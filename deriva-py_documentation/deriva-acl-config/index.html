@@ -1,0 +1,1407 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for DERIVA software.">
+      
+      
+        <link rel="canonical" href="https://informatics-isi-edu.github.io/deriva-docs/deriva-py_documentation/deriva-acl-config/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>Configure ACLs (deriva-acl-config) - DERIVA Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.ba0fd1a6.css">
+      
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#using-deriva-acl-config-to-configure-acls" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://informatics-isi-edu.github.io/deriva-docs/" title="DERIVA Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../images/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                DERIVA Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                Configure ACLs (deriva-acl-config)
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../images/logo.png" width="48" height="48">
+      
+    </span>
+    DERIVA Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../using/" title="Using DERIVA" class="md-nav__link">
+      Using DERIVA
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../concepts/" title="Key Concepts" class="md-nav__link">
+      Key Concepts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../development/" title="Developing with DERIVA" class="md-nav__link">
+      Developing with DERIVA
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      deriva-py Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        deriva-py Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" checked>
+    
+    <label class="md-nav__link" for="nav-5-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-5-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install/" title="Installing deriva-py" class="md-nav__link">
+      Installing deriva-py
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deriva-download-cli/" title="Bulk export tool (deriva-download-cli)" class="md-nav__link">
+      Bulk export tool (deriva-download-cli)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deriva-hatrac-cli/" title="Interact with Hatrac object store (deriva-hatrac-cli)" class="md-nav__link">
+      Interact with Hatrac object store (deriva-hatrac-cli)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Configure ACLs (deriva-acl-config)
+      </label>
+    
+    <a href="./" title="Configure ACLs (deriva-acl-config)" class="md-nav__link md-nav__link--active">
+      Configure ACLs (deriva-acl-config)
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-deriva-acl-config-to-configure-acls" title="Using deriva-acl-config to configure ACLs" class="md-nav__link">
+    Using deriva-acl-config to configure ACLs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-file-format" title="Config file format" class="md-nav__link">
+    Config file format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-groups-stanza" title="The groups stanza" class="md-nav__link">
+    The groups stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-group_list_table-stanza" title="The group_list_table stanza" class="md-nav__link">
+    The group_list_table stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-acl_definitions-stanza" title="The acl_definitions stanza" class="md-nav__link">
+    The acl_definitions stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-acl_bindings-stanza" title="The acl_bindings stanza" class="md-nav__link">
+    The acl_bindings stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-catalog_acls-stanza" title="The catalog_acls stanza" class="md-nav__link">
+    The catalog_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-schema_acls-stanza" title="The schema_acls stanza" class="md-nav__link">
+    The schema_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-table_acls-stanza" title="The table_acls stanza" class="md-nav__link">
+    The table_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-column_acls-stanza" title="The column_acls stanza" class="md-nav__link">
+    The column_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-foreign_key_acls-stanza" title="The foreign_key_acls stanza" class="md-nav__link">
+    The foreign_key_acls stanza
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-considerations" title="Security Considerations" class="md-nav__link">
+    Security Considerations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../deriva-annotation-config/" title="Configure annotations (deriva-annotation-config)" class="md-nav__link">
+      Configure annotations (deriva-annotation-config)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../api/" title="API Docs" class="md-nav__link">
+      API Docs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      ERMrest Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        ERMrest Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2">
+    
+    <label class="md-nav__link" for="nav-6-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-6-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/install-redhat/" title="Installing on Red Hat-derived Linux" class="md-nav__link">
+      Installing on Red Hat-derived Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/annotation/" title="Model Annotation" class="md-nav__link">
+      Model Annotation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/tuning/" title="Performance Tuning" class="md-nav__link">
+      Performance Tuning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/ermrest-registry-purge/" title="ermrest-registry-purge command" class="md-nav__link">
+      ermrest-registry-purge command
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/ermrest-client-table/" title="System Table `ermrest_client`" class="md-nav__link">
+      System Table `ermrest_client`
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/user-doc/history-track/" title="History Tracking for DBAs and Programmers" class="md-nav__link">
+      History Tracking for DBAs and Programmers
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3" type="checkbox" id="nav-6-3">
+    
+    <label class="md-nav__link" for="nav-6-3">
+      ERMrest API and Service Semantics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+      <label class="md-nav__title" for="nav-6-3">
+        ERMrest API and Service Semantics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/" title="Guide to the ERMrest API" class="md-nav__link">
+      Guide to the ERMrest API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/rest-catalog/" title="ERMrest Catalog Operations" class="md-nav__link">
+      ERMrest Catalog Operations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-3" type="checkbox" id="nav-6-3-3">
+    
+    <label class="md-nav__link" for="nav-6-3-3">
+      ERMrest Model Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="7">
+      <label class="md-nav__title" for="nav-6-3-3">
+        ERMrest Model Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/model/naming/" title="ERMrest Model Resource Naming" class="md-nav__link">
+      ERMrest Model Resource Naming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/model/rest/" title="ERMrest Model Operations" class="md-nav__link">
+      ERMrest Model Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-4" type="checkbox" id="nav-6-3-4">
+    
+    <label class="md-nav__link" for="nav-6-3-4">
+      ERMrest Access Control
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="8">
+      <label class="md-nav__title" for="nav-6-3-4">
+        ERMrest Access Control
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/acl/concepts/" title="Access Concepts" class="md-nav__link">
+      Access Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/acl/static/" title="Static Model-Based Policies" class="md-nav__link">
+      Static Model-Based Policies
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/acl/dynamic/" title="Dynamic Data-Dependent Policies" class="md-nav__link">
+      Dynamic Data-Dependent Policies
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5" type="checkbox" id="nav-6-3-5">
+    
+    <label class="md-nav__link" for="nav-6-3-5">
+      Client-Specific Rights
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="9">
+      <label class="md-nav__title" for="nav-6-3-5">
+        Client-Specific Rights
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/acl/rights/" title="Rights Summaries" class="md-nav__link">
+      Rights Summaries
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5-2" type="checkbox" id="nav-6-3-5-2">
+    
+    <label class="md-nav__link" for="nav-6-3-5-2">
+      ERMrest Data Resources
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="11">
+      <label class="md-nav__title" for="nav-6-3-5-2">
+        ERMrest Data Resources
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/data/naming/" title="ERMrest Data Resources" class="md-nav__link">
+      ERMrest Data Resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/data/rest/" title="ERMrest Data Operations" class="md-nav__link">
+      ERMrest Data Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5-3" type="checkbox" id="nav-6-3-5-3">
+    
+    <label class="md-nav__link" for="nav-6-3-5-3">
+      ERMrest History Management
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="12">
+      <label class="md-nav__title" for="nav-6-3-5-3">
+        ERMrest History Management
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/history/naming/" title="ERMrest History Management Resources" class="md-nav__link">
+      ERMrest History Management Resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../ermrest_documentation/api-doc/history/rest/" title="ERMrest History Management Operations" class="md-nav__link">
+      ERMrest History Management Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Hatrac Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Hatrac Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../hatrac_documentation/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-2" type="checkbox" id="nav-7-2">
+    
+    <label class="md-nav__link" for="nav-7-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-7-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../hatrac_documentation/INSTALL/" title="Installing on Red Hat-derived Linux" class="md-nav__link">
+      Installing on Red Hat-derived Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../hatrac_documentation/HOWTO/" title="Other HOWTO information" class="md-nav__link">
+      Other HOWTO information
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../hatrac_documentation/REST-API/" title="Hatrac API and Service Semantics" class="md-nav__link">
+      Hatrac API and Service Semantics
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#using-deriva-acl-config-to-configure-acls" title="Using deriva-acl-config to configure ACLs" class="md-nav__link">
+    Using deriva-acl-config to configure ACLs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#config-file-format" title="Config file format" class="md-nav__link">
+    Config file format
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-groups-stanza" title="The groups stanza" class="md-nav__link">
+    The groups stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-group_list_table-stanza" title="The group_list_table stanza" class="md-nav__link">
+    The group_list_table stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-acl_definitions-stanza" title="The acl_definitions stanza" class="md-nav__link">
+    The acl_definitions stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-acl_bindings-stanza" title="The acl_bindings stanza" class="md-nav__link">
+    The acl_bindings stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-catalog_acls-stanza" title="The catalog_acls stanza" class="md-nav__link">
+    The catalog_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-schema_acls-stanza" title="The schema_acls stanza" class="md-nav__link">
+    The schema_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-table_acls-stanza" title="The table_acls stanza" class="md-nav__link">
+    The table_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-column_acls-stanza" title="The column_acls stanza" class="md-nav__link">
+    The column_acls stanza
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-foreign_key_acls-stanza" title="The foreign_key_acls stanza" class="md-nav__link">
+    The foreign_key_acls stanza
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-considerations" title="Security Considerations" class="md-nav__link">
+    Security Considerations
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Configure ACLs (deriva-acl-config)</h1>
+                
+                <h3 id="using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs<a class="headerlink" href="#using-deriva-acl-config-to-configure-acls" title="Permanent link">&para;</a></h3>
+<p>The <code>deriva-acl-config</code> utility reads a configuration file and uses it to set ACLs for an ermrest catalog (or for a schema or table within that catalog). Usage is:</p>
+<p><code>deriva-acl-config</code> [<code>-g</code>|<code>--groups-only</code>] [<code>-n</code>|<code>--dryrun</code>] [<code>-v</code>|<code>--verbose</code>] [<code>-s</code>|<code>--schema</code> schema] [<code>-t</code>|<code>--table</code> table] [<code>--host host</code>] [<code>--config-file</code> config_file] [<code>--credential-file</code> credential_file] catalog</p>
+<p>where the required arguments are:</p>
+<p><em>catalog</em>: an ermrest catalog number (e.g., 1)</p>
+<p><code>--config_file</code> file: the name of a configuration file</p>
+<p>Options are:</p>
+<p><code>-credential_file</code> file: read credentials from the named <em>file</em> (if not specified, look for credentials maintained by <code>deriva-auth</code>)</p>
+<p><code>--groups-only</code>: create and populate a group table (used for dynamic ACLs) based on the contents of the config file</p>
+<p><code>--dryrun</code>: do nothing, just print out the catalog schema that would be applied</p>
+<p><code>--verbose</code>: verbose, print acls and acl bindings for each object</p>
+<p><code>--schema</code> schema: operate only on the named <em>schema</em>, not the whole catalog</p>
+<p><code>--table</code> table: operate only on the named <em>table</em>, not the whole catalog (requires the <code>--schema</code> option)</p>
+<p><code>--host</code> host: configure the server on the specified <em>host</em> (default <code>localhost</code>)</p>
+<h4 id="config-file-format">Config file format<a class="headerlink" href="#config-file-format" title="Permanent link">&para;</a></h4>
+<p>The config file is a json file divided into the following stanzas:</p>
+<p><code>groups</code>: defines a set of named group lists, which can be used in ACL definitions later in the config file.</p>
+<p><code>group_list_table</code>: the schema and table name of a table to populate with the information from the <code>groups</code> stanza, so you can use the same named group lists in both static and dynamic ACLs and maintain them in one place. This table will typically be the last step in most dynamic ACL projections.</p>
+<p><code>acl_definitions</code>: static ACL definitions (e.g., "{"write": "consortium", "select": "everyone"}) that can be referred to later on in the config file (in this example, <code>consortium</code> and <code>everyone</code> are group lists defined in the <code>groups</code> stanza).</p>
+<p><code>acl_bindings</code>: dynamic ACL definitions</p>
+<p><code>catalog_acl</code>: the ACL for the catalog; this will be one of the ACLs defined in the <code>acl_definitions</code> stanza.</p>
+<p><code>schema_acls</code>: ACLs for individual schemas. Static ACLs (from <code>acl_definitions</code>) stanza are assigned to schemas.</p>
+<p><code>table_acls</code>: ACLs for individual tables. Static ACLs (from <code>acl_definitions</code>) and dynamic ACLs (from <code>acl_bindings</code>) are assigned to tabless.</p>
+<p><code>column_acls</code>: ACLs for individual columns. Static ACLs (from <code>acl_definitions</code>) and dynamic ACLs (from <code>acl_bindings</code>) are assigned to columns</p>
+<p><code>foreign_key_acls</code>: ACLs for foreign keys. Static ACLs (from <code>acl_definitions</code>) and dynamic ACLs (from <code>acl_bindings</code>) are assigned to foreign keys</p>
+<h5 id="the-groups-stanza">The groups stanza<a class="headerlink" href="#the-groups-stanza" title="Permanent link">&para;</a></h5>
+<p>The <code>groups</code> stanza is a list of entries of the form </p>
+<p>name: [values]</p>
+<p>where <em>name</em> is a name that will be used to refer to a set of groups, and <em>values</em> is a list of group entries. The entries can be either the actual group IDs (from webauthn) or names of previously-defined groups. For example:</p>
+<pre><code>    &quot;groups&quot; : {
+    &quot;empty&quot;: [],
+    &quot;public&quot;: [&quot;*&quot;],    
+        &quot;isrd-staff&quot;: [&quot;https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b&quot;],
+        &quot;isrd-systems&quot;: [&quot;https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b&quot;],
+        &quot;isrd-testers&quot;: [&quot;https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d&quot;],
+    &quot;isrd-all&quot;: [&quot;isrd-staff&quot;, &quot;isrd-systems&quot;, &quot;isrd-testers&quot;]
+    }
+</code></pre>
+
+<h5 id="the-group_list_table-stanza">The group_list_table stanza<a class="headerlink" href="#the-group_list_table-stanza" title="Permanent link">&para;</a></h5>
+<p>If you're defining dynamic ACLs, at some point you'll probably want a table in your catalog somewhere that maps names to lists of groups. The group_list_table stanza specifies the schema and table name of a table to create for this list of groups. For example:</p>
+<pre><code>    &quot;group_list_table&quot; : {&quot;schema&quot; : &quot;_acl_admin&quot;, &quot;table&quot; : &quot;group_lists&quot;}
+</code></pre>
+
+<p>This will cause the <code>_acl_admin.group_lists</code> table to be created (if it doesn't already exist) and populated with the information specified in the <code>groups</code> stanza. The <code>name</code> column of the table will be the primary key and will contain group name, and the <code>groups</code> column will be the fully-expanded group list. The example <code>groups</code> stanza above will create this table:</p>
+<pre><code>     name     |                                                                                          groups                                                                                          
+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ isrd-staff   | {https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b}
+ isrd-testers | {https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d}
+ isrd-systems | {https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b}
+ isrd-all     | {https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b,https://auth.globus.org/9d596ac6-22b9-11e6-b519-22000aef184d,https://auth.globus.org/3938e0d0-ed35-11e5-8641-22000ab4b42b}
+ public       | {*}
+ empty        | {}
+</code></pre>
+
+<h5 id="the-acl_definitions-stanza">The acl_definitions stanza<a class="headerlink" href="#the-acl_definitions-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where you define static ACLs for later use. The syntax is a list of</p>
+<p>name: value</p>
+<p>entries, where the <em>name</em> is a name you can refer to later, to assign these ACLs to objects, and the <em>value</em> is the ACL itself (which will probably contain references to the groups defined in the <code>groups</code> stanza). For example:</p>
+<pre><code>    &quot;acl_definitions&quot; : {
+        &quot;unrestricted_read&quot; : {&quot;select&quot; : &quot;public&quot;, &quot;create&quot;: &quot;isrd-systems&quot;, &quot;write&quot;: &quot;isrd-systems&quot;},
+        &quot;isrd_read&quot; : {&quot;select&quot; : &quot;isrd-all&quot;, &quot;create&quot;: &quot;isrd-systems&quot;, &quot;write&quot;: &quot;isrd-systems&quot;},
+        &quot;secret&quot; : {&quot;select&quot; : &quot;empty&quot;}
+     }
+</code></pre>
+
+<p>In this example, the <code>unrestricted_read</code> ACL grants read access to everyone and restricts create and write access to the <code>isrd-systems</code> group; the <code>isrd_read</code> ACL is the same,except that it grants read access only to the <code>isrd-all</code> set of groups. Note that this stanza only defines the set of permissions and who they're associated with; by itself, it doesn't apply these ACLs to any object in the catalog.</p>
+<h5 id="the-acl_bindings-stanza">The acl_bindings stanza<a class="headerlink" href="#the-acl_bindings-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where you define dynamic ACLs for later use. The syntax is a list of</p>
+<p>name: value</p>
+<p>pairs, where the <em>name</em> is a name you can refer to later, and the <em>value</em> is a dynamic ACL. For example:</p>
+<pre><code>    &quot;acl_bindings&quot; : {
+    &quot;a_binding&quot; : {
+        &quot;scope_acl&quot;: &quot;isrd-staff&quot;,
+        &quot;types&quot; : [&quot;select&quot;],
+        &quot;projection&quot; : [{&quot;outbound_col&quot; : &quot;allowed_groups&quot;}, &quot;groups&quot;],
+        &quot;projection_type&quot; : &quot;acl&quot;
+    }
+</code></pre>
+
+<p>This defines an ACL binding called <code>a_binding</code>. The syntax of the binding itself is the same as defined in the ermrest ACL docs, with one exception: to specify an outbound foreign key, you can either use ermrest-standard <code>outbound</code> syntax and use the constraint name, or you can use <code>outbound_col</code> and specify the name of a column on which a foreign key is defined. It will also populate the <code>scope_acl</code> based on the referenced group list. For example, if you apply the binding <code>a_binding</code> to this table:</p>
+<pre><code>     Column     | Type | Modifiers 
+----------------+------+-----------
+ my_data        | text | 
+ allowed_groups | text | not null
+Foreign-key constraints:
+    &quot;mytable_allowed_groups_fkey&quot; FOREIGN KEY (allowed_groups) REFERENCES _acl_admin.group_lists(name)
+</code></pre>
+
+<p>then the actual ermrest dynamic ACL will be:</p>
+<pre><code>        &quot;a_binding&quot; : {
+            &quot;scope_acl&quot;: [&quot;https://auth.globus.org/176baec4-ed26-11e5-8e88-22000ab4b42b&quot;],
+            &quot;types&quot; : [&quot;select&quot;],
+            &quot;projection&quot; : [{&quot;outbound&quot; : &quot;mytable_allowed_groups_fkey&quot;}, &quot;groups&quot;],
+            &quot;projection_type&quot; : &quot;acl&quot;
+        }
+</code></pre>
+
+<p>This can be useful if you want to apply the same dynamic ACL to mutliple tables, since each table's foreign key will have a different name by default.</p>
+<h5 id="the-catalog_acls-stanza">The catalog_acls stanza<a class="headerlink" href="#the-catalog_acls-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where ACLs for the catalog itself are set. (Note: there's a bootstrapping issue for new catalogs - since this tool uses ermrest, you need to already have permission on the catalog before you can set any new permissions). For example:</p>
+<pre><code>    &quot;catalog_acl&quot; : {&quot;acl&quot; : &quot;unrestricted_read&quot;}
+</code></pre>
+
+<p>This applies the <code>unrestricted_read</code> ACL defined above to the catalog.</p>
+<h5 id="the-schema_acls-stanza">The schema_acls stanza<a class="headerlink" href="#the-schema_acls-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where ACLs for schemas are set. The syntax is a list of entries of the form:</p>
+<p>{schema_descriptor: value, acl_descriptor: value}</p>
+<p>A schema_descriptor is either:</p>
+<p><code>"schema":</code> <em>schema_name</em></p>
+<p>or</p>
+<p><code>"schema_pattern:"</code> <em>regular_expression</em></p>
+<p>When setting permissions on a schema:
+<em> if an exact <code>schema</code> match is found, the associated ACL is used (and any matching <code>schema_pattern</code> entries are ignored).
+</em> If no exact <code>schema</code> match is found and exactly one matching <code>schema_pattern</code> entry is found, then that ACL is used.
+* If no exact <code>schema</code> match is found and more than one matching <code>schema_pattern</code> entry is found, then an error is thrown.</p>
+<p>An acl descriptor has the form</p>
+<p><code>"acl":</code> <em>name_of_acl_defined_earlier</em></p>
+<p>or</p>
+<p><code>"no_acl": true</code></p>
+<p>If an <code>acl</code> is specified, the named static ACL is expanded and applied to the schema. If <code>no_acl</code> is specified, no ACL is applied to the schema (and as a result, it inherits whatever permissions are set by the catalog ACL).</p>
+<p>For example:</p>
+<pre><code>    &quot;schema_acls&quot; : [
+    {&quot;schema&quot; : &quot;Vocabulary&quot;, &quot;no_acl&quot; : &quot;true&quot;},
+    {&quot;schema&quot; : &quot;ISRD_Internal&quot;, &quot;acl&quot; : &quot;isrd_read&quot;},
+        {&quot;schema_pattern&quot; : &quot;.*&quot;, &quot;acl&quot;: &quot;secret&quot;}
+    ]
+</code></pre>
+
+<p>This, paired with the catalog_acl stanza above, allows anyone to read the Vocabulary schema and ISRD people to read the "ISRD_Internal". It forbids anyone from reading any other schema in the catalog.</p>
+<h5 id="the-table_acls-stanza">The table_acls stanza<a class="headerlink" href="#the-table_acls-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where ACLs for tables are set. The syntax is a list of entries of the form:
+{schema_descriptor, table_descriptor, [acl_descriptor], [acl_bindings_descriptor]}
+A schema descriptor has the same form as in the schema_acls stanza.</p>
+<p>A table_descriptor is either:</p>
+<p><code>"table":</code> <em>table_name</em></p>
+<p>or</p>
+<p><code>"table_pattern:"</code> <em>regular_expression</em></p>
+<p>Regular expression matching is used:
+<em> If an entry with an exact <code>schema</code> and <code>table</code> match is found, the associated ACL is used (and any other matching entries are ignored).
+</em> Otherwise, if entry with an exact <code>schema</code> match and exactly one <code>table_pattern</code> match is found, that ACL is used.
+<em> Otherwise, if exactly one entry with a <code>schema_pattern</code> and <code>table_pattern</code> match is found, that ACL is used.
+</em> If none of the above is true, and multiple matching entries are found, then an error is thrown.</p>
+<p>An acl_descriptor is the same as defined above.</p>
+<p>An <code>acl_bindings_descriptor</code> has the form:</p>
+<p><code>"acl_bindings":</code> [list_of_bindings]`</p>
+<p>where <em>list_of_bindings</em> is a list of ACL bindings defined in the acl_bindings stanza.</p>
+<h5 id="the-column_acls-stanza">The column_acls stanza<a class="headerlink" href="#the-column_acls-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where ACLs for columns are set. The syntax is a list of entries of the form:
+{schema_descriptor, table_descriptor, column_descriptor, [acl_descriptor], [acl_bindings_descriptor] [invalidate_bindings_descriptor]}
+The schema, table, acl, and acl_bindings descriptors have the same form as above.
+The column_descriptor is either:</p>
+<p><code>"column":</code> <em>table_name</em></p>
+<p>or</p>
+<p><code>"column_pattern:"</code> <em>regular_expression</em></p>
+<p>Regular expression matching is used:
+<em> If an entry with exact <code>schema</code>, <code>table</code>, and <code>column</code> matches is found, the associated ACL is used (and any other matching entries are ignored).
+</em> Otherwise, if exactly one entry is found with <code>schema</code>, <code>table</code>, and <code>column</code> matches is found, that ACL is used
+* If multiple regular-expression matches are found and no exact match is found, an exception is thrown.</p>
+<p>The i<code>nvalidate_bindings</code> descriptor has the form:</p>
+<p><code>"invalidate_bindings"</code>: [list_of_bindings]</p>
+<p>where <em>list_of_bindings</em> is a list of bindng names to invalidate (i.e., ACL bindings that were defined on the column's table but that should not be applied to the column).</p>
+<h5 id="the-foreign_key_acls-stanza">The foreign_key_acls stanza<a class="headerlink" href="#the-foreign_key_acls-stanza" title="Permanent link">&para;</a></h5>
+<p>This is where ACLs for foreign keys are set. The syntax is a list of entries of the form:</p>
+<p>{schema_descriptor, table_descriptor, fkey_schema_descriptor, fkey_name_descriptor, [acl_descriptor], [acl_bindings_descriptor], [invalidate_bindings_descriptor]}</p>
+<p>The schema, table, acl, acl_bindings, and invalidate_bindings descriptors have the same form as above.
+The fkey_schema_descriptor is either:</p>
+<p><code>"foreign_key_schema":</code> foreign_key_schema_name</p>
+<p>or</p>
+<p><code>"foreign_key_schema_pattern":</code> regular_expression</p>
+<p>The fkey_name_descriptor is either:</p>
+<p><code>"foreign_key":</code> foreign_key_name</p>
+<p>or</p>
+<p><code>"foreign_key_pattern":</code> regular_expression</p>
+<p>These specify the foreign key schema and name. As with the column_acls stanza:
+<em> If an exact match is found, it's used
+</em> If no exact match is found and exactly one regular expression match is found, it's used.
+* If no exact match is found and more than one regular expression match is found, an error is thrown.</p>
+<h4 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h4>
+<p>There's no guarantee of the order in which changes will be applied. For example, if your current state restricts access to a table, like this:</p>
+<pre><code>   &quot;table_acls&quot; : [
+       {&quot;schema&quot; : &quot;myschema&quot;, &quot;table&quot; : &quot;mytable&quot;, &quot;acl&quot;: &quot;restricted_access&quot;}
+   ]
+</code></pre>
+
+<p>and you decide to change to a configuration that restricts access only to one sensitive column in that table:</p>
+<pre><code>   &quot;table_acls&quot; : [
+       {&quot;schema&quot; : &quot;myschema&quot;, &quot;table&quot; : &quot;mytable&quot;, &quot;acl&quot;: &quot;open_access&quot;}
+   ],
+   &quot;column_acls&quot; : [
+       {&quot;schema&quot; : &quot;myschema&quot;, &quot;table&quot; : &quot;mytable&quot;, &quot;column&quot; : &quot;sensitive_column&quot;, &quot;acl&quot;: &quot;restricted_access&quot;}
+   ]
+
+</code></pre>
+
+<p>then it's possible that the change to the table ACL will occur before the change to the column ACL, temporarily exposing the table and all its columns. The solution is to run <code>acl_config</code> in two passes, first adding the new restrictions and then removing the old ones.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../deriva-hatrac-cli/" title="Interact with Hatrac object store (deriva-hatrac-cli)" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Interact with Hatrac object store (deriva-hatrac-cli)
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../deriva-annotation-config/" title="Configure annotations (deriva-annotation-config)" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Configure annotations (deriva-annotation-config)
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2018 <a href="http://deriva.isi.edu">DERIVA</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      <div class="md-footer-logo">
+        <img src="/images/deriva-h50-simple.png">
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

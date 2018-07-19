@@ -1,0 +1,1347 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Documentation for DERIVA software.">
+      
+      
+        <link rel="canonical" href="https://informatics-isi-edu.github.io/deriva-docs/ermrest_documentation/user-doc/history-track/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-0.17.4, mkdocs-material-2.9.2">
+    
+    
+      
+        <title>History Tracking for DBAs and Programmers - DERIVA Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.ba0fd1a6.css">
+      
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.1aa3b519.js"></script>
+    
+    
+      <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+      
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#ermrest-history-tracking" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://informatics-isi-edu.github.io/deriva-docs/" title="DERIVA Documentation" class="md-header-nav__button md-logo">
+          
+            <img src="../../../images/logo.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            
+              <span class="md-header-nav__topic">
+                DERIVA Documentation
+              </span>
+              <span class="md-header-nav__topic">
+                History Tracking for DBAs and Programmers
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <span class="md-nav__button md-logo">
+      
+        <img src="../../../images/logo.png" width="48" height="48">
+      
+    </span>
+    DERIVA Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../using/" title="Using DERIVA" class="md-nav__link">
+      Using DERIVA
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../concepts/" title="Key Concepts" class="md-nav__link">
+      Key Concepts
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../development/" title="Developing with DERIVA" class="md-nav__link">
+      Developing with DERIVA
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      deriva-py Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        deriva-py Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-5-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/install/" title="Installing deriva-py" class="md-nav__link">
+      Installing deriva-py
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/deriva-download-cli/" title="Bulk export tool (deriva-download-cli)" class="md-nav__link">
+      Bulk export tool (deriva-download-cli)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/deriva-hatrac-cli/" title="Interact with Hatrac object store (deriva-hatrac-cli)" class="md-nav__link">
+      Interact with Hatrac object store (deriva-hatrac-cli)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/deriva-acl-config/" title="Configure ACLs (deriva-acl-config)" class="md-nav__link">
+      Configure ACLs (deriva-acl-config)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/deriva-annotation-config/" title="Configure annotations (deriva-annotation-config)" class="md-nav__link">
+      Configure annotations (deriva-annotation-config)
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../deriva-py_documentation/api/" title="API Docs" class="md-nav__link">
+      API Docs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+    
+    <label class="md-nav__link" for="nav-6">
+      ERMrest Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        ERMrest Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-2" type="checkbox" id="nav-6-2" checked>
+    
+    <label class="md-nav__link" for="nav-6-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-6-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../install-redhat/" title="Installing on Red Hat-derived Linux" class="md-nav__link">
+      Installing on Red Hat-derived Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotation/" title="Model Annotation" class="md-nav__link">
+      Model Annotation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tuning/" title="Performance Tuning" class="md-nav__link">
+      Performance Tuning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ermrest-registry-purge/" title="ermrest-registry-purge command" class="md-nav__link">
+      ermrest-registry-purge command
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ermrest-client-table/" title="System Table `ermrest_client`" class="md-nav__link">
+      System Table `ermrest_client`
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        History Tracking for DBAs and Programmers
+      </label>
+    
+    <a href="./" title="History Tracking for DBAs and Programmers" class="md-nav__link md-nav__link--active">
+      History Tracking for DBAs and Programmers
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-design" title="Overview of Design" class="md-nav__link">
+    Overview of Design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-data-history-within-sql" title="Accessing Data History within SQL" class="md-nav__link">
+    Accessing Data History within SQL
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#special-case-handling-of-json" title="Special-case Handling of JSON" class="md-nav__link">
+    Special-case Handling of JSON
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-model-history-within-sql" title="Accessing Model History within SQL" class="md-nav__link">
+    Accessing Model History within SQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-work" title="Future Work?" class="md-nav__link">
+    Future Work?
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexing-of-history" title="Indexing of history" class="md-nav__link">
+    Indexing of history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#something-view-like-which-is-compatible-with-history" title="Something view-like which is compatible with history" class="md-nav__link">
+    Something view-like which is compatible with history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-ux-support" title="Audit UX support" class="md-nav__link">
+    Audit UX support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-change-monitoring-support" title="Asynchronous change-monitoring support" class="md-nav__link">
+    Asynchronous change-monitoring support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#longitudinal-history-retrieval" title="Longitudinal History Retrieval" class="md-nav__link">
+    Longitudinal History Retrieval
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3" type="checkbox" id="nav-6-3">
+    
+    <label class="md-nav__link" for="nav-6-3">
+      ERMrest API and Service Semantics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="4">
+      <label class="md-nav__title" for="nav-6-3">
+        ERMrest API and Service Semantics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/" title="Guide to the ERMrest API" class="md-nav__link">
+      Guide to the ERMrest API
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/rest-catalog/" title="ERMrest Catalog Operations" class="md-nav__link">
+      ERMrest Catalog Operations
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-3" type="checkbox" id="nav-6-3-3">
+    
+    <label class="md-nav__link" for="nav-6-3-3">
+      ERMrest Model Guide
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="7">
+      <label class="md-nav__title" for="nav-6-3-3">
+        ERMrest Model Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/model/naming/" title="ERMrest Model Resource Naming" class="md-nav__link">
+      ERMrest Model Resource Naming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/model/rest/" title="ERMrest Model Operations" class="md-nav__link">
+      ERMrest Model Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-4" type="checkbox" id="nav-6-3-4">
+    
+    <label class="md-nav__link" for="nav-6-3-4">
+      ERMrest Access Control
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="8">
+      <label class="md-nav__title" for="nav-6-3-4">
+        ERMrest Access Control
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/acl/concepts/" title="Access Concepts" class="md-nav__link">
+      Access Concepts
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/acl/static/" title="Static Model-Based Policies" class="md-nav__link">
+      Static Model-Based Policies
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/acl/dynamic/" title="Dynamic Data-Dependent Policies" class="md-nav__link">
+      Dynamic Data-Dependent Policies
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5" type="checkbox" id="nav-6-3-5">
+    
+    <label class="md-nav__link" for="nav-6-3-5">
+      Client-Specific Rights
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="9">
+      <label class="md-nav__title" for="nav-6-3-5">
+        Client-Specific Rights
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/acl/rights/" title="Rights Summaries" class="md-nav__link">
+      Rights Summaries
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5-2" type="checkbox" id="nav-6-3-5-2">
+    
+    <label class="md-nav__link" for="nav-6-3-5-2">
+      ERMrest Data Resources
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="11">
+      <label class="md-nav__title" for="nav-6-3-5-2">
+        ERMrest Data Resources
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/data/naming/" title="ERMrest Data Resources" class="md-nav__link">
+      ERMrest Data Resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/data/rest/" title="ERMrest Data Operations" class="md-nav__link">
+      ERMrest Data Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6-3-5-3" type="checkbox" id="nav-6-3-5-3">
+    
+    <label class="md-nav__link" for="nav-6-3-5-3">
+      ERMrest History Management
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="12">
+      <label class="md-nav__title" for="nav-6-3-5-3">
+        ERMrest History Management
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/history/naming/" title="ERMrest History Management Resources" class="md-nav__link">
+      ERMrest History Management Resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../api-doc/history/rest/" title="ERMrest History Management Operations" class="md-nav__link">
+      ERMrest History Management Operations
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      Hatrac Documentation
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Hatrac Documentation
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../hatrac_documentation/" title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7-2" type="checkbox" id="nav-7-2">
+    
+    <label class="md-nav__link" for="nav-7-2">
+      User Docs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-7-2">
+        User Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../hatrac_documentation/INSTALL/" title="Installing on Red Hat-derived Linux" class="md-nav__link">
+      Installing on Red Hat-derived Linux
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../hatrac_documentation/HOWTO/" title="Other HOWTO information" class="md-nav__link">
+      Other HOWTO information
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../hatrac_documentation/REST-API/" title="Hatrac API and Service Semantics" class="md-nav__link">
+      Hatrac API and Service Semantics
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-design" title="Overview of Design" class="md-nav__link">
+    Overview of Design
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-data-history-within-sql" title="Accessing Data History within SQL" class="md-nav__link">
+    Accessing Data History within SQL
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#special-case-handling-of-json" title="Special-case Handling of JSON" class="md-nav__link">
+    Special-case Handling of JSON
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-model-history-within-sql" title="Accessing Model History within SQL" class="md-nav__link">
+    Accessing Model History within SQL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#future-work" title="Future Work?" class="md-nav__link">
+    Future Work?
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexing-of-history" title="Indexing of history" class="md-nav__link">
+    Indexing of history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#something-view-like-which-is-compatible-with-history" title="Something view-like which is compatible with history" class="md-nav__link">
+    Something view-like which is compatible with history
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audit-ux-support" title="Audit UX support" class="md-nav__link">
+    Audit UX support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-change-monitoring-support" title="Asynchronous change-monitoring support" class="md-nav__link">
+    Asynchronous change-monitoring support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#longitudinal-history-retrieval" title="Longitudinal History Retrieval" class="md-nav__link">
+    Longitudinal History Retrieval
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="ermrest-history-tracking">ERMrest History Tracking<a class="headerlink" href="#ermrest-history-tracking" title="Permanent link">&para;</a></h1>
+<p><strong>NOTE</strong>: The majority of interface documentation previously found
+here has been integrated into the <a href="../api-docs/index.md">API docs</a>. The corresponding 
+content here has been removed to avoid any confusion for future editors.</p>
+<p>This document summarizes the architectural concepts and implications
+that might impact a DBA or developer looking at the backend
+functionality or interacting with the catalog DB.</p>
+<h2 id="overview-of-design">Overview of Design<a class="headerlink" href="#overview-of-design" title="Permanent link">&para;</a></h2>
+<ol>
+<li>We now use timestamps as catalog version IDs instead of PostgreSQL transaction IDs</li>
+<li>All writes by ERMrest use <em>serializable</em> isolation level</li>
+<li>Timestamps are stable across dump/restore events</li>
+<li>The system clock must be monotonically increasing (even across dump/restore events)</li>
+<li>These can appear in URL for historical query and in ETag content for cache management</li>
+<li>The introspected catalog model is reified in tables managed by ERMrest</li>
+<li>These tables assign persistent <code>RID</code> and other system columns to PostgreSQL model elements</li>
+<li><code>RID</code> assignments are stable across dump/restore events</li>
+<li>Runtime introspection can dump the state of these tables quickly</li>
+<li>Runtime model changes incrementally adjust these tables</li>
+<li>Stored procedures can update these tables for en masse model changes by a local DBA<ul>
+<li>One procedure syncs by OID for incremental changes including model element renaming</li>
+<li>One procedure syncs by name for OID instability including dump/restore or DBA-driven replacement of model elements</li>
+</ul>
+</li>
+<li>All model-augmenting tables are refactored in terms of <code>RID</code> subjects instead of various composite keys<ul>
+<li>Annotations</li>
+<li>ACLs</li>
+<li>ACL bindings</li>
+</ul>
+</li>
+<li>We add an internal <code>_ermrest_history</code> schema to each catalog</li>
+<li>We add internal tables to <code>_ermrest_history</code> corresponding to other tables in catalog</li>
+<li>History tables track tuple content generically<ul>
+<li>keyed by composite (<code>RID</code>, <code>during</code>)</li>
+<li><code>RID</code> corresponds to the same <code>RID</code> from the tracked table</li>
+<li><code>during</code> is an interval <code>[RMT1,NULL)</code> when tuples are born or <code>[RMT1,RMT2)</code> when tuples have already died</li>
+<li><code>RMB</code> corresponds to the same <code>RMB</code> from the tracked table (in case we want to show changes by client later...)</li>
+</ul>
+</li>
+<li>System tables from <code>_ermrest</code> are mapped in a simplified fashion by name to allow bootstrapping<ul>
+<li>Table <code>_ermrest_history.foo</code> tracks table <code>_ermrest.foo</code></li>
+<li>Tuple data is stored in a JSON blob with field <code>X</code> tracking column with name <code>X</code></li>
+</ul>
+</li>
+<li>User tables from other schemas are mapped in a generic fashion by <code>RID</code><ul>
+<li>Table <code>_ermrest_history.tXYZ</code> tracks table with <code>RID</code> <code>XYZ</code></li>
+<li>Tuple data is stored in a JSON blob with field <code>ABC</code> tracking a column with <code>RID</code> <code>ABC</code></li>
+<li>System columns <code>RID</code>, <code>RMT</code>, and <code>RMB</code> are lifted out of the JSON blob</li>
+</ul>
+</li>
+<li>We add triggers to automate data management</li>
+<li>One trigger <em>before</em> insert or update manages system column values</li>
+<li>One trigger <em>after</em> insert or update tracks tuples aka versions of rows</li>
+<li>The service can query historical content at a given time or live content</li>
+<li>Regular mutation transactions are tracked:</li>
+<li><code>_ermrest.model_modified</code>: when any part of the model was changed and by who</li>
+<li><code>_ermrest.table_modified</code>: when individual table's content was changed and by who</li>
+<li>Most recent transactions are tracked for quickly determining <em>current</em> version of catalog:</li>
+<li><code>_ermrest.model_last_modified</code>: when any part of the model was last changed and by who</li>
+<li><code>_ermrest.table_last_modified</code>: when individual table's content was last changed and by who</li>
+</ol>
+<h2 id="accessing-data-history-within-sql">Accessing Data History within SQL<a class="headerlink" href="#accessing-data-history-within-sql" title="Permanent link">&para;</a></h2>
+<p>To access historical data for a history-tracked table with table
+<code>RID</code>=<code>T1</code> and column <code>RID</code>=(<code>C1</code>, <code>C2</code>, ... <code>Ck</code>) at timestamp <code>V1</code>,
+we can use a query similar to this:</p>
+<pre><code>SELECT
+  t."RID" AS "RID",
+  d."Cx" AS "RCT",
+  lower(t.during) AS "RMT",
+  d."Cy" AS "RMT",
+  t."RMB",
+  d."C1" AS "Column name 1",
+  d."C2" AS "Column name 2",
+  ...
+  d."Ck" AS "Column name k"
+FROM _ermrest_history.tT1 t,
+LATERAL jsonb_to_record(t.rowdata) d("C1" type1, "C2" type2, ... "Ck" typek)
+WHERE t.during @&gt; V1::timestamptz;
+</code></pre>
+<p>This approach allows us to handle three difference scenarios that can
+occur during the history of the user data table:</p>
+<ol>
+<li>A new column added after the table acquires data can implicitly add
+   columns with <code>NULL</code> value without generating new storage
+   tuples. The expansion of the JSON <code>rowdata</code> blob will fill in the
+   missing NULL values.</li>
+<li>An existing column deleted after the table acquires data can
+   implicitly drop columns without generating new storage tuples. The
+   expansion of the JSON <code>rowdata</code> blob will ignore extra values.</li>
+<li>Renaming an existing column after the table acquires data can
+   implicitly rename fields without generating new storage tuples. The
+   expansion of the JSON <code>rowdata</code> blob will map the persistent
+   column-level <code>RID</code> to the currently active column name.</li>
+</ol>
+<h3 id="special-case-handling-of-json">Special-case Handling of JSON<a class="headerlink" href="#special-case-handling-of-json" title="Permanent link">&para;</a></h3>
+<p>The preceding example to query a user data history table is sufficient
+for basic column types like integers, text, and
+numbers. Unfortunately, the PostgreSQL JSON support has some
+asymmetries and requires special case handling of those columns. We
+can pack them into the <code>rowdata</code> JSON blobs using a generic method in
+our history-tracking trigger functions, but we must unpack them
+differently:</p>
+<pre><code>SELECT
+  t."RID" AS "RID",
+  d."Cx" AS "RCT",
+  lower(t.during) AS "RMT",
+  d."Cy" AS "RMT",
+  t."RMB",
+  d."C1" AS "Column name 1",
+  t.rowdata-&gt;"C2" AS "Column name 2", -- json or jsonb column extraction
+  ...
+  d."Ck" AS "Column name k"
+FROM _ermrest_history.tT1 t,
+LATERAL jsonb_to_record(t.rowdata) d("C1" type1, "C3" type3, ... "Ck" typek)
+WHERE t.during @&gt; V1::timestamptz;
+</code></pre>
+<p>This example differs only in the extraction of the <code>C2</code> field. The
+<code>jsonb_to_record()</code> procedure would fail to round-trip the JSON
+value. Instead, we explicitly project that value directly from the raw
+<code>rowdata</code> blob while using the procedure to structure the other
+non-JSON values.</p>
+<h2 id="accessing-model-history-within-sql">Accessing Model History within SQL<a class="headerlink" href="#accessing-model-history-within-sql" title="Permanent link">&para;</a></h2>
+<p>As implied by the preceding, we need to be able to reconstruct the
+table definition which was in effect at the time of the data revision
+we wish to query. We do this by making the same sort of query to
+history-tracking tables for the reified model storage. Model history
+tracking tables use their actual table and column names instead of
+being indirected through RIDs, because we know ERMrest will not rename
+these features over time.</p>
+<p>For convenience, we've wrapped these introspection queries into stored
+procedures parameterized by the catalog version timestamp.</p>
+<pre><code>-- raw introspection example w/o history awareness
+SELECT * FROM _ermrest.known_tables;
+
+-- equivalent introspection example w/ history awareness
+SELECT * FROM _ermrest.known_tables(V1::timestamptz);
+</code></pre>
+<h2 id="future-work">Future Work?<a class="headerlink" href="#future-work" title="Permanent link">&para;</a></h2>
+<h3 id="indexing-of-history">Indexing of history<a class="headerlink" href="#indexing-of-history" title="Permanent link">&para;</a></h3>
+<h3 id="something-view-like-which-is-compatible-with-history">Something view-like which is compatible with history<a class="headerlink" href="#something-view-like-which-is-compatible-with-history" title="Permanent link">&para;</a></h3>
+<h3 id="audit-ux-support">Audit UX support<a class="headerlink" href="#audit-ux-support" title="Permanent link">&para;</a></h3>
+<h3 id="asynchronous-change-monitoring-support">Asynchronous change-monitoring support<a class="headerlink" href="#asynchronous-change-monitoring-support" title="Permanent link">&para;</a></h3>
+<h3 id="longitudinal-history-retrieval">Longitudinal History Retrieval<a class="headerlink" href="#longitudinal-history-retrieval" title="Permanent link">&para;</a></h3>
+<p>Do we want to retrieve existing versions within a time range? These
+would be collective resources providing an array of documents with
+their own <code>[from,until)</code> intervals which chain together to span the
+whole range of the request. Each document would have its own
+configuration content.</p>
+<ul>
+<li><code>GET /ermrest/catalog/N/history/from,until/acl/RID</code></li>
+<li>Content example: <code>{"from": T1, "until": T2, "acls": {aclname: members, ...}}</code></li>
+<li><code>GET /ermrest/catalog/N/history/from,until/acl_binding/RID</code></li>
+<li>Content example: <code>{"from": T1, "until": T2, "acl_bindings": {bindingname: binding, ...}}</code></li>
+<li><code>GET /ermrest/catalog/N/history/from,until/annotation/RID</code></li>
+<li>Content example: <code>{"from": T1, "until": T2, "annotations": {key: annotation_value, ...}}</code></li>
+<li><code>GET /ermrest/catalog/N/history/from,until/attribute/CRID/FRID=X</code></li>
+<li>Content example: <code>{"from": T1, "until": T2, "tuple": {CRID: Y}}</code></li>
+<li><code>GET /ermrest/catalog/N/history/from,until/entity/TRID/FRID=X</code></li>
+<li>Content example: <code>{"from": T1, "until": T2, "tuple": {CRID: value, ...}}</code></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../ermrest-client-table/" title="System Table `ermrest_client`" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                System Table `ermrest_client`
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../api-doc/" title="Guide to the ERMrest API" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Guide to the ERMrest API
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2018 <a href="http://deriva.isi.edu">DERIVA</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      <div class="md-footer-logo">
+        <img src="/images/deriva-h50-simple.png">
+      </div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.a59e2a89.js"></script>
+      
+      <script>app.initialize({version:"0.17.4",url:{base:"../../.."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

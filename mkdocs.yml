@@ -1,25 +1,77 @@
 site_name: DERIVA Documentation
 site_description: Documentation for DERIVA software.
 site_url: https://informatics-isi-edu.github.io/deriva-docs/
-theme: readthedocs
-extra_css: 
-  - css/extra.css #this is a standard css sheet
+theme:
+  name: material
+  custom_dir: theme
+  logo: images/logo.png
+  favicon: images/favicon.ico
+extra_css:
+- css/extra.css
+markdown_extensions:
+- toc:
+    permalink: true
+- admonition:
 
+copyright: Copyright &copy; 2018 <a href="http://deriva.isi.edu">DERIVA</a>.
 
 pages:
-- Welcome to the documentation: index.md
-- Using DERIVA:
-    - Installing: install.md
-- Key Concepts:
-    - DERIVA Key Concepts: concepts.md
-#    - Supporting Pages such as: Resource Naming: model-resource-naming.md
-- Developing with DERIVA:
-    - Guidelines for Development: development.md
+- Home: index.md
+- About DERIVA: about.md
+- DERIVA Framework: framework.md
+- Using DERIVA: 
+  - Introduction: users-guide/index.md
+  - Using Chaise: users-guide/using-chaise.md
+  - Managing Data: users-guide/managing-data.md
+  - Managing Catalogs: users-guide/managing-catalogs.md
+#- Deployment Tutorial: tutorial.md
+# delete the rest of this file before running mkdocs-merge
+# mkdocs-merge run deriva-docs/ deriva-py/ deriva-qt/ ermrest/ hatrac/
 
-
-markdown_extensions:
-    - toc:
-        permalink: True
-    - admonition:
-
-copyright: Copyright &copy; 2018 <a href="http://github.com/informatics-isi-edu/ermrest">ERMrest Project</a>.
+- Reference Section:
+  - deriva-py:
+    - Introduction: deriva-py_documentation/index.md
+    - Installing deriva-py: deriva-py_documentation/install.md
+    - Bulk export tool (deriva-download-cli): deriva-py_documentation/deriva-download-cli.md
+    - Interact with Hatrac object store (deriva-hatrac-cli): deriva-py_documentation/deriva-hatrac-cli.md
+    - Configure ACLs (deriva-acl-config): deriva-py_documentation/deriva-acl-config.md
+    - Configure annotations (deriva-annotation-config): deriva-py_documentation/deriva-annotation-config.md
+    - API Docs: deriva-py_documentation/api.md
+  - deriva-qt:
+    - Introduction: deriva-py_documentation/index.md
+    - Installing GUIs: deriva-py_documentation/install.md
+    - Using DERIVA-Auth: deriva-py_documentation/deriva-auth.md
+    - Using DERIVA-Upload: deriva-py_documentation/deriva-upload.md
+  - ERMrest:
+    - Introduction: ermrest_documentation/index.md
+    - User Docs:
+      - Installing on Red Hat-derived Linux: ermrest_documentation/user-doc/install-redhat.md
+      - Model Annotation: ermrest_documentation/user-doc/annotation.md
+      - Performance Tuning: ermrest_documentation/user-doc/tuning.md
+      - ermrest-registry-purge command: ermrest_documentation/user-doc/ermrest-registry-purge.md
+      - System Table `ermrest_client`: ermrest_documentation/user-doc/ermrest-client-table.md
+      - History Tracking for DBAs and Programmers: ermrest_documentation/user-doc/history-track.md
+    - ERMrest API and Service Semantics:
+      - Guide to the ERMrest API: ermrest_documentation/api-doc/index.md
+      - ERMrest Catalog Operations: ermrest_documentation/api-doc/rest-catalog.md
+      - ERMrest Model Guide:
+        - ERMrest Model Resource Naming: ermrest_documentation/api-doc/model/naming.md
+        - ERMrest Model Operations: ermrest_documentation/api-doc/model/rest.md
+      - ERMrest Access Control:
+        - Access Concepts: ermrest_documentation/api-doc/acl/concepts.md
+        - Static Model-Based Policies: ermrest_documentation/api-doc/acl/static.md
+        - Dynamic Data-Dependent Policies: ermrest_documentation/api-doc/acl/dynamic.md
+      - Client-Specific Rights:
+        - Rights Summaries: ermrest_documentation/api-doc/acl/rights.md
+        - ERMrest Data Resources:
+          - ERMrest Data Resources: ermrest_documentation/api-doc/data/naming.md
+          - ERMrest Data Operations: ermrest_documentation/api-doc/data/rest.md
+        - ERMrest History Management:
+          - ERMrest History Management Resources: ermrest_documentation/api-doc/history/naming.md
+          - ERMrest History Management Operations: ermrest_documentation/api-doc/history/rest.md
+  - Hatrac:
+    - Introduction: hatrac_documentation/index.md
+    - User Docs:
+      - Installing on Red Hat-derived Linux: hatrac_documentation/INSTALL.md
+      - Other HOWTO information: hatrac_documentation/HOWTO.md
+    - Hatrac API and Service Semantics: hatrac_documentation/REST-API.md

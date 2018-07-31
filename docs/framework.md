@@ -1,25 +1,43 @@
 #DERIVA Framework
 
-Describes basic architecture, then lists each DERIVA component, how they work together and touches on how they can be customized for a particular domain/deployment.
+![Diagram of DERIVA framework architecture](images/deriva-framework-graphic.png)
 
-## Architecture
+* At DERIVA's core are a suite of server components that store the data, describe the data model, represent the data and provide exporting capabilities. 
+* Client applications offer a 1) web interface that represents the data, data model and filtering/search capabilities for discovering data, 2) a desktop GUI that data submitters can use to authenticate with the deployment and upload data files and 3) command line interface for interacting with the data.
+* Client libraries that...
 
-infographic of architecture
+## ERMrest
 
-then following sections zoom in to individual component and give high-level description of its job/role in the framework. visual cues would be great.
+ERMrest is a data store that...
+
+## Hatrac
+
+TBD
+
+## ERMresolve
+
+TBD
+
+## IOBoxD
+
+TBD
+
+## Python APIs (deriva-py)
+
+TBD
+
+## Javascript Libraries (ERMrestJS)
+
+TBD
 
 ## Chaise
 
 TBD
 
-## ERMrest
 
-TBD
 
 ## ERMrestJS
 
 TBD
 
-## Hatrac
 
-TBD

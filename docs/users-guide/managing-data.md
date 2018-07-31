@@ -1,3 +1,37 @@
 # Managing Data in DERIVA
 
-When it comes to regular tasks such as uploading or downloading data to a DERIVA deployment, 
+When it comes to regular tasks such as uploading or downloading data to a DERIVA deployment, DERIVA provides client tools, desktop GUIs and an API module to interact with DERIVA programmatically.
+
+## Desktop GUIs for Authenticating and Uploading Data (deriva-qt)
+
+For relatively small files that live on your local system, the Deriva-Upload GUI is a user-friendly lightweight tool for uploading data from your system to a DERIVA framework.
+
+* [DERIVA-Upload documentation](/deriva-py_documentation/deriva-upload/)
+
+ In most cases, a DERIVA framework will require a certain amount of authentication for uploading files. Download the DERIVA-Auth GUI to add the server configuration provided by your DERIVA administrator and you'll be able to quickly authenticate (various authentication protocols are supported) and get the token needed to make your upload successful.
+ 
+ * [DERIVA-Auth documentation](/deriva-py_documentation/deriva-auth.md)
+ 
+## Commandline Interface for interacting with Data (deriva-py)
+
+The deriva-py module provides a number of commandline clients for interacting with data stored in ERMrest (ie, metadata in tabular format) or Hatrac (data files in our object store component).
+
+To install, use this `pip` command:
+
+```
+$ pip install --upgrade git+https://github.com/informatics-isi-edu/deriva-py.git
+```
+
+* [Manage files stored in Hatrac](/deriva-py_documentation/deriva-hatrac-cli.md) - This tool allows you to manage namespaces and get, put or delete objects and access control lists.
+* [Export tool (deriva-download-cli)](/deriva-py_documentation/deriva-upload.md) - the bulk export of tabular data (stored in ERMRest) and download of asset data (stored in Hatrac, or other supported HTTP-accessible object store).
+* [Configure Access Control Lists (deriva-acl-config)](/deriva-py_documentation/deriva-acl-config.md) - Use this client to set access control lists in ERMrest.
+* [Configure annotations (deriva-annotation-config)](/deriva-py_documentation/deriva-annotation-config.md) - This client sets annotations in ERMrest.
+
+## `datapath` module (deriva-py)
+
+deriva-py also includes a [Python API](/deriva-py_documentation/api.md) for a programmatic interface for ERMrest.
+
+The `datapath` module in particular is an interface for building ERMrest "data paths" and retrieving data from ERMrest catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited 
+programmatic interface to ERMrest.
+
+* [`datapath` documentation and tutorial](/deriva-py_documentation/api/#datapath)

@@ -2,7 +2,7 @@
 # ERMrest History Tracking
 
 **NOTE**: The majority of interface documentation previously found
-here has been integrated into the [API docs](../api-docs/index.md). The corresponding 
+here has been integrated into the [API docs](../api-doc/index.md). The corresponding 
 content here has been removed to avoid any confusion for future editors.
 
 This document summarizes the architectural concepts and implications

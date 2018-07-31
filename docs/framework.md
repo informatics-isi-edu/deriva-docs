@@ -6,38 +6,47 @@
 * Client applications offer a 1) web interface that represents the data, data model and filtering/search capabilities for discovering data, 2) a desktop GUI that data submitters can use to authenticate with the deployment and upload data files and 3) command line interface for interacting with the data.
 * Client libraries that...
 
-## ERMrest
+Let's take a closer look at each of these layers.
+
+## Server Components
+
+### ERMrest
 
 ERMrest is a data store that...
 
-## Hatrac
+### Hatrac
 
 TBD
 
-## ERMresolve
+### ERMresolve
 
 TBD
 
-## IOBoxD
+### IOBoxD
 
 TBD
 
-## Python APIs (deriva-py)
+## Client Libraries
+
+### Python APIs (deriva-py)
 
 TBD
 
-## Javascript Libraries (ERMrestJS)
+### Javascript Libraries (ERMrestJS)
 
 TBD
 
-## Chaise
+## Client Applications
+
+### Web Interface (Chaise)
+
+TBD
+
+### Desktop clients (deriva-qt)
 
 TBD
 
 
-
-## ERMrestJS
+### Commandline Clients (deriva-py)
 
 TBD
-
-

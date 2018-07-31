@@ -14,13 +14,14 @@ For relatively small files that live on your local system, the Deriva-Upload GUI
  
 ## Commandline Interface for interacting with Data (deriva-py)
 
-The deriva-py module provides a number of commandline clients for interacting with data stored in ERMrest (ie, metadata in tabular format) or Hatrac (data files in our object store component).
+The `deriva-py` repository provides a number of commandline clients for interacting with data stored in ERMrest (ie, metadata in tabular format) or Hatrac (data files in our object store component). This is especially useful if you have a large number of files, very large files, and/or you want to transfer them from a remote server.
 
-To install, use this `pip` command:
+To install , simply use this `pip` command:
 
 ```
 $ pip install --upgrade git+https://github.com/informatics-isi-edu/deriva-py.git
 ```
+Then use the following links for more information on a command:
 
 * [Manage files stored in Hatrac](/deriva-py_documentation/deriva-hatrac-cli.md) - This tool allows you to manage namespaces and get, put or delete objects and access control lists.
 * [Export tool (deriva-download-cli)](/deriva-py_documentation/deriva-upload.md) - the bulk export of tabular data (stored in ERMRest) and download of asset data (stored in Hatrac, or other supported HTTP-accessible object store).

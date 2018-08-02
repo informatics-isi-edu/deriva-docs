@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DERIVA Framework &mdash; DERIVA Docs 1.0.0-alpha documentation</title>
+  <title>DERIVA Framework &mdash; DERIVA Docs  documentation</title>
   
 
   
@@ -57,10 +57,6 @@
 
           
             
-            
-              <div class="version">
-                1.0
-              </div>
             
           
 
@@ -347,45 +343,87 @@
 <span id="server-components"></span><h2>Server Components<a class="headerlink" href="#server-components" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="ermrest">
 <span id="ermrest"></span><h3>ERMrest<a class="headerlink" href="#ermrest" title="Permalink to this headline">¶</a></h3>
-<p>ERMrest is a data store that…</p>
+<p>ERMrest is an entity/relationship database web service that acts as a powerful metadata catalog for the data. It enables rich data models and lets you create, then evolve data models that accurately represent the concepts of your domain.</p>
+<p>ERMrest supports:</p>
+<ul class="simple">
+<li>RESTful web services such as: entity, attribute, schema, table, column, etc.</li>
+<li>Query processing</li>
+<li>Enforcement of policies at row-level access, providing fine-grained security.</li>
+</ul>
 </div>
 <div class="section" id="hatrac">
 <span id="hatrac"></span><h3>Hatrac<a class="headerlink" href="#hatrac" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>Hatrac is DERIVA’s object store and is where the data - the scientific assets - “live”. Data is represented as web resources in RESTful service models. Hatrac provides:</p>
+<ul class="simple">
+<li>Guarantee of data fixity via immutability (non-jargon) and checksums to ensure data integrity.</li>
+<li>Versioning - tracks different versions of data in a non-destructive way.</li>
+<li>Hierarchical naming scheme</li>
+<li>Access Control Lists (ACLs)</li>
+</ul>
 </div>
 <div class="section" id="ermresolve">
 <span id="ermresolve"></span><h3>ERMresolve<a class="headerlink" href="#ermresolve" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>ERMresolve is a trivial identifier resolver and redirect service to help cite entities in an ERMrest catalog. The sole purpose of this service is to provide an easily managed URL space to use in support of <strong>data citation</strong>.</p>
+<p>It is designed to complement the use of <a class="reference external" href="http://www.w3.org/TR/curie">CURIEs a.k.a. Compact URIs</a> to form short, permanent, and resolvable identifiers. Typical use would be to associate a CURIE prefix with an ERMresolve deployment - this means a CURIE resolver could translate the CURIE into a valid ERMresolve HTTP URL and then fetch that resource to obtain cited data from ERMrest.</p>
 </div>
 <div class="section" id="ioboxd">
 <span id="ioboxd"></span><h3>IOBoxD<a class="headerlink" href="#ioboxd" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>IOBoxd is the “messenger service” of DERIVA and communicates between a DERIVA framework and external data sources.</p>
+<ul class="simple">
+<li>Supports diverse sources</li>
+<li>Extract, Transform and Load (ETL) operations</li>
+</ul>
 </div>
 </div>
 <div class="section" id="client-libraries">
 <span id="client-libraries"></span><h2>Client Libraries<a class="headerlink" href="#client-libraries" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="python-apis-deriva-py">
 <span id="python-apis-deriva-py"></span><h3>Python APIs (deriva-py)<a class="headerlink" href="#python-apis-deriva-py" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>The Python APIs in the deriva-py module include:</p>
+<ul class="simple">
+<li>low-level ERMrest interface (see ErmrestCatalog)</li>
+<li>low-level Hatrac interface (see HatracStore)</li>
+<li>higher-level ERMrest catalog configuration (see CatalogConfig)</li>
+<li>higher-level ERMrest “data path” (see documentation and tutorials)</li>
+</ul>
 </div>
 <div class="section" id="javascript-libraries-ermrestjs">
 <span id="javascript-libraries-ermrestjs"></span><h3>Javascript Libraries (ERMrestJS)<a class="headerlink" href="#javascript-libraries-ermrestjs" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>ERMrestJS provides javascript bindings for ERMrest protocols with APIs for interacting and working with ERMrest.</p>
 </div>
 </div>
 <div class="section" id="client-applications">
 <span id="client-applications"></span><h2>Client Applications<a class="headerlink" href="#client-applications" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="web-interface-chaise">
 <span id="web-interface-chaise"></span><h3>Web Interface (Chaise)<a class="headerlink" href="#web-interface-chaise" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>Chaise is our user interface application. Written in Angular Javascript to provide powerful features in the browser. Configure Chaise to choose what and how to display the data in ERMrest and Hatrac.</p>
+<p>Users interact with the data (records) via the following capabilities:</p>
+<ul class="simple">
+<li>Search and browse (in a faceted search)</li>
+<li>Navigate between records</li>
+<li>Create, alter or extend domain model in catalogs</li>
+<li>Export collections of assets and metadata</li>
+<li>Share collections with others</li>
+<li>Annotate data.</li>
+</ul>
 </div>
 <div class="section" id="desktop-clients-deriva-qt">
 <span id="desktop-clients-deriva-qt"></span><h3>Desktop clients (deriva-qt)<a class="headerlink" href="#desktop-clients-deriva-qt" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>DERIVA provides Graphical User Interface tools for submitting data to a DERIA framework:</p>
+<ul class="simple">
+<li>An Authentication Agent that connects with your DERIVA security credentials</li>
+<li>File Upload for uploading data from your local environment. This tool is best when your uploading from your own computer and it’s not a very large amount of data.</li>
+</ul>
 </div>
 <div class="section" id="commandline-clients-deriva-py">
 <span id="commandline-clients-deriva-py"></span><h3>Commandline Clients (deriva-py)<a class="headerlink" href="#commandline-clients-deriva-py" title="Permalink to this headline">¶</a></h3>
-<p>TBD</p>
+<p>Commands available in the deriva-py module include:</p>
+<ul class="simple">
+<li>deriva-acl-config: a command-line ERMrest ACL configuration utility</li>
+<li>deriva-hatrac-cli: a command-line Hatrac client</li>
+<li>deriva-download-cli: a command-line utility for batch export and download of tabular data from ERMrest and objects from Hatrac</li>
+<li>deriva-upload-cli: a command-line data upload and metadata update utility</li>
+</ul>
 </div>
 </div>
 </div>
@@ -432,7 +470,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0.0-alpha',
+            VERSION:'',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

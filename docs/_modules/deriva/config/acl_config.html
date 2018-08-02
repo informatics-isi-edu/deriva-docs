@@ -1,0 +1,928 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva.config.acl_config &mdash; DERIVA Docs 1.0.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> DERIVA Docs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework.html">DERIVA Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#server-components">Server Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ermrest">ERMrest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#hatrac">Hatrac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ermresolve">ERMresolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ioboxd">IOBoxD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#client-libraries">Client Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#python-apis-deriva-py">Python APIs (deriva-py)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#javascript-libraries-ermrestjs">Javascript Libraries (ERMrestJS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#client-applications">Client Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#web-interface-chaise">Web Interface (Chaise)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#desktop-clients-deriva-qt">Desktop clients (deriva-qt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#commandline-clients-deriva-py">Commandline Clients (deriva-py)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Using DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/using-chaise.html">Using the Chaise Data Browser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#example-of-a-landing-page">Example of a landing page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#filtering-sidebar">Filtering sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#search-results-view">Search results view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#record-page">Record page</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/managing-data.html">Managing Data in DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#desktop-guis-for-authenticating-and-uploading-data-deriva-qt">Desktop GUIs for Authenticating and Uploading Data (deriva-qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#commandline-interface-for-interacting-with-data-deriva-py">Commandline Interface for interacting with Data (deriva-py)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#datapath-module-deriva-py"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/managing-catalogs.html">Managing Catalogs in DERIVA</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../deriva-py/index.html">deriva-py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html">DataPath</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/api/deriva.html">deriva package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.config.html">deriva.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.core.html">deriva.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.transfer.html">deriva.transfer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deriva-py/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DERIVA Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>deriva.config.acl_config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deriva.config.acl_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="p">,</span> <span class="n">get_credential</span><span class="p">,</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">VERSION</span><span class="p">,</span> \
+    <span class="n">format_exception</span><span class="p">,</span> <span class="n">urlquote</span>
+<span class="kn">from</span> <span class="nn">deriva.core.ermrest_config</span> <span class="k">import</span> <span class="n">CatalogColumn</span><span class="p">,</span> <span class="n">CatalogForeignKey</span>
+<span class="kn">from</span> <span class="nn">deriva.config.base_config</span> <span class="k">import</span> <span class="n">BaseSpec</span><span class="p">,</span> <span class="n">BaseSpecList</span><span class="p">,</span> <span class="n">ConfigUtil</span><span class="p">,</span> <span class="n">ConfigBaseCLI</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">UUID</span>
+
+
+<div class="viewcode-block" id="NoForeignKeyError"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.NoForeignKeyError">[docs]</a><span class="k">class</span> <span class="nc">NoForeignKeyError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ACLSpecList"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.ACLSpecList">[docs]</a><span class="k">class</span> <span class="nc">ACLSpecList</span><span class="p">(</span><span class="n">BaseSpecList</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictlist</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">BaseSpecList</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ACLSpec</span><span class="p">,</span> <span class="n">dictlist</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ACLSpec"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.ACLSpec">[docs]</a><span class="k">class</span> <span class="nc">ACLSpec</span><span class="p">(</span><span class="n">BaseSpec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specdict</span><span class="p">):</span>
+        <span class="n">BaseSpec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specdict</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;acl&quot;</span><span class="p">,</span> <span class="s2">&quot;no_acl&quot;</span><span class="p">,</span> <span class="s2">&quot;acl_bindings&quot;</span><span class="p">,</span> <span class="s2">&quot;invalidate_bindings&quot;</span><span class="p">],</span> <span class="s2">&quot;acl&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ACLSpec.validate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.ACLSpec.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">BaseSpec</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;no_acl&quot;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no_acl must be True or False (or not present)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;no_acl&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;can&#39;t specify an acl and no_acl=True in the same spec&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;no_acl&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;if no_acl=False, an acl must be specified&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AclConfig"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig">[docs]</a><span class="k">class</span> <span class="nc">AclConfig</span><span class="p">:</span>
+    <span class="n">NC_NAME</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+    <span class="n">GC_NAME</span> <span class="o">=</span> <span class="s1">&#39;groups&#39;</span>
+    <span class="n">ACL_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;catalog_acl&quot;</span><span class="p">,</span> <span class="s2">&quot;schema_acls&quot;</span><span class="p">,</span> <span class="s2">&quot;table_acls&quot;</span><span class="p">,</span> <span class="s2">&quot;column_acls&quot;</span><span class="p">,</span> <span class="s2">&quot;foreign_key_acls&quot;</span><span class="p">]</span>
+    <span class="n">GLOBUS_PREFIX</span> <span class="o">=</span> <span class="s1">&#39;https://auth.globus.org/&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">schema_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ignored_schema_patterns&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ip</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;catalog_acl&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;catalog_acl&quot;</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ACL_TYPES</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;catalog_acl&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_speclist</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;groups&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand_groups</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acl_definitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl_definitions&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expand_acl_definitions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl_bindings&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">invalidate_bindings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;invalidate_bindings&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span> <span class="o">=</span> <span class="n">catalog_id</span>
+
+        <span class="n">old_catalog</span> <span class="o">=</span> <span class="n">ErmrestCatalog</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span> <span class="o">=</span> <span class="n">ConfigUtil</span><span class="o">.</span><span class="n">find_toplevel_node</span><span class="p">(</span><span class="n">old_catalog</span><span class="o">.</span><span class="n">getCatalogConfig</span><span class="p">(),</span> <span class="n">schema_name</span><span class="p">,</span>
+                                                                   <span class="n">table_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">ErmrestCatalog</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span> <span class="o">=</span> <span class="n">ConfigUtil</span><span class="o">.</span><span class="n">find_toplevel_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogConfig</span><span class="p">(),</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AclConfig.make_speclist"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.make_speclist">[docs]</a>    <span class="k">def</span> <span class="nf">make_speclist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ACLSpecList</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.add_node_acl"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.add_node_acl">[docs]</a>    <span class="k">def</span> <span class="nf">add_node_acl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">acl_name</span><span class="p">):</span>
+        <span class="n">acl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_definitions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">acl_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">acl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no acl set called &#39;</span><span class="si">{name}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">acl_name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">acl</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">acls</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">acl</span><span class="p">[</span><span class="n">k</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AclConfig.add_node_acl_binding"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.add_node_acl_binding">[docs]</a>    <span class="k">def</span> <span class="nf">add_node_acl_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">table_node</span><span class="p">,</span> <span class="n">binding_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no acl binding called &#39;</span><span class="si">{name}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">binding_name</span><span class="p">))</span>
+        <span class="n">binding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">binding_name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">[</span><span class="n">binding_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_acl_binding</span><span class="p">(</span><span class="n">binding</span><span class="p">,</span> <span class="n">table_node</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoForeignKeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">detail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">CatalogColumn</span><span class="p">):</span>
+                <span class="n">detail</span> <span class="o">=</span> <span class="s1">&#39;on column </span><span class="si">{n}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">CatalogForeignKey</span><span class="p">):</span>
+                <span class="n">detail</span> <span class="o">=</span> <span class="s1">&#39;on foreign key </span><span class="si">{s}</span><span class="s1">.</span><span class="si">{n}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">n</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">detail</span> <span class="o">=</span> <span class="s1">&#39; </span><span class="si">{t}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;couldn&#39;t expand acl binding </span><span class="si">{b}</span><span class="s2"> </span><span class="si">{d}</span><span class="s2"> table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">binding_name</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">detail</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span>
+                                                                           <span class="n">t</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_acl_binding"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_acl_binding">[docs]</a>    <span class="k">def</span> <span class="nf">expand_acl_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binding</span><span class="p">,</span> <span class="n">table_node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">binding</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">binding</span>
+        <span class="n">new_binding</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">binding</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;projection&quot;</span><span class="p">:</span>
+                <span class="n">new_binding</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">proj</span> <span class="ow">in</span> <span class="n">binding</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                    <span class="n">new_binding</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expand_projection</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="n">table_node</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;scope_acl&quot;</span><span class="p">:</span>
+                <span class="n">new_binding</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">binding</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_binding</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">binding</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">new_binding</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_projection"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_projection">[docs]</a>    <span class="k">def</span> <span class="nf">expand_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">table_node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">new_proj</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">is_first_outbound</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">proj</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s2">&quot;outbound_col&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">is_first_outbound</span><span class="p">:</span>
+                        <span class="n">is_first_outbound</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                            <span class="s2">&quot;don&#39;t know how to expand &#39;outbound_col&#39; on anything but the first entry in a projection; &quot;</span>
+                            <span class="s2">&quot;use &#39;outbound&#39; instead&quot;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">table_node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                            <span class="s2">&quot;don&#39;t know how to expand &#39;outbound_col&#39; in a foreign key acl/annotation; use &#39;outbound&#39; &quot;</span>
+                            <span class="s2">&quot;instead&quot;</span><span class="p">)</span>
+                    <span class="n">new_proj</span><span class="p">[</span><span class="s2">&quot;outbound&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_projection_column</span><span class="p">(</span><span class="n">proj</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">table_node</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">new_proj</span><span class="p">[</span><span class="s2">&quot;outbound&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_proj</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">proj</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="n">is_first_outbound</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">new_proj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">proj</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_projection_column"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_projection_column">[docs]</a>    <span class="k">def</span> <span class="nf">expand_projection_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col_name</span><span class="p">,</span> <span class="n">table_node</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">table_node</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">col</span> <span class="o">=</span> <span class="n">fkey</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;table_name&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">table_node</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="n">col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema_name&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">table_node</span><span class="o">.</span><span class="n">sname</span> <span class="ow">and</span> <span class="n">col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s2">&quot;column_name&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">col_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="n">NoForeignKeyError</span><span class="p">(</span><span class="s2">&quot;can&#39;t find foreign key for column %I.%I(%I)&quot;</span><span class="p">,</span> <span class="n">table_node</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">table_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                <span class="n">col_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_node_acl_bindings"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_node_acl_bindings">[docs]</a>    <span class="k">def</span> <span class="nf">set_node_acl_bindings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">table_node</span><span class="p">,</span> <span class="n">binding_list</span><span class="p">,</span> <span class="n">invalidate_list</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">binding_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="n">binding_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_node_acl_binding</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">table_node</span><span class="p">,</span> <span class="n">binding_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">invalidate_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="n">invalidate_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">binding_list</span> <span class="ow">and</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="n">binding_list</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Binding </span><span class="si">{b}</span><span class="s2"> appears in both acl_bindings and invalidate_bindings for table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2"> node </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">b</span><span class="o">=</span><span class="n">binding_name</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">[</span><span class="n">binding_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
+            
+                
+
+<div class="viewcode-block" id="AclConfig.save_groups"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.save_groups">[docs]</a>    <span class="k">def</span> <span class="nf">save_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">glt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_or_validate_group_table</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">glt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)}</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;RCB&#39;</span><span class="p">,</span> <span class="s1">&#39;RMB&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">glt</span><span class="o">.</span><span class="n">getColumn</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+            <span class="n">glt</span><span class="o">.</span><span class="n">upsertRows</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.create_or_validate_schema"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.create_or_validate_schema">[docs]</a>    <span class="k">def</span> <span class="nf">create_or_validate_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogSchema</span><span class="p">()[</span><span class="s1">&#39;schemas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/schema/</span><span class="si">{s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">schema_name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogSchema</span><span class="p">()[</span><span class="s1">&#39;schemas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.create_table"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.create_table">[docs]</a>    <span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">table_spec</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">table_spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">table_spec</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">schema_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">table_spec</span><span class="p">[</span><span class="s2">&quot;schema_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">schema_name</span>
+        <span class="n">table_spec</span><span class="p">[</span><span class="s2">&quot;table_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">table_name</span>
+        <span class="k">if</span> <span class="n">table_spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;comment&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">comment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">table_spec</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment</span>
+        <span class="k">if</span> <span class="n">table_spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kind&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">table_spec</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;table&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/schema/</span><span class="si">{s}</span><span class="s2">/table&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">schema_name</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">table_spec</span><span class="p">)</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogSchema</span><span class="p">()[</span><span class="s1">&#39;schemas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">schema</span><span class="p">[</span><span class="s1">&#39;tables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.create_or_validate_group_table"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.create_or_validate_group_table">[docs]</a>    <span class="k">def</span> <span class="nf">create_or_validate_group_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">glt_spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;group_list_table&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">glt_spec</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">sname</span> <span class="o">=</span> <span class="n">glt_spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;schema&#39;</span><span class="p">)</span>
+        <span class="n">tname</span> <span class="o">=</span> <span class="n">glt_spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;table&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sname</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">tname</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;group_list_table missing schema or table&quot;</span><span class="p">)</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_or_validate_schema</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">glt</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="s1">&#39;tables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tname</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">glt</span> <span class="o">==</span> <span class="p">{}:</span>
+            <span class="n">glt_spec</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s2">&quot;Named lists of groups used in ACLs. Maintained by the rbk_acls program. &quot;</span>
+                           <span class="s2">&quot;Do not update this table manually.&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;tag:isrd.isi.edu,2016:generated&#39;</span><span class="p">:</span> <span class="kc">None</span>
+                <span class="p">},</span>
+                <span class="s1">&#39;column_definitions&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">},</span>
+                        <span class="s1">&#39;nullok&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;Name of grouplist, used in foreign keys. This table is maintained by the rbk_acls &#39;</span>
+                                   <span class="s1">&#39;program and should not be updated by hand.&#39;</span>
+                    <span class="p">},</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">GC_NAME</span><span class="p">,</span>
+                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;base_type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">},</span> <span class="s1">&#39;is_array&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+                        <span class="s1">&#39;nullok&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;List of groups. This table is maintained by the rbk_acls program and should not be &#39;</span>
+                                   <span class="s1">&#39;updated by hand.&#39;</span>
+                    <span class="p">}</span>
+
+                <span class="p">],</span>
+                <span class="s1">&#39;keys&#39;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="n">sname</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{t}</span><span class="s2">_</span><span class="si">{c}</span><span class="s2">_u&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">)]],</span>
+                        <span class="s1">&#39;unique_columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">]</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+            <span class="n">glt</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">glt_spec</span><span class="p">))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name_col</span> <span class="o">=</span> <span class="n">glt</span><span class="o">.</span><span class="n">getColumn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">name_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;table specified for group lists (</span><span class="si">{s}</span><span class="s1">.</span><span class="si">{t}</span><span class="s1">) lacks a &quot;</span><span class="si">{n}</span><span class="s1">&quot; column&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">,</span>
+                                                                                            <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">name_col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nullok&#39;</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{n}</span><span class="s2"> column in group list table (</span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">) allows nulls&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">))</span>
+            <span class="n">nc_uniq</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">):</span>
+                <span class="n">cols</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">:</span>
+                    <span class="n">nc_uniq</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">nc_uniq</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">nc_uniq</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{n}</span><span class="s2"> column in group list table (</span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">) is not a key&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">))</span>
+
+            <span class="n">val_col</span> <span class="o">=</span> <span class="n">glt</span><span class="o">.</span><span class="n">getColumn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GC_NAME</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s1">&#39;table specified for group lists (</span><span class="si">{s}</span><span class="s1">.</span><span class="si">{t}</span><span class="s1">) lacks a &quot;</span><span class="si">{n}</span><span class="s1">&quot; column&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">,</span>
+                                                                                            <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">GC_NAME</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">glt</span> <span class="o">==</span> <span class="p">{}:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">glt</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_node_acl"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_node_acl">[docs]</a>    <span class="k">def</span> <span class="nf">set_node_acl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">acl_name</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">acl_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_node_acl</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">acl_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_groups"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_groups">[docs]</a>    <span class="k">def</span> <span class="nf">expand_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">group_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expand_group</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.get_group"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.get_group">[docs]</a>    <span class="k">def</span> <span class="nf">get_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">):</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="p">[</span><span class="n">group_name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">group</span></div>
+
+<div class="viewcode-block" id="AclConfig.validate_group"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.validate_group">[docs]</a>    <span class="k">def</span> <span class="nf">validate_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">group</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GLOBUS_PREFIX</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_globus_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t determine format of group &#39;</span><span class="si">{g}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">group</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AclConfig.validate_globus_group"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.validate_globus_group">[docs]</a>    <span class="k">def</span> <span class="nf">validate_globus_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">):</span>
+        <span class="n">guid</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GLOBUS_PREFIX</span><span class="p">):]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">UUID</span><span class="p">(</span><span class="n">guid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Group &#39;</span><span class="si">{g}</span><span class="s2">&#39; appears to be a malformed Globus group&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">group</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;group &#39;</span><span class="si">{g}</span><span class="s2">&#39; appears to be a syntactically-correct Globus group&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">g</span><span class="o">=</span><span class="n">group</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_group"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_group">[docs]</a>    <span class="k">def</span> <span class="nf">expand_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_name</span><span class="p">):</span>
+        <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">child_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">group_name</span><span class="p">):</span>
+            <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validate_group</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
+                <span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">expand_group</span><span class="p">(</span><span class="n">child_name</span><span class="p">)</span>
+                <span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">child_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">group_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">groups</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_acl_definitions"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_acl_definitions">[docs]</a>    <span class="k">def</span> <span class="nf">expand_acl_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">acl_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_definitions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">expand_acl_definition</span><span class="p">(</span><span class="n">acl_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.expand_acl_definition"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.expand_acl_definition">[docs]</a>    <span class="k">def</span> <span class="nf">expand_acl_definition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acl_name</span><span class="p">):</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_definitions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">acl_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">op_type</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">raw_groups</span> <span class="o">=</span> <span class="n">spec</span><span class="p">[</span><span class="n">op_type</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">raw_groups</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">group_name</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">[</span><span class="n">op_type</span><span class="p">]:</span>
+                    <span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">group_name</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">raw_groups</span><span class="p">)</span>
+            <span class="n">spec</span><span class="p">[</span><span class="n">op_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">groups</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_table_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_table_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_table_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="s2">&quot;table_acls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_table_spec</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl_bindings</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl_bindings&quot;</span><span class="p">),</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;invalidate_bindings&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;set table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2"> acls to </span><span class="si">{a}</span><span class="s2">, bindings to </span><span class="si">{b}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">acls</span><span class="p">),</span>
+                                                                        <span class="n">b</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_column_acls</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_fkey_acls</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_column_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_column_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_column_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="s2">&quot;column_acls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_column_spec</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">tname</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">column</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">column</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl_bindings</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl_bindings&quot;</span><span class="p">),</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;invalidate_bindings&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;set column </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">.</span><span class="si">{c}</span><span class="s2"> acls to </span><span class="si">{a}</span><span class="s2">, bindings to </span><span class="si">{b}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">column</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">column</span><span class="o">.</span><span class="n">tname</span><span class="p">,</span>
+                                                                               <span class="n">c</span><span class="o">=</span><span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">acls</span><span class="p">),</span>
+                                                                               <span class="n">b</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_fkey_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_fkey_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_fkey_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkey</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="s2">&quot;foreign_key_acls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_foreign_key_spec</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">fkey</span><span class="o">.</span><span class="n">tname</span><span class="p">,</span> <span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">fkey</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">fkey</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl_bindings</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">spec</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;acl_bindings&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;set fkey </span><span class="si">{f}</span><span class="s2"> acls to </span><span class="si">{a}</span><span class="s2">, bindings to </span><span class="si">{b}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">),</span> <span class="n">a</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">acls</span><span class="p">),</span>
+                                                                     <span class="n">b</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_catalog_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_catalog_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_catalog_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="s2">&quot;catalog_acl&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">catalog</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;set catalog acls to </span><span class="si">{a}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">acls</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_schema_acls</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_schema_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_schema_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_schema_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ignoring schema </span><span class="si">{s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="k">return</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_specs</span><span class="p">[</span><span class="s2">&quot;schema_acls&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_schema_spec</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">schema</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_node_acl</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;set schema </span><span class="si">{s}</span><span class="s2"> acls to </span><span class="si">{a}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">acls</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_table_acls</span><span class="p">(</span><span class="n">table</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.set_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_acls">[docs]</a>    <span class="k">def</span> <span class="nf">set_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogConfig</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_catalog_acls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogSchema</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_schema_acls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogTable</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_table_acls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;toplevel config is a </span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">))))</span></div>
+
+<div class="viewcode-block" id="AclConfig.apply_acls"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.apply_acls">[docs]</a>    <span class="k">def</span> <span class="nf">apply_acls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AclConfig.dumps"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.dumps">[docs]</a>    <span class="k">def</span> <span class="nf">dumps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Dump a serialized (string) representation of the config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="o">.</span><span class="n">prejson</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table">[docs]</a><span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="n">AttrDict</span><span class="p">):</span>
+    <span class="n">ERMREST_DEFAULT_COLS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RID&quot;</span><span class="p">,</span> <span class="s2">&quot;RCB&quot;</span><span class="p">,</span> <span class="s2">&quot;RMB&quot;</span><span class="p">,</span> <span class="s2">&quot;RCT&quot;</span><span class="p">,</span> <span class="s2">&quot;RMT&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_entity_url</span> <span class="o">=</span> <span class="s2">&quot;/entity/</span><span class="si">{s}</span><span class="s2">:</span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;schema_name&#39;</span><span class="p">],</span> <span class="n">t</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;table_name&#39;</span><span class="p">])</span>
+        <span class="n">AttrDict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Table.getColumn"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getColumn">[docs]</a>    <span class="k">def</span> <span class="nf">getColumn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;column_definitions&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;column_definitions&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Table.getBaseEntityURL"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getBaseEntityURL">[docs]</a>    <span class="k">def</span> <span class="nf">getBaseEntityURL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_entity_url</span></div>
+
+<div class="viewcode-block" id="Table.upsertRows"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.upsertRows">[docs]</a>    <span class="k">def</span> <span class="nf">upsertRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insertRows</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">upsertRow</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Table.find_keys"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.find_keys">[docs]</a>    <span class="k">def</span> <span class="nf">find_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">keys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">keys</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">k</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">):</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getColumn</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nullok&#39;</span><span class="p">):</span>
+                    <span class="n">keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">keys</span></div>
+
+<div class="viewcode-block" id="Table.row_has_key"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.row_has_key">[docs]</a>    <span class="k">def</span> <span class="nf">row_has_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Table.getRowFilter"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getRowFilter">[docs]</a>    <span class="k">def</span> <span class="nf">getRowFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">row_has_key</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;can&#39;t find appropriate key&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">):</span>
+            <span class="n">filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{k}</span><span class="s2">=</span><span class="si">{v}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">urlquote</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">v</span><span class="o">=</span><span class="n">urlquote</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">])))</span>
+        <span class="k">return</span> <span class="n">filters</span></div>
+
+<div class="viewcode-block" id="Table.getRow"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getRow">[docs]</a>    <span class="k">def</span> <span class="nf">getRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{u}</span><span class="s2">/</span><span class="si">{f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getBaseEntityURL</span><span class="p">(),</span> <span class="n">f</span><span class="o">=</span><span class="s2">&quot;&amp;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filters</span><span class="p">))</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">vals</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Table.getDefaultCols"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getDefaultCols">[docs]</a>    <span class="k">def</span> <span class="nf">getDefaultCols</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">add_ermrest_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">default_cols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">default_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">add_ermrest_defaults</span><span class="p">:</span>
+            <span class="n">default_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">default_cols</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ERMREST_DEFAULT_COLS</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">default_cols</span></div>
+
+<div class="viewcode-block" id="Table.upsertRow"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.upsertRow">[docs]</a>    <span class="k">def</span> <span class="nf">upsertRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">insertRows</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">])</span>
+        <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">updateRow</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Table.updateRow"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.updateRow">[docs]</a>    <span class="k">def</span> <span class="nf">updateRow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRowFilter</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">old_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRow</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultCols</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">old_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_row</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getBaseEntityURL</span><span class="p">(),</span> <span class="n">json</span><span class="o">=</span><span class="p">[</span><span class="n">row</span><span class="p">],</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span></div>
+
+<div class="viewcode-block" id="Table.insertRows"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.insertRows">[docs]</a>    <span class="k">def</span> <span class="nf">insertRows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">default_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultCols</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">default_cols</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">default_cols</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{u}</span><span class="s2">?defaults=</span><span class="si">{d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">getBaseEntityURL</span><span class="p">(),</span> <span class="n">d</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">default_cols</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getBaseEntityURL</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AclCLI"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclCLI">[docs]</a><span class="k">class</span> <span class="nc">AclCLI</span><span class="p">(</span><span class="n">ConfigBaseCLI</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ConfigBaseCLI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;ACL configuration tool&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">VERSION</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">,</span> <span class="s1">&#39;--groups-only&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create group table only&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">cli</span> <span class="o">=</span> <span class="n">AclCLI</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">parse_cli</span><span class="p">()</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_table_arg</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">schema_names</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_schema_arg_list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">credentials</span> <span class="o">=</span> <span class="n">get_credential</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">credential_file</span><span class="p">)</span>
+    <span class="n">save_groups</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">dryrun</span>
+    <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schema_names</span><span class="p">:</span>
+        <span class="n">acl_config</span> <span class="o">=</span> <span class="n">AclConfig</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">schema_name</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span>
+                               <span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">save_groups</span><span class="p">:</span>
+                <span class="n">acl_config</span><span class="o">.</span><span class="n">save_groups</span><span class="p">()</span>
+                <span class="n">save_groups</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">groups_only</span><span class="p">:</span>
+                <span class="n">acl_config</span><span class="o">.</span><span class="n">set_acls</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">dryrun</span><span class="p">:</span>
+                    <span class="n">acl_config</span><span class="o">.</span><span class="n">apply_acls</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">raise</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dryrun</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">acl_config</span><span class="o">.</span><span class="n">dumps</span><span class="p">())</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0-alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,2237 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DataPath Example 4 &mdash; DERIVA Docs 1.0.0-alpha documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DERIVA Docs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about.html#features">Features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../framework.html">DERIVA Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../framework.html#server-components">Server Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#ermrest">ERMrest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#hatrac">Hatrac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#ermresolve">ERMresolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#ioboxd">IOBoxD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework.html#client-libraries">Client Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#python-apis-deriva-py">Python APIs (deriva-py)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#javascript-libraries-ermrestjs">Javascript Libraries (ERMrestJS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework.html#client-applications">Client Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#web-interface-chaise">Web Interface (Chaise)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#desktop-clients-deriva-qt">Desktop clients (deriva-qt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../framework.html#commandline-clients-deriva-py">Commandline Clients (deriva-py)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Using DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../users-guide/using-chaise.html">Using the Chaise Data Browser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/using-chaise.html#example-of-a-landing-page">Example of a landing page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/using-chaise.html#filtering-sidebar">Filtering sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/using-chaise.html#search-results-view">Search results view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/using-chaise.html#record-page">Record page</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../users-guide/managing-data.html">Managing Data in DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/managing-data.html#desktop-guis-for-authenticating-and-uploading-data-deriva-qt">Desktop GUIs for Authenticating and Uploading Data (deriva-qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/managing-data.html#commandline-interface-for-interacting-with-data-deriva-py">Commandline Interface for interacting with Data (deriva-py)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../users-guide/managing-data.html#datapath-module-deriva-py"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../users-guide/managing-catalogs.html">Managing Catalogs in DERIVA</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">deriva-py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="README.html">DataPath</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/deriva.html">deriva package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/deriva.config.html">deriva.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/deriva.core.html">deriva.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/deriva.transfer.html">deriva.transfer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DERIVA Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>DataPath Example 4</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/deriva-py/derivapy-datapath-example-4.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="DataPath-Example-4">
+<h1>DataPath Example 4<a class="headerlink" href="#DataPath-Example-4" title="Permalink to this headline">¶</a></h1>
+<p>This notebook covers somewhat more advanced examples for using
+<code class="docutils literal notranslate"><span class="pre">DataPath</span></code>s. It assumes that you understand the concepts presented
+in the previous example notebooks.</p>
+<p>You should also read the ERMrest documentation and the derivapy wiki.
+There are more advanced concepts in this notebook that are demonstrated
+but not fully (re)explained here, as the concepts are explained in other
+documentation.</p>
+<div class="section" id="Exampe-Data-Model">
+<h2>Exampe Data Model<a class="headerlink" href="#Exampe-Data-Model" title="Permalink to this headline">¶</a></h2>
+<p>The examples require that you understand a little bit about the example
+catalog data model, which is based on the FaceBase project.</p>
+<div class="section" id="Key-tables">
+<h3>Key tables<a class="headerlink" href="#Key-tables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'dataset'</span></code> : represents a unit of data usually a <code class="docutils literal notranslate"><span class="pre">'study'</span></code> or
+<code class="docutils literal notranslate"><span class="pre">'experiment'</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">'sample'</span></code> : a biosample</li>
+<li><code class="docutils literal notranslate"><span class="pre">'assay'</span></code> : a bioassay (typically RNA-seq or ChIP-seq assays)</li>
+</ul>
+</div>
+<div class="section" id="Relationships">
+<h3>Relationships<a class="headerlink" href="#Relationships" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">dataset</span> <span class="pre">&lt;-</span> <span class="pre">sample</span></code>: A dataset may have one to many samples. I.e.,
+there is a foreign key reference from sample to dataset.</li>
+<li><code class="docutils literal notranslate"><span class="pre">sample</span> <span class="pre">&lt;-</span> <span class="pre">assay</span></code>: A sample may have one to many assays. I.e.,
+there is a foreign key reference from assay to sample.</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Import deriva modules</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">get_credential</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Connect with the deriva catalog</span>
+<span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;https&#39;</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="s1">&#39;www.facebase.org&#39;</span>
+<span class="n">catalog_number</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">credential</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="c1"># If you need to authenticate, use Deriva Auth agent and get the credential</span>
+<span class="c1"># credential = get_credential(hostname)</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">ErmrestCatalog</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">catalog_number</span><span class="p">,</span> <span class="n">credential</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get the path builder interface for this catalog</span>
+<span class="n">pb</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span>
+
+<span class="c1"># Get some local variable handles to tables for convenience</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">isa</span><span class="o">.</span><span class="n">dataset</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">isa</span><span class="o">.</span><span class="n">sample</span>
+<span class="n">assay</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">isa</span><span class="o">.</span><span class="n">assay</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Implicit-DataPaths">
+<h2>Implicit DataPaths<a class="headerlink" href="#Implicit-DataPaths" title="Permalink to this headline">¶</a></h2>
+<p><strong>Proceed with caution</strong></p>
+<p>For compactness, <code class="docutils literal notranslate"><span class="pre">Table</span></code> objects (and <code class="docutils literal notranslate"><span class="pre">TableAlias</span></code> objects) provide
+<code class="docutils literal notranslate"><span class="pre">DataPath</span></code>-like methods. E.g., <code class="docutils literal notranslate"><span class="pre">link(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">filter(...)</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">entities(...)</span></code>, which will implicitly create <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>s rooted
+at the table and return the newly created path. These operations
+<code class="docutils literal notranslate"><span class="pre">return</span></code> the new <code class="docutils literal notranslate"><span class="pre">DataPath</span></code> rather than mutating the <code class="docutils literal notranslate"><span class="pre">Table</span></code> (or
+<code class="docutils literal notranslate"><span class="pre">TableAlias</span></code>) objects.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>71
+</pre></div>
+</div>
+</div>
+<div class="section" id="DataPath-like-methods">
+<h3>DataPath-like methods<a class="headerlink" href="#DataPath-like-methods" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>-like methods on <code class="docutils literal notranslate"><span class="pre">Table</span></code>s are essentially “wrapper”
+functions over the implicitly generated <code class="docutils literal notranslate"><span class="pre">DataPath</span></code> rooted at the
+<code class="docutils literal notranslate"><span class="pre">Table</span></code> instance. The wrappers include: - <code class="docutils literal notranslate"><span class="pre">link(...)</span></code> generates a
+path, links the related table, and returns the generated path. -
+<code class="docutils literal notranslate"><span class="pre">filter(...)</span></code> generate a path, adds a filter, and returns the
+generated path. - <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code> generate a path, (optionally)
+selects columns, and returns an entity set.</p>
+</div>
+</div>
+<div class="section" id="Attribute-Examples">
+<h2>Attribute Examples<a class="headerlink" href="#Attribute-Examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Example:-selecting-all-columns-of-a-table-instance">
+<h3>Example: selecting all columns of a table instance<a class="headerlink" href="#Example:-selecting-all-columns-of-a-table-instance" title="Permalink to this headline">¶</a></h3>
+<p>Passing a table (or table instance) object to the <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code>
+method will project all (i.e., <code class="docutils literal notranslate"><span class="pre">*</span></code>) of its attributes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
+<span class="n">path</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">assay</span><span class="p">)</span>
+<span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+171
+https://www.facebase.org/ermrest/catalog/1/entity/D:=isa:dataset/sample:=isa:sample/assay:=isa:assay
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/sample:=isa:sample/assay:=isa:assay/D:*
+</pre></div></div>
+</div>
+<p>It is important to remember that the entities method returns a entity
+set based on the entity type of the last elmenent of the path. In this
+example that means the number of results will be determined by the
+number of unique rows in the assay table instance in the path created
+above, as the last link method used the assay table.</p>
+<p>In this example, we are only using attributes from dataset. What this
+means is that even though the result of an entities method is always a
+entity set, since we are not including the attributes from assay in our
+result, it is possible that we may have duplicate rows, if the same
+assay is used in more then one dataset.</p>
+</div>
+<div class="section" id="Example:-selecting-from-multiple-table-instances">
+<h3>Example: selecting from multiple table instances<a class="headerlink" href="#Example:-selecting-from-multiple-table-instances" title="Permalink to this headline">¶</a></h3>
+<p>More than one table instance may be selected in this manner and it can
+be mixed and matched with columns from other tables instances.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="p">,</span>
+                         <span class="n">path</span><span class="o">.</span><span class="n">assay</span><span class="o">.</span><span class="n">fragmentation_method</span><span class="p">,</span>
+                         <span class="n">path</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                         <span class="n">path</span><span class="o">.</span><span class="n">assay</span><span class="o">.</span><span class="n">isolation_protocol</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+171
+https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/sample:=isa:sample/assay:=isa:assay/D:*,assay:fragmentation_method,sample:*,assay:isolation_protocol
+</pre></div></div>
+</div>
+<p>If you want to base the results on a different entity, you can introduce
+a table instance alias into the end of the path, before calling the
+entities function. In this case, even though we are asking for the same
+attributes, we are getting the set of datasets, not the set of assays.
+Also, since we are including the attributes from dataset in our query,
+we know that we will not be seeing any duplicate rows.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">entities</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="p">,</span>
+                           <span class="n">path</span><span class="o">.</span><span class="n">assay</span><span class="o">.</span><span class="n">fragmentation_method</span><span class="p">,</span>
+                           <span class="n">path</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span>
+                           <span class="n">path</span><span class="o">.</span><span class="n">assay</span><span class="o">.</span><span class="n">isolation_protocol</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+7
+https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/sample:=isa:sample/assay:=isa:assay/$D/D:*,assay:fragmentation_method,sample:*,assay:isolation_protocol
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Filtering-Examples">
+<h2>Filtering Examples<a class="headerlink" href="#Filtering-Examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Example:-filter-on-null-attribute">
+<h3>Example: filter on <code class="docutils literal notranslate"><span class="pre">null</span></code> attribute<a class="headerlink" href="#Example:-filter-on-null-attribute" title="Permalink to this headline">¶</a></h3>
+<p>To test for a <code class="docutils literal notranslate"><span class="pre">null</span></code> attribute value, do an equality comparison
+against the <code class="docutils literal notranslate"><span class="pre">None</span></code> identity.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">gene</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/sample:=isa:sample/gene::null::
+1216
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Example:-advanced-text-filters">
+<h3>Example: advanced text filters<a class="headerlink" href="#Example:-advanced-text-filters" title="Permalink to this headline">¶</a></h3>
+<p>Deriva supports advanced text filters for regular expressions
+(<code class="docutils literal notranslate"><span class="pre">regexp</span></code>), case-instansitive regexp (<code class="docutils literal notranslate"><span class="pre">ciregexp</span></code>), and text search
+(<code class="docutils literal notranslate"><span class="pre">ts</span></code>). You may have to review your text and full-text indexes in your
+ERMrest catalog before using these features.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">ciregexp</span><span class="p">(</span><span class="s1">&#39;palate&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/description::ciregexp::palate
+26
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Example:-negate-a-filter">
+<h3>Example: negate a filter<a class="headerlink" href="#Example:-negate-a-filter" title="Permalink to this headline">¶</a></h3>
+<p>Use the “inverse” (‘<code class="docutils literal notranslate"><span class="pre">~</span></code>’) operator to negate a filter. Negation works
+against simple comparison filters as demonstrated above as well as on
+logical operators to be discussed next. You must wrap the comparison or
+logical operators in an extra parens to use the negate operation, e.g.,
+“<code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">(...)</span></code>”.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span> <span class="o">~</span> <span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">ciregexp</span><span class="p">(</span><span class="s1">&#39;palate&#39;</span><span class="p">))</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/!(description::ciregexp::palate)
+693
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Example:-filters-with-logical-operators">
+<h3>Example: filters with logical operators<a class="headerlink" href="#Example:-filters-with-logical-operators" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to combine two comparisons with a conjuncting
+(i.e., <code class="docutils literal notranslate"><span class="pre">and</span></code> operator). Because Python’s logical-and (<code class="docutils literal notranslate"><span class="pre">and</span></code>) keyword
+cannot be overloaded, we instead overload the bitwise-and (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>)
+operator. This approach has become customary among many similar data
+access libraries.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">assay</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="p">((</span><span class="n">assay</span><span class="o">.</span><span class="n">markers</span> <span class="o">==</span> <span class="s1">&#39;histology&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">assay</span><span class="o">.</span><span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;H3K27AC&#39;</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/sample:=isa:sample/assay:=isa:assay/(markers=histology)&amp;(selection=H3K27AC)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RCB</th>
+      <th>RCT</th>
+      <th>RID</th>
+      <th>RMB</th>
+      <th>RMT</th>
+      <th>alignment_id</th>
+      <th>dataset</th>
+      <th>fragmentation_method</th>
+      <th>id</th>
+      <th>isolation_protocol</th>
+      <th>...</th>
+      <th>reagent_source</th>
+      <th>replicate</th>
+      <th>sample</th>
+      <th>sample_composition</th>
+      <th>sample_purification</th>
+      <th>sample_type</th>
+      <th>selection</th>
+      <th>strandednes</th>
+      <th>target_of_assay</th>
+      <th>tracks_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26531</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>59</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>19</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>2</td>
+      <td>maxillary process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26535</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>45</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>5</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>1</td>
+      <td>medial nasal process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26541</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>52</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>12</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>4</td>
+      <td>mandibular process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26544</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>54</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>14</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>3</td>
+      <td>latero nasal process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>34</td>
+    </tr>
+  </tbody>
+</table>
+<p>4 rows × 29 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example:-combine-conjunction-and-disjunctions-in-filters">
+<h3>Example: combine conjunction and disjunctions in filters<a class="headerlink" href="#Example:-combine-conjunction-and-disjunctions-in-filters" title="Permalink to this headline">¶</a></h3>
+<p>Similar to the prior example, the filters allow combining of conjunctive
+and disjunctive operators. Like the bitwise-and operator, we also
+overload the bitwise-or (<code class="docutils literal notranslate"><span class="pre">|</span></code>) operator because the logical-or (<code class="docutils literal notranslate"><span class="pre">or</span></code>)
+operatar cannot be overloaded.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">assay</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="p">((</span><span class="n">assay</span><span class="o">.</span><span class="n">markers</span> <span class="o">==</span> <span class="s1">&#39;histology&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">assay</span><span class="o">.</span><span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;H3K27AC&#39;</span><span class="p">))</span> <span class="o">|</span>
+    <span class="p">((</span><span class="n">assay</span><span class="o">.</span><span class="n">sample_type</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">assay</span><span class="o">.</span><span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;genomicDNA&#39;</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/sample:=isa:sample/assay:=isa:assay/((markers=histology)&amp;(selection=H3K27AC));((sample_type=3)&amp;(selection=genomicDNA))
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RCB</th>
+      <th>RCT</th>
+      <th>RID</th>
+      <th>RMB</th>
+      <th>RMT</th>
+      <th>alignment_id</th>
+      <th>dataset</th>
+      <th>fragmentation_method</th>
+      <th>id</th>
+      <th>isolation_protocol</th>
+      <th>...</th>
+      <th>reagent_source</th>
+      <th>replicate</th>
+      <th>sample</th>
+      <th>sample_composition</th>
+      <th>sample_purification</th>
+      <th>sample_type</th>
+      <th>selection</th>
+      <th>strandednes</th>
+      <th>target_of_assay</th>
+      <th>tracks_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26531</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>59</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>19</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>2</td>
+      <td>maxillary process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>39.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26533</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>47</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>7</td>
+      <td></td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>3</td>
+      <td>latero nasal process</td>
+      <td>excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>27.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26535</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>45</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>5</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>1</td>
+      <td>medial nasal process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>25.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26538</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>49</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>9</td>
+      <td></td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>4</td>
+      <td>mandibular process</td>
+      <td>excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>29.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26541</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>52</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>12</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>4</td>
+      <td>mandibular process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>32.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26544</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>54</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>14</td>
+      <td></td>
+      <td>...</td>
+      <td>Active Motif</td>
+      <td>1</td>
+      <td>3</td>
+      <td>latero nasal process</td>
+      <td>excision</td>
+      <td>2</td>
+      <td>H3K27AC</td>
+      <td>None</td>
+      <td>None</td>
+      <td>34.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26546</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>42</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>2</td>
+      <td></td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>1</td>
+      <td>medial nasal process</td>
+      <td>excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>22.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26549</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>56</td>
+      <td>14068</td>
+      <td>Sonication</td>
+      <td>16</td>
+      <td></td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>2</td>
+      <td>maxillary process</td>
+      <td>excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>36.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26554</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>61</td>
+      <td>14130</td>
+      <td>Sonication</td>
+      <td>24</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>1088</td>
+      <td>face</td>
+      <td>Excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26559</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>63</td>
+      <td>14130</td>
+      <td>Sonication</td>
+      <td>29</td>
+      <td>None</td>
+      <td>...</td>
+      <td>NA</td>
+      <td>4</td>
+      <td>1089</td>
+      <td>face</td>
+      <td>Excision</td>
+      <td>3</td>
+      <td>genomicDNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 29 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example:-filtering-at-different-stages-of-the-path">
+<h3>Example: filtering at different stages of the path<a class="headerlink" href="#Example:-filtering-at-different-stages-of-the-path" title="Permalink to this headline">¶</a></h3>
+<p>Filtering a path does not have to be done at the end of a path. In fact,
+the initial intention of the ERMrest URI was to mimick “RESTful”
+semantics where a RESTful “resource” is identified, then filtered, then
+a “sub-resource” is identified, and then filtered, and so on.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">release_date</span> <span class="o">&gt;=</span> <span class="s1">&#39;2017-01-01&#39;</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">species</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">assay</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">assay</span><span class="o">.</span><span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;totalRNA&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_date::geq::2017-01-01/sample:=isa:sample/species=2/assay:=isa:assay/selection=totalRNA
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RCB</th>
+      <th>RCT</th>
+      <th>RID</th>
+      <th>RMB</th>
+      <th>RMT</th>
+      <th>alignment_id</th>
+      <th>dataset</th>
+      <th>fragmentation_method</th>
+      <th>id</th>
+      <th>isolation_protocol</th>
+      <th>...</th>
+      <th>reagent_source</th>
+      <th>replicate</th>
+      <th>sample</th>
+      <th>sample_composition</th>
+      <th>sample_purification</th>
+      <th>sample_type</th>
+      <th>selection</th>
+      <th>strandednes</th>
+      <th>target_of_assay</th>
+      <th>tracks_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26532</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>60</td>
+      <td>14068</td>
+      <td>Fragmentation Buffer from Illumina</td>
+      <td>20</td>
+      <td></td>
+      <td>...</td>
+      <td>Illumina</td>
+      <td>5</td>
+      <td>4</td>
+      <td>mandibular process</td>
+      <td>excision</td>
+      <td>1</td>
+      <td>totalRNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26536</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>46</td>
+      <td>14068</td>
+      <td>Fragmentation Buffer from Illumina</td>
+      <td>6</td>
+      <td></td>
+      <td>...</td>
+      <td>Illumina</td>
+      <td>5</td>
+      <td>3</td>
+      <td>latero nasal process</td>
+      <td>excision</td>
+      <td>1</td>
+      <td>totalRNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26545</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>41</td>
+      <td>14068</td>
+      <td>Fragmentation Buffer from Illumina</td>
+      <td>1</td>
+      <td></td>
+      <td>...</td>
+      <td>Illumina</td>
+      <td>5</td>
+      <td>1</td>
+      <td>medial nasal process</td>
+      <td>excision</td>
+      <td>1</td>
+      <td>totalRNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>26548</td>
+      <td>None</td>
+      <td>2017-10-18T19:59:03.14624-07:00</td>
+      <td>55</td>
+      <td>14068</td>
+      <td>Fragmentation Buffer from Illumina</td>
+      <td>15</td>
+      <td></td>
+      <td>...</td>
+      <td>Illumina</td>
+      <td>5</td>
+      <td>2</td>
+      <td>maxillary process</td>
+      <td>excision</td>
+      <td>1</td>
+      <td>totalRNA</td>
+      <td>None</td>
+      <td>None</td>
+      <td>35</td>
+    </tr>
+  </tbody>
+</table>
+<p>4 rows × 29 columns</p>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Linking-Examples">
+<h2>Linking Examples<a class="headerlink" href="#Linking-Examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Example:-explicit-column-links">
+<h3>Example: explicit column links<a class="headerlink" href="#Example:-explicit-column-links" title="Permalink to this headline">¶</a></h3>
+<p>Up until now, the examples have shown how to link entities via
+<em>implicit</em> join predicates. That is, we knew there existed a foriegn key
+reference constraint between foreign keys of one entity and keys of
+another entity. We needed only to ask ERMrest to link the entities in
+order to get the linked set.</p>
+<p>The problem with implicit links is that it become <em>ambiguous</em> if there
+are more than one foreign key reference between tables. To support these
+situations, ERMrest and the <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>’s <code class="docutils literal notranslate"><span class="pre">link(...)</span></code> method can
+specify the columns to use for the link condition, explicitly.</p>
+<p>The structure of the <code class="docutils literal notranslate"><span class="pre">on</span></code> clause is: - an equality comparison
+operation where - the <em>left</em> operand is a column of the <em>left</em> table
+instance which is also the path <em>context</em> before the link method is
+called, and - the <em>right</em> operand is a column of the <em>right</em> table
+instance which is the table <em>to be linked</em> to the path.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">sample</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/sample:=(id)=(isa:sample:dataset)
+</pre></div></div>
+</div>
+<p><strong>IMPORTANT</strong> Not all tables are related by foreign key references.
+ERMrest does not allow arbitrary relational joins. Tables must be
+related by a foreign key reference in order to link them in a data path.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RCB</th>
+      <th>RCT</th>
+      <th>RID</th>
+      <th>RMB</th>
+      <th>RMT</th>
+      <th>_keywords</th>
+      <th>anatomy</th>
+      <th>collection_date</th>
+      <th>dataset</th>
+      <th>gender</th>
+      <th>...</th>
+      <th>mutation</th>
+      <th>origin</th>
+      <th>phenotype</th>
+      <th>replicate</th>
+      <th>replicate_group</th>
+      <th>species</th>
+      <th>specimen</th>
+      <th>stage</th>
+      <th>strain</th>
+      <th>theiler_stage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>14312</td>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>None</td>
+      <td>173</td>
+      <td>2014-08-25</td>
+      <td>14139</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>2</td>
+      <td>None</td>
+      <td>5</td>
+      <td>3</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>14313</td>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>None</td>
+      <td>133</td>
+      <td>2014-08-25</td>
+      <td>14139</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>2</td>
+      <td>None</td>
+      <td>5</td>
+      <td>3</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>14314</td>
+      <td>None</td>
+      <td>2017-09-22T17:33:18.797126-07:00</td>
+      <td>None</td>
+      <td>139</td>
+      <td>2014-08-25</td>
+      <td>14139</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>2</td>
+      <td>None</td>
+      <td>5</td>
+      <td>3</td>
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+<p>3 rows × 25 columns</p>
+</div></div>
+</div>
+</div>
+<div class="section" id="Example:-explicit-column-links-combined-with-table-aliasing">
+<h3>Example: explicit column links combined with table aliasing<a class="headerlink" href="#Example:-explicit-column-links-combined-with-table-aliasing" title="Permalink to this headline">¶</a></h3>
+<p>As usual, table instances are generated automatically unless we provide
+a table alias.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">sample</span><span class="o">.</span><span class="n">dataset</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/S:=(id)=(isa:sample:dataset)
+</pre></div></div>
+</div>
+<p>Notice that we cannot use the alias right away in the <code class="docutils literal notranslate"><span class="pre">on</span></code> clause
+because it was not <em>bound</em> to the path until <em>after</em> the <code class="docutils literal notranslate"><span class="pre">link(...)</span></code>
+operation was performed.</p>
+</div>
+<div class="section" id="Example:-links-with-“outer-join”-semantics">
+<h3>Example: links with “outer join” semantics<a class="headerlink" href="#Example:-links-with-“outer-join”-semantics" title="Permalink to this headline">¶</a></h3>
+<p>Up until now, the examples have shown “<code class="docutils literal notranslate"><span class="pre">link</span></code>s” with <em>inner join</em>
+semantics. <em>Outer join</em> semantics can be expressed as part of explicit
+column links, and <em>only</em> when using explicit column links.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">link(...)</span></code> method accepts a “<code class="docutils literal notranslate"><span class="pre">join_type</span></code>” parameter, i.e.,
+“<code class="docutils literal notranslate"><span class="pre">.link(...</span> <span class="pre">join_type=TYPE)</span></code>”, where <em>TYPE</em> may be <code class="docutils literal notranslate"><span class="pre">'left'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'full'</span></code>, and defaults to <code class="docutils literal notranslate"><span class="pre">''</span></code> which indicates inner
+join type.</p>
+<p>By ‘<code class="docutils literal notranslate"><span class="pre">right</span></code>’ outer joining in the link from <code class="docutils literal notranslate"><span class="pre">'sample'</span></code> to
+<code class="docutils literal notranslate"><span class="pre">'dataset</span></code>’, the following path gives us a reference to
+<code class="docutils literal notranslate"><span class="pre">'dataset'</span></code> entities that <em>may or may not</em> have any samples with
+assays.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">assay</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="n">assay</span><span class="o">.</span><span class="n">sample</span><span class="o">==</span><span class="n">sample</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="n">sample</span><span class="o">.</span><span class="n">dataset</span><span class="o">==</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+
+<span class="c1"># path instances were not bound until the above line was executed</span>
+
+<span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">accession</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">species</span><span class="p">,</span> <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">stage</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/attribute/assay:=isa:assay/S:=(sample)=(isa:sample:id)/D:=right(dataset)=(isa:dataset:id)/D:accession,D:title,S:species,S:stage
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[21]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>719
+</pre></div>
+</div>
+</div>
+<p>We can see above that we have a full set of datasets <em>whether or not</em>
+they have any samples with assays. For further evidence, we can convert
+to a DataFrame and look at a slice of its entries. Note that the
+sample’s ‘species’ and ‘stage’ attributes do not exist for some entities
+(i.e., <code class="docutils literal notranslate"><span class="pre">NaN</span></code>) because those entities did not exist for the join
+condition.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span><span class="o">.</span><span class="n">dataframe</span><span class="p">[</span><span class="mi">700</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>accession</th>
+      <th>species</th>
+      <th>stage</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>700</th>
+      <td>FB00000884</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>701</th>
+      <td>FB00000885</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>702</th>
+      <td>FB00000886</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>703</th>
+      <td>FB00000887</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>704</th>
+      <td>FB00000888</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>705</th>
+      <td>FB00000889</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>706</th>
+      <td>FB00000890</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Skull vault formation in individual WT AB Fish</td>
+    </tr>
+    <tr>
+      <th>707</th>
+      <td>FB00000891</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>Temporal analysis of ectoderm and mesenchyme e...</td>
+    </tr>
+    <tr>
+      <th>708</th>
+      <td>FB00000892</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>3D White Light Photogrammetry Images of North ...</td>
+    </tr>
+    <tr>
+      <th>709</th>
+      <td>FB00000902</td>
+      <td>2.0</td>
+      <td>25.0</td>
+      <td>Transcriptome Atlases of the Craniofacial Sutures</td>
+    </tr>
+    <tr>
+      <th>710</th>
+      <td>FB00000903</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>Transcriptome Atlases of the Craniofacial Sutures</td>
+    </tr>
+    <tr>
+      <th>711</th>
+      <td>FB00000904</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>Transcriptome Atlases of the Craniofacial Sutures</td>
+    </tr>
+    <tr>
+      <th>712</th>
+      <td>FB00000905</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Spatial and temporal analysis of gene expressi...</td>
+    </tr>
+    <tr>
+      <th>713</th>
+      <td>FB00000906</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Interpremaxilliary suture data submission</td>
+    </tr>
+    <tr>
+      <th>714</th>
+      <td>FB00000907</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>FB0044_ALX1_Quad Saliva</td>
+    </tr>
+    <tr>
+      <th>715</th>
+      <td>FB00000908</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MicroCT-Skull Wnt1-Cre;Alk5fl/fl mouse at P0</td>
+    </tr>
+    <tr>
+      <th>716</th>
+      <td>FB00000909</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>ChIP-seq and RNA-seq of mouse e13.5 maxillary ...</td>
+    </tr>
+    <tr>
+      <th>717</th>
+      <td>FB00000910</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MicroCT-Skull Wnt1-Cre;Alk5fl/fl mouse at P0</td>
+    </tr>
+    <tr>
+      <th>718</th>
+      <td>FB00000911</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>MicroCT-Head Wnt1-Cre;Alk5fl/fl mouse at P0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Faceting-Examples">
+<h2>Faceting Examples<a class="headerlink" href="#Faceting-Examples" title="Permalink to this headline">¶</a></h2>
+<p>You may have noticed that in the examples above, the ‘species’ and
+‘stage’ attributes are numeric. These are internal “primary keys” that
+are not meaningful and difficult to filter on. We may want to construct
+filters on our datasets based on these categories. This can be used for
+“faceted search” modes and can be useful even within the context of
+programmatic access to data in the catalog.</p>
+<div class="section" id="Example:-faceting-on-“related”-tables">
+<h3>Example: faceting on “related” tables<a class="headerlink" href="#Example:-faceting-on-“related”-tables" title="Permalink to this headline">¶</a></h3>
+<p>Let’s say we want to find all of the samples in our catalog where their
+species are ‘Mus musculus’ and their age stage are ‘E10.5’.</p>
+<p>We need to extend our understanding of the data model with the following
+tables that are related to ‘<code class="docutils literal notranslate"><span class="pre">sample</span></code>’. -
+<code class="docutils literal notranslate"><span class="pre">isa.sample.species</span> <span class="pre">-&gt;</span> <span class="pre">vocabulary.species.id</span></code>: the sample table has a
+foreign key reference to the ‘<code class="docutils literal notranslate"><span class="pre">species</span></code>’ table. -
+<code class="docutils literal notranslate"><span class="pre">isa.sample.stage</span> <span class="pre">-&gt;</span> <span class="pre">vocabulary.stage.id</span></code>: the sample table has a
+foreign key reference to the ‘<code class="docutils literal notranslate"><span class="pre">stage</span></code>’ table.</p>
+<p>We may say that <code class="docutils literal notranslate"><span class="pre">species</span></code> and <code class="docutils literal notranslate"><span class="pre">stage</span></code> are <em>related</em> to the
+<code class="docutils literal notranslate"><span class="pre">sample</span></code> table in the sense that <code class="docutils literal notranslate"><span class="pre">sample</span></code> has a direct foreign key
+relationship from it to them.</p>
+<p>For convenience, we will get local variables for the species and stage
+tables.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">species</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">species</span>
+<span class="n">stage</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">vocabulary</span><span class="o">.</span><span class="n">stage</span>
+</pre></div>
+</div>
+</div>
+<p>First, let’s link samples with species and filter on the term “Mus
+musculus” (i.e., “mouse”).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span> <span class="o">=</span> <span class="n">sample</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">species</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">species</span><span class="o">.</span><span class="n">term</span> <span class="o">==</span> <span class="s1">&#39;Mus musculus&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/S:=isa:sample/species:=vocabulary:species/term=Mus%20musculus
+</pre></div></div>
+</div>
+<p>Now the <em>context</em> of the path is the <code class="docutils literal notranslate"><span class="pre">species</span></code> table instance, but we
+need to link from the <code class="docutils literal notranslate"><span class="pre">sample</span></code> to the age <code class="docutils literal notranslate"><span class="pre">stage</span></code> table.</p>
+<p>To do so, we reference the <code class="docutils literal notranslate"><span class="pre">sample</span></code> table instance, in this case using
+its alias <code class="docutils literal notranslate"><span class="pre">S</span></code>. Then we link off of that table instance which updates
+the <code class="docutils literal notranslate"><span class="pre">path</span></code> itself.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">stage</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">stage</span><span class="o">.</span><span class="n">term</span> <span class="o">==</span> <span class="s1">&#39;E10.5&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/entity/S:=isa:sample/species:=vocabulary:species/term=Mus%20musculus/$S/stage:=vocabulary:stage/term=E10.5
+</pre></div></div>
+</div>
+<p>Now, the path <em>context</em> is the age <code class="docutils literal notranslate"><span class="pre">stage</span></code> table instance, but we
+wanted to get the entities for the <code class="docutils literal notranslate"><span class="pre">sample</span></code> table. To do so, again we
+will reference the <code class="docutils literal notranslate"><span class="pre">sample</span></code> table instance by the alias <code class="docutils literal notranslate"><span class="pre">S</span></code> we used.
+From there, we will call the <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code> method to get the
+samples.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">entities</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                           <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">collection_date</span><span class="p">,</span>
+                           <span class="n">species</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">term</span><span class="p">,</span>
+                           <span class="n">species_iri</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">iri</span><span class="p">,</span>
+                           <span class="n">stage</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">term</span><span class="p">,</span>
+                           <span class="n">stage_iei</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">iri</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">entities</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:sample/species:=vocabulary:species/term=Mus%20musculus/$S/stage:=vocabulary:stage/term=E10.5/$S/S:id,S:collection_date,species:=species:term,species_iri:=species:iri,stage:=stage:term,stage_iei:=stage:iri
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">entities</span><span class="o">.</span><span class="n">dataframe</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[27]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>collection_date</th>
+      <th>id</th>
+      <th>species</th>
+      <th>species_iri</th>
+      <th>stage</th>
+      <th>stage_iei</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2015-07-14</td>
+      <td>1331</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2015-07-14</td>
+      <td>1332</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2015-07-14</td>
+      <td>1333</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2015-07-14</td>
+      <td>1334</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2015-07-14</td>
+      <td>1335</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2015-07-14</td>
+      <td>1336</td>
+      <td>Mus musculus</td>
+      <td>http://purl.bioontology.org/ontology/NCBITAXON...</td>
+      <td>E10.5</td>
+      <td>http://purl.org/sig/ont/cmo/cmo0008759</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0-alpha',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

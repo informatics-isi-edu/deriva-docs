@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva-annotation-config &mdash; deriva-py 5.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="deriva-hatrac-cli" href="deriva-hatrac-cli.html" />
+    <link rel="prev" title="deriva-acl-config" href="deriva-acl-config.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> deriva-py
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">DataPath</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/deriva.html">deriva package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/deriva.config.html">deriva.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#module-deriva.config.acl_config">deriva.config.acl_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#module-deriva.config.annotation_config">deriva.config.annotation_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#module-deriva.config.base_config">deriva.config.base_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#module-deriva.config.dump_catalog_annotations">deriva.config.dump_catalog_annotations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.config.html#module-deriva.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/deriva.core.html">deriva.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.base_cli">deriva.core.base_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.datapath">deriva.core.datapath module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.deriva_binding">deriva.core.deriva_binding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.deriva_server">deriva.core.deriva_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.ermrest_catalog">deriva.core.ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.ermrest_config">deriva.core.ermrest_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.ermrest_model">deriva.core.ermrest_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.hatrac_cli">deriva.core.hatrac_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.hatrac_store">deriva.core.hatrac_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core.polling_ermrest_catalog">deriva.core.polling_ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.core.html#module-deriva.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/deriva.transfer.html">deriva.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.transfer.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/deriva.transfer.html#module-deriva.transfer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Command Line Interfaces</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">deriva-annotation-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#positional-arguments">Positional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#host"><code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#config-file"><code class="docutils literal notranslate"><span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#output-dir"><code class="docutils literal notranslate"><span class="pre">&lt;output</span> <span class="pre">dir&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#optional-arguments">Optional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#token"><code class="docutils literal notranslate"><span class="pre">--token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#credential-file"><code class="docutils literal notranslate"><span class="pre">--credential-file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-download-cli.html#catalog"><code class="docutils literal notranslate"><span class="pre">--catalog</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">deriva-py</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>deriva-annotation-config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/deriva-annotation-config.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="deriva-annotation-config">
+<span id="deriva-annotation-config"></span><h1>deriva-annotation-config<a class="headerlink" href="#deriva-annotation-config" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-deriva-annotation-config-to-configure-annotations">
+<span id="using-deriva-annotation-config-to-configure-annotations"></span><h2>Using deriva-annotation-config to configure annotations<a class="headerlink" href="#using-deriva-annotation-config-to-configure-annotations" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> utility reads a configuration file and uses it to set annotationss for an ermrest catalog (or for a schema or table within that catalog). Usage is:</p>
+<p><code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> [<code class="docutils literal notranslate"><span class="pre">-n</span></code>|<code class="docutils literal notranslate"><span class="pre">--dryrun</span></code>] [<code class="docutils literal notranslate"><span class="pre">-v</span></code>|<code class="docutils literal notranslate"><span class="pre">--verbose</span></code>] [<code class="docutils literal notranslate"><span class="pre">-s</span></code>|<code class="docutils literal notranslate"><span class="pre">--schema</span></code> schema] [<code class="docutils literal notranslate"><span class="pre">-t</span></code>|<code class="docutils literal notranslate"><span class="pre">--table</span></code> table] [<code class="docutils literal notranslate"><span class="pre">--host</span> <span class="pre">host</span></code>] [<code class="docutils literal notranslate"><span class="pre">--config-file</span></code> config_file] [<code class="docutils literal notranslate"><span class="pre">--credential-file</span></code> credential_file] catalog</p>
+<p>where the required arguments are:</p>
+<p><em>catalog</em>: an ermrest catalog number (e.g., 1)</p>
+<p><code class="docutils literal notranslate"><span class="pre">--config_file</span></code> file: the name of a configuration file</p>
+<p>Options are:</p>
+<p><code class="docutils literal notranslate"><span class="pre">-credential_file</span></code> file: read credentials from the named <em>file</em> (if not specified, look for credentials maintained by <code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code>)</p>
+<p><code class="docutils literal notranslate"><span class="pre">--dryrun</span></code>: do nothing, just print out the catalog schema that would be applied</p>
+<p><code class="docutils literal notranslate"><span class="pre">--verbose</span></code>: verbose, print acls and acl bindings for each object</p>
+<p><code class="docutils literal notranslate"><span class="pre">--schema</span></code> schema: operate only on the named <em>schema</em>, not the whole catalog</p>
+<p><code class="docutils literal notranslate"><span class="pre">--table</span></code> table: operate only on the named <em>table</em>, not the whole catalog (requires the <code class="docutils literal notranslate"><span class="pre">--schema</span></code> option)</p>
+<p><code class="docutils literal notranslate"><span class="pre">--host</span></code> host: configure the server on the specified <em>host</em> (default <code class="docutils literal notranslate"><span class="pre">localhost</span></code>)</p>
+</div>
+<div class="section" id="config-file-format">
+<span id="config-file-format"></span><h2>Config file format<a class="headerlink" href="#config-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The config file is a json file divided into the following stanzas:</p>
+<p><code class="docutils literal notranslate"><span class="pre">known_attributes</span></code>: Attributes (i.e., annotation URIs, such as <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:display</span></code>) managed through this config file</p>
+<p><code class="docutils literal notranslate"><span class="pre">schema_annotations</span></code>: Catalog-level annotations.</p>
+<p><code class="docutils literal notranslate"><span class="pre">schema_annotations</span></code>: Annotations for individual schemas.</p>
+<p><code class="docutils literal notranslate"><span class="pre">table_annotations</span></code>: Annotations for individual tables.</p>
+<p><code class="docutils literal notranslate"><span class="pre">column_annotations</span></code>: Annotations for individual columns.</p>
+<p><code class="docutils literal notranslate"><span class="pre">foreign_key_annotations</span></code>: Annotations for foreign keys.</p>
+<div class="section" id="the-known-attributes-stanza">
+<span id="the-known-attributes-stanza"></span><h3>The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza<a class="headerlink" href="#the-known-attributes-stanza" title="Permalink to this headline">¶</a></h3>
+<p>This stanza contains parameters that control the behavior of <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> itself. This section has three sub-sections: <code class="docutils literal notranslate"><span class="pre">managed</span></code>, <code class="docutils literal notranslate"><span class="pre">ignored</span></code>, and <code class="docutils literal notranslate"><span class="pre">ignore_all_unmanaged</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">managed</span></code> section is a list of annotation types managed by <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ignore_all_unmanaged</span></code> section is a boolean: if <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> will leave any annotations not in the <code class="docutils literal notranslate"><span class="pre">managed</span></code> list unchanged. If <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> will clear any annotations not in the <code class="docutils literal notranslate"><span class="pre">managed</span></code> list.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ignored</span></code> section is a list of annotation types that are recognized by <code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code> but that aren’t created or updated by it, depending on the value of <code class="docutils literal notranslate"><span class="pre">ignore_all_unmanaged</span></code>. If <code class="docutils literal notranslate"><span class="pre">ignore_all_unmanaged</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, the program leaves existing annotations of this type alone. If <code class="docutils literal notranslate"><span class="pre">ignore_all_unmanaged</span></code> is <code class="docutils literal notranslate"><span class="pre">false</span></code>, the program removes existing annotation sof this type.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="s2">&quot;known_attributes&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;ignore_all_unmanaged&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+        <span class="s2">&quot;managed&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;tag:isrd.isi.edu,2016:column-display&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;tag:isrd.isi.edu,2016:display&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;tag:isrd.isi.edu,2016:foreign-key&quot;</span><span class="p">,</span> 
+            <span class="o">...</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;ignored&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;comment&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;description&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;facetOrder&quot;</span>
+    <span class="p">]</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a version one might use to remove all <code class="docutils literal notranslate"><span class="pre">comment</span></code>, <code class="docutils literal notranslate"><span class="pre">description</span></code>, and <code class="docutils literal notranslate"><span class="pre">facetOrder</span></code> annotations from a catalog. If <code class="docutils literal notranslate"><span class="pre">ignore_all_attributes</span></code> were <code class="docutils literal notranslate"><span class="pre">true</span></code>, those annotations would be left unchanged.</p>
+</div>
+<div class="section" id="the-schema-annotations-stanza">
+<span id="the-schema-annotations-stanza"></span><h3>The schema_annotations stanza<a class="headerlink" href="#the-schema-annotations-stanza" title="Permalink to this headline">¶</a></h3>
+<p>This is where annotations for schemas are set. The syntax is a list of entries of the form:</p>
+<p>{schema_descriptor: value, annotation_descriptor: value}</p>
+<p>A schema_descriptor is either:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;schema&quot;:</span></code> <em>schema_name</em></p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;schema_pattern:&quot;</span></code> <em>regular_expression</em></p>
+<p>When setting permissions on a schema:</p>
+<ul class="simple">
+<li>if an exact <code class="docutils literal notranslate"><span class="pre">schema</span></code> match is found, the associated ACL is used (and any matching <code class="docutils literal notranslate"><span class="pre">schema_pattern</span></code> entries are ignored).</li>
+<li>If no exact <code class="docutils literal notranslate"><span class="pre">schema</span></code> match is found and exactly one matching <code class="docutils literal notranslate"><span class="pre">schema_pattern</span></code> entry is found, then that ACL is used.</li>
+<li>If no exact <code class="docutils literal notranslate"><span class="pre">schema</span></code> match is found and more than one matching <code class="docutils literal notranslate"><span class="pre">schema_pattern</span></code> entry is found, then an error is thrown.</li>
+</ul>
+<p>An annotation_descriptor has the form:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;uri&quot;:</span></code> <em>annotation_uri</em>
+<code class="docutils literal notranslate"><span class="pre">&quot;value&quot;:</span></code>: <em>annotation_value</em></p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="s2">&quot;Vocabulary&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;tag:misd.isi.edu,2015:display&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;name_style&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;title_case&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> 
+                    <span class="s2">&quot;underline_space&quot;</span><span class="p">:</span> <span class="n">true</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-table-annotations-stanza">
+<span id="the-table-annotations-stanza"></span><h3>The table_annotations stanza<a class="headerlink" href="#the-table-annotations-stanza" title="Permalink to this headline">¶</a></h3>
+<p>This is where annotationss for tables are set. The syntax is a list of entries of the form:
+{schema_descriptor, table_descriptor, annotation_desciptor}
+The schema_descriptor and annotation_descriptor have the same form as above.</p>
+<p>A table_descriptor is either:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;table&quot;:</span></code> <em>table_name</em></p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;table_pattern:&quot;</span></code> <em>regular_expression</em></p>
+<p>Regular expression matching is used:</p>
+<ul class="simple">
+<li>If an entry with an exact <code class="docutils literal notranslate"><span class="pre">schema</span></code> and <code class="docutils literal notranslate"><span class="pre">table</span></code> match is found, the associated ACL is used (and any other matching entries are ignored).</li>
+<li>Otherwise, if entry with an exact <code class="docutils literal notranslate"><span class="pre">schema</span></code> match and exactly one <code class="docutils literal notranslate"><span class="pre">table_pattern</span></code> match is found, that ACL is used.</li>
+<li>Otherwise, if exactly one entry with a <code class="docutils literal notranslate"><span class="pre">schema_pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">table_pattern</span></code> match is found, that ACL is used.</li>
+<li>If none of the above is true, and multiple matching entries are found, then an error is thrown.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="s2">&quot;table_annotations&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="s2">&quot;Vocabulary&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;table_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;.*_terms&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;tag:isrd.isi.edu,2016:table-display&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;row_name&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;row_markdown_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;{{name}}&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<p>This sets an annotation for any table in the “Vocabulary” schema whose table name ends in “_terms”.</p>
+</div>
+<div class="section" id="the-column-annotations-stanza">
+<span id="the-column-annotations-stanza"></span><h3>The column_annotations stanza<a class="headerlink" href="#the-column-annotations-stanza" title="Permalink to this headline">¶</a></h3>
+<p>This is where ACLs for columns are set. The syntax is a list of entries of the form:
+{schema_descriptor, table_descriptor, column_descriptor, annotation_descriptor}
+The schema, table, and annotation descriptors have the same form as above.
+The column_descriptor is either:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;column&quot;:</span></code> <em>table_name</em></p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;column_pattern:&quot;</span></code> <em>regular_expression</em></p>
+<p>Regular expression matching is used:</p>
+<ul class="simple">
+<li>If an entry with exact <code class="docutils literal notranslate"><span class="pre">schema</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>, and <code class="docutils literal notranslate"><span class="pre">column</span></code> matches is found, the associated ACL is used (and any other matching entries are ignored).</li>
+<li>Otherwise, if exactly one entry is found with <code class="docutils literal notranslate"><span class="pre">schema</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>, and <code class="docutils literal notranslate"><span class="pre">column</span></code> matches is found, that ACL is used</li>
+<li>If multiple regular-expression matches are found and no exact match is found, an exception is thrown.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="s2">&quot;column&quot;</span><span class="p">:</span> <span class="s2">&quot;RCT&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;schema_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;.*&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;table_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;.*&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;tag:misd.isi.edu,2015:display&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Creation Time&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<p>This sets the display name for any column named “RCT” in the catalog.</p>
+</div>
+<div class="section" id="the-foreign-key-annotations-stanza">
+<span id="the-foreign-key-annotations-stanza"></span><h3>The foreign_key_annotations stanza<a class="headerlink" href="#the-foreign-key-annotations-stanza" title="Permalink to this headline">¶</a></h3>
+<p>This is where annotations for foreign keys are set. The syntax is a list of entries of the form:</p>
+<p>{schema_descriptor, table_descriptor, fkey_schema_descriptor, fkey_name_descriptor, annotation_descriptor}</p>
+<p>The schema, table, and annotation descriptors have the same form as above.
+The fkey_schema_descriptor is either:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;foreign_key_schema&quot;:</span></code> foreign_key_schema_name</p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;foreign_key_schema_pattern&quot;:</span></code> regular_expression</p>
+<p>The fkey_name_descriptor is either:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;foreign_key&quot;:</span></code> foreign_key_name</p>
+<p>or</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;foreign_key_pattern&quot;:</span></code> regular_expression</p>
+<p>These specify the foreign key schema and name. As with the column_acls stanza:</p>
+<ul class="simple">
+<li>If an exact match is found, it’s used</li>
+<li>If no exact match is found and exactly one regular expression match is found, it’s used.</li>
+<li>If no exact match is found and more than one regular expression match is found, an error is thrown.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="p">{</span>
+            <span class="s2">&quot;foreign_key&quot;</span><span class="p">:</span> <span class="s2">&quot;Antibody_Gene_Association_NCBI_GeneID_fkey&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;foreign_key_schema&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="s2">&quot;Antibody&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;table&quot;</span><span class="p">:</span> <span class="s2">&quot;Antibody_Gene_Association&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;tag:isrd.isi.edu,2016:foreign-key&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;to_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Related Genes&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deriva-hatrac-cli.html" class="btn btn-neutral float-right" title="deriva-hatrac-cli" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="deriva-acl-config.html" class="btn btn-neutral" title="deriva-acl-config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.8',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

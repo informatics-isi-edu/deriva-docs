@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva.config.annotation_config &mdash; deriva-py 5.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> deriva-py
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">DataPath</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/deriva.html">deriva package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/deriva.config.html">deriva.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#module-deriva.config.acl_config">deriva.config.acl_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#module-deriva.config.annotation_config">deriva.config.annotation_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#module-deriva.config.base_config">deriva.config.base_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#module-deriva.config.dump_catalog_annotations">deriva.config.dump_catalog_annotations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.config.html#module-deriva.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/deriva.core.html">deriva.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.base_cli">deriva.core.base_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.datapath">deriva.core.datapath module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.deriva_binding">deriva.core.deriva_binding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.deriva_server">deriva.core.deriva_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.ermrest_catalog">deriva.core.ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.ermrest_config">deriva.core.ermrest_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.ermrest_model">deriva.core.ermrest_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.hatrac_cli">deriva.core.hatrac_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.hatrac_store">deriva.core.hatrac_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core.polling_ermrest_catalog">deriva.core.polling_ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.core.html#module-deriva.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/deriva.transfer.html">deriva.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.transfer.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/deriva.transfer.html#module-deriva.transfer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Command Line Interfaces</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#host"><code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#config-file"><code class="docutils literal notranslate"><span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#output-dir"><code class="docutils literal notranslate"><span class="pre">&lt;output</span> <span class="pre">dir&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#token"><code class="docutils literal notranslate"><span class="pre">--token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#credential-file"><code class="docutils literal notranslate"><span class="pre">--credential-file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../cli/deriva-download-cli.html#catalog"><code class="docutils literal notranslate"><span class="pre">--catalog</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">deriva-py</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>deriva.config.annotation_config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deriva.config.annotation_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="p">,</span> <span class="n">get_credential</span>
+<span class="kn">from</span> <span class="nn">deriva.config.base_config</span> <span class="k">import</span> <span class="n">BaseSpec</span><span class="p">,</span> <span class="n">BaseSpecList</span><span class="p">,</span> <span class="n">ConfigUtil</span><span class="p">,</span> <span class="n">ConfigBaseCLI</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+<span class="n">MY_VERSION</span> <span class="o">=</span> <span class="mf">0.99</span>
+
+
+<div class="viewcode-block" id="NoForeignKeyError"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.NoForeignKeyError">[docs]</a><span class="k">class</span> <span class="nc">NoForeignKeyError</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="AttrSpecList"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrSpecList">[docs]</a><span class="k">class</span> <span class="nc">AttrSpecList</span><span class="p">(</span><span class="n">BaseSpecList</span><span class="p">):</span>
+    <span class="n">SPEC_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;catalog_annotations&quot;</span><span class="p">,</span> <span class="s2">&quot;schema_annotations&quot;</span><span class="p">,</span> <span class="s2">&quot;table_annotations&quot;</span><span class="p">,</span> <span class="s2">&quot;column_annotations&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;foreign_key_annotations&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">known_attrs</span><span class="p">,</span> <span class="n">specdict</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_list</span><span class="p">(</span><span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;managed&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No &#39;managed&#39; attribute list&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ignore_all_unmanaged&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_list</span><span class="p">(</span><span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ignored&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># dictlist = dictlist + [{&quot;managed_annotations&quot;: self.managed_annotations}, {&quot;ignored_annotations&quot;: self.ignored_annotations}, {&quot;ignore_all_unmanaged&quot;: self.ignore_unmanaged}]</span>
+        <span class="n">BaseSpecList</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">AttrSpec</span><span class="p">,</span> <span class="n">specdict</span><span class="p">,</span> <span class="n">strict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AttrSpecList.annotation_list"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrSpecList.annotation_list">[docs]</a>    <span class="k">def</span> <span class="nf">annotation_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orig_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">orig_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">orig_list</span><span class="p">:</span>
+            <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unicode</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">new</span></div>
+
+<div class="viewcode-block" id="AttrSpecList.add_list"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrSpecList.add_list">[docs]</a>    <span class="k">def</span> <span class="nf">add_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dictlist</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dictlist</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">AttrSpec</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_spec</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="AttrSpec"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrSpec">[docs]</a><span class="k">class</span> <span class="nc">AttrSpec</span><span class="p">(</span><span class="n">BaseSpec</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specdict</span><span class="p">,</span> <span class="n">managed_annotations</span><span class="p">,</span> <span class="n">ignore_unmanaged</span><span class="p">,</span> <span class="n">ignored_annotations</span><span class="p">):</span>
+        <span class="n">BaseSpec</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">specdict</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">],</span> <span class="s2">&quot;attributes&quot;</span><span class="p">,</span> <span class="n">ignore_unmanaged</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span> <span class="o">=</span> <span class="n">ignore_unmanaged</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span> <span class="o">=</span> <span class="n">managed_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="o">=</span> <span class="n">ignored_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_annotation</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AttrSpec.validate_annotation"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrSpec.validate_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">validate_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">specdict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uri&quot;</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span></div></div>
+
+
+<div class="viewcode-block" id="AttrConfig"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig">[docs]</a><span class="k">class</span> <span class="nc">AttrConfig</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">schema_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ignored_schema_patterns&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ip</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;known_attributes&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;managed&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ignored&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_annotations</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;ignore_all_unmanaged&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">AttrSpecList</span><span class="o">.</span><span class="n">SPEC_TYPES</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_speclist</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span> <span class="o">=</span> <span class="n">catalog_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="n">old_catalog</span> <span class="o">=</span> <span class="n">ErmrestCatalog</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span> <span class="o">=</span> <span class="n">ConfigUtil</span><span class="o">.</span><span class="n">find_toplevel_node</span><span class="p">(</span><span class="n">old_catalog</span><span class="o">.</span><span class="n">getCatalogConfig</span><span class="p">(),</span> <span class="n">schema_name</span><span class="p">,</span>
+                                                                   <span class="n">table_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">ErmrestCatalog</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span> <span class="o">=</span> <span class="n">ConfigUtil</span><span class="o">.</span><span class="n">find_toplevel_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogConfig</span><span class="p">(),</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AttrConfig.make_speclist"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.make_speclist">[docs]</a>    <span class="k">def</span> <span class="nf">make_speclist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">unicode</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">AttrSpecList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">known_attrs</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_best_schema_specs"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_best_schema_specs">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_schema_specs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="s2">&quot;schema_annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_schema_spec</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">specs</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_best_table_specs"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_best_table_specs">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_table_specs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="s2">&quot;table_annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_table_spec</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span>
+                                                                                         <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">specs</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_best_fkey_specs"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_best_fkey_specs">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_fkey_specs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkey</span><span class="p">):</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="s2">&quot;foreign_key_annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_foreign_key_spec</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span>
+                                                                                                     <span class="n">fkey</span><span class="o">.</span><span class="n">tname</span><span class="p">,</span>
+                                                                                                     <span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
+                                                                                                     <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">specs</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_best_column_specs"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_best_column_specs">[docs]</a>    <span class="k">def</span> <span class="nf">find_best_column_specs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="s2">&quot;column_annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_best_column_spec</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span>
+                                                                                           <span class="n">column_name</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">specs</span></div>
+
+<div class="viewcode-block" id="AttrConfig.node_name"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.node_name">[docs]</a>    <span class="k">def</span> <span class="nf">node_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogSchema</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;schema </span><span class="si">{s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogTable</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">sname</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogColumn</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;column </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">.</span><span class="si">{c}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">sname</span><span class="p">),</span> <span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">tname</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogForeignKey</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;foreign key </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;unknown node type </span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_node_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_node_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_node_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">specs</span><span class="p">,</span> <span class="n">saved_node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">specs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n}</span><span class="s2">: clearing annotations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_name</span><span class="p">(</span><span class="n">node</span><span class="p">)))</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">specs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="sa">u</span><span class="s1">&#39;value&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n}</span><span class="s2">: setting </span><span class="si">{k}</span><span class="s2"> to </span><span class="si">{v}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_name</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">s</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="p">]))</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="sa">u</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n}</span><span class="s2">: clearing </span><span class="si">{k}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_name</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">))</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_unmanaged</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_annotations</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;annotation key </span><span class="si">{k}</span><span class="s2"> is neither managed nor ignored&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_table_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_table_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_table_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">saved_table</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_node_annotations</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_best_table_specs</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">saved_table</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_column_annotations</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_named_column</span><span class="p">(</span><span class="n">saved_table</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_fkey_annotations</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_corresponding_fkey</span><span class="p">(</span><span class="n">saved_table</span><span class="p">,</span> <span class="n">fkey</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_corresponding_fkey"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_corresponding_fkey">[docs]</a>    <span class="k">def</span> <span class="nf">find_corresponding_fkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">base_fkey</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">base_fkey</span><span class="o">.</span><span class="n">names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">base_fkey</span><span class="o">.</span><span class="n">names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">base_fkey</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">fkey</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fkey</span><span class="o">.</span><span class="n">names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">names</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="k">return</span> <span class="n">fkey</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_named_column"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_named_column">[docs]</a>    <span class="k">def</span> <span class="nf">find_named_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">column_name</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">column</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_named_schema"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_named_schema">[docs]</a>    <span class="k">def</span> <span class="nf">find_named_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">catalog</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">schema_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttrConfig.find_named_table"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.find_named_table">[docs]</a>    <span class="k">def</span> <span class="nf">find_named_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">schema</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">schema</span><span class="o">.</span><span class="n">tables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">schema</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_fkey_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_fkey_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_fkey_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkey</span><span class="p">,</span> <span class="n">saved_fkey</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_node_annotations</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_best_fkey_specs</span><span class="p">(</span><span class="n">fkey</span><span class="p">),</span> <span class="n">saved_fkey</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_column_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_column_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_column_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">saved_column</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_node_annotations</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_best_column_specs</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">tname</span><span class="p">,</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                                  <span class="n">saved_column</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_schema_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_schema_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_schema_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">saved_schema</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignored_schema_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pat</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ignoring schema </span><span class="si">{s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                <span class="k">return</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_best_schema_specs</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_node_annotations</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">specs</span><span class="p">,</span> <span class="n">saved_schema</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_table_annotations</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_named_table</span><span class="p">(</span><span class="n">saved_schema</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_catalog_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_catalog_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">set_catalog_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">specs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">managed_annotations</span><span class="p">:</span>
+            <span class="n">specs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_specs</span><span class="p">[</span><span class="s2">&quot;catalog_annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find_catalog_spec</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_node_annotations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">specs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_schema_annotations</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_named_schema</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">,</span> <span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.set_attributes"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_attributes">[docs]</a>    <span class="k">def</span> <span class="nf">set_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogConfig</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_catalog_annotations</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogSchema</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_schema_annotations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="o">.</span><span class="n">CatalogTable</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_table_annotations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;toplevel config is a </span><span class="si">{t}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="p">))))</span></div>
+
+<div class="viewcode-block" id="AttrConfig.apply_annotations"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.AttrConfig.apply_annotations">[docs]</a>    <span class="k">def</span> <span class="nf">apply_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toplevel_config</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_toplevel_config</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../api/deriva.config.html#deriva.config.annotation_config.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">cli</span> <span class="o">=</span> <span class="n">ConfigBaseCLI</span><span class="p">(</span><span class="s2">&quot;annotation config tool&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">MY_VERSION</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">parse_cli</span><span class="p">()</span>
+    <span class="n">table_name</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_table_arg</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">schema_names</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_schema_arg_list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">credentials</span> <span class="o">=</span> <span class="n">get_credential</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">credential_file</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schema_names</span><span class="p">:</span>
+        <span class="n">attr_config</span> <span class="o">=</span> <span class="n">AttrConfig</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
+                                 <span class="n">schema</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
+        <span class="n">attr_config</span><span class="o">.</span><span class="n">set_attributes</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">dryrun</span><span class="p">:</span>
+            <span class="n">attr_config</span><span class="o">.</span><span class="n">apply_annotations</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'5.8',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

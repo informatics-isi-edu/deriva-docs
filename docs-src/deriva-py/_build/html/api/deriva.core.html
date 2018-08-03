@@ -1,0 +1,2438 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva.core package &mdash; deriva-py 5.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="deriva.core.utils package" href="deriva.core.utils.html" />
+    <link rel="prev" title="deriva.config package" href="deriva.config.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> deriva-py
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">DataPath</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="deriva.html">deriva package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="deriva.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="deriva.config.html">deriva.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#module-deriva.config.acl_config">deriva.config.acl_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#module-deriva.config.annotation_config">deriva.config.annotation_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#module-deriva.config.base_config">deriva.config.base_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#module-deriva.config.dump_catalog_annotations">deriva.config.dump_catalog_annotations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.config.html#module-deriva.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">deriva.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.base_cli">deriva.core.base_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.datapath">deriva.core.datapath module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.deriva_binding">deriva.core.deriva_binding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.deriva_server">deriva.core.deriva_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.ermrest_catalog">deriva.core.ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.ermrest_config">deriva.core.ermrest_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.ermrest_model">deriva.core.ermrest_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.hatrac_cli">deriva.core.hatrac_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.hatrac_store">deriva.core.hatrac_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core.polling_ermrest_catalog">deriva.core.polling_ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-deriva.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva.transfer.html">deriva.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva.transfer.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva.transfer.html#module-deriva.transfer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Command Line Interfaces</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#host"><code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#config-file"><code class="docutils literal notranslate"><span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#output-dir"><code class="docutils literal notranslate"><span class="pre">&lt;output</span> <span class="pre">dir&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#token"><code class="docutils literal notranslate"><span class="pre">--token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#credential-file"><code class="docutils literal notranslate"><span class="pre">--credential-file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cli/deriva-download-cli.html#catalog"><code class="docutils literal notranslate"><span class="pre">--catalog</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">deriva-py</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="deriva.html">deriva package</a> &raquo;</li>
+        
+      <li>deriva.core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/deriva.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="deriva-core-package">
+<h1>deriva.core package<a class="headerlink" href="#deriva-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deriva.core.utils.html">deriva.core.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deriva.core.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva.core.utils.html#module-deriva.core.utils.hash_utils">deriva.core.utils.hash_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva.core.utils.html#module-deriva.core.utils.mime_utils">deriva.core.utils.mime_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva.core.utils.html#module-deriva.core.utils.version_utils">deriva.core.utils.version_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deriva.core.utils.html#module-deriva.core.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-deriva.core.base_cli">
+<span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.base_cli.BaseCLI">
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="deriva.core.base_cli.BaseCLI.parse_cli">
+<code class="descname">parse_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/base_cli.html#BaseCLI.parse_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI.parse_cli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.base_cli.BaseCLI.remove_options">
+<code class="descname">remove_options</code><span class="sig-paren">(</span><em>options</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/base_cli.html#BaseCLI.remove_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI.remove_options" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.base_cli.KeyValuePairArgs">
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">KeyValuePairArgs</code><span class="sig-paren">(</span><em>option_strings</em>, <em>dest</em>, <em>nargs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/base_cli.html#KeyValuePairArgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.KeyValuePairArgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Action" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.datapath">
+<span id="deriva-core-datapath-module"></span><h2>deriva.core.datapath module<a class="headerlink" href="#module-deriva.core.datapath" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.datapath.Catalog">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Catalog</code><span class="sig-paren">(</span><em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Handle to a Catalog.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Column">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents a column in a table.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.Column.ciregexp">
+<code class="descname">ciregexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Column.ciregexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.ciregexp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Column.fqname">
+<code class="descname">fqname</code><a class="headerlink" href="#deriva.core.datapath.Column.fqname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded fully qualified name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Column.instancename">
+<code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.Column.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Column.regexp">
+<code class="descname">regexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Column.regexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.regexp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Column.ts">
+<code class="descname">ts</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Column.ts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.ts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Column.uname">
+<code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.Column.uname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded name</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.DataPath">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">DataPath</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents an arbitrary data path.</p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.DataPath.context">
+<code class="descname">context</code><a class="headerlink" href="#deriva.core.datapath.DataPath.context" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPath.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the entity set referenced by the data path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.entities">
+<code class="descname">entities</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPath.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.entities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the entity set computed by this data path.
+Optionally, caller may specify the attributes to be included in the entity set. The attributes may be from the
+current context of the path or from a linked table instance. Columns may be renamed in the output and will
+take the name of the keyword parameter used. If no attributes are specified, the entity set will contain whole
+entities of the type of the path’s context.
+:param attributes: a list of Columns.
+:param renamed_attributes: a list of renamed Columns.
+:return: an entity set</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>filter_expression</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPath.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters the path based on the specified formula.
+:param filter_expression: should be a valid Predicate object
+:return: self</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.link">
+<code class="descname">link</code><span class="sig-paren">(</span><em>right</em>, <em>on=None</em>, <em>join_type=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPath.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Links this path with another table.
+At present, the implementation only supports single column keys.
+:param right: the right hand table of the link expression
+:param on: an equality comparison between keys and foreign keys
+:param join_type: the join type of this link which may be ‘left’, ‘right’, ‘full’ outer joins or ‘’ for inner
+join link by default.
+:return: self</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.DataPath.uri">
+<code class="descname">uri</code><a class="headerlink" href="#deriva.core.datapath.DataPath.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.datapath.DataPathException">
+<em class="property">exception </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">DataPathException</code><span class="sig-paren">(</span><em>message</em>, <em>reason=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#DataPathException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPathException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>DataPath exception</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.EntitySet">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">EntitySet</code><span class="sig-paren">(</span><em>uri</em>, <em>fetcher_fn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#EntitySet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.EntitySet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A set of entities.
+The EntitySet is produced by a path. The results may be explicitly fetched. The EntitySet behaves like a
+container. If the EntitySet has not been fetched explicitly, on first use of container operations, it will
+be implicitly fetched from the catalog.</p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.EntitySet.dataframe">
+<code class="descname">dataframe</code><a class="headerlink" href="#deriva.core.datapath.EntitySet.dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pandas DataFrame representation of this path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.EntitySet.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><em>limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#EntitySet.fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.EntitySet.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the entities from the catalog.
+:param limit: maximum number of entities to fetch from the catalog.
+:return: self</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Filter">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>r</em>, <em>formula</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.FilterPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">FilterPredicate</code><span class="sig-paren">(</span><em>lop</em>, <em>op</em>, <em>rop</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#FilterPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.FilterPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.JunctionPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">JunctionPredicate</code><span class="sig-paren">(</span><em>left</em>, <em>op</em>, <em>right</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#JunctionPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.JunctionPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Link">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Link</code><span class="sig-paren">(</span><em>r</em>, <em>on</em>, <em>as_=None</em>, <em>join_type=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.NegationPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">NegationPredicate</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#NegationPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.NegationPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.PathOperator">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">PathOperator</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#PathOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.PathOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Predicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Predicate</code><a class="reference internal" href="../_modules/deriva/core/datapath.html#Predicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Predicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Project">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>r</em>, <em>attributes</em>, <em>renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.ResetContext">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">ResetContext</code><span class="sig-paren">(</span><em>r</em>, <em>alias</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#ResetContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ResetContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Root">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Root</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Schema">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>sname</em>, <em>schema_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents a Schema.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Table">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Table</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>table_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents a Table.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.Table.alias">
+<code class="descname">alias</code><span class="sig-paren">(</span><em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a table alias object.
+:param alias_name: a string to use as the alias name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.entities">
+<code class="descname">entities</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.entities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>filter_expression</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.fqname">
+<code class="descname">fqname</code><a class="headerlink" href="#deriva.core.datapath.Table.fqname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded fully qualified name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.fromname">
+<code class="descname">fromname</code><a class="headerlink" href="#deriva.core.datapath.Table.fromname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>entities</em>, <em>defaults=None</em>, <em>add_system_defaults=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts entities into the table.
+:param entities: an iterable collection of entities (i.e., rows) to be inserted into the table.
+:param defaults: optional, set of column names to be assigned the default expression value.
+:param add_system_defaults: flag to add system columns to the set of default columns.
+:return newly created entities.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.instancename">
+<code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.Table.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.link">
+<code class="descname">link</code><span class="sig-paren">(</span><em>right</em>, <em>on=None</em>, <em>join_type=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.link" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.path">
+<code class="descname">path</code><a class="headerlink" href="#deriva.core.datapath.Table.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Always a new DataPath instance that is rooted at this table.
+Note that this table will be automatically aliased using its own table name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.uname">
+<code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.Table.uname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>entities</em>, <em>correlation={'RID'}</em>, <em>targets=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#Table.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update entities of a table.</p>
+<p>For more information see the ERMrest protocol for the <cite>attributegroup</cite> interface. By default, this method will
+correlate the input data (entities) based on the <cite>RID</cite> column of the table. By default, the method will use all
+column names found in the first row of the <cite>entities</cite> input, which are not found in the <cite>correlation</cite> set and
+not defined as ‘system columns’ by ERMrest, as the targets if <cite>targets</cite> is not set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entities</strong> – an iterable collection of entities (i.e., rows) to be updated in the table.</li>
+<li><strong>correlation</strong> – an iterable collection of column names used to correlate input set to the set of rows to be</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>updated in the catalog. E.g., <cite>{‘col name’}</cite> or <cite>{mytable.mycolumn}</cite> will work if you pass a Column object.
+:param targets: an iterable collection of column names used as the targets of the update operation.
+:return: EntitySet of updated entities as returned by the corresponding ERMrest interface.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.uri">
+<code class="descname">uri</code><a class="headerlink" href="#deriva.core.datapath.Table.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.TableAlias">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">TableAlias</code><span class="sig-paren">(</span><em>base_table</em>, <em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#TableAlias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.TableAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Table" title="deriva.core.datapath.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Table</span></code></a></p>
+<p>Represents a table alias.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.TableAlias.entities">
+<code class="descname">entities</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#TableAlias.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.TableAlias.entities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.fqname">
+<code class="descname">fqname</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.fqname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded fully qualified name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.fromname">
+<code class="descname">fromname</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.fromname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.instancename">
+<code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.path">
+<code class="descname">path</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parent path for this alias.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.uname">
+<code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.uname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.uri">
+<code class="descname">uri</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.datapath.from_catalog">
+<code class="descclassname">deriva.core.datapath.</code><code class="descname">from_catalog</code><span class="sig-paren">(</span><em>catalog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/datapath.html#from_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.from_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a datapath.Catalog object from an ErmrestCatalog object.
+:param catalog: an ErmrestCatalog object
+:return: a datapath.Catalog object</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="deriva.core.datapath.logger">
+<code class="descclassname">deriva.core.datapath.</code><code class="descname">logger</code><em class="property"> = &lt;Logger deriva.core.datapath (WARNING)&gt;</em><a class="headerlink" href="#deriva.core.datapath.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logger for this module</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.deriva_binding">
+<span id="deriva-core-deriva-binding-module"></span><h2>deriva.core.deriva_binding module<a class="headerlink" href="#module-deriva.core.deriva_binding" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.deriva_binding.DerivaBinding">
+<em class="property">class </em><code class="descclassname">deriva.core.deriva_binding.</code><code class="descname">DerivaBinding</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>credentials=None</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This is a base-class for implementation purposes. Not useful for clients.</p>
+<dl class="staticmethod">
+<dt id="deriva.core.deriva_binding.DerivaBinding.check_path">
+<em class="property">static </em><code class="descname">check_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.check_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.check_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>path</em>, <em>headers={}</em>, <em>guard_response=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform DELETE request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">path: the path within this bound server
+headers: headers to set in request
+guard_response: expected current resource state</p>
+<blockquote class="last">
+<div>as previously seen response object.</div></blockquote>
+</dd>
+</dl>
+<p>Uses guard_response to build appropriate ‘if-match’ header
+to assure change is only applied to expected state.</p>
+<p>Raises ConcurrentUpdate for 412 status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>path</em>, <em>headers={}</em>, <em>raise_not_modified=False</em>, <em>stream=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform GET request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">path: the path within this bound server
+headers: headers to set in request
+raise_not_modified: raise HTTPError for 304 response</p>
+<blockquote>
+<div>status when true.</div></blockquote>
+<dl class="last docutils">
+<dt>stream: whether to defer content retrieval to </dt>
+<dd>streaming access mode on response object.</dd>
+</dl>
+</dd>
+</dl>
+<p>May consult built-in cache and apply ‘if-none-match’
+request header unless input headers already include
+‘if-none-match’ or ‘if-match’. On cache hit, returns cached
+response unless raise_not_modified=true.</p>
+<p>Caching of new results is disabled when stream=True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.get_authn_session">
+<code class="descname">get_authn_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.get_authn_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.get_authn_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.get_server_uri">
+<code class="descname">get_server_uri</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.get_server_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.get_server_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.head">
+<code class="descname">head</code><span class="sig-paren">(</span><em>path</em>, <em>headers={}</em>, <em>raise_not_modified=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.head" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform HEAD request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">path: the path within this bound server
+headers: headers to set in request
+raise_not_modified: raise HTTPError for 304 response</p>
+<blockquote class="last">
+<div>status when true.</div></blockquote>
+</dd>
+</dl>
+<p>May consult built-in cache and apply ‘if-none-match’
+request header unless input headers already include
+‘if-none-match’ or ‘if-match’. On cache hit, returns cached
+response unless raise_not_modified=true. Cached response
+may include content retrieved by GET on the same resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>path</em>, <em>data=None</em>, <em>json=None</em>, <em>headers={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform POST request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>path: the path within this bound server
+data: a buffer or file-like content value
+json: data to serialize as JSON content
+headers: headers to set in request</dd>
+</dl>
+<p>Raises ConcurrentUpdate for 412 status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.post_authn_session">
+<code class="descname">post_authn_session</code><span class="sig-paren">(</span><em>credentials</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.post_authn_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.post_authn_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.put">
+<code class="descname">put</code><span class="sig-paren">(</span><em>path</em>, <em>data=None</em>, <em>json=None</em>, <em>headers={}</em>, <em>guard_response=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform PUT request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">path: the path within this bound server
+data: a buffer or file-like content value
+json: data to serialize as JSON content
+headers: headers to set in request
+guard_response: expected current resource state</p>
+<blockquote class="last">
+<div>as previously seen response object.</div></blockquote>
+</dd>
+</dl>
+<p>Uses guard_response to build appropriate ‘if-match’ header
+to assure change is only applied to expected state.</p>
+<p>Raises ConcurrentUpdate for 412 status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_binding.DerivaBinding.set_credentials">
+<code class="descname">set_credentials</code><span class="sig-paren">(</span><em>credentials</em>, <em>server</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaBinding.set_credentials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaBinding.set_credentials" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.deriva_binding.DerivaPathError">
+<em class="property">exception </em><code class="descclassname">deriva.core.deriva_binding.</code><code class="descname">DerivaPathError</code><a class="reference internal" href="../_modules/deriva/core/deriva_binding.html#DerivaPathError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_binding.DerivaPathError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.deriva_server">
+<span id="deriva-core-deriva-server-module"></span><h2>deriva.core.deriva_server module<a class="headerlink" href="#module-deriva.core.deriva_server" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.deriva_server.DerivaServer">
+<em class="property">class </em><code class="descclassname">deriva.core.deriva_server.</code><code class="descname">DerivaServer</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>credentials=None</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_server.html#DerivaServer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_server.DerivaServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.deriva_binding.DerivaBinding" title="deriva.core.deriva_binding.DerivaBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.deriva_binding.DerivaBinding</span></code></a></p>
+<p>Persistent handle for a Deriva server.</p>
+<dl class="method">
+<dt id="deriva.core.deriva_server.DerivaServer.connect_ermrest">
+<code class="descname">connect_ermrest</code><span class="sig-paren">(</span><em>catalog_id</em>, <em>snaptime=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_server.html#DerivaServer.connect_ermrest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_server.DerivaServer.connect_ermrest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to an ERMrest catalog.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>catalog_id: e.g., ‘1’ or <a class="reference external" href="mailto:'1&#37;&#52;&#48;2PM-DGYP-56Z4">‘1<span>&#64;</span>2PM-DGYP-56Z4</a>’
+snaptime: e.g., ‘2PM-DGYP-56Z4’ (optional)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.deriva_server.DerivaServer.create_ermrest_catalog">
+<code class="descname">create_ermrest_catalog</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/deriva_server.html#DerivaServer.create_ermrest_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.deriva_server.DerivaServer.create_ermrest_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an ERMrest catalog.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.ermrest_catalog">
+<span id="deriva-core-ermrest-catalog-module"></span><h2>deriva.core.ermrest_catalog module<a class="headerlink" href="#module-deriva.core.ermrest_catalog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_catalog.</code><code class="descname">ErmrestCatalog</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>catalog_id</em>, <em>credentials=None</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.deriva_binding.DerivaBinding" title="deriva.core.deriva_binding.DerivaBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.deriva_binding.DerivaBinding</span></code></a></p>
+<p>Persistent handle for an ERMrest catalog.</p>
+<p>Provides basic REST client for HTTP methods on arbitrary
+paths. Caller has to understand ERMrest APIs and compose
+appropriate paths, headers, and/or content.</p>
+<p>Additional utility methods provided for accessing catalog metadata.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.applyCatalogConfig">
+<code class="descname">applyCatalogConfig</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.applyCatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.applyCatalogConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.clone_catalog">
+<code class="descname">clone_catalog</code><span class="sig-paren">(</span><em>dst_catalog=None</em>, <em>copy_data=True</em>, <em>copy_annotations=True</em>, <em>copy_policy=True</em>, <em>truncate_after=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.clone_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.clone_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone this catalog’s content into dest_catalog, creating a new catalog if needed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dst_catalog</strong> – Destination catalog or None to request creation of new destination (default).</li>
+<li><strong>copy_data</strong> – Copy table contents when True (default).</li>
+<li><strong>copy_annotations</strong> – Copy annotations when True (default).</li>
+<li><strong>copy_policy</strong> – Copy access-control policies when True (default).</li>
+<li><strong>truncate_after</strong> – Truncate destination history after cloning when True (default).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>When dest_catalog is provided, attempt an idempotent clone,
+assuming content MAY be partially cloned already using the
+same parameters. This routine uses a table-level annotation
+“<a class="reference external" href="tag:isrd.isi.edu,2018:clone-state">tag:isrd.isi.edu,2018:clone-state</a>” to save progress markers
+which help it restart efficiently if interrupted.</p>
+<p>Cloning preserves source row RID values so that any RID-based
+foreign keys are still valid. It is not generally advisable to
+try to merge more than one source into the same clone, nor to
+clone on top of rows generated locally in the destination,
+since this could cause duplicate RID conflicts.</p>
+<p>Truncation after cloning avoids retaining incremental
+snapshots which contain partial clones.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>path</em>, <em>headers={}</em>, <em>guard_response=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform DELETE request, returning response object.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">path: the path within this bound catalog
+headers: headers to set in request
+guard_response: expected current resource state</p>
+<blockquote class="last">
+<div>as previously seen response object.</div></blockquote>
+</dd>
+</dl>
+<p>Uses guard_response to build appropriate ‘if-match’ header
+to assure change is only applied to expected state.</p>
+<p>Raises ConcurrentUpdate for 412 status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.delete_ermrest_catalog">
+<code class="descname">delete_ermrest_catalog</code><span class="sig-paren">(</span><em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.delete_ermrest_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.delete_ermrest_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform DELETE request, destroying catalog on server.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>really: delete when True, abort when False (default)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">
+<code class="descname">getAsFile</code><span class="sig-paren">(</span><em>path</em>, <em>destfilename</em>, <em>headers={}</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getAsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve catalog data streamed to destination file.
+Caller is responsible to clean up file even on error, when the file may or may not be exist.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogConfig">
+<code class="descname">getCatalogConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getCatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogModel">
+<code class="descname">getCatalogModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getCatalogModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogModel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogSchema">
+<code class="descname">getCatalogSchema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getCatalogSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogSchema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getDefaultColumns">
+<code class="descname">getDefaultColumns</code><span class="sig-paren">(</span><em>row</em>, <em>table</em>, <em>exclude=None</em>, <em>quote_url=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getDefaultColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getDefaultColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getPathBuilder">
+<code class="descname">getPathBuilder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getPathBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getPathBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ‘path builder’ interface for this catalog.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getTableColumns">
+<code class="descname">getTableColumns</code><span class="sig-paren">(</span><em>fq_table_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getTableColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getTableColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getTableSchema">
+<code class="descname">getTableSchema</code><span class="sig-paren">(</span><em>fq_table_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getTableSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getTableSchema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.latest_snapshot">
+<code class="descname">latest_snapshot</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.latest_snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.latest_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a handle to this catalog’s latest snapshot.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.splitQualifiedCatalogName">
+<em class="property">static </em><code class="descname">splitQualifiedCatalogName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.splitQualifiedCatalogName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.splitQualifiedCatalogName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.table_schemas">
+<code class="descname">table_schemas</code><em class="property"> = {}</em><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.table_schemas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.validateRowColumns">
+<code class="descname">validateRowColumns</code><span class="sig-paren">(</span><em>row</em>, <em>fq_tableName</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.validateRowColumns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.validateRowColumns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalogMutationError">
+<em class="property">exception </em><code class="descclassname">deriva.core.ermrest_catalog.</code><code class="descname">ErmrestCatalogMutationError</code><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalogMutationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalogMutationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_catalog.ErmrestSnapshot">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_catalog.</code><code class="descname">ErmrestSnapshot</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>catalog_id</em>, <em>snaptime</em>, <em>credentials=None</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_catalog.html#ErmrestSnapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestSnapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_catalog.ErmrestCatalog" title="deriva.core.ermrest_catalog.ErmrestCatalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_catalog.ErmrestCatalog</span></code></a></p>
+<p>Persistent handle for an ERMrest catalog snapshot.</p>
+<p>Inherits from ErmrestCatalog and provides the same interfaces,
+except that the interfaces are now bound to a fixed snapshot
+of the catalog.</p>
+<dl class="attribute">
+<dt id="deriva.core.ermrest_catalog.ErmrestSnapshot.snaptime">
+<code class="descname">snaptime</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestSnapshot.snaptime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The snaptime for this catalog snapshot instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.ermrest_config">
+<span id="deriva-core-ermrest-config-module"></span><h2>deriva.core.ermrest_config module<a class="headerlink" href="#module-deriva.core.ermrest_config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.ermrest_config.AttrDict">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">AttrDict</code><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#AttrDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.AttrDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Dictionary with optional attribute-based lookup.</p>
+<p>For keys that are valid attributes, self.key is equivalent to
+self[key].</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogColumn">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogColumn</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
+<p>Column-level configuration management.</p>
+<p>acl_bindings: column-level dynamic ACL bindings
+acls: column-level ACL configuration
+annotations: column-level annotations
+name: name of column</p>
+<dl class="docutils">
+<dt>Convenience access to common annotations:</dt>
+<dd>self.asset: tag.asset object
+self.column_display:: tag.column_display object
+self.display: tag.display object
+self.generated: treat tag.generated as a boolean
+self.immutable: treat tag.immutable as a boolean</dd>
+</dl>
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogColumn.asset">
+<code class="descname">asset</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.asset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogColumn.column_display">
+<code class="descname">column_display</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.column_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogColumn.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogColumn.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogConfig">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogConfig</code><span class="sig-paren">(</span><em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
+<p>Top-level catalog configuration management.</p>
+<p>acls: catalog-level ACL configuration
+annotations: catalog-level annotations
+schemas: all schemas in catalog, by name</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogConfig.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply catalog configuration to catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self will be applied recursively to the
+corresponding model nodes in schema. For each node, the
+comment, annotations, acls, and/or acl_bindings will be
+applied where applicable.</p>
+<p>If existing is not provided (default), the current whole
+configuration will be retrieved from the catalog and used
+automatically to determine whether the configuration goals
+under this CatalogConfig instance are already met or need to
+be remotely applied.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogConfig.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in catalog and children.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogConfig.column">
+<code class="descname">column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>cname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return column configuration for column with given name.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_config.CatalogConfig.fromcatalog">
+<em class="property">classmethod </em><code class="descname">fromcatalog</code><span class="sig-paren">(</span><em>catalog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.fromcatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.fromcatalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve catalog config as a CatalogConfig management object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogConfig.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogConfig.table">
+<code class="descname">table</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogConfig.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table configuration for table with given name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogForeignKey">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogForeignKey</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>fkey_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
+<p>Foreign key-level configuration management.</p>
+<p>acl_bindings: foreign key-level acl-bindings
+acls: foreign key-level acls
+annotations: foreign key-level annotations</p>
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogForeignKey.foreign_key">
+<code class="descname">foreign_key</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.foreign_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogForeignKey.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogForeignKey.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogKey">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogKey</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>key_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfig" title="deriva.core.ermrest_config.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfig</span></code></a></p>
+<p>Key-level configuration management.</p>
+<p>annotations: column-level annotations
+names: name(s) of key constraint</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogKey.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogKey.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogSchema">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogSchema</code><span class="sig-paren">(</span><em>sname</em>, <em>schema_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
+<p>Schema-level configuration management.</p>
+<p>acls: schema-level ACL configuration
+annotations: schema-level annotations
+tables: all tables in schema, by name</p>
+<dl class="docutils">
+<dt>Convenience access for common annotations:</dt>
+<dd>self.display: access mutable tag.display object</dd>
+</dl>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogSchema.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogSchema.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply schema configuration to catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self will be applied recursively to the
+corresponding model nodes in catalog. For each node, the
+comment, annotations, acls, and/or acl_bindings will be
+applied where applicable unless existing value is equivalent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogSchema.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogSchema.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in schema and children.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogSchema.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogSchema.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.CatalogTable">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogTable</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>table_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
+<p>Table-level configuration management.</p>
+<p>acl_bindings: table-level dynamic ACL bindings
+acls: table-level ACL configuration
+annotations: table-level annotations
+column_definitions: columns in table</p>
+<dl class="docutils">
+<dt>Convenience access to common annotations:</dt>
+<dd>self.alternatives: tag.table_alternatives object
+self.display: tag.display object
+self.generated: treat tag.generated as a boolean
+self.immutable: treat tag.immutable as a boolean
+self.table_display: tag.table_display object
+self.visible_columns: tag.visible_columns object
+self.visible_foreign_keys: tag.visible_foreign_keys object</dd>
+</dl>
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogTable.alternatives">
+<code class="descname">alternatives</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.alternatives" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogTable.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogTable.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply table configuration to catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self will be applied recursively to the
+corresponding model nodes in catalog. For each node, the
+comment, annotations, acls, and/or acl_bindings will be
+applied where applicable unless existing is supplied and is
+equivalent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogTable.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogTable.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in table and children.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.CatalogTable.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#CatalogTable.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogTable.table_display">
+<code class="descname">table_display</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.table_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogTable.visible_columns">
+<code class="descname">visible_columns</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.visible_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.CatalogTable.visible_foreign_keys">
+<code class="descname">visible_foreign_keys</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.KeyedList">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">KeyedList</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#KeyedList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.KeyedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>Keyed list.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.KeyedList.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#KeyedList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.KeyedList.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append element to list and record its key.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.MultiKeyedList">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">MultiKeyedList</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#MultiKeyedList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.MultiKeyedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>Multi-keyed list.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.MultiKeyedList.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#MultiKeyedList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.MultiKeyedList.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append element to list and record its keys.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.NodeConfig">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfig</code><span class="sig-paren">(</span><em>uri_path</em>, <em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Generic model document node configuration management.</p>
+<p>annotations: map of annotations for node by key
+comment: comment string or None (if supported by sub-class)</p>
+<dl class="docutils">
+<dt>Convenience access for common annotations:</dt>
+<dd>self.display: access mutable tag.display object
+self.generated: treat tag.generated as a boolean
+self.immutable: treat tag.immutable as a boolean</dd>
+</dl>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.annotation_obj">
+<code class="descname">annotation_obj</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.annotation_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.annotation_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic access to annotation object under given tag.</p>
+<p>Returns object stored under tag in node’s annotations, so
+that side-effects applied to it will affect the annotation.</p>
+<p>If annotation is not yet present, an empty object is added
+and returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.annotation_presence">
+<code class="descname">annotation_presence</code><span class="sig-paren">(</span><em>tag</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.annotation_presence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.annotation_presence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if annotation is present for given tag, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self.comment and self.annotations will be
+applied to the remote model node corresponding to self, unless
+existing node configuration is supplied and is equivalent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear existing annotations on node, also clearing comment if clear_comment is True.</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.NodeConfig.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Comment on this node in model, if supported.</p>
+<p>Raises TypeError if accessed when unsupported, e.g. on top-level catalog objects.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.NodeConfig.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.NodeConfig.generated">
+<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.generated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_config.NodeConfig.immutable">
+<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.immutable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfig.set_annotation_presence">
+<code class="descname">set_annotation_presence</code><span class="sig-paren">(</span><em>tag</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfig.set_annotation_presence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.set_annotation_presence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add or remove annotation with given tag depending on boolean presence value.</p>
+<p>True: add or replace tag with None value
+False: remove tag if it exists</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.NodeConfigAcl">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfigAcl</code><span class="sig-paren">(</span><em>uri_path</em>, <em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAcl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfig" title="deriva.core.ermrest_config.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfig</span></code></a></p>
+<p>Generic model acl-bearing document node configuration management.</p>
+<p>acls: map of acls for node by key
+annotations: map of annotations for node by key
+comment: comment string or None (if supported by sub-class)</p>
+<dl class="docutils">
+<dt>Convenience access for common annotations:</dt>
+<dd>self.display: access mutable tag.display object
+self.generated: treat tag.generated as a boolean
+self.immutable: treat tag.immutable as a boolean</dd>
+</dl>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAcl.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self.comment, self.annotations, and
+self.acls will be applied to the remote model node
+corresponding to self, unless existing node configuration is
+supplied and is equivalent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAcl.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear existing acls and annotations on node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAcl.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_config.NodeConfigAclBinding">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfigAclBinding</code><span class="sig-paren">(</span><em>uri_path</em>, <em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
+<p>Generic model acl_binding-bearing document node configuration management.</p>
+<p>acl_bindings: map of acl bindings for node by key
+acls: map of acls for node by key
+annotations: map of annotations for node by key
+comment: comment string or None (if supported by sub-class)</p>
+<dl class="docutils">
+<dt>Convenience access for common annotations:</dt>
+<dd>self.display: access mutable tag.display object
+self.generated: treat tag.generated as a boolean
+self.immutable: treat tag.immutable as a boolean</dd>
+</dl>
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>catalog</em>, <em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – The EmrestCatalog instance to which configuration will be applied.</li>
+<li><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self.comment, self.annotations,
+self.acls, and self.acl_bindings will be applied to the remote
+model node corresponding to self, unless existing node
+configuration is supplied and is equivalent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear existing acl_bindings, acls, and annotations on node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.ermrest_config.equivalent">
+<code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">equivalent</code><span class="sig-paren">(</span><em>doc1</em>, <em>doc2</em>, <em>method=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_config.html#equivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether two dict/array/literal documents are structurally equivalent.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.ermrest_model">
+<span id="deriva-core-ermrest-model-module"></span><h2>deriva.core.ermrest_model module<a class="headerlink" href="#module-deriva.core.ermrest_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.ermrest_model.ArrayType">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ArrayType</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ArrayType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ArrayType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_model.Type" title="deriva.core.ermrest_model.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_model.Type</span></code></a></p>
+<p>Named domain type.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.ArrayType.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ArrayType.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ArrayType.prejson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Column">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogColumn" title="deriva.core.ermrest_config.CatalogColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogColumn</span></code></a></p>
+<p>Named column.</p>
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Column.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>cname</em>, <em>ctype</em>, <em>nullok=True</em>, <em>default=None</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Column.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.define" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a column definition.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Column.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>catalog</em>, <em>table=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Column.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove this column from the remote database.</p>
+<p>Also remove this column from the local table object (if provided).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – an ErmrestCatalog object</li>
+<li><strong>table</strong> – a Table object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Column.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Column.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.DomainType">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">DomainType</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#DomainType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.DomainType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_model.Type" title="deriva.core.ermrest_model.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_model.Type</span></code></a></p>
+<p>Named domain type.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.DomainType.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#DomainType.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.DomainType.prejson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.ForeignKey">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ForeignKey</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>fkey_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogForeignKey" title="deriva.core.ermrest_config.CatalogForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogForeignKey</span></code></a></p>
+<p>Named foreign key.</p>
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.ForeignKey.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>fk_colnames</em>, <em>pk_sname</em>, <em>pk_tname</em>, <em>pk_colnames</em>, <em>on_update='NO ACTION'</em>, <em>on_delete='NO ACTION'</em>, <em>constraint_names=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ForeignKey.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.define" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.ForeignKey.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>catalog</em>, <em>table=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ForeignKey.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove this foreign key from the remote database.</p>
+<p>Also remove this foreign key from the local table object (if provided).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – an ErmrestCatalog object</li>
+<li><strong>table</strong> – a Table object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.ForeignKey.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#ForeignKey.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Key">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Key</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>key_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogKey" title="deriva.core.ermrest_config.CatalogKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogKey</span></code></a></p>
+<p>Named key.</p>
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Key.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>colnames</em>, <em>constraint_names=[]</em>, <em>comment=None</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Key.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.define" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a key definition.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Key.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>catalog</em>, <em>table=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Key.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove this key from the remote database.</p>
+<p>Also remove this key from the local table object (if provided).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – an ErmrestCatalog object</li>
+<li><strong>table</strong> – a Table object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Key.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Key.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Model">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogConfig" title="deriva.core.ermrest_config.CatalogConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogConfig</span></code></a></p>
+<p>Top-level catalog model.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.create_schema">
+<code class="descname">create_schema</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema_def</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Model.create_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.create_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new schema to this model in the remote database based on schema_def.</p>
+<p>Returns a new Schema instance based on the server-supplied
+representation of the newly created schema.</p>
+<p>The returned Schema is also added to self.schemas.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.update_referenced_by">
+<code class="descname">update_referenced_by</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Model.update_referenced_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.update_referenced_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Introspects the ‘foreign_keys’ and updates the ‘referenced_by’ properties on the ‘Table’ objects.
+:param model: an ERMrest model object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Schema">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>sname</em>, <em>schema_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogSchema" title="deriva.core.ermrest_config.CatalogSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogSchema</span></code></a></p>
+<p>Named schema.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Schema.create_table">
+<code class="descname">create_table</code><span class="sig-paren">(</span><em>catalog</em>, <em>table_def</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Schema.create_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.create_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new table to this schema in the remote database based on table_def.</p>
+<p>Returns a new Table instance based on the server-supplied
+representation of the newly created table.</p>
+<p>The returned Table is also added to self.tables.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Schema.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>sname</em>, <em>comment=None</em>, <em>acls={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Schema.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.define" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a schema definition.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Schema.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>catalog</em>, <em>model=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Schema.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove this schema from the remote database.</p>
+<p>Also remove this schema from the local model object (if provided).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – an ErmrestCatalog object</li>
+<li><strong>schema</strong> – a Schema object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Schema.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Schema.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Table">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Table</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>table_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogTable" title="deriva.core.ermrest_config.CatalogTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogTable</span></code></a></p>
+<p>Named table.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.create_column">
+<code class="descname">create_column</code><span class="sig-paren">(</span><em>catalog</em>, <em>column_def</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.create_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.create_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new column to this table in the remote database based on column_def.</p>
+<p>Returns a new Column instance based on the server-supplied
+representation of the new column, and adds it to
+self.column_definitions too.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.create_fkey">
+<code class="descname">create_fkey</code><span class="sig-paren">(</span><em>catalog</em>, <em>fkey_def</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.create_fkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.create_fkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new foreign key to this table in the remote database based on fkey_def.</p>
+<p>Returns a new ForeignKey instance based on the
+server-supplied representation of the new foreign key, and
+adds it to self.fkeys too.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.create_key">
+<code class="descname">create_key</code><span class="sig-paren">(</span><em>catalog</em>, <em>key_def</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.create_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.create_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new key to this table in the remote database based on key_def.</p>
+<p>Returns a new Key instance based on the server-supplied
+representation of the new key, and adds it to self.keys
+too.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Table.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>tname</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>provide_system=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.define" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a table definition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tname</strong> – the name of the newly defined table</li>
+<li><strong>column_defs</strong> – a list of Column.define() results for extra or overridden column definitions</li>
+<li><strong>key_defs</strong> – a list of Key.define() results for extra or overridden key constraint definitions</li>
+<li><strong>fkey_defs</strong> – a list of ForeignKey.define() results for foreign key definitions</li>
+<li><strong>comment</strong> – a comment string for the table</li>
+<li><strong>acls</strong> – a dictionary of ACLs for specific access modes</li>
+<li><strong>acl_bindings</strong> – a dictionary of dynamic ACL bindings</li>
+<li><strong>annotations</strong> – a dictionary of annotations</li>
+<li><strong>provide_system</strong> – whether to inject standard system column definitions when missing from column_defs</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Table.define_vocabulary">
+<em class="property">classmethod </em><code class="descname">define_vocabulary</code><span class="sig-paren">(</span><em>tname</em>, <em>curie_template</em>, <em>uri_template='/id/{RID}'</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>provide_system=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.define_vocabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.define_vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a vocabulary table definition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tname</strong> – the name of the newly defined table</li>
+<li><strong>curie_template</strong> – the RID-based template for the CURIE of locally-defined terms, e.g. ‘MYPROJECT:{RID}’</li>
+<li><strong>uri_template</strong> – the RID-based template for the URI of locally-defined terms, e.g. ‘<a class="reference external" href="https://server.example.org/id">https://server.example.org/id</a>/{RID}’</li>
+<li><strong>column_defs</strong> – a list of Column.define() results for extra or overridden column definitions</li>
+<li><strong>key_defs</strong> – a list of Key.define() results for extra or overridden key constraint definitions</li>
+<li><strong>fkey_defs</strong> – a list of ForeignKey.define() results for foreign key definitions</li>
+<li><strong>comment</strong> – a comment string for the table</li>
+<li><strong>acls</strong> – a dictionary of ACLs for specific access modes</li>
+<li><strong>acl_bindings</strong> – a dictionary of dynamic ACL bindings</li>
+<li><strong>annotations</strong> – a dictionary of annotations</li>
+<li><strong>provide_system</strong> – whether to inject standard system column definitions when missing from column_defs</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>These core vocabulary columns are generated automatically if
+absent from the input column_defs.</p>
+<ul class="simple">
+<li>id: ermrest_curie, unique not null, default curie template “%s:{RID}” % curie_prefix</li>
+<li>uri: ermrest_uri, unique not null, default URI template “/id/{RID}”</li>
+<li>name: text, unique not null</li>
+<li>description: markdown, not null</li>
+<li>synonyms: text[]</li>
+</ul>
+<p>However, caller-supplied definitions override the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove this table from the remote database.</p>
+<p>Also remove this table from the local schema object (if provided).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog</strong> – an ErmrestCatalog object</li>
+<li><strong>schema</strong> – a Schema object or None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Table.system_column_defs">
+<em class="property">classmethod </em><code class="descname">system_column_defs</code><span class="sig-paren">(</span><em>custom=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.system_column_defs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.system_column_defs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build standard system column definitions, merging optional custom definitions.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Table.system_key_defs">
+<em class="property">classmethod </em><code class="descname">system_key_defs</code><span class="sig-paren">(</span><em>custom=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Table.system_key_defs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.system_key_defs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build standard system key definitions, merging optional custom definitions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.Type">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Type</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Named type.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Type.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#Type.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Type.prejson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.ermrest_model.make_type">
+<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">make_type</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/ermrest_model.html#make_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.make_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create instance of Type, DomainType, or ArrayType as appropriate for type_doc.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.hatrac_cli">
+<span id="deriva-core-hatrac-cli-module"></span><h2>deriva.core.hatrac_cli module<a class="headerlink" href="#module-deriva.core.hatrac_cli" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI">
+<em class="property">class </em><code class="descclassname">deriva.core.hatrac_cli.</code><code class="descname">DerivaHatracCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.base_cli.BaseCLI" title="deriva.core.base_cli.BaseCLI"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.base_cli.BaseCLI</span></code></a></p>
+<p>Deriva Hatrac Command-line Interface.</p>
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.delacl">
+<code class="descname">delacl</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.delacl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.delacl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the getacl sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.delobj">
+<code class="descname">delobj</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.delobj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.delobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the delobj sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.getacl">
+<code class="descname">getacl</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.getacl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.getacl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the getacl sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.getobj">
+<code class="descname">getobj</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.getobj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.getobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the getobj sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the list sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.main">
+<code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main routine of the CLI.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.mkdir">
+<code class="descname">mkdir</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.mkdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.mkdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the mkdir sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.putobj">
+<code class="descname">putobj</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.putobj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.putobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the putobj sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.rmdir">
+<code class="descname">rmdir</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.rmdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.rmdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the mkdir sub-command.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLI.setacl">
+<code class="descname">setacl</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.setacl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.setacl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the setacl sub-command.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_cli.DerivaHatracCLIException">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_cli.</code><code class="descname">DerivaHatracCLIException</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLIException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLIException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+<p>Base exception class for DerivaHatracCli.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_cli.ResourceException">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_cli.</code><code class="descname">ResourceException</code><span class="sig-paren">(</span><em>message</em>, <em>cause</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#ResourceException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.ResourceException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.hatrac_cli.DerivaHatracCLIException" title="deriva.core.hatrac_cli.DerivaHatracCLIException"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.hatrac_cli.DerivaHatracCLIException</span></code></a></p>
+<p>Remote resource exception.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_cli.UsageException">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_cli.</code><code class="descname">UsageException</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#UsageException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.UsageException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.hatrac_cli.DerivaHatracCLIException" title="deriva.core.hatrac_cli.DerivaHatracCLIException"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.hatrac_cli.DerivaHatracCLIException</span></code></a></p>
+<p>Usage exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.hatrac_cli.main">
+<code class="descclassname">deriva.core.hatrac_cli.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_cli.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_cli.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.hatrac_store">
+<span id="deriva-core-hatrac-store-module"></span><h2>deriva.core.hatrac_store module<a class="headerlink" href="#module-deriva.core.hatrac_store" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="deriva.core.hatrac_store.HatracHashMismatch">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_store.</code><code class="descname">HatracHashMismatch</code><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracHashMismatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracHashMismatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_store.HatracJobAborted">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_store.</code><code class="descname">HatracJobAborted</code><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracJobAborted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracJobAborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_store.HatracJobPaused">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_store.</code><code class="descname">HatracJobPaused</code><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracJobPaused"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracJobPaused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.hatrac_store.HatracJobTimeout">
+<em class="property">exception </em><code class="descclassname">deriva.core.hatrac_store.</code><code class="descname">HatracJobTimeout</code><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracJobTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracJobTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.hatrac_store.HatracStore">
+<em class="property">class </em><code class="descclassname">deriva.core.hatrac_store.</code><code class="descname">HatracStore</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>credentials=None</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.deriva_binding.DerivaBinding" title="deriva.core.deriva_binding.DerivaBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.deriva_binding.DerivaBinding</span></code></a></p>
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.cancel_upload_job">
+<code class="descname">cancel_upload_job</code><span class="sig-paren">(</span><em>path</em>, <em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.cancel_upload_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.cancel_upload_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.content_equals">
+<code class="descname">content_equals</code><span class="sig-paren">(</span><em>path</em>, <em>filename=None</em>, <em>md5=None</em>, <em>sha256=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.content_equals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.content_equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a remote object’s content is equal to the content of the at least one of the specified input file,
+input md5, or input sha256 by comparing MD5 hashes.
+:return: True IFF the object exists and the MD5 or SHA256 hash matches the MD5 or SHA256 hash of the input file</p>
+<blockquote>
+<div>or the passed MD5 or SHA256 parameters.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.create_namespace">
+<code class="descname">create_namespace</code><span class="sig-paren">(</span><em>namespace_path</em>, <em>parents=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.create_namespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.create_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a namespace.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.create_upload_job">
+<code class="descname">create_upload_job</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>md5</em>, <em>sha256</em>, <em>create_parents=True</em>, <em>chunk_size=5760000</em>, <em>content_type=None</em>, <em>content_disposition=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.create_upload_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.create_upload_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.del_acl">
+<code class="descname">del_acl</code><span class="sig-paren">(</span><em>resource_name</em>, <em>access</em>, <em>role=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.del_acl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.del_acl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the object or namespace ACL resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.del_obj">
+<code class="descname">del_obj</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.del_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.del_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.delete_namespace">
+<code class="descname">delete_namespace</code><span class="sig-paren">(</span><em>namespace_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.delete_namespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.delete_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a namespace.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.finalize_upload_job">
+<code class="descname">finalize_upload_job</code><span class="sig-paren">(</span><em>path</em>, <em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.finalize_upload_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.finalize_upload_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.get_acl">
+<code class="descname">get_acl</code><span class="sig-paren">(</span><em>resource_name</em>, <em>access=None</em>, <em>role=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.get_acl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.get_acl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the object or namespace ACL resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.get_obj">
+<code class="descname">get_obj</code><span class="sig-paren">(</span><em>path</em>, <em>headers={}</em>, <em>destfilename=None</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.get_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.get_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve resource optionally streamed to destination file.</p>
+<p>If destfilename is provided, download content to file with
+that name.  Caller is responsible to clean up file even on
+error, when the file may or may not be exist.</p>
+<p>If hatrac provides a Content-MD5 response header, the
+resulting download file will be hash-verified on success or
+raise HatracHashMismatch on errors.  This is not verified
+when destfilename is None, as the client must instead
+consume and validate content directly from the response
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.get_upload_job">
+<code class="descname">get_upload_job</code><span class="sig-paren">(</span><em>path</em>, <em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.get_upload_job"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.get_upload_job" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.is_valid_namespace">
+<code class="descname">is_valid_namespace</code><span class="sig-paren">(</span><em>namespace_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.is_valid_namespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.is_valid_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a namespace already exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.put_loc">
+<code class="descname">put_loc</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>content_type=None</em>, <em>content_disposition=None</em>, <em>chunked=False</em>, <em>chunk_size=5760000</em>, <em>create_parents=True</em>, <em>allow_versioning=True</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.put_loc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_loc" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> – </li>
+<li><strong>file_path</strong> – </li>
+<li><strong>headers</strong> – </li>
+<li><strong>md5</strong> – </li>
+<li><strong>sha256</strong> – </li>
+<li><strong>content_type</strong> – </li>
+<li><strong>content_disposition</strong> – </li>
+<li><strong>chunked</strong> – </li>
+<li><strong>chunk_size</strong> – </li>
+<li><strong>create_parents</strong> – </li>
+<li><strong>allow_versioning</strong> – </li>
+<li><strong>callback</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.put_obj">
+<code class="descname">put_obj</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>parents=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Idempotent upload of object, returning object location URI.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>path: name of object
+data: filename or seekable file-like object
+headers: additional headers
+md5: a base64 encoded md5 digest may be provided in order to skip the automatic hash computation
+sha256: a base64 encoded sha256 digest may be provided in order to skip the automatic hash computation
+parents: automatically create parent namespace(s) if missing</dd>
+</dl>
+<p>Automatically computes and sends Content-MD5 if no digests provided.</p>
+<p>If an object-version already exists under the same name
+with the same Content-MD5, that location is returned
+instead of creating a new one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.put_obj_chunked">
+<code class="descname">put_obj_chunked</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>job_id</em>, <em>chunk_size=5760000</em>, <em>callback=None</em>, <em>start_chunk=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj_chunked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj_chunked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.retrieve_namespace">
+<code class="descname">retrieve_namespace</code><span class="sig-paren">(</span><em>namespace_path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.retrieve_namespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.retrieve_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a namespace.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.hatrac_store.HatracStore.set_acl">
+<code class="descname">set_acl</code><span class="sig-paren">(</span><em>resource_name</em>, <em>access</em>, <em>roles</em>, <em>add_role=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/hatrac_store.html#HatracStore.set_acl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.set_acl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object or namespace ACL resource.</p>
+<p>if ‘add_role’ is True, the operation will add a single role to the ACL, else it will attempt to replace
+all of the ACL’s roles. This option is only valid when a list of one role is given.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core.polling_ermrest_catalog">
+<span id="deriva-core-polling-ermrest-catalog-module"></span><h2>deriva.core.polling_ermrest_catalog module<a class="headerlink" href="#module-deriva.core.polling_ermrest_catalog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.core.polling_ermrest_catalog.PollingErmrestCatalog">
+<em class="property">class </em><code class="descclassname">deriva.core.polling_ermrest_catalog.</code><code class="descname">PollingErmrestCatalog</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>catalog_id</em>, <em>credentials={}</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/polling_ermrest_catalog.html#PollingErmrestCatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_catalog.ErmrestCatalog" title="deriva.core.ermrest_catalog.ErmrestCatalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_catalog.ErmrestCatalog</span></code></a></p>
+<p>Persistent handle for an ERMrest catalog.</p>
+<p>Provides a higher-level state_change_once() idiom to
+efficiently find candidate rows, transform them, and apply
+updates.</p>
+<p>Provides a higher-level blocking_poll() idiom to efficiently
+poll a catalog, using AMQP to optimize polling where possible.
+(AMQP is currently limited to clients on localhost of catalog
+in practice.)</p>
+<p>These features can be composed to implement condition-action
+agents with domain-specific logic, e.g.</p>
+<p>catalog = ErmrestCatalog(…)
+idle_etag = None</p>
+<dl class="docutils">
+<dt>def look_for_work():</dt>
+<dd><p class="first">global idle_etag
+idle_etag, batch = catalog.state_change_once(</p>
+<blockquote>
+<div># claim up to 5 items per batch
+‘/entity/Foo/state=actionable?limit=5’,
+‘/attributegroup/Foo/id;state’,
+lambda row: {‘id’: row[‘id’], ‘state’: ‘claimed’},
+idle_etag</div></blockquote>
+<p>)
+for candidate, update in batch:</p>
+<blockquote class="last">
+<div># assume we have free reign on claimed candidates
+# using state=claimed as a semaphore
+revision = candidate.copy()
+revision[‘state’] = update[‘state’]
+… # do agent work
+revision[‘state’] = ‘complete’
+catalog.put(‘/entity/Foo’, [revision])</div></blockquote>
+</dd>
+</dl>
+<p>catalog.blocking_poll(look_for_work)</p>
+<dl class="method">
+<dt id="deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.blocking_poll">
+<code class="descname">blocking_poll</code><span class="sig-paren">(</span><em>look_for_work</em>, <em>polling_seconds=600</em>, <em>coalesce_seconds=0.1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/polling_ermrest_catalog.html#PollingErmrestCatalog.blocking_poll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.blocking_poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use ERMrest change-notice monitoring to optimize polled work processing.</p>
+<p>Client-provided look_for_work function finds actual work in
+ERMrest and processes it. We only optimize the scheduling
+of this work.</p>
+<p>Run look_for_work() whenever there <em>might</em> be more work in
+ERMrest.</p>
+<p>If look_for_work() returns True, assume there is more work.</p>
+<p>If look_for_work() returns non-True, wait for ERMrest
+change-notice or polling_seconds timeout before looking
+again (whichever comes first).</p>
+<p>On any change-monitoring communication error, assume there
+might be more work and restart the monitoring process.</p>
+<p>Other exceptions abort the blocking_poll() call.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.state_change_once">
+<code class="descname">state_change_once</code><span class="sig-paren">(</span><em>query_datapath</em>, <em>update_datapath</em>, <em>row_transform_func</em>, <em>idle_etag=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core/polling_ermrest_catalog.html#PollingErmrestCatalog.state_change_once"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.state_change_once" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform generic conditional state update via GET-PUT sequence.</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>query_datapath: a query for candidate rows
+update_datapath: an update to consume update rows
+row_transform_func: maps candidate to update rows
+idle_etag: no-op if table is still in this state</dd>
+<dt>Returns: (idle_etag, [(candidate, update)…])</dt>
+<dd>idle_etag: value to thread to future calls
+[(candidate, update)…]: each row that was updated</dd>
+</dl>
+<p>Exceptions from the transform or update process will abort
+without returning results.</p>
+<ol class="arabic simple">
+<li>GET query_datapath to get candidate row(s)</li>
+<li>apply row_transform_func(row) to get updated content</li>
+<li>PUT update_datapath to deliver transformed content
+– discards rows transformed to None</li>
+</ol>
+<p>Uses opportunistic concurrency control with ETag, If-Match,
+etc. for safety.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-deriva.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-deriva.core" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="deriva.core.ConcurrentUpdate">
+<em class="property">exception </em><code class="descclassname">deriva.core.</code><code class="descname">ConcurrentUpdate</code><a class="reference internal" href="../_modules/deriva/core.html#ConcurrentUpdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ConcurrentUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="deriva.core.NotModified">
+<em class="property">exception </em><code class="descclassname">deriva.core.</code><code class="descname">NotModified</code><a class="reference internal" href="../_modules/deriva/core.html#NotModified"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.NotModified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.resource_path">
+<code class="descclassname">deriva.core.</code><code class="descname">resource_path</code><span class="sig-paren">(</span><em>relative_path</em>, <em>default='/Users/cristinawilliams/Sites/division-docs/deriva-py/docs'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#resource_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.resource_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>required to find bundled data at runtime in Pyinstaller single-file exe mode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.urlquote">
+<code class="descclassname">deriva.core.</code><code class="descname">urlquote</code><span class="sig-paren">(</span><em>s</em>, <em>safe=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#urlquote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.urlquote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quote all reserved characters according to RFC3986 unless told otherwise.</p>
+<p>The urllib.urlquote has a weird default which excludes ‘/’ from
+quoting even though it is a reserved character.  We would never
+want this when encoding elements in Deriva REST API URLs, so
+this wrapper changes the default to have no declared safe
+characters.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.get_credential">
+<code class="descclassname">deriva.core.</code><code class="descname">get_credential</code><span class="sig-paren">(</span><em>host</em>, <em>credential_file=DEFAULT_CREDENTIAL_FILE</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#get_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.get_credential" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.read_credential">
+<code class="descclassname">deriva.core.</code><code class="descname">read_credential</code><span class="sig-paren">(</span><em>credential_file=DEFAULT_CREDENTIAL_FILE</em>, <em>create_default=False</em>, <em>default=DEFAULT_CREDENTIAL</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#read_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.read_credential" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.write_credential">
+<code class="descclassname">deriva.core.</code><code class="descname">write_credential</code><span class="sig-paren">(</span><em>credential_file=DEFAULT_CREDENTIAL_FILE</em>, <em>credential=DEFAULT_CREDENTIAL</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#write_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.write_credential" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.read_config">
+<code class="descclassname">deriva.core.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>config_file=DEFAULT_CONFIG_FILE</em>, <em>create_default=False</em>, <em>default=DEFAULT_CONFIG</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.read_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.write_config">
+<code class="descclassname">deriva.core.</code><code class="descname">write_config</code><span class="sig-paren">(</span><em>config_file=DEFAULT_CONFIG_FILE</em>, <em>config=DEFAULT_CONFIG</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/deriva/core.html#write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.write_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.DEFAULT_CONFIG_PATH">
+<code class="descclassname">core.</code><code class="descname">DEFAULT_CONFIG_PATH</code><em class="property"> = System dependent default path to the configuration directory.</em><a class="headerlink" href="#deriva.core.DEFAULT_CONFIG_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.DEFAULT_CONFIG_FILE">
+<code class="descclassname">core.</code><code class="descname">DEFAULT_CONFIG_FILE</code><em class="property"> = System dependent default path to the config file.</em><a class="headerlink" href="#deriva.core.DEFAULT_CONFIG_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.DEFAULT_CREDENTIAL_FILE">
+<code class="descclassname">core.</code><code class="descname">DEFAULT_CREDENTIAL_FILE</code><em class="property"> = System dependent default path to the credential file.</em><a class="headerlink" href="#deriva.core.DEFAULT_CREDENTIAL_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deriva.core.utils.html" class="btn btn-neutral float-right" title="deriva.core.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="deriva.config.html" class="btn btn-neutral" title="deriva.config package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'5.8',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

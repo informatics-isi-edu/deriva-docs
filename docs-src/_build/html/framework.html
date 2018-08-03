@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DERIVA Framework &mdash; DERIVA Docs  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using the Chaise Data Browser" href="users-guide/using-chaise.html" />
+    <link rel="prev" title="About DERIVA" href="about.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about.html#fairness">FAIRness</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DERIVA Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#server-components">Server Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ermrest">ERMrest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hatrac">Hatrac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ermresolve">ERMresolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ioboxd">IOBoxD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#client-libraries">Client Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-apis-deriva-py">Python APIs (deriva-py)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#javascript-libraries-ermrestjs">Javascript Libraries (ERMrestJS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#client-applications">Client Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#web-interface-chaise">Web Interface (Chaise)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#desktop-clients-deriva-qt">Desktop clients (deriva-qt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commandline-clients-deriva-py">Commandline Clients (deriva-py)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Using DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/using-chaise.html">Using the Chaise Data Browser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/using-chaise.html#example-of-a-landing-page">Example of a landing page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/using-chaise.html#filtering-sidebar">Filtering sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/using-chaise.html#search-results-view">Search results view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/using-chaise.html#record-page">Record page</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/managing-data.html">Managing Data in DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/managing-data.html#desktop-guis-for-authenticating-and-uploading-data-deriva-qt">Desktop GUIs for Authenticating and Uploading Data (deriva-qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/managing-data.html#commandline-interface-for-interacting-with-data-deriva-py">Commandline Interface for interacting with Data (deriva-py)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users-guide/managing-data.html#datapath-module-deriva-py"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="users-guide/managing-catalogs.html">Managing Catalogs in DERIVA</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deriva-py/index.html">deriva-py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/README.html">DataPath</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/api/deriva.html">deriva package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.config.html">deriva.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.core.html">deriva.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.transfer.html">deriva.transfer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deriva-py/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DERIVA Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>DERIVA Framework</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/framework.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="deriva-framework">
+<span id="deriva-framework"></span><h1>DERIVA Framework<a class="headerlink" href="#deriva-framework" title="Permalink to this headline">¶</a></h1>
+<p><img alt="Diagram of DERIVA framework architecture" src="_images/deriva-framework-graphic.png" /></p>
+<ul class="simple">
+<li>At DERIVA’s core are a suite of server components that store the data, describe the data model, represent the data and provide exporting capabilities.</li>
+<li>Client applications offer a 1) web interface that represents the data, data model and filtering/search capabilities for discovering data, 2) a desktop GUI that data submitters can use to authenticate with the deployment and upload data files and 3) command line interface for interacting with the data.</li>
+<li>Client libraries that…</li>
+</ul>
+<p>Let’s take a closer look at each of these layers.</p>
+<div class="section" id="server-components">
+<span id="server-components"></span><h2>Server Components<a class="headerlink" href="#server-components" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ermrest">
+<span id="ermrest"></span><h3>ERMrest<a class="headerlink" href="#ermrest" title="Permalink to this headline">¶</a></h3>
+<p>ERMrest is an entity/relationship database web service that acts as a powerful metadata catalog for the data. It enables rich data models and lets you create, then evolve data models that accurately represent the concepts of your domain.</p>
+<p>ERMrest supports:</p>
+<ul class="simple">
+<li>RESTful web services such as: entity, attribute, schema, table, column, etc.</li>
+<li>Query processing</li>
+<li>Enforcement of policies at row-level access, providing fine-grained security.</li>
+</ul>
+</div>
+<div class="section" id="hatrac">
+<span id="hatrac"></span><h3>Hatrac<a class="headerlink" href="#hatrac" title="Permalink to this headline">¶</a></h3>
+<p>Hatrac is DERIVA’s object store and is where the data - the scientific assets - “live”. Data is represented as web resources in RESTful service models. Hatrac provides:</p>
+<ul class="simple">
+<li>Guarantee of data fixity via immutability (non-jargon) and checksums to ensure data integrity.</li>
+<li>Versioning - tracks different versions of data in a non-destructive way.</li>
+<li>Hierarchical naming scheme</li>
+<li>Access Control Lists (ACLs)</li>
+</ul>
+</div>
+<div class="section" id="ermresolve">
+<span id="ermresolve"></span><h3>ERMresolve<a class="headerlink" href="#ermresolve" title="Permalink to this headline">¶</a></h3>
+<p>ERMresolve is a trivial identifier resolver and redirect service to help cite entities in an ERMrest catalog. The sole purpose of this service is to provide an easily managed URL space to use in support of <strong>data citation</strong>.</p>
+<p>It is designed to complement the use of <a class="reference external" href="http://www.w3.org/TR/curie">CURIEs a.k.a. Compact URIs</a> to form short, permanent, and resolvable identifiers. Typical use would be to associate a CURIE prefix with an ERMresolve deployment - this means a CURIE resolver could translate the CURIE into a valid ERMresolve HTTP URL and then fetch that resource to obtain cited data from ERMrest.</p>
+</div>
+<div class="section" id="ioboxd">
+<span id="ioboxd"></span><h3>IOBoxD<a class="headerlink" href="#ioboxd" title="Permalink to this headline">¶</a></h3>
+<p>IOBoxd is the “messenger service” of DERIVA and communicates between a DERIVA framework and external data sources.</p>
+<ul class="simple">
+<li>Supports diverse sources</li>
+<li>Extract, Transform and Load (ETL) operations</li>
+</ul>
+</div>
+</div>
+<div class="section" id="client-libraries">
+<span id="client-libraries"></span><h2>Client Libraries<a class="headerlink" href="#client-libraries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="python-apis-deriva-py">
+<span id="python-apis-deriva-py"></span><h3>Python APIs (deriva-py)<a class="headerlink" href="#python-apis-deriva-py" title="Permalink to this headline">¶</a></h3>
+<p>The Python APIs in the deriva-py module include:</p>
+<ul class="simple">
+<li>low-level ERMrest interface (see ErmrestCatalog)</li>
+<li>low-level Hatrac interface (see HatracStore)</li>
+<li>higher-level ERMrest catalog configuration (see CatalogConfig)</li>
+<li>higher-level ERMrest “data path” (see documentation and tutorials)</li>
+</ul>
+</div>
+<div class="section" id="javascript-libraries-ermrestjs">
+<span id="javascript-libraries-ermrestjs"></span><h3>Javascript Libraries (ERMrestJS)<a class="headerlink" href="#javascript-libraries-ermrestjs" title="Permalink to this headline">¶</a></h3>
+<p>ERMrestJS provides javascript bindings for ERMrest protocols with APIs for interacting and working with ERMrest.</p>
+</div>
+</div>
+<div class="section" id="client-applications">
+<span id="client-applications"></span><h2>Client Applications<a class="headerlink" href="#client-applications" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="web-interface-chaise">
+<span id="web-interface-chaise"></span><h3>Web Interface (Chaise)<a class="headerlink" href="#web-interface-chaise" title="Permalink to this headline">¶</a></h3>
+<p>Chaise is our user interface application. Written in Angular Javascript to provide powerful features in the browser. Configure Chaise to choose what and how to display the data in ERMrest and Hatrac.</p>
+<p>Users interact with the data (records) via the following capabilities:</p>
+<ul class="simple">
+<li>Search and browse (in a faceted search)</li>
+<li>Navigate between records</li>
+<li>Create, alter or extend domain model in catalogs</li>
+<li>Export collections of assets and metadata</li>
+<li>Share collections with others</li>
+<li>Annotate data.</li>
+</ul>
+</div>
+<div class="section" id="desktop-clients-deriva-qt">
+<span id="desktop-clients-deriva-qt"></span><h3>Desktop clients (deriva-qt)<a class="headerlink" href="#desktop-clients-deriva-qt" title="Permalink to this headline">¶</a></h3>
+<p>DERIVA provides Graphical User Interface tools for submitting data to a DERIA framework:</p>
+<ul class="simple">
+<li>An Authentication Agent that connects with your DERIVA security credentials</li>
+<li>File Upload for uploading data from your local environment. This tool is best when your uploading from your own computer and it’s not a very large amount of data.</li>
+</ul>
+</div>
+<div class="section" id="commandline-clients-deriva-py">
+<span id="commandline-clients-deriva-py"></span><h3>Commandline Clients (deriva-py)<a class="headerlink" href="#commandline-clients-deriva-py" title="Permalink to this headline">¶</a></h3>
+<p>Commands available in the deriva-py module include:</p>
+<ul class="simple">
+<li>deriva-acl-config: a command-line ERMrest ACL configuration utility</li>
+<li>deriva-hatrac-cli: a command-line Hatrac client</li>
+<li>deriva-download-cli: a command-line utility for batch export and download of tabular data from ERMrest and objects from Hatrac</li>
+<li>deriva-upload-cli: a command-line data upload and metadata update utility</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="users-guide/using-chaise.html" class="btn btn-neutral float-right" title="Using the Chaise Data Browser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="about.html" class="btn btn-neutral" title="About DERIVA" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva.transfer.download.processors.base_download_processor &mdash; deriva-py 5.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+
+  
+  <script src="../../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home"> deriva-py
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                5.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">API Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">DataPath</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#limitations">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api/deriva.html">deriva package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api/deriva.config.html">deriva.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#module-deriva.config.acl_config">deriva.config.acl_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#module-deriva.config.annotation_config">deriva.config.annotation_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#module-deriva.config.base_config">deriva.config.base_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#module-deriva.config.dump_catalog_annotations">deriva.config.dump_catalog_annotations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.config.html#module-deriva.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api/deriva.core.html">deriva.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.base_cli">deriva.core.base_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.datapath">deriva.core.datapath module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.deriva_binding">deriva.core.deriva_binding module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.deriva_server">deriva.core.deriva_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.ermrest_catalog">deriva.core.ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.ermrest_config">deriva.core.ermrest_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.ermrest_model">deriva.core.ermrest_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.hatrac_cli">deriva.core.hatrac_cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.hatrac_store">deriva.core.hatrac_store module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core.polling_ermrest_catalog">deriva.core.polling_ermrest_catalog module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.core.html#module-deriva.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../api/deriva.transfer.html">deriva.transfer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.transfer.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../api/deriva.transfer.html#module-deriva.transfer">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Command Line Interfaces</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#host"><code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#config-file"><code class="docutils literal notranslate"><span class="pre">&lt;config</span> <span class="pre">file&gt;</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#output-dir"><code class="docutils literal notranslate"><span class="pre">&lt;output</span> <span class="pre">dir&gt;</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#token"><code class="docutils literal notranslate"><span class="pre">--token</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#credential-file"><code class="docutils literal notranslate"><span class="pre">--credential-file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#catalog"><code class="docutils literal notranslate"><span class="pre">--catalog</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">deriva-py</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../processors.html">deriva.transfer.download.processors</a> &raquo;</li>
+        
+      <li>deriva.transfer.download.processors.base_download_processor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deriva.transfer.download.processors.base_download_processor</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">certifi</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="k">import</span> <span class="n">HTTPAdapter</span>
+<span class="kn">from</span> <span class="nn">requests.packages.urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
+<span class="kn">from</span> <span class="nn">bdbag</span> <span class="k">import</span> <span class="n">bdbag_ro</span> <span class="k">as</span> <span class="n">ro</span>
+
+
+<div class="viewcode-block" id="BaseDownloadProcessor"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor">[docs]</a><span class="k">class</span> <span class="nc">BaseDownloadProcessor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for DownloadProcessor classes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Connection&#39;</span><span class="p">:</span> <span class="s1">&#39;keep-alive&#39;</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">envars</span> <span class="o">=</span> <span class="n">envars</span> <span class="k">if</span> <span class="p">(</span><span class="n">envars</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;catalog&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;store&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;query&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">envars</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">envars</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;base_path&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store_base</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;store_base&quot;</span><span class="p">,</span> <span class="s2">&quot;/hatrac/&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_bag</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bag&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sub_path&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sessions&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">format_args</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;format_args&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;application/octet-stream&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ro_file_provenance</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ro_manifest&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ro_author_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ro_author_name&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ro_author_orcid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ro_author_orcid&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.process"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span>
+        <span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;accept&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">})</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalogQuery</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_file_provenance</span><span class="p">:</span>
+            <span class="n">ro</span><span class="o">.</span><span class="n">add_file_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span><span class="p">,</span>
+                                 <span class="n">source_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                 <span class="n">local_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span>
+                                 <span class="n">media_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
+                                 <span class="n">retrieved_on</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_on</span><span class="p">(),</span>
+                                 <span class="n">retrieved_by</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_by</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_name</span><span class="p">,</span> <span class="n">orcid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_orcid</span><span class="p">),</span>
+                                 <span class="n">bundled_as</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_bundled_as</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.catalogQuery"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.catalogQuery">[docs]</a>    <span class="k">def</span> <span class="nf">catalogQuery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span> <span class="n">as_file</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">as_file</span><span class="p">:</span>
+            <span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">makeDirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">as_file</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getAsFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to execute catalog query: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.headForHeaders"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.headForHeaders">[docs]</a>    <span class="k">def</span> <span class="nf">headForHeaders</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">raise_for_status</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getHatracStore</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">store</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">raise_for_status</span><span class="p">:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">session</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getExternalSession</span><span class="p">(</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">raise_for_status</span><span class="p">:</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+            <span class="n">headers</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span>
+
+        <span class="k">return</span> <span class="n">headers</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.getHatracStore"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.getHatracStore">[docs]</a>    <span class="k">def</span> <span class="nf">getHatracStore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="n">urlparts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_base</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_base</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">serverURI</span> <span class="o">=</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">scheme</span> <span class="o">+</span> <span class="s2">&quot;://&quot;</span> <span class="o">+</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">netloc</span>
+            <span class="k">if</span> <span class="n">serverURI</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">():</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># do we need to deal with the possibility of a fully qualified URL referencing a different hatrac host?</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Got a reference to a Hatrac server [</span><span class="si">%s</span><span class="s2">] that is different from the expected Hatrac server: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">serverURI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.getExternalUrl"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.getExternalUrl">[docs]</a>    <span class="k">def</span> <span class="nf">getExternalUrl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="n">urlparts</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_base</span><span class="p">):</span>
+            <span class="n">path_only</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_base</span><span class="p">)</span>
+            <span class="n">serverURI</span> <span class="o">=</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">scheme</span> <span class="o">+</span> <span class="s2">&quot;://&quot;</span> <span class="o">+</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">netloc</span>
+            <span class="k">if</span> <span class="n">serverURI</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">()</span> <span class="ow">or</span> <span class="n">path_only</span><span class="p">:</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">(),</span> <span class="n">url</span><span class="p">])</span> <span class="k">if</span> <span class="n">path_only</span> <span class="k">else</span> <span class="n">url</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">urlparts</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">and</span> <span class="n">urlparts</span><span class="o">.</span><span class="n">netloc</span><span class="p">):</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">(),</span> <span class="n">url</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">url</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.getExternalSession"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.getExternalSession">[docs]</a>    <span class="k">def</span> <span class="nf">getExternalSession</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">):</span>
+        <span class="n">sessions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span>
+        <span class="n">auth_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;auth_params&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="n">cookies</span> <span class="o">=</span> <span class="n">auth_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cookies&quot;</span><span class="p">)</span>
+        <span class="n">auth_url</span> <span class="o">=</span> <span class="n">auth_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;auth_url&quot;</span><span class="p">)</span>
+        <span class="n">login_params</span> <span class="o">=</span> <span class="n">auth_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;login_params&quot;</span><span class="p">)</span>
+        <span class="n">session_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;session_config&quot;</span><span class="p">)</span>
+
+        <span class="n">session</span> <span class="o">=</span> <span class="n">sessions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">session</span>
+
+        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">session_config</span><span class="p">:</span>
+            <span class="n">session_config</span> <span class="o">=</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
+        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_connect&#39;</span><span class="p">],</span>
+                        <span class="n">read</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_read&#39;</span><span class="p">],</span>
+                        <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
+                        <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">])</span>
+
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;https://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">cookies</span><span class="p">:</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cookies</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">login_params</span> <span class="ow">and</span> <span class="n">auth_url</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">auth_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">login_params</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;</span> <span class="mi">203</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;GetExternalSession Failed with Status Code: </span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+
+        <span class="n">sessions</span><span class="p">[</span><span class="n">host</span><span class="p">]</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="k">return</span> <span class="n">session</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.createPaths"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.createPaths">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">createPaths</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="n">sub_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">is_bag</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">relpath</span> <span class="o">=</span> <span class="n">sub_path</span> <span class="k">if</span> <span class="n">sub_path</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">sub_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">relpath</span> <span class="o">+=</span> <span class="n">ext</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">relpath</span> <span class="o">=</span> <span class="n">relpath</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">envars</span><span class="p">)</span>
+
+        <span class="n">abspath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_path</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span> <span class="k">if</span> <span class="n">is_bag</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">relpath</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">relpath</span><span class="p">,</span> <span class="n">abspath</span></div>
+
+<div class="viewcode-block" id="BaseDownloadProcessor.makeDirs"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.BaseDownloadProcessor.makeDirs">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">makeDirs</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">error</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+                    <span class="k">raise</span></div></div>
+
+
+<div class="viewcode-block" id="CSVDownloadProcessor"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.CSVDownloadProcessor">[docs]</a><span class="k">class</span> <span class="nc">CSVDownloadProcessor</span><span class="p">(</span><span class="n">BaseDownloadProcessor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CSVDownloadProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.csv&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;text/csv&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createPaths</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">,</span> <span class="n">is_bag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_bag</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="n">envars</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JSONDownloadProcessor"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.JSONDownloadProcessor">[docs]</a><span class="k">class</span> <span class="nc">JSONDownloadProcessor</span><span class="p">(</span><span class="n">BaseDownloadProcessor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JSONDownloadProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.json&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;application/json&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createPaths</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">,</span> <span class="n">is_bag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_bag</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="n">envars</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JSONStreamDownloadProcessor"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.JSONStreamDownloadProcessor">[docs]</a><span class="k">class</span> <span class="nc">JSONStreamDownloadProcessor</span><span class="p">(</span><span class="n">BaseDownloadProcessor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JSONStreamDownloadProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.json&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span> <span class="o">=</span> <span class="s2">&quot;application/x-json-stream&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createPaths</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ext</span><span class="p">,</span> <span class="n">is_bag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_bag</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="n">envars</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="JSONEnvUpdateProcessor"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.JSONEnvUpdateProcessor">[docs]</a><span class="k">class</span> <span class="nc">JSONEnvUpdateProcessor</span><span class="p">(</span><span class="n">BaseDownloadProcessor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JSONEnvUpdateProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JSONEnvUpdateProcessor.process"><a class="viewcode-back" href="../../../../../api/deriva.transfer.download.processors.html#deriva.transfer.download.processors.base_download_processor.JSONEnvUpdateProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span>
+        <span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;accept&#39;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">})</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalogQuery</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">as_file</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envars</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">[]</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../../',
+            VERSION:'5.8',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

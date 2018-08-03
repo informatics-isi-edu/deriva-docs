@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>deriva.core.polling_ermrest_catalog &mdash; DERIVA Docs  documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about.html#fairness">FAIRness</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../framework.html">DERIVA Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#server-components">Server Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ermrest">ERMrest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#hatrac">Hatrac</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ermresolve">ERMresolve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#ioboxd">IOBoxD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#client-libraries">Client Libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#python-apis-deriva-py">Python APIs (deriva-py)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#javascript-libraries-ermrestjs">Javascript Libraries (ERMrestJS)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../framework.html#client-applications">Client Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#web-interface-chaise">Web Interface (Chaise)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#desktop-clients-deriva-qt">Desktop clients (deriva-qt)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../framework.html#commandline-clients-deriva-py">Commandline Clients (deriva-py)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Using DERIVA</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/using-chaise.html">Using the Chaise Data Browser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#example-of-a-landing-page">Example of a landing page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#filtering-sidebar">Filtering sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#search-results-view">Search results view</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/using-chaise.html#record-page">Record page</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/managing-data.html">Managing Data in DERIVA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#desktop-guis-for-authenticating-and-uploading-data-deriva-qt">Desktop GUIs for Authenticating and Uploading Data (deriva-qt)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#commandline-interface-for-interacting-with-data-deriva-py">Commandline Interface for interacting with Data (deriva-py)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users-guide/managing-data.html#datapath-module-deriva-py"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users-guide/managing-catalogs.html">Managing Catalogs in DERIVA</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../deriva-py/index.html">deriva-py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html">DataPath</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#tutorials">Tutorials</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrestcatalog">ErmrestCatalog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#http-caching">HTTP Caching</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/api/deriva.html">deriva package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/api/deriva.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.config.html">deriva.config package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.core.html">deriva.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/api/deriva.transfer.html">deriva.transfer package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/api/deriva.html#module-deriva">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html">deriva-acl-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#using-deriva-acl-config-to-configure-acls">Using deriva-acl-config to configure ACLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-groups-stanza">The groups stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-group-list-table-stanza">The group_list_table stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-acl-definitions-stanza">The acl_definitions stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-acl-bindings-stanza">The acl_bindings stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-catalog-acls-stanza">The catalog_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-schema-acls-stanza">The schema_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-table-acls-stanza">The table_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-column-acls-stanza">The column_acls stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#the-foreign-key-acls-stanza">The foreign_key_acls stanza</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-acl-config.html#security-considerations">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html">deriva-annotation-config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#using-deriva-annotation-config-to-configure-annotations">Using deriva-annotation-config to configure annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#config-file-format">Config file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-known-attributes-stanza">The <code class="docutils literal notranslate"><span class="pre">known_attributes</span></code> stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-schema-annotations-stanza">The schema_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-table-annotations-stanza">The table_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-column-annotations-stanza">The column_annotations stanza</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-annotation-config.html#the-foreign-key-annotations-stanza">The foreign_key_annotations stanza</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html">deriva-hatrac-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#common-options">Common options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#hostname">Hostname</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#authentication">Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#namespace-operation-examples">Namespace operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#list">List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#create-namespace">Create Namespace</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-namespace">Delete Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#object-operation-examples">Object operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#put-an-object">Put an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#get-an-object">Get an object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-an-object">Delete an object</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#acl-operation-examples">ACL operation examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#get-acls">Get ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#set-acls">Set ACLs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-hatrac-cli.html#delete-acls">Delete ACLs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html">deriva-download-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#optional-arguments">Optional arguments:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#json-stream"><code class="docutils literal notranslate"><span class="pre">json-stream</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../deriva-py/index.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DERIVA Docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../core.html">deriva.core</a> &raquo;</li>
+        
+      <li>deriva.core.polling_ermrest_catalog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for deriva.core.polling_ermrest_catalog</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pika</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">NotModified</span><span class="p">,</span> <span class="n">ConcurrentUpdate</span>
+<span class="kn">from</span> <span class="nn">.ermrest_catalog</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span>
+
+
+<div class="viewcode-block" id="PollingErmrestCatalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog">[docs]</a><span class="k">class</span> <span class="nc">PollingErmrestCatalog</span><span class="p">(</span><span class="n">ErmrestCatalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Persistent handle for an ERMrest catalog.</span>
+
+<span class="sd">       Provides a higher-level state_change_once() idiom to</span>
+<span class="sd">       efficiently find candidate rows, transform them, and apply</span>
+<span class="sd">       updates.</span>
+
+<span class="sd">       Provides a higher-level blocking_poll() idiom to efficiently</span>
+<span class="sd">       poll a catalog, using AMQP to optimize polling where possible.</span>
+<span class="sd">       (AMQP is currently limited to clients on localhost of catalog</span>
+<span class="sd">       in practice.)</span>
+
+<span class="sd">       These features can be composed to implement condition-action</span>
+<span class="sd">       agents with domain-specific logic, e.g.</span>
+
+<span class="sd">       catalog = ErmrestCatalog(...)</span>
+<span class="sd">       idle_etag = None</span>
+
+<span class="sd">       def look_for_work():</span>
+<span class="sd">           global idle_etag</span>
+<span class="sd">           idle_etag, batch = catalog.state_change_once(</span>
+<span class="sd">               # claim up to 5 items per batch</span>
+<span class="sd">               &#39;/entity/Foo/state=actionable?limit=5&#39;,</span>
+<span class="sd">               &#39;/attributegroup/Foo/id;state&#39;,</span>
+<span class="sd">               lambda row: {&#39;id&#39;: row[&#39;id&#39;], &#39;state&#39;: &#39;claimed&#39;},</span>
+<span class="sd">               idle_etag</span>
+<span class="sd">           )</span>
+<span class="sd">           for candidate, update in batch:</span>
+<span class="sd">               # assume we have free reign on claimed candidates</span>
+<span class="sd">               # using state=claimed as a semaphore</span>
+<span class="sd">               revision = candidate.copy()</span>
+<span class="sd">               revision[&#39;state&#39;] = update[&#39;state&#39;]</span>
+<span class="sd">               ... # do agent work</span>
+<span class="sd">               revision[&#39;state&#39;] = &#39;complete&#39;</span>
+<span class="sd">               catalog.put(&#39;/entity/Foo&#39;, [revision])</span>
+
+<span class="sd">       catalog.blocking_poll(look_for_work)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="p">{},</span> <span class="n">caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create ERMrest catalog binding.</span>
+
+<span class="sd">           Arguments:</span>
+<span class="sd">             scheme: &#39;http&#39; or &#39;https&#39;</span>
+<span class="sd">             server: server FQDN string</span>
+<span class="sd">             catalog_id: e.g. &#39;1&#39;</span>
+<span class="sd">             credentials: credential secrets, e.g. cookie</span>
+<span class="sd">             caching: whether to retain a GET response cache</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ErmrestCatalog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">caching</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amqp_server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notice_exchange</span> <span class="o">=</span> <span class="s2">&quot;ermrest_changes&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_amqp_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Bind or rebind to AMQP for change notice monitoring.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span>
+            <span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span>
+                <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">amqp_server</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># listening channel for ermrest change notifications</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">exchange_declare</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_exchange</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;fanout&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">te</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">exchange_declare</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_exchange</span><span class="p">,</span> <span class="n">exchange_type</span><span class="o">=</span><span class="s1">&#39;fanout&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">queue_bind</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_exchange</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;ERMrest change-notice channel open.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Consume all available work before returning.&quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">found</span> <span class="o">=</span> <span class="n">look_for_work</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">except</span> <span class="n">ConcurrentUpdate</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># retry if we had a race-condition while claiming work</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Handling ErmrestConcurrentUpdate exception...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">pass</span>
+
+<div class="viewcode-block" id="PollingErmrestCatalog.blocking_poll"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.blocking_poll">[docs]</a>    <span class="k">def</span> <span class="nf">blocking_poll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">look_for_work</span><span class="p">,</span> <span class="n">polling_seconds</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">coalesce_seconds</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use ERMrest change-notice monitoring to optimize polled work processing.</span>
+
+<span class="sd">           Client-provided look_for_work function finds actual work in</span>
+<span class="sd">           ERMrest and processes it. We only optimize the scheduling</span>
+<span class="sd">           of this work.</span>
+
+<span class="sd">           Run look_for_work() whenever there *might* be more work in</span>
+<span class="sd">           ERMrest.</span>
+
+<span class="sd">           If look_for_work() returns True, assume there is more work.</span>
+
+<span class="sd">           If look_for_work() returns non-True, wait for ERMrest</span>
+<span class="sd">           change-notice or polling_seconds timeout before looking</span>
+<span class="sd">           again (whichever comes first).</span>
+
+<span class="sd">           On any change-monitoring communication error, assume there</span>
+<span class="sd">           might be more work and restart the monitoring process.</span>
+
+<span class="sd">           Other exceptions abort the blocking_poll() call.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">last_run_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">retry_amqp</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_amqp_bind</span><span class="p">()</span>
+                <span class="n">polling_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                          <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">polling_seconds</span><span class="p">)</span>
+                <span class="n">coalesce_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                           <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">coalesce_seconds</span><span class="p">)</span>
+                <span class="n">retry_amqp</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># run once to catch up on historical changes since before we opened our channel</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+
+                <span class="c1"># follow channel with polling_seconds periodic wakeup even when idle</span>
+                <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">polling_gen</span><span class="p">:</span>
+                    <span class="c1"># ... and delay for up to coalesce_seconds to combine multiple notices into one wakeup</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Woke up on </span><span class="si">%s</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;change-notice&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s1">&#39;poll timeout&#39;</span><span class="p">))</span>
+                    <span class="k">while</span> <span class="n">coalesce_gen</span><span class="o">.</span><span class="n">next</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+                    <span class="c1"># catch up on changes since last time we looked</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">pika</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionClosed</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># do our best without AMQP by falling back on polling</span>
+                <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">retry_amqp</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Using basic polling due to AMQP communication problems.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">last_run_time</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">retry_amqp</span><span class="p">:</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">polling_seconds</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">last_run_time</span><span class="p">)))</span>
+                    <span class="n">last_run_time</span> <span class="o">=</span> <span class="n">now</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Got error </span><span class="si">%s</span><span class="s1"> in main event loop.&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+                <span class="k">raise</span></div>
+
+<div class="viewcode-block" id="PollingErmrestCatalog.state_change_once"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog.state_change_once">[docs]</a>    <span class="k">def</span> <span class="nf">state_change_once</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_datapath</span><span class="p">,</span> <span class="n">update_datapath</span><span class="p">,</span> <span class="n">row_transform_func</span><span class="p">,</span> <span class="n">idle_etag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform generic conditional state update via GET-PUT sequence.</span>
+
+<span class="sd">           Arguments:</span>
+<span class="sd">             query_datapath: a query for candidate rows</span>
+<span class="sd">             update_datapath: an update to consume update rows</span>
+<span class="sd">             row_transform_func: maps candidate to update rows</span>
+<span class="sd">             idle_etag: no-op if table is still in this state</span>
+
+<span class="sd">           Returns: (idle_etag, [(candidate, update)...])</span>
+<span class="sd">             idle_etag: value to thread to future calls</span>
+<span class="sd">             [(candidate, update)...]: each row that was updated</span>
+
+<span class="sd">           Exceptions from the transform or update process will abort</span>
+<span class="sd">           without returning results.</span>
+
+<span class="sd">           1. GET query_datapath to get candidate row(s)</span>
+<span class="sd">           2. apply row_transform_func(row) to get updated content</span>
+<span class="sd">           3. PUT update_datapath to deliver transformed content</span>
+<span class="sd">              -- discards rows transformed to None</span>
+
+<span class="sd">           Uses opportunistic concurrency control with ETag, If-Match,</span>
+<span class="sd">           etc. for safety.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">query_datapath</span><span class="p">,</span> <span class="n">raise_not_modified</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NotModified</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">query_datapath</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">idle_etag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">before</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;etag&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idle_etag</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;No new state to process.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">idle_etag</span><span class="p">,</span> <span class="p">[]</span>
+
+        <span class="n">rows_before</span> <span class="o">=</span> <span class="n">before</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rows_before</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;No candidate rows found.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">plan</span> <span class="o">=</span> <span class="p">[(</span><span class="n">row</span><span class="p">,</span> <span class="n">row_transform_func</span><span class="p">(</span><span class="n">row</span><span class="p">))</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows_before</span><span class="p">]</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="p">[(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span> <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">update</span> <span class="ow">in</span> <span class="n">plan</span> <span class="k">if</span> <span class="n">update</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">plan</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;No row updates requested.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">before</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;etag&#39;</span><span class="p">),</span> <span class="p">[]</span>
+
+        <span class="n">after</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="n">update_datapath</span><span class="p">,</span>
+            <span class="n">json</span><span class="o">=</span><span class="p">[</span><span class="n">update</span> <span class="k">for</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">update</span> <span class="ow">in</span> <span class="n">plan</span><span class="p">],</span>
+            <span class="n">guard_response</span><span class="o">=</span><span class="n">before</span>
+        <span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Updated </span><span class="si">%d</span><span class="s1"> rows in catalog:</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">after</span><span class="o">.</span><span class="n">json</span><span class="p">()))</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">after</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;etag&#39;</span><span class="p">),</span> <span class="n">plan</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, USC Information Sciences Institute, Informatics Systems Research Division.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

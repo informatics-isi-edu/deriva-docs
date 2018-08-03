@@ -6,7 +6,7 @@ DERIVA Documentation
    :caption: Getting to know DERIVA
 
    about
-   framework
+   platform
    
 .. toctree::
   :maxdepth: 1

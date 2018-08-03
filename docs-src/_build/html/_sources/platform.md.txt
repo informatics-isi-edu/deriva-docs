@@ -1,6 +1,6 @@
-# DERIVA Framework
+# DERIVA Platform
 
-![Diagram of DERIVA framework architecture](images/deriva-framework-graphic.png)
+![Diagram of DERIVA platform architecture](images/deriva-framework-graphic.png)
 
 * At DERIVA's core are a suite of server components that store the data, describe the data model, represent the data and provide exporting capabilities. 
 * Client applications offer a 1) web interface that represents the data, data model and filtering/search capabilities for discovering data, 2) a desktop GUI that data submitters can use to authenticate with the deployment and upload data files and 3) command line interface for interacting with the data.
@@ -36,7 +36,7 @@ It is designed to complement the use of [CURIEs a.k.a. Compact URIs](http://www.
 
 ### IOBoxD
 
-IOBoxd is the "messenger service" of DERIVA and communicates between a DERIVA framework and external data sources.
+IOBoxd is the "messenger service" of DERIVA and communicates between a DERIVA deployment and external data sources.
 
 * Supports diverse sources
 * Extract, Transform and Load (ETL) operations
@@ -73,7 +73,7 @@ Users interact with the data (records) via the following capabilities:
 
 ### Desktop clients (deriva-qt)
 
-DERIVA provides Graphical User Interface tools for submitting data to a DERIA framework: 
+DERIVA provides Graphical User Interface tools for submitting data to a DERIA platform: 
 
 * An Authentication Agent that connects with your DERIVA security credentials
 * File Upload for uploading data from your local environment. This tool is best when your uploading from your own computer and it's not a very large amount of data.

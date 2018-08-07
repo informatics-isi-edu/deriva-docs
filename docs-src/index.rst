@@ -20,7 +20,12 @@ DERIVA Documentation
   :maxdepth: 2
   :caption: Reference 
   
+  chaise/index
+  deriva-qt/index
   deriva-py/index
+  ermrestjs/index
+  ermrest/index
+  hatrac/index
    
 Indices and tables
 ==================

@@ -22,9 +22,4 @@ deriva-py
    cli/deriva-hatrac-cli
    cli/deriva-download-cli
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

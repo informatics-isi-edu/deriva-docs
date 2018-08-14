@@ -48,7 +48,8 @@ DERIVA Documentation
  :maxdepth: 1
  :caption: ERMrestJS User Documents
 
- ermrestjs/user-docs/angularjs-usage.md
+ ermrestjs/user-docs/installation.md
+ ermrestjs/user-docs/usage.md
  ermrestjs/user-docs/facet-examples.md
  ermrestjs/user-docs/facet-json-structure.md
  ermrestjs/user-docs/handlebars.md

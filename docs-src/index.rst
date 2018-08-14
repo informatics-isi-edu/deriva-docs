@@ -18,14 +18,14 @@ DERIVA Documentation
   
 .. toctree::
   :maxdepth: 1
-  :caption: deriva-qt User Documents
+  :caption: Desktop Client User Documents
   
   deriva-qt/install.md
   deriva-qt/uploading.md
   
 .. toctree::
    :maxdepth: 1
-   :caption: deriva-py CLI
+   :caption: Command-line Interfaces
 
    deriva-py/cli/deriva-acl-config
    deriva-py/cli/deriva-annotation-config
@@ -69,6 +69,7 @@ DERIVA Documentation
    :maxdepth: 1
    :caption: Chaise User Documents
 
+   chaise/install
    chaise/user-docs/chaise-config.md
    chaise/user-docs/contexts.md
    chaise/user-docs/custom-css.md
@@ -97,6 +98,7 @@ DERIVA Documentation
    :caption: ERMrest User Documents
 
    ermrest/user-doc/install-redhat.md
+   ermrest/user-doc/install-ubuntu1204
    ermrest/user-doc/annotation.md
    ermrest/user-doc/tuning.md
    ermrest/user-doc/ermrest-registry-purge.md
@@ -140,14 +142,14 @@ DERIVA Documentation
    :maxdepth: 1
    :caption: Hatrac User Documents
 
-   hatrac/INSTALL.md
-   hatrac/HOWTO.md
+   hatrac/install.md
+   hatrac/howto.md
 
 .. toctree::
   :maxdepth: 1
   :caption: Hatrac API and Service Semantics
   
-  hatrac/REST-API.md
+  hatrac/rest-api.md
    
 Indices and tables
 ==================

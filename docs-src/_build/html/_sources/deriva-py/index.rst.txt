@@ -2,6 +2,12 @@ deriva-py
 ==================
 
 .. toctree::
+   :maxdepth: 1
+   :caption: Installing 
+   
+   install
+
+.. toctree::
    :maxdepth: 4
    :caption: API Guides
 
@@ -22,4 +28,9 @@ deriva-py
    cli/deriva-hatrac-cli
    cli/deriva-download-cli
 
+Indices and tables
+==================
 
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

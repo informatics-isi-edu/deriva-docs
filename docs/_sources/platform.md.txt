@@ -12,21 +12,25 @@ Let's take a closer look at each of these layers.
 
 ### ERMrest
 
-ERMrest is an entity/relationship database web service that acts as a powerful metadata catalog for the data. It enables rich data models and lets you create, then evolve data models that accurately represent the concepts of your domain. 
+[ERMrest](/ermrest/) is an entity/relationship database web service that acts as a powerful metadata catalog for the data. It enables rich data models and lets you create, then evolve data models that accurately represent the concepts of your domain. 
 
 ERMrest supports:
 * RESTful web services such as: entity, attribute, schema, table, column, etc. 
 * Query processing
 * Enforcement of policies at row-level access, providing fine-grained security.
 
+* [ERMrest Documentation](/ermrest/)
+
 ### Hatrac
 
-Hatrac is DERIVA's object store and is where the data - the scientific assets - "live". Data is represented as web resources in RESTful service models. Hatrac provides:
+[Hatrac](/hatrac/) is DERIVA's object store and is where the data - the scientific assets - "live". Data is represented as web resources in RESTful service models. Hatrac provides:
 
 * Guarantee of data fixity via immutability (non-jargon) and checksums to ensure data integrity.
 * Versioning - tracks different versions of data in a non-destructive way.
 * Hierarchical naming scheme
 * Access Control Lists (ACLs)
+
+* [Hatrac Documentation](/hatrac/)
 
 ### ERMresolve
 
@@ -45,22 +49,26 @@ IOBoxd is the "messenger service" of DERIVA and communicates between a DERIVA de
 
 ### Python APIs (deriva-py)
 
-The Python APIs in the deriva-py module include:
+The [Python APIs in the deriva-py](/deriva-py/api/) module include:
 
 * low-level ERMrest interface (see ErmrestCatalog)
 * low-level Hatrac interface (see HatracStore)
 * higher-level ERMrest catalog configuration (see CatalogConfig)
 * higher-level ERMrest "data path" (see documentation and tutorials)
 
+* [Python APIs Documentation](/deriva-py/api/)
+
 ### Javascript Libraries (ERMrestJS)
 
-ERMrestJS provides javascript bindings for ERMrest protocols with APIs for interacting and working with ERMrest.
+[ERMrestJS](/ermrestjs/) provides javascript bindings for ERMrest protocols with APIs for interacting and working with ERMrest.
+
+* [ERMrestJS Documentation](/ermrestjs/)
 
 ## Client Applications
 
 ### Web Interface (Chaise)
 
-Chaise is our user interface application. Written in Angular Javascript to provide powerful features in the browser. Configure Chaise to choose what and how to display the data in ERMrest and Hatrac. 
+[Chaise](/chaise/) is our user interface application. Written in Angular Javascript to provide powerful features in the browser. Configure Chaise to choose what and how to display the data in ERMrest and Hatrac. 
 
 Users interact with the data (records) via the following capabilities:
 
@@ -71,17 +79,20 @@ Users interact with the data (records) via the following capabilities:
 * Share collections with others
 * Annotate data.
 
+* [Chaise Documentation](/chaise/)
+
 ### Desktop clients (deriva-qt)
 
-DERIVA provides Graphical User Interface tools for submitting data to a DERIA platform: 
+DERIVA provides [Graphical User Interface tools](/deriva-qt/) for submitting data to a DERIA platform: 
 
 * An Authentication Agent that connects with your DERIVA security credentials
 * File Upload for uploading data from your local environment. This tool is best when your uploading from your own computer and it's not a very large amount of data.
 
+* [Graphical User Interface Desktop Client tools](/deriva-qt/)
 
 ### Commandline Clients (deriva-py)
 
-Commands available in the deriva-py module include:
+[Commands available in the deriva-py module](/deriva-py/cli/commands.html) include:
 
 * deriva-acl-config: a command-line ERMrest ACL configuration utility
 * deriva-hatrac-cli: a command-line Hatrac client

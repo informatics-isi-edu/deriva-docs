@@ -1,4 +1,4 @@
-deriva-py
+Python Command-line Clients and API (deriva-py)
 ==================
 
 .. toctree::
@@ -29,9 +29,3 @@ deriva-py
    cli/deriva-hatrac-cli
    cli/deriva-download-cli
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

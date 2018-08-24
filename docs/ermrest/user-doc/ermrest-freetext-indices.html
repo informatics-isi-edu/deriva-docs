@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installing (Ubuntu 12.04) &mdash; DERIVA Docs  documentation</title>
+  <title>ermrest-freetext-indices &mdash; DERIVA Docs  documentation</title>
   
 
   
@@ -31,9 +31,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Model Annotation" href="annotation.html" />
-    <link rel="prev" title="Installing (Red Hat derivatives)" href="install-redhat.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -132,7 +130,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../users-guide/managing-catalogs.html">Managing Catalogs in DERIVA</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../deriva-qt/index.html">Desktop Command-line Clients (deriva-qt)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../deriva-qt/install.html">Installing Desktop Clients</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-qt/install.html#download-the-packages">Download the packages</a></li>
@@ -1469,7 +1467,7 @@ boolean<p>&amp;gt;</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Entity Relationship Store (ERMrest)</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Entity Relationship Store (ERMrest)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="install-redhat.html">Installing (Red Hat derivatives)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="install-redhat.html#prerequisites">Prerequisites</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="install-redhat.html#extended-packages-for-enterprise-linux-epel">Extended Packages for Enterprise Linux (EPEL)</a></li>
@@ -1486,9 +1484,9 @@ boolean<p>&amp;gt;</p>
 <li class="toctree-l3"><a class="reference internal" href="install-redhat.html#firewall">Firewall</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing (Ubuntu 12.04)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#https-notes">HTTPS Notes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#postgres-notes">Postgres Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-ubuntu1204.html">Installing (Ubuntu 12.04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install-ubuntu1204.html#https-notes">HTTPS Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install-ubuntu1204.html#postgres-notes">Postgres Notes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="annotation.html">Model Annotation</a><ul>
@@ -1919,15 +1917,13 @@ boolean<p>&amp;gt;</p>
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../index.html">Entity Relationship Store (ERMrest)</a> &raquo;</li>
-        
-      <li>Installing (Ubuntu 12.04)</li>
+      <li>ermrest-freetext-indices</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/ermrest/user-doc/install-ubuntu1204.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/ermrest/user-doc/ermrest-freetext-indices.md.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -1959,47 +1955,81 @@ boolean<p>&amp;gt;</p>
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="installing-ubuntu-12-04">
-<span id="installing-ubuntu-12-04"></span><h1>Installing (Ubuntu 12.04)<a class="headerlink" href="#installing-ubuntu-12-04" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ermrest-freetext-indices">
+<span id="ermrest-freetext-indices"></span><h1>ermrest-freetext-indices<a class="headerlink" href="#ermrest-freetext-indices" title="Permalink to this headline">¶</a></h1>
+<p>The script <code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span></code> is a utility script for
+advanced, legacy use cases.  Please see <a class="reference external" href="#caveats">caveats</a> below
+before attempting to use this script.</p>
+<div class="section" id="synopsis">
+<span id="synopsis"></span><h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<p>Invoke as the <code class="docutils literal notranslate"><span class="pre">ermrest</span></code> daemon user on the ERMrest web server:</p>
+<p><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span></code> <em>catalog</em> <em>schema</em> …</p>
+<p>Creates indices on tables under one or more given schema names for
+a given catalog ID.</p>
+</div>
+<div class="section" id="description">
+<span id="description"></span><h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span></code> processes a local database containing one
+ERMrest catalog in order to create additional column indices in the
+database.  It prepares <code class="docutils literal notranslate"><span class="pre">btree</span></code> and <code class="docutils literal notranslate"><span class="pre">gin_trgm_ops</span></code> column indexes
+useful for accelerating general Chaise functionality.</p>
+<div class="section" id="caveats">
+<span id="caveats"></span><h3>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h3>
+<p>Most simple ERMrest deployments do not need to use this script.</p>
 <ol class="simple">
-<li>Enable upstream Postgresql repo following <a class="reference external" href="http://wiki.postgresql.org/wiki/Apt">Apt instructions from Postgresql Wiki</a>.</li>
-<li>Set the <code class="docutils literal notranslate"><span class="pre">PLATFORM=ubuntu1204</span></code> variable for our Makefiles</li>
-<li>Do normal installation sequence as <code class="docutils literal notranslate"><span class="pre">root</span></code> user</li>
+<li>This script is unnecessary on catalogs managed by the ERMrest HTTP
+interface. Tables created through the REST API are indexed
+automatically in the same way managed by this script. This script
+is only useful when a DBA has locally customized the schema via SQL
+DDL statements and wishes to add missing indexes for improved
+performance when accessing those locally customized tables.</li>
+<li>The term <code class="docutils literal notranslate"><span class="pre">freetext</span></code> in the script name is a bit of a misnomer. Long
+ago, Chaise used the ERMrest <code class="docutils literal notranslate"><span class="pre">::ts::</span></code> text-search operator for the
+search box, and this script was used to construct appropriate
+<code class="docutils literal notranslate"><span class="pre">tsvector</span></code> indices in the database. However, modern Chaise uses the
+ERMrest <code class="docutils literal notranslate"><span class="pre">::regexp::</span></code> operator for substring matching and this
+script only manages tri-gram indices appropriate for accelerating
+those searches.</li>
 </ol>
+</div>
+</div>
+<div class="section" id="options">
+<span id="options"></span><h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span></code> requires the following command-line arguments:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">su</span> <span class="pre">-</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~devuser/webauthn</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span> <span class="pre">PLATFORM=ubuntu1204</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~devuser/ermrest</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">predeploy</span> <span class="pre">PLATFORM=ubuntu1204</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span> <span class="pre">PLATFORM=ubuntu1204</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span> <span class="pre">PLATFORM=ubuntu1204</span></code></li>
+<li><em>catalog</em>: Identifier for the catalog, e.g. <code class="docutils literal notranslate"><span class="pre">1</span></code></li>
+<li><em>schema</em>: Name of a schema in the catalog, e.g. <code class="docutils literal notranslate"><span class="pre">isa</span></code></li>
 </ul>
-<ol class="simple">
-<li>Enable SSL</li>
-</ol>
-<div class="section" id="https-notes">
-<span id="https-notes"></span><h2>HTTPS Notes<a class="headerlink" href="#https-notes" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li>The web service is called <code class="docutils literal notranslate"><span class="pre">apache2</span></code> and some file locations and operating details differ from that documented for CentOS.</li>
-<li>The ermrest <code class="docutils literal notranslate"><span class="pre">predeploy</span></code> make target will run <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> to install dependencies including self-signed certificates for apache.</li>
-<li>The HTTPS service needs to be enabled explicitly, unlike on CentOS</li>
-</ol>
+<p>The <em>schema</em> parameter may be repeated to process more than one named schema
+in a single invocation of the script.</p>
+<p>If invoked without arguments, the script outputs a brief help message.</p>
+</div>
+<div class="section" id="exit-status">
+<span id="exit-status"></span><h2>Exit Status<a class="headerlink" href="#exit-status" title="Permalink to this headline">¶</a></h2>
+<p>Possible exit status codes:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">a2enmod</span> <span class="pre">ssl</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">s2ensite</span> <span class="pre">default-ssl</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">service</span> <span class="pre">apache2</span> <span class="pre">reload</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">0</span></code>: Successful invocation</li>
+<li><code class="docutils literal notranslate"><span class="pre">1</span></code>: Command-line argument usage error</li>
+<li><code class="docutils literal notranslate"><span class="pre">2</span></code>: ERMrest registry configuration error</li>
+<li><code class="docutils literal notranslate"><span class="pre">3</span></code>: Given catalog not found in registry</li>
+<li><code class="docutils literal notranslate"><span class="pre">4</span></code>: Given schema not found in catalog</li>
+<li><code class="docutils literal notranslate"><span class="pre">5</span></code>: Other runtime errors</li>
 </ul>
 </div>
-<div class="section" id="postgres-notes">
-<span id="postgres-notes"></span><h2>Postgres Notes<a class="headerlink" href="#postgres-notes" title="Permalink to this headline">¶</a></h2>
-<p>Content of <code class="docutils literal notranslate"><span class="pre">/etc/apt/sources.list.d/pgdg.list</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deb</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">apt</span><span class="o">.</span><span class="n">postgresql</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">repos</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span> <span class="n">precise</span><span class="o">-</span><span class="n">pgdg</span> <span class="n">main</span>
-</pre></div>
-</div>
-<p>We try to install <code class="docutils literal notranslate"><span class="pre">postgresql-9.4</span></code> in our <code class="docutils literal notranslate"><span class="pre">predeploy</span></code> target, but you
-may want to install it sooner to make sure no other implicit postgres
-dependencies pull in an older, incompatible postgres from Ubuntu 12.04 itself.</p>
+<div class="section" id="examples">
+<span id="examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>To index the <code class="docutils literal notranslate"><span class="pre">isa</span></code> schema on catalog <code class="docutils literal notranslate"><span class="pre">1</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span> <span class="pre">1</span> <span class="pre">isa</span></code></li>
+</ul>
+<p>To index the <code class="docutils literal notranslate"><span class="pre">isa</span></code> and <code class="docutils literal notranslate"><span class="pre">vocabulary</span></code> schema on catalog <code class="docutils literal notranslate"><span class="pre">2</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span> <span class="pre">2</span> <span class="pre">isa</span> <span class="pre">vocabulary</span></code></li>
+</ul>
+<p>To index the <code class="docutils literal notranslate"><span class="pre">schema</span> <span class="pre">with</span> <span class="pre">spaces</span></code> schema on catalog <code class="docutils literal notranslate"><span class="pre">1</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">ermrest-freetext-indices</span> <span class="pre">1</span> <span class="pre">&quot;schema</span> <span class="pre">with</span> <span class="pre">spaces&quot;</span></code></li>
+</ul>
 </div>
 </div>
 
@@ -2008,15 +2038,6 @@ dependencies pull in an older, incompatible postgres from Ubuntu 12.04 itself.</
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="annotation.html" class="btn btn-neutral float-right" title="Model Annotation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="install-redhat.html" class="btn btn-neutral" title="Installing (Red Hat derivatives)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

@@ -7,6 +7,7 @@ DERIVA Documentation
 
    about
    platform
+   concepts
    
 .. toctree::
   :maxdepth: 1
@@ -15,6 +16,7 @@ DERIVA Documentation
   users-guide/using-chaise
   users-guide/managing-data
   users-guide/managing-catalogs
+  users-guide/annotations
   
 .. toctree::
   :maxdepth: 2

@@ -17,6 +17,7 @@ DERIVA Documentation
   users-guide/managing-data
   users-guide/managing-catalogs
   users-guide/annotations
+  users-guide/annotations-context
   
 .. toctree::
   :maxdepth: 2

@@ -1,5 +1,5 @@
 Object Storage (Hatrac)
-========
+========================
 
 .. toctree::
    :maxdepth: 4

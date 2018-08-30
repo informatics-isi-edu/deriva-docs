@@ -19,14 +19,15 @@ This section contains the main concepts and examples that annotations supported 
   * [JSON structure](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/facet-json-structure.md)
   * [Examples](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/facet-examples.md)
 
-* [Pseudo-Columns logic and heuristics](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/pseudo-columns.md): the pseudo-columns allow Chaise to present denormalized content of an entity by pulling data from multiple related tables through foreign key paths. Pseudo-columns can be defined as a column in the visible column list of the `isrd.isi.edu,2016:visible-columns` annotation. 
-
-* [Table Alternatives](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/table-alternatives.md) : By using table-alternatives annotation, data modelers can define alternative table (or view) for different contexts. By definition, the table that you are adding this annotation to will be the base table and all the listed tables are alternative tables for this base table (Link to the initial issue). The document describes the constraints of what can be defined as table alternatives and how it can be used. We recommend that table alternatives should be used only if necessary.  
-
 * Formating and presentation: Chaise/ERMRestJS provides flexibility for system administrators to customize the presentation of model elements and their corresponding data through the use of templating and markdown. Templating allows Chaise/ERMRestjs to compose displayed values based on patterns/templates consisting of different model elements such as column names, foreign keys, etc). Markdown allows the display to be styled differently e.g. bold text, embeded image/videos. ERMRestJS also supports customized formats of native data types such as float, integer through `PreFormat`. For example, a floating point number can be displayed with thousand separator with two decimals. The following documents provide detail and examples of mentioned features.     
   * [Templating and Markdown](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/template-markdown.md)
   * [PreFormat](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/pre-format.md)
   
+  
+* [Pseudo-Columns logic and heuristics](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/pseudo-columns.md): the pseudo-columns allow Chaise to present denormalized content of an entity by pulling data from multiple related tables through foreign key paths. Pseudo-columns can be defined as a column in the visible column list of the `isrd.isi.edu,2016:visible-columns` annotation. 
+
+* [Table Alternatives](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/table-alternatives.md) : By using table-alternatives annotation, data modelers can define alternative table (or view) for different contexts. By definition, the table that you are adding this annotation to will be the base table and all the listed tables are alternative tables for this base table (Link to the initial issue). The document describes the constraints of what can be defined as table alternatives and how it can be used. We recommend that table alternatives should be used only if necessary.  
+
 * [Export](https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/export.md): Chaise/ERMRestJS is integrated with [ioboxd](https://github.com/informatics-isi-edu/ioboxd) to provide data export service. See the document on how to configure an export service. 
 
 ## Annotation support in ioboxd

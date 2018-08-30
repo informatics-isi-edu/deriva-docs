@@ -10,7 +10,7 @@ Model annotations are utilized in the following Deriva components:
 ## Model Annotation
 * [Model Annotation](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md): Base annotation document describing all existing key-value pairs, their expected usage, as well as basic heuristics that the client applications should follow. Further detail as well as examples can be found in the following sections.
 
-## Annotation support in Chaise/Ermrestjs
+## Annotation support in Chaise/ERMRestJS
 This section contains the main concepts and examples that annotations supported by Chaise/ERMRestJS.  
 
 * [Contexts](https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/contexts.md): Contexts are used to specifine presentation modes e.g. compact, detailed, editing, selecting modal, etc. This document provides a list of contexts supported by Chaise.  
@@ -27,7 +27,7 @@ This section contains the main concepts and examples that annotations supported 
   * [Templating and Markdown](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/template-markdown.md)
   * [PreFormat](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/pre-format.md)
   
-* [Export](): Chaise/ERMRestJS is integrated with [ioboxd](https://github.com/informatics-isi-edu/ioboxd) to provide data export service. See the document on how to configure an export service. 
+* [Export](https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/export.md): Chaise/ERMRestJS is integrated with [ioboxd](https://github.com/informatics-isi-edu/ioboxd) to provide data export service. See the document on how to configure an export service. 
 
 ## Annotation support in ioboxd
 

@@ -11,7 +11,7 @@ Model annotations are utilized in the following Deriva components:
 * [Model Annotation](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md): Base annotation document describing all existing key-value pairs, their expected usage, as well as basic heuristics that the client applications should follow. Further detail as well as examples can be found in the following sections.
 
 ## Annotation support in Chaise/ERMRestJS
-This section contains the main concepts and examples that annotations supported by Chaise/ERMRestJS.  
+This section contains the main concepts and examples of annotations supported by Chaise/ERMRestJS. 
 
 * [Contexts](https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/contexts.md): Contexts are used to specifine presentation modes e.g. compact, detailed, editing, selecting modal, etc. This document provides a list of contexts supported by Chaise.  
 
@@ -29,6 +29,8 @@ This section contains the main concepts and examples that annotations supported 
 * [Table Alternatives](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/table-alternatives.md) : By using table-alternatives annotation, data modelers can define alternative table (or view) for different contexts. By definition, the table that you are adding this annotation to will be the base table and all the listed tables are alternative tables for this base table (Link to the initial issue). The document describes the constraints of what can be defined as table alternatives and how it can be used. We recommend that table alternatives should be used only if necessary.  
 
 * [Export](https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/export.md): Chaise/ERMRestJS is integrated with [ioboxd](https://github.com/informatics-isi-edu/ioboxd) to provide data export service. See the document on how to configure an export service. 
+
+Note: Please refer to the [base model annotation document](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md) for annotation details not present here. 
 
 ## Annotation support in ioboxd
 

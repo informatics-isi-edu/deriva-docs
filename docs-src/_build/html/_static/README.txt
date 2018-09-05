@@ -1,1 +1,0 @@
-Place static file additions/overrides in this directory.

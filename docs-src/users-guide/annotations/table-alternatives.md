@@ -1,0 +1,1 @@
+../../ermrestjs/user-docs/table-alternatives.md

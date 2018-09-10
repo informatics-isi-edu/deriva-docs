@@ -23,6 +23,8 @@ project = 'DERIVA Docs'
 copyright = '2018, USC Information Sciences Institute, Informatics Systems Research Division'
 author = 'USC Information Sciences Institute, Informatics Systems Research Division'
 
+html_baseurl = 'http://docs.derivacloud.org'
+
 # The short X.Y version
 #version = '1.0'
 # The full version, including alpha/beta/rc tags

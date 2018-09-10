@@ -16,8 +16,8 @@ DERIVA Documentation
   users-guide/using-chaise
   users-guide/managing-data
   users-guide/managing-catalogs
-  users-guide/annotations
-  users-guide/annotations-context
+  users-guide/annotations/index
+  
   
 .. toctree::
   :maxdepth: 2

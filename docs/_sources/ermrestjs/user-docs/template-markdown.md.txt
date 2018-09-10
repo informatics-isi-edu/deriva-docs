@@ -3,7 +3,7 @@
 > **Disclaimer**:
 > We are only supporting mustache features that are explained in this document. We are not responsible for other features that Mustache is supporting. Those features might or might not work in context of ERMrestJS.
 
-For information on the annotation **tag:isrd.isi.edu,2016:column-display** specifics you can refer this [document](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md#2016-column-display)
+For information on the annotation **tag:isrd.isi.edu,2016:column-display** specifics you can refer this [document](../../users-guide/annotations/base-annotation-model.html#tag-2016-column-display) ([GitHub](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md)).
 
 
 The annotation is represented as follows:
@@ -30,12 +30,12 @@ The `markdown_pattern` parameter of the annotation accepts a markdown string whi
     + [Encoding variables for URL manipulation](#encoding-variables-for-url-manipulation)
     + [Escaping Content](#escaping-content)
   * [Examples](#examples)
-    + [1. Normal replacement - "{{{name}}}"](#1-normal-replacement---name)
-    + [2. Replacement with URL encoding - "{{#encode}}{{{name}}}{{/encode}}"](#2-replacement-with-url-encoding---encodenameencode)
-    + [3. Replacement with escaping - "{{date}}"](#3-replacement-with-escaping---date)
-    + [4. Replacement with null check, disabled escaping and url encoding - "{{#name}}...{{/name}}"](#4-replacement-with-null-check-disabled-escaping-and-url-encoding---namename)
-    + [5. Replacement with negated-null check - "{{^name}}...{{/name}}"](#5-replacement-with-negated-null-check---namename)
-    + [6. Null Handling](#6-null-handling)
+    + [Normal replacement - "{{{name}}}"](#normal-replacement-name)
+    + [Replacement with URL encoding - "{{#encode}}{{{name}}}{{/encode}}"](#replacement-with-url-encoding-encodenameencode)
+    + [Replacement with escaping - "{{date}}"](#replacement-with-escaping-date)
+    + [Replacement with null check, disabled escaping and url encoding - "{{#name}}...{{/name}}"](#replacement-with-null-check-disabled-escaping-and-url-encoding-namename)
+    + [Replacement with negated-null check - "{{^name}}...{{/name}}"](#replacement-with-negated-null-check-namename)
+    + [Null Handling](#null-handling)
       - [Limitations](#limitations)
     + [Using Pre-defined Attributes](#using-pre-defined-attributes)
       - [$moment Usage](#-moment-usage)
@@ -44,24 +44,24 @@ The `markdown_pattern` parameter of the annotation accepts a markdown string whi
   * [Inline Vs. Block](#inline-vs-block)
   * [Attributes](#attributes)
   * [Examples](#examples-1)
-    + [1. Link (Anchor)](#1-link-anchor-)
-    + [2. Download Button](#2-download-button)
-    + [3. Image](#3-image)
-    + [4. Thumbnail Image With Aspect Ratio and Height](#4-thumbnail-image-with-aspect-ratio-and-height)
+    + [Link (Anchor)](#link-anchor)
+    + [Download Button](#download-button)
+    + [Image](#image)
+    + [Thumbnail Image With Aspect Ratio and Height](#thumbnail-image-with-aspect-ratio-and-height)
       - [Multiple Adjacent Images](#multiple-adjacent-images)
-    + [5. Thumbnail With Link To Original Image And A caption](#5-thumbnail-with-link-to-original-image-and-a-caption)
-    + [6. Iframe](#6-iframe)
+    + [Thumbnail With Link To Original Image And A caption](#thumbnail-with-link-to-original-image-and-a-caption)
+    + [Iframe](#iframe)
       - [Iframe With a linkable caption](#iframe-with-a-linkable-caption)
       - [Iframe with a linkable caption positioned at its bottom](#iframe-with-a-linkable-caption-positioned-at-its-bottom)
       - [Iframe with a linkable caption positioned at its bottom with iframe class and style](#iframe-with-a-linkable-caption-positioned-at-its-bottom-with-iframe-class-and-style)
       - [Iframe with caption positioned at its bottom with caption class and style](#iframe-with-caption-positioned-at-its-bottom-with-caption-class-and-style)
       - [Iframe with iframe class, style, caption class and style](#iframe-with-iframe-class--style--caption-class-and-style)
-    + [7. Dropdown download button](#7-dropdown-download-button)
-    + [8. Vocabulary](#8-vocabulary)
-    + [9. Video](#9-video)
-    + [10. Subscript](#10-subscript)
-    + [11. Superscript](#11-superscript)
-    + [12. Span (Attach Attributes To Text)](#12-span-attach-attributes-to-text)
+    + [Dropdown download button](#dropdown-download-button)
+    + [Vocabulary](#vocabulary)
+    + [Video](#video)
+    + [Subscript](#subscript)
+    + [Superscript](#superscript)
+    + [Span (Attach Attributes To Text)](#span-attach-attributes-to-text)
 
 # Mustache Templating
 
@@ -170,7 +170,7 @@ These special characters are as follows:
 }
 ```
 
-### 1. Normal replacement - "{{{name}}}"
+### Normal replacement - "{{{name}}}"
 
 ```sh
 
@@ -181,7 +181,7 @@ These special characters are as follows:
 ```
 > <p>This is some value in COLUMN <strong>BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</strong></p>
 
-### 2. Replacement with URL encoding - "{{#encode}}{{{name}}}{{/encode}}"
+### Replacement with URL encoding - "{{#encode}}{{{name}}}{{/encode}}"
 
 ```sh
 
@@ -192,7 +192,7 @@ These special characters are as follows:
 ```
 > <p><a href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></p>
 
-### 3. Replacement with escaping - "{{date}}"
+### Replacement with escaping - "{{date}}"
 
 ```sh
 # name="BiomassProdBatch for Virus=7782 Target=5HT1B site=USC and date=2013-02-11 11:27:20"
@@ -204,7 +204,7 @@ Research **{{name}}** was conducted on {{{date}}}
 ```
 > <p>Research <strong>BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</strong> was conducted on 08/25/2016</p>
 
-### 4. Replacement with null check, disabled escaping and url encoding - "{{#name}}...{{/name}}"
+### Replacement with null check, disabled escaping and url encoding - "{{#name}}...{{/name}}"
 
 With null value for title
 ```sh
@@ -228,7 +228,7 @@ Research on date {{{date}}} : {{#title}}[{{{title}}}](https://dev.isrd.isi.edu/c
 ```
 > <p>Research on date 08/25/2016 : <a href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></p>
 
-### 5. Replacement with negated-null check - "{{^name}}...{{/name}}"
+### Replacement with negated-null check - "{{^name}}...{{/name}}"
 
 In cases where you need to check whether a value is null, then use this string, you can use this syntax.
 ```sh
@@ -241,7 +241,7 @@ Research on date {{{date}}} : {{^title}}[This is some title](https://dev.isrd.is
 ```
 > <p>Research on date 08/25/2016 : <a href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">This is some title</a></p>
 
-### 6. Null Handling
+### Null Handling
 
 If the value of any of the columns which are being used in the `markdown_pattern` are either null or empty, then the pattern will fall back on the `show_nulls` display annotation to return respective value. For example, if title property in the json object is not defined or null then following template `[{{{title}}}]({{{url}}})` will resolve as null and use the `show_nulls` annotation to determine what should be done.
 
@@ -304,7 +304,7 @@ ISO datetime is {{$moment.ISOString}}
 
 # Handlebars Templating
 
-The **Handlebars** template format can be understood [here](handlebars.md). Once templating is done, the returned string is passed to the markdown renderer. To learn about the markdown syntax please refer to the [markdown Formatting](#markdown-formatting) section.
+The **Handlebars** template format can be understood [on this page](../../ermrestjs/user-docs/handlebars.html) ([GitHub](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/handlebars.md)). Once templating is done, the returned string is passed to the markdown renderer. To learn about the markdown syntax please refer to the [markdown Formatting](#markdown-formatting) section.
 
 
 # Markdown Formatting
@@ -388,7 +388,7 @@ You can attach attributes to any element in your markdown. Generally you can att
 
 ## Examples
 
-### 1. Link (Anchor)
+### Link (Anchor)
 
 This is part of commonMark specification. Links are [inline](#inline-vs.-block) elements.
 ```html
@@ -414,7 +414,7 @@ You can attach attributes to the link.
 ```
 > <p><a href="https://dev.isrd.isi.edu/chaise/search" target="_blank">ChaiseLink</a></p>
 
-### 2. Download Button
+### Download Button
 
 Download button is a link with some predefined attributes. You can use these attributes to ensure consistent display for the download buttons.`download` and `target="_blank"` which will allow it to open in a new tab with classes `.btn` and `.btn-primary` for CSS styling.
 ```html
@@ -429,7 +429,7 @@ Download button is a link with some predefined attributes. You can use these att
 
 **NOTE:** please stick to the above format only to generate a download link.
 
-### 3. Image
+### Image
 
 By adding `!` at the begining of a link definition, it will display the image. Images are [inline](#inline-vs.-block) elements.
 ```html
@@ -472,7 +472,7 @@ You can also add extra styles to the image to ensure it is displayed correctly.
 
 **NOTE**: You can add any style content to your markdown. For more info on styling you can refer this [tutorial](http://www.w3schools.com/html/html_css.asp)
 
-### 4. Thumbnail Image With Aspect Ratio and Height
+### Thumbnail Image With Aspect Ratio and Height
 
 With attributes height=400 and target=_blank is to open it in new tab
 ```html
@@ -511,7 +511,7 @@ With attributes height=200 and target=_blank is to open it in new tab
 
 > <p><a href="https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg" target="_blank"><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" alt="Image" height="200"></a> <a href="https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg" target="_blank"><img src="https://c.fastcompany.net/multisite_files/fastcompany/imagecache/1280/poster/2015/06/3046722-poster-p-1-the-psychology-of-living-in-skyscrapers.jpg" alt="Image" height="200"></a></p>
 
-### 5. Thumbnail With Link To Original Image And A caption
+### Thumbnail With Link To Original Image And A caption
 
 This is not part of commonMark specification and it will result in a [block](#inline-vs-block). You have to follow the syntax completely (notice the newline in the closing tag).
 
@@ -533,7 +533,7 @@ With attributes width=500, height=400 and a linkable caption to open it in new t
 
 > <figure class="embed-block" style="display:inline-block;"><a href="https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg" target="_blank"><figcaption class="embed-caption">Skyscrapers</figcaption><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" height="200"  /></a></figure>
 
-### 6. Iframe
+### Iframe
 
 This is not part of commonMark specification and it will result in a [block](#inline-vs-block). You have to follow the syntax completely (notice the newline in the closing tag).
 
@@ -640,7 +640,7 @@ To style the caption of an iframe you can either specify classes using `caption-
 </figure>
 ```
 
-### 7. Dropdown download button
+### Dropdown download button
 
 This is not part of commonMark specification and it will result in a [block](#inline-vs-block). You have to follow the syntax completely (notice the newline in the closing tag).
 
@@ -654,7 +654,7 @@ The button has an appearance similar to the [Bootstrap dropdown button](http://g
 
 You can test the `markdown_pattern` string [here](https://tonicdev.com/chiragsanghvi/57b4b5f94c7bbd13004b43f6). Just scroll down and change the `markdown_pattern` string and `obj` object according to your requirement.
 
-### 8. Vocabulary
+### Vocabulary
 
 To show text as vocabulary, you can use the predefined `vocab` class. The following markdown pattern turns a bock of text, to a gray bold bubble with color blue.
 
@@ -663,7 +663,7 @@ To show text as vocabulary, you can use the predefined `vocab` class. The follow
 # OUTPUT: <strong class="vocab">some bold term</strong>
 ```
 
-### 9. Video
+### Video
 
 This is not part of commonMark specification and it will result in a [block](#inline-vs-block). You have to follow the syntax completely (notice the newline in the closing tag).
 
@@ -756,7 +756,7 @@ Invalid attributes provided to the attribute list will be simple ignored.
 </figure>
 ```
 
-### 10. Subscript
+### Subscript
 
 This is not part of commonMark specification and it will result in an [inline](#inline-vs-block) element.
 
@@ -784,7 +784,7 @@ With attributes
 > <p> <sub class="class-name">This</sub> should be subscript.</p>
 
 
-### 11. Superscript
+### Superscript
 
 This is not part of commonMark specification and it will result in an [inline](#inline-vs-block) element.
 
@@ -813,7 +813,7 @@ With attributes
 ```
 > <p> <sup class="class-name">This</sup> should be superscript.</p>
 
-### 12. Span (Attach Attributes To Text)
+### Span (Attach Attributes To Text)
 
 This is not part of commonMark specification and it will result in an [inline](#inline-vs-block) element.  Openning tag is `:span:` and closing is `:/span:`.
 

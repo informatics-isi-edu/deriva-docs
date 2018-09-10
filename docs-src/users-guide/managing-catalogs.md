@@ -6,7 +6,7 @@ Include definition of 'catalog'.
 
 Cover these topics:
 * Model Manipulation - Configuring catalog using deriva-py
-* [Annotations](/users-guide/annotations.html) - ermrest, ermrestjs, deriva-py, ioboxd
+* [Annotations](annotations/annotations.md) - ermrest, ermrestjs, deriva-py, ioboxd
 * deriva.py python programming (deriva-py) - everything but DataPath
 * Hatrac
 * Policies

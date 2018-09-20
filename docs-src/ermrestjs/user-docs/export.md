@@ -1,6 +1,6 @@
 # Export Annotation
 
-The export annotation applies at the table level. It allows for downloading sets of data using the BDBag tool available in the iobox service. The following is how chaise leverages the different values defined in the export annotation:
+The export annotation applies at the table level. It allows for downloading sets of data using the BDBag tool available in the IOBox service. The following is how Chaise leverages the different values defined in the export annotation:
 
 ```js
 templates: [

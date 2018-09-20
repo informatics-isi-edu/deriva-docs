@@ -4,9 +4,9 @@ Annotations Guide
 .. toctree::
    :maxdepth: 2
 
-   annotations
-   annotations-context
-   base-annotation-model
+   annotations-overview
+   annotation
+   context
    facet-json-structure
    facet-examples
    template-markdown

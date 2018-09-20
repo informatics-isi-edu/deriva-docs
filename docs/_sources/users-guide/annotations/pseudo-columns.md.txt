@@ -10,9 +10,8 @@ If you want to just look at some examples, go [here](#examples).
 
 ## Where To Use
 
-You can use pseudo-columns while defining list of [visible columns](../../users-guide/annotations/base-annotation-model.html#tag-2016-visible-columns)  ([GitHub](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md#2016-visible-columns)) and [visible foreign keys](../../users-guide/annotations/base-annotation-model.html#tag-2016-visible-foreign-keys)  ([GitHub](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md#tag-2016-visible-foreign-keys)). 
+You can use pseudo-columns while defining list of [visible columns](annotation.md#tag-2016-visible-columns) and [visible foreign keys](annotation.md#tag-2016-visible-foreign-keys). You can use any type of pseudo-columns in your list of visible columns, but only the pseudo-columns that have a path to another table will be allowed for visible foreign keys.
 
-You can use any type of pseudo-columns in your list of visible columns, but only the pseudo-columns that have a path to another table will be allowed for visible foreign keys.
 
 ## Syntax
 
@@ -46,7 +45,7 @@ Note: If the `[<schema name>, <constraint name>]` is an inbound foreign key from
 ```
 
 #### source
-To define a pseudo column, you need an object with at least the `source` attribute. Please refer to [facet `data source` syntax](http://docs.derivacloud.org/ermrestjs/user-docs/facet-json-structure.html#data-source) for more information on how to define `<data source>`.
+To define a pseudo column, you need an object with at least the `source` attribute. Please refer to [facet `data source` syntax](facet-json-structure.md#data-source) for more information on how to define `<data source>`.
 
 #### entity (v.s. scalar)
  If the pseudo column can be treated as entity (the column that is defined in data source is key of the table), setting `entity` attribute to `false` will force the scalar mode. This will affect different logic and heuristics. In a nutshell, entity-mode means we try to provide a UX around a set of entities (table rows).  Scalar mode means we try to provide a UX around a set of values like strings, integers, etc.
@@ -67,9 +66,17 @@ In Chaise, comment is displayed as tooltip associated with columns. To change th
 
 #### aggregate
 
-This is only applicable in visible columns definition (Not applicable in Facet definition). You can use this attribute to get aggregate values instead of a table. The available functions are `cnt`, `cnt_d`, `max`, `min`, and `array`.
+This is only applicable in visible columns definition (Not applicable in Facet definition). You can use this attribute to get aggregate values instead of a table. The available functions are `cnt`, `cnt_d`, `max`, `min`, `array`, and `array_d`.
 - `min` and `max` are only applicable in scalar mode.
 - `array` will return ALL the values including duplicates associated with the specified columns. For data types that are sortable (e.g integer, text), the values will be sorted alphabetically or numerically. Otherwise, it displays values in the order that it receives from ERMrest. There is no paging mechanism to limit what's shown in the aggregate column, therefore please USE WITH CARE as it can incur performance overhead and ugly presentation.
+- `array_d` will return the distinct values. It has the same performance overhead as `array`, so pleas USE WITH CARE.
+
+#### aggregate array_display
+
+If you have `"aggregate": "array"` or `"aggregate": "array_d"` in your pseudo-column definition, you can use `array_display` attribute to change the display of values. You can use 
+- `olist` for ordered bullet list.
+- `ulist` for unordered bullet list.
+- `csv` for comma-seperated values (the default presentation).
 
 ## Logic And Heuristics
 
@@ -80,6 +87,7 @@ In this section, we will summarize the heuristics and logic of pseudo column att
 3. If the data-source is defining an inbound foreign key path of length one (or pure and binary association path), it should behave the same as having the constraint name of foreign key in the list of columns.
 
 #### Displayname
+
 1. Use the defined `markdown_name`.
 2. If the given data-path is defining a more specific pseudo-column type (Key, ForeignKey, or Inbound-Foreignkey) then the value that is returned will be based on that type.
 3. Otherwise if `aggregate` is defined, it will be returning a value in the `<Agg-Fn> <col-displayname>` format. The `<Agg-Fn>` map is as follows:
@@ -93,6 +101,7 @@ cnt_d -> #
 5. In scalar mode, return the column's displayname.
 
 #### Value
+
 1. Return null in entry mode, the paths that are not all-outbound (It's not applicable in these cases), and when aggregate is defined.
 2. If the given data-path is defining a more specific pseudo-column type (Key, ForeignKey, or Inbound-Foreignkey) then the value that is returned will be based on that type.
 3. In scalar mode, return the column's value.
@@ -146,7 +155,7 @@ Other examples:
 3. To show aggregate values:
 ```
 {"source": [{"inbound": ["S", "fk3_cons"]}, "main_f3_id"], "aggregate": "cnt_d"}
-{"source": [{"inbound": ["S", "fk3_cons"]}, {"outbound": ["S", "main_f3_cons"]}, "f3_id"], "aggregate": "array"}
+{"source": [{"inbound": ["S", "fk3_cons"]}, {"outbound": ["S", "main_f3_cons"]}, "f3_id"], "aggregate": "array", "array_display": "olist"}
 {"source": [{"inbound": ["S", "fk3_cons"]}, {"outbound": ["S", "main_f3_cons"]}, {"inbound": ["S", "f4_cons"]}, "f4_id"], "entity": false, "aggregate": "min"}
 ```
 

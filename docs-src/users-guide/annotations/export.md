@@ -1,1 +1,1 @@
-../../chaise/user-docs/export.md
+../../ermrestjs/user-docs/export.md

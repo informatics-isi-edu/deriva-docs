@@ -1,14 +1,14 @@
 # Facet Examples
 
-In this document we will assume that you are familiar with facet filter syntax. If that is not the case, please read the [base annotation model page](../../users-guide/annotations/base-annotation-model.html#tag-2016-visible-columns) ([GitHub](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/user-doc/annotation.md#tag-2016-visible-columns)).
+In this document we will assume that you are familiar with facet filter syntax. If that is not the case, please read the [annotation document](annotation.md#tag-2016-visible-columns).
 
-All the examples are based on the given ERD and we are creating a facet list for the `main` table.
+All the examples are based on the given ERD and we are creating facet list for the `main` table.
 
 ![ERD](https://dev.isrd.isi.edu/~ashafaei/wiki-images/faceting_example_erd.png)
 
 ### Entity vs. Scalar
 
-In Chaise we have two facet types:
+In chaise we have two facet types:
 
  1. Entity: When the facet filter is a path, and facet column is a simple key, and `entity:false` is not available in the definition. Entity picker will show list of table rows instead of column values.
     Clicking on "show more" will open up the complete table. We're using the same annotation and logic for the row-name and row-order.
@@ -48,7 +48,7 @@ In Chaise we have two facet types:
 ### Choice Vs. Range
 
 In scalar mode, you can define your preferred UX mode. You can set that by setting the `ux_mode` attribute to `choices` or `ranges`.
-By default (If `ux_mode` is unavailable or invalid), we are showing ranges for the following column types:
+By default (If `ux_mode` is unavailable or invalid) we are showing range for the following column types:
 
 ```JavaScript
 {"source": "id", "ux_mode": "choices"}

@@ -9,7 +9,7 @@ catalog content.
 These annotations do not affect the behavior of the ERMrest service
 itself but merely inform clients about intended use beyond that
 captured in the entity-relationship model. Further, as described in
-the [REST API docs](../../ermrest/api-doc/) ([GitHub](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/api-doc/index.md)), the annotation system is
+the [REST API docs](https://github.com/informatics-isi-edu/ermrest/blob/master/docs/api-doc/index.md), the annotation system is
 openly extensible so communities MAY use other annotation keys not
 described here; in those cases, the community SHOULD publish similar
 documentation on their use and interpretation.
@@ -66,6 +66,7 @@ here is a quick matrix to locate them.
 | [2016 Export](#tag-2016-export) | - | X | - | - | - | Describes export templates |
 | [2017 Asset](#tag-2017-asset) | - | - | X | - | - | Describes assets |
 | [2018 Citation](#tag-2018-citation) | - | X | - | - | - | Describes citation |
+| [2018 Required](#tag-2018-required) | - | X | - | - | - | Required model column |
 | [2018 Indexing Preferences](#tag-2018-indexing-preferences) | - | X | X | - | - | Specify database indexing preferences |
 
 For brevity, the annotation keys are listed above by their section
@@ -333,7 +334,7 @@ Configuration attributes (optional):
 - `n_bins`: Used to define the number of bins the histogram uses to fetch and display data. If undefined, default is 30 bins.
 
 
-The following is an example of visible-columns annotation payload for defining facets. You can find more examples in [here](https://github.com/informatics-isi-edu/ermrestjs/wiki/Facet-Examples).
+The following is an example of visible-columns annotation payload for defining facets. You can find more examples in [here](facet-examples.md).
 
 ```
 "filter": {
@@ -477,7 +478,7 @@ See [Context Names](#context-names) section for the list of supported _context_ 
 
 Supported _option_ syntax:
 
-- `"pre_format"`: _format_: The column value SHOULD be pre-formatted by evaluating the _format_ string with the raw column value as its sole argument. Please refer to [Pre Format Annotation document](https://github.com/informatics-isi-edu/ermrestjs/wiki/Pre-Format-Annotation) for detailed explanation of supported syntax.
+- `"pre_format"`: _format_: The column value SHOULD be pre-formatted by evaluating the _format_ string with the raw column value as its sole argument. Please refer to [Pre Format Annotation document](pre-format.md) for detailed explanation of supported syntax.
 - `"markdown_pattern":` _pattern_: The visual presentation of the column SHOULD be computed by performing [Pattern Expansion](#pattern-expansion) on _pattern_ to obtain a markdown-formatted text value which MAY be rendered using a markdown-aware renderer.
 - `"column_order"`: `[` _columnorder_key_ ... `]`: An alternative sort method to apply when a client wants to semantically sort by this column.
 - `"column_order": false`: Sorting by this column should not be offered.
@@ -563,7 +564,7 @@ For presentation contexts which are not listed in the annotation, or when the an
 Supported _fkeylist_ patterns:
 
 - `[` `[` _schema name_`,` _constraint name_ `]` `,` ... `]`: Present foreign keys with matching _schema name_ and _constraint name_, in the order specified in the list. Ignore constraint names that do not correspond to foreign keys in the catalog. Do not present foreign keys that are not mentioned in the list. These 2-element lists use the same format as each element in the `names` property of foreign keys in the JSON model introspection output of ERMrest. The foreign keys MUST represent inbound relationships to the current table.
-- `{ "source": ` _sourceentry_ `}`:  Defines a pseudo-column based on the given _sourceentry_. For detailed explanation and examples please refer to [here](https://github.com/informatics-isi-edu/ermrestjs/wiki/Pseudo-Column-Logic-&-Heuristics#examples). Other optional attributes that this JSON document can have are:
+- `{ "source": ` _sourceentry_ `}`:  Defines a pseudo-column based on the given _sourceentry_. For detailed explanation and examples please refer to [here](pseudo-columns.md#examples). Other optional attributes that this JSON document can have are:
   - `markdown_name`: The markdown to use in place of the default heuristics for title of column.
 
 Supported _sourceentry_ pattern in here:
@@ -641,7 +642,7 @@ Default heuristics:
 - The `2017 Asset` annotation explicitly indicates that the associated column is the asset location.
 - `url_pattern` MUST be specified for browser upload. If it is not specified or if it produces a null value, the browser upload will be disabled.
 - Column MUST be `text` typed. Otherwise the asset annotation will be ignored.
-- In addition to native columns, the following properties are also available under the annotated column object and can be referred in the _pattern_ e.g. `_URI.md5_hex` where `URI` is the annotated column (notice the [underscore before the column name](https://github.com/informatics-isi-edu/ermrestjs/wiki/Template-and-Markdown-Guide#raw-values)).
+- In addition to native columns, the following properties are also available under the annotated column object and can be referred in the _pattern_ e.g. `_URI.md5_hex` where `URI` is the annotated column (notice the [underscore before the column name](mustache-templating.md#raw-values)).
   - `md5_hex` for hex  
   - `md5_base64` for base64
   - `filename` for filename
@@ -681,6 +682,13 @@ At present, the Chaise implementation of the citation annotation has the followi
 1. If `journal_pattern`, `year_pattern`, or `url_pattern` is not available, Chaise will not show a Citation list option in the Share dialog.
 2. Chaise will try to show the 3 non-required fields if their are present and their templates don't produce a null value.
 
+### Tag: 2018 Required
+
+`tag:isrd.isi.edu,2018:required`
+
+This key indicates that the values for a given model element will be required by
+the system. This key is allowed on any number of columns. There is no content for this key.
+
 ### Tag: 2018 Indexing Preferences
 
 `tag:isrd.isi.edu,2018:indexing-preferences`
@@ -706,7 +714,8 @@ This annotation is a hint to ERMrest during table or column creation, when index
 
 ### Context Names
 
-List of _context_ names that are used in ermrest:
+List of _context_ names that are used in ERMrest:
+
 - `"compact"`: Any compact, tabular presentation of data from multiple entities.
   - `"compact/brief"`: A limited compact, tabular presentation of data from multiple entities to be shown under the `detailed` context. In this context, only a page of data will be shown with a link to the access the `compact` context for more detail.  
   - `"compact/select"`: A sub-context of `compact` that is used for selecting entities, e.g. when prompting the user for choosing a foreign key value.

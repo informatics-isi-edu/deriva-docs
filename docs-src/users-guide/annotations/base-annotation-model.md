@@ -1,1 +1,0 @@
-../../ermrest/user-doc/annotation.md

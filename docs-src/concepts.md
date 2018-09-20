@@ -21,4 +21,32 @@ it is more convienient to use the Python SDK
 
 Catalog, schema, table, columns, constraints
 
+# Entities in Deriva
+
+In Deriva, an entity is represented by a table in a catalog.  The table has one columm for each attribute that describes a characteristic of the entity.  
+
 ## Relationships in Deriva
+
+### Cardinality
+
+#### One to one relationships
+
+#### One to M relationships
+
+Inbound foreign key constraints
+
+#### M to one relationships
+
+Outbound foreign key constraints
+
+#### M to N relationships
+
+The most general type of relationship we have is an M to N in which any record *A* can be related to any number of records *B and visa versa.  An common example of where this occurs might be in relating protocol steps to a sample.  Each sample might have muliple steps, while a specific step might be used to prepare more then one sample.
+
+In Deriva, M to N relationships are expressed using an _association table_, which has two foriegn key constraints, one to each of the tables being related. Each row in the association table captures the relationship between one entity in each table. By repeating the same value in the first foreign key, we can have multiple entities in table two associated with a single entity in table one, and visa versa.
+
+To streamline interactions in the Deriva UI, we try to identify when a table is acting as an association table. For this purpose, we look for _pure binary association tables_.  We say a table is pure binary if:
+* It only has two foreign keys
+* Those keys cannot have NULL values
+* There is a primary key constraint on the two foreign keys, i.e. each pair must be unique.
+If those conditions are met, we consider the table to be an association table and the user interface will take advantage of this fact to streamline various user interactions.  We note that the table might have additional attributes, which can be used to describe additional characteristics of the relationship.

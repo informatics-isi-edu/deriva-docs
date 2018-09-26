@@ -27,7 +27,7 @@ DERIVA Documentation
   deriva-py/index
   ermrestjs/index
   chaise/index
-  ermrest/docs/index
+  ermrest/index
   hatrac/index
   ioboxd/index
    

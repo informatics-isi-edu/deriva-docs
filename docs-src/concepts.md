@@ -62,6 +62,17 @@ To support this customization, Chaise uses an extensible set of [_annotations_](
 DERIVA also has a programmatic interface written in Python called _deriva-py_.
 It is more convenient to use the Python SDK 
 
+## Assets
+
+One of the primary objectives of Deriva is to manage collections of _assets_. In Deriva,  an asset is a blob, a sequence of bytes with some basic properties:
+* It can be refered to by a globally unique resource name, i.e. a URL
+* In general, the sequence will not change without the resource name changing
+* It will often be characterized by a checksum which is computed from its contents
+* It will have a known lenght
+* It may have a convient human understandable name
+
+A deriva catalog will generally contain one or more asset tables, which are then orginized into more complex data descriptions to help interpret the different types of assets and figure out how assets relate to one another.
+
 ## The Catalog Model
 
 TBD: Describe catalog, schema, table, columns, and constraints

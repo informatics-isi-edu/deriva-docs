@@ -8,10 +8,10 @@ Python Command-line Clients and API (deriva-py)
    install
    
 .. toctree::
-  :maxdepth: 4
-  :caption: Data Management Project Tutorial
-  
-  project-tutorial
+   :maxdepth: 4
+   :caption: Data Management Project Tutorial
+ 
+   project-tutorial
 
 .. toctree::
    :maxdepth: 4
@@ -20,7 +20,7 @@ Python Command-line Clients and API (deriva-py)
    README
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 10
    :caption: API Reference
 
    api/deriva

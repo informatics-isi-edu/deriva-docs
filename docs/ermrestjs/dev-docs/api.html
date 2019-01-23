@@ -263,7 +263,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -327,7 +329,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/export.html">Export Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/export.html">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/export.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -506,8 +512,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-processors">Supported processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#processor-details">Processor details</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
@@ -563,7 +569,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -651,7 +659,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../user-docs/export.html">Export Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-docs/export.html">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/export.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../chaise/index.html">Web interface (Chaise)</a><ul>
@@ -1159,6 +1171,11 @@ to use for ERMrest JavaScript agents.</p>
 <dt><a href="#formatDate">formatDate()</a> ⇒</dt>
 <dd><p>{{formatDate value format}}</p>
 </dd>
+<dt><a href="#encodeFacet">encodeFacet()</a> ⇒</dt>
+<dd><p>{{#encodeFacet}}
+ str
+{{/encodeFacet}}</p>
+</dd>
 </dl></div>
 <div class="section" id="typedefs">
 <span id="typedefs"></span><h1>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h1>
@@ -1508,7 +1525,11 @@ ForeignKeyRef<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.InvalidFacetOperatorError">.InvalidFacetOperatorError</a><ul>
-<li><a class="reference external" href="#new_ERMrest.InvalidFacetOperatorError_new">new InvalidFacetOperatorError(message, path)</a></li>
+<li><a class="reference external" href="#new_ERMrest.InvalidFacetOperatorError_new">new InvalidFacetOperatorError(path, subMessage)</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#ERMrest.InvalidCustomFacetOperatorError">.InvalidCustomFacetOperatorError</a><ul>
+<li><a class="reference external" href="#new_ERMrest.InvalidCustomFacetOperatorError_new">new InvalidCustomFacetOperatorError(path, subMessage)</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.InvalidFilterOperatorError">.InvalidFilterOperatorError</a><ul>
@@ -1552,7 +1573,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+displayname">.displayname</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+projectionTable">.projectionTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+facetBaseTable">.facetBaseTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+columns">.columns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
@@ -1572,14 +1593,11 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+appLink">.appLink</a> : <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+csvDownloadLink">.csvDownloadLink</a> ⇒ <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+exportTemplates">.exportTemplates</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultExportTemplate">.defaultExportTemplate</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code><ul>
-<li><a class="reference external" href="#ERMrest.Reference+read..processSortObject">~processSortObject()</a></li>
-</ul>
-</li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -1589,6 +1607,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+getExportTemplates">.getExportTemplates(useDefault)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+search">.search(term)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
@@ -1596,6 +1615,10 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath">._getReadPath()</a> : <code>Object</code><ul>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath..processSortObject">~processSortObject()</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.Page">.Page</a><ul>
@@ -1724,8 +1747,11 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.FacetColumn+dataSource">.dataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
@@ -1851,9 +1877,9 @@ boolean<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.exporter">.exporter</a><ul>
-<li><a class="reference external" href="#new_ERMrest.exporter_new">new exporter(reference, template)</a></li>
+<li><a class="reference external" href="#new_ERMrest.exporter_new">new exporter(reference, bagName, template, servicePath)</a></li>
 <li><a class="reference external" href="#ERMrest.exporter+exportParameters">.exportParameters</a></li>
-<li><a class="reference external" href="#ERMrest.exporter+run">.run()</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.exporter+run">.run(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.exporter+cancel">.cancel()</a> ⇒ <code>boolean</code></li>
 </ul>
 </li>
@@ -1951,7 +1977,7 @@ String<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+displayname">.displayname</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+projectionTable">.projectionTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+facetBaseTable">.facetBaseTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+columns">.columns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
@@ -1971,14 +1997,11 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+appLink">.appLink</a> : <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+csvDownloadLink">.csvDownloadLink</a> ⇒ <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+exportTemplates">.exportTemplates</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultExportTemplate">.defaultExportTemplate</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code><ul>
-<li><a class="reference external" href="#ERMrest.Reference+read..processSortObject">~processSortObject()</a></li>
-</ul>
-</li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -1988,6 +2011,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+getExportTemplates">.getExportTemplates(useDefault)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+search">.search(term)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
@@ -1995,6 +2019,10 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath">._getReadPath()</a> : <code>Object</code><ul>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath..processSortObject">~processSortObject()</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference">.AttributeGroupReference</a> : <code>object</code><ul>
@@ -4643,8 +4671,8 @@ will be a type understandable by database.</p>
 <div class="section" id="ermrest-invalidfacetoperatorerror">
 <span id="ermrest-invalidfacetoperatorerror"></span><h2>ERMrest.InvalidFacetOperatorError<a class="headerlink" href="#ermrest-invalidfacetoperatorerror" title="Permalink to this headline">¶</a></h2>
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><a name="new_ERMrest.InvalidFacetOperatorError_new"></a></p>
-<div class="section" id="new-invalidfacetoperatorerror-message-path">
-<span id="new-invalidfacetoperatorerror-message-path"></span><h3>new InvalidFacetOperatorError(message, path)<a class="headerlink" href="#new-invalidfacetoperatorerror-message-path" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-invalidfacetoperatorerror-path-submessage">
+<span id="new-invalidfacetoperatorerror-path-submessage"></span><h3>new InvalidFacetOperatorError(path, subMessage)<a class="headerlink" href="#new-invalidfacetoperatorerror-path-submessage" title="Permalink to this headline">¶</a></h3>
 <p>An invalid facet operator</p>
 <table border="1" class="docutils">
 <thead>
@@ -4656,14 +4684,43 @@ will be a type understandable by database.</p>
 </thead>
 <tbody>
 <tr>
-<td>message</td>
+<td>path</td>
 <td><code>string</code></td>
-<td>error message</td>
+<td>path for redirectLink</td>
 </tr>
+<tr>
+<td>subMessage</td>
+<td><code>string</code></td>
+<td>the details of the error message</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.InvalidCustomFacetOperatorError"></a></p>
+</div>
+</div>
+<div class="section" id="ermrest-invalidcustomfacetoperatorerror">
+<span id="ermrest-invalidcustomfacetoperatorerror"></span><h2>ERMrest.InvalidCustomFacetOperatorError<a class="headerlink" href="#ermrest-invalidcustomfacetoperatorerror" title="Permalink to this headline">¶</a></h2>
+<p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><a name="new_ERMrest.InvalidCustomFacetOperatorError_new"></a></p>
+<div class="section" id="new-invalidcustomfacetoperatorerror-path-submessage">
+<span id="new-invalidcustomfacetoperatorerror-path-submessage"></span><h3>new InvalidCustomFacetOperatorError(path, subMessage)<a class="headerlink" href="#new-invalidcustomfacetoperatorerror-path-submessage" title="Permalink to this headline">¶</a></h3>
+<p>An invalid facet operator</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>path</td>
 <td><code>string</code></td>
 <td>path for redirectLink</td>
+</tr>
+<tr>
+<td>subMessage</td>
+<td><code>string</code></td>
+<td>the details of the error message</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.InvalidFilterOperatorError"></a></p>
@@ -4947,7 +5004,7 @@ will be a type understandable by database.</p>
 <li><a class="reference external" href="#ERMrest.Reference+displayname">.displayname</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+projectionTable">.projectionTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+facetBaseTable">.facetBaseTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+columns">.columns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
@@ -4967,14 +5024,11 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+appLink">.appLink</a> : <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+csvDownloadLink">.csvDownloadLink</a> ⇒ <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+exportTemplates">.exportTemplates</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultExportTemplate">.defaultExportTemplate</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code><ul>
-<li><a class="reference external" href="#ERMrest.Reference+read..processSortObject">~processSortObject()</a></li>
-</ul>
-</li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -4984,6 +5038,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+getExportTemplates">.getExportTemplates(useDefault)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+search">.search(term)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
@@ -4991,6 +5046,10 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath">._getReadPath()</a> : <code>Object</code><ul>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath..processSortObject">~processSortObject()</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -5065,11 +5124,11 @@ Should not be used for sending requests to ermrest, use this.location.ermrestCom
 <div class="section" id="reference-table-code-table-code">
 <span id="reference-table-code-table-code"></span><h3>reference.table : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-table-code-table-code" title="Permalink to this headline">¶</a></h3>
 <p>The table object for this reference</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+projectionTable"></a></p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+facetBaseTable"></a></p>
 </div>
-<div class="section" id="reference-projectiontable-code-table-code">
-<span id="reference-projectiontable-code-table-code"></span><h3>reference.projectionTable : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-projectiontable-code-table-code" title="Permalink to this headline">¶</a></h3>
-<p>The projection table object,
+<div class="section" id="reference-facetbasetable-code-table-code">
+<span id="reference-facetbasetable-code-table-code"></span><h3>reference.facetBaseTable : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-facetbasetable-code-table-code" title="Permalink to this headline">¶</a></h3>
+<p>The base table object that is used for faceting,
 if there’s a join in path, this will return a different object from .table</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+columns"></a></p>
 </div>
@@ -5246,14 +5305,6 @@ NOTE It will not have the same sort and paging as the reference.</p>
 <div class="section" id="reference-defaultloginfo-code-object-code">
 <span id="reference-defaultloginfo-code-object-code"></span><h3>reference.defaultLogInfo : <code>Object</code><a class="headerlink" href="#reference-defaultloginfo-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>The default information that we want to be logged including catalog, schema_table, and facet (filter).</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+exportTemplates"></a></p>
-</div>
-<div class="section" id="reference-exporttemplates-code-object-code">
-<span id="reference-exporttemplates-code-object-code"></span><h3>reference.exportTemplates : <code>Object</code><a class="headerlink" href="#reference-exporttemplates-code-object-code" title="Permalink to this headline">¶</a></h3>
-<p>Will return the expor templates that are available for this reference.
-It will validate the templates that are defined in annotation.
-If its <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context and annotation was missing,
-it will return the default export template.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+defaultExportTemplate"></a></p>
 </div>
 <div class="section" id="reference-defaultexporttemplate-code-string-code">
@@ -5273,9 +5324,9 @@ if these columns are missing from the asset annotation, they won’t be added.</
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+removeAllFacetFilters"></a></p>
 </div>
-<div class="section" id="reference-removeallfacetfilters-samefacet-code-ermrest-reference-code">
-<span id="reference-removeallfacetfilters-samefacet-code-ermrest-reference-code"></span><h3>reference.removeAllFacetFilters(sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
-<p>Remove all the fitlers from facets</p>
+<div class="section" id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code">
+<span id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code"></span><h3>reference.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
+<p>Remove all the fitlers, facets, and custom-facets from the reference</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>ERMrest.reference</code> - A reference without facet filters</p>
 <table border="1" class="docutils">
 <thead>
@@ -5287,12 +5338,27 @@ if these columns are missing from the asset annotation, they won’t be added.</
 </thead>
 <tbody>
 <tr>
+<td>sameFilter</td>
+<td><code>boolean</code></td>
+<td>By default we're removing filters, if this is true filters won't be changed.</td>
+</tr>
+<tr>
+<td>sameCustomFacet</td>
+<td><code>boolean</code></td>
+<td>By default we're removing custom-facets, if this is true custom-facets won't be changed.</td>
+</tr>
+<tr>
 <td>sameFacet</td>
 <td><code>boolean</code></td>
 <td>By default we're removing facets, if this is true facets won't be changed.</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.Reference+create"></a></p>
+</table><p><a name="ERMrest.Reference+hideFacets"></a></p>
+</div>
+<div class="section" id="reference-hidefacets-code-reference-code">
+<span id="reference-hidefacets-code-reference-code"></span><h3>reference.hideFacets() ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a class="headerlink" href="#reference-hidefacets-code-reference-code" title="Permalink to this headline">¶</a></h3>
+<p>Will return a reference with the same facets but hidden.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+create"></a></p>
 </div>
 <div class="section" id="reference-create-data-contextheaderparams-code-promise-code">
 <span id="reference-create-data-contextheaderparams-code-promise-code"></span><h3>reference.create(data, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
@@ -5382,24 +5448,7 @@ or rejected with any of these errors:</p>
 <td>whether we should use entity api or not (if true, we won't get foreignkey data)</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.Reference+read..processSortObject"></a></p>
-<div class="section" id="read-processsortobject">
-<span id="read-processsortobject"></span><h4>read~processSortObject()<a class="headerlink" href="#read-processsortobject" title="Permalink to this headline">¶</a></h4>
-<p>Check the sort object. Does not change the <code class="docutils literal notranslate"><span class="pre">this._location</span></code> object.</p>
-<ul class="simple">
-<li>Throws an error if the column doesn’t exist or is not sortable.</li>
-<li>maps the sorting to its sort columns.<ul>
-<li>for columns it’s straighforward and uses the actual column name.</li>
-<li>for PseudoColumns we need<ul>
-<li>A new alias: F# where the # is a positive integer.</li>
-<li>The sort column name must be the “foreignkey_alias:column_name”.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Kind</strong>: inner method of <a class="reference external" href="#ERMrest.Reference+read"><code>read</code></a><a name="ERMrest.Reference+sort"></a></p>
-</div>
+</table><p><a name="ERMrest.Reference+sort"></a></p>
 </div>
 <div class="section" id="reference-sort-sort-code-reference-code">
 <span id="reference-sort-sort-code-reference-code"></span><h3>reference.sort(sort) ⇒ <code>Reference</code><a class="headerlink" href="#reference-sort-sort-code-reference-code" title="Permalink to this headline">¶</a></h3>
@@ -5527,6 +5576,30 @@ has other moderating attributes, for instance that indicate the
 <td>[tuple]</td>
 <td><a href="#ERMrest.Tuple"><code>Tuple</code></a></td>
 <td>the current tuple</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.Reference+getExportTemplates"></a></p>
+</div>
+<div class="section" id="reference-getexporttemplates-usedefault-code-object-code">
+<span id="reference-getexporttemplates-usedefault-code-object-code"></span><h3>reference.getExportTemplates(useDefault) ⇒ <code>Object</code><a class="headerlink" href="#reference-getexporttemplates-usedefault-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Will return the expor templates that are available for this reference.
+It will validate the templates that are defined in annotations.
+If its <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context and annotation was missing,
+it will return the default export template.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>useDefault</td>
+<td><code>Boolean</code></td>
+<td>whether we should use default template or not</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+search"></a></p>
@@ -5698,7 +5771,36 @@ ReferenceColumn<p>&amp;gt;</p>
 <td>the data for the current refe</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.Page"></a></p>
+</table><p><a name="ERMrest.Reference+_getReadPath"></a></p>
+</div>
+<div class="section" id="reference-getreadpath-code-object-code">
+<span id="reference-getreadpath-code-object-code"></span><h3>reference._getReadPath() : <code>Object</code><a class="headerlink" href="#reference-getreadpath-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>The actual path that will be used for read request.
+It will return an object that will have:</p>
+<ul class="simple">
+<li>value: the string value of the path</li>
+<li>isAttributeGroup: whether we should use attributegroup api or not.
+(if the reference doesn’t have any fks, we don’t need to use attributegroup)
+NOTE Might throw an error if modifiers are not valid</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+_getReadPath..processSortObject"></a></p>
+<div class="section" id="getreadpath-processsortobject">
+<span id="getreadpath-processsortobject"></span><h4>_getReadPath~processSortObject()<a class="headerlink" href="#getreadpath-processsortobject" title="Permalink to this headline">¶</a></h4>
+<p>Check the sort object. Does not change the <code class="docutils literal notranslate"><span class="pre">this._location</span></code> object.</p>
+<ul class="simple">
+<li>Throws an error if the column doesn’t exist or is not sortable.</li>
+<li>maps the sorting to its sort columns.<ul>
+<li>for columns it’s straighforward and uses the actual column name.</li>
+<li>for PseudoColumns we need<ul>
+<li>A new alias: F# where the # is a positive integer.</li>
+<li>The sort column name must be the “foreignkey_alias:column_name”.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kind</strong>: inner method of <a class="reference external" href="#ERMrest.Reference+_getReadPath"><code>_getReadPath</code></a><a name="ERMrest.Page"></a></p>
+</div>
 </div>
 </div>
 <div class="section" id="ermrest-page">
@@ -5847,6 +5949,12 @@ For more info you can refer {ERM.reference.display}</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>It will return:</p>
+<ol class="simple">
+<li>the rendered page_markdown_pattern if it’s defined.</li>
+<li>the rendered row_markdown_pattern if it’s defined.</li>
+<li>list of links that point to the row. Caption is going to be the row-name.</li>
+</ol>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Page"><code>Page</code></a><a name="ERMrest.Tuple"></a></p>
 </div>
 </div>
@@ -6916,8 +7024,11 @@ of current table. This wrapper is for inbound foreignkeys. It is actually warppi
 <li><a class="reference external" href="#ERMrest.FacetColumn+dataSource">.dataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
@@ -7033,6 +7144,20 @@ NOTE: we’re not validating this data-source, we assume that this is valid.</p>
 <span id="facetcolumn-isopen-code-boolean-code"></span><h3>facetColumn.isOpen : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isopen-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>If has filters it will return true,
 otherwise returns facetObject[‘open’]</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+hasPath"></a></p>
+</div>
+<div class="section" id="facetcolumn-haspath-code-boolean-code">
+<span id="facetcolumn-haspath-code-boolean-code"></span><h3>facetColumn.hasPath : <code>Boolean</code><a class="headerlink" href="#facetcolumn-haspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether the source has path or not</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+ermrestHasPath"></a></p>
+</div>
+<div class="section" id="facetcolumn-ermresthaspath-code-boolean-code">
+<span id="facetcolumn-ermresthaspath-code-boolean-code"></span><h3>facetColumn.ermrestHasPath : <code>Boolean</code><a class="headerlink" href="#facetcolumn-ermresthaspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether the source is going to have path when sending the request to ermrest
+The path that is defined on the facet might be different from the one that
+we are going to use to talk with ermrest. We might optmize the path.
+Facets with only one hop where the column used in foreignkey is the same column for faceting, and is not nullable
+can be optmized by completely ignoring the foreignkey path and just doing a value check on main table.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+preferredMode"></a></p>
 </div>
 <div class="section" id="facetcolumn-preferredmode-code-string-code">
@@ -7040,11 +7165,15 @@ otherwise returns facetObject[‘open’]</p>
 <p>The Preferred ux mode.
 Any of:
 <code class="docutils literal notranslate"><span class="pre">choices</span></code>, <code class="docutils literal notranslate"><span class="pre">ranges</span></code>, or <code class="docutils literal notranslate"><span class="pre">check_presence</span></code>
-This should be used if we’re not in entity mode.</p>
+This should be used if we’re not in entity mode. In entity mode it will
+always return <code class="docutils literal notranslate"><span class="pre">choices</span></code>.</p>
+<p>The logic is as follows,</p>
 <ol class="simple">
+<li>if facet has only choice or range filter, return that.</li>
 <li>use ux_mode if available</li>
 <li>use choices if in entity mode</li>
-<li>use range or chocies based on type.</li>
+<li>return choices if int or serial, part of key, and not null.</li>
+<li>return ranges or choices based on the type.</li>
 </ol>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isEntityMode"></a></p>
 </div>
@@ -7053,6 +7182,14 @@ This should be used if we’re not in entity mode.</p>
 <p>Returns true if the source is on a key column.
 If facetObject[‘entity’] is defined as false, it will return false,
 otherwise it will true if filter is based on key.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isAllOutboundNotNull"></a></p>
+</div>
+<div class="section" id="facetcolumn-isalloutboundnotnull-code-boolean-code">
+<span id="facetcolumn-isalloutboundnotnull-code-boolean-code"></span><h3>facetColumn.isAllOutboundNotNull : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isalloutboundnotnull-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether the facet is defining an all outbound path that the columns used
+in the path are all not-null.
+NOTE even if the column.nullok is false, ermrest could return null value for it
+if the user rights to select that column is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+barPlot"></a></p>
 </div>
 <div class="section" id="facetcolumn-barplot-code-boolean-code">
@@ -7122,12 +7259,52 @@ Heuristics are as follows (first applicable rule):</p>
 </div>
 <div class="section" id="facetcolumn-hidenullchoice-code-boolean-code">
 <span id="facetcolumn-hidenullchoice-code-boolean-code"></span><h3>facetColumn.hideNullChoice : <code>Boolean</code><a class="headerlink" href="#facetcolumn-hidenullchoice-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>Whether client should hide the null choice</p>
+<p>Whether client should hide the null choice.
+<code class="docutils literal notranslate"><span class="pre">null</span></code> filter could mean any of the following:</p>
+<ul class="simple">
+<li>Scalar value being <code class="docutils literal notranslate"><span class="pre">null</span></code>. In terms of ermrest, a simple col::null:: query</li>
+<li>No value exists in the given path (checking presence of a value in the path). In terms of ermrest,
+we have to construct an outer join. For performance we’re going to use right outer join.
+Because of ermrest limitation, we cannot have more than two right outer joins and therefore
+two such null checks cannot co-exist.
+Since we’re not going to show two different options for these two meanings,
+we have to make sure to offer <code class="docutils literal notranslate"><span class="pre">null</span></code> option when only one of these two meanings would make sense.
+Based on this, we can categorize facets into these three groups:</li>
+</ul>
+<ol class="simple">
+<li>(G1) Facets without any path.</li>
+<li>(G2) Facets with path where the column is nullable: <code class="docutils literal notranslate"><span class="pre">null</span></code> could mean any of those.</li>
+<li>(G3) Facets with path where the column is not nullable. Here <code class="docutils literal notranslate"><span class="pre">null</span></code> can only mean path existence.</li>
+<li>(G3.1) Facets with only one hop where the column used in foreignkey is the same column for faceting.
+In this case, we can completely ignore the foreignkey path and just do a value check on main table.
+Other types of facet that null won’t be applicable to them and therefore
+we shouldn’t even offer the option:</li>
+<li>(G4) Scalar columns of main table that are not-null.</li>
+<li>(G5) All outbound foreignkey facets that all the columns invloved are not-null
+Although if user is vewing a snapshot of catalog, ermrest might actually return null
+value for a not-null column, and therefore we should not do this check if user is in that state.</li>
+</ol>
+<p>Based on this, the following will be the logic for this function:
+- If facet has <code class="docutils literal notranslate"><span class="pre">null</span></code> filter: <code class="docutils literal notranslate"><span class="pre">false</span></code>
+- If facet has <code class="docutils literal notranslate"><span class="pre">&quot;hide_null_choice&quot;:</span> <span class="pre">true</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>
+- If G1: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is not-null and user has select right otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>
+- If G5: <code class="docutils literal notranslate"><span class="pre">true</span></code>
+- If G2: <code class="docutils literal notranslate"><span class="pre">true</span></code>
+- If G3.1: <code class="docutils literal notranslate"><span class="pre">false</span></code>
+- If G3 and no other G3 has null: <code class="docutils literal notranslate"><span class="pre">false</span></code>
+- otherwise: <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+hideNotNullChoice"></a></p>
 </div>
 <div class="section" id="facetcolumn-hidenotnullchoice-code-boolean-code">
 <span id="facetcolumn-hidenotnullchoice-code-boolean-code"></span><h3>facetColumn.hideNotNullChoice : <code>Boolean</code><a class="headerlink" href="#facetcolumn-hidenotnullchoice-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>Whether client should hide the not-null choice</p>
+<p>Whether client should hide the not-null choice. The logic is as follows:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">false</span></code> if facet has not-null filter.</li>
+<li><code class="docutils literal notranslate"><span class="pre">true</span></code> if facet has hide_not_null_choice in it’s definition</li>
+<li><code class="docutils literal notranslate"><span class="pre">true</span></code> if facet is from the same table and it’s not-nullable.</li>
+<li><code class="docutils literal notranslate"><span class="pre">true</span></code> if facet is all outbound not null.</li>
+<li>otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code></li>
+</ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+hideNumOccurrences"></a></p>
 </div>
 <div class="section" id="facetcolumn-hidenumoccurrences-code-boolean-code">
@@ -8180,16 +8357,16 @@ Therefore the returned count might not be exactly the same as number of returned
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.exporter">.exporter</a><ul>
-<li><a class="reference external" href="#new_ERMrest.exporter_new">new exporter(reference, template)</a></li>
+<li><a class="reference external" href="#new_ERMrest.exporter_new">new exporter(reference, bagName, template, servicePath)</a></li>
 <li><a class="reference external" href="#ERMrest.exporter+exportParameters">.exportParameters</a></li>
-<li><a class="reference external" href="#ERMrest.exporter+run">.run()</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.exporter+run">.run(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.exporter+cancel">.cancel()</a> ⇒ <code>boolean</code></li>
 </ul>
 </li>
 </ul>
 <p><a name="new_ERMrest.exporter_new"></a></p>
-<div class="section" id="new-exporter-reference-template">
-<span id="new-exporter-reference-template"></span><h3>new exporter(reference, template)<a class="headerlink" href="#new-exporter-reference-template" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-exporter-reference-bagname-template-servicepath">
+<span id="new-exporter-reference-bagname-template-servicepath"></span><h3>new exporter(reference, bagName, template, servicePath)<a class="headerlink" href="#new-exporter-reference-bagname-template-servicepath" title="Permalink to this headline">¶</a></h3>
 <p>Export Object</p>
 <table border="1" class="docutils">
 <thead>
@@ -8206,9 +8383,19 @@ Therefore the returned count might not be exactly the same as number of returned
 <td></td>
 </tr>
 <tr>
+<td>bagName</td>
+<td><code>String</code></td>
+<td>the name that will be used for the bag</td>
+</tr>
+<tr>
 <td>template</td>
 <td><code>Object</code></td>
 <td>the tempalte must be in the valid format.</td>
+</tr>
+<tr>
+<td>servicePath</td>
+<td><code>String</code></td>
+<td>the path to the service, i.e. "/deriva/export/"</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.exporter+exportParameters"></a></p>
@@ -8218,10 +8405,26 @@ Therefore the returned count might not be exactly the same as number of returned
 <p>TODO: add description</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.exporter"><code>exporter</code></a><a name="ERMrest.exporter+run"></a></p>
 </div>
-<div class="section" id="exporter-run-code-promise-code">
-<span id="exporter-run-code-promise-code"></span><h3>exporter.run() ⇒ <code>Promise</code><a class="headerlink" href="#exporter-run-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="exporter-run-contextheaderparams-code-promise-code">
+<span id="exporter-run-contextheaderparams-code-promise-code"></span><h3>exporter.run(contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#exporter-run-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>sends the export request to ioboxd</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.exporter"><code>exporter</code></a><a name="ERMrest.exporter+cancel"></a></p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.exporter"><code>exporter</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contextHeaderParams</td>
+<td><code>Object</code></td>
+<td>the object that will be logged</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.exporter+cancel"></a></p>
 </div>
 <div class="section" id="exporter-cancel-code-boolean-code">
 <span id="exporter-cancel-code-boolean-code"></span><h3>exporter.cancel() ⇒ <code>boolean</code><a class="headerlink" href="#exporter-cancel-code-boolean-code" title="Permalink to this headline">¶</a></h3>
@@ -9031,7 +9234,7 @@ String<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+displayname">.displayname</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+projectionTable">.projectionTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+facetBaseTable">.facetBaseTable</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+columns">.columns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
@@ -9051,14 +9254,11 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+appLink">.appLink</a> : <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+csvDownloadLink">.csvDownloadLink</a> ⇒ <code>String</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+exportTemplates">.exportTemplates</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+defaultExportTemplate">.defaultExportTemplate</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code><ul>
-<li><a class="reference external" href="#ERMrest.Reference+read..processSortObject">~processSortObject()</a></li>
-</ul>
-</li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -9068,6 +9268,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+getExportTemplates">.getExportTemplates(useDefault)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+search">.search(term)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
@@ -9075,6 +9276,10 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath">._getReadPath()</a> : <code>Object</code><ul>
+<li><a class="reference external" href="#ERMrest.Reference+_getReadPath..processSortObject">~processSortObject()</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -9149,11 +9354,11 @@ Should not be used for sending requests to ermrest, use this.location.ermrestCom
 <div class="section" id="reference-table-code-table-code">
 <span id="id8"></span><h3>reference.table : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-table-code-table-code" title="Permalink to this headline">¶</a></h3>
 <p>The table object for this reference</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+projectionTable"></a></p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+facetBaseTable"></a></p>
 </div>
-<div class="section" id="reference-projectiontable-code-table-code">
-<span id="id9"></span><h3>reference.projectionTable : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-projectiontable-code-table-code" title="Permalink to this headline">¶</a></h3>
-<p>The projection table object,
+<div class="section" id="reference-facetbasetable-code-table-code">
+<span id="id9"></span><h3>reference.facetBaseTable : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a class="headerlink" href="#reference-facetbasetable-code-table-code" title="Permalink to this headline">¶</a></h3>
+<p>The base table object that is used for faceting,
 if there’s a join in path, this will return a different object from .table</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+columns"></a></p>
 </div>
@@ -9330,18 +9535,10 @@ NOTE It will not have the same sort and paging as the reference.</p>
 <div class="section" id="reference-defaultloginfo-code-object-code">
 <span id="id24"></span><h3>reference.defaultLogInfo : <code>Object</code><a class="headerlink" href="#reference-defaultloginfo-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>The default information that we want to be logged including catalog, schema_table, and facet (filter).</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+exportTemplates"></a></p>
-</div>
-<div class="section" id="reference-exporttemplates-code-object-code">
-<span id="id25"></span><h3>reference.exportTemplates : <code>Object</code><a class="headerlink" href="#reference-exporttemplates-code-object-code" title="Permalink to this headline">¶</a></h3>
-<p>Will return the expor templates that are available for this reference.
-It will validate the templates that are defined in annotation.
-If its <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context and annotation was missing,
-it will return the default export template.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+defaultExportTemplate"></a></p>
 </div>
 <div class="section" id="reference-defaultexporttemplate-code-string-code">
-<span id="id26"></span><h3>reference.defaultExportTemplate : <code>string</code><a class="headerlink" href="#reference-defaultexporttemplate-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id25"></span><h3>reference.defaultExportTemplate : <code>string</code><a class="headerlink" href="#reference-defaultexporttemplate-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>Returns a object, that can be used as a default export template.
 It will include:</p>
 <ul class="simple">
@@ -9357,9 +9554,9 @@ if these columns are missing from the asset annotation, they won’t be added.</
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+removeAllFacetFilters"></a></p>
 </div>
-<div class="section" id="reference-removeallfacetfilters-samefacet-code-ermrest-reference-code">
-<span id="id27"></span><h3>reference.removeAllFacetFilters(sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
-<p>Remove all the fitlers from facets</p>
+<div class="section" id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code">
+<span id="id26"></span><h3>reference.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
+<p>Remove all the fitlers, facets, and custom-facets from the reference</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>ERMrest.reference</code> - A reference without facet filters</p>
 <table border="1" class="docutils">
 <thead>
@@ -9371,12 +9568,27 @@ if these columns are missing from the asset annotation, they won’t be added.</
 </thead>
 <tbody>
 <tr>
+<td>sameFilter</td>
+<td><code>boolean</code></td>
+<td>By default we're removing filters, if this is true filters won't be changed.</td>
+</tr>
+<tr>
+<td>sameCustomFacet</td>
+<td><code>boolean</code></td>
+<td>By default we're removing custom-facets, if this is true custom-facets won't be changed.</td>
+</tr>
+<tr>
 <td>sameFacet</td>
 <td><code>boolean</code></td>
 <td>By default we're removing facets, if this is true facets won't be changed.</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.Reference+create"></a></p>
+</table><p><a name="ERMrest.Reference+hideFacets"></a></p>
+</div>
+<div class="section" id="reference-hidefacets-code-reference-code">
+<span id="id27"></span><h3>reference.hideFacets() ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a class="headerlink" href="#reference-hidefacets-code-reference-code" title="Permalink to this headline">¶</a></h3>
+<p>Will return a reference with the same facets but hidden.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+create"></a></p>
 </div>
 <div class="section" id="reference-create-data-contextheaderparams-code-promise-code">
 <span id="id28"></span><h3>reference.create(data, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
@@ -9466,27 +9678,10 @@ or rejected with any of these errors:</p>
 <td>whether we should use entity api or not (if true, we won't get foreignkey data)</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.Reference+read..processSortObject"></a></p>
-<div class="section" id="read-processsortobject">
-<span id="id30"></span><h4>read~processSortObject()<a class="headerlink" href="#read-processsortobject" title="Permalink to this headline">¶</a></h4>
-<p>Check the sort object. Does not change the <code class="docutils literal notranslate"><span class="pre">this._location</span></code> object.</p>
-<ul class="simple">
-<li>Throws an error if the column doesn’t exist or is not sortable.</li>
-<li>maps the sorting to its sort columns.<ul>
-<li>for columns it’s straighforward and uses the actual column name.</li>
-<li>for PseudoColumns we need<ul>
-<li>A new alias: F# where the # is a positive integer.</li>
-<li>The sort column name must be the “foreignkey_alias:column_name”.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>Kind</strong>: inner method of <a class="reference external" href="#ERMrest.Reference+read"><code>read</code></a><a name="ERMrest.Reference+sort"></a></p>
-</div>
+</table><p><a name="ERMrest.Reference+sort"></a></p>
 </div>
 <div class="section" id="reference-sort-sort-code-reference-code">
-<span id="id31"></span><h3>reference.sort(sort) ⇒ <code>Reference</code><a class="headerlink" href="#reference-sort-sort-code-reference-code" title="Permalink to this headline">¶</a></h3>
+<span id="id30"></span><h3>reference.sort(sort) ⇒ <code>Reference</code><a class="headerlink" href="#reference-sort-sort-code-reference-code" title="Permalink to this headline">¶</a></h3>
 <p>Return a new Reference with the new sorting
 TODO this should validate the given sort objects,
 but I’m not sure how much adding that validation will affect other apis and client</p>
@@ -9512,7 +9707,7 @@ but I’m not sure how much adding that validation will affect other apis and cl
 </table><p><a name="ERMrest.Reference+update"></a></p>
 </div>
 <div class="section" id="reference-update-tuples-contextheaderparams-code-promise-code">
-<span id="id32"></span><h3>reference.update(tuples, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-update-tuples-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<span id="id31"></span><h3>reference.update(tuples, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-update-tuples-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Updates a set of resources.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with a object containing <code class="docutils literal notranslate"><span class="pre">successful</span></code> and <code class="docutils literal notranslate"><span class="pre">failure</span></code> attributes.
 Both are <a class="reference external" href="#ERMrest.Page">Page</a> of results.
@@ -9544,7 +9739,7 @@ or rejected with any of these errors:</p>
 </table><p><a name="ERMrest.Reference+delete"></a></p>
 </div>
 <div class="section" id="reference-delete-contextheaderparams-code-promise-code">
-<span id="id33"></span><h3>reference.delete(contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-delete-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<span id="id32"></span><h3>reference.delete(contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-delete-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Deletes the referenced resources.
 NOTE This will ignore the provided sort and paging on the reference, make
 sure you are calling this on specific set or rows (filtered).</p>
@@ -9569,7 +9764,7 @@ sure you are calling this on specific set or rows (filtered).</p>
 </tbody>
 </table><p><a name="ERMrest.Reference+delete..self"></a></p>
 <div class="section" id="delete-self">
-<span id="id34"></span><h4>delete~self<a class="headerlink" href="#delete-self" title="Permalink to this headline">¶</a></h4>
+<span id="id33"></span><h4>delete~self<a class="headerlink" href="#delete-self" title="Permalink to this headline">¶</a></h4>
 <p>NOTE: previous implemenation of delete with 412 logic is here:
 https://github.com/informatics-isi-edu/ermrestjs/commit/5fe854118337e0a63c6f91b4f3e139e7eadc42ac</p>
 <p>We decided to drop the support for 412, because the etag that we get from the read function
@@ -9582,7 +9777,7 @@ without any joins.</p>
 </div>
 </div>
 <div class="section" id="reference-related-tuple-code-array-lt-reference-gt-code">
-<span id="id35"></span><h3>reference.related([tuple]) ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
+<span id="id34"></span><h3>reference.related([tuple]) ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a><a class="headerlink" href="#reference-related-tuple-code-array-lt-reference-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>The “related” references. Relationships are defined by foreign key
@@ -9611,6 +9806,30 @@ has other moderating attributes, for instance that indicate the
 <td>[tuple]</td>
 <td><a href="#ERMrest.Tuple"><code>Tuple</code></a></td>
 <td>the current tuple</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.Reference+getExportTemplates"></a></p>
+</div>
+<div class="section" id="reference-getexporttemplates-usedefault-code-object-code">
+<span id="id35"></span><h3>reference.getExportTemplates(useDefault) ⇒ <code>Object</code><a class="headerlink" href="#reference-getexporttemplates-usedefault-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Will return the expor templates that are available for this reference.
+It will validate the templates that are defined in annotations.
+If its <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context and annotation was missing,
+it will return the default export template.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>useDefault</td>
+<td><code>Boolean</code></td>
+<td>whether we should use default template or not</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+search"></a></p>
@@ -9782,7 +10001,36 @@ ReferenceColumn<p>&amp;gt;</p>
 <td>the data for the current refe</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.AttributeGroupReference"></a></p>
+</table><p><a name="ERMrest.Reference+_getReadPath"></a></p>
+</div>
+<div class="section" id="reference-getreadpath-code-object-code">
+<span id="id41"></span><h3>reference._getReadPath() : <code>Object</code><a class="headerlink" href="#reference-getreadpath-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>The actual path that will be used for read request.
+It will return an object that will have:</p>
+<ul class="simple">
+<li>value: the string value of the path</li>
+<li>isAttributeGroup: whether we should use attributegroup api or not.
+(if the reference doesn’t have any fks, we don’t need to use attributegroup)
+NOTE Might throw an error if modifiers are not valid</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+_getReadPath..processSortObject"></a></p>
+<div class="section" id="getreadpath-processsortobject">
+<span id="id42"></span><h4>_getReadPath~processSortObject()<a class="headerlink" href="#getreadpath-processsortobject" title="Permalink to this headline">¶</a></h4>
+<p>Check the sort object. Does not change the <code class="docutils literal notranslate"><span class="pre">this._location</span></code> object.</p>
+<ul class="simple">
+<li>Throws an error if the column doesn’t exist or is not sortable.</li>
+<li>maps the sorting to its sort columns.<ul>
+<li>for columns it’s straighforward and uses the actual column name.</li>
+<li>for PseudoColumns we need<ul>
+<li>A new alias: F# where the # is a positive integer.</li>
+<li>The sort column name must be the “foreignkey_alias:column_name”.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kind</strong>: inner method of <a class="reference external" href="#ERMrest.Reference+_getReadPath"><code>_getReadPath</code></a><a name="ERMrest.AttributeGroupReference"></a></p>
+</div>
 </div>
 </div>
 <div class="section" id="ermrest-attributegroupreference-code-object-code">
@@ -9815,7 +10063,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 </ul>
 <p><a name="new_ERMrest.AttributeGroupReference_new"></a></p>
 <div class="section" id="new-attributegroupreference-keycolumns-aggregatecolumns-location-catalog-sourcetable-context">
-<span id="id41"></span><h3>new AttributeGroupReference(keyColumns, aggregateColumns, location, catalog, sourceTable, context)<a class="headerlink" href="#new-attributegroupreference-keycolumns-aggregatecolumns-location-catalog-sourcetable-context" title="Permalink to this headline">¶</a></h3>
+<span id="id43"></span><h3>new AttributeGroupReference(keyColumns, aggregateColumns, location, catalog, sourceTable, context)<a class="headerlink" href="#new-attributegroupreference-keycolumns-aggregatecolumns-location-catalog-sourcetable-context" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a Reference object.</p>
 <p>This object will be the main object that client will interact with, when we want
 to use ermrset <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> api. Referencse are immutable and therefore can be
@@ -9870,45 +10118,45 @@ AttributeGroupReference rather than a <a class="reference external" href="#ERMre
 </table><p><a name="ERMrest.AttributeGroupReference+_keyColumns"></a></p>
 </div>
 <div class="section" id="attributegroupreference-keycolumns-code-array-lt-ermrest-attributegroupcolumn-gt-code">
-<span id="id42"></span><h3>attributeGroupReference._keyColumns : <code>Array.<p>&amp;lt;</p>
+<span id="id44"></span><h3>attributeGroupReference._keyColumns : <code>Array.<p>&amp;lt;</p>
 ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegroupreference-keycolumns-code-array-lt-ermrest-attributegroupcolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Array of AttributeGroupColumn that will be used as the key columns</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+_aggregateColumns"></a></p>
 </div>
 <div class="section" id="attributegroupreference-aggregatecolumns-code-array-lt-ermrest-attributegroupcolumn-gt-code">
-<span id="id43"></span><h3>attributeGroupReference._aggregateColumns : <code>Array.<p>&amp;lt;</p>
+<span id="id45"></span><h3>attributeGroupReference._aggregateColumns : <code>Array.<p>&amp;lt;</p>
 ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegroupreference-aggregatecolumns-code-array-lt-ermrest-attributegroupcolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Array of AttributeGroupColumn that will be used for the aggregate results</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+aggregate"></a></p>
 </div>
 <div class="section" id="attributegroupreference-aggregate-code-referenceaggregatefn-code">
-<span id="id44"></span><h3>attributeGroupReference.aggregate : <a class="reference external" href="#ERMrest.ReferenceAggregateFn"><code>ReferenceAggregateFn</code></a><a class="headerlink" href="#attributegroupreference-aggregate-code-referenceaggregatefn-code" title="Permalink to this headline">¶</a></h3>
+<span id="id46"></span><h3>attributeGroupReference.aggregate : <a class="reference external" href="#ERMrest.ReferenceAggregateFn"><code>ReferenceAggregateFn</code></a><a class="headerlink" href="#attributegroupreference-aggregate-code-referenceaggregatefn-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+displayname"></a></p>
 </div>
 <div class="section" id="attributegroupreference-displayname-code-object-code">
-<span id="id45"></span><h3>attributeGroupReference.displayname : <code>object</code><a class="headerlink" href="#attributegroupreference-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
+<span id="id47"></span><h3>attributeGroupReference.displayname : <code>object</code><a class="headerlink" href="#attributegroupreference-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>the displayname of the reference
 TODO not sure if this sis needed</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+columns"></a></p>
 </div>
 <div class="section" id="attributegroupreference-columns-code-array-lt-attributegroupcolumn-gt-code">
-<span id="id46"></span><h3>attributeGroupReference.columns : <code>Array.<p>&amp;lt;</p>
+<span id="id48"></span><h3>attributeGroupReference.columns : <code>Array.<p>&amp;lt;</p>
 AttributeGroupColumn<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegroupreference-columns-code-array-lt-attributegroupcolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Visible columns</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+shortestKey"></a></p>
 </div>
 <div class="section" id="attributegroupreference-shortestkey-code-array-lt-ermrest-attributegroupcolumn-gt-code">
-<span id="id47"></span><h3>attributeGroupReference.shortestKey : <code>Array.<p>&amp;lt;</p>
+<span id="id49"></span><h3>attributeGroupReference.shortestKey : <code>Array.<p>&amp;lt;</p>
 ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegroupreference-shortestkey-code-array-lt-ermrest-attributegroupcolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Returns the visible key columns</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+uri"></a></p>
 </div>
 <div class="section" id="attributegroupreference-uri-code-string-code">
-<span id="id48"></span><h3>attributeGroupReference.uri : <code>string</code><a class="headerlink" href="#attributegroupreference-uri-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id50"></span><h3>attributeGroupReference.uri : <code>string</code><a class="headerlink" href="#attributegroupreference-uri-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The attributegroup uri.
 <service>/catalog/&lt;_catalogId&gt;/attributegroup/<path>/<search>/&lt;_keyColumns&gt;;&lt;_aggregateColumns&gt;<sort><page></p>
 <p>NOTE:</p>
@@ -9920,13 +10168,13 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+unfilteredReference"></a></p>
 </div>
 <div class="section" id="attributegroupreference-unfilteredreference-code-reference-code">
-<span id="id49"></span><h3>attributeGroupReference.unfilteredReference : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a class="headerlink" href="#attributegroupreference-unfilteredreference-code-reference-code" title="Permalink to this headline">¶</a></h3>
+<span id="id51"></span><h3>attributeGroupReference.unfilteredReference : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a class="headerlink" href="#attributegroupreference-unfilteredreference-code-reference-code" title="Permalink to this headline">¶</a></h3>
 <p>This will generate a new unfiltered reference each time.
 Returns a reference that points to all entities of current table</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+ermrestPath"></a></p>
 </div>
 <div class="section" id="attributegroupreference-ermrestpath-code-string-code">
-<span id="id50"></span><h3>attributeGroupReference.ermrestPath : <code>string</code><a class="headerlink" href="#attributegroupreference-ermrestpath-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id52"></span><h3>attributeGroupReference.ermrestPath : <code>string</code><a class="headerlink" href="#attributegroupreference-ermrestpath-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The second part of Attributegroup uri.
 <path>/<search>/&lt;_keyColumns&gt;;&lt;_aggregateColumns&gt;<sort><page></p>
 <p>NOTE:</p>
@@ -9938,7 +10186,7 @@ Returns a reference that points to all entities of current table</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+read"></a></p>
 </div>
 <div class="section" id="attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code">
-<span id="id51"></span><h3>attributeGroupReference.read([limit], contextHeaderParams) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
+<span id="id53"></span><h3>attributeGroupReference.read([limit], contextHeaderParams) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></p>
 <table border="1" class="docutils">
 <thead>
@@ -9963,7 +10211,7 @@ Returns a reference that points to all entities of current table</p>
 </table><p><a name="ERMrest.AttributeGroupReference+getColumnByName"></a></p>
 </div>
 <div class="section" id="attributegroupreference-getcolumnbyname-name-code-ermrest-attributegroupcolumn-code">
-<span id="id52"></span><h3>attributeGroupReference.getColumnByName(name) ⇒ <code>ERMrest.AttributeGroupColumn</code><a class="headerlink" href="#attributegroupreference-getcolumnbyname-name-code-ermrest-attributegroupcolumn-code" title="Permalink to this headline">¶</a></h3>
+<span id="id54"></span><h3>attributeGroupReference.getColumnByName(name) ⇒ <code>ERMrest.AttributeGroupColumn</code><a class="headerlink" href="#attributegroupreference-getcolumnbyname-name-code-ermrest-attributegroupcolumn-code" title="Permalink to this headline">¶</a></h3>
 <p>Find a column in list of key and aggregate columns.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></p>
 <table border="1" class="docutils">
@@ -10003,7 +10251,7 @@ AttributeGroupTuple<p>&amp;gt;</p>
 </ul>
 <p><a name="new_ERMrest.AttributeGroupPage_new"></a></p>
 <div class="section" id="new-attributegrouppage-reference-data-hasprevious-hasnext">
-<span id="id53"></span><h3>new AttributeGroupPage(reference, data, hasPrevious, hasNext)<a class="headerlink" href="#new-attributegrouppage-reference-data-hasprevious-hasnext" title="Permalink to this headline">¶</a></h3>
+<span id="id55"></span><h3>new AttributeGroupPage(reference, data, hasPrevious, hasNext)<a class="headerlink" href="#new-attributegrouppage-reference-data-hasprevious-hasnext" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a AttributeGroupPage object. A <em>page</em> represents a set of results returned from
 ERMrest. It may not represent the complete set of results. There is an
 iterator pattern used here, where its <a class="reference external" href="#ERMrest.AttributeGroupPage+previous">previous</a> and
@@ -10050,22 +10298,22 @@ See <a class="reference external" href="#ERMrest.AttributeGroupReference+read">r
 </table><p><a name="ERMrest.AttributeGroupPage+reference"></a></p>
 </div>
 <div class="section" id="attributegrouppage-reference-code-attributegroupreference-code">
-<span id="id54"></span><h3>attributeGroupPage.reference : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a class="headerlink" href="#attributegrouppage-reference-code-attributegroupreference-code" title="Permalink to this headline">¶</a></h3>
+<span id="id56"></span><h3>attributeGroupPage.reference : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a class="headerlink" href="#attributegrouppage-reference-code-attributegroupreference-code" title="Permalink to this headline">¶</a></h3>
 <p>The page’s associated reference.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+hasPrevious"></a></p>
 </div>
 <div class="section" id="attributegrouppage-hasprevious-code-boolean-code">
-<span id="id55"></span><h3>attributeGroupPage.hasPrevious ⇒ <code>boolean</code><a class="headerlink" href="#attributegrouppage-hasprevious-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<span id="id57"></span><h3>attributeGroupPage.hasPrevious ⇒ <code>boolean</code><a class="headerlink" href="#attributegrouppage-hasprevious-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Whether there is more entities before this page</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+hasNext"></a></p>
 </div>
 <div class="section" id="attributegrouppage-hasnext-code-boolean-code">
-<span id="id56"></span><h3>attributeGroupPage.hasNext ⇒ <code>boolean</code><a class="headerlink" href="#attributegrouppage-hasnext-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<span id="id58"></span><h3>attributeGroupPage.hasNext ⇒ <code>boolean</code><a class="headerlink" href="#attributegrouppage-hasnext-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Whether there is more entities after this page</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+tuples"></a></p>
 </div>
 <div class="section" id="attributegrouppage-tuples-code-array-lt-attributegrouptuple-gt-code">
-<span id="id57"></span><h3>attributeGroupPage.tuples : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
+<span id="id59"></span><h3>attributeGroupPage.tuples : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
 AttributeGroupTuple<p>&amp;gt;</p>
 </code></a><a class="headerlink" href="#attributegrouppage-tuples-code-array-lt-attributegrouptuple-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>An array of processed tuples.</p>
@@ -10079,7 +10327,7 @@ AttributeGroupTuple<p>&amp;gt;</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+next"></a></p>
 </div>
 <div class="section" id="attributegrouppage-next-code-attributegroupreference-code-code-null-code">
-<span id="id58"></span><h3>attributeGroupPage.next : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-next-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
+<span id="id60"></span><h3>attributeGroupPage.next : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-next-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
 <p>A reference to the next set of results.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
@@ -10093,7 +10341,7 @@ AttributeGroupTuple<p>&amp;gt;</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+previous"></a></p>
 </div>
 <div class="section" id="attributegrouppage-previous-code-attributegroupreference-code-code-null-code">
-<span id="id59"></span><h3>attributeGroupPage.previous : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-previous-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
+<span id="id61"></span><h3>attributeGroupPage.previous : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-previous-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
 <p>A reference to the previous set of results.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">previous</span><span class="p">)</span> <span class="p">{</span>
@@ -10123,7 +10371,7 @@ boolean<p>&amp;gt;</p>
 </ul>
 <p><a name="new_ERMrest.AttributeGroupTuple_new"></a></p>
 <div class="section" id="new-attributegrouptuple-page-data">
-<span id="id60"></span><h3>new AttributeGroupTuple(page, data)<a class="headerlink" href="#new-attributegrouptuple-page-data" title="Permalink to this headline">¶</a></h3>
+<span id="id62"></span><h3>new AttributeGroupTuple(page, data)<a class="headerlink" href="#new-attributegrouptuple-page-data" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a new Tuple. In database jargon, a tuple is a row in a
 relation. This object represents a row returned by a query to ERMrest.</p>
 <p>Usage:
@@ -10152,7 +10400,7 @@ See <a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">tupl
 </table><p><a name="ERMrest.AttributeGroupTuple+isHTML"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-ishtml-code-array-lt-boolean-gt-code">
-<span id="id61"></span><h3>attributeGroupTuple.isHTML : <code>Array.<p>&amp;lt;</p>
+<span id="id63"></span><h3>attributeGroupTuple.isHTML : <code>Array.<p>&amp;lt;</p>
 boolean<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegrouptuple-ishtml-code-array-lt-boolean-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>The array of boolean values of this tuple speicifying the value is HTML or not. The ordering of the
@@ -10162,13 +10410,13 @@ TODO Eventually should be refactored (https://github.com/informatics-isi-edu/erm
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>AttributeGroupTuple</code></a><a name="ERMrest.AttributeGroupTuple+uniqueId"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-uniqueid-code-string-code">
-<span id="id62"></span><h3>attributeGroupTuple.uniqueId : <code>string</code><a class="headerlink" href="#attributegrouptuple-uniqueid-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id64"></span><h3>attributeGroupTuple.uniqueId : <code>string</code><a class="headerlink" href="#attributegrouptuple-uniqueid-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The unique identifier for this tuple composed of the values for each
 of the shortest key columns concatenated together by an ‘_’</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>AttributeGroupTuple</code></a><a name="ERMrest.AttributeGroupTuple+displayname"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-displayname-code-string-code">
-<span id="id63"></span><h3>attributeGroupTuple.displayname : <code>string</code><a class="headerlink" href="#attributegrouptuple-displayname-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id65"></span><h3>attributeGroupTuple.displayname : <code>string</code><a class="headerlink" href="#attributegrouptuple-displayname-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The <em>display name</em> of this tuple. currently it will be values of
 key columns concatenated together by <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
 <p>Usage:</p>
@@ -10326,7 +10574,14 @@ ERMrest.resolve(&#39;https://example.org/catalog/42/entity/s:t/k=123&#39;).then(
 <div class="section" id="formatdate">
 <span id="formatdate"></span><h1>formatDate() ⇒<a class="headerlink" href="#formatdate" title="Permalink to this headline">¶</a></h1>
 <p>{{formatDate value format}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">format</span></code><a name="appLinkFn"></a></p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">format</span></code><a name="encodeFacet"></a></p>
+</div>
+<div class="section" id="encodefacet">
+<span id="encodefacet"></span><h1>encodeFacet() ⇒<a class="headerlink" href="#encodefacet" title="Permalink to this headline">¶</a></h1>
+<p>{{#encodeFacet}}
+str
+{{/encodeFacet}}</p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: encoded facet string that can be used in url<a name="appLinkFn"></a></p>
 </div>
 <div class="section" id="applinkfn-code-function-code">
 <span id="applinkfn-code-function-code"></span><h1>appLinkFn : <code>function</code><a class="headerlink" href="#applinkfn-code-function-code" title="Permalink to this headline">¶</a></h1>

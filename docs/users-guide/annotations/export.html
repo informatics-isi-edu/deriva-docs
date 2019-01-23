@@ -265,7 +265,9 @@
 <li class="toctree-l3"><a class="reference internal" href="handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -329,7 +331,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Export Annotation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -508,8 +514,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-processors">Supported processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#processor-details">Processor details</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
@@ -565,7 +571,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -653,7 +661,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/export.html">Export Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/export.html">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../chaise/index.html">Web interface (Chaise)</a><ul>
@@ -1148,16 +1160,18 @@
 </style>
 <div class="section" id="export-annotation">
 <span id="export-annotation"></span><h1>Export Annotation<a class="headerlink" href="#export-annotation" title="Permalink to this headline">¶</a></h1>
-<p>The export annotation applies at the table level. It allows for downloading sets of data using the BDBag tool available in the IOBox service. The following is how Chaise leverages the different values defined in the export annotation:</p>
+<p>Using the <a class="reference internal" href="annotation.html#tag-2016-export"><span class="std std-ref">export annotation</span></a> you can define expor templates that will be used for <code class="docutils literal notranslate"><span class="pre">ioboxd</span></code> service integration with the client tools. For detailed information please refer to <a class="reference external" href="https://github.com/informatics-isi-edu/ioboxd/blob/master/doc/integration.md">the ioboxd documentation</a>.</p>
+<div class="section" id="structure">
+<span id="structure"></span><h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<p>The following is how ERMrestJS and Chaise leverage the different values defined in the export annotation:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">templates</span><span class="o">:</span> <span class="p">[</span>
   <span class="p">{</span>
-    <span class="nx">displayname</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">chaise</span><span class="o">-</span><span class="nx">display</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// name displayed in dropdown menu in chaise</span>
+    <span class="nx">displayname</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">chaise</span><span class="o">-</span><span class="nx">display</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// name displayed in dropdown menu in the client</span>
     <span class="nx">type</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">FILE</span> <span class="nx">or</span> <span class="nx">BAG</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="nx">outputs</span><span class="o">:</span> <span class="p">[</span>
       <span class="p">{</span>
         <span class="nx">source</span><span class="o">:</span> <span class="p">{</span>
           <span class="nx">api</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">query</span><span class="o">-</span><span class="nx">type</span><span class="o">&gt;</span><span class="p">,</span> <span class="c1">// entity, attribute, attribute-group</span>
-          <span class="nx">table</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">schema</span><span class="o">:</span><span class="nx">table</span><span class="o">&gt;</span>
           <span class="nx">path</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">optional</span><span class="o">-</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">predicate</span><span class="o">&gt;</span> <span class="c1">// used to represent more complex queries</span>
         <span class="p">},</span>
         <span class="nx">destination</span><span class="o">:</span> <span class="p">{</span>
@@ -1171,7 +1185,18 @@
 <span class="p">]</span>
 </pre></div>
 </div>
-<p>More information can be found <a class="reference external" href="https://github.com/informatics-isi-edu/ioboxd/blob/master/doc/integration.md">here</a> with multiple examples.</p>
+</div>
+<div class="section" id="how-ermrestjs-interperts-it">
+<span id="how-ermrestjs-interperts-it"></span><h2>How ERMrestJS Interperts It<a class="headerlink" href="#how-ermrestjs-interperts-it" title="Permalink to this headline">¶</a></h2>
+<p>This annotation only applies to table but MAY be annotated at the schema level to set a schema-wide default. If the annotation is missing on the table, we will get the export definition from the schema. If the annotation is missing from both schema and table, we are going to apply default heuristics for this annotation in detailed context. This means if you navigate to a page with <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context (record page in chaise) and you haven’t defined any export annotation on the table, we are going to use the default export template. The following is how the content of default export anntoation:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">entity</span></code> API request to the main table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">entity</span></code> API for all the related entities that are one level away from the main table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API for all the other related entities. The projection list should include all the columns of the table, plus the foreignkey value of the main entity. This request will be grouped by the value of table’s key and foreignkey value.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all assets on the main entity that have <code class="docutils literal notranslate"><span class="pre">byte_count_column</span></code>, <code class="docutils literal notranslate"><span class="pre">filename_column</span></code>, and <code class="docutils literal notranslate"><span class="pre">md5</span></code> (or <code class="docutils literal notranslate"><span class="pre">sha256</span></code>) defined on the asset annotation.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all assets of related entities that have <code class="docutils literal notranslate"><span class="pre">byte_count_column</span></code>, <code class="docutils literal notranslate"><span class="pre">filename_column</span></code>, and <code class="docutils literal notranslate"><span class="pre">md5</span></code> (or <code class="docutils literal notranslate"><span class="pre">sha256</span></code>) defined on the asset annotation.</li>
+</ul>
+</div>
 </div>
 
 

@@ -297,6 +297,7 @@ Supported _columnentry_ patterns:
     - `olist` for ordered bullet list.
     - `ulist` for unordered bullet list.
     - `csv` for comma-seperated values.
+    - `raw` for space-seperated values.
 
 Supported _sourceentry_ pattern:
 - _columnname_: : A string literal. _columnname_ identifies a constituent column of the table.
@@ -329,6 +330,7 @@ Configuration attributes (optional):
 - `open`: Setting this attribute to `true`, will force the facet to open by default.
 - `bar_plot`: This attribute is meant to be an object of properties that control the display of the histogram. Setting this attribute to `false` will force the histogram to not be shown in the facet in the facet panel. If unspecified, default is `true` (or show the histogram).
 - `ux_mode`: `choices`, `ranges`, or `check_presence`. If a multi-modal facet control UX is available, it will specify the default UX mode that should be used (If `ux_mode` is defined, the other type of constraint will not be displayed even if you have defined it in the annotation). In `check_presence` mode only two options will be available to the users, "not-null" and "null".
+- `hide_null_choice` and `hide_not_null_choice`: By default, we are going to add `null` and `not-null` options in the choice picker. Setting any of these variables to `true`, will hide its respective option.
 
 `bar_plot` attributes (optional):
 - `n_bins`: Used to define the number of bins the histogram uses to fetch and display data. If undefined, default is 30 bins.
@@ -516,6 +518,13 @@ Supported JSON _option_ payload patterns:
 
 - `"row_order":` `[` _sortkey_ ... `]`: The list of one or more _sortkey_ defines the preferred or default order to present rows from a table. The ordered list of sort keys starts with a primary sort and optionally continues with secondary, tertiary, etc. sort keys. The given _sortkey_ s will be used as is (_columnorder_ SHOULD not be applied recursivly to this).
 - `"page_size":` `_number_`: The default number of rows to be shown on a page.  
+- `"page_markdown_pattern"`: _pagepattern_: Render the page by composing a markdown representation only when `page_markdown_pattern` is non-null.
+  - Expand _pagepattern_ to obtain a markdown representation of whole page of dat via [Pattern Expansion](#pattern-expansion. In the pattern, you have access to a `$page` object that has the following attributes:
+      - `values`: An array of values. You can access each column value using the `{{{$page.values.<index>.<column>}}}` where `<index>` is the index of array element that you want (starting with zero), and `<column>` is the column name (`{{{$page.values.0.RID}}}`).
+      - `parent`: This variable is available when used for getting table content of related entities. Currently the `row_markdown_pattern` in `compact` context is used to provide a brief summary of table data. When used in this context, you can access the parent attributes under `$page.parent`. The attributes are:
+        - `values`: the parent data `{{{$page.parent.values.RID}}}`.
+        - `table`: the parent table name `{{{$page.parent.table}}}`.
+        - `schema`: the parent schema name `{{{$page.parent.schema}}}`.
 - `"row_markdown_pattern":` _rowpattern_: Render the row by composing a markdown representation only when `row_markdown_pattern` is non-null.
   - Expand _rowpattern_ to obtain a markdown representation of each row via [Pattern Expansion](#pattern-expansion). The pattern has access to column values **after** any processing implied by [2016 Column Display](#column-display).
 - `"separator_markdown":` _separator_: Insert _separator_ markdown text between each expanded _rowpattern_ when presenting row sets. (Default new-line `"\n"`.)
@@ -532,7 +541,7 @@ Supported JSON _option_ payload patterns:
 	- The _pathsuffix_ MAY join additional tables to the path and MAY project from these tables as well as the table bound to the `S` table alias.
 	- The _pathsuffix_ SHOULD reset the path context to `$S` if it has joined other tables.
 
-It is not meaningful to use both `row_markdown_pattern` and `module` in for the same _context_. If both are specified, it is RECOMMENDED that the application prefer the `module` configuration and ignore the markdown instructions.
+It is not meaningful to use `page_markdown_pattern`, `row_markdown_pattern`, and `module` in for the same _context_. If they co-exist, the application will prefer `module` over `page_markdown_pattern` and `page_markdown_pattern` over `row_markdown_pattern`.
 
 Supported JSON _sortkey_ patterns:
 
@@ -619,8 +628,6 @@ Supported _destinationentry_ patterns:
 #### Export Annotation Hierarchy
 
 This annotation only applies to table but MAY be annotated at the schema level to set a schema-wide default. If the annotation is missing on the table, we will get the export definition from the schema.
-
-#### 
 
 ### Tag: 2017 Asset
 
@@ -755,14 +762,15 @@ The following matrix illustrates which context is meaningful in which annotation
 
 ## Pattern Expansion
 
-When deriving a field value from a _pattern_, the _pattern_ MAY contain markers for substring replacements of the form `{{column name}}` or `{{{ column name}}}` where `column name` MUST reference a column in the table. Any particular column name MAY be referenced and expanded zero or more times in the same _pattern_. Each pattern is passed through a templating environment. By default, this templating environment is `Mustache`. A `template_engine` parameter can be defined alongside any _pattern_ to define which templating engine to use.
+When deriving a field value from a _pattern_, the _pattern_ MAY contain markers for substring replacements of the form `{{column name}}` or `{{{ column name}}}` where `column name` MUST reference a column in the table. Any particular column name MAY be referenced and expanded zero or more times in the same _pattern_. Each pattern is passed through a templating environment. By default, this templating environment is `Mustache`. A `template_engine` parameter can be defined alongside any _pattern_ to define which templating engine to use. Currently you can choose between `handlebars` and `mustache`. For detailed explanation on template and markdown language please refer to [Mustache Templating](mustache-templating.md) and [Handlebars Templating](handlebars.md) documents.
 
-For example, a _column_ may have a [`tag:isrd.isi.edu,2016:column-display`](#tag-2016-column-display) annotation containing the following payload:
+As an example, a _column_ may have a [`tag:isrd.isi.edu,2016:column-display`](#tag-2016-column-display) annotation containing the following payload:
 
 ```
 {
    "*" : {
-       "markdown_pattern": "[{{{title}}}](https://dev.isrd.isi.edu/chaise/search?name={{{_name}}})"
+       "markdown_pattern": "[{{{title}}}](https://dev.isrd.isi.edu/chaise/search?name={{{_name}}})",
+       "template_engine": "handlebars"
    }
 }
 ```
@@ -774,5 +782,3 @@ A web user agent that consumes this annotation and the related table data would 
     <img src="https://dev.isrd.isi.edu/chaise/search?name=col%20name" alt="Title of Image">
 </p>
 ```
-
-For detailed explanation on template and markdown language please refer to [Template and Markdown Guide](https://github.com/informatics-isi-edu/ermrestjs/wiki/Template-and-Markdown-Guide).

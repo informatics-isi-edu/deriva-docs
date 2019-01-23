@@ -265,7 +265,9 @@
 <li class="toctree-l3"><a class="reference internal" href="handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -329,7 +331,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="export.html">Export Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="export.html">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="export.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -508,8 +514,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-output-formats">Supported output formats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#supported-processors">Supported processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#processor-details">Processor details</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#env"><code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/cli/deriva-download-cli.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
@@ -565,7 +571,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#additional-helpers">Additional Helpers</a></li>
@@ -653,7 +661,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/export.html">Export Annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/export.html">Export Annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../chaise/index.html">Web interface (Chaise)</a><ul>
@@ -1377,6 +1389,17 @@ Research on date <span class="o">{{{</span>date<span class="o">}}}</span> : <spa
 </pre></div>
 </div>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">ISO</span> <span class="nx">datetime</span> <span class="nx">is</span> <span class="p">{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">ISOString</span><span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="catalog-usage">
+<span id="catalog-usage"></span><h4>$catalog Usage<a class="headerlink" href="#catalog-usage" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">$catalog</span></code> is an object that gives you access to the catalog information including version if it is present. The following properties are currently included:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="n">snapshot</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;@&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nb">id</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+  <span class="n">version</span><span class="p">:</span> <span class="n">version</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

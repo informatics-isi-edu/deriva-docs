@@ -1,6 +1,6 @@
 # Using the Chaise Data Browser
 
-Chaise, sometimes referred to as the "Data Browser", serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or adminstrator roles, you can learn how to manage the model and annotations in [Managing Catalogs](/users-guide/managing-catalogs/).)
+Chaise, sometimes referred to as the "Data Browser", serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or adminstrator roles, you can learn how to manage the model and annotations in [Managing Catalogs](users-guide/managing-catalogs/).)
 
 The Chaise interfaces represent data via records that can be filtered with attributes in the sidebar much like you would in an online shopping site.
 

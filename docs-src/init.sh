@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e -o pipefail
 
 echo -e "Removing existing build directory...\n"
 rm -rf ./_build
@@ -20,7 +21,7 @@ fi
 
 git clone -b ${DERIVAPY_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-py ../repo-src/deriva-py
 git clone -b ${DERIVAQT_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-qt ../repo-src/deriva-qt
-git clone -b ${DERIVAWEB_TAG} --depth 1https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-web ../repo-src/deriva-web
+git clone -b ${DERIVAWEB_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-web ../repo-src/deriva-web
 git clone -b ${ERMREST_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrest ../repo-src/ermrest
 git clone -b ${HATRAC_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/hatrac ../repo-src/hatrac
 git clone -b ${ERMRESTJS_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrestjs ../repo-src/ermrestjs

@@ -18,13 +18,13 @@ if [[ -n "$GITHUB_TOKEN" ]]; then
     GITHUB_AUTH=${GITHUB_TOKEN}:x-oauth-basic@
 fi
 
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-py ../repo-src/deriva-py --branch ${DERIVAPY_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-qt ../repo-src/deriva-qt --branch ${DERIVAQT_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-web ../repo-src/deriva-web --branch ${DERIVAWEB_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrest ../repo-src/ermrest --branch ${ERMREST_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/hatrac ../repo-src/hatrac --branch ${HATRAC_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrestjs ../repo-src/ermrestjs --branch ${ERMRESTJS_TAG} --single-branch
-git clone https://${GITHUB_AUTH}github.com/informatics-isi-edu/chaise ../repo-src/chaise --branch ${CHAISE_TAG} --single-branch
+git clone -b ${DERIVAPY_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-py ../repo-src/deriva-py
+git clone -b ${DERIVAQT_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-qt ../repo-src/deriva-qt
+git clone -b ${DERIVAWEB_TAG} --depth 1https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-web ../repo-src/deriva-web
+git clone -b ${ERMREST_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrest ../repo-src/ermrest
+git clone -b ${HATRAC_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/hatrac ../repo-src/hatrac
+git clone -b ${ERMRESTJS_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrestjs ../repo-src/ermrestjs
+git clone -b ${CHAISE_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/chaise ../repo-src/chaise
 
 echo -e "\nInstall code dependencies:\n"
 pip install --no-warn-script-location --user ../repo-src/deriva-py

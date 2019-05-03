@@ -8,4 +8,8 @@ fi
 echo -e "Copying (rsync) files to docs directory...\n"
 rsync -avz -delete ./_build/html/ ../docs
 
-# echo -e "Commit and push files to GitHub...\n"
+echo -e "Commit and push files to GitHub...\n"
+cd ../docs
+MESSAGE="Automated update: `date`"
+git commit --dry-run -m "${MESSAGE}" .
+git push --dry-run

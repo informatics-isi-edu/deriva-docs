@@ -7,5 +7,6 @@ rsync -avz -delete ./_build/html/ ../docs
 echo -e "\nCommit and push files to GitHub...\n"
 cd ../docs
 MESSAGE="Automated update: `date`"
-git commit --dry-run -m "${MESSAGE}" .
+git add -A .
+git commit -m "${MESSAGE}" .
 git push --dry-run

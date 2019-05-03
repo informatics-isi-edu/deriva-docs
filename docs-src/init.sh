@@ -57,4 +57,4 @@ ln -sfv ../../ermrestjs/user-docs/table-alternatives.md
 ln -sfv ../../ermrestjs/user-docs/template-markdown-overview.md
 ln -sfv ../../ermrestjs/user-docs/template-markdown.rst
 
-echo -e "\nInitialization complete\n"
+echo -e "\nInitialization complete.\n"

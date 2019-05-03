@@ -61,8 +61,10 @@ to use for ERMrest JavaScript agents.
 
 * [ERMrest](#ERMrest) : <code>object</code>
     * [.Server](#ERMrest.Server)
-        * [new Server(uri)](#new_ERMrest.Server_new)
+        * [new Server(uri, contextHeaderParams)](#new_ERMrest.Server_new)
         * [.uri](#ERMrest.Server+uri) : <code>string</code>
+        * [.cid](#ERMrest.Server+cid) : <code>string</code>
+        * [.pid](#ERMrest.Server+pid) : <code>string</code>
         * [.catalogs](#ERMrest.Server+catalogs) : [<code>Catalogs</code>](#ERMrest.Catalogs)
     * [.Catalogs](#ERMrest.Catalogs)
         * [new Catalogs(server)](#new_ERMrest.Catalogs_new)
@@ -73,6 +75,8 @@ to use for ERMrest JavaScript agents.
         * [new Catalog(server, id)](#new_ERMrest.Catalog_new)
         * [.id](#ERMrest.Catalog+id) : <code>string</code>
         * [.schemas](#ERMrest.Catalog+schemas) : [<code>Schemas</code>](#ERMrest.Schemas)
+        * [.chaiseConfig](#ERMrest.Catalog+chaiseConfig) ⇒ <code>Object</code>
+        * [.currentSnaptime()](#ERMrest.Catalog+currentSnaptime) ⇒ <code>Promise</code>
         * [.constraintByNamePair(pair, subject)](#ERMrest.Catalog+constraintByNamePair) ⇒ <code>Object</code> \| <code>null</code>
         * [.getTable(tableName, schemaName)](#ERMrest.Catalog+getTable) ⇒ [<code>Table</code>](#ERMrest.Table)
     * [.Schemas](#ERMrest.Schemas)
@@ -119,8 +123,8 @@ to use for ERMrest JavaScript agents.
             * [.shortestKey](#ERMrest.Table+shortestKey)
             * [.displayKey](#ERMrest.Table+displayKey) : [<code>Array.&lt;Column&gt;</code>](#ERMrest.Column)
             * [.uri](#ERMrest.Table+uri) : <code>string</code>
-            * [.exportTemplates](#ERMrest.Table+exportTemplates) : <code>Array</code> \| <code>null</code>
             * [._getRowDisplayKey(context)](#ERMrest.Table+_getRowDisplayKey)
+            * [.getExportTemplates()](#ERMrest.Table+getExportTemplates) : <code>Array</code> \| <code>null</code>
         * _static_
             * [.Entity](#ERMrest.Table.Entity)
                 * [new Entity(server, table)](#new_ERMrest.Table.Entity_new)
@@ -175,6 +179,7 @@ to use for ERMrest JavaScript agents.
         * [.formatPresentation(data, context, options)](#ERMrest.Column+formatPresentation) ⇒ <code>Object</code>
         * [.toString()](#ERMrest.Column+toString) ⇒ <code>string</code>
         * [.getDisplay(context)](#ERMrest.Column+getDisplay)
+        * [.compare(a, b)](#ERMrest.Column+compare) ⇒ <code>integer</code>
     * [.Annotations](#ERMrest.Annotations)
         * [new Annotations()](#new_ERMrest.Annotations_new)
         * [.all()](#ERMrest.Annotations+all) ⇒ [<code>Array.&lt;Annotation&gt;</code>](#ERMrest.Annotation)
@@ -358,6 +363,7 @@ to use for ERMrest JavaScript agents.
         * [.isHTML](#ERMrest.Tuple+isHTML) : <code>Array.&lt;boolean&gt;</code>
         * [.displayname](#ERMrest.Tuple+displayname) : <code>string</code>
         * [.uniqueId](#ERMrest.Tuple+uniqueId) : <code>string</code>
+        * [.templateVariables](#ERMrest.Tuple+templateVariables) : <code>Object</code>
         * [.update()](#ERMrest.Tuple+update) ⇒ <code>Promise</code>
         * [.delete()](#ERMrest.Tuple+delete) ⇒ <code>Promise</code>
         * [.getAssociationRef()](#ERMrest.Tuple+getAssociationRef) : [<code>Reference</code>](#ERMrest.Reference)
@@ -414,6 +420,7 @@ to use for ERMrest JavaScript agents.
         * [new AssetPseudoColumn(reference, column)](#new_ERMrest.AssetPseudoColumn_new)
         * [.isPseudo](#ERMrest.AssetPseudoColumn+isPseudo) : <code>boolean</code>
         * [.isAsset](#ERMrest.AssetPseudoColumn+isAsset) : <code>boolean</code>
+        * [.template_engine](#ERMrest.AssetPseudoColumn+template_engine) : <code>ERMrest.Refernece</code>
         * [.urlPattern](#ERMrest.AssetPseudoColumn+urlPattern) : <code>ERMrest.Refernece</code>
         * [.filenameColumn](#ERMrest.AssetPseudoColumn+filenameColumn) : [<code>Column</code>](#ERMrest.Column)
         * [.filenameColumn](#ERMrest.AssetPseudoColumn+filenameColumn) : [<code>Column</code>](#ERMrest.Column)
@@ -421,6 +428,7 @@ to use for ERMrest JavaScript agents.
         * [.sha256](#ERMrest.AssetPseudoColumn+sha256) : [<code>Column</code>](#ERMrest.Column)
         * [.filenameExtFilter](#ERMrest.AssetPseudoColumn+filenameExtFilter) : [<code>Column</code>](#ERMrest.Column)
         * [._determineInputDisabled(context)](#ERMrest.AssetPseudoColumn+_determineInputDisabled) ⇒ <code>boolean</code> \| <code>object</code>
+        * [.getMetadata()](#ERMrest.AssetPseudoColumn+getMetadata)
     * [.InboundForeignKeyPseudoColumn](#ERMrest.InboundForeignKeyPseudoColumn)
         * [new InboundForeignKeyPseudoColumn(reference, fk)](#new_ERMrest.InboundForeignKeyPseudoColumn_new)
         * [.reference](#ERMrest.InboundForeignKeyPseudoColumn+reference) : [<code>Reference</code>](#ERMrest.Reference)
@@ -457,7 +465,7 @@ to use for ERMrest JavaScript agents.
         * [.searchFilters](#ERMrest.FacetColumn+searchFilters) : <code>Array.&lt;ERMREst.SearchFacetFilter&gt;</code>
         * [.choiceFilters](#ERMrest.FacetColumn+choiceFilters) : <code>Array.&lt;ERMREst.ChoiceFacetFilter&gt;</code>
         * [.rangeFilters](#ERMrest.FacetColumn+rangeFilters) : <code>Array.&lt;ERMREst.RangeFacetFilter&gt;</code>
-        * [.getChoiceDisplaynames()](#ERMrest.FacetColumn+getChoiceDisplaynames) ⇒ <code>Promise</code>
+        * [.getChoiceDisplaynames(contextHeaderParams)](#ERMrest.FacetColumn+getChoiceDisplaynames) ⇒ <code>Promise</code>
         * [.toJSON()](#ERMrest.FacetColumn+toJSON) ⇒ <code>Object</code>
         * [._setFilters(json)](#ERMrest.FacetColumn+_setFilters)
         * [.addSearchFilter(term)](#ERMrest.FacetColumn+addSearchFilter) ⇒ [<code>Reference</code>](#ERMrest.Reference)
@@ -505,6 +513,7 @@ to use for ERMrest JavaScript agents.
         * [.uri](#ERMrest.AttributeGroupReference+uri) : <code>string</code>
         * [.unfilteredReference](#ERMrest.AttributeGroupReference+unfilteredReference) : [<code>Reference</code>](#ERMrest.Reference)
         * [.ermrestPath](#ERMrest.AttributeGroupReference+ermrestPath) : <code>string</code>
+        * [.defaultLogInfo](#ERMrest.AttributeGroupReference+defaultLogInfo) : <code>Object</code>
         * [.read([limit], contextHeaderParams)](#ERMrest.AttributeGroupReference+read) ⇒ <code>ERMRest.AttributeGroupPage</code>
         * [.getColumnByName(name)](#ERMrest.AttributeGroupReference+getColumnByName) ⇒ <code>ERMrest.AttributeGroupColumn</code>
     * [.AttributeGroupPage](#ERMrest.AttributeGroupPage)
@@ -637,6 +646,7 @@ to use for ERMrest JavaScript agents.
         * [.uri](#ERMrest.AttributeGroupReference+uri) : <code>string</code>
         * [.unfilteredReference](#ERMrest.AttributeGroupReference+unfilteredReference) : [<code>Reference</code>](#ERMrest.Reference)
         * [.ermrestPath](#ERMrest.AttributeGroupReference+ermrestPath) : <code>string</code>
+        * [.defaultLogInfo](#ERMrest.AttributeGroupReference+defaultLogInfo) : <code>Object</code>
         * [.read([limit], contextHeaderParams)](#ERMrest.AttributeGroupReference+read) ⇒ <code>ERMRest.AttributeGroupPage</code>
         * [.getColumnByName(name)](#ERMrest.AttributeGroupReference+getColumnByName) ⇒ <code>ERMrest.AttributeGroupColumn</code>
     * [.AttributeGroupPage](#ERMrest.AttributeGroupPage) : <code>object</code>
@@ -664,22 +674,37 @@ to use for ERMrest JavaScript agents.
 **Kind**: static class of [<code>ERMrest</code>](#ERMrest)  
 
 * [.Server](#ERMrest.Server)
-    * [new Server(uri)](#new_ERMrest.Server_new)
+    * [new Server(uri, contextHeaderParams)](#new_ERMrest.Server_new)
     * [.uri](#ERMrest.Server+uri) : <code>string</code>
+    * [.cid](#ERMrest.Server+cid) : <code>string</code>
+    * [.pid](#ERMrest.Server+pid) : <code>string</code>
     * [.catalogs](#ERMrest.Server+catalogs) : [<code>Catalogs</code>](#ERMrest.Catalogs)
 
 <a name="new_ERMrest.Server_new"></a>
 
-#### new Server(uri)
+#### new Server(uri, contextHeaderParams)
 
 | Param | Type | Description |
 | --- | --- | --- |
 | uri | <code>string</code> | URI of the ERMrest service. |
+| contextHeaderParams | <code>Object</code> | an object with at least `cid` |
 
 <a name="ERMrest.Server+uri"></a>
 
 #### server.uri : <code>string</code>
 The URI of the ERMrest service
+
+**Kind**: instance property of [<code>Server</code>](#ERMrest.Server)  
+<a name="ERMrest.Server+cid"></a>
+
+#### server.cid : <code>string</code>
+context-id: shows the id of app that this server is being used for
+
+**Kind**: instance property of [<code>Server</code>](#ERMrest.Server)  
+<a name="ERMrest.Server+pid"></a>
+
+#### server.pid : <code>string</code>
+page-id: shows the id of the page that this server is being used for
 
 **Kind**: instance property of [<code>Server</code>](#ERMrest.Server)  
 <a name="ERMrest.Server+catalogs"></a>
@@ -740,6 +765,8 @@ Get a catalog by id. This call does catalog introspection.
     * [new Catalog(server, id)](#new_ERMrest.Catalog_new)
     * [.id](#ERMrest.Catalog+id) : <code>string</code>
     * [.schemas](#ERMrest.Catalog+schemas) : [<code>Schemas</code>](#ERMrest.Schemas)
+    * [.chaiseConfig](#ERMrest.Catalog+chaiseConfig) ⇒ <code>Object</code>
+    * [.currentSnaptime()](#ERMrest.Catalog+currentSnaptime) ⇒ <code>Promise</code>
     * [.constraintByNamePair(pair, subject)](#ERMrest.Catalog+constraintByNamePair) ⇒ <code>Object</code> \| <code>null</code>
     * [.getTable(tableName, schemaName)](#ERMrest.Catalog+getTable) ⇒ [<code>Table</code>](#ERMrest.Table)
 
@@ -764,6 +791,17 @@ The catalog identifier.
 
 #### catalog.schemas : [<code>Schemas</code>](#ERMrest.Schemas)
 **Kind**: instance property of [<code>Catalog</code>](#ERMrest.Catalog)  
+<a name="ERMrest.Catalog+chaiseConfig"></a>
+
+#### catalog.chaiseConfig ⇒ <code>Object</code>
+**Kind**: instance property of [<code>Catalog</code>](#ERMrest.Catalog)  
+**Returns**: <code>Object</code> - the chaise config object from the catalog annotation  
+<a name="ERMrest.Catalog+currentSnaptime"></a>
+
+#### catalog.currentSnaptime() ⇒ <code>Promise</code>
+**Kind**: instance method of [<code>Catalog</code>](#ERMrest.Catalog)  
+**Returns**: <code>Promise</code> - a promise that returns json object or snaptime if resolved or
+     [ERMrestError](#ERMrest.ERMrestError) if rejected  
 <a name="ERMrest.Catalog+constraintByNamePair"></a>
 
 #### catalog.constraintByNamePair(pair, subject) ⇒ <code>Object</code> \| <code>null</code>
@@ -1011,8 +1049,8 @@ get table by table name
         * [.shortestKey](#ERMrest.Table+shortestKey)
         * [.displayKey](#ERMrest.Table+displayKey) : [<code>Array.&lt;Column&gt;</code>](#ERMrest.Column)
         * [.uri](#ERMrest.Table+uri) : <code>string</code>
-        * [.exportTemplates](#ERMrest.Table+exportTemplates) : <code>Array</code> \| <code>null</code>
         * [._getRowDisplayKey(context)](#ERMrest.Table+_getRowDisplayKey)
+        * [.getExportTemplates()](#ERMrest.Table+getExportTemplates) : <code>Array</code> \| <code>null</code>
     * _static_
         * [.Entity](#ERMrest.Table.Entity)
             * [new Entity(server, table)](#new_ERMrest.Table.Entity_new)
@@ -1123,14 +1161,6 @@ The columns that create the shortest key that can be used for display purposes.
 uri to the table in ermrest with entity api
 
 **Kind**: instance property of [<code>Table</code>](#ERMrest.Table)  
-<a name="ERMrest.Table+exportTemplates"></a>
-
-#### table.exportTemplates : <code>Array</code> \| <code>null</code>
-Returns the export templates that are defined on this table.
-NOTE If this returns `null`, then the exportTemplates is not defined on the table or schema
-NOTE The returned template might not have `outputs` attribute.
-
-**Kind**: instance property of [<code>Table</code>](#ERMrest.Table)  
 <a name="ERMrest.Table+_getRowDisplayKey"></a>
 
 #### table.\_getRowDisplayKey(context)
@@ -1144,6 +1174,14 @@ It's the same as displaykey but with extra restrictions. It might return undefin
 | --- | --- | --- |
 | context | <code>string</code> | used to figure out if the column has markdown_pattern annoation or not. |
 
+<a name="ERMrest.Table+getExportTemplates"></a>
+
+#### table.getExportTemplates() : <code>Array</code> \| <code>null</code>
+Returns the export templates that are defined on this table.
+NOTE If this returns `null`, then the exportTemplates is not defined on the table or schema
+NOTE The returned template might not have `outputs` attribute.
+
+**Kind**: instance method of [<code>Table</code>](#ERMrest.Table)  
 <a name="ERMrest.Table.Entity"></a>
 
 #### Table.Entity
@@ -1480,6 +1518,7 @@ Constructor for Columns.
     * [.formatPresentation(data, context, options)](#ERMrest.Column+formatPresentation) ⇒ <code>Object</code>
     * [.toString()](#ERMrest.Column+toString) ⇒ <code>string</code>
     * [.getDisplay(context)](#ERMrest.Column+getDisplay)
+    * [.compare(a, b)](#ERMrest.Column+compare) ⇒ <code>integer</code>
 
 <a name="new_ERMrest.Column_new"></a>
 
@@ -1646,6 +1685,24 @@ display object for the column
 | Param | Type | Description |
 | --- | --- | --- |
 | context | <code>String</code> | the context that we want the display for. |
+
+<a name="ERMrest.Column+compare"></a>
+
+#### column.compare(a, b) ⇒ <code>integer</code>
+can be used for comparing two values of the column.
+Will return
+  - 1: if a is greater than b
+  - -1: if b is greater than a
+  - 0: if a is equal to b, or cannot compare the values
+NOTE: null is greater than any not-null values.
+
+**Kind**: instance method of [<code>Column</code>](#ERMrest.Column)  
+**Returns**: <code>integer</code> - 1: a > b, -1: b > a, 0: a = b  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| a | <code>\*</code> | raw value |
+| b | <code>\*</code> | raw value |
 
 <a name="ERMrest.Annotations"></a>
 
@@ -2875,7 +2932,8 @@ NOTE It will not have the same sort and paging as the reference.
 <a name="ERMrest.Reference+defaultLogInfo"></a>
 
 #### reference.defaultLogInfo : <code>Object</code>
-The default information that we want to be logged including catalog, schema_table, and facet (filter).
+The default information that we want to be logged. This includes:
+ - catalog, schema_table, cfacet, cfacet_str, cfacet_path, facets
 
 **Kind**: instance property of [<code>Reference</code>](#ERMrest.Reference)  
 <a name="ERMrest.Reference+defaultExportTemplate"></a>
@@ -2883,12 +2941,8 @@ The default information that we want to be logged including catalog, schema_tabl
 #### reference.defaultExportTemplate : <code>string</code>
 Returns a object, that can be used as a default export template.
 It will include:
-- csv of entity API request to the main table.
--  csv of entity API requests for all the related entities that are one level away from the main.
-- csv of attributegroup API requests for all the other related entities.
-  The projection list should include all the columns of the table plus
-  the foreignkey value to the main entity.
-  The request should be grouped by the value of table's key + foreign key value.
+- csv of the main table.
+- csv of all the related entities
 - fetch all the assets. For fetch, we need to provide url, length, and md5 (or other checksum types).
   if these columns are missing from the asset annotation, they won't be added.
 - fetch all the assetes of related tables.
@@ -3353,6 +3407,7 @@ It will return:
     * [.isHTML](#ERMrest.Tuple+isHTML) : <code>Array.&lt;boolean&gt;</code>
     * [.displayname](#ERMrest.Tuple+displayname) : <code>string</code>
     * [.uniqueId](#ERMrest.Tuple+uniqueId) : <code>string</code>
+    * [.templateVariables](#ERMrest.Tuple+templateVariables) : <code>Object</code>
     * [.update()](#ERMrest.Tuple+update) ⇒ <code>Promise</code>
     * [.delete()](#ERMrest.Tuple+delete) ⇒ <code>Promise</code>
     * [.getAssociationRef()](#ERMrest.Tuple+getAssociationRef) : [<code>Reference</code>](#ERMrest.Reference)
@@ -3510,6 +3565,12 @@ console.log("This tuple has a displayable name of ", tuple.displayname.value);
 #### tuple.uniqueId : <code>string</code>
 The unique identifier for this tuple composed of the values for each
 of the shortest key columns concatenated together by an '_'
+
+**Kind**: instance property of [<code>Tuple</code>](#ERMrest.Tuple)  
+<a name="ERMrest.Tuple+templateVariables"></a>
+
+#### tuple.templateVariables : <code>Object</code>
+An object of what is available in templating environment for this tuple
 
 **Kind**: instance property of [<code>Tuple</code>](#ERMrest.Tuple)  
 <a name="ERMrest.Tuple+update"></a>
@@ -3704,6 +3765,9 @@ Formats a value corresponding to this reference-column definition.
 
 #### referenceColumn.formatPresentation(data, context, options) ⇒ <code>Object</code>
 Formats the presentation value corresponding to this reference-column definition.
+It will return:
+ - rendered value of sourceMarkdownPattern if exists.
+ - rendered value of formatPresentation of underlying columns joined by ":".
 
 **Kind**: instance method of [<code>ReferenceColumn</code>](#ERMrest.ReferenceColumn)  
 **Returns**: <code>Object</code> - A key value pair containing value and isHTML that detemrines the presentation.  
@@ -3790,7 +3854,6 @@ If the pseudoColumn is referring to a unique row (the path is one to one)
 
 #### pseudoColumn.isEntityMode : <code>boolean</code>
 If the pseudoColumn is in entity mode
-This includes columns without path too.
 
 **Kind**: instance property of [<code>PseudoColumn</code>](#ERMrest.PseudoColumn)  
 <a name="ERMrest.PseudoColumn+key"></a>
@@ -3851,6 +3914,23 @@ Format the presentation value corresponding to this pseudo-column definition.
 #### pseudoColumn.getAggregatedValue(page, contextHeaderParams) ⇒ <code>Promise</code>
 Returns a promise that gets resolved with list of aggregated values in the same
 order of tuples of the page that is passed.
+implementation Notes:
+1. This function will take care of url limitation. It might generate multiple
+ermrest requests based on the url length, and will resolve the promise when
+all the requests have been succeeded. If we cannot fit all the requests, an
+error will be thrown.
+2. Only in case of entity scalar aggregate we are going to get all the row data.
+In other cases, the returned data will only include the scalar value.
+3. Regarding the returned value:
+ 3.0. Null and empty string values are treated the same way as any array column.
+ We are going to show the special value for them.
+ 3.1. If it's an array aggregate:
+     3.1.1. array_display will dictate how we should join the values (csv, olist, ulist, raw).
+     3.1.2. array_options will dictate the sort and length criteria.
+     3.1.3. Based on entity/scalar mode:
+         3.1.3.1. In scalar mode, only pre_format will be applied to each value.
+         3.1.3.2. In entity mode, we are going to return list of row_names derived from `row_name/compact`.
+ 3.2. Otherwise we will only apply the pre_format annotation for the column.
 
 **Kind**: instance method of [<code>PseudoColumn</code>](#ERMrest.PseudoColumn)  
 
@@ -4021,6 +4101,7 @@ The following is the logic:
     * [new AssetPseudoColumn(reference, column)](#new_ERMrest.AssetPseudoColumn_new)
     * [.isPseudo](#ERMrest.AssetPseudoColumn+isPseudo) : <code>boolean</code>
     * [.isAsset](#ERMrest.AssetPseudoColumn+isAsset) : <code>boolean</code>
+    * [.template_engine](#ERMrest.AssetPseudoColumn+template_engine) : <code>ERMrest.Refernece</code>
     * [.urlPattern](#ERMrest.AssetPseudoColumn+urlPattern) : <code>ERMrest.Refernece</code>
     * [.filenameColumn](#ERMrest.AssetPseudoColumn+filenameColumn) : [<code>Column</code>](#ERMrest.Column)
     * [.filenameColumn](#ERMrest.AssetPseudoColumn+filenameColumn) : [<code>Column</code>](#ERMrest.Column)
@@ -4028,6 +4109,7 @@ The following is the logic:
     * [.sha256](#ERMrest.AssetPseudoColumn+sha256) : [<code>Column</code>](#ERMrest.Column)
     * [.filenameExtFilter](#ERMrest.AssetPseudoColumn+filenameExtFilter) : [<code>Column</code>](#ERMrest.Column)
     * [._determineInputDisabled(context)](#ERMrest.AssetPseudoColumn+_determineInputDisabled) ⇒ <code>boolean</code> \| <code>object</code>
+    * [.getMetadata()](#ERMrest.AssetPseudoColumn+getMetadata)
 
 <a name="new_ERMrest.AssetPseudoColumn_new"></a>
 
@@ -4052,6 +4134,12 @@ indicates that this object represents a PseudoColumn.
 
 #### assetPseudoColumn.isAsset : <code>boolean</code>
 Indicates that this ReferenceColumn is an asset.
+
+**Kind**: instance property of [<code>AssetPseudoColumn</code>](#ERMrest.AssetPseudoColumn)  
+<a name="ERMrest.AssetPseudoColumn+template_engine"></a>
+
+#### assetPseudoColumn.template\_engine : <code>ERMrest.Refernece</code>
+Returns the template_engine defined in the annotation
 
 **Kind**: instance property of [<code>AssetPseudoColumn</code>](#ERMrest.AssetPseudoColumn)  
 <a name="ERMrest.AssetPseudoColumn+urlPattern"></a>
@@ -4101,6 +4189,12 @@ If url_pattern is invalid or browser_upload=false the input will be disabled.
 | --- | --- | --- |
 | context | <code>string</code> | the context |
 
+<a name="ERMrest.AssetPseudoColumn+getMetadata"></a>
+
+#### assetPseudoColumn.getMetadata()
+Given the data, return the appropriate filename that should be used for the asset
+
+**Kind**: instance method of [<code>AssetPseudoColumn</code>](#ERMrest.AssetPseudoColumn)  
 <a name="ERMrest.InboundForeignKeyPseudoColumn"></a>
 
 ### ERMrest.InboundForeignKeyPseudoColumn
@@ -4193,7 +4287,7 @@ Indicates that this ReferenceColumn is an inbound foreign key.
     * [.searchFilters](#ERMrest.FacetColumn+searchFilters) : <code>Array.&lt;ERMREst.SearchFacetFilter&gt;</code>
     * [.choiceFilters](#ERMrest.FacetColumn+choiceFilters) : <code>Array.&lt;ERMREst.ChoiceFacetFilter&gt;</code>
     * [.rangeFilters](#ERMrest.FacetColumn+rangeFilters) : <code>Array.&lt;ERMREst.RangeFacetFilter&gt;</code>
-    * [.getChoiceDisplaynames()](#ERMrest.FacetColumn+getChoiceDisplaynames) ⇒ <code>Promise</code>
+    * [.getChoiceDisplaynames(contextHeaderParams)](#ERMrest.FacetColumn+getChoiceDisplaynames) ⇒ <code>Promise</code>
     * [.toJSON()](#ERMrest.FacetColumn+toJSON) ⇒ <code>Object</code>
     * [._setFilters(json)](#ERMrest.FacetColumn+_setFilters)
     * [.addSearchFilter(term)](#ERMrest.FacetColumn+addSearchFilter) ⇒ [<code>Reference</code>](#ERMrest.Reference)
@@ -4490,7 +4584,7 @@ NOTE ASSUMES that filters is immutable
 **Kind**: instance property of [<code>FacetColumn</code>](#ERMrest.FacetColumn)  
 <a name="ERMrest.FacetColumn+getChoiceDisplaynames"></a>
 
-#### facetColumn.getChoiceDisplaynames() ⇒ <code>Promise</code>
+#### facetColumn.getChoiceDisplaynames(contextHeaderParams) ⇒ <code>Promise</code>
 When presenting the applied choice filters, the displayname might be differnt from the value.
 This only happens in case of entity-picker. Othercases we can just return the list of fitleres as is.
 In case of entity-picker, we should get the displayname of the choices.
@@ -4503,6 +4597,11 @@ NOTE This function will not return the null filter.
 
 **Kind**: instance method of [<code>FacetColumn</code>](#ERMrest.FacetColumn)  
 **Returns**: <code>Promise</code> - A promise resolved with list of objects that have `uniqueId`, and `displayname`.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| contextHeaderParams | <code>Object</code> | object that we want to be logged with the request |
+
 <a name="ERMrest.FacetColumn+toJSON"></a>
 
 #### facetColumn.toJSON() ⇒ <code>Object</code>
@@ -4896,6 +4995,7 @@ parent table (not the end table).
     * [.uri](#ERMrest.AttributeGroupReference+uri) : <code>string</code>
     * [.unfilteredReference](#ERMrest.AttributeGroupReference+unfilteredReference) : [<code>Reference</code>](#ERMrest.Reference)
     * [.ermrestPath](#ERMrest.AttributeGroupReference+ermrestPath) : <code>string</code>
+    * [.defaultLogInfo](#ERMrest.AttributeGroupReference+defaultLogInfo) : <code>Object</code>
     * [.read([limit], contextHeaderParams)](#ERMrest.AttributeGroupReference+read) ⇒ <code>ERMRest.AttributeGroupPage</code>
     * [.getColumnByName(name)](#ERMrest.AttributeGroupReference+getColumnByName) ⇒ <code>ERMrest.AttributeGroupColumn</code>
 
@@ -4988,6 +5088,12 @@ NOTE:
 - Since this is the object that has knowledge of columns, this should be here.
   (we might want to relocate it to the AttributeGroupLocation object.)
 - ermrest can processs this uri.
+
+**Kind**: instance property of [<code>AttributeGroupReference</code>](#ERMrest.AttributeGroupReference)  
+<a name="ERMrest.AttributeGroupReference+defaultLogInfo"></a>
+
+#### attributeGroupReference.defaultLogInfo : <code>Object</code>
+The default information that we want to be logged including catalog, schema_table, and facet (filter).
 
 **Kind**: instance property of [<code>AttributeGroupReference</code>](#ERMrest.AttributeGroupReference)  
 <a name="ERMrest.AttributeGroupReference+read"></a>
@@ -6097,7 +6203,8 @@ NOTE It will not have the same sort and paging as the reference.
 <a name="ERMrest.Reference+defaultLogInfo"></a>
 
 #### reference.defaultLogInfo : <code>Object</code>
-The default information that we want to be logged including catalog, schema_table, and facet (filter).
+The default information that we want to be logged. This includes:
+ - catalog, schema_table, cfacet, cfacet_str, cfacet_path, facets
 
 **Kind**: instance property of [<code>Reference</code>](#ERMrest.Reference)  
 <a name="ERMrest.Reference+defaultExportTemplate"></a>
@@ -6105,12 +6212,8 @@ The default information that we want to be logged including catalog, schema_tabl
 #### reference.defaultExportTemplate : <code>string</code>
 Returns a object, that can be used as a default export template.
 It will include:
-- csv of entity API request to the main table.
--  csv of entity API requests for all the related entities that are one level away from the main.
-- csv of attributegroup API requests for all the other related entities.
-  The projection list should include all the columns of the table plus
-  the foreignkey value to the main entity.
-  The request should be grouped by the value of table's key + foreign key value.
+- csv of the main table.
+- csv of all the related entities
 - fetch all the assets. For fetch, we need to provide url, length, and md5 (or other checksum types).
   if these columns are missing from the asset annotation, they won't be added.
 - fetch all the assetes of related tables.
@@ -6444,6 +6547,7 @@ Check the sort object. Does not change the `this._location` object.
     * [.uri](#ERMrest.AttributeGroupReference+uri) : <code>string</code>
     * [.unfilteredReference](#ERMrest.AttributeGroupReference+unfilteredReference) : [<code>Reference</code>](#ERMrest.Reference)
     * [.ermrestPath](#ERMrest.AttributeGroupReference+ermrestPath) : <code>string</code>
+    * [.defaultLogInfo](#ERMrest.AttributeGroupReference+defaultLogInfo) : <code>Object</code>
     * [.read([limit], contextHeaderParams)](#ERMrest.AttributeGroupReference+read) ⇒ <code>ERMRest.AttributeGroupPage</code>
     * [.getColumnByName(name)](#ERMrest.AttributeGroupReference+getColumnByName) ⇒ <code>ERMrest.AttributeGroupColumn</code>
 
@@ -6536,6 +6640,12 @@ NOTE:
 - Since this is the object that has knowledge of columns, this should be here.
   (we might want to relocate it to the AttributeGroupLocation object.)
 - ermrest can processs this uri.
+
+**Kind**: instance property of [<code>AttributeGroupReference</code>](#ERMrest.AttributeGroupReference)  
+<a name="ERMrest.AttributeGroupReference+defaultLogInfo"></a>
+
+#### attributeGroupReference.defaultLogInfo : <code>Object</code>
+The default information that we want to be logged including catalog, schema_table, and facet (filter).
 
 **Kind**: instance property of [<code>AttributeGroupReference</code>](#ERMrest.AttributeGroupReference)  
 <a name="ERMrest.AttributeGroupReference+read"></a>

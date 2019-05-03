@@ -21,4 +21,3 @@ RUN pip install docutils==0.14 recommonmark==0.4.0 sphinx==1.8.5 sphinx-autobuil
 COPY --from=base deriva-docs /deriva-docs
 ENV DATA_DIR=/deriva-docs
 WORKDIR $DATA_DIR
-# RUN git config user.name $GITHUB_USER && git config user.email '$GITHUB_USER@users.noreply.github.com'

@@ -10,4 +10,4 @@ GITHUB_USER=${GITHUB_USER:-isi-isrd-dev}
 git config user.name ${GITHUB_USER} && git config user.email '{$GITHUB_USER}@users.noreply.github.com'
 git add -A .
 git commit -m "Automated update: `date`" .
-git push --dry-run
+git push

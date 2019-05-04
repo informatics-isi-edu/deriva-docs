@@ -6,6 +6,7 @@ rsync -avz -delete ./_build/html/ ../docs
 
 echo -e "\nCommit and push files to GitHub...\n"
 cd ../docs
+GITHUB_USER=${GITHUB_USER:-isi-isrd-dev}
 GITHUB_EMAIL=${GITHUB_EMAIL:-isrddev@isi.edu}
 git config user.name ${GITHUB_USER} && git config user.email ${GITHUB_EMAIL}
 git add -A .

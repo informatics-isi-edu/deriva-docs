@@ -24,7 +24,7 @@ Selecting and de-selecting attributes in any of the facets will filter the resul
 
 ![screenshot of FaceBase filtering sidebar](/images/chaise-filter-sidebar-example.jpg)
 
-The above screenshot shows that when you select the "Homo Sapiens" attribute from the "Organism" filter, the number of records shown changes from 801 records to 52 records of human datasets.
+The above screenshot shows that when you select the "Homo Sapiens" attribute from the "Organism" filter, the number of records shown changes from 801 records to 52 records of human data sets.
 
 For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click "Show Details" to pull up a modal window to access all of the attributes.
 

@@ -1149,23 +1149,32 @@
 <span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Queue</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">get_new_requests_session</span><span class="p">,</span> <span class="n">urlquote_dcctx</span><span class="p">,</span> <span class="n">ConcurrentUpdate</span><span class="p">,</span> <span class="n">NotModified</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
 
+
 <div class="viewcode-block" id="DerivaClientContext"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaClientContext">[docs]</a><span class="k">class</span> <span class="nc">DerivaClientContext</span> <span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represent Deriva-Client-Context header content.</span>
 
 <span class="sd">    Well-known keys (originally defined for Chaise):</span>
-<span class="sd">    - cid: client application ID i.e. program name</span>
-<span class="sd">    - wid: window ID i.e. request stream ID</span>
-<span class="sd">    - pid: page ID i.e. sub-stream ID</span>
-<span class="sd">    - action: UX action embodied by request(s)</span>
-<span class="sd">    - table: table upon which application is focused (if any)</span>
-<span class="sd">    - uinit: True if request initiated by user action</span>
+
+<span class="sd">    - `cid`: client application ID i.e. program name</span>
+
+<span class="sd">    - `wid`: window ID i.e. request stream ID</span>
+
+<span class="sd">    - `pid`: page ID i.e. sub-stream ID</span>
+
+<span class="sd">    - `action`: UX action embodied by request(s)</span>
+
+<span class="sd">    - `table`: table upon which application is focused (if any)</span>
+
+<span class="sd">    - `uinit`: True if request initiated by user action</span>
 
 <span class="sd">    Default values to use process-wide:</span>
-<span class="sd">    - cid: os.path.basename(sys.argv[0]) if available</span>
-<span class="sd">    - wid: a random UUID</span>
+
+<span class="sd">    - `cid`:code:: os.path.basename(sys.argv[0]) if available</span>
+
+<span class="sd">    - `wid`:code:: a random UUID</span>
 
 <span class="sd">    The process-wide defaults MAY be customized by mutating</span>
-<span class="sd">    DerivaClientContext.defaults prior to constructing instances.</span>
+<span class="sd">    `DerivaClientContext.defaults`:code: prior to constructing instances.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="p">{</span>

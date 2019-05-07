@@ -1721,6 +1721,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultValues">.defaultValues</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultReference">.defaultReference</a> : <code>ERMrest.Refernece</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+filteredRef">.filteredRef(column, data)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 </ul>
 </li>
@@ -1744,7 +1745,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+sha256">.sha256</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
-<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata()</a></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn">.InboundForeignKeyPseudoColumn</a><ul>
@@ -6716,6 +6717,7 @@ We are going to show the special value for them.
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultValues">.defaultValues</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultReference">.defaultReference</a> : <code>ERMrest.Refernece</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+filteredRef">.filteredRef(column, data)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 </ul>
 </li>
@@ -6775,6 +6777,22 @@ This class extends the <a class="reference external" href="#ERMrest.ReferenceCol
 <div class="section" id="foreignkeypseudocolumn-defaultreference-code-ermrest-refernece-code">
 <span id="foreignkeypseudocolumn-defaultreference-code-ermrest-refernece-code"></span><h3>foreignKeyPseudoColumn.defaultReference : <code>ERMrest.Refernece</code><a class="headerlink" href="#foreignkeypseudocolumn-defaultreference-code-ermrest-refernece-code" title="Permalink to this headline">¶</a></h3>
 <p>returns a reference using raw default values of the constituent columns.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn"><code>ForeignKeyPseudoColumn</code></a><a name="ERMrest.ForeignKeyPseudoColumn+displayname"></a></p>
+</div>
+<div class="section" id="foreignkeypseudocolumn-displayname-code-object-code">
+<span id="foreignkeypseudocolumn-displayname-code-object-code"></span><h3>foreignKeyPseudoColumn.displayname : <code>Object</code><a class="headerlink" href="#foreignkeypseudocolumn-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li>If <code class="docutils literal notranslate"><span class="pre">to_name</span></code> in <code class="docutils literal notranslate"><span class="pre">foreign</span> <span class="pre">key</span></code> annotation is available, use it as the displayname.</li>
+<li>Otherwise,
+2.1. If foreign key is simple, use columns’ displayname.<ul>
+<li>If constituent column of foreign key is part of other foreign keys,
+use column’s displayname disambiguated with table’s displayname, i.e. <code class="docutils literal notranslate"><span class="pre">table_1</span> <span class="pre">(col_1)</span></code>.
+2.2. Otherwise, use table’s displayname.</li>
+<li>If there are multiple composite foreign keys without <code class="docutils literal notranslate"><span class="pre">to_name</span></code> to the table,
+use table’s displayname disambiguated with columns’ displayname, i.e. <code class="docutils literal notranslate"><span class="pre">table_1</span> <span class="pre">(col_1,</span> <span class="pre">col_2)</span></code>.</li>
+</ul>
+</li>
+</ol>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn"><code>ForeignKeyPseudoColumn</code></a><a name="ERMrest.ForeignKeyPseudoColumn+filteredRef"></a></p>
 </div>
 <div class="section" id="foreignkeypseudocolumn-filteredref-column-data-code-reference-code">
@@ -6960,7 +6978,7 @@ It usually is a self-link to the given row of data.</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+sha256">.sha256</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
-<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata()</a></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
 </ul>
@@ -7058,10 +7076,44 @@ This class extends the <a class="reference external" href="#ERMrest.ReferenceCol
 </tbody>
 </table><p><a name="ERMrest.AssetPseudoColumn+getMetadata"></a></p>
 </div>
-<div class="section" id="assetpseudocolumn-getmetadata">
-<span id="assetpseudocolumn-getmetadata"></span><h3>assetPseudoColumn.getMetadata()<a class="headerlink" href="#assetpseudocolumn-getmetadata" title="Permalink to this headline">¶</a></h3>
-<p>Given the data, return the appropriate filename that should be used for the asset</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><a name="ERMrest.InboundForeignKeyPseudoColumn"></a></p>
+<div class="section" id="assetpseudocolumn-getmetadata-data-context-options-code-object-code">
+<span id="assetpseudocolumn-getmetadata-data-context-options-code-object-code"></span><h3>assetPseudoColumn.getMetadata(data, context, options) ⇒ <code>Object</code><a class="headerlink" href="#assetpseudocolumn-getmetadata-data-context-options-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Given the data, will return the appropriate metadata values. The returned object
+will have the following attributes:</p>
+<ul class="simple">
+<li>caption: the string that can be used for showing the selected file.</li>
+<li>filename</li>
+<li>byteCount</li>
+<li>md5</li>
+<li>sha256</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><strong>Returns</strong>: <code>Object</code> - metadata object with <code class="docutils literal notranslate"><span class="pre">caption</span></code>, <code class="docutils literal notranslate"><span class="pre">filename</span></code>, <code class="docutils literal notranslate"><span class="pre">byteCount</span></code>, <code class="docutils literal notranslate"><span class="pre">md5</span></code>, and <code class="docutils literal notranslate"><span class="pre">sha256</span></code> attributes.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>key-value pair of data</td>
+</tr>
+<tr>
+<td>context</td>
+<td><code>String</code></td>
+<td>context string</td>
+</tr>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td></td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.InboundForeignKeyPseudoColumn"></a></p>
 </div>
 </div>
 <div class="section" id="ermrest-inboundforeignkeypseudocolumn">

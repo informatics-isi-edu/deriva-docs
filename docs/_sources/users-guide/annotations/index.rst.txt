@@ -6,7 +6,7 @@ Annotations Guide
 
    annotations-overview
    annotation
-   context
+   contexts
    facet-json-structure
    facet-examples
    template-markdown

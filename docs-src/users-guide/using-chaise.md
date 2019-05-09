@@ -1,6 +1,6 @@
 # Using the Chaise Data Browser
 
-Chaise, sometimes referred to as the "Data Browser", serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or adminstrator roles, you can learn how to manage the model and annotations in [Managing Catalogs](/users-guide/managing-catalogs/).)
+Chaise, sometimes referred to as the "Data Browser", serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or administrator roles, you can learn how to manage the model and annotations in [Managing Catalogs](managing-catalogs.html).)
 
 The Chaise interfaces represent data via records that can be filtered with attributes in the sidebar much like you would in an online shopping site.
 
@@ -24,7 +24,7 @@ Selecting and de-selecting attributes in any of the facets will filter the resul
 
 ![screenshot of FaceBase filtering sidebar](/images/chaise-filter-sidebar-example.jpg)
 
-The above screenshot shows that when you select the "Homo Sapiens" attribute from the "Organism" filter, the number of records shown changes from 801 records to 52 records of human datasets.
+The above screenshot shows that when you select the "Homo Sapiens" attribute from the "Organism" filter, the number of records shown changes from 801 records to 52 records of human data sets.
 
 For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click "Show Details" to pull up a modal window to access all of the attributes.
 

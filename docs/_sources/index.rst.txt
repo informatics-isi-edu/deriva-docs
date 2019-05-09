@@ -23,14 +23,14 @@ DERIVA Documentation
 .. toctree::
   :maxdepth: 2
   :caption: Reference 
-  
-  deriva-qt/index
+
   deriva-py/index
-  ermrestjs/index
-  chaise/index
+  deriva-qt/index
+  deriva-web/index
   ermrest/index
   hatrac/index
-  ioboxd/index
+  ermrestjs/index
+  chaise/index
    
 Indices and tables
 ==================

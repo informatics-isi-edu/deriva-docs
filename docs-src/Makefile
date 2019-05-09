@@ -1,4 +1,4 @@
-# Minimal makefile for Sphinx documentation
+# Makefile for Sphinx documentation
 #
 
 # You can set these variables from the command line.
@@ -14,7 +14,12 @@ help:
 
 .PHONY: help Makefile
 
+init:
+	./init.sh
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-%: Makefile
+%: Makefile init
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	echo -e "\nCopying (rsync) files to docs directory...\n"
+	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete ./_build/html/ ../docs

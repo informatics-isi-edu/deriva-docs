@@ -19,7 +19,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'DERIVA Docs'
-copyright = '2018, USC Information Sciences Institute, Informatics Systems Research Division'
+copyright = '2019, USC Information Sciences Institute, Informatics Systems Research Division'
 author = 'USC Information Sciences Institute, Informatics Systems Research Division'
 
 html_baseurl = 'http://docs.derivacloud.org'

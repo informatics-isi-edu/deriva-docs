@@ -1308,6 +1308,7 @@
 
     <span class="k">def</span> <span class="nf">_contextualized_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a path uri for the specified context.</span>
+
 <span class="sd">        :param context: a table instance that is bound to this path</span>
 <span class="sd">        :return: string representation of the path uri</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1343,6 +1344,7 @@
 
 <div class="viewcode-block" id="DataPath.filter"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expression</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Filters the path based on the specified formula.</span>
+
 <span class="sd">        :param filter_expression: should be a valid Predicate object</span>
 <span class="sd">        :return: self</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1352,25 +1354,50 @@
 
 <div class="viewcode-block" id="DataPath.link"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.link">[docs]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Links this path with another table.</span>
-<span class="sd">        At present, the implementation only supports single column keys.</span>
+
+<span class="sd">        To link a table with an unambigious relationship where table A is related to table B via a single foreign key</span>
+<span class="sd">        reference, the `on` clause is not.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        # let A and B be variables for tables from the catalog</span>
+<span class="sd">        path = A.link(B)</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        To link tables with more than one foreign key reference between them, use explicit `on` clause.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        # let A.c1 be a column that is a simple foreign key to B.c1 that is a simple key in B</span>
+<span class="sd">        path = A.link(B, on=(A.c1 == B.c1))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        To link tables with foreign keys on composite keys, use a conjunction of 2 or more equality comparisons in the</span>
+<span class="sd">        `on` clause.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        # let A.c1, A.c2 be columns that form a foreign key to B.c1, B.c2 that are a composite key in B</span>
+<span class="sd">        path = A.link(B, on=((A.c1 == B.c1) &amp; (A.c2 == B.c2)))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        By default links use inner join semantics on the foreign key / key equality comparison. The `join_type`</span>
+<span class="sd">        parameter can be used to specify `left`, `right`, or `full` outer join semantics.</span>
+
 <span class="sd">        :param right: the right hand table of the link expression</span>
-<span class="sd">        :param on: an equality comparison between keys and foreign keys</span>
+<span class="sd">        :param on: an equality comparison between key and foreign key columns or a conjunction of such comparisons</span>
 <span class="sd">        :param join_type: the join type of this link which may be &#39;left&#39;, &#39;right&#39;, &#39;full&#39; outer joins or &#39;&#39; for inner</span>
 <span class="sd">        join link by default.</span>
 <span class="sd">        :return: self</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">on</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">FilterPredicate</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">join_type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">on</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Table</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;right&#39; must be a &#39;Table&#39; instance&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">on</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span>
+                                                               <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;on&#39; must be a comparison or conjuction of comparisons&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">join_type</span> <span class="ow">and</span> <span class="n">on</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;on&#39; must be specified for outer joins&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">catalog</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">catalog</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Cannot link across catalogs.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">):</span>
-            <span class="c1"># Validate that alias has not been used</span>
-            <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Table instance is already linked. &quot;</span>
-                                <span class="s2">&quot;Consider aliasing it if you want to link another instance of the base table.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;right&#39; is from a different catalog. Cannot link across catalogs.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span> <span class="ow">and</span> <span class="n">right</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;right&#39; is a table alias that has already been used.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># Generate an unused alias name for the table</span>
             <span class="n">table_name</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="n">name</span>
@@ -1638,6 +1665,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_contextualized_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the path as contextualized for this table instance.</span>
+
 <span class="sd">        Conditionally updates the context of the path to which this table instance is bound.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
@@ -1653,9 +1681,11 @@
         <span class="k">return</span> <span class="n">TableAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Table.filter"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_expression</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See the docs for this method in `DataPath` for more information.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contextualized_path</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">filter_expression</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Table.link"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.link">[docs]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See the docs for this method in `DataPath` for more information.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contextualized_path</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">join_type</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">):</span>
@@ -1799,6 +1829,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_table</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the table alias.</span>
+
 <span class="sd">        :param base_table: the base table to be given an alias name</span>
 <span class="sd">        :param alias_name: the alias name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1845,6 +1876,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_contextualized_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the path as contextualized for this table instance.</span>
+
 <span class="sd">        Conditionally updates the context of the path to which this table instance is bound.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span>
@@ -1924,9 +1956,9 @@
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::null::&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::null::&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__eq__</span> <span class="o">=</span> <span class="n">eq</span>
 
@@ -1936,7 +1968,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::lt::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::lt::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__lt__</span> <span class="o">=</span> <span class="n">lt</span>
 
@@ -1946,7 +1978,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::leq::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::leq::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__le__</span> <span class="o">=</span> <span class="n">le</span>
 
@@ -1956,7 +1988,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::gt::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::gt::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__gt__</span> <span class="o">=</span> <span class="n">gt</span>
 
@@ -1966,7 +1998,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::geq::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::geq::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__ge__</span> <span class="o">=</span> <span class="n">ge</span>
 
@@ -1978,7 +2010,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;regexp&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::regexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::regexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Column.ciregexp"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Column.ciregexp">[docs]</a>    <span class="k">def</span> <span class="nf">ciregexp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a &#39;case-insensitive regular expression&#39; comparison predicate.</span>
@@ -1988,7 +2020,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;ciregexp&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ciregexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ciregexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Column.ts"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Column.ts">[docs]</a>    <span class="k">def</span> <span class="nf">ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a &#39;text search&#39; comparison predicate.</span>
@@ -1998,7 +2030,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;ts&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">FilterPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ts::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ts::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="SortDescending"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.SortDescending">[docs]</a><span class="k">class</span> <span class="nc">SortDescending</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2137,9 +2169,10 @@
 <div class="viewcode-block" id="Link"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Link">[docs]</a><span class="k">class</span> <span class="nc">Link</span> <span class="p">(</span><span class="n">PathOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Link</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">FilterPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">as_</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">as_</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">join_type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">join_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;full&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">FilterPredicate</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="n">join_type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">join_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;full&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on</span> <span class="o">=</span> <span class="n">on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_as</span> <span class="o">=</span> <span class="n">as_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_join_type</span> <span class="o">=</span> <span class="n">join_type</span>
@@ -2148,13 +2181,19 @@
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span>
         <span class="n">assign</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_as</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="o">.</span><span class="n">uname</span>
-        <span class="n">cond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="o">.</span><span class="n">fqname</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">,</span> <span class="n">Table</span><span class="p">):</span>
+            <span class="n">cond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="o">.</span><span class="n">fqname</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">):</span>
+            <span class="n">cond</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">,</span> <span class="n">ConjunctionPredicate</span><span class="p">):</span>
+            <span class="n">cond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="o">.</span><span class="n">as_join_condition</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataPathException</span><span class="p">(</span><span class="s2">&quot;Invalid join condition: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">))</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="n">assign</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_join_type</span><span class="p">,</span> <span class="n">cond</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Predicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Predicate">[docs]</a><span class="k">class</span> <span class="nc">Predicate</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+    <span class="sd">&quot;&quot;&quot;Common base class for all predicate types.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Predicate.and_"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Predicate.and_">[docs]</a>    <span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a conjunction predicate.</span>
@@ -2162,7 +2201,9 @@
 <span class="sd">        :param other: a predicate object.</span>
 <span class="sd">        :return: a junction predicate object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">JunctionPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid comparison with object that is not a Predicate instance.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ConjunctionPredicate</span><span class="p">([</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">])</span></div>
 
     <span class="fm">__and__</span> <span class="o">=</span> <span class="n">and_</span>
 
@@ -2172,7 +2213,9 @@
 <span class="sd">        :param other: a predicate object.</span>
 <span class="sd">        :return: a junction predicate object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">JunctionPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;;&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid comparison with object that is not a Predicate instance.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DisjunctionPredicate</span><span class="p">([</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">])</span></div>
 
     <span class="fm">__or__</span> <span class="o">=</span> <span class="n">or_</span>
 
@@ -2188,9 +2231,9 @@
     <span class="fm">__invert__</span> <span class="o">=</span> <span class="n">negate</span></div>
 
 
-<div class="viewcode-block" id="FilterPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.FilterPredicate">[docs]</a><span class="k">class</span> <span class="nc">FilterPredicate</span> <span class="p">(</span><span class="n">Predicate</span><span class="p">):</span>
+<div class="viewcode-block" id="ComparisonPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ComparisonPredicate">[docs]</a><span class="k">class</span> <span class="nc">ComparisonPredicate</span> <span class="p">(</span><span class="n">Predicate</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lop</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">rop</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ComparisonPredicate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lop</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> \
             <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> \
@@ -2200,27 +2243,77 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_op</span> <span class="o">=</span> <span class="n">op</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span> <span class="o">=</span> <span class="n">rop</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_equality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span> <span class="o">==</span> <span class="s1">&#39;=&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lop</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span>
+
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">,</span> <span class="n">Column</span><span class="p">):</span>
-            <span class="c1"># The only valid circumstance for a Column rop is in a link &#39;on&#39; predicate</span>
-            <span class="c1"># TODO: ultimately, this should be a Column Set equality comparison</span>
+            <span class="c1"># The only valid circumstance for a Column rop is in a link &#39;on&#39; predicate for simple key/fkey joins</span>
             <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)=(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="o">.</span><span class="n">instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="o">.</span><span class="n">fqname</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># All other comparisons are serialized per the usual form</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="o">.</span><span class="n">instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="JunctionPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.JunctionPredicate">[docs]</a><span class="k">class</span> <span class="nc">JunctionPredicate</span> <span class="p">(</span><span class="n">Predicate</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">operands</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">JunctionPredicate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">operands</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">operands</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">operands</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">)</span> <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="n">operands</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_left</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_operands</span> <span class="o">=</span> <span class="n">operands</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_op</span> <span class="o">=</span> <span class="n">op</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_right</span> <span class="o">=</span> <span class="n">right</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">operand</span> <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operands</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="ConjunctionPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ConjunctionPredicate">[docs]</a><span class="k">class</span> <span class="nc">ConjunctionPredicate</span> <span class="p">(</span><span class="n">JunctionPredicate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operands</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConjunctionPredicate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConjunctionPredicate.and_"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ConjunctionPredicate.and_">[docs]</a>    <span class="k">def</span> <span class="nf">and_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ConjunctionPredicate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_operands</span> <span class="o">+</span> <span class="p">[</span><span class="n">other</span><span class="p">])</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_valid_join_condition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests if this conjunction is a valid join condition.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">o</span><span class="o">.</span><span class="n">is_equality</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operands</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">as_join_condition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the conjunction in the &#39;join condition&#39; serialized format.&quot;&quot;&quot;</span>
+        <span class="n">lhs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rhs</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">operand</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operands</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">operand</span><span class="o">.</span><span class="n">is_equality</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
+            <span class="n">lhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="n">rhs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">operand</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">{left}</span><span class="s2">)=(</span><span class="si">{right}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">left</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lop</span><span class="o">.</span><span class="n">instancename</span> <span class="k">for</span> <span class="n">lop</span> <span class="ow">in</span> <span class="n">lhs</span><span class="p">),</span>
+            <span class="n">right</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rop</span><span class="o">.</span><span class="n">fqname</span> <span class="k">for</span> <span class="n">rop</span> <span class="ow">in</span> <span class="n">rhs</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DisjunctionPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DisjunctionPredicate">[docs]</a><span class="k">class</span> <span class="nc">DisjunctionPredicate</span> <span class="p">(</span><span class="n">JunctionPredicate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operands</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DisjunctionPredicate</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="n">operands</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DisjunctionPredicate.or_"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DisjunctionPredicate.or_">[docs]</a>    <span class="k">def</span> <span class="nf">or_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DisjunctionPredicate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_operands</span> <span class="o">+</span> <span class="p">[</span><span class="n">other</span><span class="p">])</span></div></div>
 
 
 <div class="viewcode-block" id="NegationPredicate"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.NegationPredicate">[docs]</a><span class="k">class</span> <span class="nc">NegationPredicate</span> <span class="p">(</span><span class="n">Predicate</span><span class="p">):</span>

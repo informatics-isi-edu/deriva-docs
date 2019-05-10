@@ -1444,6 +1444,61 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="deriva.core.datapath.ComparisonPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">ComparisonPredicate</code><span class="sig-paren">(</span><em>lop</em>, <em>op</em>, <em>rop</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ComparisonPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ComparisonPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.ComparisonPredicate.is_equality">
+<code class="descname">is_equality</code><a class="headerlink" href="#deriva.core.datapath.ComparisonPredicate.is_equality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ComparisonPredicate.left">
+<code class="descname">left</code><a class="headerlink" href="#deriva.core.datapath.ComparisonPredicate.left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ComparisonPredicate.right">
+<code class="descname">right</code><a class="headerlink" href="#deriva.core.datapath.ComparisonPredicate.right" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.ConjunctionPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">ConjunctionPredicate</code><span class="sig-paren">(</span><em>operands</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ConjunctionPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ConjunctionPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.JunctionPredicate" title="deriva.core.datapath.JunctionPredicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.JunctionPredicate</span></code></a></p>
+<dl class="method">
+<dt id="deriva.core.datapath.ConjunctionPredicate.and_">
+<code class="descname">and_</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ConjunctionPredicate.and_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ConjunctionPredicate.and_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a conjunction predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a predicate object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a junction predicate object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ConjunctionPredicate.as_join_condition">
+<code class="descname">as_join_condition</code><a class="headerlink" href="#deriva.core.datapath.ConjunctionPredicate.as_join_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the conjunction in the ‘join condition’ serialized format.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ConjunctionPredicate.is_valid_join_condition">
+<code class="descname">is_valid_join_condition</code><a class="headerlink" href="#deriva.core.datapath.ConjunctionPredicate.is_valid_join_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if this conjunction is a valid join condition.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="deriva.core.datapath.DataPath">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">DataPath</code><span class="sig-paren">(</span><em>root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -1565,20 +1620,56 @@ named parameter is therefore _reserved_ for any invocation of the <cite>attribut
 <dl class="method">
 <dt id="deriva.core.datapath.DataPath.filter">
 <code class="descname">filter</code><span class="sig-paren">(</span><em>filter_expression</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filters the path based on the specified formula.
-:param filter_expression: should be a valid Predicate object
-:return: self</p>
+<dd><p>Filters the path based on the specified formula.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filter_expression</strong> – should be a valid Predicate object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="deriva.core.datapath.DataPath.link">
 <code class="descname">link</code><span class="sig-paren">(</span><em>right</em>, <em>on=None</em>, <em>join_type=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.link" title="Permalink to this definition">¶</a></dt>
-<dd><p>Links this path with another table.
-At present, the implementation only supports single column keys.
-:param right: the right hand table of the link expression
-:param on: an equality comparison between keys and foreign keys
-:param join_type: the join type of this link which may be ‘left’, ‘right’, ‘full’ outer joins or ‘’ for inner
-join link by default.
+<dd><p>Links this path with another table.</p>
+<p>To link a table with an unambigious relationship where table A is related to table B via a single foreign key
+reference, the <cite>on</cite> clause is not.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">#</span> <span class="pre">let</span> <span class="pre">A</span> <span class="pre">and</span> <span class="pre">B</span> <span class="pre">be</span> <span class="pre">variables</span> <span class="pre">for</span> <span class="pre">tables</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">catalog</span>
+<span class="pre">path</span> <span class="pre">=</span> <span class="pre">A.link(B)</span>
+<span class="pre">`</span></code></p>
+<p>To link tables with more than one foreign key reference between them, use explicit <cite>on</cite> clause.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">#</span> <span class="pre">let</span> <span class="pre">A.c1</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">column</span> <span class="pre">that</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">simple</span> <span class="pre">foreign</span> <span class="pre">key</span> <span class="pre">to</span> <span class="pre">B.c1</span> <span class="pre">that</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">simple</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">B</span>
+<span class="pre">path</span> <span class="pre">=</span> <span class="pre">A.link(B,</span> <span class="pre">on=(A.c1</span> <span class="pre">==</span> <span class="pre">B.c1))</span>
+<span class="pre">`</span></code></p>
+<p>To link tables with foreign keys on composite keys, use a conjunction of 2 or more equality comparisons in the
+<cite>on</cite> clause.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">#</span> <span class="pre">let</span> <span class="pre">A.c1,</span> <span class="pre">A.c2</span> <span class="pre">be</span> <span class="pre">columns</span> <span class="pre">that</span> <span class="pre">form</span> <span class="pre">a</span> <span class="pre">foreign</span> <span class="pre">key</span> <span class="pre">to</span> <span class="pre">B.c1,</span> <span class="pre">B.c2</span> <span class="pre">that</span> <span class="pre">are</span> <span class="pre">a</span> <span class="pre">composite</span> <span class="pre">key</span> <span class="pre">in</span> <span class="pre">B</span>
+<span class="pre">path</span> <span class="pre">=</span> <span class="pre">A.link(B,</span> <span class="pre">on=((A.c1</span> <span class="pre">==</span> <span class="pre">B.c1)</span> <span class="pre">&amp;</span> <span class="pre">(A.c2</span> <span class="pre">==</span> <span class="pre">B.c2)))</span>
+<span class="pre">`</span></code></p>
+<p>By default links use inner join semantics on the foreign key / key equality comparison. The <cite>join_type</cite>
+parameter can be used to specify <cite>left</cite>, <cite>right</cite>, or <cite>full</cite> outer join semantics.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>right</strong> – the right hand table of the link expression</li>
+<li><strong>on</strong> – an equality comparison between key and foreign key columns or a conjunction of such comparisons</li>
+<li><strong>join_type</strong> – the join type of this link which may be ‘left’, ‘right’, ‘full’ outer joins or ‘’ for inner</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>join link by default.
 :return: self</p>
 </dd></dl>
 
@@ -1602,20 +1693,36 @@ join link by default.
 </dd></dl>
 
 <dl class="class">
+<dt id="deriva.core.datapath.DisjunctionPredicate">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">DisjunctionPredicate</code><span class="sig-paren">(</span><em>operands</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DisjunctionPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DisjunctionPredicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.JunctionPredicate" title="deriva.core.datapath.JunctionPredicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.JunctionPredicate</span></code></a></p>
+<dl class="method">
+<dt id="deriva.core.datapath.DisjunctionPredicate.or_">
+<code class="descname">or_</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DisjunctionPredicate.or_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DisjunctionPredicate.or_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a disjunction predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a predicate object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a junction predicate object.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="deriva.core.datapath.Filter">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>r</em>, <em>formula</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
-<dt id="deriva.core.datapath.FilterPredicate">
-<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">FilterPredicate</code><span class="sig-paren">(</span><em>lop</em>, <em>op</em>, <em>rop</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#FilterPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.FilterPredicate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
-</dd></dl>
-
-<dl class="class">
 <dt id="deriva.core.datapath.JunctionPredicate">
-<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">JunctionPredicate</code><span class="sig-paren">(</span><em>left</em>, <em>op</em>, <em>right</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#JunctionPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.JunctionPredicate" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">JunctionPredicate</code><span class="sig-paren">(</span><em>op</em>, <em>operands</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#JunctionPredicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.JunctionPredicate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Predicate" title="deriva.core.datapath.Predicate"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Predicate</span></code></a></p>
 </dd></dl>
 
@@ -1655,6 +1762,7 @@ join link by default.
 <dt id="deriva.core.datapath.Predicate">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Predicate</code><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Predicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Predicate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Common base class for all predicate types.</p>
 <dl class="method">
 <dt id="deriva.core.datapath.Predicate.and_">
 <code class="descname">and_</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Predicate.and_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Predicate.and_" title="Permalink to this definition">¶</a></dt>
@@ -1860,7 +1968,8 @@ be implicitly fetched from the catalog.</p>
 <dl class="method">
 <dt id="deriva.core.datapath.Table.filter">
 <code class="descname">filter</code><span class="sig-paren">(</span><em>filter_expression</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="deriva.core.datapath.Table.fqname">
@@ -1892,7 +2001,8 @@ be implicitly fetched from the catalog.</p>
 <dl class="method">
 <dt id="deriva.core.datapath.Table.link">
 <code class="descname">link</code><span class="sig-paren">(</span><em>right</em>, <em>on=None</em>, <em>join_type=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.link" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="deriva.core.datapath.Table.path">

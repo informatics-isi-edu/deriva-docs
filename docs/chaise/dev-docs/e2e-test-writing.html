@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>End to End Testing Documentation &mdash; DERIVA Docs  documentation</title>
+  <title>Writing End to End Test Cases &mdash; DERIVA Docs  documentation</title>
   
 
   
@@ -1120,13 +1120,13 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>End to End Testing Documentation</li>
+      <li>Writing End to End Test Cases</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/chaise/dev-docs/e2e-test.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/chaise/dev-docs/e2e-test-writing.md.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -1163,335 +1163,118 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="end-to-end-testing-documentation">
-<span id="end-to-end-testing-documentation"></span><h1>End to End Testing Documentation<a class="headerlink" href="#end-to-end-testing-documentation" title="Permalink to this headline">¶</a></h1>
-<p>For now, we only have E2E tests in Chaise. E2E tests are automation tests that simulate a user interacting with the app and assert or expect the app would act correctly accordingly. This document will explain how you can configure and run the e2e test cases. Please use <a class="reference internal" href="e2e-test-writing.html"><span class="doc">this link</span></a> to find more information about how to write new test cases.</p>
-<div class="section" id="tools-used">
-<span id="tools-used"></span><h2>Tools used<a class="headerlink" href="#tools-used" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><strong>Protractor</strong>: E2E framework tailored for AngularJS apps</li>
-<li><strong>Jasmine</strong>: the way in which the automation tests are written</li>
-<li><strong>NPM</strong>: to install necessary NodeJS packages</li>
-<li><strong>SauceLabs</strong>: platform for executing E2E tests and record (in video) the testing results by Travis CI</li>
-<li><strong>Travis CI</strong>: to test automatically every time code is pushed to Github repo</li>
-<li><strong>Makefile</strong>: to invoke NPM to install packages necessary for running tests and invoke Protractor (which will run the tests).</li>
-<li><strong>ErmrestDataUtils</strong>: tool created in house for catalog/schema creation and seeding data (<a class="reference external" href="https://github.com/informatics-isi-edu/ErmrestDataUtils">Found here</a>)</li>
-</ul>
+<div class="section" id="writing-end-to-end-test-cases">
+<span id="writing-end-to-end-test-cases"></span><h1>Writing End to End Test Cases<a class="headerlink" href="#writing-end-to-end-test-cases" title="Permalink to this headline">¶</a></h1>
+<p>In this section we have summarized all the resources that you need for writing test cases alongside different issues that we have faced. Please make sure to follow the given instructions.</p>
+<div class="section" id="test-idioms">
+<span id="test-idioms"></span><h2>Test Idioms<a class="headerlink" href="#test-idioms" title="Permalink to this headline">¶</a></h2>
+<p>Please follow <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/dev-docs/test-idioms.md">this link</a> to access the Test idioms document. This document includes the best practices for writing test cases in both Chaise and ERMrestJS.</p>
 </div>
-<div class="section" id="setup">
-<span id="setup"></span><h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<p>To run E2E tests on your machine, make sure that you’ve installed the following on your machine:</p>
-<ul class="simple">
-<li><strong>Node.js</strong></li>
-<li><strong>JAVA</strong></li>
-<li><strong>JDK</strong></li>
-</ul>
-<p>Before running the test cases you also need to set <code class="docutils literal notranslate"><span class="pre">ERMREST_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">CHAISE_BASE_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>, and <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> environment variables.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>YOUR_CHAISE_BASE_URL
-<span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>YOUR_ERMREST_URL
-<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_ERMREST_COOKIE
-<span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>USERNAME@HOST:public_html/chaise
-</pre></div>
+<div class="section" id="test-faq">
+<span id="test-faq"></span><h2>Test FAQ<a class="headerlink" href="#test-faq" title="Permalink to this headline">¶</a></h2>
+<p>You can find the complete list of test FAQs in <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/test-faq.md">here</a>.</p>
 </div>
-<p>These variables are used in <code class="docutils literal notranslate"><span class="pre">ErmrestDataUtils</span></code> to communicate with <code class="docutils literal notranslate"><span class="pre">ERMrest</span></code>. A copy of <code class="docutils literal notranslate"><span class="pre">ErmrestDataUtils</span></code> should be pulled from master and placed alongside chaise in your workspace. The following is how these variables most probably should look like:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;chaise <span class="c1"># No trailing `/`</span>
-<span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/ermrest <span class="c1"># No trailing `/`</span>
-<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span><span class="s2">&quot;webauthn=PutYourCookieHere;&quot;</span> <span class="c1"># You have to put `webauthn=` at the beginging and `;` at the end.</span>
-<span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise <span class="c1"># No trailing `/`</span>
-<span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">false</span>
-</pre></div>
+<div class="section" id="page-object-pattern-chaise-page-js">
+<span id="page-object-pattern-chaise-page-js"></span><h2>Page Object Pattern <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/test/e2e/utils/chaise.page.js">chaise.page.js</a><a class="headerlink" href="#page-object-pattern-chaise-page-js" title="Permalink to this headline">¶</a></h2>
+<p>To write the tests, usually one has to first find the DOM elements on the page, then perform some actions on the elements, finally expect (assert) the correct result will show up. There are two logics here, DOM finding and expectation. To separate concerns, most DOM finding logic is put into a <strong>Page Object</strong> file “chaise.page.js”. So in “.spec.js” files where the tests (expectations) are written, more effort can be focused on the expectation logic.</p>
 </div>
-<p>You can get your cookie by querying the database, or using the following simple steps:</p>
-<ol class="simple">
-<li>Open up <a class="reference external" href="https://dev.isrd.isi.edu/chaise/search/">https://dev.isrd.isi.edu/chaise/search/</a> website.</li>
-<li>Login. The account that you are using must have delete and create access. We use this cookie to create and delete catalogs.</li>
-<li>Open the Developer tools in your browser.</li>
-<li>Go to the console section and write <code class="docutils literal notranslate"><span class="pre">$.cookie(&quot;webauthn&quot;)</span></code>.</li>
-</ol>
+<div class="section" id="expectations">
+<span id="expectations"></span><h2>Expectations<a class="headerlink" href="#expectations" title="Permalink to this headline">¶</a></h2>
+<p>Expectations should use <a class="reference external" href="https://jasmine.github.io/api/2.6/matchers.html">Jasmine matchers</a>. One thing to note with matchers is that a custom message can be attached to each matcher, <code class="docutils literal notranslate"><span class="pre">expect(value).toBe(expected_value,</span> <span class="pre">failure</span> <span class="pre">message)</span></code>. This should be done as often as possible to provide a point of contact to look at when debugging errors in test cases.</p>
 </div>
-<div class="section" id="how-to-run-tests">
-<span id="how-to-run-tests"></span><h2>How To Run Tests<a class="headerlink" href="#how-to-run-tests" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>To execute all test cases in sequential order, set the following:</li>
-</ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">false</span>
-</pre></div>
+<div class="section" id="expected-conditions">
+<span id="expected-conditions"></span><h2>Expected Conditions<a class="headerlink" href="#expected-conditions" title="Permalink to this headline">¶</a></h2>
+<p>When writing tests, there will be times where the spec will attempt to run before the elements are available in the DOM. Having tests fail because an element isn’t visible has been a sporadic but common enough issue. Protractor has a library called <a class="reference external" href="http://www.protractortest.org/#/api?view=ProtractorExpectedConditions">Expected Conditions</a> that allows for waiting for a certain part of the DOM to be available before continuing to run tests.</p>
 </div>
-<p>and then run the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make <span class="nb">test</span>
-</pre></div>
-</div>
-<p>This will automatically call <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to install all <em>node.js</em> dependencies and also updates the <em>selenium</em> web-driver that protractor is using.</p>
-<ul class="simple">
-<li>To execute all the test cases in parallel, set the following:</li>
-</ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">true</span>
-</pre></div>
-</div>
-<p>and then run the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make testparallel
-</pre></div>
-</div>
-<ul>
-<li><p class="first">To run a specific test spec</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ node_modules/.bin/protractor test/e2e/specs/search/data-independent/protractor.conf.js
-</pre></div>
-</div>
-</li>
-</ul>
-<blockquote>
-<div>Calling protractor directly won’t install npm modules and will not update the selenium web-driver. So you have to do those steps manually.</div></blockquote>
-</div>
-<div class="section" id="file-structure">
-<span id="file-structure"></span><h2>File structure<a class="headerlink" href="#file-structure" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>chaise/
-`-- test/
-    |-- unit
-    `-- e2e
-    |-- data_setup                       
-    |   |-- config                       # test configuration files
-        |   |   |-- record
-        |   |   |   |-- *.dev.json  # lists the schema config files (*.config.json)
-        |   |   |   `-- *.config.json # the configuration for data utils that connects the schema and data together
-    |   |   `-- recordedit
-    |   |-- data                         # Data
-    |   |   `-- SCHEMA_NAME
-    |   |       |-- TABLE_NAME.json
-    |   |       `-- TABLE_NAME.json      # Table entities json
-    |   `-- schema
-        |       |-- record
-        |       |   `-- SCHEMA_NAME.json
-    |   `-- SCHEMA_NAME.json         # Schema Definition json
-    |-- specs
-    |   `-- all-features
-    |       |-- record           
-    |       |   |-- TEST_NAME1.spec.js   
-    |       |   `-- TEST_NAME1.conf.js   # protractor configuration for similarly named single test
-    |       |-- recordedit         
-    |       |                            # They introspect the existing schema to run the cases*/
-    |       `-- protractor.conf.js   # configuration for the parallel tests
-    `-- utils
-        |-- chaise.page.js               # To declare Page Objects, google &quot;page object pattern&quot; for details
-        |-- page.utils.js                # Utilities for Page objects
-        `-- protractor.configuration.js  # Scaffolding for all configurations
-</pre></div>
-</div>
-</div>
-<div class="section" id="configuration">
-<span id="configuration"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p><strong>Protractor.configuration.js</strong>: the protractor.configuration.js file is a scaffolding for all tests and specifies which browser to use when executing tests using</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>capabilities: <span class="o">{</span>
-    //browserName: <span class="s1">&#39;internet explorer&#39;</span>,
-    //browserName: <span class="s1">&#39;firefox&#39;</span>,
-    //version: <span class="s1">&#39;40.0&#39;</span>, //to specify the browser version
-    browserName: <span class="s1">&#39;chrome&#39;</span>,
-  <span class="o">}</span>,
-</pre></div>
-</div>
-<p>It specifies tests to be run on multiple browsers,</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>multiCapabilities: <span class="o">[{</span>
-    <span class="s1">&#39;browserName&#39;</span>: <span class="s1">&#39;firefox&#39;</span>
-  <span class="o">}</span>, <span class="o">{</span>
-    <span class="s1">&#39;browserName&#39;</span>: <span class="s1">&#39;chrome&#39;</span>
-  <span class="o">}]</span>,
-</pre></div>
-</div>
-<p>To specify which test specs to run, use</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>specs: <span class="o">[</span>
-    <span class="s1">&#39;*.spec.js&#39;</span>
-  <span class="o">]</span>,
-</pre></div>
-</div>
-<p>To configure SauceLabs credentials,</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sauceUser: process.env.SAUCE_USERNAME,
-sauceKey: process.env.SAUCE_ACCESS_KEY,
-</pre></div>
-</div>
-<div class="section" id="protractor-conf-js">
-<span id="protractor-conf-js"></span><h3>protractor.conf.js<a class="headerlink" href="#protractor-conf-js" title="Permalink to this headline">¶</a></h3>
-<p>You must refer this scaffolding in your <code class="docutils literal notranslate"><span class="pre">protractor.conf.js</span></code> file and pass the parameters to avoid duplicating it. This is how your file would look like.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">pConfig</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./../../../utils/protractor.configuration.js&#39;</span><span class="p">);</span>
+<div class="section" id="clicking-elements">
+<span id="clicking-elements"></span><h2>Clicking Elements<a class="headerlink" href="#clicking-elements" title="Permalink to this headline">¶</a></h2>
+<p>Whenever you want to click an element, make sure that you don’t trigger the click function on the element directly. This is because, if the element is not in the sight of browser, it will err out saying unable to find the element and will never get clicked.</p>
+<p>A workaround for this situation is to scroll the page to the element position and then click. <code class="docutils literal notranslate"><span class="pre">chaise.page.js</span></code> has a function to do this. It accepts a WebElement</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">chaisePage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;chaise.page.js&#39;</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">pConfig</span><span class="p">.</span><span class="nx">getConfig</span><span class="p">({</span>
+<span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;.add-button&#39;</span><span class="p">)).</span><span class="nx">first</span><span class="p">();</span>
 
-  <span class="c1">// Change this to your desired filed name and Comment below testConfiguration object declaration</span>
-    <span class="nx">configFileName</span><span class="o">:</span> <span class="s1">&#39;search.dev.json&#39;</span><span class="p">,</span>
+<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">clickButton</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="synchronization-issues">
+<span id="synchronization-issues"></span><h2>Synchronization Issues<a class="headerlink" href="#synchronization-issues" title="Permalink to this headline">¶</a></h2>
+<p>Currently Chaise is not using Angular router, thus we can’t use Protractor <a class="reference external" href="https://github.com/angular/protractor/blob/9891d430aff477c5feb80ae01b48356866820132/lib/protractor.js#L158">Synchronization</a>.</p>
+<p>Setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code> means that subsequent additions/injections to the the control flow don’t also add browser.waitForAngular.</p>
+<p>Synchronization makes protractor wait for Angular promises to resolve and causes the url’s to be scrambled. Chaise uses the <code class="docutils literal notranslate"><span class="pre">#</span></code> delimiter to determine url parameters to be sent to Ermrest. Thus, enabling synchronization, changes the url, appending an extra / after the <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol.</p>
+<p>Thus a correct url like this
+<code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/chaise/record/#1/legacy:dataset/id=1580</span></code></p>
+<p>changes to</p>
+<p><code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/chaise/record/#/1/legacy:dataset/id=1580</span></code></p>
+<p>Thus, the parser is unable to parse it. To avoid this we simply disable synchronization in the start of testcases.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">browser</span><span class="p">.</span><span class="nx">ignoreSynchronization</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+    <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="waiting-for-elements-to-be-visible">
+<span id="waiting-for-elements-to-be-visible"></span><h2>Waiting For Elements To Be Visible<a class="headerlink" href="#waiting-for-elements-to-be-visible" title="Permalink to this headline">¶</a></h2>
+<p>Disabling synchronization has its own issues. Protractor by default waits for the Angular to be done with displaying data or complete http call. With disabled synchronization we need to add logic to handle situations which need the page/element/data to be visible before running the asserts.</p>
+<p>In such cases you might just be tempted to put in a <code class="docutils literal notranslate"><span class="pre">browser.sleep(2000)</span></code> to allow everything to get back on track.</p>
+<p>You shouldn’t be using <code class="docutils literal notranslate"><span class="pre">browser.sleep</span></code> functions as they are brittle. Sleeps put your tests at the mercy of changes in your test environments (network speed, machine performance etc). They make your tests slower. From a maintainability point of view they are ambiguous to someone else reading your code. Why were the put there? Is the sleep long enough? They are an acceptance that you don’t really know what is going on with your code and in my opinion should be banned (or at least you should try your best to resist the quick win they give you!).</p>
+<p>A simple workaround is to use <a class="reference external" href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.wait">browser.wait</a> in conjunction with other parameters such as a timeout/element/variable/functions.</p>
+<p>To wait for elements to be visible/rendered we can simply use following syntax</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForElement</span><span class="p">(</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="s2">&quot;some-id&quot;</span><span class="p">),</span> <span class="mi">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element found&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element not found&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="waiting-for-url-to-change">
+<span id="waiting-for-url-to-change"></span><h2>Waiting For Url To Change<a class="headerlink" href="#waiting-for-url-to-change" title="Permalink to this headline">¶</a></h2>
+<p>This can be useful when you want to wait for the URL to change in case of form submissions or link clicks.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://dev.isrd.isi.edu/chaise/search&quot;</span><span class="p">;</span>
+<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="mi">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Redirected to url&quot;</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Unable to redirect to url&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="section" id="detecting-travis-environment">
+<span id="detecting-travis-environment"></span><h3>Detecting Travis Environment<a class="headerlink" href="#detecting-travis-environment" title="Permalink to this headline">¶</a></h3>
+<p>There’re scenarios where you might need to determine which environment are your tests running; TRAVIS or locally. To determine that you can simply refer the variable <code class="docutils literal notranslate"><span class="pre">process.env.TRAVIS</span></code>. If it is true then the environment is Travis else it is something else.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TRAVIS</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// DO something Travis specific</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="c1">// DO something specific to local environment</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-webauthn-cookies-in-test-cases">
+<span id="setting-webauthn-cookies-in-test-cases"></span><h3>Setting Webauthn Cookies in Test Cases<a class="headerlink" href="#setting-webauthn-cookies-in-test-cases" title="Permalink to this headline">¶</a></h3>
+<p>You can always change the user authentication cookie in your tests. To do so, first you need to have the <strong>webauthn</strong> cookie.</p>
+<p>Now you need to put this code in your test to set the cookie and then redirect the user to specific page on success. The <code class="docutils literal notranslate"><span class="pre">performLogin(cookie)</span></code> function accepts a cookie and returns a promise. On successful completion of login the promise is resolved.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">chaisePage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;YOU_PATH/chaise.page.js&#39;</span><span class="p">);</span>
 
-  <span class="cm">/* Just in case if you plan on not giving a file for configuration, you can always specify a testConfiguration object</span>
-<span class="cm">   * Comment above 2 lines</span>
-<span class="cm">   * Empty configuration will run test cases against catalog 1 and default schema</span>
-<span class="cm">    testConfiguration: {</span>
-<span class="cm">      ....</span>
-<span class="cm">    },</span>
-<span class="cm">   */</span>
-
-    <span class="c1">// Optional: Default is &quot;chaise-config.js&quot;</span>
-    <span class="nx">chaiseConfigFilePath</span><span class="o">:</span> <span class="s2">&quot;path/to/your/chaise-config/to/be.used/in/this/test/suite&quot;</span><span class="p">,</span>
-
-    <span class="c1">// Full path from the base of base directory</span>
-    <span class="c1">//chaiseConfigFilePath: &quot;test/e2e/specs/recordedit/data-independent/edit/chaise-config.js&quot;</span>
-
-   <span class="cm">/* If you want to set a custom base URL with some query string or other url parameters use</span>
-<span class="cm">    * setBaseUrl function else directly set the page. You just need to provide wither of them.</span>
-<span class="cm">    */</span>
-    <span class="nx">page</span><span class="o">:</span> <span class="s1">&#39;/search&#39;</span><span class="p">,</span>
-
-    <span class="cm">/*</span>
-<span class="cm">    setBaseUrl: function(browser, data) {</span>
-<span class="cm">      browser.params.url = process.env.CHAISE_BASE_URL + &quot;/search&quot; + &quot;/#&quot; + data.catalogId + &quot;/&quot; + data.schema.name;</span>
-<span class="cm">      return browser.params.url;</span>
-<span class="cm">    }</span>
-<span class="cm">    */</span>
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Setting Login cookie&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">chaisePage</span><span class="p">.</span><span class="nx">performLogin</span><span class="p">(</span><span class="nx">COOKIE</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+         <span class="c1">// Successfully set the user cookie</span>
+         <span class="c1">// Add your code to redirect the user to another page on beforeAll</span>
+      <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+         <span class="c1">// Unable to set the cookie</span>
+      <span class="p">});</span>
+   <span class="p">});</span>
 <span class="p">});</span>
 
-<span class="nx">exports</span><span class="p">.</span><span class="nx">config</span> <span class="o">=</span> <span class="nx">config</span><span class="p">;</span>
+<span class="p">});</span>
 </pre></div>
 </div>
-<div class="section" id="chaiseconfigfilepath">
-<span id="chaiseconfigfilepath"></span><h4>ChaiseConfigFilePath<a class="headerlink" href="#chaiseconfigfilepath" title="Permalink to this headline">¶</a></h4>
-<p>When a tester specifies a chaiseConfigFilePath, it copies the file specified in the <code class="docutils literal notranslate"><span class="pre">chaiseConfigFilePath</span></code> into REMOTE_CHAISE_DIR_PATH/chaise-config.js. This functionality is to make it work locally on developer machine pointing to some other server. In addition, to avoid the newly copied <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file being used for other suites, it is reverted back to the previous one. Here previous refers to the <code class="docutils literal notranslate"><span class="pre">chaise-config-sample.js</span> <span class="pre">file</span></code>.</p>
-<p><strong>NOTE</strong>: To specify which config you want to use for your spec, set <code class="docutils literal notranslate"><span class="pre">chaiseConfigFilePath</span></code> in your <strong>protractor.conf.js</strong> file as follows. You also need to run the <a class="reference external" href="http://mah.everybody.org/docs/ssh">ssh-agent</a> in background as well as export a new environment variable that specifies your remote <strong>dev.isrd</strong> sshpath.</p>
-<p>For example</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># run ssh-agent in background</span>
-$ <span class="nb">eval</span> ssh-agent
-
-<span class="c1"># add your key to ssh-agent</span>
-$ ssh-add PATH/TO/KEY
-
-<span class="c1"># export REMOTE_CHAISE_DIR_PATH=USERNAME@HOST:public_html/chaise</span>
-$ <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise
-</pre></div>
+<p>You should try to put the performLogin function inside an <code class="docutils literal notranslate"><span class="pre">it</span></code> statement or <code class="docutils literal notranslate"><span class="pre">beforeAll</span></code>/<code class="docutils literal notranslate"><span class="pre">beforeEach</span></code> statement, so that it is executed in the flow of test.</p>
+<p><strong>NOTE</strong>: Our Travis environment doesn’t uses HTTPS for CHAISE. When we setup the cookie we set the secure flag in the path for cookie depending on environment. <a class="reference external" href="http://resources.infosecinstitute.com/securing-cookies-httponly-secure-flags/#gref">Reference</a></p>
 </div>
-<p><strong>TRAVIS</strong>: For TRAVIS there is no need to set <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> as it copies the actual file to the <strong>chaise-config.js</strong> in its local directory where it is running the test-suite.</p>
-</div>
-</div>
-<div class="section" id="test-configuration-json-file">
-<span id="test-configuration-json-file"></span><h3>Test Configuration JSON file<a class="headerlink" href="#test-configuration-json-file" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">configFileName</span></code> which is <strong>“search.dev.json”</strong> here, specifies the file where the JSON for this suite exists. Apart from that everything is self-explanatory in the JSON.</p>
-<p>The structure of the configuration is</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="s2">&quot;setup&quot;</span><span class="o">:</span> <span class="p">{</span>
-      <span class="s2">&quot;schemaConfigurations&quot;</span> <span class="o">:</span> <span class="p">[{</span>
-        <span class="s2">&quot;catalog&quot;</span><span class="o">:</span> <span class="p">{</span>
-            <span class="c1">//&quot;id&quot;: 1  //existing id of a catalog</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;schema&quot;</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;product&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// change this to false to avoid creating new schema</span>
-            <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;./schema/product.json&quot;</span> <span class="c1">// path of the schema json file in data_setup folder</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;tables&quot;</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Mention this to be true to allow creating new tables</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;entities&quot;</span><span class="o">:</span> <span class="p">{</span>
-            <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Mention this to be true to allow creating new entities</span>
-            <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;./data/product&quot;</span><span class="p">,</span> <span class="c1">// This is the path from where the json for the entities will be picked for import</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;authCookie&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span>
-    <span class="p">}],</span>
-    <span class="s2">&quot;schema&quot;</span><span class="o">:</span> <span class="s2">&quot;DEFAULT_NAME_OF_SCHEMA&quot;</span> <span class="c1">// (Optional: Will set the default schema to the name you provide)</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;cleanup&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">//Do you want to delete the created catalog/schema/tables/entities created in the setup phase</span>
-  <span class="s2">&quot;tests&quot;</span><span class="o">:</span> <span class="p">{</span>
-
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">setup</span></code> object  allows you to specify whether the test-cases should create or use existing catalog, schema, tables and entities before running the testcases.
-The <code class="docutils literal notranslate"><span class="pre">cleanup</span></code> property if true will delete all the data that was created in the dataSetup phase.
-The <code class="docutils literal notranslate"><span class="pre">tests</span></code> object is mandatory for data-dependent testcases, as the test-cases will refer to this configuration for running and asserting them.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span>    <span class="s2">&quot;tests&quot;</span> <span class="o">:</span> <span class="p">{</span>
-        <span class="s2">&quot;Filters on top of the records,&quot;</span> <span class="o">:</span> <span class="p">{</span>   <span class="c1">// This is the name of describe which will used this data</span>
-
-            <span class="c1">// The internal data doesn&#39;t has a format, its just an object which can change accorsing to your test needs/</span>
-            <span class="s2">&quot;data&quot;</span> <span class="o">:</span> <span class="s2">&quot;testcase2Input2&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;someMoreData&quot;</span> <span class="o">:</span> <span class="s2">&quot;data&quot;</span>
-            <span class="p">.</span>
-            <span class="p">.</span>
-            <span class="p">.</span>
-            <span class="p">.</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="test-parallelization">
-<span id="test-parallelization"></span><h2>Test Parallelization<a class="headerlink" href="#test-parallelization" title="Permalink to this headline">¶</a></h2>
-<p>By default the e2e tests will run in parallel. To avoid this, set the <code class="docutils literal notranslate"><span class="pre">Sharding</span></code> environment variable to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">SHARDING=false</span></code></p>
-<p>To run a set of specs in parallel you can set some flags in the <code class="docutils literal notranslate"><span class="pre">protractor.conf.js</span></code>.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="p">..</span>
-   <span class="s2">&quot;parallel&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span> <span class="c1">//No of instances or just set it to true for default (4)</span>
-   <span class="p">..</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Internally the <code class="docutils literal notranslate"><span class="pre">parallel</span></code> property gets resolved to number of instances and enabling/disabling sharding.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">parallel</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">config</span><span class="p">.</span><span class="nx">capabilities</span><span class="p">.</span><span class="nx">shardTestFiles</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-    <span class="nx">config</span><span class="p">.</span><span class="nx">capabilities</span><span class="p">.</span><span class="nx">maxInstances</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">options</span><span class="p">.</span><span class="nx">parallel</span> <span class="o">==</span> <span class="s1">&#39;number&#39;</span> <span class="o">?</span> <span class="nx">options</span><span class="p">.</span><span class="nx">parallel</span> <span class="o">:</span> <span class="mi">4</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>You can see the code <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/test/e2e/utils/protractor.configuration.js">here</a></p>
-</div>
-<div class="section" id="running-tests-using-sauce-labs-locally">
-<span id="running-tests-using-sauce-labs-locally"></span><h2>Running tests using SAUCE LABS locally<a class="headerlink" href="#running-tests-using-sauce-labs-locally" title="Permalink to this headline">¶</a></h2>
-<p>To run tests locally using <a class="reference external" href="https://saucelabs.com">Sauce Labs</a> you need to have an account with them. Once you signup you will need to extract your <code class="docutils literal notranslate"><span class="pre">username</span></code> and <code class="docutils literal notranslate"><span class="pre">access</span> <span class="pre">key</span></code>.</p>
-<p>You can access them from the <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">account</span></code> link in user dropdown. On the <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">account</span></code> page you will find your username and access key. After which you need to set them in your environment.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SAUCE_USERNAME</span><span class="o">=</span><span class="s2">&quot;your_username&quot;</span>
-<span class="nb">export</span> <span class="nv">SAUCE_ACCESS_KEY</span><span class="o">=</span><span class="s2">&quot;your_access_key&quot;</span>
-</pre></div>
-</div>
-<p>Now when you run the tests, they will be executed on Sauce Labs instead of your machine. You can monitor them on their dashboard.</p>
-</div>
-<div class="section" id="running-tests-in-travis">
-<span id="running-tests-in-travis"></span><h2>Running tests in TRAVIS<a class="headerlink" href="#running-tests-in-travis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="travis-testing-workflow">
-<span id="travis-testing-workflow"></span><h3>Travis Testing workflow<a class="headerlink" href="#travis-testing-workflow" title="Permalink to this headline">¶</a></h3>
-<p>in the Chaise folder, invoke command</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>npm <span class="nb">test</span>
-</pre></div>
-</div>
-<p>The “test” command specified in package.json (NodeJS conf file) will be executed, so command</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make <span class="nb">test</span>
-</pre></div>
-</div>
-<p>will be executed. Command specified in Makefile will then be executed, which will invoke Protractor to execute the tests.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>protractor search/data-independent/protractor.conf.js <span class="o">&amp;&amp;</span> search/data-dependent/protractor.conf.js <span class="o">&amp;&amp;</span> protractor recordedit/data-independentadd/protractor.conf.js  <span class="o">&amp;&amp;</span> protractor recordedit/data-independentadd/protractor.conf.js
-</pre></div>
-</div>
-<p>Protractor will run “protractor search/data-independent/protractor.conf.js” first, if there is no failure in search/data-independent/protractor.conf.js specs, protractor will proceed to execute “protractor search/data-dependent/protractor.conf.js”. If there are failures in search/data-dependent/protractor.conf.js specs, the tests will exit. And it keeps going on until it has executed all protractor test suites.</p>
-<p>Usually Protractor will open a local server (and browsers) to execute the e2e tests. But because we want the tests to be executed on SauceLabs, lines below are added to protractor conf files.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sauceUser: process.env.SAUCE_USERNAME,
-sauceKey: process.env.SAUCE_ACCESS_KEY,
-</pre></div>
-</div>
-<p>These lines will set up credentials necessary to login SauceLabs and when detected, will execute these tests on SauceLabs. SauceLabs will then print the testing result on terminal and record the testing video on that account as well. When tests are finished, there will be a URL printed on terminal directing you to see the recorded results.</p>
-<p>When the code is pushed to ISI repo, the existence of <strong>.travis.yml</strong> will run “npm test” command in Travis CI, which will trigger the testing chain specified above.</p>
-</div>
-<div class="section" id="environment-variables">
-<span id="environment-variables"></span><h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
-<p><strong>.travis.yml</strong>: <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/.travis.yml">.travis.yml</a>
-specifies environment variables in Travis CI so that tests can be run successfully. Usually the env variables are set using terminal locally, to set them up in Travis CI one has to configure .travis.yml file.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>env:
-    global:
-        - CHAISE_BASE_URL: http://localhost/chaise
-        - ERMREST_URL: http://localhost/ermrest
-        - secure: KKPijZEdaQ7wyubNojHcJi/pgqwemhOzD8lHBV9c521+iybrHJRyR8fJE22OoMrn9UVPlk2pYgljpF1Vjubms10Kga4GT3vxjZ7kbadkgs09vIzo4SUQDi7XBrm3NbWIgYgcLhE8ZqhZo75idtkFMJCQclwLQ7vn5P5xSzNI3CUVxoQJ+uB6ZgVDn0b2ldfmqCBM5B52ocOBF1c4yLTmJwCkSRNdM2aVj4scf+S0h3InGCitHNyuu0WUYNvrIVIFhjCi7VuadCtJ7fy7Z2uFksHIxkT5Lx9WkdZX1M522ckvKhlFrOOB8ejIl//JsPsvy7cPAs7R9w+8LwiE3lmU376fxO9cKCrY7vnW78zHhbs3q6iFO2hhAiPILlcK3H626zbblHms8wsqUHkXlFx19FyTU8pqW86/4LKr6sdVRPyutokMdrFtgjFC1KevseK7GUWzOepOBJazXCc0WvQvUOUIWET5auRztLPEt0P9fh0hNamKWqYUiaW/nl0cUGAL/70PWSQBwIAHAry9mI9xVsBVVl0JhF5ljzqGmzFxRik7ylaYSZh1nTrjwjZDmBEOvycNsDqZBmU6Vc0KXtHaWF/AbCj1Lyng72YCe5jks058DGzv4nKonphNsG0bn3sb1oNHzFoHMncx8FxjZACsmuVzvzXtWTcv9O/iu+rbYxg<span class="o">=</span>
-        - secure: hSGHl2cRYx9gmE2lrjRWu3H45ogd8hIiI9QlLZpvXonROZJSw8VqQWpLe/7m+95L8UDhOpnCXKct/V9+qUDsQM2kDpEP+9bNCf3skg7MFLkpr1te+y1mCkO0xu2vhoqrzJKtvXGIenZ/aEY1nQrnIYuF/5MaOzNRliHQ+7rmhigW7M4LSFqDQdj7CvqXsyk3cfNMbIeUI9H8/SrG9mxYfAa61H1zJtPmdDegvjFNcQeeT57lgYyoArOw4lcGm9KHQp2Hn4EtXv1L65DS7eogFit0CnS/1QHEinU2ibpgfb/vnAnRun5OAmjsiPAURLb6AuhevzDHeyMZrTPIGUHiIyuzG8qP264sWq1ukyjolyarwcwJoifJAdGWhVPT41XAlgAy+xgfN4xSKNp+tGPo9+iJqVGgccbpKAYqMQKvWSXO6DVQEqPHtpFuXsqNBBwvzCBAS+VdHFoKOy9bv2AEIpVOZJszIkuaNAQVqG/iD0pXQT9rEsZ4Ghm0N/RQf7qhGA4Ot1u5yOko1zgm15ATzpacy6qEzqQQwG3qilO2hUNK8xehqU52a4KQu79yGOG8zFkyvcUS3H/e4NQVeBFQ8GIrfcjg1vD5PXzdnun3iiLwwSXSk9CMHMW0B2z34qvg0q4++LWP2UMHkrx+yf/MzABoYuiZ6LshCvobftU7zmQ<span class="o">=</span>
-</pre></div>
-</div>
-<p>The two “secure”s above set up the SauceLabs username and password and the ERMRest authCookie, and encrypt them. The last 2 lines set up env variable “CHAISE_BASE_URL” and “ERMREST_URL” without encryption. More details about it, take a look at Travis CI official website.</p>
-<p>While running tests on <strong>TRAVIS</strong> you don’t need to set the <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> in <strong>travis.yml</strong> file.</p>
-</div>
-</div>
-<div class="section" id="writing-test">
-<span id="writing-test"></span><h2>Writing test<a class="headerlink" href="#writing-test" title="Permalink to this headline">¶</a></h2>
-<p>Please use <a class="reference internal" href="e2e-test-writing.html"><span class="doc">this link</span></a> to find more information about how to write new test cases.</p>
 </div>
 </div>
 

@@ -1173,7 +1173,7 @@
 <div class="section" id="export">
 <span id="export"></span><h2>Export<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
 <p>Export of data from Chaise is configured through the use of <em>export templates</em>. An export template is a JSON object that
-is used in an ERMrest table annotation payload.  The annotation is specified using the following annotation key:</p>
+is used in an ERMrest table annotation payload. The annotation is specified using the following annotation key:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:export</span></code></li>
 </ul>
@@ -1184,13 +1184,13 @@ objects. A template output descriptor maps one or more source table queries to o
 </div>
 <div class="section" id="root-object">
 <span id="root-object"></span><h2>root (object)<a class="headerlink" href="#root-object" title="Permalink to this headline">¶</a></h2>
-<p>| Variable | Type | Inclusion| Description |
+<p>| Variable | Type | Inclusion| Description
 | — | — | — | — |
-| <code class="docutils literal notranslate"><span class="pre">templates</span></code> | array[<code class="docutils literal notranslate"><span class="pre">template</span></code>] | required | An array of <code class="docutils literal notranslate"><span class="pre">template</span></code> objects.</p>
+|<code class="docutils literal notranslate"><span class="pre">templates</span></code> | array[<code class="docutils literal notranslate"><span class="pre">template</span></code>] | required | An array of <code class="docutils literal notranslate"><span class="pre">template</span></code></p>
 </div>
 <div class="section" id="template-object">
 <span id="template-object"></span><h2><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)<a class="headerlink" href="#template-object" title="Permalink to this headline">¶</a></h2>
-<p>| Variable | Type | Inclusion| Description |
+<p>| Variable | Type | Inclusion| Description
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">displayname</span></code> | string | required | The display name that will be used to populate the Chaise export format drop-down box for this <code class="docutils literal notranslate"><span class="pre">template</span></code>.
 | <code class="docutils literal notranslate"><span class="pre">type</span></code> | string, enum [<code class="docutils literal notranslate"><span class="pre">&quot;FILE&quot;</span></code>,<code class="docutils literal notranslate"><span class="pre">&quot;BAG&quot;</span></code>] | required | One of two keywords; <code class="docutils literal notranslate"><span class="pre">&quot;FILE&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;BAG&quot;</span></code>, used to determine the container format for results.
@@ -1198,7 +1198,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </div>
 <div class="section" id="output-object">
 <span id="output-object"></span><h2><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)<a class="headerlink" href="#output-object" title="Permalink to this headline">¶</a></h2>
-<p>| Variable | Type | Inclusion| Description |
+<p>| Variable | Type | Inclusion| Description
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">source</span></code> | <code class="docutils literal notranslate"><span class="pre">source</span></code> | required | An object that contains parameters used to generate source data by querying ERMrest.
 | <code class="docutils literal notranslate"><span class="pre">destination</span></code> | <code class="docutils literal notranslate"><span class="pre">destination</span></code> | required | An object that contains parameters used to render the results of the source query into a specified destination format.</p>
@@ -1246,14 +1246,14 @@ objects. A template output descriptor maps one or more source table queries to o
 </div>
 <div class="section" id="source-object">
 <span id="source-object"></span><h2><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)<a class="headerlink" href="#source-object" title="Permalink to this headline">¶</a></h2>
-<p>| Variable | Type | Inclusion| Description |
+<p>| Variable | Type | Inclusion| Description
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">api</span></code> | string, enum [<code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>] | required | The type of ERMrest query projection to perform.  Valid values are <code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, and <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>.
 | <code class="docutils literal notranslate"><span class="pre">path</span></code> | string | optional | An optional ERMrest path predicate. The string MUST be escaped according to <a class="reference external" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a> if it contains user-generated identifiers that use the reserved character set. See the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrest/blob/master/docs/api-doc/index.md#url-conventions">ERMRest URL conventions</a> for additional information.</p>
 </div>
 <div class="section" id="destination-object">
 <span id="destination-object"></span><h2><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)<a class="headerlink" href="#destination-object" title="Permalink to this headline">¶</a></h2>
-<p>| Variable | Type | Inclusion| Description |
+<p>| Variable | Type | Inclusion| Description
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">name</span></code> | string | required | The base name to use for the output file.
 | <code class="docutils literal notranslate"><span class="pre">type</span></code> | string | required | A type keyword that determines the output format. Supported values are dependent on the <code class="docutils literal notranslate"><span class="pre">template</span></code>.<code class="docutils literal notranslate"><span class="pre">type</span></code> selected. For the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, are currently supported. For the <code class="docutils literal notranslate"><span class="pre">BAG</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">fetch</span></code> and <code class="docutils literal notranslate"><span class="pre">download</span></code> are currently supported. See additional notes on destination format types.

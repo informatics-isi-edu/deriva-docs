@@ -1165,7 +1165,61 @@
 </style>
 <div class="section" id="developer-guide">
 <span id="developer-guide"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
-<p>This is a guide for people who develop Chaise. Because this is not an exhaustive guide, consider looking through &#64;johnpapa’s <a class="reference external" href="https://github.com/johnpapa/angular-styleguide/tree/master/a1">Angular 1 style guide</a> to understand the spirit and conventions of Angular development. We also have our own <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/style-guide.md">Chaise style guide</a>, that explains the use of different libraries (bootstrap) and other HTML and CSS combinations.</p>
+<p>This is a guide for people who develop Chaise.  We also have our own <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/style-guide.md">Chaise style guide</a>, that explains the use of different libraries (bootstrap) and other HTML and CSS combinations.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#angularjs-related">AngularJS-related</a><ul>
+<li><a class="reference external" href="#angularjs-developer-guides">AngularJS Developer Guides</a></li>
+<li><a class="reference external" href="#one-time-binding">One-Time Binding</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#general">General</a><ul>
+<li><a class="reference external" href="#extracting-common-code">Extracting <code class="docutils literal notranslate"><span class="pre">common</span></code> code</a></li>
+<li><a class="reference external" href="#session">Session</a></li>
+<li><a class="reference external" href="#use-variable-vs-string-in-lookup">Use variable vs string in lookup</a></li>
+<li><a class="reference external" href="#naming-conventions">Naming Conventions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#error-handling">Error Handling</a><ul>
+<li><a class="reference external" href="#guidelines-for-promise-chains">Guidelines for promise chains</a></li>
+<li><a class="reference external" href="#promise-with-success-reject-and-catch-handlers">Promise with success, reject, and catch handlers</a></li>
+<li><a class="reference external" href="#promise-with-success-and-catch-handlers">Promise with success and catch handlers</a></li>
+<li><a class="reference external" href="#promise-chaining-with-single-catch">Promise chaining with single catch</a></li>
+<li><a class="reference external" href="#promise-chaining-with-interleaved-catches">Promise chaining with interleaved catches</a></li>
+<li><a class="reference external" href="#how-it-works">How It Works</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#config-app">Config App</a></li>
+</ul>
+</div>
+<div class="section" id="angularjs-related">
+<span id="angularjs-related"></span><h2>AngularJS-related<a class="headerlink" href="#angularjs-related" title="Permalink to this headline">¶</a></h2>
+<p>Because this is not an exhaustive guide, consider looking through &#64;johnpapa’s <a class="reference external" href="https://github.com/johnpapa/angular-styleguide/tree/master/a1">AngularJS style guide</a> to understand the spirit and conventions of AngularJS development. The following are a few notable points that should be followed:</p>
+<ul class="simple">
+<li>Use <code class="docutils literal notranslate"><span class="pre">controllerAs</span></code> syntax instead of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> whenever possible and refrain from using <code class="docutils literal notranslate"><span class="pre">$rootscope</span></code></li>
+<li>AngularJS allows for users to define a module and later extend that module with new <strong>services</strong>, <strong>controllers</strong>, <strong>factories</strong>, <strong>providers</strong>, and so on. These other components should be defined in separate files to avoid having one single <code class="docutils literal notranslate"><span class="pre">*.app.js</span></code> file.</li>
+</ul>
+<div class="section" id="angularjs-developer-guides">
+<span id="angularjs-developer-guides"></span><h3>AngularJS Developer Guides<a class="headerlink" href="#angularjs-developer-guides" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/templates">View Templating</a></li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/databinding">Data Binding with Templates</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_databinding.asp">tutorial</a>)</li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/module">Modules</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_modules.asp">tutorial</a>)</li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/directive">Directives</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_directives.asp">tutorial</a>)</li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/di">Dependency Injection</a></li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/services">Services and Factories</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_services.asp">tutorial</a>)</li>
+<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/bootstrap">App Bootstrapping</a></li>
+</ul>
+</div>
+<div class="section" id="one-time-binding">
+<span id="one-time-binding"></span><h3>One-Time Binding<a class="headerlink" href="#one-time-binding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Use one-time binding for improved performance.</li>
+<li>If you know an AngularJS expression won’t change its value after the first digest (e.g. displaying an ERMrest table name), prepend the binding with <code class="docutils literal notranslate"><span class="pre">::</span></code> to benefit from one-time binding. For more details about this, see the One-Time Binding section of the <a class="reference external" href="https://docs.angularjs.org/guide/expression">doc on AngularJS expressions</a>.</li>
+</ul>
+</div>
+</div>
 <div class="section" id="general">
 <span id="general"></span><h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="extracting-common-code">
@@ -1184,51 +1238,20 @@ NOTE: This was causing a race condition before when we were relying on the sessi
 <span id="use-variable-vs-string-in-lookup"></span><h3>Use variable vs string in lookup<a class="headerlink" href="#use-variable-vs-string-in-lookup" title="Permalink to this headline">¶</a></h3>
 <p>The purpose of using variables or enumeration is to avoid rewriting (or copy-and-pasting) the same string in multiple places.</p>
 <ul class="simple">
-<li>if you have more than one call site in more than one script, then define the variable in the utilities.js script and add it to the module (e.g., module._tag_default = “tag:…default”) and it may then be used by code in different ermrestjs scripts (e.g., referencing module._tag_default somewhere). Note that this is not being added to the public interface. Code outside of the various ermrestjs scripts are not intended to use these variables. Hence we follow the underscore prefix convention _variableName, which by convention indicates that the variable should be considered private to the module and clients are at least warned not to use it.</li>
-<li>Example: The <code class="docutils literal notranslate"><span class="pre">messageMap</span></code> constant can be used to store and display user-facing messages in Chaise.</li>
+<li>if you have more than one call site in more than one script, then define the variable in the utilities.js script and add it to the module (e.g., module._tag_default = “tag:…default”) and it may then be used by code in different ermrestjs scripts (e.g., referencing module._tag_default somewhere). Note that this is not being added to the public interface. Code outside of the various ermrestjs scripts are not intended to use these variables. Hence we follow the underscore prefix convention (_<em>variableName</em>), which by convention indicates that the variable should be considered private to the module and clients are at least warned not to use it.</li>
+<li>Example: The <code class="docutils literal notranslate"><span class="pre">messageMap</span></code> constant can be used to store and display user-facing messages in Chaise. <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/issues/68">ERMrestJS#68</a> contains detail discussion related to this topic.</li>
 </ul>
-<p><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/issues/68">Ermrestjs#68</a> contains detail discussion related to this topic.</p>
 </div>
 <div class="section" id="naming-conventions">
 <span id="naming-conventions"></span><h3>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
 <p>There are a few naming conventions that are being used across the apps. This pertains to variables, module names, and file names.</p>
 <ul class="simple">
 <li>File names should be written in camel case (camelCase) with identifying information separated by <code class="docutils literal notranslate"><span class="pre">.</span></code> (<code class="docutils literal notranslate"><span class="pre">*.controller.js</span></code>, <code class="docutils literal notranslate"><span class="pre">*.app.js</span></code>, <code class="docutils literal notranslate"><span class="pre">*.html</span></code>).</li>
-<li>Angular modules need to be defined like the following <code class="docutils literal notranslate"><span class="pre">chaise.*</span></code>. Chaise identifies the set of apps it applies to and the <code class="docutils literal notranslate"><span class="pre">*</span></code> is that modules purpose in chaise.</li>
+<li>AngularJS modules need to be defined like the following <code class="docutils literal notranslate"><span class="pre">chaise.*</span></code>. Chaise identifies the set of apps it applies to and the <code class="docutils literal notranslate"><span class="pre">*</span></code> is that modules purpose in chaise.</li>
 <li>Service, Factory, Provider, Controller, and other angular classes should be defined with camel case text leading with a capital letter. For example: <code class="docutils literal notranslate"><span class="pre">ErrorDialogController</span></code> is the convention for naming controllers. Don’t shorten the text to <code class="docutils literal notranslate"><span class="pre">ctrl</span></code> because we should be using controller as syntax and want to have a more readable structure to our code.</li>
-<li>Variables should follow a similar naming convention using camel case text. Variables and functions that are prefixed with an underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>, should be treated as private variables and used with caution.</li>
+<li>Variables should follow a similar naming convention using camel case text. Variables and functions that are prefixed with an underscore, should be treated as private variables and used with caution.</li>
 <li>Folder names should be different from file names. Of course folders don’t have an extension so it’s more apparent that they are folders, but developers should use <code class="docutils literal notranslate"><span class="pre">-</span></code> separated names for folders, i.e. <code class="docutils literal notranslate"><span class="pre">common\templates\data-link</span></code>.</li>
 </ul>
-</div>
-</div>
-<div class="section" id="angular-related">
-<span id="angular-related"></span><h2>Angular-related<a class="headerlink" href="#angular-related" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Use <code class="docutils literal notranslate"><span class="pre">controllerAs</span></code> syntax instead of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> whenever possible and refrain from using <code class="docutils literal notranslate"><span class="pre">$rootscope</span></code></li>
-<li>Angular allows for users to define a module and later extend that module with new <strong>services</strong>, <strong>controllers</strong>, <strong>factories</strong>, <strong>providers</strong>, and so on. These other components should be defined in separate files to avoid having one single <code class="docutils literal notranslate"><span class="pre">*.app.js</span></code> file.</li>
-</ul>
-<div class="section" id="angular-developer-guides">
-<span id="angular-developer-guides"></span><h3>Angular Developer Guides<a class="headerlink" href="#angular-developer-guides" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/templates">View Templating</a></li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/databinding">Data Binding with Templates</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_databinding.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/module">Modules</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_modules.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/directive">Directives</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_directives.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/di">Dependency Injection</a></li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/services">Services and Factories</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_services.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/bootstrap">App Bootstrapping</a></li>
-</ul>
-</div>
-<div class="section" id="one-time-binding">
-<span id="one-time-binding"></span><h3>One-Time Binding<a class="headerlink" href="#one-time-binding" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Use one-time binding for improved performance.</li>
-<li>If you know an Angular expression won’t change its value after the first digest (e.g. displaying an ERMrest table name), prepend the binding with <code class="docutils literal notranslate"><span class="pre">::</span></code> to benefit from one-time binding. For more details about this, see the One-Time Binding section of the <a class="reference external" href="https://docs.angularjs.org/guide/expression">doc on Angular expressions</a>.</li>
-</ul>
-</div>
-<div class="section" id="common-config">
-<span id="common-config"></span><h3>Common Config<a class="headerlink" href="#common-config" title="Permalink to this headline">¶</a></h3>
-<p>We have a configuration app that is loaded into the DOM before each of our angular apps to do some setup before attaching the app instance. More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/config-app.md">Config app guide</a>.</p>
 </div>
 </div>
 <div class="section" id="error-handling">
@@ -1396,45 +1419,40 @@ NOTE: This was causing a race condition before when we were relying on the sessi
 </pre></div>
 </div>
 </div>
-<div class="section" id="guideline-for-exceptionhandler">
-<span id="guideline-for-exceptionhandler"></span><h3>Guideline for $exceptionHandler<a class="headerlink" href="#guideline-for-exceptionhandler" title="Permalink to this headline">¶</a></h3>
-<p>The angularJS global exception handler, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>, is used as the final catch for exceptions in the <code class="docutils literal notranslate"><span class="pre">chaise</span></code> applications. Any exceptions that need to be handled in a common way should throw and exception and leave it to the angular service to catch them. A function is registered with <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> to manage how we want general cases to be handled.</p>
-</div>
-<div class="section" id="special-case-uibmodal">
-<span id="special-case-uibmodal"></span><h3>Special Case: $uibModal<a class="headerlink" href="#special-case-uibmodal" title="Permalink to this headline">¶</a></h3>
-<p>The promise used to create an instance of $uibModal is rejected if the user dismisses the modal. Unless you have logic for when the modal is dismissed, there’s no need to attach an error callback to this promise. There’s also no need to add a <code class="docutils literal notranslate"><span class="pre">.catch()</span></code> because <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> will handle any errors in the success callback.</p>
-</div>
-<div class="section" id="guidelines-for-synchronous-try-catch-blocks">
-<span id="guidelines-for-synchronous-try-catch-blocks"></span><h3>Guidelines for synchronous try/catch blocks<a class="headerlink" href="#guidelines-for-synchronous-try-catch-blocks" title="Permalink to this headline">¶</a></h3>
-<p>This section is deprecated. We now rely on a registered function with the global exception handler in angular JS ($exceptionHandler).</p>
-<p>~~There are essentially two rules here:~~
-~~- always be specific about what error conditions you are catching; and~~
-~~- make sure that you throw unhandled exceptions.~~</p>
-</div>
-<div class="section" id="guideline-for-angular-components">
-<span id="guideline-for-angular-components"></span><h3>Guideline for Angular components<a class="headerlink" href="#guideline-for-angular-components" title="Permalink to this headline">¶</a></h3>
-<p>Angular has a common exception handler service, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>. For reference:</p>
+<div class="section" id="how-it-works">
+<span id="how-it-works"></span><h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
+<p>This section will provide more information on how the error handling has been implemented in Chaise.</p>
+<div class="section" id="exceptionhandler">
+<span id="exceptionhandler"></span><h4>$exceptionHandler<a class="headerlink" href="#exceptionhandler" title="Permalink to this headline">¶</a></h4>
+<p>AngularJS has a common exception handler service, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>. For reference:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://docs.angularjs.org/api/ng/service/$exceptionHandler">Official guide</a></li>
 <li><a class="reference external" href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#exception-handling">Unofficial style guide</a></li>
 </ul>
-<p>Chaise overrides the default implementation of the <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> service. All or almost all of Chaise should be implemented within the Angular framework and therefore uncaught exceptions from any function, callback, promise chain etc., will be caught and handled by the common <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> service function.</p>
+<p>The AngularJS global exception handler, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>, is used as the final catch for exceptions in the <code class="docutils literal notranslate"><span class="pre">chaise</span></code> applications. Any exceptions that need to be handled in a common way should throw the exception and leave it to the AngularJS service to catch them. A function is registered with <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> to manage how we want general cases to be handled.</p>
 </div>
-<div class="section" id="guidelines-for-non-angular-asynchronous-event-handling-functions">
-<span id="guidelines-for-non-angular-asynchronous-event-handling-functions"></span><h3>Guidelines for non-Angular asynchronous event-handling functions<a class="headerlink" href="#guidelines-for-non-angular-asynchronous-event-handling-functions" title="Permalink to this headline">¶</a></h3>
-<p>In general, we should only implement event-handling functions within the Angular framework. However, in the event that we must implement an event-handler outside of Angular, <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> will handle this.</p>
+<div class="section" id="special-case-uibmodal">
+<span id="special-case-uibmodal"></span><h4>Special Case: $uibModal<a class="headerlink" href="#special-case-uibmodal" title="Permalink to this headline">¶</a></h4>
+<p>The promise used to create an instance of $uibModal is rejected if the user dismisses the modal. Unless you have logic for when the modal is dismissed, there’s no need to attach an error callback to this promise. There’s also no need to add a <code class="docutils literal notranslate"><span class="pre">.catch()</span></code> because <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> will handle any errors in the success callback.</p>
 </div>
-<div class="section" id="guideline-for-window-onerror">
-<span id="guideline-for-window-onerror"></span><h3>Guideline for window.onerror<a class="headerlink" href="#guideline-for-window-onerror" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> handler may be called by the browser for many error conditions outside of the scope of our applications. There are also known browser compatibility issues at the time of writing this guideline.</p>
+<div class="section" id="synchronous-try-catch-blocks">
+<span id="synchronous-try-catch-blocks"></span><h4>Synchronous try/catch blocks<a class="headerlink" href="#synchronous-try-catch-blocks" title="Permalink to this headline">¶</a></h4>
+<p>Any unhandled exception will be handled by the <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>. So we should always be specific about what error conditions that we are catching; and make sure that you throw unhandled exceptions.</p>
 </div>
-<div class="section" id="references">
-<span id="references"></span><h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="non-angularjs-asynchronous-event-handling-functions">
+<span id="non-angularjs-asynchronous-event-handling-functions"></span><h4>non-AngularJS asynchronous event-handling functions<a class="headerlink" href="#non-angularjs-asynchronous-event-handling-functions" title="Permalink to this headline">¶</a></h4>
+<p>In general, we should only implement event-handling functions within the AngularJS framework. However, in the event that we must implement an event-handler outside of AngularJS, <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> will handle this.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> handler may be called by the browser for many error conditions outside of the scope of our applications. There are also known browser compatibility issues at the time of writing this guideline. The following are some references related to <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code>:</p>
 <ul class="simple">
 <li>This old article discussed issues with window.onerror. https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/</li>
 <li>This article summarizes window.onerror support for each browser and provide an example to wrap a function so the exception can be logged. Maybe we can use the same method? https://blog.sentry.io/2016/01/04/client-javascript-reporting-window-onerror.html</li>
 </ul>
 </div>
+</div>
+</div>
+<div class="section" id="config-app">
+<span id="config-app"></span><h2>Config App<a class="headerlink" href="#config-app" title="Permalink to this headline">¶</a></h2>
+<p>We have a configuration app that is loaded into the DOM before each of our angular apps to do some setup before attaching the app instance. More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/config-app.md">Config app guide</a>.</p>
 </div>
 </div>
 

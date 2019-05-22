@@ -1699,6 +1699,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn">.PseudoColumn</a><ul>
 <li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, facetObject, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
@@ -6496,6 +6497,7 @@ TODO should be removed in favor of inputDisabled</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn">.PseudoColumn</a><ul>
 <li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, facetObject, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
@@ -6563,15 +6565,29 @@ entity (inbound or p&amp;b association)</li>
 <div class="section" id="pseudocolumn-ispseudo-code-boolean-code">
 <span id="pseudocolumn-ispseudo-code-boolean-code"></span><h3>pseudoColumn.isPseudo : <code>boolean</code><a class="headerlink" href="#pseudocolumn-ispseudo-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>indicates that this object represents a PseudoColumn.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+comment"></a></p>
+</div>
+<div class="section" id="pseudocolumn-comment-code-object-code">
+<span id="pseudocolumn-comment-code-object-code"></span><h3>pseudoColumn.comment : <code>Object</code><a class="headerlink" href="#pseudocolumn-comment-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>The tooltip that should be used for this column.
+It will return the first applicable rule:</p>
+<ol class="simple">
+<li>comment that is defined on the sourceObject, use it.</li>
+<li>if aggregate and scalar use the “<function> &lt;col_displayname&gt;”</li>
+<li>if aggregate and entity use the “<function> &lt;table_displayname&gt;”</li>
+<li>In entity mode, return the table’s displayname.</li>
+<li>In scalar return the column’s displayname.</li>
+</ol>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+displayname"></a></p>
 </div>
 <div class="section" id="pseudocolumn-displayname-code-object-code">
 <span id="pseudocolumn-displayname-code-object-code"></span><h3>pseudoColumn.displayname : <code>Object</code><a class="headerlink" href="#pseudocolumn-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
-<p>The displayname that should be used for this column.
+<p>The tooltip that should be used for this column.
 It will return the first applicable rule:</p>
 <ol class="simple">
-<li>markdown_name that is defined on the sourceObject.</li>
-<li>if aggregate use the {function} col_displayname.</li>
+<li>comment that is defined on the sourceObject, use it.</li>
+<li>if aggregate and scalar use the “<function> &lt;col_displayname&gt;”</li>
+<li>if aggregate and entity use the “<function> &lt;table_displayname&gt;”</li>
 <li>In entity mode, return the table’s displayname.</li>
 <li>In scalar return the column’s displayname.</li>
 </ol>

@@ -21,5 +21,5 @@ init:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile init
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	echo -e "\nCopying (rsync) files to docs directory...\n"
+	@echo -e "\nCopying (rsync) files to docs directory...\n"
 	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete ./_build/html/ ../docs

@@ -7,7 +7,7 @@ echo -e "Removing existing source repos...\n"
 rm -rf ../repo-src
 
 DEFAULT_TAG=master
-REPO_TAGS=( DERIVAPY_TAG DERIVAQT_TAG DERIVAWEB_TAG ERMREST_TAG HATRAC_TAG ERMRESTJS_TAG CHAISE_TAG )
+REPO_TAGS=( DERIVAPY_TAG DERIVAQT_TAG DERIVAWEB_TAG ERMREST_TAG HATRAC_TAG ERMRESTJS_TAG CHAISE_TAG DERIVA_CATALOG_MANAGE_TAG )
 echo -e "Cloning the following repositories:\n"
 for TAG in ${REPO_TAGS[@]}; do
   export ${TAG}=${!TAG:-${DEFAULT_TAG}}
@@ -26,9 +26,11 @@ git clone -b ${ERMREST_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informati
 git clone -b ${HATRAC_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/hatrac ../repo-src/hatrac
 git clone -b ${ERMRESTJS_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/ermrestjs ../repo-src/ermrestjs
 git clone -b ${CHAISE_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/chaise ../repo-src/chaise
+git clone -b ${DERIVA_CATALOG_MANAGE_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-catalog-manage ../repo-src/deriva-catalog-manage
 
 echo -e "\nInstall code dependencies:\n"
 pip install --no-warn-script-location --user ../repo-src/deriva-py
+pip install --no-warn-script-location --user ../repo-src/deriva-catalog-manage
 
 echo -e "\nSymlink files and directories...\n"
 rm -f ./deriva-py && ln -sv ../repo-src/deriva-py/docs/ ./deriva-py
@@ -38,6 +40,7 @@ rm -f ./ermrest && ln -sv ../repo-src/ermrest/docs/ ./ermrest
 rm -f ./hatrac && ln -sv ../repo-src/hatrac/docs/ ./hatrac
 rm -f ./ermrestjs && ln -sv ../repo-src/ermrestjs/docs/ ./ermrestjs
 rm -f ./chaise && ln -sv ../repo-src/chaise/docs/ ./chaise
+rm -f ./deriva-catalog-manage && ln -sv ../repo-src/deriva-catalog-manage/docs/ ./deriva-catalog-manage
 
 cd ./users-guide/
 ln -sfv ../deriva-py/project-tutorial.md

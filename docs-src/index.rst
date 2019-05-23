@@ -31,6 +31,7 @@ DERIVA Documentation
   hatrac/index
   ermrestjs/index
   chaise/index
+  deriva-catalog-manage/index
    
 Indices and tables
 ==================

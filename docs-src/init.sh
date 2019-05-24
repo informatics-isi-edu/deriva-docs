@@ -30,7 +30,6 @@ git clone -b ${DERIVA_CATALOG_MANAGE_TAG} --depth 1 https://${GITHUB_AUTH}github
 
 echo -e "\nInstall code dependencies:\n"
 pip install --no-warn-script-location --user ../repo-src/deriva-py
-pip install --no-warn-script-location --user ../repo-src/deriva-catalog-manage
 
 echo -e "\nSymlink files and directories...\n"
 rm -f ./deriva-py && ln -sv ../repo-src/deriva-py/docs/ ./deriva-py

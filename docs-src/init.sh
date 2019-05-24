@@ -28,6 +28,10 @@ git clone -b ${ERMRESTJS_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informa
 git clone -b ${CHAISE_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/chaise ../repo-src/chaise
 git clone -b ${DERIVA_CATALOG_MANAGE_TAG} --depth 1 https://${GITHUB_AUTH}github.com/informatics-isi-edu/deriva-catalog-manage ../repo-src/deriva-catalog-manage
 
+echo -e "\nInstall code dependencies:\n"
+pip install --no-warn-script-location --user ../repo-src/deriva-py
+pip install --no-warn-script-location --user ../repo-src/deriva-catalog-manage
+
 echo -e "\nSymlink files and directories...\n"
 rm -f ./deriva-py && ln -sv ../repo-src/deriva-py/docs/ ./deriva-py
 rm -f ./deriva-qt && ln -sv ../repo-src/deriva-qt/docs/ ./deriva-qt

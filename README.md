@@ -30,7 +30,7 @@ The manual build process only works on Linux or MacOS operating systems.
 2. Install the `pandoc` dependency for Jupyter Notebook conversion support. Follow the instructions for your platform [here](http://pandoc.org/installing.html).
 3. Install Python dependencies via `pip` using the following command:
     ```
-    pip3 install --user -r requirements.txt .
+    pip3 install --user -r requirements.txt
     ``` 
 4. Run: `make -C ./docs-src html` from the cloned repo root directory.
 5. Run: `commit.sh` to update only the built documentation to the live 

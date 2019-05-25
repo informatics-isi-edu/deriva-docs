@@ -62,12 +62,14 @@ Run the following command on the docker image to automatically build and
 publish the documentation as the GitHub user `isi-isrd-dev` from the master 
 [`deriva-docs`](https://github.com/informatics-isi-edu/deriva-docs) branch. 
 
-* Note that in the default usage below, the _required_ `GITHUB_TOKEN` 
+* Note that in the default usage below, the `GITHUB_TOKEN` 
 environment variable must be a valid token with read/write scopes for 
 the default GitHub user `isi-isrd-dev` and the 
 [`deriva-docs`](https://github.com/informatics-isi-edu/deriva-docs) repo.
+* The `-e GITHUB_TOKEN=XXX` may be omitted to only build the docs without 
+the subsequent commit/push to GitHub.
 
 
 ```sh
-docker run -it -e GITHUB_TOKEN=<token> isrddev/deriva-docs build
+docker run -it -e GITHUB_TOKEN=XXX isrddev/deriva-docs build
 ```

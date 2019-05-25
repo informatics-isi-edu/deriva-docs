@@ -1170,19 +1170,26 @@
 <span class="n">chaise_tags</span><span class="o">.</span><span class="n">catalog_config</span> <span class="o">=</span> <span class="s1">&#39;tag:isrd.isi.edu,2019:catalog-config&#39;</span>
 
 
-<div class="viewcode-block" id="DerivaConfigError"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaConfigError">[docs]</a><span class="k">class</span> <span class="nc">DerivaConfigError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DerivaConfigError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
 
 
 <div class="viewcode-block" id="DerivaCatalogConfigure"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure">[docs]</a><span class="k">class</span> <span class="nc">DerivaCatalogConfigure</span><span class="p">(</span><span class="n">DerivaCatalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DerovaCatalogConfigure extends DerivaCatalog by providing methods for creating a default configuration for a</span>
+<span class="sd">    catalog.</span>
+
+<span class="sd">    The only method of interest in this class is configure_baseline_catalog.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="n">catalog_id</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_make_schema_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">DerivaSchemaConfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DerivaCatalogConfigure.configure_ermrest_client"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.configure_ermrest_client">[docs]</a>    <span class="k">def</span> <span class="nf">configure_ermrest_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groups</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_configure_ermrest_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groups</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set up ermrest_client table so that it has readable names and uses the display name of the user as the row name.</span>
 <span class="sd">        :param groups:</span>
@@ -1210,7 +1217,7 @@
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_annotations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">ermrest_client</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-        <span class="k">return</span></div>
+        <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_configure_www_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1259,8 +1266,8 @@
 
         <span class="k">return</span> <span class="bp">self</span>
 
-<div class="viewcode-block" id="DerivaCatalogConfigure.set_core_groups"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.set_core_groups">[docs]</a>    <span class="k">def</span> <span class="nf">set_core_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">admin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">curator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_set_core_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">admin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">curator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Look in the catalog to get the group IDs for the four core groups used in the baseline configuration. There are</span>
 <span class="sd">        three options:  1) core group name can be provided explicitly, 2) group name can be formed from a catalog</span>
@@ -1312,9 +1319,9 @@
             <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DerivaConfigError</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Group </span><span class="si">{}</span><span class="s1"> not defined&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
-        <span class="k">return</span> <span class="n">groups</span></div>
+        <span class="k">return</span> <span class="n">groups</span>
 
-<div class="viewcode-block" id="DerivaCatalogConfigure.configure_group_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.configure_group_table">[docs]</a>    <span class="k">def</span> <span class="nf">configure_group_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groups</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_configure_group_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groups</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a table in the public schema for tracking mapping of group names.</span>
 <span class="sd">        :param groups:</span>
@@ -1408,7 +1415,7 @@
                 <span class="k">raise</span>
         <span class="n">table</span> <span class="o">=</span> <span class="n">DerivaTableConfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;Catalog_Group&#39;</span><span class="p">)</span>
         <span class="n">table</span><span class="o">.</span><span class="n">configure_table_defaults</span><span class="p">(</span><span class="n">set_policy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">return</span></div>
+        <span class="k">return</span>
 
 <div class="viewcode-block" id="DerivaCatalogConfigure.configure_baseline_catalog"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.configure_baseline_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                    <span class="n">catalog_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1417,25 +1424,27 @@
                                    <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Put catalog into standard configuration which includes:</span>
-<span class="sd">        1) Setting default display mode to be to turn underscores to spaces.</span>
-<span class="sd">        2) Set access control assuming admin, curator, writer, and reader groups.</span>
-<span class="sd">        3) Configure ermrest_client to have readable names.</span>
 
-<span class="sd">        :param catalog_name:</span>
-<span class="sd">        :param admin: Name of the admin group.  Defaults to catalog-admin</span>
+<span class="sd">        1. Setting default display mode to be to turn underscores to spaces.</span>
+<span class="sd">        2. Set access control assuming admin, curator, writer, and reader groups.</span>
+<span class="sd">        3. Configure ermrest_client to have readable names.</span>
+<span class="sd">        4. Create a schema called *WWW* and create a *Page* table in that schema configured to display web-page like</span>
+<span class="sd">        content.</span>
+
+<span class="sd">        :param catalog_name: Name to use when looking up catalog groups.  Defaults to host name if not provided.</span>
+<span class="sd">        :param admin: Name of the admin group.  Defaults to catalog-admin, where catalog is the catalog_name</span>
 <span class="sd">        :param curator: Name of the curator group. Defaults to catalog-curator</span>
 <span class="sd">        :param writer: Name of the writer group. Defaults to catalog-writer</span>
 <span class="sd">        :param reader: Name of the reader group. Defaults to catalog-reader</span>
 <span class="sd">        :param set_policy: Set policy for catalog to support reader/writer/curator/admin groups.</span>
 <span class="sd">        :param public: Set to true if anonymous read access should be allowed.</span>
-<span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">catalog_name</span><span class="p">:</span>
                 <span class="c1"># If catalog name is not provided, default to the host name of the host.</span>
                 <span class="n">catalog_name</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">())</span><span class="o">.</span><span class="n">hostname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_core_groups</span><span class="p">(</span><span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span>
-                                          <span class="n">admin</span><span class="o">=</span><span class="n">admin</span><span class="p">,</span> <span class="n">curator</span><span class="o">=</span><span class="n">curator</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="n">reader</span><span class="p">)</span>
+            <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_core_groups</span><span class="p">(</span><span class="n">catalog_name</span><span class="o">=</span><span class="n">catalog_name</span><span class="p">,</span>
+                                           <span class="n">admin</span><span class="o">=</span><span class="n">admin</span><span class="p">,</span> <span class="n">curator</span><span class="o">=</span><span class="n">curator</span><span class="p">,</span> <span class="n">writer</span><span class="o">=</span><span class="n">writer</span><span class="p">,</span> <span class="n">reader</span><span class="o">=</span><span class="n">reader</span><span class="p">)</span>
 
             <span class="c1"># Record configuration of catalog so we can retrieve when we configure tables later on.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">chaise_tags</span><span class="o">.</span><span class="n">catalog_config</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">catalog_name</span><span class="p">,</span> <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="n">groups</span><span class="p">}</span>
@@ -1455,14 +1464,12 @@
                     <span class="s2">&quot;enumerate&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
                 <span class="p">})</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">configure_ermrest_client</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">configure_group_table</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_configure_www_schema</span><span class="p">()</span>
-
-        <span class="k">return</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configure_ermrest_client</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configure_group_table</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_configure_www_schema</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="update_group_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.update_group_table">[docs]</a><span class="k">def</span> <span class="nf">update_group_table</span><span class="p">(</span><span class="n">catalog</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">update_group_table</span><span class="p">(</span><span class="n">catalog</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">group_urls</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
         <span class="n">guid</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">link</span> <span class="o">=</span> <span class="s1">&#39;https://app.globus.org/groups/&#39;</span> <span class="o">+</span> <span class="n">guid</span>
@@ -1473,18 +1480,24 @@
     <span class="c1"># Attempt to add URL.  This can go away once we have URL entered by ERMrest.</span>
     <span class="n">pb</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
         <span class="p">[{</span><span class="s1">&#39;RID&#39;</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;RID&#39;</span><span class="p">],</span> <span class="s1">&#39;URL&#39;</span><span class="p">:</span> <span class="n">group_urls</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pb</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">entities</span><span class="p">()]</span>
-    <span class="p">)</span></div>
+    <span class="p">)</span>
 
 
-<div class="viewcode-block" id="DerivaSchemaConfigure"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaSchemaConfigure">[docs]</a><span class="k">class</span> <span class="nc">DerivaSchemaConfigure</span><span class="p">(</span><span class="n">DerivaSchema</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DerivaSchemaConfigure</span><span class="p">(</span><span class="n">DerivaSchema</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a shim class that is used to make sure that a DerivaCatalogConfigure returns a DerivaTableConfigure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DerivaSchemaConfigure</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_make_table_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">DerivaTableConfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">DerivaTableConfigure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="DerivaTableConfigure"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure">[docs]</a><span class="k">class</span> <span class="nc">DerivaTableConfigure</span><span class="p">(</span><span class="n">DerivaTable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used to create a default configuration for a Deriva Table.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DerivaTableConfigure</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
         <span class="k">return</span>
@@ -1579,14 +1592,17 @@
 <div class="viewcode-block" id="DerivaTableConfigure.configure_table_defaults"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.configure_table_defaults">[docs]</a>    <span class="k">def</span> <span class="nf">configure_table_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_policy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reset_visible_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function adds the following basic configuration details to an existing table:</span>
-<span class="sd">        1) Creates a self service modification policy in which creators can update update any row they create.</span>
+
+<span class="sd">        1. Creates a self service modification policy in which creators can update update any row they create.</span>
 <span class="sd">           Optionally, an Owner column can be provided, which allows the creater of a row to delegate row ownership to</span>
 <span class="sd">           a specific group.</span>
-<span class="sd">        2) Adds display annotations and foreign key declarations so that system columns RCB, RMB display in a user</span>
+<span class="sd">        2. Adds display annotations and foreign key declarations so that system columns RCB, RMB display in a user</span>
 <span class="sd">           friendly way.</span>
+<span class="sd">        3. Adds a visible_foreign_keys and visible_columns annotation.</span>
+
 <span class="sd">        :param set_policy: If true, then configure the table to have a self service policy</span>
 <span class="sd">        :param public: Make table acessible without logging in.</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :param reset_visible_columns: Overwrite any existing visible_columns annotation.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">catalog_config</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
@@ -1626,9 +1642,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="s1">&#39;RCT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">chaise_tags</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creation Time&#39;</span><span class="p">}})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="s1">&#39;RMT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">chaise_tags</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified Time&#39;</span><span class="p">}})</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_default_visible_columns</span><span class="p">(</span><span class="n">really</span><span class="o">=</span><span class="n">reset_visible_columns</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_default_visible_columns</span><span class="p">(</span><span class="n">really</span><span class="o">=</span><span class="n">reset_visible_columns</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

@@ -1226,23 +1226,23 @@
             <span class="s1">&#39;propagate&#39;</span><span class="p">:</span> <span class="kc">False</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaModel&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="c1">#      &#39;level&#39;: &#39;DEBUG&#39;,</span>
-        <span class="c1">#      &#39;filters&#39;: [&#39;model_filter&#39;]</span>
+            <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;,</span>
+            <span class="c1">#   &#39;filters&#39;: [&#39;model_filter&#39;]</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaCatalog&#39;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;,</span>
+            <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;,</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaColumnMap&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1">#  &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaSchema&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span>
+         <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaVisibleSources&#39;</span><span class="p">:</span> <span class="p">{</span>
-         <span class="c1">#      &#39;level&#39;: &#39;DEBUG&#39;</span>
+            <span class="c1">#      &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaSourceSpec&#39;</span><span class="p">:</span> <span class="p">{</span>
-          <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;</span>
+            <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaTable&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;</span>
@@ -1251,7 +1251,7 @@
             <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaKey&#39;</span><span class="p">:</span> <span class="p">{</span>
-           <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;</span>
+            <span class="c1">#     &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaForeignKey&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;,</span>
@@ -1261,6 +1261,7 @@
 <span class="p">}</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">logger_config</span><span class="p">)</span>
+
 
 <span class="k">class</span> <span class="nc">DerivaLogging</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1349,15 +1350,16 @@
         <span class="k">return</span> <span class="n">element_iterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lst</span><span class="p">)</span>
 
 
-
 <span class="k">class</span> <span class="nc">DerivaModel</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Representation of a deriva model. Is primarly used as a resource manager to group catalog operations so as to</span>
-<span class="sd">    minimize networ round trips.  For example:</span>
+<span class="sd">    Representation of a deriva model. Is primarily used as a resource manager to group catalog operations so as to</span>
+<span class="sd">    minimize network round trips.  For example:</span>
 
+<span class="sd">    ``</span>
 <span class="sd">    with DerivaModel(catalog)</span>
 <span class="sd">       table = schema.create_table(&#39;MyTable&#39;,[])</span>
 <span class="sd">       table.display = &#39;My Nice Table&#39;</span>
+<span class="sd">    ``</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">contexts</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">DerivaContext</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)}</span>
@@ -1526,23 +1528,44 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get catalog host.</span>
+<span class="sd">        :return: Hostname of the current catalog</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">())</span><span class="o">.</span><span class="n">hostname</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">catalog_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get catalog id</span>
+<span class="sd">        :return: catalog identifier</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="o">.</span><span class="n">catalog_id</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">server_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        URI for the catalog server</span>
+<span class="sd">        :return: server uri</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return an interable for the schemas contained in the the catalog. The return value can be indexed by</span>
+<span class="sd">        schema name, or iterated over.</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ElementList</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">catalog_model</span><span class="p">()</span><span class="o">.</span><span class="n">schemas</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">acls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the ACLs associated with this catalog</span>
+<span class="sd">        :return: catalog ACLs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">catalog_model</span><span class="p">()</span><span class="o">.</span><span class="n">acls</span>
 
@@ -1606,6 +1629,14 @@
                 <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;schema </span><span class="si">{}</span><span class="s1"> not defined&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schema_name</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="DerivaCatalog.create_schema"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaCatalog.create_schema">[docs]</a>    <span class="k">def</span> <span class="nf">create_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">acls</span><span class="o">=</span><span class="p">{},</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new schema in this catalog.</span>
+<span class="sd">        :param schema_name: The name of the schema</span>
+<span class="sd">        :param comment: A comment for the schema</span>
+<span class="sd">        :param acls: ACLs for the schema</span>
+<span class="sd">        :param annotations: Schema annotations.</span>
+<span class="sd">        :return: A DerivaSchema object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;name: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_instance</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span>
                                           <span class="n">em</span><span class="o">.</span><span class="n">Schema</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
@@ -1759,7 +1790,7 @@
                      <span class="n">file_pattern</span><span class="o">=</span><span class="s1">&#39;.*&#39;</span><span class="p">,</span>
                      <span class="n">extensions</span><span class="o">=</span><span class="p">[]):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create an asset table.  This funcation creates a new table that has the standard asset columns in addition</span>
+<span class="sd">        Create an asset table.  This function creates a new table that has the standard asset columns in addition</span>
 <span class="sd">        to columns provided by the caller.</span>
 <span class="sd">        :param table_name:</span>
 <span class="sd">        :param column_defs:</span>
@@ -1769,7 +1800,7 @@
 <span class="sd">        :param acls:</span>
 <span class="sd">        :param acl_bindings:</span>
 <span class="sd">        :param annotations:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :return: A DerivaTable object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;table_name: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
@@ -1811,17 +1842,17 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a vocabulary table that can be used to reference externally defined terms. This funcion provides the</span>
 <span class="sd">        option to add additional columns to the table, as well as set access control and additional table annotations.</span>
-<span class="sd">        :param vocab_name:</span>
+<span class="sd">        :param vocab_name: Name of the vocabulary table to be created.</span>
 <span class="sd">        :param curie_template: Default shortform name for the term, in the form of &#39;NAMESPACE:{RID}&#39;,</span>
 <span class="sd">        :param uri_template:</span>
-<span class="sd">        :param column_defs:</span>
+<span class="sd">        :param column_defs: Additional columns to be added to the vocabulary table.</span>
 <span class="sd">        :param key_defs:</span>
 <span class="sd">        :param fkey_defs:</span>
-<span class="sd">        :param comment:</span>
+<span class="sd">        :param comment: Comment string.</span>
 <span class="sd">        :param acls:</span>
 <span class="sd">        :param acl_bindings:</span>
 <span class="sd">        :param annotations:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :return: A DerivaTable object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_table</span><span class="p">(</span>
             <span class="n">em</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">define_vocabulary</span><span class="p">(</span><span class="n">vocab_name</span><span class="p">,</span> <span class="n">curie_template</span><span class="p">,</span> <span class="n">uri_template</span><span class="o">=</span><span class="n">uri_template</span><span class="p">,</span>
@@ -1833,14 +1864,32 @@
 
 <div class="viewcode-block" id="DerivaSchema.validate"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaSchema.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Validate the annotations associated with the tables in this schema.</span>
-<span class="sd">        :return:</span>
+<span class="sd">        Validate the annotations associated with the tables in this schema.  Look at all visable column,</span>
+<span class="sd">        visible foreign key, display and other configurable fields associated with the catalog and check to ensure</span>
+<span class="sd">        they use valid column and key definitions.  Some limited syntax checking is done as well.  Throws an</span>
+<span class="sd">        exception if an invalid value is found.</span>
+<span class="sd">        :return: True if all values are valid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">:</span>
-            <span class="n">t</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span></div></div>
+            <span class="n">t</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">DerivaColumnMap</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">,</span> <span class="n">OrderedDict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The DerivaColumnMap class is used to define a mapping between columns.  This mapping is used to define how</span>
+<span class="sd">    columns are renamed.  A column map is an ordered dictionary that reflects the order that the columns should</span>
+<span class="sd">    be added to the table.  The key of the dictionary is the *current* column name.  The value may take several forms:</span>
+
+<span class="sd">    * A string which is the new name of the column.  In this case, all attributes of the column are preserved.</span>
+
+<span class="sd">    * A Deriva DerivaColumnDef or ermrest_model Column object, which provides all of the values for the new column.</span>
+
+<span class="sd">    * A dictionary that can specify standard column attributes (name, type, nullok,</span>
+<span class="sd">    default, comment, acls, acl_bindings). In addition the attribute **fill* can be provided, which is a value to</span>
+<span class="sd">    be used to fill in missing values when mapping a column that has nullok=True to a column that has nullok=Falsue</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">column_map</span><span class="p">,</span> <span class="n">dest_table</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dest_table</span> <span class="o">=</span> <span class="n">dest_table</span>
@@ -1891,9 +1940,9 @@
             <span class="k">except</span> <span class="n">DerivaCatalogError</span><span class="p">:</span>
                 <span class="c1"># Column is new, so create a default definition for it. If value is a string, then its the type.</span>
                 <span class="n">col</span> <span class="o">=</span> <span class="n">DerivaColumn</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="s1">&#39;define&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
-                    <span class="s1">&#39;table&#39;</span><span class="p">:</span> <span class="n">dest_table</span><span class="p">,</span>
-                    <span class="o">**</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">v</span><span class="p">)})</span>
+                                      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span>
+                                      <span class="s1">&#39;table&#39;</span><span class="p">:</span> <span class="n">dest_table</span><span class="p">,</span>
+                                      <span class="o">**</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span> <span class="k">else</span> <span class="n">v</span><span class="p">)})</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">k</span>
 
             <span class="c1"># We have a column remap in the form of col: new_name or col: dictionary</span>
@@ -2446,7 +2495,11 @@
         <span class="k">return</span> <span class="bp">self</span>
 
 
-<span class="k">class</span> <span class="nc">DerivaColumn</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaColumn"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn">[docs]</a><span class="k">class</span> <span class="nc">DerivaColumn</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that represents columns in Deriva catalog.  The same class is used for columns that are being defined</span>
+<span class="sd">    as well as columns that have already been defined.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">class</span> <span class="nc">_DerivaColumnDef</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">nullok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">acls</span><span class="o">=</span><span class="p">{},</span>
                      <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
@@ -2531,14 +2584,14 @@
             <span class="p">]</span>
         <span class="p">)</span>
 
-    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DerivaColumn.define"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.define">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">define</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span>
                <span class="n">nullok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">acls</span><span class="o">=</span><span class="p">{},</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span>
                <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
         <span class="k">return</span> <span class="n">DerivaColumn</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">nullok</span><span class="o">=</span><span class="n">nullok</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">fill</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">,</span>
-                            <span class="n">acls</span><span class="o">=</span><span class="n">acls</span><span class="p">,</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span><span class="p">,</span> <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                            <span class="n">acls</span><span class="o">=</span><span class="n">acls</span><span class="p">,</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span><span class="p">,</span> <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2611,7 +2664,7 @@
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
             <span class="n">m</span><span class="o">.</span><span class="n">column_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DerivaColumn.convert_def"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.convert_def">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">convert_def</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">column_def</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">DerivaColumn</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
                             <span class="n">column_def</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">column_def</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
@@ -2619,38 +2672,38 @@
                             <span class="n">comment</span><span class="o">=</span><span class="n">column_def</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
                             <span class="n">acls</span><span class="o">=</span><span class="n">column_def</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="n">column_def</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span>
                             <span class="n">annotations</span><span class="o">=</span><span class="n">column_def</span><span class="o">.</span><span class="n">annotations</span>
-                            <span class="p">)</span>
+                            <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaColumn.definition"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.definition">[docs]</a>    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Column will either be a DerivaColumn or an ermrest column.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">definition</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span></div>
 
-    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaColumn.update_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.update_table">[docs]</a>    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">catalog</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaColumn.create"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">column</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">create_column</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span>
-                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
+                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span></div>
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaColumn.delete"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaColumn.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a single column.</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">delete_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">delete_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
 
 
 
-<span class="k">class</span> <span class="nc">DerivaKey</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaKey"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey">[docs]</a><span class="k">class</span> <span class="nc">DerivaKey</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">_DerivaKeyDef</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                      <span class="n">table</span><span class="p">,</span>
@@ -2785,53 +2838,53 @@
     <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">chaise_tags</span><span class="o">.</span><span class="n">display</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DerivaKey.define"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.define">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">define</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="k">return</span> <span class="n">DerivaKey</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DerivaKey</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">annotations</span><span class="p">,</span> <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DerivaKey.convert_def"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.convert_def">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">convert_def</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">key_def</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key_def</span><span class="p">,</span> <span class="n">em</span><span class="o">.</span><span class="n">Key</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="s1">&#39;convert_def must have em.Key as an argument&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">DerivaKey</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
                          <span class="n">key_def</span><span class="o">.</span><span class="n">unique_columns</span><span class="p">,</span>
                          <span class="n">name</span><span class="o">=</span><span class="n">key_def</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                         <span class="n">comment</span><span class="o">=</span><span class="n">key_def</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="n">key_def</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+                         <span class="n">comment</span><span class="o">=</span><span class="n">key_def</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="n">key_def</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaKey.update_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.update_table">[docs]</a>    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">catalog</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">update_name</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">update_name</span><span class="p">(</span><span class="n">table</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_key_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">DerivaColumn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">column_name</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaKey.create"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">create_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span></div>
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaKey.delete"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
                 <span class="n">m</span><span class="o">.</span><span class="n">key_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
         <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DerivaKeyError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaKey.definition"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaKey.definition">[docs]</a>    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Key will either be a DerivaKey or an ermrest key.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">DerivaForeignKey</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaForeignKey"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey">[docs]</a><span class="k">class</span> <span class="nc">DerivaForeignKey</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">_DerivaForeignKeyDef</span><span class="p">:</span>
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                      <span class="n">table</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span>
@@ -2948,7 +3001,7 @@
             <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">annotations: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
         <span class="p">])</span>
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DerivaForeignKey.define"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.define">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">define</span><span class="p">(</span>
             <span class="n">columns</span><span class="p">,</span>
             <span class="n">dest_table</span><span class="p">,</span> <span class="n">dest_columns</span><span class="p">,</span>
@@ -2966,15 +3019,15 @@
                                 <span class="n">on_update</span><span class="o">=</span><span class="n">on_update</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">on_delete</span><span class="p">,</span>
                                 <span class="n">acls</span><span class="o">=</span><span class="n">acls</span><span class="p">,</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="n">acl_bindings</span><span class="p">,</span>
                                 <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span><span class="p">,</span>
-                                <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="n">define</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaForeignKey.update_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.update_table">[docs]</a>    <span class="k">def</span> <span class="nf">update_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">catalog</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">[</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="o">.</span><span class="n">update_name</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="o">.</span><span class="n">update_name</span><span class="p">(</span><span class="n">table</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3068,7 +3121,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="o">.</span><span class="n">on_delete</span>
 
 
-    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="DerivaForeignKey.convert_def"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.convert_def">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">convert_def</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">fkey_def</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fkey_def</span><span class="p">,</span> <span class="n">em</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="s1">&#39;convert_def must have em.ForeignKey as an argument&#39;</span><span class="p">)</span>
@@ -3080,15 +3133,15 @@
                                 <span class="n">comment</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
                                 <span class="n">on_update</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">on_update</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">on_delete</span><span class="p">,</span>
                                 <span class="n">acls</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span>
-                                <span class="n">annotations</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+                                <span class="n">annotations</span><span class="o">=</span><span class="n">fkey_def</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaForeignKey.create"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span> <span class="k">as</span> <span class="n">m</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">)</span><span class="o">.</span><span class="n">create_fkey</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">definition</span><span class="p">())</span>
-            <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">referenced_table</span><span class="p">)</span><span class="o">.</span><span class="n">referenced_by</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">referenced_table</span><span class="p">)</span><span class="o">.</span><span class="n">referenced_by</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaForeignKey.delete"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">referenced_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_table</span>
         <span class="n">column</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;demoting visible column </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">)</span>
@@ -3103,14 +3156,14 @@
             <span class="n">m</span><span class="o">.</span><span class="n">foreign_key_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">ermrest_catalog</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">table_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaForeignKey.definition"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.definition">[docs]</a>    <span class="k">def</span> <span class="nf">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Key will either be a DerivaForeignKey or an ermrest fkey.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span><span class="o">.</span><span class="n">definition</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkey</span></div></div>
 
 
 <div class="viewcode-block" id="DerivaTable"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaTable">[docs]</a><span class="k">class</span> <span class="nc">DerivaTable</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
@@ -3873,7 +3926,7 @@
 <span class="sd">        :param acls:</span>
 <span class="sd">        :param acl_bindings:</span>
 <span class="sd">        :param annotations:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :return: The new table</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;schema_name </span><span class="si">%s</span><span class="s1"> dest_table </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
 
@@ -3935,6 +3988,21 @@
                    <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span>
                    <span class="n">annotations</span><span class="o">=</span><span class="p">{}</span>
                    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move a table, renaming and inserting new columns.</span>
+
+<span class="sd">        :param schema_name: Schema for new table</span>
+<span class="sd">        :param table_name: Name of new table</span>
+<span class="sd">        :param delete: Delete the origional table.  Defaults to True</span>
+<span class="sd">        :param column_map: A DerivaColumnMap that defines and column renaming or insertions.</span>
+<span class="sd">        :param key_defs: New keys that should be defined in the target table</span>
+<span class="sd">        :param fkey_defs:</span>
+<span class="sd">        :param comment:</span>
+<span class="sd">        :param acls:</span>
+<span class="sd">        :param acl_bindings:</span>
+<span class="sd">        :param annotations:</span>
+<span class="sd">        :return: New DerivaTable object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">column_map</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="n">DerivaModel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">):</span>
@@ -4118,10 +4186,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a foreign key link from the specified column to the target table and column.</span>
 <span class="sd">        :param column_name: Column or list of columns in current table which will hold the FK</span>
-<span class="sd">        :param target_table:</span>
-<span class="sd">        :param target_column:</span>
-<span class="sd">        :param create_column:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :param target_table: Target table to link to.</span>
+<span class="sd">        :param target_column: Column to link the table on.  Defaults to *RID*</span>
+<span class="sd">        :param create_column: Create a new column for the foreign key.  Name defaults to the target table name.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">column_name</span><span class="p">:</span>
@@ -4196,11 +4263,13 @@
 <div class="viewcode-block" id="DerivaTable.is_pure_binary"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaTable.is_pure_binary">[docs]</a>    <span class="k">def</span> <span class="nf">is_pure_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check to see if the table has the propoerties of a pure binary association.</span>
+
 <span class="sd">          1. It only has two foreign keys,</span>
 <span class="sd">          2. There is a uniqueness constraint on the two keys.</span>
 <span class="sd">          3. NULL values are not allowed in the foreign keys.</span>
+
 <span class="sd">        :param table:</span>
-<span class="sd">        :return:</span>
+<span class="sd">        :return: Boolean</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># table has only two foreign_key constraints.</span>
         <span class="c1"># Each constraint is over only one column.</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Managing Data in DERIVA &mdash; DERIVA Docs  documentation</title>
+  <title>Managing Data in DERIVA with deriva-client &mdash; DERIVA Docs  documentation</title>
   
 
   
@@ -143,12 +143,32 @@
 <li class="toctree-l2"><a class="reference internal" href="using-chaise.html#record-page">Record page</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Managing Data in DERIVA</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#desktop-guis-for-authenticating-and-uploading-data-deriva-qt">Desktop GUIs for Authenticating and Uploading Data (deriva-qt)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#commandline-interface-for-interacting-with-data-deriva-py">Commandline Interface for interacting with Data (deriva-py)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#datapath-module-deriva-py"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Managing Data in DERIVA with <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installed-applications">Installed Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-interface-cli-applications">Command-Line Interface (CLI) applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graphical-user-interface-gui-applications">Graphical User Interface (GUI) applications</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#installer-packages-for-windows-and-macosx">Installer packages for Windows and MacOSX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-deriva-client-from-pypi-via-pip">Installing <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> from PyPi via <code class="docutils literal notranslate"><span class="pre">pip</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installation-prerequisites">Installation Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-quickstart">Installation Quickstart</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mac-linux">Mac/Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#important-note-for-macosx-users-running-python-3-5-x-with-pip-version-9-0-3">Important Note: For MacOSX users running Python 3.5.x with pip version &lt; 9.0.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#important-note-python-virtual-environments-versus-user-environments">IMPORTANT NOTE: Python <em>virtual environments</em> versus <em>user environments</em></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#installation-procedure">Installation Procedure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#installation-sequence">Installation Sequence</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#managing-data-with-the-datapath-api-deriva-py">Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project-tutorial.html">Starting a Deriva-Py Data Management Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="project-tutorial.html#python-client-bindings">Python Client Bindings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="project-tutorial.html#your-project-specific-groups">Your Project-Specific Groups</a><ul>
@@ -468,15 +488,9 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../deriva-qt/index.html">Desktop Command-line Clients (deriva-qt)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-qt/install.html">Installing Desktop Clients</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-qt/install.html#download-the-packages">Download the packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-qt/install.html#by-desktop-for-windows-macos">By desktop (for Windows / MacOS)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-qt/install.html#install-from-source-linux">Install from source (Linux)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-qt/install.html#fedora">Fedora</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-qt/install.html#windows-10">Windows 10</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../deriva-qt/index.html">Desktop GUI Applications (deriva-qt)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-qt/auth.html">Using <code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code> to authenticate to DERIVA systems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-qt/auth.html#tbd">TBD</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../deriva-qt/uploading.html">Uploading files via DERIVA-Upload and DERIVA-Auth</a><ul>
@@ -497,45 +511,15 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../deriva-web/index.html">deriva-web</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-web/config.html">deriva Configuration Guide</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/config.html#deriva-config-json">deriva_config.json</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/config.html#wsgi-deriva-conf">wsgi_deriva.conf</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-web/export/api.html">deriva/export REST API reference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/api.html#exporting-individual-files"><strong>Exporting individual files</strong></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#export-file-s">Export file(s)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-exported-file-s">Retrieve exported file(s)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-log-file-for-exported-file-s">Retrieve log file for exported file(s)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/api.html#exporting-bags"><strong>Exporting Bags</strong></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#export-bag">Export bag</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-an-exported-bag">Retrieve an exported bag</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-log-file-for-exported-bag">Retrieve log file for exported bag</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-web/export/integration.html">Chaise Integration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#export">Export</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#root-object">root (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#template-object"><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-object"><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-details">Output details</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#source-object"><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#destination-object"><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#supported-output-formats">Supported output formats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-format-details">Output format details</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-1">Example 1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-2">Example 2</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-3">Example 3</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-4">Example 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deriva-catalog-manage/index.html">Catalog Management Command-line Clients and API (deriva-catalog-manage)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/overview.html">TBD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-catalog-config.html">TBD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-catalog-dump.html">TBD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-csv.html">TBD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.html">deriva.utils.catalog package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.components.html">deriva.utils.catalog.components package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.manage.html">deriva.utils.catalog.manage package</a></li>
 </ul>
 </li>
 </ul>
@@ -1077,15 +1061,45 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../deriva-catalog-manage/index.html">Catalog Management Command-line Clients and API (deriva-catalog-manage)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/overview.html">TBD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-catalog-config.html">TBD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-catalog-dump.html">TBD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/cli/deriva-csv.html">TBD</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.html">deriva.utils.catalog package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.components.html">deriva.utils.catalog.components package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deriva-catalog-manage/api/deriva.utils.catalog.manage.html">deriva.utils.catalog.manage package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deriva-web/index.html">Auxiliary web services for DERIVA (deriva-web)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-web/config.html"><code class="docutils literal notranslate"><span class="pre">deriva-web</span></code> Configuration Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/config.html#deriva-config-json">deriva_config.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/config.html#wsgi-deriva-conf">wsgi_deriva.conf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-web/export/api.html">deriva/export REST API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/api.html#exporting-individual-files"><strong>Exporting individual files</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#export-file-s">Export file(s)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-exported-file-s">Retrieve exported file(s)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-log-file-for-exported-file-s">Retrieve log file for exported file(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/api.html#exporting-bags"><strong>Exporting Bags</strong></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#export-bag">Export bag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-an-exported-bag">Retrieve an exported bag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/api.html#retrieve-log-file-for-exported-bag">Retrieve log file for exported bag</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../deriva-web/export/integration.html">Chaise Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#export">Export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#root-object">root (object)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#template-object"><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-object"><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-details">Output details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#source-object"><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#destination-object"><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deriva-web/export/integration.html#output-format-details">Output format details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-1">Example 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-2">Example 2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-3">Example 3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../deriva-web/export/integration.html#example-4">Example 4</a></li>
 </ul>
 </li>
 </ul>
@@ -1137,7 +1151,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Managing Data in DERIVA</li>
+      <li>Managing Data in DERIVA with <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code></li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -1180,41 +1194,238 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="managing-data-in-deriva">
-<span id="managing-data-in-deriva"></span><h1>Managing Data in DERIVA<a class="headerlink" href="#managing-data-in-deriva" title="Permalink to this headline">¶</a></h1>
-<p>When it comes to regular tasks such as uploading or downloading data to a DERIVA deployment, DERIVA provides client tools, desktop GUIs and an API module to interact with DERIVA programmatically.</p>
-<div class="section" id="desktop-guis-for-authenticating-and-uploading-data-deriva-qt">
-<span id="desktop-guis-for-authenticating-and-uploading-data-deriva-qt"></span><h2>Desktop GUIs for Authenticating and Uploading Data (deriva-qt)<a class="headerlink" href="#desktop-guis-for-authenticating-and-uploading-data-deriva-qt" title="Permalink to this headline">¶</a></h2>
-<p>For relatively small files that live on your local system, the Deriva-Upload GUI is a user-friendly lightweight tool for uploading data from your system to a DERIVA framework.</p>
-<p>In most cases, a DERIVA framework will require a certain amount of authentication for uploading files. Download the DERIVA-Auth GUI to add the server configuration provided by your DERIVA administrator and you’ll be able to quickly authenticate (various authentication protocols are supported) and get the token needed to make your upload successful.</p>
-<ul class="simple">
-<li><a class="reference external" href="/deriva-qt/install.html">Desktop Clients Docs</a></li>
-</ul>
+<div class="section" id="managing-data-in-deriva-with-deriva-client">
+<span id="managing-data-in-deriva-with-deriva-client"></span><h1>Managing Data in DERIVA with <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code><a class="headerlink" href="#managing-data-in-deriva-with-deriva-client" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> package bundles an application suite of Python-based
+client software for use with the DERIVA platform. These tools provide functions such as:</p>
+<ol class="simple">
+<li>Authentication services for programmatic and non browser-based application access.</li>
+<li>Bulk import and export of catalog assets and (meta) data.</li>
+<li>Catalog configuration, mutation and administration.</li>
+<li>Tools for working with <a class="reference external" href="https://github.com/fair-research/bdbag"><code class="docutils literal notranslate"><span class="pre">bdbags</span></code></a>,
+a file container format used by DERIVA for the import and export of data.</li>
+</ol>
+<div class="section" id="installed-applications">
+<span id="installed-applications"></span><h2>Installed Applications<a class="headerlink" href="#installed-applications" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="command-line-interface-cli-applications">
+<span id="command-line-interface-cli-applications"></span><h3>Command-Line Interface (CLI) applications<a class="headerlink" href="#command-line-interface-cli-applications" title="Permalink to this headline">¶</a></h3>
+<p>| Executable Name | Description |
+| — | — |
+|<code class="docutils literal notranslate"><span class="pre">bdbag</span></code>|The <a class="reference external" href="https://github.com/fair-research/bdbag/blob/master/doc/cli.md#bdbag-command-line-interface-cli"><code class="docutils literal notranslate"><span class="pre">bdbag</span></code></a> application provides a variety of functions for working with <a class="reference external" href="https://datatracker.ietf.org/doc/draft-kunze-bagit/"><code class="docutils literal notranslate"><span class="pre">BagIt</span></code></a> file archives, a file packaging format used by DERIVA for data export. This format is created by the DERIVA web applications when exporting data sets using the <code class="docutils literal notranslate"><span class="pre">BDBAG</span></code> option.|
+|<code class="docutils literal notranslate"><span class="pre">bdbag-utils</span></code>|The <a class="reference external" href="https://github.com/fair-research/bdbag/blob/master/doc/utils.md#bdbag-bdbag-utils--reference"><code class="docutils literal notranslate"><span class="pre">bdbag-utils</span></code></a> application is used to make some of the more repetitive and programmable tasks associated with creating and maintaining bags easier.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-acl-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-acl-config.html#deriva-acl-config"><code class="docutils literal notranslate"><span class="pre">deriva-acl-config</span></code></a> utility reads a configuration file and uses it to set ACLs for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).|
+|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-annotation-config.html#deriva-annotation-config"><code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code></a> utility reads a configuration file and uses it to set annotations for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).|
+|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-dump</span></code>|Outputs the current set of annotations in use for the specified catalog in JSON format.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-rollback</span></code>|Provides a function to rollback the entire annotation hierarchy for the specified catalog to a given point in time specified by catalog snapshot ID. |
+|<code class="docutils literal notranslate"><span class="pre">deriva-catalog-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-config.html"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-config</span></code></a> application provides functions to set up catalog schema and tables with a standard baseline annotation and ACL configuration.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-catalog-dump</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-dump.html"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-dump</span></code></a> application provides functions to dump the current configuration of a catalog as a set of <a class="reference external" href="http://docs.derivacloud.org/deriva-py/index.html#python-command-line-clients-and-api-deriva-py"><code class="docutils literal notranslate"><span class="pre">deriva-py</span></code></a> scripts. The scripts are pure deriva-py and have placeholder variables to set annotations, acls, and acl-bindings.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-csv</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-csv.html"><code class="docutils literal notranslate"><span class="pre">deriva-csv</span></code></a> application provides functions to upload <code class="docutils literal notranslate"><span class="pre">csv</span></code> or other table-like data to a catalog with options to create a new table, validate input data and upload data.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-download-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-download-cli.html#deriva-download-cli"><code class="docutils literal notranslate"><span class="pre">deriva-download-cli</span></code></a> is used for orchestrating the bulk export of tabular data (stored in <em>ERMRest</em> catalogs) and download of asset data (stored in <em>Hatrac</em>, or other supported HTTP-accessible object store).|
+|<code class="docutils literal notranslate"><span class="pre">deriva-hatrac-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-hatrac-cli.html"><code class="docutils literal notranslate"><span class="pre">deriva-hatrac-cli</span></code></a> is a command-line utility for interacting directly with the DERIVA <em>Hatrac</em> object store.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code>|The <a class="reference external" href="#"><code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code></a> provides batch upload functionality for both catalog (<em>ERMRest</em>) and asset (<em>Hatrac</em>) data. This application is generally used for automating the bulk transfer of data to DERIVA servers.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-sitemap-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-sitemap-cli.html"><code class="docutils literal notranslate"><span class="pre">deriva-sitemap-cli</span></code></a> utility creates a sitemap containing <code class="docutils literal notranslate"><span class="pre">record</span></code> entries for all publicly-readable rows in one or more <em>ERMRest</em> tables.</p>
 </div>
-<div class="section" id="commandline-interface-for-interacting-with-data-deriva-py">
-<span id="commandline-interface-for-interacting-with-data-deriva-py"></span><h2>Commandline Interface for interacting with Data (deriva-py)<a class="headerlink" href="#commandline-interface-for-interacting-with-data-deriva-py" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">deriva-py</span></code> repository provides a number of commandline clients for interacting with data stored in ERMrest (ie, metadata in tabular format) or Hatrac (data files in our object store component). This is especially useful if you have a large number of files, very large files, and/or you want to transfer them from a remote server.</p>
-<p>To install , simply use this <code class="docutils literal notranslate"><span class="pre">pip</span></code> command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install --upgrade git+https://github.com/informatics-isi-edu/deriva-py.git
+<div class="section" id="graphical-user-interface-gui-applications">
+<span id="graphical-user-interface-gui-applications"></span><h3>Graphical User Interface (GUI) applications<a class="headerlink" href="#graphical-user-interface-gui-applications" title="Permalink to this headline">¶</a></h3>
+<p>| Executable Name | Application Name | Description |
+| — | — | — |
+|<code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code>|DERIVA Authentication Agent|Provides credential authentication and refresh services for one or more DERIVA servers. This application is intended to be run in the background after the user completes the login sequence for each server.|
+|<code class="docutils literal notranslate"><span class="pre">deriva-upload</span></code>|DERIVA Upload Utility|Provides batch upload functionality for both catalog and asset data. This application is an interactive tool used for the bulk transfer of data to DERIVA servers.|</p>
+</div>
+</div>
+<div class="section" id="installer-packages-for-windows-and-macosx">
+<span id="installer-packages-for-windows-and-macosx"></span><h2>Installer packages for Windows and MacOSX<a class="headerlink" href="#installer-packages-for-windows-and-macosx" title="Permalink to this headline">¶</a></h2>
+<p>Pre-packaged installers of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> for Windows and MacOSX can be
+found <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-client-bundle/releases">here</a>.
+These installer packages include a bundled Python interpreter and all
+other software dependencies and are recommended for Windows and MacOSX
+users who are looking for a more traditional “turnkey” installation that
+does not require them to install Python and manage Python software package
+installations.</p>
+</div>
+<div class="section" id="installing-deriva-client-from-pypi-via-pip">
+<span id="installing-deriva-client-from-pypi-via-pip"></span><h2>Installing <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> from PyPi via <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#installing-deriva-client-from-pypi-via-pip" title="Permalink to this headline">¶</a></h2>
+<p>For users who already have the base Python interpreter installed and are
+comfortable installing Python software via the <code class="docutils literal notranslate"><span class="pre">pip</span></code> application,
+<code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> can be easily  installed along with all of it’s dependencies
+directly from <a class="reference external" href="https://pypi.org/project/deriva-client">PyPi</a> using basic
+<code class="docutils literal notranslate"><span class="pre">pip</span></code> commands. For those users who wish to write programs against the
+various APIs included in <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code>, this is the recommended
+installation method.</p>
+<div class="section" id="installation-prerequisites">
+<span id="installation-prerequisites"></span><h3>Installation Prerequisites<a class="headerlink" href="#installation-prerequisites" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>A Python 3.5.4 or greater system installation is required. The latest
+stable version of Python is recommended.</li>
+<li>Verify that the appropriate Python 3 interpreter can be invoked from a
+command shell using the <code class="docutils literal notranslate"><span class="pre">python3</span></code> command. This can be tested simply
+with the following command:</li>
+</ul>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 --version
 </pre></div>
 </div>
-<p>Then use the following links for more information on a command:</p>
+</div>
+<div class="section" id="installation-quickstart">
+<span id="installation-quickstart"></span><h3>Installation Quickstart<a class="headerlink" href="#installation-quickstart" title="Permalink to this headline">¶</a></h3>
+<p>The following commands can be used to perform a <code class="docutils literal notranslate"><span class="pre">venv</span></code>-based <em>virtual
+environment</em> installation to the current working directory.</p>
+<div class="section" id="mac-linux">
+<span id="mac-linux"></span><h4>Mac/Linux<a class="headerlink" href="#mac-linux" title="Permalink to this headline">¶</a></h4>
+<p>The following commands assume a <code class="docutils literal notranslate"><span class="pre">BASH</span></code> (or compatible) command shell is
+used. For a different command interpreter (e.g. <code class="docutils literal notranslate"><span class="pre">CSH</span></code>), invoke the <code class="docutils literal notranslate"><span class="pre">source</span></code>
+command on the appropriate activation script in the virtual environment’s <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m venv ./deriva-client-venv
+<span class="nb">source</span> ./deriva-client-venv/bin/activate
+python3 -m pip install --upgrade pip setuptools wheel
+pip install deriva-client
+</pre></div>
+</div>
+</div>
+<div class="section" id="important-note-for-macosx-users-running-python-3-5-x-with-pip-version-9-0-3">
+<span id="important-note-for-macosx-users-running-python-3-5-x-with-pip-version-9-0-3"></span><h4>Important Note: For MacOSX users running Python 3.5.x with pip version &lt; 9.0.3<a class="headerlink" href="#important-note-for-macosx-users-running-python-3-5-x-with-pip-version-9-0-3" title="Permalink to this headline">¶</a></h4>
+<p>If you encounter the following error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Could</span> <span class="ow">not</span> <span class="n">fetch</span> <span class="n">URL</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span><span class="n">pip</span><span class="o">/</span><span class="p">:</span> 
+<span class="n">There</span> <span class="n">was</span> <span class="n">a</span> <span class="n">problem</span> <span class="n">confirming</span> <span class="n">the</span> <span class="n">ssl</span> <span class="n">certificate</span><span class="p">:</span> 
+<span class="p">[</span><span class="n">SSL</span><span class="p">:</span> <span class="n">TLSV1_ALERT_PROTOCOL_VERSION</span><span class="p">]</span> <span class="n">tlsv1</span> <span class="n">alert</span> <span class="n">protocol</span> <span class="n">version</span> <span class="p">(</span><span class="n">_ssl</span><span class="o">.</span><span class="n">c</span><span class="p">:</span><span class="mi">720</span><span class="p">)</span> <span class="o">-</span> <span class="n">skipping</span>
+</pre></div>
+</div>
+<p>This error means that you cannot update <code class="docutils literal notranslate"><span class="pre">pip</span></code>, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>, and <code class="docutils literal notranslate"><span class="pre">wheel</span></code>
+via the command provided above. You can work around this error by issuing the
+following commands instead, and then continue with the installation procedure as described.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>curl https://bootstrap.pypa.io/get-pip.py <span class="p">|</span> python3
+pip install --upgrade setuptools
+</pre></div>
+</div>
+</div>
+<div class="section" id="windows">
+<span id="windows"></span><h4>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
+<p>The following commands assume a Windows <code class="docutils literal notranslate"><span class="pre">Command</span> <span class="pre">Prompt</span></code> command shell is used. For a
+<code class="docutils literal notranslate"><span class="pre">Powershell</span></code> shell, the <code class="docutils literal notranslate"><span class="pre">activate.ps1</span></code> activation script should be invoked instead.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">venv</span> <span class="o">.</span>\<span class="n">deriva</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">venv</span>
+<span class="o">.</span>\<span class="n">deriva</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="n">venv</span>\<span class="n">Scripts</span>\<span class="n">activate</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pip</span> <span class="n">setuptools</span> <span class="n">wheel</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">deriva</span><span class="o">-</span><span class="n">client</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="important-note-python-virtual-environments-versus-user-environments">
+<span id="important-note-python-virtual-environments-versus-user-environments"></span><h4>IMPORTANT NOTE: Python <em>virtual environments</em> versus <em>user environments</em><a class="headerlink" href="#important-note-python-virtual-environments-versus-user-environments" title="Permalink to this headline">¶</a></h4>
+<p>While a <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html"><em>virtual environment</em></a>
+installation is generally the safest way to install and isolate multiple
+software packages, it also must be <em>activated</em> before use and
+<em>deactivated</em> after use. If this requirement is too cumbersome, the
+recommended alternative is to install the software into a
+<a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#user-installs"><em>user environment</em></a>
+instead. See the complete installation procedure below for more information.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="installation-procedure">
+<span id="installation-procedure"></span><h3>Installation Procedure<a class="headerlink" href="#installation-procedure" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference external" href="/deriva-py/cli/deriva-hatrac-cli.html">Manage files stored in Hatrac</a> - This tool allows you to manage namespaces and get, put or delete objects and access control lists.</li>
-<li><a class="reference external" href="/deriva-py/cli/deriva-download-cli.html">Export tool (deriva-download-cli)</a> - the bulk export of tabular data (stored in ERMRest) and download of asset data (stored in Hatrac, or other supported HTTP-accessible object store).</li>
-<li><a class="reference external" href="/deriva-py/cli/deriva-acl-config.html">Configure Access Control Lists (deriva-acl-config)</a> - Use this client to set access control lists in ERMrest.</li>
-<li><a class="reference external" href="/deriva-py/cli/deriva-annotation-config.html">Configure annotations (deriva-annotation-config)</a> - This client sets annotations in ERMrest.</li>
+<li>For MacOSX and Linux systems which include Python as a core part of the
+operating system, it is <em>highly recommended</em> to install this software
+into a <em>virtual environment</em> or a <em>user environment</em>, so that it does not interfere or conflict
+with the operating system’s Python installation. The native Python3
+<a class="reference external" href="https://docs.python.org/3/tutorial/venv.html"><code class="docutils literal notranslate"><span class="pre">venv</span></code></a> module, the
+<a class="reference external" href="https://packaging.python.org/guides/installing-using-pip-and-virtualenv/"><code class="docutils literal notranslate"><span class="pre">virtualenv</span></code></a>
+package from PyPi, or the <a class="reference external" href="https://www.anaconda.com/distribution/">Anaconda Distribution</a>
+environment are all suitable for use as virtual environments.</li>
+<li>Instead of using a <em>virtual environment</em>, it is also possible to
+install the software into a <a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#user-installs"><em>user environment</em></a>
+using the <code class="docutils literal notranslate"><span class="pre">--user</span></code> argument when invoking <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>.</li>
+<li>Recent versions of <code class="docutils literal notranslate"><span class="pre">pip</span></code>, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>, and <code class="docutils literal notranslate"><span class="pre">wheel</span></code> are recommended.
+If these components are already installed, updating them to the latest
+versions available is <em>optional</em>.</li>
+</ul>
+<div class="section" id="installation-sequence">
+<span id="installation-sequence"></span><h4>Installation Sequence<a class="headerlink" href="#installation-sequence" title="Permalink to this headline">¶</a></h4>
+<ol>
+<li><p class="first">Create and/or activate the target virtual environment, if any.
+This step is specific to the type of virtual environment being used.</p>
+</li>
+<li><p class="first">Update <code class="docutils literal notranslate"><span class="pre">pip</span></code>, <code class="docutils literal notranslate"><span class="pre">setuptools</span></code>, and <code class="docutils literal notranslate"><span class="pre">wheel</span></code> (optional).</p>
+<ol>
+<li><p class="first">For <em>virtual environments</em> execute the following (ensure the
+environment is <em>active</em>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python -m pip install --upgrade pip setuptools wheel
+</pre></div>
+</div>
+</li>
+<li><p class="first">For <em>user environments</em> execute the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --user --upgrade pip setuptools wheel
+</pre></div>
+</div>
+</li>
+<li><p class="first">For Linux system python installations it is recommended to use the
+system’s package manager such as <code class="docutils literal notranslate"><span class="pre">dnf</span></code>, <code class="docutils literal notranslate"><span class="pre">apt</span></code>, or <code class="docutils literal notranslate"><span class="pre">yum</span></code> to update
+the following packages: <code class="docutils literal notranslate"><span class="pre">python3-pip</span></code>, <code class="docutils literal notranslate"><span class="pre">python3-setuptools</span></code> , and <code class="docutils literal notranslate"><span class="pre">python3-wheel</span></code>.</p>
+</li>
+</ol>
+</li>
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> directly from <a class="reference external" href="https://pypi.org/project/deriva-client">PyPi</a>
+using the <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> command.</p>
+<ol>
+<li><p class="first">For <em>virtual environments</em> execute the following (ensure the
+environment is <em>active</em>):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip install deriva-client
+</pre></div>
+</div>
+</li>
+<li><p class="first">For <em>user environments</em> execute the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip3 install --user deriva-client
+</pre></div>
+</div>
+</li>
+<li><p class="first">For system-wide python installations (only do this if you
+understand the complexities involved):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip3 install deriva-client
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+<div class="section" id="important-notes-using-pip-to-install-software-into-system-wide-python-locations">
+<span id="important-notes-using-pip-to-install-software-into-system-wide-python-locations"></span><h5>IMPORTANT NOTES: Using <code class="docutils literal notranslate"><span class="pre">pip</span></code> to install software into <strong>system-wide</strong> Python locations<a class="headerlink" href="#important-notes-using-pip-to-install-software-into-system-wide-python-locations" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Many newer Linux (as well as MacOSX) distributions contain both Python2
+and Python3 installed alongside each other. In these environments, both
+the python interpreter and <code class="docutils literal notranslate"><span class="pre">pip</span></code> are symbolically linked to the system
+default version, which in general results in <code class="docutils literal notranslate"><span class="pre">python</span></code> and <code class="docutils literal notranslate"><span class="pre">pip</span></code> being
+linked to the Python2 versions.</li>
+<li>Python3 versions are commonly accessed via <code class="docutils literal notranslate"><span class="pre">python3</span></code> and <code class="docutils literal notranslate"><span class="pre">pip3</span></code>.
+If you are working <em>outside</em> of a Python3 virtual environment and installing
+either to the system-wide Python location (not recommended) or a user-based
+location (e.g. with the <code class="docutils literal notranslate"><span class="pre">pip</span></code> <code class="docutils literal notranslate"><span class="pre">--user</span></code> argument), then you <em>must</em>
+substitute <code class="docutils literal notranslate"><span class="pre">pip3</span></code> for <code class="docutils literal notranslate"><span class="pre">pip</span></code> when issuing <code class="docutils literal notranslate"><span class="pre">pip</span></code> installation commands.</li>
+<li>Also note that when installing into the system Python location via
+<code class="docutils literal notranslate"><span class="pre">pip</span></code> on Linux/MacOSX, the commands must be run as root or the  <code class="docutils literal notranslate"><span class="pre">sudo</span></code>
+command must be prefixed to the command line.</li>
 </ul>
 </div>
-<div class="section" id="datapath-module-deriva-py">
-<span id="datapath-module-deriva-py"></span><h2><code class="docutils literal notranslate"><span class="pre">datapath</span></code> module (deriva-py)<a class="headerlink" href="#datapath-module-deriva-py" title="Permalink to this headline">¶</a></h2>
-<p>deriva-py also includes a <a class="reference external" href="/deriva-py/api/deriva.html">Python API</a> for a programmatic interface for ERMrest.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">datapath</span></code> module in particular is an interface for building ERMrest “data paths” and retrieving data from ERMrest catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited
-programmatic interface to ERMrest.</p>
+</div>
+</div>
+</div>
+<div class="section" id="source-code">
+<span id="source-code"></span><h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
+<p>The source code and additional documentation for the primary components of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> can be found at the links below:</p>
 <ul class="simple">
-<li><a class="reference external" href="/deriva-py/README.html"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> documentation and tutorial</a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/deriva-py"><code class="docutils literal notranslate"><span class="pre">deriva-py</span></code></a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/deriva-qt"><code class="docutils literal notranslate"><span class="pre">deriva-qt</span></code></a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/deriva-catalog-manage"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-manage</span></code></a></li>
 </ul>
 </div>
+</div>
+<div class="section" id="managing-data-with-the-datapath-api-deriva-py">
+<span id="managing-data-with-the-datapath-api-deriva-py"></span><h1>Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)<a class="headerlink" href="#managing-data-with-the-datapath-api-deriva-py" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">deriva-py</span></code> package (part of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code>) also includes a
+<a class="reference external" href="/deriva-py/api/deriva.html">Python API</a> for a programmatic interface for <em>ERMRest</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">datapath</span></code> module in particular is an interface for building <em>ERMRest</em> “data paths” and retrieving data from <em>ERMRest</em> catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited
+programmatic interface to <em>ERMRest</em>.</p>
+<ul class="simple">
+<li><a class="reference external" href="/deriva-py/README.html"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> Documentation and Tutorial</a></li>
+</ul>
 </div>
 
 

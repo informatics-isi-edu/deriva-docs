@@ -11,6 +11,7 @@ a file container format used by DERIVA for the import and export of data.
 ## Installed Applications
 
 ###### Command-Line Interface (CLI) applications
+
 | Executable Name | Description |
 | --- | --- |
 |`bdbag`|The [`bdbag`](https://github.com/fair-research/bdbag/blob/master/doc/cli.md#bdbag-command-line-interface-cli) application provides a variety of functions for working with [`BagIt`](https://datatracker.ietf.org/doc/draft-kunze-bagit/) file archives, a file packaging format used by DERIVA for data export. This format is created by the DERIVA web applications when exporting data sets using the `BDBAG` option.|
@@ -26,7 +27,9 @@ a file container format used by DERIVA for the import and export of data.
 |`deriva-hatrac-cli`|The [`deriva-hatrac-cli`](http://docs.derivacloud.org/deriva-py/cli/deriva-hatrac-cli.html) is a command-line utility for interacting directly with the DERIVA _Hatrac_ object store.|
 |`deriva-upload-cli`|The [`deriva-upload-cli`]() provides batch upload functionality for both catalog (_ERMRest_) and asset (_Hatrac_) data. This application is generally used for automating the bulk transfer of data to DERIVA servers.|
 |`deriva-sitemap-cli`|The [`deriva-sitemap-cli`](http://docs.derivacloud.org/deriva-py/cli/deriva-sitemap-cli.html) utility creates a sitemap containing `record` entries for all publicly-readable rows in one or more _ERMRest_ tables.
+
 ###### Graphical User Interface (GUI) applications
+
 | Executable Name | Application Name | Description |
 | --- | --- | --- |
 |`deriva-auth`|DERIVA Authentication Agent|Provides credential authentication and refresh services for one or more DERIVA servers. This application is intended to be run in the background after the user completes the login sequence for each server.|
@@ -187,14 +190,7 @@ substitute `pip3` for `pip` when issuing `pip` installation commands.
 `pip` on Linux/MacOSX, the commands must be run as root or the  `sudo`
 command must be prefixed to the command line.
 
-## Source Code
-The source code and additional documentation for the primary components of `deriva-client` can be found at the links below: 
-
-* [`deriva-py`](https://github.com/informatics-isi-edu/deriva-py)
-* [`deriva-qt`](https://github.com/informatics-isi-edu/deriva-qt)
-* [`deriva-catalog-manage`](https://github.com/informatics-isi-edu/deriva-catalog-manage)
-
-# Managing data with the `datapath` API (deriva-py)
+## Managing data with the `datapath` API (deriva-py)
 
 The `deriva-py` package (part of `deriva-client`) also includes a 
 [Python API](/deriva-py/api/deriva.html) for a programmatic interface for _ERMRest_.
@@ -203,3 +199,10 @@ The `datapath` module in particular is an interface for building _ERMRest_ "data
 programmatic interface to _ERMRest_.
 
 * [`datapath` Documentation and Tutorial](/deriva-py/README.html)
+
+## Source Code
+The source code and additional documentation for the primary components of `deriva-client` can be found at the links below: 
+
+* [`deriva-py`](https://github.com/informatics-isi-edu/deriva-py)
+* [`deriva-qt`](https://github.com/informatics-isi-edu/deriva-qt)
+* [`deriva-catalog-manage`](https://github.com/informatics-isi-edu/deriva-catalog-manage)

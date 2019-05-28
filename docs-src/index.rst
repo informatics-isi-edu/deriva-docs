@@ -26,13 +26,13 @@ DERIVA Documentation
 
   deriva-py/index
   deriva-qt/index
-  deriva-web/index
+  deriva-catalog-manage/index
   ermrest/index
   hatrac/index
   ermrestjs/index
   chaise/index
-  deriva-catalog-manage/index
-   
+  deriva-web/index
+
 Indices and tables
 ==================
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Managing Data in DERIVA with deriva-client &mdash; DERIVA Docs  documentation</title>
+  <title>Managing Data in DERIVA with deriva-client &mdash; DERIVA Docs current documentation</title>
   
 
   
@@ -165,10 +165,10 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#managing-data-with-the-datapath-api-deriva-py">Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#source-code">Source Code</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#managing-data-with-the-datapath-api-deriva-py">Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="project-tutorial.html">Starting a Deriva-Py Data Management Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="project-tutorial.html#python-client-bindings">Python Client Bindings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="project-tutorial.html#your-project-specific-groups">Your Project-Specific Groups</a><ul>
@@ -1209,29 +1209,91 @@ a file container format used by DERIVA for the import and export of data.</li>
 <span id="installed-applications"></span><h2>Installed Applications<a class="headerlink" href="#installed-applications" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="command-line-interface-cli-applications">
 <span id="command-line-interface-cli-applications"></span><h3>Command-Line Interface (CLI) applications<a class="headerlink" href="#command-line-interface-cli-applications" title="Permalink to this headline">¶</a></h3>
-<p>| Executable Name | Description |
-| — | — |
-|<code class="docutils literal notranslate"><span class="pre">bdbag</span></code>|The <a class="reference external" href="https://github.com/fair-research/bdbag/blob/master/doc/cli.md#bdbag-command-line-interface-cli"><code class="docutils literal notranslate"><span class="pre">bdbag</span></code></a> application provides a variety of functions for working with <a class="reference external" href="https://datatracker.ietf.org/doc/draft-kunze-bagit/"><code class="docutils literal notranslate"><span class="pre">BagIt</span></code></a> file archives, a file packaging format used by DERIVA for data export. This format is created by the DERIVA web applications when exporting data sets using the <code class="docutils literal notranslate"><span class="pre">BDBAG</span></code> option.|
-|<code class="docutils literal notranslate"><span class="pre">bdbag-utils</span></code>|The <a class="reference external" href="https://github.com/fair-research/bdbag/blob/master/doc/utils.md#bdbag-bdbag-utils--reference"><code class="docutils literal notranslate"><span class="pre">bdbag-utils</span></code></a> application is used to make some of the more repetitive and programmable tasks associated with creating and maintaining bags easier.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-acl-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-acl-config.html#deriva-acl-config"><code class="docutils literal notranslate"><span class="pre">deriva-acl-config</span></code></a> utility reads a configuration file and uses it to set ACLs for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).|
-|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-annotation-config.html#deriva-annotation-config"><code class="docutils literal notranslate"><span class="pre">deriva-annotation-config</span></code></a> utility reads a configuration file and uses it to set annotations for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).|
-|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-dump</span></code>|Outputs the current set of annotations in use for the specified catalog in JSON format.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-annotation-rollback</span></code>|Provides a function to rollback the entire annotation hierarchy for the specified catalog to a given point in time specified by catalog snapshot ID. |
-|<code class="docutils literal notranslate"><span class="pre">deriva-catalog-config</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-config.html"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-config</span></code></a> application provides functions to set up catalog schema and tables with a standard baseline annotation and ACL configuration.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-catalog-dump</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-dump.html"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-dump</span></code></a> application provides functions to dump the current configuration of a catalog as a set of <a class="reference external" href="http://docs.derivacloud.org/deriva-py/index.html#python-command-line-clients-and-api-deriva-py"><code class="docutils literal notranslate"><span class="pre">deriva-py</span></code></a> scripts. The scripts are pure deriva-py and have placeholder variables to set annotations, acls, and acl-bindings.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-csv</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-csv.html"><code class="docutils literal notranslate"><span class="pre">deriva-csv</span></code></a> application provides functions to upload <code class="docutils literal notranslate"><span class="pre">csv</span></code> or other table-like data to a catalog with options to create a new table, validate input data and upload data.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-download-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-download-cli.html#deriva-download-cli"><code class="docutils literal notranslate"><span class="pre">deriva-download-cli</span></code></a> is used for orchestrating the bulk export of tabular data (stored in <em>ERMRest</em> catalogs) and download of asset data (stored in <em>Hatrac</em>, or other supported HTTP-accessible object store).|
-|<code class="docutils literal notranslate"><span class="pre">deriva-hatrac-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-hatrac-cli.html"><code class="docutils literal notranslate"><span class="pre">deriva-hatrac-cli</span></code></a> is a command-line utility for interacting directly with the DERIVA <em>Hatrac</em> object store.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code>|The <a class="reference external" href="#"><code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code></a> provides batch upload functionality for both catalog (<em>ERMRest</em>) and asset (<em>Hatrac</em>) data. This application is generally used for automating the bulk transfer of data to DERIVA servers.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-sitemap-cli</span></code>|The <a class="reference external" href="http://docs.derivacloud.org/deriva-py/cli/deriva-sitemap-cli.html"><code class="docutils literal notranslate"><span class="pre">deriva-sitemap-cli</span></code></a> utility creates a sitemap containing <code class="docutils literal notranslate"><span class="pre">record</span></code> entries for all publicly-readable rows in one or more <em>ERMRest</em> tables.</p>
-</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Executable Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bdbag</code></td>
+<td>The <a href="https://github.com/fair-research/bdbag/blob/master/doc/cli.md#bdbag-command-line-interface-cli"><code>bdbag</code></a> application provides a variety of functions for working with <a href="https://datatracker.ietf.org/doc/draft-kunze-bagit/"><code>BagIt</code></a> file archives, a file packaging format used by DERIVA for data export. This format is created by the DERIVA web applications when exporting data sets using the <code>BDBAG</code> option.</td>
+</tr>
+<tr>
+<td><code>bdbag-utils</code></td>
+<td>The <a href="https://github.com/fair-research/bdbag/blob/master/doc/utils.md#bdbag-bdbag-utils--reference"><code>bdbag-utils</code></a> application is used to make some of the more repetitive and programmable tasks associated with creating and maintaining bags easier.</td>
+</tr>
+<tr>
+<td><code>deriva-acl-config</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-py/cli/deriva-acl-config.html#deriva-acl-config"><code>deriva-acl-config</code></a> utility reads a configuration file and uses it to set ACLs for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).</td>
+</tr>
+<tr>
+<td><code>deriva-annotation-config</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-py/cli/deriva-annotation-config.html#deriva-annotation-config"><code>deriva-annotation-config</code></a> utility reads a configuration file and uses it to set annotations for an <em>ERMRest</em> catalog (or for a schema or table within that catalog).</td>
+</tr>
+<tr>
+<td><code>deriva-annotation-dump</code></td>
+<td>Outputs the current set of annotations in use for the specified catalog in JSON format.</td>
+</tr>
+<tr>
+<td><code>deriva-annotation-rollback</code></td>
+<td>Provides a function to rollback the entire annotation hierarchy for the specified catalog to a given point in time specified by catalog snapshot ID.</td>
+</tr>
+<tr>
+<td><code>deriva-catalog-config</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-config.html"><code>deriva-catalog-config</code></a> application provides functions to set up catalog schema and tables with a standard baseline annotation and ACL configuration.</td>
+</tr>
+<tr>
+<td><code>deriva-catalog-dump</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-catalog-dump.html"><code>deriva-catalog-dump</code></a> application provides functions to dump the current configuration of a catalog as a set of <a href="http://docs.derivacloud.org/deriva-py/index.html#python-command-line-clients-and-api-deriva-py"><code>deriva-py</code></a> scripts. The scripts are pure deriva-py and have placeholder variables to set annotations, acls, and acl-bindings.</td>
+</tr>
+<tr>
+<td><code>deriva-csv</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-catalog-manage/cli/deriva-csv.html"><code>deriva-csv</code></a> application provides functions to upload <code>csv</code> or other table-like data to a catalog with options to create a new table, validate input data and upload data.</td>
+</tr>
+<tr>
+<td><code>deriva-download-cli</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-py/cli/deriva-download-cli.html#deriva-download-cli"><code>deriva-download-cli</code></a> is used for orchestrating the bulk export of tabular data (stored in <em>ERMRest</em> catalogs) and download of asset data (stored in <em>Hatrac</em>, or other supported HTTP-accessible object store).</td>
+</tr>
+<tr>
+<td><code>deriva-hatrac-cli</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-py/cli/deriva-hatrac-cli.html"><code>deriva-hatrac-cli</code></a> is a command-line utility for interacting directly with the DERIVA <em>Hatrac</em> object store.</td>
+</tr>
+<tr>
+<td><code>deriva-upload-cli</code></td>
+<td>The <a href=""><code>deriva-upload-cli</code></a> provides batch upload functionality for both catalog (<em>ERMRest</em>) and asset (<em>Hatrac</em>) data. This application is generally used for automating the bulk transfer of data to DERIVA servers.</td>
+</tr>
+<tr>
+<td><code>deriva-sitemap-cli</code></td>
+<td>The <a href="http://docs.derivacloud.org/deriva-py/cli/deriva-sitemap-cli.html"><code>deriva-sitemap-cli</code></a> utility creates a sitemap containing <code>record</code> entries for all publicly-readable rows in one or more <em>ERMRest</em> tables.</td>
+</tr>
+</tbody>
+</table></div>
 <div class="section" id="graphical-user-interface-gui-applications">
 <span id="graphical-user-interface-gui-applications"></span><h3>Graphical User Interface (GUI) applications<a class="headerlink" href="#graphical-user-interface-gui-applications" title="Permalink to this headline">¶</a></h3>
-<p>| Executable Name | Application Name | Description |
-| — | — | — |
-|<code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code>|DERIVA Authentication Agent|Provides credential authentication and refresh services for one or more DERIVA servers. This application is intended to be run in the background after the user completes the login sequence for each server.|
-|<code class="docutils literal notranslate"><span class="pre">deriva-upload</span></code>|DERIVA Upload Utility|Provides batch upload functionality for both catalog and asset data. This application is an interactive tool used for the bulk transfer of data to DERIVA servers.|</p>
-</div>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Executable Name</th>
+<th>Application Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deriva-auth</code></td>
+<td>DERIVA Authentication Agent</td>
+<td>Provides credential authentication and refresh services for one or more DERIVA servers. This application is intended to be run in the background after the user completes the login sequence for each server.</td>
+</tr>
+<tr>
+<td><code>deriva-upload</code></td>
+<td>DERIVA Upload Utility</td>
+<td>Provides batch upload functionality for both catalog and asset data. This application is an interactive tool used for the bulk transfer of data to DERIVA servers.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <div class="section" id="installer-packages-for-windows-and-macosx">
 <span id="installer-packages-for-windows-and-macosx"></span><h2>Installer packages for Windows and MacOSX<a class="headerlink" href="#installer-packages-for-windows-and-macosx" title="Permalink to this headline">¶</a></h2>
@@ -1407,6 +1469,16 @@ command must be prefixed to the command line.</li>
 </div>
 </div>
 </div>
+<div class="section" id="managing-data-with-the-datapath-api-deriva-py">
+<span id="managing-data-with-the-datapath-api-deriva-py"></span><h2>Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)<a class="headerlink" href="#managing-data-with-the-datapath-api-deriva-py" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">deriva-py</span></code> package (part of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code>) also includes a
+<a class="reference external" href="/deriva-py/api/deriva.html">Python API</a> for a programmatic interface for <em>ERMRest</em>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">datapath</span></code> module in particular is an interface for building <em>ERMRest</em> “data paths” and retrieving data from <em>ERMRest</em> catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited
+programmatic interface to <em>ERMRest</em>.</p>
+<ul class="simple">
+<li><a class="reference external" href="/deriva-py/README.html"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> Documentation and Tutorial</a></li>
+</ul>
+</div>
 <div class="section" id="source-code">
 <span id="source-code"></span><h2>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h2>
 <p>The source code and additional documentation for the primary components of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code> can be found at the links below:</p>
@@ -1416,16 +1488,6 @@ command must be prefixed to the command line.</li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/deriva-catalog-manage"><code class="docutils literal notranslate"><span class="pre">deriva-catalog-manage</span></code></a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="managing-data-with-the-datapath-api-deriva-py">
-<span id="managing-data-with-the-datapath-api-deriva-py"></span><h1>Managing data with the <code class="docutils literal notranslate"><span class="pre">datapath</span></code> API (deriva-py)<a class="headerlink" href="#managing-data-with-the-datapath-api-deriva-py" title="Permalink to this headline">¶</a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">deriva-py</span></code> package (part of <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code>) also includes a
-<a class="reference external" href="/deriva-py/api/deriva.html">Python API</a> for a programmatic interface for <em>ERMRest</em>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">datapath</span></code> module in particular is an interface for building <em>ERMRest</em> “data paths” and retrieving data from <em>ERMRest</em> catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited
-programmatic interface to <em>ERMRest</em>.</p>
-<ul class="simple">
-<li><a class="reference external" href="/deriva-py/README.html"><code class="docutils literal notranslate"><span class="pre">datapath</span></code> Documentation and Tutorial</a></li>
-</ul>
 </div>
 
 

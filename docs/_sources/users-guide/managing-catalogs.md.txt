@@ -1,12 +1,12 @@
 # Managing Catalogs in DERIVA
 
-Coming soon.
+Coming soon?
 
 Include definition of 'catalog'.
 
 Cover these topics:
-* Model Manipulation - Configuring catalog using deriva-py
-* [Annotations](annotations/index.html) - ermrest, ermrestjs, deriva-py, ioboxd
+* Model Manipulation - Configuring catalog using deriva-py / deriva-catalog-manage
+* [Annotations](annotations/index.html) - ermrest, ermrestjs, deriva-py, export
 * deriva.py python programming (deriva-py) - everything but DataPath
 * Hatrac
 * Policies

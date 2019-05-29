@@ -39,7 +39,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="deriva/export REST API reference" href="api.html" /> 
+    <link rel="prev" title="REST API reference: deriva/export" href="api.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -1066,14 +1066,14 @@
 <li class="toctree-l3"><a class="reference internal" href="../config.html#wsgi-deriva-conf">wsgi_deriva.conf</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api.html">deriva/export REST API reference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api.html#exporting-individual-files"><strong>Exporting individual files</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html">REST API reference: <code class="docutils literal notranslate"><span class="pre">deriva/export</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#exporting-files">Exporting Files</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#export-file-s">Export file(s)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#retrieve-exported-file-s">Retrieve exported file(s)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#retrieve-log-file-for-exported-file-s">Retrieve log file for exported file(s)</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#exporting-bags"><strong>Exporting Bags</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#exporting-bags">Exporting Bags</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api.html#export-bag">Export bag</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#retrieve-an-exported-bag">Retrieve an exported bag</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api.html#retrieve-log-file-for-exported-bag">Retrieve log file for exported bag</a></li>
@@ -1082,23 +1082,15 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Chaise Integration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#export">Export</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#root-object">root (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#template-object"><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output-object"><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output-details">Output details</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#source-object"><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#destination-object"><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#supported-output-formats">Supported output formats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output-format-details">Output format details</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#csv"><code class="docutils literal notranslate"><span class="pre">csv</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#json"><code class="docutils literal notranslate"><span class="pre">json</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#download"><code class="docutils literal notranslate"><span class="pre">download</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-1">Example 1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-2">Example 2</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-3">Example 3</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-4">Example 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#export">Export</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#root-object">root (object)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#template-object"><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-object"><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-details">Output details</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#source-object"><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#destination-object"><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#supported-output-formats">Supported output formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#output-format-details">Output format details</a></li>
 </ul>
 </li>
 </ul>
@@ -1209,9 +1201,8 @@ is used in an ERMrest table annotation payload. The annotation is specified usin
 specified for a given table entity.  Templates specify a format name and type, followed by a set of output descriptor
 objects. A template output descriptor maps one or more source table queries to one or more output file destinations.</p>
 <p>The object structure of an export template annotation is defined as follows:</p>
-</div>
 <div class="section" id="root-object">
-<span id="root-object"></span><h2>root (object)<a class="headerlink" href="#root-object" title="Permalink to this headline">¶</a></h2>
+<span id="root-object"></span><h3>root (object)<a class="headerlink" href="#root-object" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1231,7 +1222,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="template-object">
-<span id="template-object"></span><h2><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)<a class="headerlink" href="#template-object" title="Permalink to this headline">¶</a></h2>
+<span id="template-object"></span><h3><code class="docutils literal notranslate"><span class="pre">template</span></code> (object)<a class="headerlink" href="#template-object" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1263,7 +1254,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="output-object">
-<span id="output-object"></span><h2><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)<a class="headerlink" href="#output-object" title="Permalink to this headline">¶</a></h2>
+<span id="output-object"></span><h3><code class="docutils literal notranslate"><span class="pre">output</span></code> (object)<a class="headerlink" href="#output-object" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1289,7 +1280,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="output-details">
-<span id="output-details"></span><h2>Output details<a class="headerlink" href="#output-details" title="Permalink to this headline">¶</a></h2>
+<span id="output-details"></span><h3>Output details<a class="headerlink" href="#output-details" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">The table entity that the template is bound to is considered the <em>root</em> of the query for join purposes. Therefore this is how a query is going to be constructed based on the given attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="o">&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">api</span><span class="o">&gt;/&lt;</span><span class="n">current</span> <span class="n">root</span> <span class="n">path</span><span class="o">&gt;/&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">path</span><span class="o">&gt;</span>
@@ -1330,7 +1321,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </ul>
 </div>
 <div class="section" id="source-object">
-<span id="source-object"></span><h2><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)<a class="headerlink" href="#source-object" title="Permalink to this headline">¶</a></h2>
+<span id="source-object"></span><h3><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)<a class="headerlink" href="#source-object" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1356,7 +1347,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="destination-object">
-<span id="destination-object"></span><h2><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)<a class="headerlink" href="#destination-object" title="Permalink to this headline">¶</a></h2>
+<span id="destination-object"></span><h3><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)<a class="headerlink" href="#destination-object" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1388,7 +1379,7 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="supported-output-formats">
-<span id="supported-output-formats"></span><h2>Supported output formats<a class="headerlink" href="#supported-output-formats" title="Permalink to this headline">¶</a></h2>
+<span id="supported-output-formats"></span><h3>Supported output formats<a class="headerlink" href="#supported-output-formats" title="Permalink to this headline">¶</a></h3>
 <p>The following output format types are supported by default:</p>
 <table border="1" class="docutils">
 <thead>
@@ -1422,13 +1413,13 @@ objects. A template output descriptor maps one or more source table queries to o
 </tbody>
 </table></div>
 <div class="section" id="output-format-details">
-<span id="output-format-details"></span><h2>Output format details<a class="headerlink" href="#output-format-details" title="Permalink to this headline">¶</a></h2>
+<span id="output-format-details"></span><h3>Output format details<a class="headerlink" href="#output-format-details" title="Permalink to this headline">¶</a></h3>
 <p>Each <em>output format processor</em> is designed for a specific task, and the task types may vary for a given data export task.
 Some <em>output formats</em> are designed to handle the export of tabular data from the catalog, while others are meant to handle the export of file assets that are referenced by tables in the catalog.
 Other <em>output formats</em> may be implemented that could perform a combination of these tasks, implement a new format, or perform some kind of data transformation.
 <a name="csv"></a></p>
 <div class="section" id="csv">
-<span id="csv"></span><h3><code class="docutils literal notranslate"><span class="pre">csv</span></code><a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h3>
+<span id="csv"></span><h4><code class="docutils literal notranslate"><span class="pre">csv</span></code><a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h4>
 <p>This format processor generates a standard Comma Separated Values formatted text file. The first row is a comma-delimited list of column names, and all subsequent rows are comma-delimted values.  Fields are not enclosed in quotation marks.</p>
 <p>Example output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subject_id</span><span class="p">,</span><span class="n">sample_id</span><span class="p">,</span><span class="n">snp_id</span><span class="p">,</span><span class="n">gt</span><span class="p">,</span><span class="n">chipset</span>
@@ -1439,7 +1430,7 @@ Other <em>output formats</em> may be implemented that could perform a combinatio
 <p><a name="json"></a></p>
 </div>
 <div class="section" id="json">
-<span id="json"></span><h3><code class="docutils literal notranslate"><span class="pre">json</span></code><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<span id="json"></span><h4><code class="docutils literal notranslate"><span class="pre">json</span></code><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h4>
 <p>This format processor generates a text file containing a JSON Array of row data, where each JSON object in the array represents one row.</p>
 <p>Example output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="nt">&quot;subject_id&quot;</span><span class="p">:</span><span class="s2">&quot;CNP0001_F09&quot;</span><span class="p">,</span><span class="nt">&quot;sample_id&quot;</span><span class="p">:</span><span class="s2">&quot;600009963128&quot;</span><span class="p">,</span><span class="nt">&quot;snp_id&quot;</span><span class="p">:</span><span class="s2">&quot;rs6265&quot;</span><span class="p">,</span><span class="nt">&quot;gt&quot;</span><span class="p">:</span><span class="s2">&quot;0/1&quot;</span><span class="p">,</span><span class="nt">&quot;chipset&quot;</span><span class="p">:</span><span class="s2">&quot;HumanOmniExpress&quot;</span><span class="p">},</span>
@@ -1449,7 +1440,7 @@ Other <em>output formats</em> may be implemented that could perform a combinatio
 <p><a name="download"></a></p>
 </div>
 <div class="section" id="download">
-<span id="download"></span><h3><code class="docutils literal notranslate"><span class="pre">download</span></code><a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h3>
+<span id="download"></span><h4><code class="docutils literal notranslate"><span class="pre">download</span></code><a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h4>
 <p>This format processor performs multiple actions. First, it issues a <code class="docutils literal notranslate"><span class="pre">json-stream</span></code> catalog query using the parameters specified in <code class="docutils literal notranslate"><span class="pre">source</span></code>,
 in order to generate a <em>file download manifest</em> file named <code class="docutils literal notranslate"><span class="pre">download-manifest.json</span></code>. This manifest is simply a set of rows which MUST contain at least one field named <code class="docutils literal notranslate"><span class="pre">url</span></code>, and MAY contain a field named <code class="docutils literal notranslate"><span class="pre">filename</span></code>,
 and MAY contain other arbitrary fields. If the <code class="docutils literal notranslate"><span class="pre">filename</span></code> field is present, it will be appended to the final (calculated) <code class="docutils literal notranslate"><span class="pre">destination.name</span></code>, otherwise the service will perform a <em>HEAD</em> HTTP request against
@@ -1462,7 +1453,7 @@ perform the download are returned.  Additionally, use of the <code class="docuti
 <a name="fetch"></a></p>
 </div>
 <div class="section" id="fetch">
-<span id="fetch"></span><h3><code class="docutils literal notranslate"><span class="pre">fetch</span></code><a class="headerlink" href="#fetch" title="Permalink to this headline">¶</a></h3>
+<span id="fetch"></span><h4><code class="docutils literal notranslate"><span class="pre">fetch</span></code><a class="headerlink" href="#fetch" title="Permalink to this headline">¶</a></h4>
 <p>This format processor performs multiple actions. First, it issues a <code class="docutils literal notranslate"><span class="pre">json-stream</span></code> catalog query against the specified <code class="docutils literal notranslate"><span class="pre">query_path</span></code>, in order to generate a  <em>file download manifest</em>.
 This manifest is simply a set of rows which MUST contain at least one field named <code class="docutils literal notranslate"><span class="pre">url</span></code>, and SHOULD contain two additional fields: <code class="docutils literal notranslate"><span class="pre">length</span></code>,
 which is the size of the referenced file in bytes, and (at least) one of the following <em>checksum</em> fields; <code class="docutils literal notranslate"><span class="pre">md5</span></code>, <code class="docutils literal notranslate"><span class="pre">sha1</span></code>, <code class="docutils literal notranslate"><span class="pre">sha256</span></code>, <code class="docutils literal notranslate"><span class="pre">sha512</span></code>. If the <em>length</em> and appropriate <em>checksum</em> fields are missing,
@@ -1475,7 +1466,7 @@ the <code class="docutils literal notranslate"><span class="pre">url</span></cod
 The type of <code class="docutils literal notranslate"><span class="pre">source.api</span></code> that is used does not matter, as long as the result data rows contain the necessary columns. As with the <code class="docutils literal notranslate"><span class="pre">download</span></code> processor, the use of the <code class="docutils literal notranslate"><span class="pre">attribute</span></code> ERMRest query API is recommended.</p>
 </div>
 <div class="section" id="example-1">
-<span id="example-1"></span><h3>Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h3>
+<span id="example-1"></span><h4>Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h4>
 <p>This example shows how a Bag can be created that includes both tabular data and localized assets by using an attribute query to select a
 filtered set of files from an image asset table.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1512,7 +1503,7 @@ filtered set of files from an image asset table.</p>
 </div>
 </div>
 <div class="section" id="example-2">
-<span id="example-2"></span><h3>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h3>
+<span id="example-2"></span><h4>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h4>
 <p>This example shows how a Bag can be created with remote file references by using an attribute query to select a
 filtered set of file types and mapping columns from an image asset table, which can then be used to automatically create
 the bag’s <code class="docutils literal notranslate"><span class="pre">fetch.txt</span></code>.</p>
@@ -1570,7 +1561,7 @@ the bag’s <code class="docutils literal notranslate"><span class="pre">fetch.t
 </div>
 </div>
 <div class="section" id="example-3">
-<span id="example-3"></span><h3>Example 3<a class="headerlink" href="#example-3" title="Permalink to this headline">¶</a></h3>
+<span id="example-3"></span><h4>Example 3<a class="headerlink" href="#example-3" title="Permalink to this headline">¶</a></h4>
 <p>This example maps multiple single table queries to single FILE outputs using the FASTA format.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;templates&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1649,7 +1640,7 @@ the bag’s <code class="docutils literal notranslate"><span class="pre">fetch.t
 </div>
 </div>
 <div class="section" id="example-4">
-<span id="example-4"></span><h3>Example 4<a class="headerlink" href="#example-4" title="Permalink to this headline">¶</a></h3>
+<span id="example-4"></span><h4>Example 4<a class="headerlink" href="#example-4" title="Permalink to this headline">¶</a></h4>
 <p>This example uses the same queries from Example 1, but instead packages the results in a Bag archive rather than as a set
 of individual files.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1716,6 +1707,7 @@ of individual files.</p>
 </div>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -1726,7 +1718,7 @@ of individual files.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="api.html" class="btn btn-neutral float-left" title="deriva/export REST API reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-left" title="REST API reference: deriva/export" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

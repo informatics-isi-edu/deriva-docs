@@ -399,6 +399,7 @@
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.config.html">deriva.config package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.core.html">deriva.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.transfer.html">deriva.transfer package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/api/deriva.seo.html">deriva.seo package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="deriva-py/api/deriva.html#module-deriva">Module contents</a></li>
@@ -483,6 +484,11 @@
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deriva-py/cli/deriva-sitemap-cli.html">deriva-sitemap-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-sitemap-cli.html#using-deriva-sitemap-cli-to-create-sitemaps">Using deriva-sitemap-cli to create sitemaps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-sitemap-cli.html#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -1206,6 +1212,8 @@
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.dump_catalog_annotations.Annotations.add_column_annotations">add_column_annotations() (deriva.config.dump_catalog_annotations.Annotations method)</a>
 </li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.add_fkey_times">add_fkey_times() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
+</li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.dump_catalog_annotations.Annotations.add_foreign_key_annotations">add_foreign_key_annotations() (deriva.config.dump_catalog_annotations.Annotations method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.annotation_config.AttrSpecList.add_list">add_list() (deriva.config.annotation_config.AttrSpecList method)</a>
@@ -1223,6 +1231,8 @@
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.base_config.BaseSpecList.add_spec">add_spec() (deriva.config.base_config.BaseSpecList method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.dump_catalog_annotations.Annotations.add_table_annotations">add_table_annotations() (deriva.config.dump_catalog_annotations.Annotations method)</a>
+</li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.add_table_spec">add_table_spec() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.core.utils.html#deriva.core.utils.mime_utils.add_types">add_types() (in module deriva.core.utils.mime_utils)</a>
 </li>
@@ -1250,14 +1260,14 @@
 </li>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.dump_catalog.DerivaCatalogToString.annotations_to_str">annotations_to_str() (deriva.utils.catalog.manage.dump_catalog.DerivaCatalogToString method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_config.KeyedList.append">append() (deriva.core.ermrest_config.KeyedList method)</a>
 
       <ul>
         <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_config.MultiKeyedList.append">(deriva.core.ermrest_config.MultiKeyedList method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.apply">apply() (deriva.core.ermrest_config.CatalogConfig method)</a>
 
       <ul>
@@ -1746,14 +1756,16 @@
 </li>
       <li><a href="deriva-py/api/deriva.core.utils.html#module-deriva.core.utils.webauthn_utils">deriva.core.utils.webauthn_utils (module)</a>
 </li>
+      <li><a href="deriva-py/api/deriva.seo.html#module-deriva.seo.sitemap_builder">deriva.seo.sitemap_builder (module)</a>
+</li>
       <li><a href="deriva-py/api/deriva.transfer.html#module-deriva.transfer">deriva.transfer (module)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.download.html#module-deriva.transfer.download">deriva.transfer.download (module)</a>
 </li>
-      <li><a href="deriva-py/api/deriva.transfer.download.html#module-deriva.transfer.download.deriva_download">deriva.transfer.download.deriva_download (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deriva-py/api/deriva.transfer.download.html#module-deriva.transfer.download.deriva_download">deriva.transfer.download.deriva_download (module)</a>
+</li>
       <li><a href="deriva-py/api/deriva.transfer.download.html#module-deriva.transfer.download.deriva_download_cli">deriva.transfer.download.deriva_download_cli (module)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.download.processors.html#module-deriva.transfer.download.processors">deriva.transfer.download.processors (module)</a>
@@ -1936,10 +1948,12 @@
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.ERMREST_DEFAULT_COLS">ERMREST_DEFAULT_COLS (deriva.config.acl_config.Table attribute)</a>
 </li>
-      <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog">ErmrestCatalog (class in deriva.core.ermrest_catalog)</a>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.ermrest_time_to_float">ermrest_time_to_float() (deriva.seo.sitemap_builder.SitemapBuilder static method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog">ErmrestCatalog (class in deriva.core.ermrest_catalog)</a>
+</li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalogMutationError">ErmrestCatalogMutationError</a>
 </li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestSnapshot">ErmrestSnapshot (class in deriva.core.ermrest_catalog)</a>
@@ -2112,6 +2126,8 @@
       </ul></li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaBinding.get_authn_session">get_authn_session() (deriva.core.deriva_binding.DerivaBinding method)</a>
 </li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.get_column">get_column() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
+</li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.get_credential">get_credential() (in module deriva.core)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.get_group">get_group() (deriva.config.acl_config.AclConfig method)</a>
@@ -2133,6 +2149,8 @@
 </li>
       </ul></li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.base_config.BaseSpecList.get_specs">get_specs() (deriva.config.base_config.BaseSpecList method)</a>
+</li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.get_table">get_table() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.base_config.ConfigBaseCLI.get_table_arg">get_table_arg() (deriva.config.base_config.ConfigBaseCLI class method)</a>
 </li>
@@ -2168,10 +2186,10 @@
         <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.GenericUploader.getConfigPath">(deriva.transfer.upload.deriva_upload.GenericUploader class method)</a>
 </li>
       </ul></li>
-      <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.getCurrentConfigFilePath">getCurrentConfigFilePath() (deriva.transfer.upload.deriva_upload.DerivaUpload method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.getCurrentConfigFilePath">getCurrentConfigFilePath() (deriva.transfer.upload.deriva_upload.DerivaUpload method)</a>
+</li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.Table.getDefaultCols">getDefaultCols() (deriva.config.acl_config.Table method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.getDefaultColumns">getDefaultColumns() (deriva.core.ermrest_catalog.ErmrestCatalog method)</a>
@@ -2590,6 +2608,8 @@
 </li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog">PollingErmrestCatalog (class in deriva.core.polling_ermrest_catalog)</a>
 </li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.populate_spec">populate_spec() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
+</li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaBinding.post">post() (deriva.core.deriva_binding.DerivaBinding method)</a>
 
       <ul>
@@ -2794,10 +2814,10 @@
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_fkey_annotations">set_fkey_annotations() (deriva.config.annotation_config.AttrConfig method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.base_config.BaseSpec.set_keys">set_keys() (deriva.config.base_config.BaseSpec method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_node_acl">set_node_acl() (deriva.config.acl_config.AclConfig method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_node_acl_bindings">set_node_acl_bindings() (deriva.config.acl_config.AclConfig method)</a>
@@ -2811,6 +2831,8 @@
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.set_table_acls">set_table_acls() (deriva.config.acl_config.AclConfig method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.config.html#deriva.config.annotation_config.AttrConfig.set_table_annotations">set_table_annotations() (deriva.config.annotation_config.AttrConfig method)</a>
+</li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.set_table_spec_data">set_table_spec_data() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.hatrac_cli.DerivaHatracCLI.setacl">setacl() (deriva.core.hatrac_cli.DerivaHatracCLI method)</a>
 </li>
@@ -2827,6 +2849,8 @@
       <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.GenericUploader.setServers">setServers() (deriva.transfer.upload.deriva_upload.GenericUploader class method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.setTransferState">setTransferState() (deriva.transfer.upload.deriva_upload.DerivaUpload method)</a>
+</li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder">SitemapBuilder (class in deriva.seo.sitemap_builder)</a>
 </li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestSnapshot.snaptime">snaptime (deriva.core.ermrest_catalog.ErmrestSnapshot attribute)</a>
 </li>
@@ -3051,6 +3075,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.write_credential">write_credential() (in module deriva.core)</a>
+</li>
+      <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.write_sitemap">write_sitemap() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.writeTransferState">writeTransferState() (deriva.transfer.upload.deriva_upload.DerivaUpload method)</a>
 </li>

@@ -17,6 +17,12 @@ help:
 init:
 	./init.sh
 
+clean:
+	@rm -rf "$(BUILDDIR)"
+
+draft-html:
+	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
 livehtml: init
 	sphinx-autobuild -b html $(SPHINXOPTS) $(O) "$(SOURCEDIR)" "$(BUILDDIR)/html"
 
@@ -25,4 +31,4 @@ livehtml: init
 %: Makefile init
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@echo -e "\nCopying (rsync) files to docs directory...\n"
-	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete "$(BUILDDIR)/html" ../docs
+	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete "$(BUILDDIR)/html/" ../docs

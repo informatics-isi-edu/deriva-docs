@@ -17,9 +17,12 @@ help:
 init:
 	./init.sh
 
+livehtml: init
+	sphinx-autobuild -b html $(SPHINXOPTS) $(O) "$(SOURCEDIR)" "$(BUILDDIR)/html"
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile init
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 	@echo -e "\nCopying (rsync) files to docs directory...\n"
-	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete ./_build/html/ ../docs
+	rsync -avz  --exclude='CNAME' --exclude='.nojekyll' --exclude='.buildinfo' --delete "$(BUILDDIR)/html" ../docs

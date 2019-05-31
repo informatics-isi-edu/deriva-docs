@@ -2148,9 +2148,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inferred_mode</span> <span class="o">=</span> <span class="s1">&#39;attribute&#39;</span>
 
-        <span class="c1"># Validate attributes, no aggregations allowed</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">]):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Aggregate functions not allowed in attributes list, use renamed attributes instead.&quot;</span><span class="p">)</span>
+        <span class="c1"># Validate attributes</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Table</span><span class="p">)):</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Invalid value in attributes: </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">):</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Aggregate functions not allowed in attributes list, use renamed attributes instead.&quot;</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Try using the explicit syntax of </span><span class="se">\&quot;</span><span class="s2">path_or_table.column_definitions[&#39;your_column_name&#39;]</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># Validate renamed attributes</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="p">:</span>
+            <span class="n">elem</span> <span class="o">=</span> <span class="n">renamed_attributes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)):</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Invalid value in renamed attributes: </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Try using the explicit syntax of </span><span class="se">\&quot;</span><span class="si">%s</span><span class="s2">=path_or_table.column_definitions[&#39;your_column_name&#39;]</span><span class="se">\&quot;</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">key</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
         <span class="c1"># Validate group_key, if it exists</span>
         <span class="k">if</span> <span class="s1">&#39;group_key&#39;</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="p">:</span>
@@ -2176,7 +2191,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">attr</span><span class="o">.</span><span class="n">instancename</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span>
         <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
-            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">out_alias</span><span class="p">,</span> <span class="n">attr</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span> <span class="k">for</span> <span class="n">out_alias</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">urlquote</span><span class="p">(</span><span class="n">out_alias</span><span class="p">),</span> <span class="n">attr</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span> <span class="k">for</span> <span class="n">out_alias</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">]</span>
 
     <span class="nd">@property</span>

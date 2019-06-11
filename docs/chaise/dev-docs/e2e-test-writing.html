@@ -1303,6 +1303,17 @@
 <p><strong>NOTE</strong>: Our Travis environment doesn’t uses HTTPS for CHAISE. When we setup the cookie we set the secure flag in the path for cookie depending on environment. <a class="reference external" href="http://resources.infosecinstitute.com/securing-cookies-httponly-secure-flags/#gref">Reference</a></p>
 </div>
 </div>
+<div class="section" id="asynchronous-actions">
+<span id="asynchronous-actions"></span><h2>Asynchronous actions<a class="headerlink" href="#asynchronous-actions" title="Permalink to this headline">¶</a></h2>
+<p>Currently the asynchronous actions are implemented with promise manager of Selenium.
+The alternate approach to this can be the use of <code class="docutils literal notranslate"><span class="pre">async/await</span></code>.</p>
+<p>We shouldn’t be using both the approaches together as the behaviour is unpredicatable. For adding <code class="docutils literal notranslate"><span class="pre">async/await</span></code> couple of things to keep in mind:</p>
+<ol class="simple">
+<li>Make sure you disabled control flow / promise manager. Mixing awaits with enabled control flow may lead to unpredictable results.</li>
+<li>Do not forget to prepend ALL your async actions with await (usually this is all protractor api methods). If you will forgot to do this - action without await won’t be queued with other actions, so order of actions will be broken. <a class="reference external" href="https://stackoverflow.com/questions/44691940/explain-about-async-await-in-protractor/44701633#44701633">Source</a></li>
+</ol>
+<p><strong>NOTE</strong>: Currently <code class="docutils literal notranslate"><span class="pre">async/await</span></code> is only used for viewport in <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/blob/c7ca3e890c7bf73b23c49ac4cbff5ee2733fa93c/test/e2e/utils/common/deriva-webapps.js#L73">deriva-webapps</a>.</p>
+</div>
 </div>
 
 

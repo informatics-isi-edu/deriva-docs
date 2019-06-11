@@ -1033,7 +1033,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Custom CSS Styling Tips</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#changing-chaise-table-styles">Changing chaise table styles</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#general-html-structure">General HTML structure:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#general-example">General example:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen):</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#caveats">Caveats</a></li>
 </ul>
@@ -1208,6 +1208,10 @@
 <span id="changing-chaise-table-styles"></span><h2>Changing chaise table styles<a class="headerlink" href="#changing-chaise-table-styles" title="Permalink to this headline">¶</a></h2>
 <p>With the current HTML structure, it is possible to apply different styles to the table directive. There are a few key HTML ids/classes to be aware of:</p>
 <ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code><ul>
+<li>identifies the navbar that is displayed on top of every app.</li>
+</ul>
+</li>
 <li><code class="docutils literal notranslate"><span class="pre">recordset</span></code> identifier (<code class="docutils literal notranslate"><span class="pre">#recordset</span></code>)<ul>
 <li>identifies (scopes) the HTML used only for the <code class="docutils literal notranslate"><span class="pre">recordset</span></code> application</li>
 <li>should be specified when CSS rules are to be applied ONLY to <code class="docutils literal notranslate"><span class="pre">recordset</span></code> app</li>
@@ -1231,6 +1235,18 @@
 <li>identifies the related tables container</li>
 <li>should be specified when CSS rules are to be applied to only the related tables portion of <code class="docutils literal notranslate"><span class="pre">record</span></code> app</li>
 <li>can be used to scope CSS rules to the related tables not in the main body</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">r_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">r_t_&lt;table.name&gt;</span></code> classes<ul>
+<li>identifies the record page for the particular table or schema.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">rs_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">rs_t_&lt;table.name&gt;</span></code> classes<ul>
+<li>identifies the recordset page for the particular table or schema.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">re_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">re_t_&lt;table.name&gt;</span></code> classes<ul>
+<li>identifies the recordedit page for the particular table or schema.</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">s_&lt;schema.name&gt;</span></code> class (<code class="docutils literal notranslate"><span class="pre">.s_&lt;schema.name&gt;</span></code>) and <code class="docutils literal notranslate"><span class="pre">t_&lt;table.name&gt;</span></code> class (<code class="docutils literal notranslate"><span class="pre">.t_&lt;table.name&gt;</span></code>)<ul>
@@ -1258,29 +1274,53 @@
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>&lt;html id=&quot;&lt;appname&gt;&quot;
   &lt;head&gt;...&lt;/head&gt;
   &lt;body&gt;
-    ...
-      &lt;div class=&quot;s_&lt;schema.name&gt; t_&lt;table.name&gt;&quot;&gt;
-        &lt;table&gt;
-          &lt;thead&gt;
-            &lt;tr&gt;
-              &lt;th class=&quot;c_&lt;column.name&gt;&quot;&gt;...&lt;/th&gt;
-            &lt;/tr&gt;
-          &lt;thead&gt;
-          &lt;tbody&gt;...&lt;/tbody&gt;
-        &lt;/table&gt;
-      &lt;/div&gt; &lt;!-- end schema name, table name div --&gt;
-    ...
+    &lt;div class=&quot;app-container &lt;app-abbr&gt;_s_&lt;schema.name&gt; &lt;app-abbr&gt;_t_&lt;table.name&gt;&quot;&gt;
+      &lt;navbar&gt;&lt;/navbar&gt;
+      ...
+        &lt;div class=&quot;s_&lt;schema.name&gt; t_&lt;table.name&gt;&quot;&gt;
+          &lt;table&gt;
+            &lt;thead&gt;
+              &lt;tr&gt;
+                &lt;th class=&quot;c_&lt;column.name&gt;&quot;&gt;...&lt;/th&gt;
+              &lt;/tr&gt;
+            &lt;thead&gt;
+            &lt;tbody&gt;...&lt;/tbody&gt;
+          &lt;/table&gt;
+        &lt;/div&gt; &lt;!-- end schema name, table name div --&gt;
+      ...
+    &lt;/div&gt; &lt;!-- end of app-container --&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </pre></div>
 </div>
 </div>
-<div class="section" id="general-example">
-<span id="general-example"></span><h3>General example:<a class="headerlink" href="#general-example" title="Permalink to this headline">¶</a></h3>
-<p>For the a generic <code class="docutils literal notranslate"><span class="pre">#catalog/schema:table</span></code>, the following rule can be used to apply styling to a specific column:</p>
-<div class="highlight-css notranslate"><div class="highlight"><pre><span></span>.s_schema.t_table .c_column {
-  ...
-}
+<div class="section" id="examples">
+<span id="examples"></span><h3>Examples:<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Hide everything except the result table in recordset:</li>
+</ul>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span> <span class="p">.</span><span class="nc">faceting-resizable</span><span class="o">,</span> 
+<span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span> <span class="nt">faceting-collapse-btn</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span> <span class="p">#</span><span class="nn">recordset-controls-container</span><span class="o">,</span>
+<span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span> <span class="p">#</span><span class="nn">facet-filters-container</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Hide navbar in recordedit:</li>
+</ul>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">re_s_schema</span><span class="p">.</span><span class="nc">re_t_table</span> <span class="nt">navbar</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Change the width of a column in tabular displays:</li>
+</ul>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">s_schema</span><span class="p">.</span><span class="nc">t_table</span> <span class="p">.</span><span class="nc">c_column</span> <span class="p">{</span>
+  <span class="k">min-width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

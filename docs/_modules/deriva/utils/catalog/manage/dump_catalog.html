@@ -1183,8 +1183,7 @@
 
 <span class="kn">from</span> <span class="nn">yapf.yapflib.yapf_api</span> <span class="k">import</span> <span class="n">FormatCode</span>
 
-<span class="kn">from</span> <span class="nn">attrdict</span> <span class="k">import</span> <span class="n">AttrDict</span>
-<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">get_credential</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">get_credential</span><span class="p">,</span> <span class="n">AttrDict</span>
 
 <span class="kn">from</span> <span class="nn">deriva.core.ermrest_config</span> <span class="k">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">chaise_tags</span>
 <span class="kn">from</span> <span class="nn">deriva.utils.catalog.manage.deriva_file_templates</span> <span class="k">import</span> <span class="n">table_file_template</span><span class="p">,</span> <span class="n">schema_file_template</span><span class="p">,</span> \
@@ -1238,9 +1237,13 @@
         <span class="c1"># Get the currently known groups for this catalog.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span> <span class="o">=</span> <span class="n">groups</span>
         <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">(</span>
-                <span class="p">{</span><span class="n">e</span><span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">]:</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">entities</span><span class="p">()}</span>
-            <span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">(</span>
+                    <span class="p">{</span><span class="n">e</span><span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">]:</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">catalog</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">entities</span><span class="p">()}</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot access ERMrest_Group table. Check ACLs&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_groups</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -1500,7 +1503,7 @@
 
         <span class="c1"># parent arg parser</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--catalog&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;ID number of desired catalog&#39;</span><span class="p">)</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--catalog&#39;</span><span class="p">,</span> <span class="s1">&#39;--catalog-id&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;CATALOG-NUMBER&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;ID number of desired catalog&#39;</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dir&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;catalog-configs&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;output directory name&#39;</span><span class="p">)</span>
         <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--table&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Only dump out the spec for the specified table.  Format is &#39;</span>
                                                           <span class="s1">&#39;schema_name:table_name&#39;</span><span class="p">)</span>

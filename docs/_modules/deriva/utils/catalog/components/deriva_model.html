@@ -1243,6 +1243,10 @@
         <span class="s1">&#39;visiblesources_filter&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">DerivaMethodFilter</span><span class="p">,</span>
             <span class="s1">&#39;include&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;insert_sources&#39;</span><span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;sourcespec_filter&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;()&#39;</span><span class="p">:</span> <span class="n">DerivaMethodFilter</span><span class="p">,</span>
+            <span class="s1">&#39;include&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rename_column&#39;</span><span class="p">]</span>
         <span class="p">}</span>
 
     <span class="p">},</span>
@@ -1274,7 +1278,7 @@
             <span class="c1">#   &#39;level&#39;: &#39;DEBUG&#39;,</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaColumnMap&#39;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="s1">&#39;level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span>
+            <span class="c1">#    &#39;level&#39;: &#39;DEBUG&#39;</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaSchema&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1">#    &#39;level&#39;: &#39;DEBUG&#39;</span>
@@ -1284,7 +1288,8 @@
             <span class="c1"># &#39;filters&#39;: [&#39;visiblesources_filter&#39;]</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaSourceSpec&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="c1">#       &#39;level&#39;: &#39;DEBUG&#39;</span>
+            <span class="c1">#       &#39;level&#39;: &#39;DEBUG&#39;,</span>
+            <span class="c1">#   &#39;filters&#39;: [&#39;sourcespec_filter&#39;]</span>
         <span class="p">},</span>
         <span class="s1">&#39;deriva_model.DerivaTable&#39;</span><span class="p">:</span> <span class="p">{</span>
             <span class="c1">#       &#39;level&#39;: &#39;DEBUG&#39;,</span>
@@ -1867,6 +1872,14 @@
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+                <span class="s1">&#39;&lt;b&gt;Catalog: </span><span class="si">{}</span><span class="s1">&lt;/b&gt;&lt;br&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span>
+                <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span>
+                    <span class="p">[[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">comment</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">],</span>
+                    <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Schema Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Comment&#39;</span><span class="p">],</span>
+                    <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2022,8 +2035,15 @@
 
 <div class="viewcode-block" id="DerivaCatalog.validate_display"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaCatalog.validate_display">[docs]</a>    <span class="k">def</span> <span class="nf">validate_display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># TODO impliment</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span></div>
 
+<div class="viewcode-block" id="DerivaCatalog.rename_visible_columns"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaCatalog.rename_visible_columns">[docs]</a>    <span class="k">def</span> <span class="nf">rename_visible_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_map</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">t</span><span class="o">.</span><span class="n">visible_columns</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">visible_columns</span><span class="o">.</span><span class="n">rename_columns</span><span class="p">(</span><span class="n">column_map</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">DerivaSourceError</span><span class="p">:</span>
+                    <span class="k">pass</span></div></div>
 
 <div class="viewcode-block" id="DerivaSchema"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaSchema">[docs]</a><span class="k">class</span> <span class="nc">DerivaSchema</span><span class="p">(</span><span class="n">DerivaCore</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
@@ -2043,6 +2063,15 @@
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+                <span class="s1">&#39;&lt;b&gt;Schema: </span><span class="si">{}</span><span class="s1">&lt;/b&gt;&lt;br&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span>
+                <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span>
+                    <span class="p">[[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">comment</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="p">],</span>
+                    <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Table Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Comment&#39;</span><span class="p">],</span>
+                    <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stralign</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2345,10 +2374,10 @@
         <span class="c1"># Go through the columns in order and add map entries, converting any map entries that are just column names</span>
         <span class="c1"># or dictionaries to DerivaColumnDefs</span>
 
-        <span class="n">column_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">normalize_column</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">column_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">normalize_column</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_map</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
 
         <span class="c1"># Collect up all of the column name maps.</span>
-        <span class="n">column_name_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="n">column_name_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_map</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;column_map: </span><span class="si">%s</span><span class="s1"> column_name_map </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">column_map</span><span class="p">,</span> <span class="n">column_name_map</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;keys: </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">key_columns: </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> mapped_keys </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1">fkeys </span><span class="si">%s</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> mapped fkeys </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
                           <span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">keys</span><span class="p">],</span>
@@ -2393,17 +2422,17 @@
         <span class="k">return</span> <span class="n">column_map</span>
 
     <span class="k">def</span> <span class="nf">get_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaColumn</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaColumn</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaKey</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaKey</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">get_foreign_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaForeignKey</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">DerivaForeignKey</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">field</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">field</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">field</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">field</span><span class="p">))</span>
 
 
 <span class="k">class</span> <span class="nc">DerivaVisibleSources</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">):</span>
@@ -2417,7 +2446,7 @@
         <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">][</span><span class="n">item</span><span class="p">]</span>
@@ -2443,11 +2472,17 @@
                 <span class="n">rval</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Invalid context name </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;filter&#39;</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">]</span>
-                <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Invalid filter specification </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_foreign_keys</span><span class="p">:</span>
                     <span class="n">rval</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Filter context not allowed in visible_foreign_key annotation.&#39;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Invalid filter specification </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+                        <span class="n">rval</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">continue</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">DerivaSourceSpec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
@@ -2487,25 +2522,25 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">remove_new_columns</span><span class="p">(</span><span class="n">plist</span><span class="p">):</span>
-            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">plist</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">plist</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
         <span class="c1"># If just a set of contexts, convert to normal form.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="nb">set</span><span class="p">)</span> <span class="ow">or</span> <span class="n">positions</span> <span class="o">==</span> <span class="p">{}:</span>
-            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">({</span><span class="n">DerivaContext</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="p">{}</span>
+            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">DerivaContext</span><span class="p">(</span><span class="n">j</span><span class="p">),</span> <span class="p">{})</span>
                                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">positions</span>
                                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DerivaModel</span><span class="o">.</span><span class="n">contexts</span>
-                                          <span class="k">if</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">i</span><span class="p">])})</span>
+                                          <span class="k">if</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Map all contexts to enum values...</span>
-            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">({</span><span class="n">DerivaContext</span><span class="p">(</span><span class="n">j</span><span class="p">):</span> <span class="n">remove_new_columns</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">DerivaContext</span><span class="p">(</span><span class="n">j</span><span class="p">),</span> <span class="n">remove_new_columns</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
                                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">positions</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="n">DerivaModel</span><span class="o">.</span><span class="n">contexts</span>
-                                          <span class="k">if</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">k</span><span class="p">])})</span>
+                                          <span class="k">if</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="ow">is</span> <span class="n">DerivaContext</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">k</span><span class="p">]))</span>
 
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="c1"># Keys are not valid context name, so we must have keylist dictionary.</span>
-            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">remove_new_columns</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">DerivaModel</span><span class="o">.</span><span class="n">contexts</span><span class="p">})</span>
+            <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">remove_new_columns</span><span class="p">(</span><span class="n">positions</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">DerivaModel</span><span class="o">.</span><span class="n">contexts</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">insert_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">sources</span><span class="o">=</span><span class="p">[],</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
@@ -2598,6 +2633,8 @@
 <span class="sd">        :param column_map:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DerivaSourceError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;tag </span><span class="si">{}</span><span class="s1"> does not exist&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;column_map </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">column_map</span><span class="p">,</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">]))</span>
         <span class="c1"># For each context, go through the source specs and rename columns</span>
         <span class="n">new_vc</span> <span class="o">=</span> <span class="p">{}</span>
@@ -2952,14 +2989,19 @@
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># We have a list of  inbound/outbound specs.  Go through the list and replace any names that are in the map.</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">,</span>
-                <span class="o">**</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="p">[</span>
-                                 <span class="p">{</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span> <span class="n">column_map</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">()))]</span><span class="o">.</span><span class="n">name</span><span class="p">}</span> <span class="k">if</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="ow">in</span> <span class="n">column_map</span>
-                                 <span class="k">else</span> <span class="n">s</span>
-                                 <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
-                   <span class="p">}</span>
-            <span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Looking for rename in source path: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">direction</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>   <span class="c1"># inbound or outbound</span>
+                <span class="n">key_schema</span><span class="p">,</span> <span class="n">key_name</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+                <span class="k">if</span> <span class="n">key_schema</span> <span class="o">==</span> <span class="n">column_map</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span> <span class="ow">and</span> <span class="n">key_name</span> <span class="ow">in</span> <span class="n">column_map</span><span class="p">:</span>
+                    <span class="n">source</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">direction</span><span class="p">:</span> <span class="p">(</span><span class="n">key_schema</span><span class="p">,</span> <span class="n">column_map</span><span class="p">[</span><span class="n">key_name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)})</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">source</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+
+            <span class="k">return</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">spec</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">source</span><span class="p">}}</span>
+
 
     <span class="k">def</span> <span class="nf">make_outbound</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source_type</span><span class="p">()</span> <span class="ow">is</span> <span class="s1">&#39;column&#39;</span><span class="p">:</span>
@@ -3114,7 +3156,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">,</span> <span class="n">DerivaColumn</span><span class="o">.</span><span class="n">_DerivaColumnDef</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">nullok</span> <span class="o">=</span> <span class="n">nullok</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Cannot alter defined column type&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Cannot alter nullok in defined column&#39;</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3130,10 +3172,7 @@
 
     <span class="nd">@comment</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="p">,</span> <span class="n">DerivaColumn</span><span class="o">.</span><span class="n">_DerivaColumnDef</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DerivaCatalogError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Cannot alter defined column type&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">column</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">comment</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3722,6 +3761,42 @@
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tablefmt</span> <span class="o">=</span> <span class="s1">&#39;html&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="s1">&#39;&lt;b&gt;Table: </span><span class="si">{}</span><span class="s1">&lt;/b&gt;&lt;br&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="s1">&#39;Columns&lt;br&gt;&#39;</span><span class="p">,</span>
+            <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span>
+                <span class="p">[[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">typename</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">nullok</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">default</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
+                <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="s1">&#39;NullOK&#39;</span><span class="p">,</span> <span class="s1">&#39;Default&#39;</span><span class="p">],</span>
+                <span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">),</span>
+            <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Keys:&#39;</span><span class="p">,</span>
+            <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">([[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">columns</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">],</span>
+                              <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Columns&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">),</span>
+            <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Foreign Keys:&#39;</span><span class="p">,</span>
+            <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span>
+                <span class="p">[[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span> <span class="s1">&#39;-&gt;&#39;</span><span class="p">,</span>
+                  <span class="n">i</span><span class="o">.</span><span class="n">referenced_table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">]]</span>
+                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">],</span>
+                <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Columns&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Referenced Table&#39;</span><span class="p">,</span> <span class="s1">&#39;Referenced Columns&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">),</span>
+            <span class="s1">&#39;&lt;br&gt;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Referenced By:&#39;</span><span class="p">,</span>
+            <span class="n">tabulate</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                     <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">],</span>
+                     <span class="s1">&#39;&lt;-&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span>
+                                     <span class="n">i</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                     <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+                     <span class="p">]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_by</span><span class="p">],</span>
+                <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Columns&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;Referenced Columns&#39;</span><span class="p">],</span> <span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
             <span class="s1">&#39;Table </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
@@ -3794,7 +3869,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">visible_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">DerivaVisibleSources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">DerivaVisibleSources</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DerivaSourceError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Visible columns not defined&#39;</span><span class="p">)</span>
 
     <span class="nd">@visible_columns</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">visible_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vcs</span><span class="p">):</span>
@@ -4038,6 +4116,8 @@
         <span class="c1"># TODO handle: &#39;markdown_pattern&#39;: &#39;{{{$fkeys.Beta_Cell.XRay_Tomography_Data_File_Type_FKey.rowName}}}&#39;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_map</span><span class="o">.</span><span class="n">get_names</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;{{</span><span class="si">{}</span><span class="s1">}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="s1">&#39;{{</span><span class="si">{}</span><span class="s1">}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+            <span class="n">pattern</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;fkeys.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column_map</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span>
+                                      <span class="s1">&#39;fkeys.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column_map</span><span class="o">.</span><span class="n">dest_table</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">pattern</span>
 
     <span class="nd">@staticmethod</span>
@@ -4055,6 +4135,7 @@
 
     <span class="k">def</span> <span class="nf">_rename_columns_in_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_map</span><span class="p">,</span> <span class="n">skip_annotations</span><span class="o">=</span><span class="p">[],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">new_annotations</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">rename_visible_columns</span><span class="p">(</span><span class="n">column_map</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">skip_annotations</span><span class="p">:</span>
                 <span class="n">renamed</span> <span class="o">=</span> <span class="n">v</span>
@@ -4062,8 +4143,6 @@
                 <span class="n">renamed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rename_columns_in_display</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">column_map</span><span class="p">)</span>
             <span class="k">elif</span> <span class="p">(</span><span class="n">k</span> <span class="o">==</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">table_display</span> <span class="ow">or</span> <span class="n">k</span> <span class="o">==</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">column_display</span><span class="p">):</span>
                 <span class="n">renamed</span> <span class="o">=</span> <span class="n">DerivaTable</span><span class="o">.</span><span class="n">_rename_columns_in_context_display</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">column_map</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span>
-                <span class="n">renamed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visible_columns</span><span class="o">.</span><span class="n">rename_columns</span><span class="p">(</span><span class="n">column_map</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">renamed</span> <span class="o">=</span> <span class="n">v</span>
             <span class="n">new_annotations</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">renamed</span>
@@ -4452,6 +4531,7 @@
                     <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span>
                 <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">update_referenced_by</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">rename_visible_columns</span><span class="p">(</span><span class="n">column_map</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DerivaTable.copy_table"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaTable.copy_table">[docs]</a>    <span class="k">def</span> <span class="nf">copy_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">column_map</span><span class="o">=</span><span class="p">{},</span> <span class="n">clone</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                    <span class="n">key_defs</span><span class="o">=</span><span class="p">[],</span>

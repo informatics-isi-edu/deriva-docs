@@ -1204,153 +1204,8 @@
 <div class="section" id="module-deriva.utils.catalog.manage.config">
 <span id="deriva-utils-catalog-manage-config-module"></span><h2>deriva.utils.catalog.manage.config module<a class="headerlink" href="#module-deriva.utils.catalog.manage.config" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-deriva.utils.catalog.manage.deriva_csv">
-<span id="deriva-utils-catalog-manage-deriva-csv-module"></span><h2>deriva.utils.catalog.manage.deriva_csv module<a class="headerlink" href="#module-deriva.utils.catalog.manage.deriva_csv" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV">
-<em class="property">class </em><code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">DerivaCSV</code><span class="sig-paren">(</span><em>source</em>, <em>schema_name</em>, <em>table_name=None</em>, <em>column_map=True</em>, <em>key_columns=None</em>, <em>row_number_as_key=False</em>, <em>schema=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tableschema.table.Table</span></code></p>
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.convert_to_deriva">
-<code class="descname">convert_to_deriva</code><span class="sig-paren">(</span><em>outfile=None</em>, <em>schemafile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.convert_to_deriva"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.convert_to_deriva" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read in a table, try to figure out the type of its columns and output a deriva-py program that can be used
-to create the table in a catalog.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>outfile</strong> – Where to put the deriva_py program. If None, put in same directory as the input file with
-the same name as the table.</li>
-<li><strong>schemafile</strong> – If true, dump tableschema output.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary that has the column name mapping derived by this routine.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.create_validate_upload_csv">
-<code class="descname">create_validate_upload_csv</code><span class="sig-paren">(</span><em>catalog</em>, <em>convert=True</em>, <em>validate=False</em>, <em>create=False</em>, <em>upload=False</em>, <em>upload_id=None</em>, <em>derivafile=None</em>, <em>schemafile=None</em>, <em>chunk_size=10000</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.create_validate_upload_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.create_validate_upload_csv" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>catalog</strong> – Ermrest catalog to be used for operations.</li>
-<li><strong>convert</strong> – If true, use table inference to infer types for columns of table and create a deriva-py program</li>
-<li><strong>derivafile</strong> – Specify the file name of where the deriva-py program to create the table exists</li>
-<li><strong>schemafile</strong> – File that contains tableschema. May be input or output depending on other arguments</li>
-<li><strong>create</strong> – If true, create a table in the catalog.
-If derivafile argument is not specified, then infer table definition</li>
-<li><strong>validate</strong> – Run table validation on input before trying to upload</li>
-<li><strong>upload</strong> – If true, upload file to deriva catalog.</li>
-<li><strong>upload_id</strong> – ID of upload to continue.</li>
-<li><strong>chunk_size</strong> – Number of rows to upload at one time.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.infer">
-<code class="descname">infer</code><span class="sig-paren">(</span><em>limit=None</em>, <em>confidence=0.75</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.infer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.infer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Infer the current type by looking at the values in the table</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.map_name">
-<code class="descname">map_name</code><span class="sig-paren">(</span><em>name</em>, <em>column_map=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.map_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.map_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>A simple function that attempts to map a column name into a name that follows the deriva naming convetions.
-:param name: Column name to be mapped
-:param column_map: map of column names that should be used directly without additional modification
-:return: Resulting column name.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.table_schema_from_catalog">
-<code class="descname">table_schema_from_catalog</code><span class="sig-paren">(</span><em>catalog</em>, <em>skip_system_columns=True</em>, <em>outfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.table_schema_from_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.table_schema_from_catalog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a TableSchema by querying an ERMRest catalog and converting the model format.</p>
-<p>:param catalog
-:param outfile: if this argument is specified, dump the scheme into the specified file.
-:param skip_system_columns: Don’t include system columns in the schema.
-:return: table schema representation of the model</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.upload_to_deriva">
-<code class="descname">upload_to_deriva</code><span class="sig-paren">(</span><em>catalog</em>, <em>upload_id=None</em>, <em>chunk_size=10000</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.upload_to_deriva"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.upload_to_deriva" title="Permalink to this definition">¶</a></dt>
-<dd><p>Upload the source table to deriva.</p>
-<p>:param catalog
-:param upload_id
-:param chunk_size: Number of rows to upload at one time.
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSV.validate">
-<code class="descname">validate</code><span class="sig-paren">(</span><em>catalog</em>, <em>validation_limit=500000</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSV.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSV.validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>For the specified table data, validate the contents of the table against an existing table in a catalog.
-:parameter catalog
-:param validation_limit: How much of the table to check. Defaults to entire table.
-:return: an error report and the number of rows in the table as a tuple</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSVCLI">
-<em class="property">class </em><code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">DerivaCSVCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSVCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSVCLI" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../../deriva-py/api/deriva.core.html#deriva.core.base_cli.BaseCLI" title="deriva.core.base_cli.BaseCLI"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.base_cli.BaseCLI</span></code></a></p>
-<dl class="method">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSVCLI.main">
-<code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSVCLI.main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSVCLI.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="exception">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSVError">
-<em class="property">exception </em><code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">DerivaCSVError</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSVError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSVError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaCSVModel">
-<em class="property">class </em><code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">DerivaCSVModel</code><span class="sig-paren">(</span><em>csvschema</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaCSVModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaCSVModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Class to represent a CSV schema as a dervia catalog model. This class takes a table schema, performs name
-mapping of column names and generates a deriva-py model.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="deriva.utils.catalog.manage.deriva_csv.DerivaUploadError">
-<em class="property">exception </em><code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">DerivaUploadError</code><span class="sig-paren">(</span><em>chunk_size</em>, <em>chunk_number</em>, <em>http_err</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#DerivaUploadError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.DerivaUploadError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.exceptions.HTTPError</span></code></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="deriva.utils.catalog.manage.deriva_csv.load_module_from_path">
-<code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">load_module_from_path</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#load_module_from_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.load_module_from_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load configuration file from a path.
-:param file:
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="deriva.utils.catalog.manage.deriva_csv.main">
-<code class="descclassname">deriva.utils.catalog.manage.deriva_csv.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/deriva_csv.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.deriva_csv.main" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="deriva-utils-catalog-manage-deriva-csv-module">
+<h2>deriva.utils.catalog.manage.deriva_csv module<a class="headerlink" href="#deriva-utils-catalog-manage-deriva-csv-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-deriva.utils.catalog.manage.dump_catalog">
 <span id="deriva-utils-catalog-manage-dump-catalog-module"></span><h2>deriva.utils.catalog.manage.dump_catalog module<a class="headerlink" href="#module-deriva.utils.catalog.manage.dump_catalog" title="Permalink to this headline">¶</a></h2>
@@ -1532,32 +1387,32 @@ where v is the value of the annotation the dictionary.  If the tag is not in the
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="staticmethod">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acl_bindings">
-<em class="property">static </em><code class="descname">update_acl_bindings</code><span class="sig-paren">(</span><em>o</em>, <em>acl_bindings</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_acl_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acl_bindings" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">update_acl_bindings</code><span class="sig-paren">(</span><em>o</em>, <em>acl_bindings</em>, <em>merge=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_acl_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acl_bindings" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acls">
-<em class="property">static </em><code class="descname">update_acls</code><span class="sig-paren">(</span><em>o</em>, <em>acls</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_acls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acls" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">update_acls</code><span class="sig-paren">(</span><em>o</em>, <em>acls</em>, <em>merge=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_acls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_acls" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_annotations">
-<em class="property">static </em><code class="descname">update_annotations</code><span class="sig-paren">(</span><em>o</em>, <em>annotations</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_annotations" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">update_annotations</code><span class="sig-paren">(</span><em>o</em>, <em>annotations</em>, <em>merge=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_annotations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_annotations" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_catalog">
-<code class="descname">update_catalog</code><span class="sig-paren">(</span><em>mode</em>, <em>annotations</em>, <em>acls</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_catalog" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_catalog</code><span class="sig-paren">(</span><em>mode</em>, <em>annotations</em>, <em>acls</em>, <em>replace=False</em>, <em>merge=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_catalog" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_schema">
-<code class="descname">update_schema</code><span class="sig-paren">(</span><em>mode</em>, <em>schema_def</em>, <em>replace=False</em>, <em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_schema" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_schema</code><span class="sig-paren">(</span><em>mode</em>, <em>schema_def</em>, <em>replace=False</em>, <em>merge=False</em>, <em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_schema" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_table">
-<code class="descname">update_table</code><span class="sig-paren">(</span><em>mode</em>, <em>schema_name</em>, <em>table_def</em>, <em>replace=False</em>, <em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_table" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_table</code><span class="sig-paren">(</span><em>mode</em>, <em>schema_name</em>, <em>table_def</em>, <em>replace=False</em>, <em>merge=False</em>, <em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/update_catalog.html#CatalogUpdater.update_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.update_catalog.CatalogUpdater.update_table" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1681,6 +1536,14 @@ be remotely applied.</p>
 :param scheme: URL scheme to be used
 :param server: Server on which the catalog is to be created
 :param kwargs:  Other DerivaServer arguments
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.utils.catalog.manage.utils.load_module_from_path">
+<code class="descclassname">deriva.utils.catalog.manage.utils.</code><code class="descname">load_module_from_path</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/manage/utils.html#load_module_from_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.manage.utils.load_module_from_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load configuration file from a path.
+:param file:
 :return:</p>
 </dd></dl>
 

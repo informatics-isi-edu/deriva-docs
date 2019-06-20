@@ -1171,6 +1171,7 @@
 <span class="kn">from</span> <span class="nn">graphviz</span> <span class="k">import</span> <span class="n">Digraph</span>
 <span class="kn">from</span> <span class="nn">deriva.utils.catalog.components.deriva_model</span> <span class="k">import</span> <span class="n">DerivaCatalog</span>
 
+
 <div class="viewcode-block" id="DerivaCatalogToGraph"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph">[docs]</a><span class="k">class</span> <span class="nc">DerivaCatalogToGraph</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">(</span>
@@ -1192,7 +1193,7 @@
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">schemas</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_acl_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;Public&#39;</span><span class="p">,</span> <span class="s1">&#39;WWW&#39;</span><span class="p">]]</span> \
+        <span class="n">schemas</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_acl_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;WWW&#39;</span><span class="p">]]</span> \
             <span class="k">if</span> <span class="n">schemas</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">schemas</span>
 
         <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schemas</span><span class="p">:</span>
@@ -1208,6 +1209,7 @@
 <span class="sd">        :param skip_assocation_tables:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">schema_name</span><span class="p">]</span>
 
         <span class="c1"># Put nodes for each schema in a seperate subgraph.</span>
@@ -1221,7 +1223,9 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># Skip over current table if it is a association table and option is set.</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">is_pure_binary</span><span class="p">()</span> <span class="ow">and</span> <span class="n">skip_assocation_tables</span><span class="p">):</span>
-                        <span class="n">schema_graph</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+                        <span class="n">schema_graph</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+                                          <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">,</span>
+                                          <span class="n">URL</span><span class="o">=</span><span class="n">table</span><span class="o">.</span><span class="n">chaise_uri</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Skipping node&#39;</span><span class="p">,</span> <span class="n">node_name</span><span class="p">)</span>
 
@@ -1272,6 +1276,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dumping graph in file&#39;</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">file</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="nb">dir</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span> <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_repr_svg_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">_repr_svg_</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DerivaCatalogToGraph.view"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph.view">[docs]</a>    <span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">view</span><span class="p">()</span></div></div>

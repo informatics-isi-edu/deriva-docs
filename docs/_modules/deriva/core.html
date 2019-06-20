@@ -1174,15 +1174,14 @@
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">portalocker</span>
 <span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="k">import</span> <span class="n">HTTPAdapter</span>
 <span class="kn">from</span> <span class="nn">requests.packages.urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
 <span class="kn">from</span> <span class="nn">requests.packages.urllib3.exceptions</span> <span class="k">import</span> <span class="n">MaxRetryError</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">distutils</span> <span class="k">import</span> <span class="n">util</span> <span class="k">as</span> <span class="n">du_util</span>
-<span class="kn">from</span> <span class="nn">importlib</span> <span class="k">import</span> <span class="n">import_module</span>
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.8.4&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.8.5&quot;</span>
 
 <span class="n">IS_PY2</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">IS_PY3</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
@@ -1293,8 +1292,6 @@
                  <span class="n">capture_warnings</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">add_logging_level</span><span class="p">(</span><span class="s2">&quot;TRACE&quot;</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="n">capture_warnings</span><span class="p">)</span>
-    <span class="c1"># this will suppress potentially numerous INFO-level &quot;Resetting dropped connection&quot; messages from requests</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;requests.packages.urllib3.connectionpool&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">log_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">log_format</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)s</span><span class="s2">:</span><span class="si">%(funcName)s</span><span class="s2">()] </span><span class="si">%(message)s</span><span class="s2">&quot;</span> \
             <span class="k">if</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
@@ -1331,20 +1328,12 @@
 
 <span class="k">def</span> <span class="nf">get_new_requests_session</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="n">DEFAULT_SESSION_CONFIG</span><span class="p">):</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
-    <span class="n">inspect_retry</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">Retry</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s2">&quot;raise_on_status&quot;</span> <span class="ow">in</span> <span class="n">inspect_retry</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_connect&#39;</span><span class="p">],</span>
-                        <span class="n">read</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_read&#39;</span><span class="p">],</span>
-                        <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
-                        <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">],</span>
-                        <span class="n">method_whitelist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                        <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># this is in case installed urllib3 is &lt; 1.15 and raise_on_status is unavailable</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_connect&#39;</span><span class="p">],</span>
-                        <span class="n">read</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_read&#39;</span><span class="p">],</span>
-                        <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
-                        <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">])</span>
+    <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_connect&#39;</span><span class="p">],</span>
+                    <span class="n">read</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_read&#39;</span><span class="p">],</span>
+                    <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
+                    <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">],</span>
+                    <span class="n">method_whitelist</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
         <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1400,25 +1389,9 @@
     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span></div>
 
 
-<span class="n">PORTALOCKER</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">PORTALOCKER</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;portalocker&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">pass</span>
-
-
 <span class="k">def</span> <span class="nf">lock_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="k">global</span> <span class="n">PORTALOCKER</span>
-    <span class="k">if</span> <span class="n">PORTALOCKER</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-        <span class="n">portalocker_argspec</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">Lock</span><span class="o">.</span><span class="fm">__init__</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;truncate&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">portalocker_argspec</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">Lock</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-                                    <span class="n">flags</span><span class="o">=</span><span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">LOCK_EX</span> <span class="k">if</span> <span class="n">exclusive</span> <span class="k">else</span> <span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">LOCK_SH</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">Lock</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
-                                    <span class="n">flags</span><span class="o">=</span><span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">LOCK_EX</span> <span class="k">if</span> <span class="n">exclusive</span> <span class="k">else</span> <span class="n">PORTALOCKER</span><span class="o">.</span><span class="n">LOCK_SH</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">portalocker</span><span class="o">.</span><span class="n">Lock</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+                            <span class="n">flags</span><span class="o">=</span><span class="n">portalocker</span><span class="o">.</span><span class="n">LOCK_EX</span> <span class="k">if</span> <span class="n">exclusive</span> <span class="k">else</span> <span class="n">portalocker</span><span class="o">.</span><span class="n">LOCK_SH</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="write_credential"><a class="viewcode-back" href="../../deriva-py/api/deriva.core.html#deriva.core.write_credential">[docs]</a><span class="k">def</span> <span class="nf">write_credential</span><span class="p">(</span><span class="n">credential_file</span><span class="o">=</span><span class="n">DEFAULT_CREDENTIAL_FILE</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">DEFAULT_CREDENTIAL</span><span class="p">):</span>

@@ -1242,8 +1242,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="c1"># process config file</span>
-        <span class="k">if</span> <span class="n">config_file</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">config_file</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DerivaDownloadConfigurationError</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
 <div class="viewcode-block" id="DerivaDownload.set_dcctx_cid"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload.set_dcctx_cid">[docs]</a>    <span class="k">def</span> <span class="nf">set_dcctx_cid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cid</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">cid</span><span class="p">,</span> <span class="s2">&quot;A dcctx cid is required&quot;</span>

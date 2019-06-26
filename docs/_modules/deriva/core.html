@@ -1380,7 +1380,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create configuration file </span><span class="si">%s</span><span class="s2">. Using internal defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                             <span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
@@ -1416,9 +1416,9 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">write_credential</span><span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create configuration file </span><span class="si">%s</span><span class="s2">. Using internal defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create credential file </span><span class="si">%s</span><span class="s2">. Using internal defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                             <span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-            <span class="n">credential</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="n">credential</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">credential</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">lock_file</span><span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>

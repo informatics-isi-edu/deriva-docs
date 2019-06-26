@@ -1834,6 +1834,11 @@
             <span class="n">exclusions</span> <span class="o">=</span> <span class="n">correlation_cnames</span> <span class="o">|</span> <span class="n">_system_defaults</span>
             <span class="n">target_cnames</span> <span class="o">=</span> <span class="p">{</span><span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclusions</span><span class="p">}</span>
 
+        <span class="c1"># test if there are any targets after excluding for correlation keys and system columns</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">target_cnames</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No &quot;targets&quot; for the update. There must be at least one column as a target of the update,&#39;</span>
+                             <span class="s1">&#39; and targets cannot overlap with &quot;correlation&quot; keys and system columns.&#39;</span><span class="p">)</span>
+
         <span class="c1"># Form the path</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/attributegroup/</span><span class="si">{table}</span><span class="s1">/</span><span class="si">{correlation}</span><span class="s1">;</span><span class="si">{targets}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fqname</span><span class="p">,</span>

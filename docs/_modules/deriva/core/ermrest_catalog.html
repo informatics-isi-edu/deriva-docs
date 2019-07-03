@@ -1167,11 +1167,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for deriva.core.ermrest_catalog</h1><div class="highlight"><pre>
-<span></span>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">csv</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">Megabyte</span><span class="p">,</span> <span class="n">get_transfer_summary</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">Megabyte</span><span class="p">,</span> <span class="n">Kilobyte</span><span class="p">,</span> <span class="n">get_transfer_summary</span><span class="p">,</span> <span class="n">IS_PY2</span>
 <span class="kn">from</span> <span class="nn">.deriva_binding</span> <span class="k">import</span> <span class="n">DerivaBinding</span>
 <span class="kn">from</span> <span class="nn">.ermrest_config</span> <span class="k">import</span> <span class="n">CatalogConfig</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ermrest_model</span>
@@ -1323,11 +1325,14 @@
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">entity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">entity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="ErmrestCatalog.getAsFile"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">[docs]</a>    <span class="k">def</span> <span class="nf">getAsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ErmrestCatalog.getAsFile"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">[docs]</a>    <span class="k">def</span> <span class="nf">getAsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delete_if_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">           Retrieve catalog data streamed to destination file.</span>
 <span class="sd">           Caller is responsible to clean up file even on error, when the file may or may not be exist.</span>
-
+<span class="sd">           If &quot;delete_if_empty&quot; is True, the file will be inspected for &quot;empty&quot; content. In the case of</span>
+<span class="sd">           json/json-stream content, the presence of a single empty JSON object will be tested for. In the case of</span>
+<span class="sd">           CSV content, the file will be parsed with CSV reader to determine that only a single header line and now row</span>
+<span class="sd">           data is present.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
@@ -1338,6 +1343,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_response_raise_for_status</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+            <span class="n">content_type</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span>
 
             <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
@@ -1349,15 +1355,44 @@
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloading: </span><span class="si">%.2f</span><span class="s2"> MB transferred&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">Megabyte</span><span class="p">))):</span>
                         <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                         <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">destfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
             <span class="n">elapsed</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
             <span class="n">summary</span> <span class="o">=</span> <span class="n">get_transfer_summary</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">)</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File [</span><span class="si">%s</span><span class="s2">] transfer successful. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">destfilename</span><span class="p">,</span> <span class="n">summary</span><span class="p">))</span>
+
+            <span class="c1"># perform automatic file deletion on detected &quot;empty&quot; content, if requested</span>
+            <span class="n">delete_file</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">delete_if_empty</span> <span class="ow">and</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">destfile</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">content_type</span> <span class="o">==</span> <span class="s2">&quot;application/json&quot;</span> <span class="ow">or</span> <span class="n">content_type</span> <span class="o">==</span> <span class="s2">&quot;application/x-json-stream&quot;</span><span class="p">:</span>
+                    <span class="n">buf</span> <span class="o">=</span> <span class="n">destfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">buf</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;[]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="ow">or</span> <span class="n">buf</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">:</span>
+                        <span class="n">delete_file</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">elif</span> <span class="n">content_type</span> <span class="o">==</span> <span class="s2">&quot;text/csv&quot;</span><span class="p">:</span>
+                    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">codecs</span><span class="o">.</span><span class="n">iterdecode</span><span class="p">(</span><span class="n">destfile</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">IS_PY2</span> <span class="k">else</span> <span class="n">destfile</span><span class="p">)</span>
+                    <span class="n">rowcount</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+                        <span class="n">rowcount</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="k">if</span> <span class="n">rowcount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="k">break</span>
+                    <span class="k">if</span> <span class="n">rowcount</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">delete_file</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="k">if</span> <span class="n">delete_file</span><span class="p">:</span>
+                    <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destfilename</span><span class="p">)</span>
+                    <span class="n">destfile</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="n">log_msg</span> <span class="o">=</span> <span class="s2">&quot;File [</span><span class="si">%s</span><span class="s2">] transfer successful. </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> \
+                      <span class="p">(</span><span class="n">destfilename</span><span class="p">,</span> <span class="n">summary</span><span class="p">,</span>
+                       <span class="s2">&quot;File was automatically deleted due to empty content.&quot;</span> <span class="k">if</span> <span class="n">delete_file</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">log_msg</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
-                <span class="n">callback</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="n">summary</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="n">destfilename</span><span class="p">)</span>
+                <span class="n">callback</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="n">log_msg</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="n">destfilename</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">r</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+            <span class="k">if</span> <span class="n">destfile</span><span class="p">:</span>
+                <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ErmrestCatalog.delete"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">guard_response</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform DELETE request, returning response object.</span>

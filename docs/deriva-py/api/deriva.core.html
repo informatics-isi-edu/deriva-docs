@@ -2440,9 +2440,13 @@ to assure change is only applied to expected state.</p>
 
 <dl class="method">
 <dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">
-<code class="descname">getAsFile</code><span class="sig-paren">(</span><em>path</em>, <em>destfilename</em>, <em>headers={}</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getAsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getAsFile</code><span class="sig-paren">(</span><em>path</em>, <em>destfilename</em>, <em>headers={}</em>, <em>callback=None</em>, <em>delete_if_empty=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getAsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve catalog data streamed to destination file.
-Caller is responsible to clean up file even on error, when the file may or may not be exist.</p>
+Caller is responsible to clean up file even on error, when the file may or may not be exist.
+If “delete_if_empty” is True, the file will be inspected for “empty” content. In the case of
+json/json-stream content, the presence of a single empty JSON object will be tested for. In the case of
+CSV content, the file will be parsed with CSV reader to determine that only a single header line and now row
+data is present.</p>
 </dd></dl>
 
 <dl class="method">

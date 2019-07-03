@@ -1806,7 +1806,7 @@
             <span class="k">raise</span> <span class="n">DerivaUploadConfigurationError</span><span class="p">(</span><span class="s2">&quot;Record query template substitution error: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_updateFileMetadata</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_updateFileMetadata</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">no_overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pruneDict</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">column_map</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolateDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="n">column_map</span><span class="p">)</span>
@@ -1835,16 +1835,22 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_urlEncodeMetadata</span><span class="p">(</span><span class="n">asset_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url_encoding_safe_overrides&quot;</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_updateFileMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_updateFileMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
             <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid input parameter type(s): (src = </span><span class="si">%s</span><span class="s2">), expected (dict)&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">src</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">dst</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">src</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">UploadMetadataReservedKeyNames</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Context metadata update specified reserved key name [</span><span class="si">%s</span><span class="s2">], &quot;</span>
                                    <span class="s2">&quot;ignoring value: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">src</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
-                    <span class="k">del</span> <span class="n">src</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+                    <span class="k">del</span> <span class="n">dst</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="k">continue</span>
+            <span class="c1"># dont overwrite any existing metadata field</span>
+            <span class="k">if</span> <span class="n">no_overwrite</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">dst</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_queryFileMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_mapping</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

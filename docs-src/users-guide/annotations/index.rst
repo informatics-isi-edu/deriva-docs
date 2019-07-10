@@ -12,5 +12,7 @@ Annotations Guide
    template-markdown
    pre-format
    pseudo-columns
+   pseudo-column-display
+   pseudo-column-template
    table-alternatives
    export

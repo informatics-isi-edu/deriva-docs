@@ -357,6 +357,25 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pseudo-column-display.html">Pseudo-Column Display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-column-display.html#accessing-pseudo-column-values-using-by-utilizing-source-definitions">Accessing Pseudo-Column Values Using By Utilizing Source Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-column-display.html#accessing-current-pseudo-column-data">Accessing Current Pseudo-Column Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pseudo-column-display.html#self-data-structure">$self Data Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pseudo-column-display.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pseudo-column-template.html">Pseudo Column in Templating Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-column-template.html#defining-sources">1. Defining Sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-column-template.html#defining-pseudo-column-display">2. Defining Pseudo-Column Display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pseudo-column-template.html#accessing-columns-and-fkeys">Accessing Columns and Fkeys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pseudo-column-template.html#accessing-sources-wait-for">Accessing Sources (Wait For)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-column-template.html#examples">Examples</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="table-alternatives.html">Table Alternatives</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#definition-and-assumptions">Definition and assumptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#related-entities">Related Entities</a></li>
@@ -1743,7 +1762,7 @@ columns in a table, overriding the defined table structure.</p>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;sourcekey&quot;:</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: Defines a pseudo-column based on the given <em>sourcekey</em>. For more information please refer to <a class="reference internal" href="pseudo-columns.html"><span class="doc">pseudo-column document</span></a>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;source&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Defines a pseudo-column based on the given <em>sourceentry</em>. For detailed explanation and examples please refer to <a class="reference internal" href="pseudo-columns.html#examples"><span class="std std-ref">here</span></a>. Other optional attributes that this JSON document can have are:<ul>
 <li><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The markdown to use in place of the default heuristics for title of column.</li>
-<li><code class="docutils literal notranslate"><span class="pre">display</span></code>: The display settings for generating the column presentation value. Please refer to <a class="reference external" href="pseudo-column-display.md">pseudo-columns display document</a> for more information. The available options are:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">display</span></code>: The display settings for generating the column presentation value. Please refer to <a class="reference internal" href="pseudo-column-display.html"><span class="doc">pseudo-columns display document</span></a> for more information. The available options are:<ul>
 <li><code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>: Markdown pattern that will be used for generating the value.</li>
 <li><code class="docutils literal notranslate"><span class="pre">template_engine</span></code>: The template engine that should be used for the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">wait_for</span></code>: List of pseudo-column sourcekeys that the current column will use in the defined <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>.</li>
@@ -2073,7 +2092,7 @@ foreign keys referencing a table, useful when presenting “related entities”.
 <li><code class="docutils literal notranslate"><span class="pre">[</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em><code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present foreign keys with matching <em>schema name</em> and <em>constraint name</em>, in the order specified in the list. Ignore constraint names that do not correspond to foreign keys in the catalog. Do not present foreign keys that are not mentioned in the list. These 2-element lists use the same format as each element in the <code class="docutils literal notranslate"><span class="pre">names</span></code> property of foreign keys in the JSON model introspection output of ERMrest. The foreign keys MUST represent inbound relationships to the current table.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;source&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Defines a pseudo-column based on the given <em>sourceentry</em>. For detailed explanation and examples please refer to <a class="reference internal" href="pseudo-columns.html#examples"><span class="std std-ref">here</span></a>. Other optional attributes that this JSON document can have are:<ul>
 <li><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The markdown to use in place of the default heuristics for title of column.</li>
-<li><code class="docutils literal notranslate"><span class="pre">display</span></code>: The display settings to use for generating the value for this column. Please refer to <a class="reference external" href="pseudo-column-display.md">pseudo-columns display document</a> for more information.</li>
+<li><code class="docutils literal notranslate"><span class="pre">display</span></code>: The display settings to use for generating the value for this column. Please refer to <a class="reference internal" href="pseudo-column-display.html"><span class="doc">pseudo-columns display document</span></a> for more information.</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;sourcekey&quot;:</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: Defines a pseudo-column based on the given <em>sourcekey</em>.</li>
@@ -2271,7 +2290,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <div class="section" id="tag-2019-source-definitions">
 <span id="tag-2019-source-definitions"></span><h2>Tag: 2019 Source Definitions<a class="headerlink" href="#tag-2019-source-definitions" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2019:source-defnitions</span></code></p>
-<p>This key allows specification of sources that can be used in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreignKeys</span></code> annotations. It will also allow defining the list of column names and outbound forieng keys that should be available in the templating environments. Please refer to <a class="reference external" href="pseudo-column-template.md">this document</a> for more information about how to use this annotation.</p>
+<p>This key allows specification of sources that can be used in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreignKeys</span></code> annotations. It will also allow defining the list of column names and outbound forieng keys that should be available in the templating environments. Please refer to <a class="reference internal" href="pseudo-column-template.html"><span class="doc">this document</span></a> for more information about how to use this annotation.</p>
 <p>Example:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;tag:isrd.isi.edu,2019:source-defnitions&quot;: {
     &quot;columns&quot;: true,

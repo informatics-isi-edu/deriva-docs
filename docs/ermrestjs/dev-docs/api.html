@@ -1698,7 +1698,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -2115,7 +2115,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -5225,7 +5225,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -5593,8 +5593,8 @@ or rejected with any of the following errors:</p>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>
 </div>
-<div class="section" id="reference-read-limit-contextheaderparams-useentity-code-promise-code">
-<span id="reference-read-limit-contextheaderparams-useentity-code-promise-code"></span><h3>reference.read(limit, contextHeaderParams, useEntity) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code">
+<span id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Reads the referenced resources and returns a promise for a page of
 tuples. The <code class="docutils literal notranslate"><span class="pre">limit</span></code> parameter is required and must be a positive
 integer. The page of tuples returned will be described by the
@@ -5643,6 +5643,11 @@ or rejected with any of these errors:</p>
 <td>useEntity</td>
 <td><code>Boolean</code></td>
 <td>whether we should use entity api or not (if true, we won't get foreignkey data)</td>
+</tr>
+<tr>
+<td>dontCorrectPage</td>
+<td><code>Boolean</code></td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check. NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>
@@ -9725,7 +9730,7 @@ FacetColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -10093,8 +10098,8 @@ or rejected with any of the following errors:</p>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>
 </div>
-<div class="section" id="reference-read-limit-contextheaderparams-useentity-code-promise-code">
-<span id="id29"></span><h3>reference.read(limit, contextHeaderParams, useEntity) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code">
+<span id="id29"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Reads the referenced resources and returns a promise for a page of
 tuples. The <code class="docutils literal notranslate"><span class="pre">limit</span></code> parameter is required and must be a positive
 integer. The page of tuples returned will be described by the
@@ -10143,6 +10148,11 @@ or rejected with any of these errors:</p>
 <td>useEntity</td>
 <td><code>Boolean</code></td>
 <td>whether we should use entity api or not (if true, we won't get foreignkey data)</td>
+</tr>
+<tr>
+<td>dontCorrectPage</td>
+<td><code>Boolean</code></td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check. NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>

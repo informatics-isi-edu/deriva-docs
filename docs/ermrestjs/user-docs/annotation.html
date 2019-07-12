@@ -2363,6 +2363,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <li><code class="docutils literal notranslate"><span class="pre">&quot;entry/create&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">entry</span></code> that only applies to creating new resources.</li>
 </ul>
 </li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;export&quot;</span></code>: Controls the presentations related to the export.</li>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;filter&quot;</span></code>: Any data-filtering control context, i.e. when prompting the user for column constraints or facets.</li>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;row_name&quot;</span></code>: Any abbreviated title-like presentation context.<ul>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;row_name/title&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">row_name</span></code> that only applies to title of page.</li>
@@ -2385,11 +2386,13 @@ The json object follows the same rules as <a class="reference external" href="ht
 <th>Annotation</th>
 <th>compact</th>
 <th>compact/brief</th>
+<th>compact/brief/inline</th>
 <th>compact/select</th>
 <th>detailed</th>
 <th>entry</th>
 <th>entry/edit</th>
 <th>entry/create</th>
+<th>export</th>
 <th>filter</th>
 <th>row_name</th>
 <th>*</th>
@@ -2399,33 +2402,39 @@ The json object follows the same rules as <a class="reference external" href="ht
 <tr>
 <td><a href="#tag-2015-display">2015 Display</a></td>
 <td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 <td>-</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>X</td>
 </tr>
 <tr>
 <td><a href="#tag-2016-ignore">2016 Ignore</a></td>
 <td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 <td>-</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
+<td>-</td>
 <td>-</td>
 <td>X</td>
 </tr>
 <tr>
 <td><a href="#tag-2016-visible-columns">2016 Visible Columns</a></td>
 <td>X</td>
-<td>-</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
@@ -2436,15 +2445,32 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>X</td>
 </tr>
 <tr>
-<td><a href="#tag-2016-column-display">2016 Column Display</a></td>
+<td><a href="#tag-2017-key-display">2017 Key Display</a></td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
 <td>X</td>
 <td>-</td>
+<td>-</td>
+<td>-</td>
+<td></td>
+<td>-</td>
+<td>-</td>
+<td>X</td>
+</tr>
+<tr>
+<td><a href="#tag-2016-column-display">2016 Column Display</a></td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
+<td>X</td>
+<td>X</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>X</td>
 </tr>
@@ -2454,38 +2480,59 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>X</td>
 <td>X</td>
 <td>X</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
 <td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>X</td>
 <td>X</td>
 </tr>
 <tr>
 <td><a href="#tag-2016-visible-foreign-keys">2016 Visible Foreign Keys</a></td>
-<td>X</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
-<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 <td>-</td>
 <td>X</td>
 </tr>
 <tr>
 <td><a href="#tag-2016-table-alternatives">2016 Table Alternatives</a></td>
 <td>X</td>
-<td>-</td>
 <td>X</td>
 <td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>X</td>
+</tr>
+<tr>
+<td><a href="#tag-2019-export">2019 Export</a></td>
+<td>X</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
 <td>X</td>
 <td>-</td>
-<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
 </tr>
 </tbody>
 </table></div>

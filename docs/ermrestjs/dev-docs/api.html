@@ -1115,6 +1115,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/logging.html#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">07/12/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">05/06/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">04/18/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">03/08/19</a></li>
@@ -1841,6 +1842,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+formatPresentation">.formatPresentation(data, context, options)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn">.InboundForeignKeyPseudoColumn</a><ul>
@@ -7256,6 +7258,7 @@ It usually is a self-link to the given row of data.</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+formatPresentation">.formatPresentation(data, context, options)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
 </ul>
@@ -7358,11 +7361,18 @@ This class extends the <a class="reference external" href="#ERMrest.ReferenceCol
 <p>Given the data, will return the appropriate metadata values. The returned object
 will have the following attributes:</p>
 <ul class="simple">
-<li>caption: the string that can be used for showing the selected file.</li>
 <li>filename</li>
 <li>byteCount</li>
 <li>md5</li>
 <li>sha256</li>
+<li>origin</li>
+<li>caption: the string that can be used for showing the selected file.
+The heuristics for origin and caption:<ol>
+<li>if filenameColumn is defined and its value is not null, use it as caption.</li>
+<li>otherwise, if the url is from hatrac, extract the filename and use it as caption.</li>
+<li>otherwise, use the last part of url as caption. in detailed context, if url is absolute find the origin.</li>
+</ol>
+</li>
 </ul>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><strong>Returns</strong>: <code>Object</code> - metadata object with <code class="docutils literal notranslate"><span class="pre">caption</span></code>, <code class="docutils literal notranslate"><span class="pre">filename</span></code>, <code class="docutils literal notranslate"><span class="pre">byteCount</span></code>, <code class="docutils literal notranslate"><span class="pre">md5</span></code>, and <code class="docutils literal notranslate"><span class="pre">sha256</span></code> attributes.</p>
 <table border="1" class="docutils">
@@ -7388,6 +7398,44 @@ will have the following attributes:</p>
 <td>options</td>
 <td><code>Object</code></td>
 <td></td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.AssetPseudoColumn+formatPresentation"></a></p>
+</div>
+<div class="section" id="assetpseudocolumn-formatpresentation-data-context-options-code-object-code">
+<span id="assetpseudocolumn-formatpresentation-data-context-options-code-object-code"></span><h3>assetPseudoColumn.formatPresentation(data, context, options) ⇒ <code>Object</code><a class="headerlink" href="#assetpseudocolumn-formatpresentation-data-context-options-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Format the presentation value corresponding to this asset definition.</p>
+<ol class="simple">
+<li>return the raw data in entry contexts.</li>
+<li>otherwise if it has wait-for return empty.</li>
+<li>otherwise if column-display is defined, use it.</li>
+<li>otherwise if value is null, return null.</li>
+<li>otherwise use getMetadata to genarate caption and origin and return a download button.</li>
+</ol>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><strong>Returns</strong>: <code>Object</code> - A key value pair containing value and isHTML that detemrines the presentation.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>the raw data of the table</td>
+</tr>
+<tr>
+<td>context</td>
+<td><code>String</code></td>
+<td>the app context</td>
+</tr>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>include <code>formattedValues</code></td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.InboundForeignKeyPseudoColumn"></a></p>

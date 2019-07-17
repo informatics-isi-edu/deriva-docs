@@ -1116,7 +1116,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#asset-download-csv-default-export">Asset Download &amp; CSV Default Export</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#pcid-list">PCID list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#">07/16/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">07/12/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">05/06/19</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">04/18/19</a></li>
@@ -1827,17 +1829,46 @@ The truncation is done based on a set priority. We keep adding more and more att
 </ul>
 </div>
 </div>
+<div class="section" id="pcid-list">
+<span id="pcid-list"></span><h2>PCID list<a class="headerlink" href="#pcid-list" title="Permalink to this headline">¶</a></h2>
+<p>The following is the list of <code class="docutils literal notranslate"><span class="pre">PCID</span></code>’s that will be present on main entity requests in the chaise apps. <code class="docutils literal notranslate"><span class="pre">CID</span></code> will always represent what app the request was made from, <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will represent what app the user navigated from when the main entity request was triggered.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">record</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">recordset</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">recordedit</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/record</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/recordset</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/recordedit</span></code></li>
+</ul>
+<p>If the user clicked on a link in the navbar, the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will properly denote what app the user came from that had the navbar present. A static page that uses the navbar app, will set the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> as <code class="docutils literal notranslate"><span class="pre">navbar</span></code>. Otherwise the appname will be appended (i.e.   <code class="docutils literal notranslate"><span class="pre">navbar/&lt;appname&gt;</span></code>). This is true for the <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/wiki/Logging-in-WebApps#pcid-list">deriva-webapps</a> as well.</p>
+</div>
 <div class="section" id="change-log">
 <span id="change-log"></span><h2>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id1"></span><h3>07/12/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>07/16/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-links">
 <span id="commit-links"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/65de409b3229533be76a1537d55a83a9bec84bb3">chaise</a></li>
+</ul>
+<div class="section" id="added">
+<span id="added"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Added <code class="docutils literal notranslate"><span class="pre">pcid</span></code> and <code class="docutils literal notranslate"><span class="pre">ppid</span></code> to navbar links that are for the same origin/host.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="">
+<span id="id2"></span><h3>07/12/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="commit-links">
+<span id="id3"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/commit/df91573fac7ae59eee0e6bf73f7023de899de3d4">ermrestjs</a></li>
 </ul>
 <div class="section" id="added">
-<span id="added"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
+<span id="id4"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li>Added specific action for the <code class="docutils literal notranslate"><span class="pre">recordset/main/&lt;ANY_SUBACTION&gt;/correct-page</span></code>. This action will indicate that users went to a page with <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code> in url AND there is less data than limit implies (beginning of set) OR we got the right set of data but there’s no previous set (beginning of set), and then chaise tried again without <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code> in url. This action is used for the second request that is trying the main request again without <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code>.</li>
 </ul>
@@ -1845,24 +1876,24 @@ The truncation is done based on a set priority. We keep adding more and more att
 </div>
 </div>
 <div class="section" id="">
-<span id="id2"></span><h3>05/06/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>05/06/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-links">
-<span id="id3"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
+<span id="id6"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/8dc53a5e61e3b32dfae3279bb000baf9b2f51fb1">chaise</a></li>
 </ul>
 </div>
 <div class="section" id="added">
-<span id="id4"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<span id="id7"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>We are going to send <code class="docutils literal notranslate"><span class="pre">cid</span></code>, <code class="docutils literal notranslate"><span class="pre">wid</span></code>, and <code class="docutils literal notranslate"><span class="pre">pid</span></code> headers with authen requests from now on.</li>
 </ul>
 </div>
 </div>
 <div class="section" id="">
-<span id="id5"></span><h3>04/18/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id8"></span><h3>04/18/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-links">
-<span id="id6"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
+<span id="id9"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/777febb1811620522344314e383238ece936047f">chaise</a></li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/commit/af7ac83359647e232dbb5385ec25be7add7dc89e">ermrestjs</a></li>
@@ -1902,7 +1933,7 @@ The truncation is done based on a set priority. We keep adding more and more att
 </ul>
 </div>
 <div class="section" id="added">
-<span id="id7"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<span id="id10"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Added proper <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> logging to viewer app.</li>
 <li><code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code> has been added to the main request of each app which shows the parent <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">cid</span></code>.</li>
@@ -1917,15 +1948,15 @@ The truncation is done based on a set priority. We keep adding more and more att
 </div>
 </div>
 <div class="section" id="">
-<span id="id8"></span><h3>03/08/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id11"></span><h3>03/08/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-links">
-<span id="id9"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
+<span id="id12"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/05108d07e37c1579b28ccfc58916db486f379005">chaise</a></li>
 </ul>
 </div>
 <div class="section" id="changed">
-<span id="id10"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
+<span id="id13"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>We realized that the first request of adding pure and binary is not using the correct action. It was using the <code class="docutils literal notranslate"><span class="pre">recordset/main/load</span></code>. We changed it to use the appropriate <code class="docutils literal notranslate"><span class="pre">pre-create/prefill/association</span></code> action with <code class="docutils literal notranslate"><span class="pre">referred</span></code> information.</li>
 </ul>

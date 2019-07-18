@@ -1110,6 +1110,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#action-list">Action List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#button-action-list">Button Action List</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#error-log">Error Log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#truncation">Truncation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a><ul>
@@ -1771,6 +1772,343 @@
 <td></td>
 <td></td>
 <td><a href="#041819">added (4/18/19)</a></td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="button-action-list">
+<span id="button-action-list"></span><h2>Button Action List<a class="headerlink" href="#button-action-list" title="Permalink to this headline">¶</a></h2>
+<p>The following table will include the actions that are triggered when the user clicks on buttons or other elements on the page that don’t send a request to the server. We will have to make a head request as part of this click event to store the log info.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>App</th>
+<th>Description</th>
+<th>Action</th>
+<th>Extra</th>
+<th>Notes</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>record</td>
+<td>delete clicked</td>
+<td>record/delete-pending</td>
+<td></td>
+<td>Delete was clicked from submenu bar and confirm delete was shown.</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>confirm delete clicked</td>
+<td>record/delete-cancelled</td>
+<td></td>
+<td>Delete was clicked and confirm delete was shown. User then clicked cancel or X to close the modal without deleting</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>hide empty related tables</td>
+<td>record/hide-related</td>
+<td></td>
+<td>"Hide empty related records" clicked in submenu bar</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>show empty related tables</td>
+<td>record/show-related</td>
+<td></td>
+<td>"Show empty related records" clicked in submenu bar</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>export dropdown</td>
+<td>record/export</td>
+<td></td>
+<td>Dropdown was opened. Selecting an export option will trigger a request so need to capture that event</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>share popup</td>
+<td>record/share</td>
+<td></td>
+<td>Share dialog was opened up. NOTE: We send a request to fetch the catalog information to verify if the current "version" is the most recent. Maybe update that request instead (action currently is "model/catalog")</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>copy live link</td>
+<td>record/share-live-copy</td>
+<td></td>
+<td>Live link was copied to clipboard</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>copy version link</td>
+<td>record/share-version-copy</td>
+<td></td>
+<td>Versioned link was copied to clipboard</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>Table Display</td>
+<td>record/inline/table-display</td>
+<td></td>
+<td>User changed display format to show table display (user does not have permission to edit)</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>Revert Display</td>
+<td>record/inline/mkdn-display</td>
+<td></td>
+<td>User changed display format to show markdown display (user does not have permission to edit)</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>Edit Display</td>
+<td>record/inline/edit-display</td>
+<td></td>
+<td>User changed display format to show table display (user has permission to edit)</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>Display</td>
+<td>record/inline/display</td>
+<td></td>
+<td>User changed display format to show markdown display (user has permission to edit)</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>ToC panel open/collapse</td>
+<td>record/toc-panel</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>ToC panel options selected</td>
+<td>record/toc-heading</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordset</td>
+<td>export dropdown</td>
+<td>recordset/export</td>
+<td></td>
+<td>Dropdown was opened. Selecting an export option will trigger a request so need to capture that event</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset</td>
+<td>permalink</td>
+<td>recordset/permalink</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordedit</td>
+<td>Add 1 record</td>
+<td>create/add-1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordedit</td>
+<td>Add x records</td>
+<td>create/add-x</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordedit</td>
+<td>remove form</td>
+<td>create/remove</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordedit</td>
+<td>remove form</td>
+<td>update/remove</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>navbar</td>
+<td>branding link clicked</td>
+<td>branding</td>
+<td></td>
+<td>User clicked the branding logo in the top left and navigating to the static page</td>
+<td></td>
+</tr>
+<tr>
+<td>navbar</td>
+<td>My profile</td>
+<td>profile</td>
+<td></td>
+<td>User clicked the My Profile button in top right dropdown to view profile details</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordset directive</td>
+<td>facet panel open/collapse</td>
+<td>recordset/facet-panel</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordset directive</td>
+<td>items per page dropdown</td>
+<td>recordset/page-size</td>
+<td></td>
+<td>Dropdown was opened. Selecting a page size will trigger a read request so need to capture that event</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>All on page</td>
+<td>recordset/multi/all</td>
+<td></td>
+<td>All on page checkbox selected</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>None on page</td>
+<td>recordset/multi/none</td>
+<td></td>
+<td>None on page checkbox selected</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>Clear All</td>
+<td>recordset/multi/clear</td>
+<td></td>
+<td>Clear all clicked to remove selection</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>Records with values</td>
+<td>recordset/multi/not-null</td>
+<td></td>
+<td>"records with values" checkbox selected</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>Records with no values</td>
+<td>recordset/multi/null</td>
+<td></td>
+<td>"no value" checkbox selected</td>
+<td></td>
+</tr>
+<tr>
+<td>recordset multiselect directive</td>
+<td>Modal closed</td>
+<td>recordset/select/cancelled</td>
+<td></td>
+<td>select (single/multi) modal was closed with no selection made</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ellipses directive (row)</td>
+<td>delete clicked</td>
+<td>row/delete-pending</td>
+<td></td>
+<td>Delete was clicked and confirm delete was shown.</td>
+<td></td>
+</tr>
+<tr>
+<td>ellipses directive (row)</td>
+<td>confirm delete cancelled</td>
+<td>row/delete-cancelled</td>
+<td></td>
+<td>Delete was clicked and confirm delete was shown. User then clicked cancel or X to close the modal without deleting</td>
+<td></td>
+</tr>
+<tr>
+<td>ellipses directive (row)</td>
+<td>unlink clicked</td>
+<td>row/unlink-pending</td>
+<td></td>
+<td>Unlink was clicked and confirm unlink (delete) was shown.</td>
+<td></td>
+</tr>
+<tr>
+<td>ellipses directive (row)</td>
+<td>confirm unlink cancelled</td>
+<td>row/unlink-cancelled</td>
+<td></td>
+<td>Unlink was clicked and confirm unlink (delete) was shown. User then clicked cancel or X to close the modal without unlinking</td>
+<td></td>
 </tr>
 </tbody>
 </table></div>

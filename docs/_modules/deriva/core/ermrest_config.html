@@ -522,6 +522,26 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-sitemap-cli.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html">deriva-backup-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html">deriva-restore-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../deriva-qt/index.html">Desktop GUI Applications (deriva-qt)</a><ul>
@@ -1212,8 +1232,6 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../core.html">deriva.core</a> &raquo;</li>
-        
       <li>deriva.core.ermrest_config</li>
     
     
@@ -1230,7 +1248,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for deriva.core.ermrest_config</h1><div class="highlight"><pre>
-<span></span>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span>
 
 
@@ -1566,6 +1585,14 @@
     <span class="k">def</span> <span class="nf">fromcatalog</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieve catalog config as a CatalogConfig management object.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/schema&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="CatalogConfig.fromfile"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.fromfile">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">fromfile</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">schema_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deserialize a JSON schema file as a CatalogConfig management object.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">schema_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">sf</span><span class="p">:</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="CatalogConfig.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply catalog configuration to catalog unless existing already matches.</span>

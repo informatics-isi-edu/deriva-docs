@@ -522,6 +522,26 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-sitemap-cli.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html">deriva-backup-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-backup-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html">deriva-restore-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-restore-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../deriva-qt/index.html">Desktop GUI Applications (deriva-qt)</a><ul>
@@ -1251,22 +1271,18 @@
     <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span>
-                 <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">credentials</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="k">if</span> <span class="n">output_dir</span> <span class="k">else</span> <span class="s2">&quot;.&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">envars</span> <span class="o">=</span> <span class="n">envars</span> <span class="k">if</span> <span class="n">envars</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cancelled</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span class="n">credentials</span> <span class="k">if</span> <span class="n">credentials</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;output_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">envars</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;envars&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;config&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;credentials&quot;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="n">config_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;config_file&quot;</span><span class="p">)</span>
+        <span class="n">credential_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;credential_file&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
@@ -1288,8 +1304,17 @@
         <span class="n">session_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span>
 
         <span class="c1"># credential initialization</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;token&quot;</span><span class="p">)</span>
+        <span class="n">oauth2_token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;oauth2_token&quot;</span><span class="p">)</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">credential_file</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span class="n">get_credential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="n">credential_file</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">token</span> <span class="ow">or</span> <span class="n">oauth2_token</span> <span class="ow">or</span> <span class="p">(</span><span class="n">username</span> <span class="ow">and</span> <span class="n">password</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">format_credential</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span>
+                                                   <span class="n">oauth2_token</span><span class="o">=</span><span class="n">oauth2_token</span><span class="p">,</span>
+                                                   <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
+                                                   <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">))</span>
 
         <span class="c1"># catalog and file store initialization</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">:</span>
@@ -1318,10 +1343,10 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">dcctx</span><span class="p">[</span><span class="s1">&#39;cid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cid</span></div>
 
-<div class="viewcode-block" id="DerivaDownload.setConfig"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload.setConfig">[docs]</a>    <span class="k">def</span> <span class="nf">setConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaDownload.set_config"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload.set_config">[docs]</a>    <span class="k">def</span> <span class="nf">set_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span></div>
 
-<div class="viewcode-block" id="DerivaDownload.setCredentials"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload.setCredentials">[docs]</a>    <span class="k">def</span> <span class="nf">setCredentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">):</span>
+<div class="viewcode-block" id="DerivaDownload.set_credentials"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload.set_credentials">[docs]</a>    <span class="k">def</span> <span class="nf">set_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">credentials</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span> <span class="o">=</span> <span class="n">credentials</span></div>
@@ -1349,7 +1374,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">identity</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">setCredentials</span><span class="p">(</span><span class="n">get_credential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">get_credential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Validating credentials for host: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
                 <span class="n">attributes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get_authn_session</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
                 <span class="n">identity</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">]</span>
@@ -1503,8 +1528,8 @@
     <span class="n">REMOTE_PATHS_KEY</span> <span class="o">=</span> <span class="n">REMOTE_PATHS_KEY</span>
     <span class="n">SERVICE_URL_KEY</span> <span class="o">=</span> <span class="n">SERVICE_URL_KEY</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">DerivaDownload</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">DerivaDownload</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

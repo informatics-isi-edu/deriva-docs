@@ -522,6 +522,26 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-sitemap-cli.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html">deriva-backup-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-backup-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html">deriva-restore-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-restore-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../deriva-qt/index.html">Desktop GUI Applications (deriva-qt)</a><ul>
@@ -1212,8 +1232,6 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../core.html">deriva.core</a> &raquo;</li>
-        
       <li>deriva.core.ermrest_catalog</li>
     
     
@@ -1488,7 +1506,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Catalog deletion refused when really is </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="n">really</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ErmrestCatalog.clone_catalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.clone_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">clone_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst_catalog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">copy_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">copy_annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">copy_policy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">truncate_after</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ErmrestCatalog.clone_catalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.clone_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">clone_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                      <span class="n">dst_catalog</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">copy_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">copy_annotations</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">copy_policy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">truncate_after</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">exclude_schemas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clone this catalog&#39;s content into dest_catalog, creating a new catalog if needed.</span>
 
 <span class="sd">        :param dst_catalog: Destination catalog or None to request creation of new destination (default).</span>
@@ -1496,6 +1520,7 @@
 <span class="sd">        :param copy_annotations: Copy annotations when True (default).</span>
 <span class="sd">        :param copy_policy: Copy access-control policies when True (default).</span>
 <span class="sd">        :param truncate_after: Truncate destination history after cloning when True (default).</span>
+<span class="sd">        :param exclude_schemas: A list of schema names to exclude from the cloning process.</span>
 
 <span class="sd">        When dest_catalog is provided, attempt an idempotent clone,</span>
 <span class="sd">        assuming content MAY be partially cloned already using the</span>
@@ -1538,6 +1563,7 @@
         <span class="n">new_keys</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># ERMrest does not currently allow bulk key creation</span>
         <span class="n">clone_states</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">fkeys_deferred</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">exclude_schemas</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">exclude_schemas</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">exclude_schemas</span>
 
         <span class="k">def</span> <span class="nf">prune_parts</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">copy_annotations</span> <span class="ow">and</span> <span class="s1">&#39;annotations&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
@@ -1602,6 +1628,8 @@
             <span class="k">return</span> <span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">prejson</span><span class="p">()))</span>
 
         <span class="k">for</span> <span class="n">sname</span><span class="p">,</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">src_model</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sname</span> <span class="ow">in</span> <span class="n">exclude_schemas</span><span class="p">:</span>
+                <span class="k">continue</span>
             <span class="k">if</span> <span class="n">sname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
                 <span class="n">new_model</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy_sdef</span><span class="p">(</span><span class="n">schema</span><span class="p">))</span>
 

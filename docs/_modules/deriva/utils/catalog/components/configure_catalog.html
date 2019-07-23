@@ -522,6 +522,26 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-sitemap-cli.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html">deriva-backup-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-backup-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html">deriva-restore-cli</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html#features">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html#command-line-options">Command-Line options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html#positional-arguments">Positional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html#optional-arguments">Optional arguments:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../deriva-py/cli/deriva-restore-cli.html#oauth2-token"><code class="docutils literal notranslate"><span class="pre">--oauth2-token</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../deriva-qt/index.html">Desktop GUI Applications (deriva-qt)</a><ul>
@@ -1258,8 +1278,8 @@
 <span class="sd">    The only method of interest in this class is configure_baseline_catalog.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="n">catalog_id</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">,</span> <span class="n">catalog_id</span><span class="o">=</span><span class="n">catalog_id</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_make_schema_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">DerivaSchemaConfigure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_name</span><span class="p">)</span>
@@ -1419,9 +1439,8 @@
         <span class="c1"># Set compound key so that we can link up with Visible_Group table.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ermrest_group</span><span class="o">.</span><span class="n">create_key</span><span class="p">([</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">,</span> <span class="s1">&#39;Display_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Description&#39;</span><span class="p">],</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Group ID is unique.&#39;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;already exists&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="k">raise</span>
+        <span class="k">except</span> <span class="n">DerivaCatalogError</span><span class="p">:</span>
+            <span class="k">pass</span>
 
         <span class="c1"># Create a catalog groups table</span>
         <span class="n">column_defs</span> <span class="o">=</span> <span class="p">[</span>

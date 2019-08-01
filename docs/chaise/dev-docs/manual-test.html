@@ -1492,6 +1492,17 @@ You are not authorized to perform this action. <a class="reference external" hre
 <p>The share dialog has an alert warning that shows when the user is viewing stale data. This can happen if the current record’s values are updated after you laoded the record page or the model itself has changed. The data changed event is test in the e2e tests. The model change event requires manual testing. This can be tested on any table on <code class="docutils literal notranslate"><span class="pre">dev.isrd</span></code> as long as you can modify that table’s model. <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/wiki/Ermrest-Howto-(set-ACL,-cookies)#add-column-to-existing-table">Here</a> is a template for the curl command.</p>
 </div>
 </div>
+<div class="section" id="testing-assets">
+<span id="testing-assets"></span><h1>Testing assets<a class="headerlink" href="#testing-assets" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="asset-hosted-on-www-different-origin">
+<span id="asset-hosted-on-www-different-origin"></span><h2>asset hosted on www (different origin)<a class="headerlink" href="#asset-hosted-on-www-different-origin" title="Permalink to this headline">¶</a></h2>
+<p>When an asset is hosted on a differet origin, a modal dialog stating you will be redirected will be shown. Follow <a class="reference external" href="https://dev.gudmap.org/chaise/record/#2/Common:Publication/RID=17-EZ6C">this link</a> to see an asset on a different origin to test this functionality.</p>
+</div>
+<div class="section" id="asset-with-permission-to-access-required">
+<span id="asset-with-permission-to-access-required"></span><h2>asset with permission to access required<a class="headerlink" href="#asset-with-permission-to-access-required" title="Permalink to this headline">¶</a></h2>
+<p>When an asset requires login, it should have the proper class attached to it. This is done automatically for the default asset presentation in ermrestJS. The class is called <code class="docutils literal notranslate"><span class="pre">asset-permission</span></code>. Follow <a class="reference external" href="https://dev.rebuildingakidney.org/chaise/record/#2/RNASeq:File/RID=16-1YDJ">this link</a> and try to download the asset without being logged in. You should see a modal dialog that looks like an error that suggests you should login. After logging in, try downloading the asset again with a user with the proper permission to view it. Then try the same with a user who can’t view the asset and verify the proper 403 modal is shown instead.</p>
+</div>
+</div>
 
 
            </div>

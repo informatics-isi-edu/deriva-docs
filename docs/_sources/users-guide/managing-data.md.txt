@@ -27,6 +27,7 @@ a file container format used by DERIVA for the import and export of data.
 |`deriva-hatrac-cli`|The [`deriva-hatrac-cli`](http://docs.derivacloud.org/deriva-py/cli/deriva-hatrac-cli.html) is a command-line utility for interacting directly with the DERIVA _Hatrac_ object store.|
 |`deriva-upload-cli`|The [`deriva-upload-cli`]() provides batch upload functionality for both catalog (_ERMRest_) and asset (_Hatrac_) data. This application is generally used for automating the bulk transfer of data to DERIVA servers.|
 |`deriva-sitemap-cli`|The [`deriva-sitemap-cli`](http://docs.derivacloud.org/deriva-py/cli/deriva-sitemap-cli.html) utility creates a sitemap containing `record` entries for all publicly-readable rows in one or more _ERMRest_ tables.
+|`deriva-globus-auth-utils`|The [`deriva-globus-auth-utils`]() provides numerous utility functions for working with the [Globus Auth API](https://docs.globus.org/api/auth/reference/) in addition to Globus Auth Native App login functionality.|
 
 ###### Graphical User Interface (GUI) applications
 
@@ -36,13 +37,15 @@ a file container format used by DERIVA for the import and export of data.
 |`deriva-upload`|DERIVA Upload Utility|Provides batch upload functionality for both catalog and asset data. This application is an interactive tool used for the bulk transfer of data to DERIVA servers.|
 
 ## Installer packages for Windows and MacOSX
-Pre-packaged installers of `deriva-client` for Windows and MacOSX can be 
-found [here](https://github.com/informatics-isi-edu/deriva-client-bundle/releases). 
+Pre-packaged installers of `deriva-client` for Windows and MacOSX are 
+available. 
 These installer packages include a bundled Python interpreter and all 
 other software dependencies and are recommended for Windows and MacOSX 
 users who are looking for a more traditional "turnkey" installation that 
 does not require them to install Python and manage Python software package 
 installations.  
+
+[Download the installer packages here.](https://github.com/informatics-isi-edu/deriva-client-bundle/releases)
 
 ## Installing `deriva-client` from PyPi via `pip`
 For users who already have the base Python interpreter installed and are 

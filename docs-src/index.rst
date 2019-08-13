@@ -16,7 +16,6 @@ DERIVA Documentation
   users-guide/using-chaise
   users-guide/managing-data
   users-guide/project-tutorial
-  users-guide/managing-catalogs
   users-guide/annotations/index
   
   

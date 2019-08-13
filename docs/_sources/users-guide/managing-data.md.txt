@@ -203,8 +203,12 @@ programmatic interface to _ERMRest_.
 
 * [`datapath` Documentation and Tutorial](/deriva-py/README.html)
 
+
+## Reference Documentation
+Documentation for [`deriva-py`](/deriva-py/index.html) API functions and CLI programs.
+
 ## Source Code
-The source code and additional documentation for the primary components of `deriva-client` can be found at the links below: 
+The source code for the primary components of `deriva-client` can be found at the links below: 
 
 * [`deriva-py`](https://github.com/informatics-isi-edu/deriva-py)
 * [`deriva-qt`](https://github.com/informatics-isi-edu/deriva-qt)

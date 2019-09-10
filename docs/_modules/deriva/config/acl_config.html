@@ -1250,6 +1250,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">ermrest_config</span><span class="p">,</span> <span class="n">get_credential</span><span class="p">,</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">VERSION</span><span class="p">,</span> \
     <span class="n">format_exception</span><span class="p">,</span> <span class="n">urlquote</span>
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ermrest_model</span> <span class="k">as</span> <span class="n">_em</span>
 <span class="kn">from</span> <span class="nn">deriva.core.ermrest_config</span> <span class="k">import</span> <span class="n">CatalogColumn</span><span class="p">,</span> <span class="n">CatalogForeignKey</span>
 <span class="kn">from</span> <span class="nn">deriva.config.base_config</span> <span class="k">import</span> <span class="n">BaseSpec</span><span class="p">,</span> <span class="n">BaseSpecList</span><span class="p">,</span> <span class="n">ConfigUtil</span><span class="p">,</span> <span class="n">ConfigBaseCLI</span>
 <span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span>
@@ -1405,11 +1406,10 @@
         <span class="k">if</span> <span class="n">invalidate_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="n">invalidate_list</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">binding_list</span> <span class="ow">and</span> <span class="n">binding_name</span> <span class="ow">in</span> <span class="n">binding_list</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Binding </span><span class="si">{b}</span><span class="s2"> appears in both acl_bindings and invalidate_bindings for table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2"> node </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">b</span><span class="o">=</span><span class="n">binding_name</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Binding </span><span class="si">{b}</span><span class="s2"> appears in both acl_bindings and invalidate_bindings for table </span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2"> node </span><span class="si">{n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">b</span><span class="o">=</span><span class="n">binding_name</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">table_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
                 <span class="n">node</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">[</span><span class="n">binding_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></div>
-            
-                
 
 <div class="viewcode-block" id="AclConfig.save_groups"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclConfig.save_groups">[docs]</a>    <span class="k">def</span> <span class="nf">save_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">glt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_or_validate_group_table</span><span class="p">()</span>
@@ -1457,36 +1457,34 @@
         <span class="k">assert</span> <span class="n">schema</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">glt</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="s1">&#39;tables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tname</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">glt</span> <span class="o">==</span> <span class="p">{}:</span>
-            <span class="n">glt_spec</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s2">&quot;Named lists of groups used in ACLs. Maintained by the rbk_acls program. &quot;</span>
-                           <span class="s2">&quot;Do not update this table manually.&quot;</span><span class="p">,</span>
-                <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;tag:isrd.isi.edu,2016:generated&#39;</span><span class="p">:</span> <span class="kc">None</span>
-                <span class="p">},</span>
-                <span class="s1">&#39;column_definitions&#39;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span>
-                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span>
-                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">},</span>
-                        <span class="s1">&#39;nullok&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                        <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;Name of grouplist, used in foreign keys. This table is maintained by the rbk_acls &#39;</span>
-                                   <span class="s1">&#39;program and should not be updated by hand.&#39;</span>
-                    <span class="p">},</span>
-                    <span class="p">{</span>
-                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">GC_NAME</span><span class="p">,</span>
-                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;base_type&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;typename&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">},</span> <span class="s1">&#39;is_array&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
-                        <span class="s1">&#39;nullok&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                        <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="s1">&#39;List of groups. This table is maintained by the rbk_acls program and should not be &#39;</span>
-                                   <span class="s1">&#39;updated by hand.&#39;</span>
-                    <span class="p">}</span>
-
+            <span class="n">glt_spec</span> <span class="o">=</span> <span class="n">_em</span><span class="o">.</span><span class="n">Table</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                <span class="n">tname</span><span class="p">,</span>
+                <span class="n">column_defs</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">_em</span><span class="o">.</span><span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span>
+                        <span class="n">_em</span><span class="o">.</span><span class="n">builtin_types</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                        <span class="n">nullok</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Name of grouplist, used in foreign keys. This table is maintained by the acl-config &#39;</span>
+                                <span class="s1">&#39;program and should not be updated by hand.&#39;</span>
+                    <span class="p">),</span>
+                    <span class="n">_em</span><span class="o">.</span><span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">GC_NAME</span><span class="p">,</span>
+                        <span class="n">_em</span><span class="o">.</span><span class="n">builtin_types</span><span class="p">[</span><span class="s1">&#39;text[]&#39;</span><span class="p">],</span>
+                        <span class="n">nullok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;List of groups. This table is maintained by the acl-config program and should not be &#39;</span>
+                                <span class="s1">&#39;updated by hand.&#39;</span>
+                    <span class="p">)</span>
                 <span class="p">],</span>
-                <span class="s1">&#39;keys&#39;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span>
-                        <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="n">sname</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{t}</span><span class="s2">_</span><span class="si">{c}</span><span class="s2">_u&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">)]],</span>
-                        <span class="s1">&#39;unique_columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">]</span>
-                    <span class="p">}</span>
-                <span class="p">]</span>
-            <span class="p">}</span>
+                <span class="n">key_defs</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">_em</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                        <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">],</span>
+                        <span class="n">constraint_names</span><span class="o">=</span><span class="p">[[</span><span class="n">sname</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{t}</span><span class="s2">_</span><span class="si">{c}</span><span class="s2">_u&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">)]]</span>
+                    <span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;Named lists of groups used in ACLs. Maintained by the acl-config program. Do not update this &quot;</span>
+                        <span class="s2">&quot;table manually.&quot;</span><span class="p">,</span>
+                <span class="n">annotations</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;tag:isrd.isi.edu,2016:generated&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+            <span class="p">)</span>
             <span class="n">glt</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">glt_spec</span><span class="p">))</span>
 
         <span class="k">else</span><span class="p">:</span>
@@ -1498,13 +1496,12 @@
             <span class="k">if</span> <span class="n">name_col</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nullok&#39;</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s2">&quot;</span><span class="si">{n}</span><span class="s2"> column in group list table (</span><span class="si">{s}</span><span class="s2">.</span><span class="si">{t}</span><span class="s2">) allows nulls&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">sname</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">tname</span><span class="p">))</span>
+
             <span class="n">nc_uniq</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">glt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">):</span>
                 <span class="n">cols</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">)</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">NC_NAME</span><span class="p">:</span>
                     <span class="n">nc_uniq</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="k">break</span>
-                <span class="k">if</span> <span class="n">nc_uniq</span><span class="p">:</span>
                     <span class="k">break</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">nc_uniq</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -1779,7 +1776,9 @@
 <div class="viewcode-block" id="AclCLI"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.AclCLI">[docs]</a><span class="k">class</span> <span class="nc">AclCLI</span><span class="p">(</span><span class="n">ConfigBaseCLI</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ConfigBaseCLI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;ACL configuration tool&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">VERSION</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">,</span> <span class="s1">&#39;--groups-only&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create group table only&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span></div>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-g&#39;</span><span class="p">,</span> <span class="s1">&#39;--groups-only&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;create group table only&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span>
+        <span class="n">group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--omit-groups&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;do not create group table&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../deriva-py/api/deriva.config.html#deriva.config.acl_config.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -1788,7 +1787,7 @@
     <span class="n">table_name</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_table_arg</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">schema_names</span> <span class="o">=</span> <span class="n">cli</span><span class="o">.</span><span class="n">get_schema_arg_list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="n">credentials</span> <span class="o">=</span> <span class="n">get_credential</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">credential_file</span><span class="p">)</span>
-    <span class="n">save_groups</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">dryrun</span>
+    <span class="n">save_groups</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dryrun</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">omit_groups</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schema_names</span><span class="p">:</span>
         <span class="n">acl_config</span> <span class="o">=</span> <span class="n">AclConfig</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">catalog</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">schema_name</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span>
                                <span class="n">table_name</span><span class="o">=</span><span class="n">table_name</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>

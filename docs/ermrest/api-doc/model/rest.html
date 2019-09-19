@@ -638,22 +638,27 @@
 <li class="toctree-l3"><a class="reference internal" href="#bulk-schemata-and-table-creation">Bulk Schemata and Table Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#schema-creation">Schema Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#schema-retrieval">Schema Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#schema-alteration">Schema Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#schema-deletion">Schema Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-list-retrieval">Table List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-creation">Table Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-retrieval">Table Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-alteration">Table Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-deletion">Table Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-list-retrieval">Column List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-creation">Column Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-retrieval">Column Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#column-alteration">Column Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-deletion">Column Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#key-list-retrieval">Key List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#key-creation">Key Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#key-retrieval">Key Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-alteration">Key Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#key-deletion">Key Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#foreign-key-list-retrieval">Foreign Key List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#foreign-key-creation">Foreign Key Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#foreign-key-retrieval">Foreign Key Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#foreign-key-alteration">Foreign Key Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#foreign-key-deletion">Foreign Key Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#annotations">Annotations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#annotation-list-retrieval">Annotation List Retrieval</a></li>
@@ -1422,6 +1427,62 @@ a model-level resource name of the form:</p>
 <li>401 Unauthorized</li>
 </ul>
 </div>
+<div class="section" id="schema-alteration">
+<span id="schema-alteration"></span><h2>Schema Alteration<a class="headerlink" href="#schema-alteration" title="Permalink to this headline">¶</a></h2>
+<p>The PUT operation is used to alter an existing schema’s definition:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em></li>
+</ul>
+<p>In this operation, the <code class="docutils literal notranslate"><span class="pre">application/json</span></code> <em>schema representation</em> is supplied as input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span><span class="o">/</span><span class="n">schema</span><span class="o">/</span><span class="n">schema_name</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">schema</span> <span class="n">name</span><span class="p">,</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">column</span> <span class="n">comment</span><span class="p">,</span>
+  <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">annotation</span> <span class="n">key</span><span class="p">:</span> <span class="n">annotation</span> <span class="n">document</span><span class="p">,</span> <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The input <em>schema representation</em> is as for schema creation via the POST request. Instead of creating a new schema, the existing schema with <em>schema name</em> as specified in the URL is altered to match the input representation. Each of these fields, if present, will be processed as a target configuration for that aspect of the table definition:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">schema_name</span></code>: a new schema name to support renaming from <em>schema name</em> to <em>new schema name</em></li>
+<li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: a new comment string</li>
+<li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: a replacement annotation map</li>
+<li><code class="docutils literal notranslate"><span class="pre">acls</span></code>: a replacement ACL set</li>
+</ul>
+<p>Other schema fields are immutable through this interface, and such input fields will be ignored.</p>
+<p>Absence of a named field indicates that the existing state for that aspect of the definition should be retained without change. For example, an input to rename a schema and set a comment would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="s2">&quot;the new name&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;This is my new named table.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On success, the response is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="n">schema</span> <span class="n">representation</span>
+</pre></div>
+</div>
+<p>where the body content represents the schema status at the end of the request.</p>
+<p><em>NOTE</em>: In the case that the schema name is changed, the returned document will indicate the new name, and subsequent access to the model resource will require using the updated URL:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>new schema name</em></li>
+</ul>
+<p>The old URL will immediately start responding with a schema not found error.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request</li>
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
 <div class="section" id="schema-deletion">
 <span id="schema-deletion"></span><h2>Schema Deletion<a class="headerlink" href="#schema-deletion" title="Permalink to this headline">¶</a></h2>
 <p>The DELETE method is used to delete a schema:</p>
@@ -1558,6 +1619,65 @@ a model-level resource name of the form:</p>
 <li>409 Conflict</li>
 </ul>
 </div>
+<div class="section" id="table-alteration">
+<span id="table-alteration"></span><h2>Table Alteration<a class="headerlink" href="#table-alteration" title="Permalink to this headline">¶</a></h2>
+<p>The PUT operation is used to alter an existing table’s definition:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em></li>
+</ul>
+<p>In this operation, the <code class="docutils literal notranslate"><span class="pre">application/json</span></code> <em>table representation</em> is supplied as input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span><span class="o">/</span><span class="n">schema</span><span class="o">/</span><span class="n">schema_name</span><span class="o">/</span><span class="n">table</span><span class="o">/</span><span class="n">table_name</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="n">destination</span> <span class="n">schema</span> <span class="n">name</span><span class="p">,</span>
+  <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">table</span> <span class="n">name</span><span class="p">,</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">column</span> <span class="n">comment</span><span class="p">,</span>
+  <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">annotation</span> <span class="n">key</span><span class="p">:</span> <span class="n">annotation</span> <span class="n">document</span><span class="p">,</span> <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The input <em>table representation</em> is as for table creation via the POST request. Instead of creating a new table, the existing table with <em>table name</em> as specified in the URL is altered to match the input representation. Each of these fields, if present, will be processed as a target configuration for that aspect of the table definition:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">schema_name</span></code>: an existing schema name to support moving from <em>schema name</em> to <em>destination schema name</em></li>
+<li><code class="docutils literal notranslate"><span class="pre">table_name</span></code>: a new name to support renaming from <em>table name</em> to <em>new table name</em></li>
+<li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: a new comment string</li>
+<li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: a replacement annotation map</li>
+<li><code class="docutils literal notranslate"><span class="pre">acls</span></code>: a replacement ACL set</li>
+<li><code class="docutils literal notranslate"><span class="pre">acl_bindings</span></code>: a replacement ACL bindings set</li>
+</ul>
+<p>Other table fields are immutable through this interface, and such input fields will be ignored.</p>
+<p>Absence of a named field indicates that the existing state for that aspect of the definition should be retained without change. For example, an input to rename a table and set a comment would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="s2">&quot;the new name&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;This is my new named table.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On success, the response is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="n">table</span> <span class="n">representation</span>
+</pre></div>
+</div>
+<p>where the body content represents the table status at the end of the request.</p>
+<p><em>NOTE</em>: In the case that the table name is changed or the table is relocated to a different schema, the returned document will indicate the new names, and subsequent access to the model resource will require using the updated URL:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>new schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>new table name</em></li>
+</ul>
+<p>The old URL will immediately start responding with a table not found error.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request</li>
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
 <div class="section" id="table-deletion">
 <span id="table-deletion"></span><h2>Table Deletion<a class="headerlink" href="#table-deletion" title="Permalink to this headline">¶</a></h2>
 <p>The DELETE method is used to delete a table and all its content:</p>
@@ -1640,6 +1760,8 @@ a model-level resource name of the form:</p>
 <li><code class="docutils literal notranslate"><span class="pre">nullok</span></code>: JSON <code class="docutils literal notranslate"><span class="pre">true</span></code> if NULL values are allowed or <code class="docutils literal notranslate"><span class="pre">false</span></code> if NULL values are disallowed in this column (default <code class="docutils literal notranslate"><span class="pre">true</span></code> if this field is absent in the input column representation)</li>
 <li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: whose value is the human-readable comment string for the column</li>
 <li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: whose value is a sub-object use as a dictionary where each field of the sub-object is an <em>annotation key</em> and its corresponding value a nested object structure representing the <em>annotation document</em> content (as hierarchical content, not as a double-serialized JSON string!)</li>
+<li><code class="docutils literal notranslate"><span class="pre">acls</span></code>: whose value is a sub-object specifying ACLs for the new column</li>
+<li><code class="docutils literal notranslate"><span class="pre">acl_bindings</span></code>: whose value is a sub-object specifying ACL bindings for the new column</li>
 </ul>
 <p>On success, the response is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
@@ -1680,6 +1802,69 @@ a model-level resource name of the form:</p>
 <p>The response body is a <em>column representation</em> as described in <a class="reference external" href="#column-creation">Column Creation</a>.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="column-alteration">
+<span id="column-alteration"></span><h2>Column Alteration<a class="headerlink" href="#column-alteration" title="Permalink to this headline">¶</a></h2>
+<p>The PUT operation is used to alter an existing column’s definition:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">/column/</span></code> <em>column name</em></li>
+</ul>
+<p>In this operation, the <code class="docutils literal notranslate"><span class="pre">application/json</span></code> <em>column representation</em> is supplied as input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span><span class="o">/</span><span class="n">schema</span><span class="o">/</span><span class="n">schema_name</span><span class="o">/</span><span class="n">table</span><span class="o">/</span><span class="n">table_name</span><span class="o">/</span><span class="n">column</span><span class="o">/</span><span class="n">column_name</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">column</span> <span class="n">name</span><span class="p">,</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">column</span> <span class="nb">type</span><span class="p">,</span>
+  <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">default</span> <span class="n">value</span><span class="p">,</span>
+  <span class="s2">&quot;nullok&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">boolean</span><span class="p">,</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">column</span> <span class="n">comment</span><span class="p">,</span>
+  <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">annotation</span> <span class="n">key</span><span class="p">:</span> <span class="n">annotation</span> <span class="n">document</span><span class="p">,</span> <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The input <em>column representation</em> is as for column creation via the POST request. Instead of creating a new column, the existing column with <em>column name</em> as specified in the URL is altered to match the input representation. Each of these fields, if present, will be processed as a target configuration for that aspect of the column definition:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code>: a new name to support renaming from <em>column name</em> to <em>new column name</em></li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: a new type to support changing from existing to new column type</li>
+<li><code class="docutils literal notranslate"><span class="pre">default</span></code>: a new default value for future row insertions</li>
+<li><code class="docutils literal notranslate"><span class="pre">nullok</span></code>: a new nullok status</li>
+<li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: a new comment string</li>
+<li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: a replacement annotation map</li>
+<li><code class="docutils literal notranslate"><span class="pre">acls</span></code>: a replacement ACL set</li>
+<li><code class="docutils literal notranslate"><span class="pre">acl_bindings</span></code>: a replacement ACL bindings set</li>
+</ul>
+<p>Absence of a named field indicates that the existing state for that aspect of the column definition should be retained without change. For example, an input to rename a column, disallow nulls, and set a new default value would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;the new name&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;nullok&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+  <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="s2">&quot;the new default value&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On success, the response is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="n">column</span> <span class="n">representation</span>
+</pre></div>
+</div>
+<p>where the body content represents the column status at the end of the request.</p>
+<p><em>NOTE</em>: In the case that the column name is changed with the <code class="docutils literal notranslate"><span class="pre">&quot;name&quot;:</span></code> <em>new column name</em> input syntax, the returned document will indicate the new name, and subsequent access to the model resource will require using the updated URL:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">/column/</span></code> <em>new column name</em></li>
+</ul>
+<p>The old URL will immediately start responding with a column not found error.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request</li>
 <li>404 Not Found</li>
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>
@@ -1814,6 +1999,56 @@ a model-level resource name of the form:</p>
 <p>The response body is a <em>key representation</em> as described in <a class="reference external" href="#key-creation">Key Creation</a>.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="key-alteration">
+<span id="key-alteration"></span><h2>Key Alteration<a class="headerlink" href="#key-alteration" title="Permalink to this headline">¶</a></h2>
+<p>The PUT operation is used to alter an existing key’s definition:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">/key/</span></code> <em>key columns</em></li>
+</ul>
+<p>In this operation, the <code class="docutils literal notranslate"><span class="pre">application/json</span></code> <em>key representation</em> is supplied as input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span><span class="o">/</span><span class="n">schema</span><span class="o">/</span><span class="n">schema_name</span><span class="o">/</span><span class="n">table</span><span class="o">/</span><span class="n">table_name</span><span class="o">/</span><span class="n">key</span><span class="o">/</span><span class="n">key_columns</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span> <span class="n">schema</span> <span class="n">name</span><span class="p">,</span> <span class="n">new</span> <span class="n">constraint</span> <span class="n">name</span> <span class="p">]</span> <span class="p">],</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">comment</span><span class="p">,</span>
+  <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">annotation</span> <span class="n">key</span><span class="p">:</span> <span class="n">annotation</span> <span class="n">document</span><span class="p">,</span> <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The input <em>key representation</em> is as for key creation via the POST request. Instead of creating a new key, the existing key with <em>key columns</em> as specified in the URL is altered to match the input representation. Each of these fields, if present, will be processed as a target configuration for that aspect of the definition:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">names</span></code>: the <em>new constraint name</em>, i.e. second field of first element of <code class="docutils literal notranslate"><span class="pre">names</span></code> list, is a replacement constraint name</li>
+<li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: a new comment string</li>
+<li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: a replacement annotation map</li>
+</ul>
+<p>Other key fields are immutable through this interface. The <code class="docutils literal notranslate"><span class="pre">unique_columns</span></code> field, if present, must match the <em>key columns</em> in the URL.</p>
+<p>Absence of a named field indicates that the existing state for that aspect of the definition should be retained without change. For example, an input to rename a key and set a comment would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;table schema name&quot;</span><span class="p">,</span> <span class="s2">&quot;the new constraint name&quot;</span> <span class="p">]</span> <span class="p">],</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;This is my newly named key.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On success, the response is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="n">key</span> <span class="n">representation</span>
+</pre></div>
+</div>
+<p>where the body content represents the key status at the end of the request.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request</li>
 <li>404 Not Found</li>
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>
@@ -1998,6 +2233,64 @@ a model-level resource name of the following forms:</p>
 <p>The response body is a <em>foreign key reference representation</em> as described in <a class="reference external" href="#foreign-key-creation">Foreign Key Creation</a>.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="foreign-key-alteration">
+<span id="foreign-key-alteration"></span><h2>Foreign Key Alteration<a class="headerlink" href="#foreign-key-alteration" title="Permalink to this headline">¶</a></h2>
+<p>The PUT operation is used to alter an existing foreign key’s definition:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">/foreignkey/</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">/reference/</span></code> <em>table reference</em> <code class="docutils literal notranslate"><span class="pre">/</span></code> <em>key column</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> …</li>
+</ul>
+<p>In this operation, the <code class="docutils literal notranslate"><span class="pre">application/json</span></code> <em>key representation</em> is supplied as input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span><span class="o">/</span><span class="n">schema</span><span class="o">/</span><span class="n">schema_name</span><span class="o">/</span><span class="n">table</span><span class="o">/</span><span class="n">table_name</span><span class="o">/</span><span class="n">key</span><span class="o">/</span><span class="n">column_name</span><span class="p">,</span><span class="o">.../</span><span class="n">reference</span><span class="o">/</span><span class="n">table_referenace</span><span class="o">/</span><span class="n">key_column</span><span class="p">,</span><span class="o">...</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span> <span class="n">schema</span> <span class="n">name</span><span class="p">,</span> <span class="n">new</span> <span class="n">constraint</span> <span class="n">name</span> <span class="p">]</span> <span class="p">],</span>
+<span class="s2">&quot;on_update&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">update</span> <span class="n">action</span><span class="p">,</span>
+<span class="s2">&quot;on_delete&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">delete</span> <span class="n">action</span><span class="p">,</span>
+    <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">comment</span><span class="p">,</span>
+    <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">annotation</span> <span class="n">key</span><span class="p">:</span> <span class="n">annotation</span> <span class="n">document</span><span class="p">,</span> <span class="o">...</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The input <em>foreign key reference representation</em> is as for key creation via the POST request. Instead of creating a new foreign key, the existing one as specified in the URL is altered to match the input representation. To be symmetric with <a class="reference external" href="#foreign-key-retrieval">foreign key retrieval</a>, the input is a JSON array with one sub-document. Each of these object fields, if present, will be processed as a target configuration for that aspect of the definition:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">names</span></code>: the <em>new constraint name</em>, i.e. second field of first element of <code class="docutils literal notranslate"><span class="pre">names</span></code> list, is a replacement constraint name</li>
+<li><code class="docutils literal notranslate"><span class="pre">on_update</span></code>: the <em>new update action</em>, e.g. one of <code class="docutils literal notranslate"><span class="pre">NO</span> <span class="pre">ACTION</span></code>, <code class="docutils literal notranslate"><span class="pre">RESTRICT</span></code>, <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code>, <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">DEFAULT</span></code>, <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">NULL</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">on_delete</span></code>: the <em>new delete action</em>, e.g. one of <code class="docutils literal notranslate"><span class="pre">NO</span> <span class="pre">ACTION</span></code>, <code class="docutils literal notranslate"><span class="pre">RESTRICT</span></code>, <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code>, <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">DEFAULT</span></code>, <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">NULL</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">comment</span></code>: a new comment string</li>
+<li><code class="docutils literal notranslate"><span class="pre">acls</span></code>: a replacement ACL configuration</li>
+<li><code class="docutils literal notranslate"><span class="pre">acl_bindings</span></code>: a replacement ACL binding configuration</li>
+<li><code class="docutils literal notranslate"><span class="pre">annotations</span></code>: a replacement annotation map</li>
+</ul>
+<p>Other key fields are immutable through this interface.</p>
+<p>Absence of a named field indicates that the existing state for that aspect of the definition should be retained without change. For example, an input to rename a constraint and set a comment would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;names&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;table schema name&quot;</span><span class="p">,</span> <span class="s2">&quot;the new constraint name&quot;</span> <span class="p">]</span> <span class="p">],</span>
+  <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="s2">&quot;This is my newly named key.&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>On success, the response is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="n">foreign</span> <span class="n">key</span> <span class="n">reference</span> <span class="n">representation</span>
+</pre></div>
+</div>
+<p>where the body content represents the foreign key status at the end of the request.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request</li>
 <li>404 Not Found</li>
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>

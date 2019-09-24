@@ -514,6 +514,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#supported-transform-processors">Supported transform_processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#transform-processor-details">Transform Processor details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#strsub"><code class="docutils literal notranslate"><span class="pre">strsub</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#interpolation"><code class="docutils literal notranslate"><span class="pre">interpolation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#cat"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../deriva-py/cli/deriva-sitemap-cli.html">deriva-sitemap-cli</a><ul>
@@ -1263,7 +1270,7 @@
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.transform.fasta_transform_processor</span> <span class="k">import</span> <span class="n">FastaExportTransformProcessor</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.transform.geo_transform_processor</span> <span class="k">import</span> <span class="n">GeoExportTransformProcessor</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.transform.string_transform_processor</span> <span class="k">import</span> <span class="n">InterpolationTransformProcessor</span><span class="p">,</span> \
-    <span class="n">StrSubTransformProcessor</span>
+    <span class="n">StrSubTransformProcessor</span><span class="p">,</span> <span class="n">ConcatenateTransformProcessor</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.postprocess.identifier_post_processor</span> <span class="k">import</span> <span class="n">GlobusIdentifierPostProcessor</span><span class="p">,</span> \
     <span class="n">MinidIdentifierPostProcessor</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.postprocess.transfer_post_processor</span> <span class="k">import</span> <span class="n">Boto3UploadPostProcessor</span>
@@ -1280,6 +1287,7 @@
 <span class="p">}</span>
 
 <span class="n">DEFAULT_TRANSFORM_PROCESSORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;cat&quot;</span><span class="p">:</span> <span class="n">ConcatenateTransformProcessor</span><span class="p">,</span>
     <span class="s2">&quot;interpolation&quot;</span><span class="p">:</span> <span class="n">InterpolationTransformProcessor</span><span class="p">,</span>
     <span class="s2">&quot;strsub&quot;</span><span class="p">:</span> <span class="n">StrSubTransformProcessor</span><span class="p">,</span>
     <span class="s2">&quot;geo&quot;</span><span class="p">:</span> <span class="n">GeoExportTransformProcessor</span><span class="p">,</span>

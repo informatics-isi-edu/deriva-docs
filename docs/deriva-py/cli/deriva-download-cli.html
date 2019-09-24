@@ -516,6 +516,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#fetch"><code class="docutils literal notranslate"><span class="pre">fetch</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#supported-transform-processors">Supported transform_processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transform-processor-details">Transform Processor details</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#strsub"><code class="docutils literal notranslate"><span class="pre">strsub</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#interpolation"><code class="docutils literal notranslate"><span class="pre">interpolation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cat"><code class="docutils literal notranslate"><span class="pre">cat</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="deriva-sitemap-cli.html">deriva-sitemap-cli</a><ul>
@@ -1721,6 +1728,101 @@ If the required values cannot be determined this way, it is an error condition a
 the <code class="docutils literal notranslate"><span class="pre">url</span></code> for the <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> of the referenced file asset. If this query fails to determine the filename, the application falls back to using the final name component of the <code class="docutils literal notranslate"><span class="pre">url</span></code> field after the last <code class="docutils literal notranslate"><span class="pre">/</span></code> character.
 If other fields are present, they are also available for variable substitution in other parameters that support interpolation, e.g., <code class="docutils literal notranslate"><span class="pre">output_path</span></code>.</p>
 <p>Unlike the <code class="docutils literal notranslate"><span class="pre">download</span></code> processor, the <code class="docutils literal notranslate"><span class="pre">fetch</span></code> processor does not actually download any asset files, but rather uses the query results to create a <code class="docutils literal notranslate"><span class="pre">bag</span></code> with checksummed manifest entries that reference each remote asset via the <code class="docutils literal notranslate"><span class="pre">bag</span></code>’s <code class="docutils literal notranslate"><span class="pre">fetch.txt</span></code> file.</p>
+</div>
+</div>
+<div class="section" id="supported-transform-processors">
+<span id="supported-transform-processors"></span><h2>Supported transform_processors<a class="headerlink" href="#supported-transform-processors" title="Permalink to this headline">¶</a></h2>
+<p>The following <code class="docutils literal notranslate"><span class="pre">transform_processor</span></code> tag values are supported by default:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Tag</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#strsub"><code>strsub</code></a></td>
+<td>Transform</td>
+<td>String substitution transformation.</td>
+</tr>
+<tr>
+<td><a href="#csv"><code>interpolation</code></a></td>
+<td>Transform</td>
+<td>Performs a string interpolation.</td>
+</tr>
+<tr>
+<td><a href="#cat"><code>cat</code></a></td>
+<td>Transform</td>
+<td>Concatenates multiple files.</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="transform-processor-details">
+<span id="transform-processor-details"></span><h2>Transform Processor details<a class="headerlink" href="#transform-processor-details" title="Permalink to this headline">¶</a></h2>
+<p>Each <em>transform processor</em> performs a transformation over the input stream(s). The transform processors may alter
+specific fields of the input (e.g., <code class="docutils literal notranslate"><span class="pre">strsub</span></code>) while others alter the entire contents and format of the input (e.g.,
+<code class="docutils literal notranslate"><span class="pre">interpolation</span></code>).</p>
+<p><a name="strsub"></a></p>
+<div class="section" id="strsub">
+<span id="strsub"></span><h3><code class="docutils literal notranslate"><span class="pre">strsub</span></code><a class="headerlink" href="#strsub" title="Permalink to this headline">¶</a></h3>
+<p>This <code class="docutils literal notranslate"><span class="pre">transform_processor</span></code> processor performs a string substitution on a designated property of the input stream. The
+input must be <code class="docutils literal notranslate"><span class="pre">json-stream</span></code>. The spec allows multiple <code class="docutils literal notranslate"><span class="pre">substitutions</span></code> where <code class="docutils literal notranslate"><span class="pre">pattern</span></code> is given as a regular expresison
+following Python <code class="docutils literal notranslate"><span class="pre">re</span></code> conventions, <code class="docutils literal notranslate"><span class="pre">reply</span></code> is the replacement string to substitute for each matched pattern, <code class="docutils literal notranslate"><span class="pre">input</span></code> is
+the name of the object attribute to process, and <code class="docutils literal notranslate"><span class="pre">output</span></code> is the name of the object attribute to set with the result.
+The following example would strip off the version suffix (<code class="docutils literal notranslate"><span class="pre">...:version-id</span></code>) from Hatrac versioned URLs.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>  &quot;transform_processors&quot;: [
+    {
+      &quot;processor&quot;:&quot;strsub&quot;,
+      &quot;processor_params&quot;: {
+        &quot;input_path&quot;: &quot;track-metadata.json&quot;,
+        &quot;output_path&quot;: &quot;track-metadata-unversioned.json&quot;,
+        &quot;substitutions&quot;: [
+          {
+            &quot;pattern&quot;: &quot;:[^/]*$&quot;,
+            &quot;repl&quot;: &quot;&quot;,
+            &quot;input&quot;: &quot;url&quot;,
+            &quot;output&quot;: &quot;url&quot;
+          }
+        ]
+      }
+    },
+</pre></div>
+</div>
+<p><a name="interpolation"></a></p>
+</div>
+<div class="section" id="interpolation">
+<span id="interpolation"></span><h3><code class="docutils literal notranslate"><span class="pre">interpolation</span></code><a class="headerlink" href="#interpolation" title="Permalink to this headline">¶</a></h3>
+<p>This <code class="docutils literal notranslate"><span class="pre">transform_processor</span></code> processor performs a string interpolation on each line of the input stream. The input must
+be <code class="docutils literal notranslate"><span class="pre">json-stream</span></code> format. Each row of the input is passed as the environment for the string interpolation parameters.
+The following example would take metadata for genomic annotation tracks and create a line for the “custom tracks”
+specification used by UCSC and other Genome Browsers.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
+      <span class="nt">&quot;processor&quot;</span><span class="p">:</span><span class="s2">&quot;interpolation&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;processor_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;input_path&quot;</span><span class="p">:</span> <span class="s2">&quot;track-metadata-unversioned.json&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;output_path&quot;</span><span class="p">:</span> <span class="s2">&quot;customtracks.txt&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;template&quot;</span><span class="p">:</span> <span class="s2">&quot;track type=$type name=\&quot;$RID\&quot; description=\&quot;$filename\&quot; bigDataUrl=https://www.facebase.org$url\n&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p><a name="cat"></a></p>
+</div>
+<div class="section" id="cat">
+<span id="cat"></span><h3><code class="docutils literal notranslate"><span class="pre">cat</span></code><a class="headerlink" href="#cat" title="Permalink to this headline">¶</a></h3>
+<p>This <code class="docutils literal notranslate"><span class="pre">transform_processor</span></code> processor performs a concatenation of multiple input streams into a single output stream. In
+the following example, 2 input files are concatenated into one. (More than 2 input files are allow.)</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>    <span class="p">{</span>
+      <span class="nt">&quot;processor&quot;</span><span class="p">:</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;processor_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;input_paths&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;super-track.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;track.txt&quot;</span><span class="p">],</span>
+        <span class="nt">&quot;output_path&quot;</span><span class="p">:</span> <span class="s2">&quot;trackDb.txt&quot;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

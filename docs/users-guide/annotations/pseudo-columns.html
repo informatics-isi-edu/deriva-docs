@@ -341,7 +341,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#general-syntax">General Syntax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#source-definition-attributes">Source Definition Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#display-attributes">Display Attributes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#display">display</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#logic-and-heuristics">Logic And Heuristics</a><ul>
@@ -1054,7 +1053,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#general-syntax">General Syntax</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#source-definition-attributes">Source Definition Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#display-attributes">Display Attributes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#display">display</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#logic-and-heuristics">Logic And Heuristics</a><ul>
@@ -1325,14 +1323,20 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s2">&quot;source&quot;</span> <span class="p">:</span> <span class="o">&lt;</span><span class="n">data</span> <span class="n">source</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;entity&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">true</span> <span class="ow">or</span> <span class="n">false</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s2">&quot;aggregate&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">aggregate</span> <span class="n">function</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s2">&quot;self_link&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span>
   <span class="s2">&quot;markdown_name&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">display</span> <span class="n">name</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">tooltip</span> <span class="n">message</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="s2">&quot;markdown_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
       <span class="s2">&quot;template_engine&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">handlebars</span> <span class="ow">or</span> <span class="n">mustache</span><span class="o">&gt;</span><span class="p">,</span>
       <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;array_ux_mode&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">csv</span><span class="o">|</span><span class="n">ulist</span><span class="o">|</span><span class="n">olist</span><span class="o">|</span><span class="n">raw</span><span class="o">&gt;</span>
   <span class="p">},</span>
-  <span class="s2">&quot;aggregate&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">aggregate</span> <span class="n">function</span><span class="o">&gt;</span>
+  <span class="s2">&quot;array_options&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">change</span> <span class="n">the</span> <span class="n">default</span> <span class="n">order</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;max_lengh&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span> <span class="n">length</span><span class="o">&gt;</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1345,6 +1349,11 @@
       <span class="s2">&quot;markdown_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
       <span class="s2">&quot;template_engine&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">handlebars</span> <span class="ow">or</span> <span class="n">mustache</span><span class="o">&gt;</span><span class="p">,</span>
       <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="s2">&quot;array_ux_mode&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">csv</span><span class="o">|</span><span class="n">ulist</span><span class="o">|</span><span class="n">olist</span><span class="o">|</span><span class="n">raw</span><span class="o">&gt;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;array_options&quot;</span><span class="p">:{</span>
+    <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">change</span> <span class="n">the</span> <span class="n">default</span> <span class="n">order</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;max_lengh&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span> <span class="n">length</span><span class="o">&gt;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1364,6 +1373,10 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="self-link">
+<span id="self-link"></span><h4>self-link<a class="headerlink" href="#self-link" title="Permalink to this headline">¶</a></h4>
+<p>If you want to show a self-link to the current row, you need to make sure the source is based on a not-null unique column of the current table and add the <code class="docutils literal notranslate"><span class="pre">&quot;self_link&quot;:</span> <span class="pre">true</span></code> to the definition.</p>
+</div>
 <div class="section" id="aggregate">
 <span id="aggregate"></span><h4>aggregate<a class="headerlink" href="#aggregate" title="Permalink to this headline">¶</a></h4>
 <p>This is only applicable in visible columns definition (Not applicable in Facet definition). You can use this attribute to get aggregate values instead of a table. The available functions are <code class="docutils literal notranslate"><span class="pre">cnt</span></code>, <code class="docutils literal notranslate"><span class="pre">cnt_d</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">array</span></code>, and <code class="docutils literal notranslate"><span class="pre">array_d</span></code>.</p>
@@ -1373,13 +1386,9 @@
 <li><code class="docutils literal notranslate"><span class="pre">array_d</span></code> will return the distinct values. It has the same performance overhead as <code class="docutils literal notranslate"><span class="pre">array</span></code>, so pleas USE WITH CARE.</li>
 </ul>
 </div>
-<div class="section" id="self-link">
-<span id="self-link"></span><h4>self-link<a class="headerlink" href="#self-link" title="Permalink to this headline">¶</a></h4>
-<p>If you want to show a self-link to the current row, you need to make sure the source is based on a not-null unique column and add the <code class="docutils literal notranslate"><span class="pre">&quot;self_link&quot;:</span> <span class="pre">true</span></code> to the definition.</p>
-</div>
 <div class="section" id="sourcekey">
 <span id="sourcekey"></span><h4>sourcekey<a class="headerlink" href="#sourcekey" title="Permalink to this headline">¶</a></h4>
-<p>Instead of defining a pseudo-column in place, you can define them in the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions annotations</span></a>, and refer to those definitions using <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>. If <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> is defined on a pseudo-column, the rest of source definition attributes defined on the pseudo-column will be ignored.</p>
+<p>Instead of defining a pseudo-column in place, you can define them in the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions annotations</span></a>, and refer to those definitions using <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>. If <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> is defined on a pseudo-column, the rest of <em>source definition attributes</em> defined on the pseudo-column will be ignored (but you still can modify the display and other types of attributes).</p>
 </div>
 </div>
 <div class="section" id="display-attributes">
@@ -1399,32 +1408,37 @@
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="display">
-<span id="display"></span><h3>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h3>
+<span id="display"></span><h4>display<a class="headerlink" href="#display" title="Permalink to this headline">¶</a></h4>
 <p>By using this attribute you can customize the presented value to the users. The following is the accepted syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">any</span> <span class="n">acceptable</span> <span class="n">source</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;markdown_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">markdown</span> <span class="n">pattern</span> <span class="n">value</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="s2">&quot;template_engine&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="s2">&quot;handlebars&quot;</span> <span class="o">|</span> <span class="s2">&quot;mustache&quot;</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span>
+        <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="s2">&quot;array_ux_mode&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">csv</span><span class="o">|</span><span class="n">ulist</span><span class="o">|</span><span class="n">olist</span><span class="o">|</span><span class="n">raw</span><span class="o">&gt;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="section" id="markdown-pattern">
+<span id="markdown-pattern"></span><h5>markdown_pattern<a class="headerlink" href="#markdown-pattern" title="Permalink to this headline">¶</a></h5>
 <p>In the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> you can access the current pseudo-column data with <code class="docutils literal notranslate"><span class="pre">$self</span></code> namespace alongside the defined source definitions. Please refer to the <a class="reference external" href="#pseudo-column-display.md">pseudo-column display documentation</a> for more information.</p>
-<div class="section" id="aggregate-array-display">
-<span id="aggregate-array-display"></span><h4>aggregate array_display<a class="headerlink" href="#aggregate-array-display" title="Permalink to this headline">¶</a></h4>
-<p>If you have <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array_d&quot;</span></code> in your pseudo-column definition, you can use <code class="docutils literal notranslate"><span class="pre">array_display</span></code> attribute to change the display of values. You can use</p>
+</div>
+<div class="section" id="array-ux-mode">
+<span id="array-ux-mode"></span><h5>array_ux_mode<a class="headerlink" href="#array-ux-mode" title="Permalink to this headline">¶</a></h5>
+<p>If you have <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array_d&quot;</span></code> in your pseudo-column definition, you can use <code class="docutils literal notranslate"><span class="pre">array_ux_mode</span></code> attribute to change the display of values. You can use</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">olist</span></code> for ordered bullet list.</li>
 <li><code class="docutils literal notranslate"><span class="pre">ulist</span></code> for unordered bullet list.</li>
 <li><code class="docutils literal notranslate"><span class="pre">csv</span></code> for comma-seperated values (the default presentation).</li>
+<li><code class="docutils literal notranslate"><span class="pre">raw</span></code> for space-seperated values.</li>
 </ul>
 </div>
-<div class="section" id="aggregate-array-options">
-<span id="aggregate-array-options"></span><h4>aggregate array_options<a class="headerlink" href="#aggregate-array-options" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="array-options">
+<span id="array-options"></span><h4>array_options<a class="headerlink" href="#array-options" title="Permalink to this headline">¶</a></h4>
 <p>If you have <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">&quot;array_d&quot;</span></code> in your pseudo-column definition, you can use <code class="docutils literal notranslate"><span class="pre">array_options</span></code> to change the array of data that client will present. It will not have any effect on the generated ERMrest query and manipulation of the array is happening on the client side. The available options are:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">order</span></code>: An alternative sort method to apply when a client wants to semantically sort by key values. Its syntax is similar to <code class="docutils literal notranslate"><span class="pre">column_order</span></code>.<ul>

@@ -296,7 +296,6 @@
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Handlebars Templating</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#handlebars-paths">Handlebars Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#block-helpers">Block Helpers</a></li>
@@ -975,7 +974,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
@@ -1286,22 +1284,33 @@
 <div class="section" id="handlebars-templating">
 <span id="handlebars-templating"></span><h1>Handlebars Templating<a class="headerlink" href="#handlebars-templating" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="http://handlebarsjs.com/">Handlebars</a> is almost similar to Mustache with some additional benefits. There are some things that you can’t do in Mustache (e.g if-else statement) that Handlebars allows us to do easily using <code class="docutils literal notranslate"><span class="pre">helpers</span></code>.</p>
-<p>Handlebars supports most of the Mustache syntax. However, there are a few features that are not supported by Handlebars. The primary ones are the block syntax (e.g. <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>) which is often used in Deriva annoations to perform boolean (or null) check, and the encode/decode methods (e.g. <code class="docutils literal notranslate"><span class="pre">{{#encode}}</span></code>, <code class="docutils literal notranslate"><span class="pre">{{#decode}}</span></code>). For example:</p>
+<p>Handlebars supports most of the Mustache syntax. However, there are a few features that are not supported by Handlebars. For example:</p>
+<ul class="simple">
+<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annoations to perform boolean (or null) check. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
+</ul>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span>// Mustache
 
 {{#name}}Hello {{name}}{{/name}}{{^name}}No name available{{/name}}
 
 // name=&quot;John&quot; (or any object that evaluates to true in javascript)                 =&gt; Hello John
 // name=null (or any object that evaluate to false such as &#39;&#39;, 0, false, [], etc)   =&gt; No name available
+
+// handlebards
+
+{{#if name}}Hello {{name}}{{else}}No name available{{/if}}
 </pre></div>
 </div>
-<p>With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if name}}Hello {{name}}{{else}}No name available{{/if}}</span>
+<ul class="simple">
+<li>encode/decode <code class="docutils literal notranslate"><span class="pre">{{#encode}}...{{/encode}}</span></code>/<code class="docutils literal notranslate"><span class="pre">{{#decode}}...{{/decode}}</span></code>: With handlebards the value to be encoded is passed to the <code class="docutils literal notranslate"><span class="pre">encode</span></code>/<code class="docutils literal notranslate"><span class="pre">decode</span></code> helper e.g. <code class="docutils literal notranslate"><span class="pre">{{#encode</span> <span class="pre">...}}{{/encode}}</span></code> or <code class="docutils literal notranslate"><span class="pre">{{#decode</span> <span class="pre">...}}{{/decode}}</span></code>.</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Mustache</span>
+<span class="p">{{</span><span class="c1">#encode}}My URL{{/encode}}</span>
+
+<span class="o">//</span> <span class="n">handlebards</span>
+<span class="p">{{</span><span class="c1">#encode &#39;My URL&#39;}}{{/encode}}</span>
 </pre></div>
 </div>
 <p>Handlebars supports more complicated expression syntax and allow the comparison to be done at the finer level e.g. null v.s. false comparsion. This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
-<div class="section" id="notable-differences-between-mustache-and-handlebars">
-<span id="notable-differences-between-mustache-and-handlebars"></span><h2>Notable differences between Mustache and Handlebars<a class="headerlink" href="#notable-differences-between-mustache-and-handlebars" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="#handlebars-paths">Handlebar Paths</a></li>
 <li><a class="reference external" href="#helpers">Helpers</a><ul>
@@ -1330,7 +1339,6 @@
 </li>
 <li><a class="reference external" href="#math-helpers">Math Helpers</a></li>
 </ul>
-</div>
 <div class="section" id="handlebars-paths">
 <span id="handlebars-paths"></span><h2>Handlebars Paths<a class="headerlink" href="#handlebars-paths" title="Permalink to this headline">¶</a></h2>
 <p>Handlebars supports simple paths, just like Mustache.</p>

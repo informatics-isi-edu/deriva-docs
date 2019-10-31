@@ -294,7 +294,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../users-guide/annotations/handlebars.html">Handlebars Templating</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../users-guide/annotations/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../users-guide/annotations/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../users-guide/annotations/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../users-guide/annotations/handlebars.html#block-helpers">Block Helpers</a></li>
@@ -973,7 +972,6 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../../ermrestjs/user-docs/handlebars.html#notable-differences-between-mustache-and-handlebars">Notable differences between Mustache and Handlebars</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
@@ -1396,7 +1394,8 @@
         <span class="n">bag_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bag&#39;</span><span class="p">)</span>
         <span class="n">create_bag</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">bag_config</span> <span class="k">else</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">create_bag</span><span class="p">:</span>
-            <span class="n">bag_name</span> <span class="o">=</span> <span class="n">bag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bag_name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;deriva_bag&quot;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)]))</span>
+            <span class="n">bag_name</span> <span class="o">=</span> <span class="n">bag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s1">&#39;bag_name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;deriva_bag&quot;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">_%H.%M.%S&quot;</span><span class="p">)]))</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">envars</span><span class="p">)</span>
             <span class="n">bag_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">bag_name</span><span class="p">))</span>
             <span class="n">bag_archiver</span> <span class="o">=</span> <span class="n">bag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bag_archiver&#39;</span><span class="p">)</span>
             <span class="n">bag_algorithms</span> <span class="o">=</span> <span class="n">bag_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bag_algorithms&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sha256&#39;</span><span class="p">])</span>

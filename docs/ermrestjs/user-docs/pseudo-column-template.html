@@ -1282,14 +1282,14 @@
 <div class="section" id="pseudo-column-in-templating-environments">
 <span id="pseudo-column-in-templating-environments"></span><h1>Pseudo Column in Templating Environments<a class="headerlink" href="#pseudo-column-in-templating-environments" title="Permalink to this headline">¶</a></h1>
 <p>This document will explain which annotations you need to use and how to use them in order to be able to access more than the current table’s values in the templating environment. To make this simpler, we will explain this using an example.</p>
-<p>Let’s assume the following is the ERD of our database. In all the examples we’re defining column list for the <code class="docutils literal notranslate"><span class="pre">Main</span></code> table (assuming <code class="docutils literal notranslate"><span class="pre">S</span></code> is the schema name).</p>
+<p>Let’s assume the following is the ERD of our database. In all the examples we’re defining column list for the <code class="docutils literal notranslate"><span class="pre">Main</span></code> table (assuming <code class="docutils literal notranslate"><span class="pre">schema</span></code> is the schema name).</p>
 <p><img alt="erd_01" src="https://raw.githubusercontent.com/informatics-isi-edu/ermrestjs/master/docs/resources/pseudo_columns_erd_01.png" /></p>
 <div class="section" id="defining-sources">
 <span id="defining-sources"></span><h2>1. Defining Sources<a class="headerlink" href="#defining-sources" title="Permalink to this headline">¶</a></h2>
-<p>First you need to define your source definitions. To do this, you have to define the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions</span></a> annotation.</p>
+<p>First you need to define your source definitions. To do this, you have to define the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions</span></a> annotation which is in the following format:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;tag:isrd.isi.edu,2019:source-definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
-   <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="n">cname</span><span class="p">,</span> <span class="o">...</span> <span class="p">],</span>
-   <span class="s2">&quot;fkeys&quot;</span><span class="p">:</span> <span class="p">[</span>  <span class="p">[</span> <span class="n">schema</span><span class="p">,</span> <span class="n">constraint</span> <span class="p">],</span> <span class="o">...</span> <span class="p">],</span>
+   <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="n">cname</span><span class="p">,</span> <span class="o">...</span> <span class="p">]</span> <span class="o">|</span> <span class="n">true</span><span class="p">,</span>
+   <span class="s2">&quot;fkeys&quot;</span><span class="p">:</span> <span class="p">[</span>  <span class="p">[</span> <span class="n">schema</span><span class="p">,</span> <span class="n">constraint</span> <span class="p">],</span> <span class="o">...</span> <span class="p">]</span> <span class="o">|</span> <span class="n">true</span><span class="p">,</span>
    <span class="s2">&quot;sources&quot;</span><span class="p">:</span> <span class="p">{</span>
       <span class="o">&lt;</span><span class="n">sourcekey</span><span class="o">&gt;</span><span class="p">:</span> <span class="p">{</span>
           <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">some</span> <span class="n">valid</span> <span class="n">path</span><span class="o">&gt;</span><span class="p">,</span>
@@ -1300,23 +1300,22 @@
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">sources</span></code> attribute to define the sources that you want to use in this table. You should be able to access the data by the given <em>sourcekey</em>. The available data will be <a class="reference external" href="#Pseudo-Column-Templating-Variable-Data-Structure">different based on the pseudo-column type</a>. Please make sure to follow these rules while specifying the <em>sourcekey</em>:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&quot;columns&quot;</span></code>: Map implicitly to keys <code class="docutils literal notranslate"><span class="pre">cname</span></code> (formatted value) and <code class="docutils literal notranslate"><span class="pre">_cname</span></code> (raw value).<ul>
-<li>if field is boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> instead of list, it implies all the columns.</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;</span></code>: map implicitly into the <code class="docutils literal notranslate"><span class="pre">$fkey_&lt;schema_name&gt;_&lt;constraint_name&gt;</span></code> namespace.<ul>
-<li>if field is boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> instead of list, it implies all the outbound foreign keys.</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;sources&quot;</span></code>: Access the pseudo-column data by the given <em>sourcekey</em>. Which will allow you to refer to pseudo-columns just by using their <em>sourcekey</em>. The available data will be <a class="reference external" href="#Pseudo-Column-Templating-Variable-Data-Structure">different based on the pseudo-column type</a>. Please make sure to follow these rules while specifying the sourcekey:<ul>
 <li>sourcekey cannot start with <code class="docutils literal notranslate"><span class="pre">$</span></code>.</li>
 <li>sourcekey should not be any of the table’s column names.</li>
 </ul>
-</li>
+<p>The following extra fields can be used to automatically configure the list of available columns and foreign keys in the templating environments (This syntactic sugar is of course a redundant way to specify the sources and you can just use the <code class="docutils literal notranslate"><span class="pre">sources</span></code> attribute):</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;columns&quot;</span></code>: List of table column names. Assuming one of the defined column names is <code class="docutils literal notranslate"><span class="pre">cname</span></code>, you can use <code class="docutils literal notranslate"><span class="pre">cname</span></code> to access the formatted value and <code class="docutils literal notranslate"><span class="pre">_cname</span></code> to access the raw value.</li>
+<li>if field is boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> instead of list, it implies all the columns.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;</span></code>: List of outbound foreign keys. Assuming <code class="docutils literal notranslate"><span class="pre">[&quot;schema&quot;,</span> <span class="pre">&quot;constraint&quot;]</span></code> is the constraint name of one of the specified foreign keys, you can use the <code class="docutils literal notranslate"><span class="pre">$fkey_schema_constraint</span></code> namespace (in the format of <code class="docutils literal notranslate"><span class="pre">$fkey_&lt;schema</span> <span class="pre">name&gt;_&lt;constraint</span> <span class="pre">name&gt;</span></code>) to access the foreign key data.</li>
+<li>if field is boolean <code class="docutils literal notranslate"><span class="pre">true</span></code> instead of list, it implies all the outbound foreign keys.</li>
 </ul>
 <blockquote>
 <div>If you define this annotation, you have to define all three attributes. If you do not providing any values for <code class="docutils literal notranslate"><span class="pre">columns</span></code> and <code class="docutils literal notranslate"><span class="pre">fkeys</span></code>, chaise will not provide data for any columns or outbound foreign keys in templating environments.</div></blockquote>
+<blockquote>
+<div>Using <code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;:</span> <span class="pre">true</span></code> might cause performance issues since we have to fetch the data for all the outbound foreign keys of the table.</div></blockquote>
 <p>The following is the source definitions that we are going to use:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;tag:isrd.isi.edu,2019:source-definitions&quot;</span><span class="o">:</span> <span class="p">{</span>

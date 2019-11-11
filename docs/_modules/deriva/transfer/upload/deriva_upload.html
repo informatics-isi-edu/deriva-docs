@@ -408,6 +408,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/README.html#alter-a-table">Alter a Table</a></li>
 </ul>
 </li>
 </ul>
@@ -1263,7 +1264,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">CatalogConfig</span><span class="p">,</span> <span class="n">HatracStore</span><span class="p">,</span> <span class="n">HatracJobAborted</span><span class="p">,</span> <span class="n">HatracJobPaused</span><span class="p">,</span> \
+<span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">HatracStore</span><span class="p">,</span> <span class="n">HatracJobAborted</span><span class="p">,</span> <span class="n">HatracJobPaused</span><span class="p">,</span> \
     <span class="n">HatracJobTimeout</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">stob</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">,</span> <span class="n">get_credential</span><span class="p">,</span> <span class="n">read_config</span><span class="p">,</span> <span class="n">write_config</span><span class="p">,</span> <span class="n">copy_config</span><span class="p">,</span> \
     <span class="n">resource_path</span><span class="p">,</span> <span class="n">make_dirs</span><span class="p">,</span> <span class="n">lock_file</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">IS_PY2</span><span class="p">,</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">VERSION</span>
 <span class="kn">from</span> <span class="nn">deriva.core.utils</span> <span class="k">import</span> <span class="n">hash_utils</span> <span class="k">as</span> <span class="n">hu</span><span class="p">,</span> <span class="n">mime_utils</span> <span class="k">as</span> <span class="n">mu</span><span class="p">,</span> <span class="n">version_utils</span> <span class="k">as</span> <span class="n">vu</span>
@@ -1597,7 +1598,7 @@
                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DefaultTransferStateBaseName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="s1">&#39;localhost&#39;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="DerivaUpload.getRemoteConfig"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.getRemoteConfig">[docs]</a>    <span class="k">def</span> <span class="nf">getRemoteConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">catalog_config</span> <span class="o">=</span> <span class="n">CatalogConfig</span><span class="o">.</span><span class="n">fromcatalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="n">catalog_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogModel</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">catalog_config</span><span class="o">.</span><span class="n">bulk_upload</span></div>
 
 <div class="viewcode-block" id="DerivaUpload.getUpdatedConfig"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.getUpdatedConfig">[docs]</a>    <span class="k">def</span> <span class="nf">getUpdatedConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

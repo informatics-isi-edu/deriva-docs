@@ -408,6 +408,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#alter-a-table">Alter a Table</a></li>
 </ul>
 </li>
 </ul>
@@ -1268,7 +1269,10 @@
             <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="bp">self</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+        <span class="bp">self</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+<div class="viewcode-block" id="AttrDict.update"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.AttrDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div></div>
 
 <span class="c1"># convenient enumeration of common annotation tags</span>
 <span class="n">tag</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">({</span>
@@ -1391,17 +1395,29 @@
 <span class="sd">         self.generated: treat tag.generated as a boolean</span>
 <span class="sd">         self.immutable: treat tag.immutable as a boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri_path</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">uri_path</span> <span class="o">=</span> <span class="n">uri_path</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span> <span class="o">=</span> <span class="n">uri_path</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">node_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="p">{}))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supports_comment</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_comment</span> <span class="o">=</span> <span class="n">node_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;comment&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="NodeConfig.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfig.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;derived classes MUST define self.catalog property&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Subclasses need their own URI path properties.&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">update_uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to use as base for sub-resources ./comment ./annotation etc.&quot;&quot;&quot;</span>
+        <span class="c1"># normally this is the same as uri_path, but a subclass may need to override</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uri_path</span>
+
+<div class="viewcode-block" id="NodeConfig.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfig.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding node in catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self, or None to apply configuration unconditionally.</span>
 
 <span class="sd">        The configuration in self.comment and self.annotations will be</span>
@@ -1411,14 +1427,17 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supports_comment</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_comment</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">_comment</span><span class="p">):</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/comment&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_comment</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/comment&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_comment</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">catalog</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/comment&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/comment&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
-            <span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
-                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="s1">&#39;annotation&#39;</span><span class="p">),</span>
-                <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-            <span class="p">)</span></div>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                    <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="s1">&#39;annotation&#39;</span><span class="p">),</span>
+                    <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Bad </span><span class="si">%s</span><span class="s1">/annotation&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">))</span> <span class="kn">from</span> <span class="nn">e</span></div>
 
 <div class="viewcode-block" id="NodeConfig.clear"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfig.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clear_comment</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear existing annotations on node, also clearing comment if clear_comment is True.</span>
@@ -1482,14 +1501,13 @@
 <span class="sd">         self.generated: treat tag.generated as a boolean</span>
 <span class="sd">         self.immutable: treat tag.immutable as a boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri_path</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
-        <span class="n">NodeConfig</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri_path</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
+        <span class="n">NodeConfig</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acls</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">(</span><span class="n">node_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;acls&#39;</span><span class="p">,</span> <span class="p">{}))</span>
 
-<div class="viewcode-block" id="NodeConfigAcl.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfigAcl.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="NodeConfigAcl.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfigAcl.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding node in catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self, or None to apply configuration unconditionally.</span>
 
 <span class="sd">        The configuration in self.comment, self.annotations, and</span>
@@ -1498,9 +1516,9 @@
 <span class="sd">        supplied and is equivalent.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">NodeConfig</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
+        <span class="n">NodeConfig</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
-            <span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
                 <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="s1">&#39;acl&#39;</span><span class="p">),</span>
                 <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span>
             <span class="p">)</span></div>
@@ -1531,14 +1549,13 @@
 <span class="sd">         self.generated: treat tag.generated as a boolean</span>
 <span class="sd">         self.immutable: treat tag.immutable as a boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri_path</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri_path</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">):</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_doc</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">(</span><span class="n">node_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">,</span> <span class="p">{}))</span>
 
-<div class="viewcode-block" id="NodeConfigAclBinding.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfigAclBinding.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="NodeConfigAclBinding.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.NodeConfigAclBinding.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding node in catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self, or None to apply configuration unconditionally.</span>
 
 <span class="sd">        The configuration in self.comment, self.annotations,</span>
@@ -1547,9 +1564,9 @@
 <span class="sd">        configuration is supplied and is equivalent.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acl_binding&#39;</span><span class="p">):</span>
-            <span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
                 <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">,</span> <span class="s1">&#39;acl_binding&#39;</span><span class="p">),</span>
                 <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span>
             <span class="p">)</span></div>
@@ -1566,7 +1583,6 @@
             <span class="n">d</span><span class="p">[</span><span class="s2">&quot;acl_bindings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span>
         <span class="k">return</span> <span class="n">d</span></div></div>
 
-
 <div class="viewcode-block" id="CatalogConfig"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig">[docs]</a><span class="k">class</span> <span class="nc">CatalogConfig</span> <span class="p">(</span><span class="n">NodeConfigAcl</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Top-level catalog configuration management.</span>
 
@@ -1574,32 +1590,60 @@
 <span class="sd">       annotations: catalog-level annotations</span>
 <span class="sd">       schemas: all schemas in catalog, by name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;/schema&quot;</span><span class="p">,</span> <span class="n">model_doc</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">model_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_catalog</span> <span class="o">=</span> <span class="n">catalog</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_doc</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supports_comment</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pseudo_fkeys</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">sname</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;schema_class&#39;</span><span class="p">,</span> <span class="n">CatalogSchema</span><span class="p">)(</span><span class="n">sname</span><span class="p">,</span> <span class="n">sdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">sname</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;schema_class&#39;</span><span class="p">,</span> <span class="n">CatalogSchema</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">sdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">sname</span><span class="p">,</span> <span class="n">sdoc</span> <span class="ow">in</span> <span class="n">model_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;schemas&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">digest_fkeys</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CatalogConfig.digest_fkeys"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.digest_fkeys">[docs]</a>    <span class="k">def</span> <span class="nf">digest_fkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finish second-pass digestion of foreign key definitions using full model w/ all schemas and tables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">referer</span> <span class="ow">in</span> <span class="n">schema</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">referer</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">fkey</span><span class="o">.</span><span class="n">digest_referenced_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                        <span class="k">del</span> <span class="n">referer</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">[</span><span class="n">fkey</span><span class="o">.</span><span class="n">name</span><span class="p">]</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;/schema&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">update_uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to use as base for sub-resources ./acl ./annotation etc.&quot;&quot;&quot;</span>
+        <span class="c1"># we get whole catalog schema at /schema</span>
+        <span class="c1"># but we get whole catalog sub-resources at /acl etc.</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
 <div class="viewcode-block" id="CatalogConfig.fromcatalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.fromcatalog">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">fromcatalog</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieve catalog config as a CatalogConfig management object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/schema&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/schema&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="CatalogConfig.fromfile"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.fromfile">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">fromfile</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">schema_file</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fromfile</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">schema_file</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Deserialize a JSON schema file as a CatalogConfig management object.&quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">schema_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">sf</span><span class="p">:</span>
             <span class="n">schema</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CatalogConfig.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CatalogConfig.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply catalog configuration to catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self.</span>
 
 <span class="sd">        The configuration in self will be applied recursively to the</span>
@@ -1615,10 +1659,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">existing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fromcatalog</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
+            <span class="n">existing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fromcatalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sname</span><span class="p">,</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">schema</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">])</span></div>
+            <span class="n">schema</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="CatalogConfig.clear"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear all configuration in catalog and children.&quot;&quot;&quot;</span>
@@ -1633,6 +1677,25 @@
 <div class="viewcode-block" id="CatalogConfig.column"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.column">[docs]</a>    <span class="k">def</span> <span class="nf">column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">cname</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return column configuration for column with given name.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CatalogConfig.fkey"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogConfig.fkey">[docs]</a>    <span class="k">def</span> <span class="nf">fkey</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraint_name_pair</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return configuration for foreign key with given name pair.</span>
+
+<span class="sd">        Accepts (schema_name, constraint_name) pairs as found in many</span>
+<span class="sd">        faceting annotations and (schema_obj, constraint_name) pairs</span>
+<span class="sd">        as found in fkey.name fields.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sname</span><span class="p">,</span> <span class="n">cname</span> <span class="o">=</span> <span class="n">constraint_name_pair</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">CatalogSchema</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="n">sname</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">sname</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;schema object </span><span class="si">%s</span><span class="s1"> is not from same model tree&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sname</span><span class="p">,))</span>
+        <span class="k">elif</span> <span class="n">sname</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">sname</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pseudo_fkeys</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span></div>
 
     <span class="nd">@object_annotation</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">bulk_upload</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">bulk_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
@@ -1651,27 +1714,34 @@
 
 <span class="sd">       acls: schema-level ACL configuration</span>
 <span class="sd">       annotations: schema-level annotations</span>
+<span class="sd">       comment: schema-level comment string</span>
 <span class="sd">       tables: all tables in schema, by name</span>
 
 <span class="sd">       Convenience access for common annotations:</span>
 <span class="sd">         self.display: access mutable tag.display object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">schema_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="s2">&quot;/schema/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">sname</span><span class="p">),</span>
-            <span class="n">schema_doc</span>
-        <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">schema_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema_doc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">sname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fkeys</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tables</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">tname</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;table_class&#39;</span><span class="p">,</span> <span class="n">CatalogTable</span><span class="p">)(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">tdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">tname</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;table_class&#39;</span><span class="p">,</span> <span class="n">CatalogTable</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">tdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">tdoc</span> <span class="ow">in</span> <span class="n">schema_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tables&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
 
-<div class="viewcode-block" id="CatalogSchema.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogSchema.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;/schema/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CatalogSchema.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogSchema.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply schema configuration to catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self.</span>
 
 <span class="sd">        The configuration in self will be applied recursively to the</span>
@@ -1680,9 +1750,9 @@
 <span class="sd">        applied where applicable unless existing value is equivalent.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
+        <span class="n">NodeConfigAcl</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">table</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+            <span class="n">table</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CatalogSchema.clear"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogSchema.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear all configuration in schema and children.&quot;&quot;&quot;</span>
@@ -1699,7 +1769,6 @@
             <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">table</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">d</span></div></div>
-
 
 <div class="viewcode-block" id="KeyedList"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.KeyedList">[docs]</a><span class="k">class</span> <span class="nc">KeyedList</span> <span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Keyed list.&quot;&quot;&quot;</span>
@@ -1740,39 +1809,6 @@
         <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span></div></div>
 
-<div class="viewcode-block" id="MultiKeyedList"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.MultiKeyedList">[docs]</a><span class="k">class</span> <span class="nc">MultiKeyedList</span> <span class="p">(</span><span class="nb">list</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Multi-keyed list.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
-        <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elements</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nb">tuple</span><span class="p">(</span><span class="n">name</span><span class="p">):</span> <span class="n">e</span>
-            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">l</span>
-            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">names</span>
-        <span class="p">}</span>
-
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get element by key or by list index or slice.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Delete element by key or by list index.&quot;&quot;&quot;</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="nb">list</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
-            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-
-<div class="viewcode-block" id="MultiKeyedList.append"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.MultiKeyedList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Append element to list and record its keys.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Element name </span><span class="si">%s</span><span class="s1"> already exists.&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
-        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span></div></div>
-
 <div class="viewcode-block" id="CatalogTable"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable">[docs]</a><span class="k">class</span> <span class="nc">CatalogTable</span> <span class="p">(</span><span class="n">NodeConfigAclBinding</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Table-level configuration management.</span>
 
@@ -1780,6 +1816,7 @@
 <span class="sd">       acls: table-level ACL configuration</span>
 <span class="sd">       annotations: table-level annotations</span>
 <span class="sd">       column_definitions: columns in table</span>
+<span class="sd">       comment: table-level comment string</span>
 
 <span class="sd">       Convenience access to common annotations:</span>
 <span class="sd">         self.alternatives: tag.table_alternatives object</span>
@@ -1791,31 +1828,36 @@
 <span class="sd">         self.visible_foreign_keys: tag.visible_foreign_keys object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">table_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="s2">&quot;/schema/</span><span class="si">%s</span><span class="s2">/table/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">urlquote</span><span class="p">(</span><span class="n">sname</span><span class="p">),</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">tname</span><span class="p">)),</span>
-            <span class="n">table_doc</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schema</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">table_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table_doc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">schema</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">tname</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;column_class&#39;</span><span class="p">,</span> <span class="n">CatalogColumn</span><span class="p">)(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">cdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;column_class&#39;</span><span class="p">,</span> <span class="n">CatalogColumn</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">cdoc</span> <span class="ow">in</span> <span class="n">table_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;column_definitions&#39;</span><span class="p">,</span> <span class="p">[])</span>
         <span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="n">MultiKeyedList</span><span class="p">([</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key_class&#39;</span><span class="p">,</span> <span class="n">CatalogKey</span><span class="p">)(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">kdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;key_class&#39;</span><span class="p">,</span> <span class="n">CatalogKey</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">kdoc</span> <span class="ow">in</span> <span class="n">table_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="p">[])</span>
         <span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span> <span class="o">=</span> <span class="n">MultiKeyedList</span><span class="p">([</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;foreign_key_class&#39;</span><span class="p">,</span> <span class="n">CatalogForeignKey</span><span class="p">)(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">fkdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;foreign_key_class&#39;</span><span class="p">,</span> <span class="n">CatalogForeignKey</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkdoc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">fkdoc</span> <span class="ow">in</span> <span class="n">table_doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;foreign_keys&#39;</span><span class="p">,</span> <span class="p">[])</span>
         <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">referenced_by</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([])</span>
 
-<div class="viewcode-block" id="CatalogTable.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model element.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/table/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">uri_path</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="CatalogTable.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Apply table configuration to catalog unless existing already matches.</span>
 
-<span class="sd">        :param catalog: The EmrestCatalog instance to which configuration will be applied.</span>
 <span class="sd">        :param existing: An instance comparable to self.</span>
 
 <span class="sd">        The configuration in self will be applied recursively to the</span>
@@ -1825,13 +1867,13 @@
 <span class="sd">        equivalent.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
+        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">:</span>
-            <span class="n">col</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">col</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">:</span>
-            <span class="n">key</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">key</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">key</span><span class="o">.</span><span class="n">name_in_model</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="p">)]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
-            <span class="n">fkey</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">[</span><span class="n">fkey</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
+            <span class="n">fkey</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">[</span><span class="n">fkey</span><span class="o">.</span><span class="n">name_in_model</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="p">)]</span> <span class="k">if</span> <span class="n">existing</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CatalogTable.clear"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear all configuration in table and children.&quot;&quot;&quot;</span>
@@ -1846,21 +1888,187 @@
 <div class="viewcode-block" id="CatalogTable.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;schema_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;table_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;column_definitions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">column</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span>
-        <span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;keys&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">key</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span>
-        <span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s2">&quot;foreign_keys&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">fkey</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span>
-        <span class="p">]</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;column_definitions&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">key</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;foreign_keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">fkey</span><span class="o">.</span><span class="n">prejson</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span>
+            <span class="p">]</span>
+        <span class="p">})</span>
         <span class="k">return</span> <span class="n">d</span></div>
+
+    <span class="k">def</span> <span class="nf">_own_column</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">column</span><span class="p">,</span> <span class="n">CatalogColumn</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="n">column</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">column</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;column </span><span class="si">%s</span><span class="s1"> object is not from this table object&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">column</span><span class="p">,))</span>
+        <span class="k">elif</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">column</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;value </span><span class="si">%s</span><span class="s1"> does not name a defined column in this table&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c</span><span class="p">,))</span>
+
+<div class="viewcode-block" id="CatalogTable.key_by_columns"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.key_by_columns">[docs]</a>    <span class="k">def</span> <span class="nf">key_by_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unique_columns</span><span class="p">,</span> <span class="n">raise_nomatch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return key from self.keys with matching unique columns.</span>
+
+<span class="sd">        unique_columns: iterable of column instances or column names</span>
+<span class="sd">        raise_nomatch: for True, raise KeyError on non-match, else return None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cset</span> <span class="o">=</span> <span class="p">{</span> <span class="bp">self</span><span class="o">.</span><span class="n">_own_column</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">unique_columns</span> <span class="p">}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cset</span> <span class="o">==</span> <span class="p">{</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">key</span><span class="o">.</span><span class="n">unique_columns</span> <span class="p">}:</span>
+                <span class="k">return</span> <span class="n">key</span>
+        <span class="k">if</span> <span class="n">raise_nomatch</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">cset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CatalogTable.fkeys_by_columns"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.fkeys_by_columns">[docs]</a>    <span class="k">def</span> <span class="nf">fkeys_by_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_columns</span><span class="p">,</span> <span class="n">partial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">raise_nomatch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Iterable of fkeys from self.foreign_keys with matching columns.</span>
+
+<span class="sd">        from_columns: iterable of referencing column instances or column names</span>
+<span class="sd">        partial: include fkeys which cover a superset of from_columns</span>
+<span class="sd">        raise_nomatch: for True, raise KeyError on empty iterable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cset</span> <span class="o">=</span> <span class="p">{</span> <span class="bp">self</span><span class="o">.</span><span class="n">_own_column</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">from_columns</span> <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cset</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;from_columns must be non-empty&#39;</span><span class="p">)</span>
+        <span class="n">to_table</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="n">fkey_cset</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">cset</span> <span class="o">==</span> <span class="n">fkey_cset</span> <span class="ow">or</span> <span class="n">partial</span> <span class="ow">and</span> <span class="n">cset</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">fkey_cset</span><span class="p">):</span>
+                <span class="n">raise_nomatch</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">yield</span> <span class="n">fkey</span>
+        <span class="k">if</span> <span class="n">raise_nomatch</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">cset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CatalogTable.fkey_by_column_map"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.fkey_by_column_map">[docs]</a>    <span class="k">def</span> <span class="nf">fkey_by_column_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_to_map</span><span class="p">,</span> <span class="n">raise_nomatch</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return fkey from self.foreign_keys with matching {referencing: referenced} column mapping.</span>
+
+<span class="sd">        from_to_map: dict-like mapping with items() method yielding (from_col, to_col) pairs</span>
+<span class="sd">        raise_nomatch: for True, raise KeyError on non-match, else return None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">colmap</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_own_column</span><span class="p">(</span><span class="n">from_col</span><span class="p">):</span> <span class="n">to_col</span>
+            <span class="k">for</span> <span class="n">from_col</span><span class="p">,</span> <span class="n">to_col</span> <span class="ow">in</span> <span class="n">from_to_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colmap</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;column mapping must be non-empty&#39;</span><span class="p">)</span>
+        <span class="n">to_table</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">colmap</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">to_table</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">to_table</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">table</span>
+            <span class="k">elif</span> <span class="n">to_table</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">table</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;to-columns must all be part of same table&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">colmap</span> <span class="o">==</span> <span class="n">fkey</span><span class="o">.</span><span class="n">column_map</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">fkey</span>
+        <span class="k">if</span> <span class="n">raise_nomatch</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">from_to_map</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CatalogTable.is_association"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogTable.is_association">[docs]</a>    <span class="k">def</span> <span class="nf">is_association</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_arity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_arity</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">unqualified</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">no_overlap</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return (truthy) integer arity if self is a matching association, else False.</span>
+
+<span class="sd">        min_arity: minimum number of associated fkeys (default 2)</span>
+<span class="sd">        max_arity: maximum number of associated fkeys (default 2) or None</span>
+<span class="sd">        unqualified: reject qualified associations when True (default True)</span>
+<span class="sd">        pure: reject impure assocations when True (default True)</span>
+<span class="sd">        no_overlap: reject overlapping associations when True (default True)</span>
+
+<span class="sd">        The default behavior with no arguments is to test for pure,</span>
+<span class="sd">        unqualified, non-overlapping, binary assocations.</span>
+
+<span class="sd">        An association is comprised of several foreign keys which are</span>
+<span class="sd">        covered by a non-nullable composite row key. This allows</span>
+<span class="sd">        specific combinations of foreign keys to appear at most once.</span>
+
+<span class="sd">        The arity of an association is the number of foreign keys</span>
+<span class="sd">        being associated. A typical binary association has arity=2.</span>
+
+<span class="sd">        An unqualified association contains *only* the foreign key</span>
+<span class="sd">        material in its row key. Conversely, a qualified association</span>
+<span class="sd">        mixes in other material which means that a specific</span>
+<span class="sd">        combination of foreign keys may repeat with different</span>
+<span class="sd">        qualifiers.</span>
+
+<span class="sd">        A pure association contains *only* row key</span>
+<span class="sd">        material. Conversely, an impure association includes</span>
+<span class="sd">        additional metadata columns not covered by the row key. Unlike</span>
+<span class="sd">        qualifiers, impure metadata merely decorates an association</span>
+<span class="sd">        without augmenting its identifying characteristics.</span>
+
+<span class="sd">        A non-overlapping association does not share any columns</span>
+<span class="sd">        between multiple foreign keys. This means that all</span>
+<span class="sd">        combinations of foreign keys are possible. Conversely, an</span>
+<span class="sd">        overlapping association shares some columns between multiple</span>
+<span class="sd">        foreign keys, potentially limiting the combinations which can</span>
+<span class="sd">        be represented in an association row.</span>
+
+<span class="sd">        These tests ignore the five ERMrest system columns and any</span>
+<span class="sd">        corresponding constraints.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">min_arity</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;An assocation cannot have arity &lt; 2&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_arity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">max_arity</span> <span class="o">&lt;</span> <span class="n">min_arity</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;max_arity cannot be less than min_arity&#39;</span><span class="p">)</span>
+
+        <span class="c1"># TODO: revisit whether there are any other cases we might</span>
+        <span class="c1"># care about where system columns are involved?</span>
+        <span class="n">non_sys_cols</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">col</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span>
+            <span class="k">if</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;RID&#39;</span><span class="p">,</span> <span class="s1">&#39;RCT&#39;</span><span class="p">,</span> <span class="s1">&#39;RMT&#39;</span><span class="p">,</span> <span class="s1">&#39;RCB&#39;</span><span class="p">,</span> <span class="s1">&#39;RMB&#39;</span><span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">non_sys_key_colsets</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">frozenset</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">unique_columns</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">unique_columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">non_sys_cols</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">unique_columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">non_sys_key_colsets</span><span class="p">:</span>
+            <span class="c1"># reject: not association</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># choose longest compound key (arbitrary choice with ties!)</span>
+        <span class="n">row_key</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_sys_key_colsets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">covered_fkeys</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">fkey</span>
+            <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_keys</span>
+            <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">row_key</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">covered_fkey_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">covered_fkeys</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_arity</span><span class="p">:</span>
+            <span class="c1"># reject: not enough fkeys in association</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">max_arity</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">covered_fkeys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_arity</span><span class="p">:</span>
+            <span class="c1"># reject: too many fkeys in association</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">covered_fkeys</span><span class="p">:</span>
+            <span class="n">fkcols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">fkey</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">no_overlap</span> <span class="ow">and</span> <span class="n">fkcols</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">covered_fkey_cols</span><span class="p">):</span>
+                <span class="c1"># reject: overlapping fkeys in association</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">covered_fkey_cols</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">fkcols</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">unqualified</span> <span class="ow">and</span> <span class="n">row_key</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">covered_fkey_cols</span><span class="p">):</span>
+            <span class="c1"># reject: qualified association</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">pure</span> <span class="ow">and</span> <span class="n">non_sys_cols</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">row_key</span><span class="p">):</span>
+            <span class="c1"># reject: impure association</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># return (truthy) arity</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">covered_fkeys</span><span class="p">)</span></div>
 
     <span class="nd">@object_annotation</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">table_alternatives</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">alternatives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
@@ -1880,6 +2088,7 @@
 <span class="sd">       acl_bindings: column-level dynamic ACL bindings</span>
 <span class="sd">       acls: column-level ACL configuration</span>
 <span class="sd">       annotations: column-level annotations</span>
+<span class="sd">       comment: column-level comment string</span>
 <span class="sd">       name: name of column</span>
 
 <span class="sd">       Convenience access to common annotations:</span>
@@ -1890,16 +2099,27 @@
 <span class="sd">         self.immutable: treat tag.immutable as a boolean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">column_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">column_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">cname</span> <span class="o">=</span> <span class="n">column_doc</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="s2">&quot;/schema/</span><span class="si">%s</span><span class="s2">/table/</span><span class="si">%s</span><span class="s2">/column/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">urlquote</span><span class="p">(</span><span class="n">sname</span><span class="p">),</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">tname</span><span class="p">),</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">cname</span><span class="p">)),</span>
-            <span class="n">column_doc</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tname</span> <span class="o">=</span> <span class="n">tname</span>
+        <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column_doc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">cname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/column/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">uri_path</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="CatalogColumn.prejson_colref"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogColumn.prejson_colref">[docs]</a>    <span class="k">def</span> <span class="nf">prejson_colref</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;table_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;column_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">}</span></div>
 
 <div class="viewcode-block" id="CatalogColumn.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogColumn.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>
@@ -1913,34 +2133,85 @@
     <span class="nd">@object_annotation</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">column_display</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">column_display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span></div>
 
+<span class="k">def</span> <span class="nf">_constraint_name_parts</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+    <span class="c1"># modern systems should have 0 or 1 names here</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;names&#39;</span><span class="p">,</span> <span class="p">[])[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unexpected constraint without any name.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">constraint_schema</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">constraint</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">constraint_schema</span> <span class="o">=</span> <span class="n">constraint</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unexpected schema name in constraint </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>
+    <span class="n">constraint_name</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="n">constraint_name</span><span class="p">)</span>
+
 <div class="viewcode-block" id="CatalogKey"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogKey">[docs]</a><span class="k">class</span> <span class="nc">CatalogKey</span> <span class="p">(</span><span class="n">NodeConfig</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Key-level configuration management.</span>
 
 <span class="sd">       annotations: column-level annotations</span>
-<span class="sd">       names: name(s) of key constraint</span>
+<span class="sd">       comment: key-level comment string</span>
+<span class="sd">       name: (self.schema, name_str) pair of key constraint</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">NodeConfig</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="s1">&#39;/schema/</span><span class="si">%s</span><span class="s1">/table/</span><span class="si">%s</span><span class="s1">/key/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">sname</span><span class="p">),</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">tname</span><span class="p">),</span>
-                <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">cname</span><span class="p">)</span> <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span> <span class="p">])</span>
-            <span class="p">),</span>
-            <span class="n">key_doc</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">NodeConfig</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="n">_constraint_name_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span>
+        <span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/key/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">uri_path</span><span class="p">,</span>
+            <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="p">])</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tname</span> <span class="o">=</span> <span class="n">tname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="o">=</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint name (schemaobj, name_str) used in API dictionaries.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CatalogKey.name_in_model"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogKey.name_in_model">[docs]</a>    <span class="k">def</span> <span class="nf">name_in_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</span>
+
+<span class="sd">        While self.name works as a key within the same model tree,</span>
+<span class="sd">        self.name_in_model(dstmodel) works in dstmodel tree by finding</span>
+<span class="sd">        the equivalent schemaobj in that model via schema name lookup.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint names field as seen in JSON document.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="p">]</span>
 
 <div class="viewcode-block" id="CatalogKey.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogKey.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">NodeConfig</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;unique_columns&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
+        <span class="p">})</span>
         <span class="k">return</span> <span class="n">d</span></div></div>
-
 
 <div class="viewcode-block" id="CatalogForeignKey"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogForeignKey">[docs]</a><span class="k">class</span> <span class="nc">CatalogForeignKey</span> <span class="p">(</span><span class="n">NodeConfigAclBinding</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Foreign key-level configuration management.</span>
@@ -1948,27 +2219,90 @@
 <span class="sd">       acl_bindings: foreign key-level acl-bindings</span>
 <span class="sd">       acls: foreign key-level acls</span>
 <span class="sd">       annotations: foreign key-level annotations</span>
+<span class="sd">       comment: foreign key-level comment string</span>
+<span class="sd">       name: (self.schema, name_str) pair of foreign key constraint</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">fkey_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">fkey_doc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">refcols</span> <span class="o">=</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]</span>
         <span class="n">NodeConfigAclBinding</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
-            <span class="s1">&#39;/schema/</span><span class="si">%s</span><span class="s1">/table/</span><span class="si">%s</span><span class="s1">/foreignkey/</span><span class="si">%s</span><span class="s1">/reference/</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">sname</span><span class="p">),</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">tname</span><span class="p">),</span>
-                <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">col</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">]</span> <span class="p">]),</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">refcols</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;schema_name&#39;</span><span class="p">]),</span>
-                <span class="n">urlquote</span><span class="p">(</span><span class="n">refcols</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;table_name&#39;</span><span class="p">]),</span>
-                <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">col</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">refcols</span> <span class="p">]),</span>
-            <span class="p">),</span>
             <span class="n">fkey_doc</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tname</span> <span class="o">=</span> <span class="n">tname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span> <span class="o">=</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]</span>
-    
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="n">_constraint_name_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkey_doc</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_pseudo_fkeys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">coldoc</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]]</span>
+            <span class="k">for</span> <span class="n">coldoc</span> <span class="ow">in</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span> <span class="o">=</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CatalogForeignKey.digest_referenced_columns"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogForeignKey.digest_referenced_columns">[docs]</a>    <span class="k">def</span> <span class="nf">digest_referenced_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Finish construction deferred until model is known with all tables.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pk_sname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;schema_name&#39;</span><span class="p">]</span>
+            <span class="n">pk_tname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">pk_sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">pk_tname</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">coldoc</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]]</span>
+                <span class="k">for</span> <span class="n">coldoc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span>
+            <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">referenced_by</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">column_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">fk_col</span><span class="p">:</span> <span class="n">pk_col</span>
+            <span class="k">for</span> <span class="n">fk_col</span><span class="p">,</span> <span class="n">pk_col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">)</span>
+        <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;URI to this model resource.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/foreignkey/</span><span class="si">%s</span><span class="s1">/reference/</span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">uri_path</span><span class="p">,</span>
+            <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span> <span class="p">]),</span>
+            <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
+            <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint name (schemaobj, name_str) used in API dictionaries.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CatalogForeignKey.name_in_model"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogForeignKey.name_in_model">[docs]</a>    <span class="k">def</span> <span class="nf">name_in_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</span>
+
+<span class="sd">        While self.name works as a key within the same model tree,</span>
+<span class="sd">        self.name_in_model(dstmodel) works in dstmodel tree by finding</span>
+<span class="sd">        the equivalent schemaobj in that model via schema name lookup.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constraint names field as seen in JSON document.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="p">]</span>
+
 <div class="viewcode-block" id="CatalogForeignKey.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.CatalogForeignKey.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">expand</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
@@ -1976,12 +2310,17 @@
             <span class="n">c</span><span class="p">[</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tname</span>
             <span class="k">return</span> <span class="n">c</span>
         <span class="n">d</span> <span class="o">=</span> <span class="n">NodeConfig</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">expand</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span>
-        <span class="p">]</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span>
-        <span class="n">d</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">prejson_colref</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;referenced_columns&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">prejson_colref</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span>
+            <span class="p">],</span>
+            <span class="s1">&#39;names&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
+        <span class="p">})</span>
         <span class="k">return</span> <span class="n">d</span></div>
 
     <span class="nd">@object_annotation</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">foreign_key</span><span class="p">)</span>

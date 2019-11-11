@@ -408,6 +408,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#alter-a-table">Alter a Table</a></li>
 </ul>
 </li>
 </ul>
@@ -1377,39 +1378,74 @@
 <span class="sd">           Other exceptions abort the blocking_poll() call.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">last_run_time</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">retry_amqp</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">amqp_failed_at</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">amqp_retry_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">last_notice_event</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">def</span> <span class="nf">next_poll_time</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span>
+                <span class="n">polling_seconds</span>
+                <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_notice_event</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">next_amqp_time</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">amqp_failed_at</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="mi">5</span><span class="o">**</span><span class="n">amqp_retry_count</span> <span class="c1"># exponential backoff 5s ... ~21h</span>
+                <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">amqp_failed_at</span><span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_amqp_bind</span><span class="p">()</span>
-                <span class="n">polling_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                                          <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">polling_seconds</span><span class="p">)</span>
-                <span class="n">coalesce_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                                           <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">coalesce_seconds</span><span class="p">)</span>
-                <span class="n">retry_amqp</span> <span class="o">=</span> <span class="kc">True</span>
-
-                <span class="c1"># run once to catch up on historical changes since before we opened our channel</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
-
-                <span class="c1"># follow channel with polling_seconds periodic wakeup even when idle</span>
-                <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">polling_gen</span><span class="p">:</span>
-                    <span class="c1"># ... and delay for up to coalesce_seconds to combine multiple notices into one wakeup</span>
-                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Woke up on </span><span class="si">%s</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;change-notice&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s1">&#39;poll timeout&#39;</span><span class="p">))</span>
-                    <span class="k">while</span> <span class="nb">next</span><span class="p">(</span><span class="n">coalesce_gen</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="k">pass</span>
-
-                    <span class="c1"># catch up on changes since last time we looked</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span><span class="o">.</span><span class="n">is_open</span><span class="p">)</span> \
+                   <span class="ow">and</span> <span class="n">next_amqp_time</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">next_poll_time</span><span class="p">():</span>
+                    <span class="c1"># initialize AMQP (unless we&#39;re in a cool-down period)</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">next_amqp_time</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_amqp_bind</span><span class="p">()</span>
+                    <span class="n">polling_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span>
+                        <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">polling_seconds</span>
+                    <span class="p">)</span>
+                    <span class="n">coalesce_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">notice_channel</span><span class="o">.</span><span class="n">consume</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">notice_queue_name</span><span class="p">,</span>
+                        <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">inactivity_timeout</span><span class="o">=</span><span class="n">coalesce_seconds</span>
+                    <span class="p">)</span>
+                    <span class="n">amqp_failed_at</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">amqp_retry_count</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Using AMQP hybrid polling.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="c1"># drain any pre-existing work that won&#39;t fire an AMQP event for us</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+                    <span class="n">last_notice_event</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+                    <span class="c1"># wait for AMQP event or timeout to wake us</span>
+                    <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">polling_gen</span><span class="p">:</span>
+                        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Woke up on </span><span class="si">%s</span><span class="s1">.</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;change-notice&#39;</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="s1">&#39;poll timeout&#39;</span><span class="p">))</span>
+                        <span class="c1"># ... and delay for up to coalesce_seconds to combine multiple notices into one wakeup</span>
+                        <span class="k">while</span> <span class="nb">next</span><span class="p">(</span><span class="n">coalesce_gen</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="k">pass</span>
+                        <span class="c1"># run once per wakeup</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+                        <span class="n">last_notice_event</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># wait for next poll deadline and run once</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">next_poll_time</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+                    <span class="n">last_notice_event</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
             <span class="k">except</span> <span class="n">pika</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">AMQPConnectionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="c1"># do our best without AMQP by falling back on polling</span>
-                <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">retry_amqp</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">amqp_failed_at</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Using basic polling due to AMQP communication problems.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">last_run_time</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">retry_amqp</span><span class="p">:</span>
-                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">polling_seconds</span> <span class="o">-</span> <span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="n">last_run_time</span><span class="p">)))</span>
-                    <span class="n">last_run_time</span> <span class="o">=</span> <span class="n">now</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_run_notice_event</span><span class="p">(</span><span class="n">look_for_work</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">amqp_failed_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">amqp_retry_count</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>
+                    <span class="c1"># don&#39;t let retry exponent get bigger than 7...</span>
+                    <span class="n">amqp_retry_count</span> <span class="o">+=</span> <span class="mi">1</span>
 
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Got error </span><span class="si">%s</span><span class="s1"> in main event loop.&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>

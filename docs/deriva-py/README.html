@@ -410,6 +410,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#add-column-to-table">Add Column to Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#alter-a-table">Alter a Table</a></li>
 </ul>
 </li>
 </ul>
@@ -1343,12 +1344,27 @@ access layer.</p>
 <li>Create new foreign key constraints over existing columns and key constraints.</li>
 </ul>
 </li>
-<li>Delete model elements<ul>
+<li>Reconfigure model elements<ul>
+<li>Change comment string on schema, table, column, key, or foreign key constraints.</li>
+<li>Change acls on schema, table, column, and foreign key constraints.</li>
+<li>Change acl_bindings on table, column, and foreign key constraints.</li>
+<li>Change annotations on catalog, schema, table, column, key, or foreign key constraints.</li>
+</ul>
+</li>
+<li>Drop model elements<ul>
 <li>Drop schemas.</li>
 <li>Drop tables.</li>
 <li>Drop columns.</li>
 <li>Drop key constraints.</li>
 <li>Drop foreign key constraints.</li>
+</ul>
+</li>
+<li>Alter model elements<ul>
+<li>Rename a schema.</li>
+<li>Rename a table or move the table between schemas.</li>
+<li>Rename a column, or change column storage type, default value, or null-ok status.</li>
+<li>Rename a key constraint.</li>
+<li>Rename a foreign key constraint.</li>
 </ul>
 </li>
 </ul>
@@ -1360,11 +1376,10 @@ catalog model with a hierarchy of local objects, it is possible for
 the local objects to get out of synchronization with the remote
 catalog and either represent model elements which no longer exist or
 lack model elements recently added.</p>
-<p>The provided management methods, when used carefully, can
-incrementally update the local representation with changes made to the
-server by the calling client. However, if other clients make
-concurrent changes, it is likely that the local representation will
-diverge.</p>
+<p>The provided management methods can incrementally update the local
+representation with changes made to the server by the calling
+client. However, if other clients make concurrent changes, it is
+likely that the local representation will diverge.</p>
 <p>The only robust solution to this problem is for the caller to discard
 its model representation, reconstruct it to match the latest server
 state, and retry whatever changes are intended.</p>
@@ -1432,7 +1447,7 @@ definition:</p>
   <span class="n">provide_system</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">schema</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">schema_name</span><span class="p">]</span>
-<span class="n">new_table</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">table_def</span><span class="p">)</span>
+<span class="n">new_table</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">table_def</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">create_table(...)</span></code> will add system columns to the table
@@ -1446,7 +1461,7 @@ vocabulary used as a domain table for foreign key values used in
 science data columns.  A simple vocabulary term table can be
 created with a helper function:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">schema_name</span><span class="p">]</span>
-<span class="n">new_vocab_table</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span>
+<span class="n">new_vocab_table</span> <span class="o">=</span> <span class="n">schema</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
   <span class="n">Table</span><span class="o">.</span><span class="n">define_vocabulary</span><span class="p">(</span>
     <span class="s2">&quot;My Vocabulary&quot;</span><span class="p">,</span>
     <span class="s2">&quot;MYPROJECT:</span><span class="si">{RID}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -1455,7 +1470,7 @@ created with a helper function:</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">Table.define_vocabular()</span></code> method is a convenience wrapper around
+<p>The <code class="docutils literal notranslate"><span class="pre">Table.define_vocabulary()</span></code> method is a convenience wrapper around
 <code class="docutils literal notranslate"><span class="pre">Table.define()</span></code> to automatically generate core vocabulary table
 structures. It accepts other table definition parameters which a
 sophisticated caller can use to override or extend these core
@@ -1476,30 +1491,83 @@ existing table.</p>
   <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span>
 <span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
-<span class="n">new_column</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">create_column</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">column_def</span><span class="p">)</span>
+<span class="n">new_column</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">create_column</span><span class="p">(</span><span class="n">column_def</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The same pattern can be used to add a key or foreign key to an
-existing table via <code class="docutils literal notranslate"><span class="pre">table.create_key(catalog,</span> <span class="pre">key_def)</span></code> or
-<code class="docutils literal notranslate"><span class="pre">table.create_fkey(catalog,</span> <span class="pre">fkey_def)</span></code>, respectively. Similarly, a
-schema can be added to a model with <code class="docutils literal notranslate"><span class="pre">model.create_schema(catalog,</span> <span class="pre">schema_def)</span></code>.</p>
+existing table via <code class="docutils literal notranslate"><span class="pre">table.create_key(key_def)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">table.create_fkey(fkey_def)</span></code>, respectively. Similarly, a schema can
+be added to a model with <code class="docutils literal notranslate"><span class="pre">model.create_schema(schema_def)</span></code>.</p>
 </div>
 <div class="section" id="remove-a-column-from-a-table">
 <span id="remove-a-column-from-a-table"></span><h3>Remove a Column from a Table<a class="headerlink" href="#remove-a-column-from-a-table" title="Permalink to this headline">¶</a></h3>
-<p>To delete a column, you invoke the <code class="docutils literal notranslate"><span class="pre">delete()</span></code> method on the
+<p>To remove or “drop” a column, you invoke the <code class="docutils literal notranslate"><span class="pre">drop()</span></code> method on the
 column object itself:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
 <span class="n">column</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">column_name</span><span class="p">]</span>
-<span class="n">column</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span>
+<span class="n">column</span><span class="o">.</span><span class="n">drop</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>The optional <code class="docutils literal notranslate"><span class="pre">table</span></code> argument allows the method to prune the stale
-object from the table object to reflect the change made on
-the server. If this is omitted, the server change will be made but the
-local table object will fall out of synchronization.</p>
 <p>The same pattern can be used to remove a key or foreign key from a
-table via <code class="docutils literal notranslate"><span class="pre">key.delete(catalog,</span> <span class="pre">table)</span></code> or <code class="docutils literal notranslate"><span class="pre">foreign_key.delete(catalog,</span> <span class="pre">table)</span></code>, respectively. Similarly, a schema or table can be removed
-with <code class="docutils literal notranslate"><span class="pre">schema.delete(catalog,</span> <span class="pre">model)</span></code> or <code class="docutils literal notranslate"><span class="pre">table.delete(catalog,</span> <span class="pre">schema)</span></code>, respectively.</p>
+table via <code class="docutils literal notranslate"><span class="pre">key.drop()</span></code> or <code class="docutils literal notranslate"><span class="pre">foreign_key.drop()</span></code>,
+respectively. Similarly, a schema or table can be removed with
+<code class="docutils literal notranslate"><span class="pre">schema.drop()</span></code> or <code class="docutils literal notranslate"><span class="pre">table.drop()</span></code>, respectively.</p>
+</div>
+<div class="section" id="alter-a-table">
+<span id="alter-a-table"></span><h3>Alter a Table<a class="headerlink" href="#alter-a-table" title="Permalink to this headline">¶</a></h3>
+<p>To alter certain aspects of an existing table, you invoke the
+<code class="docutils literal notranslate"><span class="pre">alter()</span></code> method with optional keyword arguments for the aspects you
+wish to change. The default for omitted keyword arguments is a special
+<code class="docutils literal notranslate"><span class="pre">nochange</span></code> value which means to keep that aspect as it is currently
+defined:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">orig_schema_name</span><span class="p">,</span> <span class="n">orig_table_name</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">alter</span><span class="p">(</span>
+  <span class="n">schema_name</span><span class="o">=</span><span class="n">destination_schema_name</span><span class="p">,</span>
+  <span class="n">table_name</span><span class="o">=</span><span class="n">new_table_name</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">schema_name</span></code> argument allows you to relocate an existing table
+from an original schema to a destination schema, where both named
+schemas already exist in the model. This also relocates key or foreign
+key constraints in the table at the same time. The <code class="docutils literal notranslate"><span class="pre">table_name</span></code>
+argument allows you to revise the name of an existing table in the
+model, while preserving other aspects of the table definition,
+content, and content history.</p>
+<p>The same pattern can be used to alter schemas, columns, keys, and
+foreign keys:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span><span class="o">.</span><span class="n">alter</span><span class="p">(</span><span class="n">schema_name</span><span class="o">=</span><span class="n">new_schema_name</span><span class="p">)</span>
+
+<span class="n">column</span><span class="o">.</span><span class="n">alter</span><span class="p">(</span>
+  <span class="n">name</span><span class="o">=</span><span class="n">new_column_name</span><span class="p">,</span>
+  <span class="nb">type</span><span class="o">=</span><span class="n">new_column_type_obj</span><span class="p">,</span>
+  <span class="n">nullok</span><span class="o">=</span><span class="n">new_nullok_value</span><span class="p">,</span>
+  <span class="n">default</span><span class="o">=</span><span class="n">new_default_value</span>
+<span class="p">)</span>
+
+<span class="n">key</span><span class="o">.</span><span class="n">alter</span><span class="p">(</span><span class="n">constraint_name</span><span class="o">=</span><span class="n">new_unqualified_name_str</span><span class="p">)</span>
+
+<span class="n">foreign_key</span><span class="o">.</span><span class="n">alter</span><span class="p">(</span>
+  <span class="n">constraint_name</span><span class="o">=</span><span class="n">new_unqualified_name_str</span><span class="p">,</span>
+  <span class="n">on_update</span><span class="o">=</span><span class="n">new_action_string</span><span class="p">,</span>
+  <span class="n">on_delete</span><span class="o">=</span><span class="n">new_action_string</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The key and foreign key alterations accept only the unqualified
+constraint name string, because it is not possible to change the
+schema qualification other than by relocating the parent table to a
+different schema. The foreign key alteration also supports changes to
+the <code class="docutils literal notranslate"><span class="pre">on_update</span></code> and <code class="docutils literal notranslate"><span class="pre">on_delete</span></code> action, e.g. <code class="docutils literal notranslate"><span class="pre">NO</span> <span class="pre">ACTION</span></code>, <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">NULL</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code>.</p>
+<p>As a convenience, there are also optional <code class="docutils literal notranslate"><span class="pre">alter()</span></code> arguments to
+reconfigure <code class="docutils literal notranslate"><span class="pre">comment</span></code>, <code class="docutils literal notranslate"><span class="pre">acls</span></code>, <code class="docutils literal notranslate"><span class="pre">acl_bindings</span></code> if they exist in the
+<code class="docutils literal notranslate"><span class="pre">define()</span></code> method for the same class of object. They are omitted from
+the preceding examples for the sake of brevity. These arguments allow
+similar effect to mutating the local configuration fields and then
+invoking the <code class="docutils literal notranslate"><span class="pre">apply()</span></code> method to send them to the server, except that
+configuration changes included in an <code class="docutils literal notranslate"><span class="pre">alter()</span></code> request will happen
+atomically with respect to the other indicated alterations.</p>
 </div>
 </div>
 </div>
@@ -1571,7 +1639,7 @@ factory methods on a catalog or snapshot object:</p>
 <li>The <code class="docutils literal notranslate"><span class="pre">config_root</span></code> object roots a tree of objects isomorphic to the catalog model, organizing configuration data according to each part of the model.</li>
 <li>Allows inspection of catalog/snapshot annotations and policies.</li>
 <li>Allows mutation to draft a new configuration objective.</li>
-<li>Draft changes are applied with <code class="docutils literal notranslate"><span class="pre">catalog.applyCatalogConfig(config_root)</span></code></li>
+<li>Draft changes are applied with <code class="docutils literal notranslate"><span class="pre">config_root.apply()</span></code></li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">model_root</span> <span class="pre">=</span> <span class="pre">catalog.getCatalogModel()</span></code><ul>

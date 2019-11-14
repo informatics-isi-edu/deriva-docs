@@ -1132,7 +1132,10 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#action-list">Action List</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#button-action-list">Button Action List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#client-button-action-list">Client Button Action List</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#button-action-attributes">Button Action Attributes</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#error-log">Error Log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#truncation">Truncation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a><ul>
@@ -1317,6 +1320,7 @@
 <li><code class="docutils literal notranslate"><span class="pre">catalog</span></code>: The catalog id.</li>
 <li><code class="docutils literal notranslate"><span class="pre">schema_table</span></code>: The <code class="docutils literal notranslate"><span class="pre">schema:table</span></code> combination.</li>
 <li><code class="docutils literal notranslate"><span class="pre">action</span></code>: A pre-defined string that implies what the request was for. Refer to <a class="reference external" href="#action-list">the action list</a> for more information.</li>
+<li><code class="docutils literal notranslate"><span class="pre">elapsed_s</span></code>: A value set to determine the elapsed time since the ermrestJS http service has been available. This will always be in seconds</li>
 </ul>
 <p>The following are the optional attributes that you might find on requests:</p>
 <ul class="simple">
@@ -1798,10 +1802,33 @@
 </tr>
 </tbody>
 </table></div>
-<div class="section" id="button-action-list">
-<span id="button-action-list"></span><h2>Button Action List<a class="headerlink" href="#button-action-list" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="client-button-action-list">
+<span id="client-button-action-list"></span><h2>Client Button Action List<a class="headerlink" href="#client-button-action-list" title="Permalink to this headline">¶</a></h2>
 <p>The following table will include the actions that are triggered when the user clicks on buttons or other elements on the page that don’t send a request to the server. We make a head request as part of this click event to store the log info.</p>
-<p>Each head request for the below client action events will be made to the same path in ermrest. This namespace will be “client_action”, so each log request will be made to <code class="docutils literal notranslate"><span class="pre">.../ermrest/client_action</span></code>.</p>
+<p>Each head request for the below client action events will be made to the same path in ermrest, namely <code class="docutils literal notranslate"><span class="pre">.../ermrest/client_action</span></code>. To figure out which table or record the action was performed on, locate the server request sent on page load associated with the same <code class="docutils literal notranslate"><span class="pre">pid</span></code>.</p>
+<div class="section" id="button-action-attributes">
+<span id="button-action-attributes"></span><h3>Button Action Attributes<a class="headerlink" href="#button-action-attributes" title="Permalink to this headline">¶</a></h3>
+<p>The default attributes that you can find on all client action requests are the same as the ones define above in <a class="reference external" href="#attributes">attributes</a>. The only difference for the default attributes is that <code class="docutils literal notranslate"><span class="pre">action</span></code> will be from the list below.</p>
+<p>The following are the optional attributes that you might find on requests:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">facet</span></code>: If url contains filter, this attributes gives you the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/wiki/Facets-JSON-Structure">facet</a> equivalent of that filter.<ul>
+<li>recordedit page: facet is used for <code class="docutils literal notranslate"><span class="pre">update/remove</span></code> to notify which form was removed from being edited</li>
+<li>facet “show more” (all 3 apps): In each case, the “Show More” dialog will be for a specific facet which is constrained by all other facets and the main entity that this facet is a part of.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">column</span></code>: The column that is used for faceting for faceting popups. The column that is being acted on in recordedit when using multi select/set functionality.</li>
+<li><code class="docutils literal notranslate"><span class="pre">referrer</span></code>: It’s an object that has <code class="docutils literal notranslate"><span class="pre">schema_table</span></code>, <code class="docutils literal notranslate"><span class="pre">facet</span></code>, and <code class="docutils literal notranslate"><span class="pre">source</span></code> as its attributes. This attribute is available on the request that needs to capture their parent context, which are<ul>
+<li>record page:<ul>
+<li>Any client actions taken to interact with related entities sections (inline or below). The <code class="docutils literal notranslate"><span class="pre">referrer</span></code> for these actions is the main table of the page.</li>
+<li>Each action in Pure and binary popup, points to main table of page.</li>
+<li>Each action in facet popup from Pure and binary popup, points to main table for pure and binary popup.</li>
+</ul>
+</li>
+<li>recordedit page: Each action taken on a foreign key picker row. Includes the select/set all input actions and the foreign key popup dialog actions. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> is the main entity for the create/edit form.</li>
+<li>facet “show more” (all 3 apps): In each case, the “Show More” dialog will be for a specific facet. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> pertains to the main table of the page “show more” was clicked on.</li>
+</ul>
+</li>
+</ul>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1815,35 +1842,19 @@
 </thead>
 <tbody>
 <tr>
-<td>recordset</td>
-<td>row delete clicked</td>
-<td>delete/intend</td>
-<td>RID</td>
-<td>Delete was clicked from table and confirm delete was shown. (use cid to determine app)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>confirm delete cancelled</td>
-<td>delete/cancel</td>
-<td>RID</td>
-<td>User closed the confirm delete modal without deleting</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
+<td>record/recordset</td>
 <td>delete clicked</td>
 <td>delete/intend</td>
-<td></td>
-<td>Delete was clicked from submenu bar and confirm delete was shown. (use cid to determine app)</td>
+<td>facet</td>
+<td>Delete was clicked from the main record page and confirm delete was shown. (use cid to determine app)</td>
 <td></td>
 </tr>
 <tr>
-<td>record</td>
+<td>record/recordset</td>
 <td>confirm delete cancelled</td>
 <td>delete/cancel</td>
-<td></td>
-<td>User closed the confirm delete modal without deleting</td>
+<td>facet</td>
+<td>User closed the confirm delete modal without deleting (facet attribute included when record app)</td>
 <td></td>
 </tr>
 <tr>
@@ -1859,7 +1870,7 @@
 <td>export dropdown</td>
 <td>export/open</td>
 <td></td>
-<td>Dropdown was opened. Selecting an export option will send a request, no need to capture that event (use cid to determine app)</td>
+<td>Dropdown was opened (record request will include extra attribute, facet)</td>
 <td></td>
 </tr>
 <tr>
@@ -1915,7 +1926,7 @@
 <td>copy live link</td>
 <td>share/live</td>
 <td></td>
-<td>Live link was copied to clipboard using glyphicon button</td>
+<td>Live link was copied to clipboard</td>
 <td></td>
 </tr>
 <tr>
@@ -1923,7 +1934,15 @@
 <td>copy version link</td>
 <td>share/version</td>
 <td></td>
-<td>Versioned link was copied to clipboard using glyphicon button</td>
+<td>Versioned link was copied to clipboard</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>cite, download bibtex</td>
+<td>cite/bibtex</td>
+<td></td>
+<td>Bibtex citation downloaded</td>
 <td></td>
 </tr>
 <tr>
@@ -1962,8 +1981,8 @@
 <td>record</td>
 <td>ToC panel options selected</td>
 <td>toc/scroll-to</td>
-<td>S:T</td>
-<td>RT heading clicked in Table of contents</td>
+<td></td>
+<td>Related table heading clicked in Table of contents</td>
 <td></td>
 </tr>
 <tr>
@@ -1978,23 +1997,23 @@
 <td>record</td>
 <td>toggle related table open</td>
 <td>related/open</td>
-<td>S:T</td>
-<td>RT in RT section toggled open</td>
+<td></td>
+<td>Related table section toggled open</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>toggle related table close</td>
 <td>related/close</td>
-<td>S:T</td>
-<td>RT in RT section toggled close</td>
+<td></td>
+<td>Related table section toggled close</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>items per page dropdown</td>
 <td>related/page-size</td>
-<td>S:T</td>
+<td></td>
 <td>Dropdown was opened for related table. Selecting a page size will trigger a read request.</td>
 <td></td>
 </tr>
@@ -2002,7 +2021,7 @@
 <td>record</td>
 <td>Table mode</td>
 <td>related/display/table</td>
-<td>S:T</td>
+<td></td>
 <td>User changed display format to show table display (user does not have permission to edit)</td>
 <td></td>
 </tr>
@@ -2010,15 +2029,15 @@
 <td>record</td>
 <td>Custom mode</td>
 <td>related/display/mkdn</td>
-<td>S:T</td>
-<td>User changed display format to show markdown display (edit and !edit permission)</td>
+<td></td>
+<td>User changed display format to show markdown display (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>Edit mode</td>
 <td>related/display/edit</td>
-<td>S:T</td>
+<td></td>
 <td>User changed display format to show table display (user has permission to edit)</td>
 <td></td>
 </tr>
@@ -2026,15 +2045,15 @@
 <td>record</td>
 <td>row delete clicked</td>
 <td>related/delete/intend</td>
-<td>S:T RID</td>
-<td>Delete was clicked from RT (edit/table mode) in RT section and confirm delete was shown</td>
+<td>facet</td>
+<td>Delete was clicked from related table and confirm delete was shown (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>confirm delete cancelled</td>
 <td>related/delete/cancel</td>
-<td>S:T RID</td>
+<td>facet</td>
 <td>User closed the confirm delete modal without deleting</td>
 <td></td>
 </tr>
@@ -2042,15 +2061,15 @@
 <td>record</td>
 <td>row unlink clicked</td>
 <td>related/unlink/intend</td>
-<td>S:T RID</td>
-<td>Unlink was clicked from RT (edit/table mode) in RT section and confirm unlink (delete) was shown</td>
+<td>facet</td>
+<td>Unlink was clicked from related table and confirm unlink was shown (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>confirm unlink cancelled</td>
 <td>related/unlink/cancel</td>
-<td>S:T RID</td>
+<td>facet</td>
 <td>User closed the confirm unlink modal without unlinking</td>
 <td></td>
 </tr>
@@ -2066,7 +2085,7 @@
 <td>record</td>
 <td>items per page dropdown</td>
 <td>inline/page-size</td>
-<td>S:T</td>
+<td></td>
 <td>Dropdown was opened for inline related table. Selecting a page size will trigger a read request.</td>
 <td></td>
 </tr>
@@ -2074,7 +2093,7 @@
 <td>record</td>
 <td>Table mode</td>
 <td>inline/display/table</td>
-<td>S:T</td>
+<td></td>
 <td>User changed display format to show table display (user does not have permission to edit)</td>
 <td></td>
 </tr>
@@ -2082,15 +2101,15 @@
 <td>record</td>
 <td>Custom mode</td>
 <td>inline/display/mkdn</td>
-<td>S:T</td>
-<td>User changed display format to show markdown display (edit and !edit permission)</td>
+<td></td>
+<td>User changed display format to show markdown display (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>Edit mode</td>
 <td>inline/display/edit</td>
-<td>S:T</td>
+<td></td>
 <td>User changed display format to show table display (user has permission to edit)</td>
 <td></td>
 </tr>
@@ -2098,15 +2117,15 @@
 <td>record</td>
 <td>row delete clicked</td>
 <td>inline/delete/intend</td>
-<td>S:T RID</td>
-<td>Delete was clicked from inline RT (edit/table mode) and confirm delete was shown</td>
+<td>facet</td>
+<td>Delete was clicked from inline related table and confirm delete was shown (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>confirm delete cancelled</td>
 <td>inline/delete/cancel</td>
-<td>S:T RID</td>
+<td>facet</td>
 <td>User closed the confirm delete modal without deleting</td>
 <td></td>
 </tr>
@@ -2114,15 +2133,15 @@
 <td>record</td>
 <td>row unlink clicked</td>
 <td>inline/unlink/intend</td>
-<td>S:T RID</td>
-<td>Unlink was clicked from inline RT (edit/table mode) and confirm unlink (delete) was shown</td>
+<td>facet</td>
+<td>Unlink was clicked from inline related table and confirm unlink was shown (for both edit and not edit permission)</td>
 <td></td>
 </tr>
 <tr>
 <td>record</td>
 <td>confirm unlink cancelled</td>
 <td>inline/unlink/cancel</td>
-<td>S:T RID</td>
+<td>facet</td>
 <td>User closed the confirm unlink modal without unlinking</td>
 <td></td>
 </tr>
@@ -2146,7 +2165,7 @@
 <td>recordedit</td>
 <td>Add x records</td>
 <td>create/clone-x</td>
-<td></td>
+<td>x</td>
 <td>User cloned more than 1 form</td>
 <td></td>
 </tr>
@@ -2162,40 +2181,40 @@
 <td>recordedit</td>
 <td>open set all</td>
 <td>create/set-all/open</td>
-<td>colname</td>
-<td>set all row opened (pencil icon button)</td>
+<td>column</td>
+<td>set all row opened, referrer used for FK rows (pencil icon button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
-<td>open set all</td>
+<td>close set all</td>
 <td>create/set-all/close</td>
-<td>colname</td>
-<td>set all row closed (chevron up icon button)</td>
+<td>column</td>
+<td>set all row closed, referrer used for FK rows (chevron up icon button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>cancel set all</td>
 <td>create/set-all/cancel</td>
-<td>colname</td>
-<td>set all row closed ("Cancel" button)</td>
+<td>column</td>
+<td>set all row closed, referrer used for FK rows ("Cancel" button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>apply set all</td>
 <td>create/set-all/apply</td>
-<td>colname</td>
-<td>set all row applied ("Apply All" button)</td>
+<td>column</td>
+<td>set all row applied, referrer used for FK rows ("Apply All" button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>clear all</td>
 <td>create/set-all/clear</td>
-<td>colname</td>
-<td>set all row cleared ("Clear All" button)</td>
+<td>column</td>
+<td>set all row cleared, referrer used for FK rows ("Clear All" button)</td>
 <td></td>
 </tr>
 <tr>
@@ -2210,7 +2229,7 @@
 <td>recordedit</td>
 <td>remove form</td>
 <td>update/remove</td>
-<td></td>
+<td>facet</td>
 <td>1 form was removed from being updated</td>
 <td></td>
 </tr>
@@ -2218,40 +2237,40 @@
 <td>recordedit</td>
 <td>open set all</td>
 <td>update/set-all/open</td>
-<td>colname</td>
-<td>set all row opened (pencil icon button)</td>
+<td>column</td>
+<td>set all row opened, referrer used for FK rows (pencil icon button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
-<td>open set all</td>
+<td>close set all</td>
 <td>update/set-all/close</td>
-<td>colname</td>
-<td>set all row closed (chevron up icon button)</td>
+<td>column</td>
+<td>set all row closed, referrer used for FK rows (chevron up icon button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>cancel set all</td>
 <td>update/set-all/cancel</td>
-<td>colname</td>
-<td>set all row closed ("Cancel" button)</td>
+<td>column</td>
+<td>set all row closed, referrer used for FK rows ("Cancel" button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>apply set all</td>
 <td>update/set-all/apply</td>
-<td>colname</td>
-<td>set all row applied ("Apply All" button)</td>
+<td>column</td>
+<td>set all row applied, referrer used for FK rows ("Apply All" button)</td>
 <td></td>
 </tr>
 <tr>
 <td>recordedit</td>
 <td>clear all</td>
 <td>update/set-all/clear</td>
-<td>colname</td>
-<td>set all row cleared ("Clear All" button)</td>
+<td>column</td>
+<td>set all row cleared, referrer used for FK rows ("Clear All" button)</td>
 <td></td>
 </tr>
 <tr>
@@ -2266,47 +2285,47 @@
 <td>navbar</td>
 <td>branding link clicked</td>
 <td>branding</td>
-<td>linkname</td>
+<td></td>
 <td>branding logo in the top left clicked</td>
 <td></td>
 </tr>
 <tr>
 <td>navbar</td>
 <td>user dropdown menu</td>
-<td>dropdown/user</td>
+<td>user</td>
 <td></td>
-<td>user dropdown menu was opened (menu contains "Log Out" and "My Profile")</td>
+<td>user dropdown menu was opened (no <code>catalog</code> or <code>schema_table</code>)</td>
 <td></td>
 </tr>
 <tr>
 <td>navbar</td>
 <td>My profile</td>
-<td>dropdown/user/profile</td>
+<td>user/profile</td>
 <td></td>
-<td>My Profile button in top right dropdown to view profile details</td>
+<td>My Profile button in top right dropdown to view profile details (no <code>catalog</code> or <code>schema_table</code>)</td>
 <td></td>
 </tr>
 <tr>
 <td>navbar</td>
 <td>Navbar menu dropdown</td>
-<td>dropdown/menu</td>
-<td>menuname</td>
+<td>menu/submenu</td>
+<td>name</td>
 <td>Navbar dropdown menu was opened (applies to top level and each nested sub menu)</td>
 <td></td>
 </tr>
 <tr>
 <td>navbar</td>
 <td>Navbar menu internal link</td>
-<td>dropdown/menu/internal</td>
-<td>linkname</td>
+<td>menu/internal</td>
+<td>name</td>
 <td>Navbar menu option was selected that redirects to static/internal resource (same domain)</td>
 <td></td>
 </tr>
 <tr>
 <td>navbar</td>
 <td>Navbar menu external link</td>
-<td>dropdown/menu/external</td>
-<td>linkname</td>
+<td>menu/external</td>
+<td>name</td>
 <td>Navbar menu option was selected that redirects to an external resource (different domain)</td>
 <td></td>
 </tr>
@@ -2592,6 +2611,7 @@
 </tr>
 </tbody>
 </table></div>
+</div>
 <div class="section" id="error-log">
 <span id="error-log"></span><h2>Error Log<a class="headerlink" href="#error-log" title="Permalink to this headline">¶</a></h2>
 <p>Currently we’re only logging terminal errors (we might want to change that to log 5xx errors too). To find the errors in log, you can search for <code class="docutils literal notranslate"><span class="pre">terminal_error</span></code> path. This is what a error log would look like:</p>

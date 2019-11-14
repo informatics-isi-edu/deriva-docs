@@ -1549,8 +1549,8 @@
 <div class="viewcode-block" id="DataPath.aggregates"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.aggregates">[docs]</a>    <span class="k">def</span> <span class="nf">aggregates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">functions</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of computed aggregates from this data path.</span>
 
-<span class="sd">        By using the built-in subclasses of the `AggregateFunction` class, including `Min`, `Max`, `Avg`, `Cnt`, `CntD`,</span>
-<span class="sd">        `Array`, and `ArrayD`, aggregates can be computed and fetched. These aggregates must be passed as named</span>
+<span class="sd">        By using the built-in subclasses of the `AggregateFunction` class, including `Min`, `Max`, `Sum`, `Avg`, `Cnt`,</span>
+<span class="sd">        `CntD`, `Array`, and `ArrayD`, aggregates can be computed and fetched. These aggregates must be passed as named</span>
 <span class="sd">        parameters since they require _alias names_.</span>
 
 <span class="sd">        ```</span>
@@ -2490,8 +2490,14 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">Max</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">operand</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="Sum"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Sum">[docs]</a><span class="k">class</span> <span class="nc">Sum</span> <span class="p">(</span><span class="n">AggregateFunction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Aggregate function for sum of non-NULL values.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sum</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">operand</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Avg"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Avg">[docs]</a><span class="k">class</span> <span class="nc">Avg</span> <span class="p">(</span><span class="n">AggregateFunction</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Aggregate function for average non-NULL value.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Aggregate function for average of non-NULL values.&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Avg</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;avg&#39;</span><span class="p">,</span> <span class="n">operand</span><span class="p">)</span></div>
 

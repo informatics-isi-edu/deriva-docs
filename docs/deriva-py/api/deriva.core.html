@@ -1361,7 +1361,7 @@
 <dt id="deriva.core.datapath.Avg">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Avg</code><span class="sig-paren">(</span><em>operand</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Avg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.AggregateFunction" title="deriva.core.datapath.AggregateFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.AggregateFunction</span></code></a></p>
-<p>Aggregate function for average non-NULL value.</p>
+<p>Aggregate function for average of non-NULL values.</p>
 </dd></dl>
 
 <dl class="class">
@@ -1621,8 +1621,8 @@
 <dt id="deriva.core.datapath.DataPath.aggregates">
 <code class="descname">aggregates</code><span class="sig-paren">(</span><em>**functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.aggregates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of computed aggregates from this data path.</p>
-<p>By using the built-in subclasses of the <cite>AggregateFunction</cite> class, including <cite>Min</cite>, <cite>Max</cite>, <cite>Avg</cite>, <cite>Cnt</cite>, <cite>CntD</cite>,
-<cite>Array</cite>, and <cite>ArrayD</cite>, aggregates can be computed and fetched. These aggregates must be passed as named
+<p>By using the built-in subclasses of the <cite>AggregateFunction</cite> class, including <cite>Min</cite>, <cite>Max</cite>, <cite>Sum</cite>, <cite>Avg</cite>, <cite>Cnt</cite>,
+<cite>CntD</cite>, <cite>Array</cite>, and <cite>ArrayD</cite>, aggregates can be computed and fetched. These aggregates must be passed as named
 parameters since they require _alias <a href="#id1"><span class="problematic" id="id2">names_</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
 <span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(min_col1=Min(col1),</span> <span class="pre">arr_col2=Array(col2))</span>
@@ -2022,6 +2022,13 @@ be implicitly fetched from the catalog.</p>
 <dd><p>the url encoded name</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Sum">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Sum</code><span class="sig-paren">(</span><em>operand</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.AggregateFunction" title="deriva.core.datapath.AggregateFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.AggregateFunction</span></code></a></p>
+<p>Aggregate function for sum of non-NULL values.</p>
 </dd></dl>
 
 <dl class="class">

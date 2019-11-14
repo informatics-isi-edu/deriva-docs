@@ -1340,7 +1340,7 @@ to use for ERMrest JavaScript agents.</p>
 <li><a class="reference external" href="#ERMrest.Server+cid">.cid</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Server+pid">.pid</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Server+catalogs">.catalogs</a> : <a class="reference external" href="#ERMrest.Catalogs"><code>Catalogs</code></a></li>
-<li><a class="reference external" href="#ERMrest.Server+logHeaders">.logHeaders(headers, location)</a></li>
+<li><a class="reference external" href="#ERMrest.Server+logClientAction">.logClientAction(headers)</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.Catalogs">.Catalogs</a><ul>
@@ -1355,7 +1355,7 @@ to use for ERMrest JavaScript agents.</p>
 <li><a class="reference external" href="#ERMrest.Catalog+id">.id</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+schemas">.schemas</a> : <a class="reference external" href="#ERMrest.Schemas"><code>Schemas</code></a></li>
 <li><a class="reference external" href="#ERMrest.Catalog+chaiseConfig">.chaiseConfig</a> ⇒ <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime()</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+constraintByNamePair">.constraintByNamePair(pair, subject)</a> ⇒ <code>Object</code> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+getTable">.getTable(tableName, schemaName)</a> ⇒ <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 </ul>
@@ -2247,7 +2247,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Server+cid">.cid</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Server+pid">.pid</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Server+catalogs">.catalogs</a> : <a class="reference external" href="#ERMrest.Catalogs"><code>Catalogs</code></a></li>
-<li><a class="reference external" href="#ERMrest.Server+logHeaders">.logHeaders(headers, location)</a></li>
+<li><a class="reference external" href="#ERMrest.Server+logClientAction">.logClientAction(headers)</a></li>
 </ul>
 </li>
 </ul>
@@ -2298,11 +2298,11 @@ boolean<p>&amp;gt;</p>
 </div>
 <div class="section" id="server-catalogs-code-catalogs-code">
 <span id="server-catalogs-code-catalogs-code"></span><h3>server.catalogs : <a class="reference external" href="#ERMrest.Catalogs"><code>Catalogs</code></a><a class="headerlink" href="#server-catalogs-code-catalogs-code" title="Permalink to this headline">¶</a></h3>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Server"><code>Server</code></a><a name="ERMrest.Server+logHeaders"></a></p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Server"><code>Server</code></a><a name="ERMrest.Server+logClientAction"></a></p>
 </div>
-<div class="section" id="server-logheaders-headers-location">
-<span id="server-logheaders-headers-location"></span><h3>server.logHeaders(headers, location)<a class="headerlink" href="#server-logheaders-headers-location" title="Permalink to this headline">¶</a></h3>
-<p>should be used to log information on the server to different log locations</p>
+<div class="section" id="server-logclientaction-headers">
+<span id="server-logclientaction-headers"></span><h3>server.logClientAction(headers)<a class="headerlink" href="#server-logclientaction-headers" title="Permalink to this headline">¶</a></h3>
+<p>should be used to log client action information on the server</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Server"><code>Server</code></a></p>
 <table border="1" class="docutils">
 <thead>
@@ -2317,11 +2317,6 @@ boolean<p>&amp;gt;</p>
 <td>headers</td>
 <td><code>Object</code></td>
 <td>the headers to be logged, should include action</td>
-</tr>
-<tr>
-<td>location</td>
-<td><code>String</code></td>
-<td>the path for logging (terminal_error</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Catalogs"></a></p>
@@ -2401,7 +2396,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Catalog+id">.id</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+schemas">.schemas</a> : <a class="reference external" href="#ERMrest.Schemas"><code>Schemas</code></a></li>
 <li><a class="reference external" href="#ERMrest.Catalog+chaiseConfig">.chaiseConfig</a> ⇒ <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime()</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+constraintByNamePair">.constraintByNamePair(pair, subject)</a> ⇒ <code>Object</code> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+getTable">.getTable(tableName, schemaName)</a> ⇒ <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 </ul>
@@ -2446,12 +2441,28 @@ boolean<p>&amp;gt;</p>
 <span id="catalog-chaiseconfig-code-object-code"></span><h3>catalog.chaiseConfig ⇒ <code>Object</code><a class="headerlink" href="#catalog-chaiseconfig-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Catalog"><code>Catalog</code></a><strong>Returns</strong>: <code>Object</code> - the chaise config object from the catalog annotation<a name="ERMrest.Catalog+currentSnaptime"></a></p>
 </div>
-<div class="section" id="catalog-currentsnaptime-code-promise-code">
-<span id="catalog-currentsnaptime-code-promise-code"></span><h3>catalog.currentSnaptime() ⇒ <code>Promise</code><a class="headerlink" href="#catalog-currentsnaptime-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="catalog-currentsnaptime-contextheaderparams-code-promise-code">
+<span id="catalog-currentsnaptime-contextheaderparams-code-promise-code"></span><h3>catalog.currentSnaptime(contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#catalog-currentsnaptime-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>This will return the snapshot from the catalog request instead of schema,
 because it will return the snapshot based on the model changes.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Catalog"><code>Catalog</code></a><strong>Returns</strong>: <code>Promise</code> - a promise that returns json object or snaptime if resolved or
-<a class="reference external" href="#ERMrest.ERMrestError">ERMrestError</a> if rejected<a name="ERMrest.Catalog+constraintByNamePair"></a></p>
+<a class="reference external" href="#ERMrest.ERMrestError">ERMrestError</a> if rejected</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contextHeaderParams</td>
+<td><code>Object</code></td>
+<td>properties to log under the dcctx header</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.Catalog+constraintByNamePair"></a></p>
 </div>
 <div class="section" id="catalog-constraintbynamepair-pair-subject-code-object-code-code-null-code">
 <span id="catalog-constraintbynamepair-pair-subject-code-object-code-code-null-code"></span><h3>catalog.constraintByNamePair(pair, subject) ⇒ <code>Object</code> | <code>null</code><a class="headerlink" href="#catalog-constraintbynamepair-pair-subject-code-object-code-code-null-code" title="Permalink to this headline">¶</a></h3>

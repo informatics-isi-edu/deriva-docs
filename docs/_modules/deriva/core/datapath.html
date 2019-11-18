@@ -227,7 +227,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#annotations">Annotations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2015-display">Tag: 2015 Display</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2015-vocabulary">Tag: 2015 Vocabulary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2015-vocabulary-deprecated">Tag: 2015 Vocabulary (<em>deprecated</em>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2016-ignore-deprecated">Tag: 2016 Ignore (<em>Deprecated</em>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2016-app-links">Tag: 2016 App Links</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2016-immutable">Tag: 2016 Immutable</a></li>
@@ -937,7 +937,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#annotations">Annotations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2015-display">Tag: 2015 Display</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2015-vocabulary">Tag: 2015 Vocabulary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2015-vocabulary-deprecated">Tag: 2015 Vocabulary (<em>deprecated</em>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2016-ignore-deprecated">Tag: 2016 Ignore (<em>Deprecated</em>)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2016-app-links">Tag: 2016 App Links</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2016-immutable">Tag: 2016 Immutable</a></li>
@@ -2252,6 +2252,8 @@
 
         <span class="c1"># Validate renamed attributes</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;group_key&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>  <span class="c1"># validation of group_key is handled as a special case</span>
             <span class="n">elem</span> <span class="o">=</span> <span class="n">renamed_attributes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)):</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Invalid value in renamed attributes: </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span>

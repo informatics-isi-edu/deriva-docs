@@ -353,6 +353,7 @@ to use for ERMrest JavaScript agents.
         * [new Page(reference, etag, data, hasPrevious, hasNext, extraData)](#new_ERMrest.Page_new)
         * [.reference](#ERMrest.Page+reference) : [<code>Reference</code>](#ERMrest.Reference)
         * [.tuples](#ERMrest.Page+tuples) : [<code>Array.&lt;Tuple&gt;</code>](#ERMrest.Tuple)
+        * [.length](#ERMrest.Page+length) : <code>integer</code>
         * [.hasPrevious](#ERMrest.Page+hasPrevious) ⇒ <code>boolean</code>
         * [.previous](#ERMrest.Page+previous) : [<code>Reference</code>](#ERMrest.Reference) \| <code>undefined</code>
         * [.hasNext](#ERMrest.Page+hasNext) ⇒ <code>boolean</code>
@@ -385,6 +386,7 @@ to use for ERMrest JavaScript agents.
         * [.isPseudo](#ERMrest.ReferenceColumn+isPseudo) : <code>boolean</code>
         * [.table](#ERMrest.ReferenceColumn+table) : [<code>Table</code>](#ERMrest.Table)
         * [.name](#ERMrest.ReferenceColumn+name) : <code>string</code>
+        * [.dataSource](#ERMrest.ReferenceColumn+dataSource)
         * [.displayname](#ERMrest.ReferenceColumn+displayname) : <code>object</code>
         * [.type](#ERMrest.ReferenceColumn+type) : [<code>Type</code>](#ERMrest.Type)
         * [.nullok](#ERMrest.ReferenceColumn+nullok) : <code>Boolean</code>
@@ -3401,6 +3403,7 @@ Check the sort object. Does not change the `this._location` object.
     * [new Page(reference, etag, data, hasPrevious, hasNext, extraData)](#new_ERMrest.Page_new)
     * [.reference](#ERMrest.Page+reference) : [<code>Reference</code>](#ERMrest.Reference)
     * [.tuples](#ERMrest.Page+tuples) : [<code>Array.&lt;Tuple&gt;</code>](#ERMrest.Tuple)
+    * [.length](#ERMrest.Page+length) : <code>integer</code>
     * [.hasPrevious](#ERMrest.Page+hasPrevious) ⇒ <code>boolean</code>
     * [.previous](#ERMrest.Page+previous) : [<code>Reference</code>](#ERMrest.Reference) \| <code>undefined</code>
     * [.hasNext](#ERMrest.Page+hasNext) ⇒ <code>boolean</code>
@@ -3450,6 +3453,12 @@ for (var i=0, len=page.tuples.length; i<len; i++) {
   console.log("Tuple:", tuple.displayname.value, "has values:", tuple.values);
 }
 ```
+
+**Kind**: instance property of [<code>Page</code>](#ERMrest.Page)  
+<a name="ERMrest.Page+length"></a>
+
+#### page.length : <code>integer</code>
+the page length (number of rows in the page)
 
 **Kind**: instance property of [<code>Page</code>](#ERMrest.Page)  
 <a name="ERMrest.Page+hasPrevious"></a>
@@ -3801,6 +3810,7 @@ count aggregate representation
     * [.isPseudo](#ERMrest.ReferenceColumn+isPseudo) : <code>boolean</code>
     * [.table](#ERMrest.ReferenceColumn+table) : [<code>Table</code>](#ERMrest.Table)
     * [.name](#ERMrest.ReferenceColumn+name) : <code>string</code>
+    * [.dataSource](#ERMrest.ReferenceColumn+dataSource)
     * [.displayname](#ERMrest.ReferenceColumn+displayname) : <code>object</code>
     * [.type](#ERMrest.ReferenceColumn+type) : [<code>Type</code>](#ERMrest.Type)
     * [.nullok](#ERMrest.ReferenceColumn+nullok) : <code>Boolean</code>
@@ -3848,6 +3858,13 @@ indicates that this object represents a Column.
 name of the column.
 
 **Kind**: instance property of [<code>ReferenceColumn</code>](#ERMrest.ReferenceColumn)  
+<a name="ERMrest.ReferenceColumn+dataSource"></a>
+
+#### referenceColumn.dataSource
+the source path from the main reference to this column
+
+**Kind**: instance property of [<code>ReferenceColumn</code>](#ERMrest.ReferenceColumn)  
+**Type{object}**:   
 <a name="ERMrest.ReferenceColumn+displayname"></a>
 
 #### referenceColumn.displayname : <code>object</code>

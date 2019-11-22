@@ -1850,6 +1850,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">referenced_by</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([])</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sugared access to self.column_definitions&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_definitions</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">catalog</span>
 
@@ -2164,10 +2169,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="n">_constraint_name_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
             <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span>
-        <span class="p">]</span>
+        <span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sugared access to self.unique_columns&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2241,10 +2251,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_pseudo_fkeys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
             <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">coldoc</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]]</span>
             <span class="k">for</span> <span class="n">coldoc</span> <span class="ow">in</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;foreign_key_columns&#39;</span><span class="p">]</span>
-        <span class="p">]</span>
+        <span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span> <span class="o">=</span> <span class="n">fkey_doc</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -2254,19 +2264,25 @@
             <span class="n">pk_sname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;schema_name&#39;</span><span class="p">]</span>
             <span class="n">pk_tname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">pk_sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">pk_tname</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">coldoc</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]]</span>
                 <span class="k">for</span> <span class="n">coldoc</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span>
-            <span class="p">]</span>
+            <span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_referenced_columns_doc</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">referenced_by</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">column_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Mapping of foreign_key_columns elements to referenced_columns elements.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="n">fk_col</span><span class="p">:</span> <span class="n">pk_col</span>
             <span class="k">for</span> <span class="n">fk_col</span><span class="p">,</span> <span class="n">pk_col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">)</span>
         <span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sugared access to self.column_definitions&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

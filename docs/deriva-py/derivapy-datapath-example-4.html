@@ -1505,8 +1505,9 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Import deriva modules</span>
+<span></span><span class="c1"># Import deriva modules and pandas DataFrame (for use in examples only)</span>
 <span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="n">get_credential</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span>
 </pre></div>
 </div>
 </div>
@@ -1569,7 +1570,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="section" id="DataPath-like-methods">
 <h3>DataPath-like methods<a class="headerlink" href="#DataPath-like-methods" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>-like methods on <code class="docutils literal notranslate"><span class="pre">Table</span></code>s are essentially “wrapper” functions over the implicitly generated <code class="docutils literal notranslate"><span class="pre">DataPath</span></code> rooted at the <code class="docutils literal notranslate"><span class="pre">Table</span></code> instance. The wrappers include, <code class="docutils literal notranslate"><span class="pre">link(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">filter(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">attributes(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">aggregates(...)</span></code>, and <code class="docutils literal notranslate"><span class="pre">attributegroups(...)</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>-like methods on <code class="docutils literal notranslate"><span class="pre">Table</span></code>s are essentially “wrapper” functions over the implicitly generated <code class="docutils literal notranslate"><span class="pre">DataPath</span></code> rooted at the <code class="docutils literal notranslate"><span class="pre">Table</span></code> instance. The wrappers include, <code class="docutils literal notranslate"><span class="pre">link(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">filter(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">attributes(...)</span></code>, <code class="docutils literal notranslate"><span class="pre">aggregates(...)</span></code>, and <code class="docutils literal notranslate"><span class="pre">groupby(...)</span></code>.</p>
 </div>
 </div>
 <div class="section" id="Attribute-Examples">
@@ -1771,7 +1772,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -3321,7 +3322,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -4871,7 +4872,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -5742,7 +5743,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">dataframe</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -5928,7 +5929,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span><span class="o">.</span><span class="n">dataframe</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -6105,10 +6106,10 @@ https://www.facebase.org/ermrest/catalog/1/entity/S:=isa:biosample/species:=voca
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">results</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">RID</span><span class="p">,</span>
                             <span class="n">path</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">collection_date</span><span class="p">,</span>
-                            <span class="n">species</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-                            <span class="n">species_uri</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">],</span>
-                            <span class="n">stage</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-                            <span class="n">stage_uri</span><span class="o">=</span><span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+                            <span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">),</span>
+                            <span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;species_uri&#39;</span><span class="p">),</span>
+                            <span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;stage&#39;</span><span class="p">),</span>
+                            <span class="n">path</span><span class="o">.</span><span class="n">stage</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;stage_uri&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -6126,7 +6127,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span><span class="o">.</span><span class="n">dataframe</span>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

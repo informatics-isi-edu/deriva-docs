@@ -1533,23 +1533,18 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="DataPath.entities"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.entities">[docs]</a>    <span class="k">def</span> <span class="nf">entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">renamed_attributes</span><span class="p">):</span>
+<div class="viewcode-block" id="DataPath.entities"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.entities">[docs]</a>    <span class="k">def</span> <span class="nf">entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of whole entities from this data path&#39;s current context.</span>
 
 <span class="sd">        ```</span>
 <span class="sd">        results1 = my_path.entities()</span>
-<span class="sd">        results2 = my_path.entities(col1, col2)  # WARNING. Deprecated usage. Use the `attributes(...)` method instead.</span>
 <span class="sd">        ```</span>
 
-<span class="sd">        :param attributes: DEPRECATED.</span>
-<span class="sd">        :param renamed_attributes: DEPRECATED.</span>
 <span class="sd">        :return: a result set of entities where each element is a whole entity per the table definition and policy.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">renamed_attributes</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Use of &#39;attributes&#39; or &#39;renamed_attributes&#39; in &#39;entities(...)&#39; is deprecated. Use &#39;attributes(...)&#39; instead.&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="DataPath.aggregates"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.aggregates">[docs]</a>    <span class="k">def</span> <span class="nf">aggregates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">functions</span><span class="p">):</span>
+<div class="viewcode-block" id="DataPath.aggregates"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.aggregates">[docs]</a>    <span class="k">def</span> <span class="nf">aggregates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">functions</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of computed aggregates from this data path.</span>
 
 <span class="sd">        By using the built-in subclasses of the `AggregateFunction` class, including `Min`, `Max`, `Sum`, `Avg`, `Cnt`,</span>
@@ -1557,56 +1552,70 @@
 <span class="sd">        parameters since they require _alias names_.</span>
 
 <span class="sd">        ```</span>
-<span class="sd">        results1 = my_path.aggregates(min_col1=Min(col1), arr_col2=Array(col2))</span>
-<span class="sd">        results2 = my_path.aggregates(Min(col1), Array(col2))  # Error! Aggregates must be named.</span>
-<span class="sd">        results3 = my_path.aggregates(col1, arr_col2=Array(col2))  # Error! Cannot mix columns and aggregate functions.</span>
+<span class="sd">        results1 = my_path.aggregates(Min(col1).alias(&#39;mincol1&#39;), Array(col2).alias(&#39;arrcol2&#39;))</span>
+<span class="sd">        results2 = my_path.aggregates(Min(col1), Array(col2))  # Error! Aggregates must be aliased.</span>
+<span class="sd">        results3 = my_path.aggregates(col1, Array(col2).alias(&#39;arrcol2&#39;))  # Error! Cannot mix columns and aggregate functions.</span>
 <span class="sd">        ```</span>
 
-<span class="sd">        :param functions: named parameters of type AggregateFunction</span>
+<span class="sd">        :param functions: aliased functions of type AggregateFunctionAlias</span>
 <span class="sd">        :return: a results set with a single row of results.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">([],</span> <span class="n">functions</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">Project</span><span class="o">.</span><span class="n">AGGREGATE</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">functions</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="DataPath.attributegroups"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.attributegroups">[docs]</a>    <span class="k">def</span> <span class="nf">attributegroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_key</span><span class="p">,</span> <span class="o">**</span><span class="n">functions</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a results set of computed aggregates for groups of attributes from this data path.</span>
-
-<span class="sd">        Aggregates over groups, as specified by a `group_key`, can be computed and fetched. Note that the `group_key`</span>
-<span class="sd">        named parameter is therefore _reserved_ for any invocation of the `attributegroups(...)` method.</span>
-
-<span class="sd">        ```</span>
-<span class="sd">        results1 = my_path.attributegroups(group_key=col1, min_col1=Min(col2), arr_col2=Array(col3))  # 1 group key</span>
-<span class="sd">        results2 = my_path.attributegroups(group_key=(col1, col2), min_col1=Min(col3), arr_col2=Array(col4))  # &gt;1 group keys</span>
-<span class="sd">        ```</span>
-
-<span class="sd">        As with aggregation, callers must not mix ordinary columns in with grouped aggregates.</span>
-
-<span class="sd">        :param group_key: a Column or a set of Columns to be used as the group key for grouping the computations on.</span>
-<span class="sd">        :param functions: named parameters of type AggregateFunction</span>
-<span class="sd">        :return: a results set with a row of results for each group.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">functions</span><span class="p">[</span><span class="s1">&#39;group_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_key</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">([],</span> <span class="n">functions</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="DataPath.attributes"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">renamed_attributes</span><span class="p">):</span>
+<div class="viewcode-block" id="DataPath.attributes"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of attributes projected and optionally renamed from this data path.</span>
 
 <span class="sd">        ```</span>
 <span class="sd">        results1 = my_path.attributes(col1, col2)  # fetch a subset of attributes of the path</span>
-<span class="sd">        results2 = my_path.attributes(foo=col1, bar=col2)  # fetch and rename the attributes</span>
-<span class="sd">        results3 = my_path.attributes(col1, bar=col2)  # rename some but not others</span>
+<span class="sd">        results2 = my_path.attributes(col1.alias(&#39;col_1&#39;), col2.alias(&#39;col_2&#39;))  # fetch and rename the attributes</span>
+<span class="sd">        results3 = my_path.attributes(col1, col2.alias(&#39;col_2&#39;))  # rename some but not others</span>
 <span class="sd">        ```</span>
 
 <span class="sd">        :param attributes: a list of Columns.</span>
-<span class="sd">        :param renamed_attributes: a list of renamed Columns.</span>
 <span class="sd">        :return: a results set of the projected attributes from this data path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">Project</span><span class="o">.</span><span class="n">ATTRIBUTE</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">attributes</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="DataPath.groupby"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.groupby">[docs]</a>    <span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an attribute group object.</span>
+
+<span class="sd">        The attribute group object returned by this method can be used to get a results set of computed aggregates for</span>
+<span class="sd">        groups of attributes from this data path.</span>
+
+<span class="sd">        With a single group key:</span>
+<span class="sd">        ```</span>
+<span class="sd">        results1 = my_path.groupby(col1).attributes(Min(col2).alias(&#39;min_col1&#39;), Array(col3).alias(&#39;arr_col2&#39;))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        With more than one group key:</span>
+<span class="sd">        ```</span>
+<span class="sd">        results2 = my_path.groupby(col1, col2).attributes(Min(col3).alias(&#39;min_col1&#39;), Array(col4).alias(&#39;arr_col2&#39;))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        With aliased group keys:</span>
+<span class="sd">        ```</span>
+<span class="sd">        results3 = my_path.groupby(col1.alias(&#39;key_one&#39;), col2.alias(&#39;keyTwo&#39;))\</span>
+<span class="sd">                          .attributes(Min(col3).alias(&#39;min_col1&#39;), Array(col4).alias(&#39;arr_col2&#39;))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        With binning:</span>
+<span class="sd">        ```</span>
+<span class="sd">        results3 = my_path.groupby(col1.alias(&#39;key_one&#39;), Bin(col2;10;0;9999).alias(&#39;my_bin&#39;))\</span>
+<span class="sd">                          .attributes(Min(col3).alias(&#39;min_col1&#39;), Array(col4).alias(&#39;arr_col2&#39;))</span>
+<span class="sd">        ```</span>
+
+<span class="sd">        :param keys: a list of columns, aliased columns, or aliased bins, to be used as the grouping key.</span>
+<span class="sd">        :return: an attribute group that supports an `.attributes(...)` method that accepts columns, aliased columns,</span>
+<span class="sd">        and/or aliased aggregate functions as its arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AttributeGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="p">[],</span> <span class="n">group_key</span><span class="o">=</span><span class="p">[],</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Internal method for querying the data path from the perspective of the given &#39;context&#39;.</span>
 
-<span class="sd">        :param attributes: a list of Columns.</span>
-<span class="sd">        :param renamed_attributes: a list of renamed Columns or AggregateFunctions</span>
+<span class="sd">        :param mode: a valid mode in Project.MODES</span>
+<span class="sd">        :param projection: a projection list.</span>
+<span class="sd">        :param group_key: a group key list (only for attributegroup queries).</span>
 <span class="sd">        :param context: optional context for the query.</span>
 <span class="sd">        :return: a results set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1616,8 +1625,8 @@
         <span class="n">expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span>
         <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
             <span class="n">expression</span> <span class="o">=</span> <span class="n">ResetContext</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">renamed_attributes</span><span class="p">:</span>
-            <span class="n">expression</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="n">Project</span><span class="o">.</span><span class="n">ENTITY</span><span class="p">:</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">projection</span><span class="p">,</span> <span class="n">group_key</span><span class="p">)</span>
         <span class="n">base_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">fetcher</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1655,7 +1664,7 @@
         <span class="k">assert</span> <span class="n">fetcher_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fetcher_fn</span> <span class="o">=</span> <span class="n">fetcher_fn</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_keys</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span>
 
     <span class="nd">@property</span>
@@ -1663,18 +1672,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Pandas DataFrame representation of this path.</span>
-
-<span class="sd">        :return: a pandas dataframe object</span>
-<span class="sd">        :raise ImportError: exception if the &#39;pandas&#39; library is not available</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">DataFrame</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">)</span>
@@ -1685,17 +1682,29 @@
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_results</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ResultSet.fetch"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ResultSet.fetch">[docs]</a>    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ResultSet.sort"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ResultSet.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Orders the results set by the given attributes.</span>
+
+<span class="sd">        :param keys: Columns, column aliases, or aggregate function aliases. The sort attributes must be projected by</span>
+<span class="sd">        the originating query.</span>
+<span class="sd">        :return: self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No sort attributes given.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Sort keys must be column, column alias, or aggregate function alias&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sort_keys</span> <span class="o">=</span> <span class="n">attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="ResultSet.fetch"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ResultSet.fetch">[docs]</a>    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fetches the results from the catalog.</span>
 
 <span class="sd">        :param limit: maximum number of results to fetch from the catalog.</span>
-<span class="sd">        :param sort: collection of columns to use for sorting. Note that if using the `attributes(...)` query interface,</span>
-<span class="sd">        the columns in the sort list _must_ be explicitly listed in the `attributes(...)` call.</span>
 <span class="sd">        :return: self</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span> <span class="k">if</span> <span class="n">limit</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetcher_fn</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">sort</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dataframe</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># clear potentially cached state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetcher_fn</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sort_keys</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Fetched </span><span class="si">%d</span><span class="s2"> entities&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_results_doc</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span></div></div>
 
@@ -1761,6 +1770,11 @@
         <span class="k">return</span> <span class="s1">&#39;*&#39;</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instancename</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fromname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fqname</span>
 
@@ -1803,40 +1817,37 @@
         <span class="sd">&quot;&quot;&quot;See the docs for this method in `DataPath` for more information.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contextualized_path</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">join_type</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="p">[],</span> <span class="n">group_key</span><span class="o">=</span><span class="p">[],</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Invokes query on the path for this table.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">projection</span><span class="p">,</span> <span class="n">group_key</span><span class="o">=</span><span class="n">group_key</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Table.entities"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.entities">[docs]</a>    <span class="k">def</span> <span class="nf">entities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">renamed_attributes</span><span class="p">):</span>
+<div class="viewcode-block" id="Table.entities"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.entities">[docs]</a>    <span class="k">def</span> <span class="nf">entities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of whole entities from this data path&#39;s current context.</span>
 
 <span class="sd">        See the docs for this method in `DataPath` for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">attributes</span> <span class="ow">or</span> <span class="n">renamed_attributes</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Use of &#39;attributes&#39; or &#39;renamed_attributes&#39; in &#39;entities(...)&#39; is deprecated. Use &#39;attributes(...)&#39; instead.&quot;</span><span class="p">,</span> <span class="ne">DeprecationWarning</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Table.aggregates"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.aggregates">[docs]</a>    <span class="k">def</span> <span class="nf">aggregates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">functions</span><span class="p">):</span>
+<div class="viewcode-block" id="Table.aggregates"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.aggregates">[docs]</a>    <span class="k">def</span> <span class="nf">aggregates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">functions</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of computed aggregates from this data path.</span>
 
 <span class="sd">        See the docs for this method in `DataPath` for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">([],</span> <span class="n">functions</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">Project</span><span class="o">.</span><span class="n">AGGREGATE</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">functions</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Table.attributegroups"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.attributegroups">[docs]</a>    <span class="k">def</span> <span class="nf">attributegroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_key</span><span class="p">,</span> <span class="o">**</span><span class="n">functions</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns a results set of computed aggregates for groups of attributes from this data path.</span>
-
-<span class="sd">        See the docs for this method in `DataPath` for more information.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">functions</span><span class="p">[</span><span class="s1">&#39;group_key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_key</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">([],</span> <span class="n">functions</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Table.attributes"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">,</span> <span class="o">**</span><span class="n">renamed_attributes</span><span class="p">):</span>
+<div class="viewcode-block" id="Table.attributes"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a results set of attributes projected and optionally renamed from this data path.</span>
 
 <span class="sd">        See the docs for this method in `DataPath` for more information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">Project</span><span class="o">.</span><span class="n">ATTRIBUTE</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">attributes</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Table.groupby"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.groupby">[docs]</a>    <span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">keys</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an attribute group object.</span>
+
+<span class="sd">        See the docs for this method in `DataPath` for more information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AttributeGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Table.insert"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Table.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entities</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">nondefaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">add_system_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Inserts entities into the table.</span>
@@ -1974,6 +1985,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uname</span> <span class="o">+</span> <span class="s2">&quot;:*&quot;</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instancename</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fromname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_table</span><span class="o">.</span><span class="n">fqname</span><span class="p">)</span>
 
@@ -2008,9 +2024,9 @@
     <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">_contextualized_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="p">[],</span> <span class="n">group_key</span><span class="o">=</span><span class="p">[],</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Overridden method to set context of query to this table instance.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">projection</span><span class="p">,</span> <span class="n">group_key</span><span class="o">=</span><span class="n">group_key</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Column"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Column">[docs]</a><span class="k">class</span> <span class="nc">Column</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2060,6 +2076,11 @@
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">uname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instancename</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2150,24 +2171,155 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;ts&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ts::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ts::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Column.alias"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Column.alias">[docs]</a>    <span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an alias for this column.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ColumnAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ColumnAlias"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias">[docs]</a><span class="k">class</span> <span class="nc">ColumnAlias</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Represents an (output) alias for a column instance in a path.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_column</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the column alias.</span>
+
+<span class="sd">        :param base_column: the base column to be given an alias name</span>
+<span class="sd">        :param alias_name: the alias name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_column</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ColumnAlias</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">alias_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span> <span class="o">=</span> <span class="n">base_column</span>
+
+<div class="viewcode-block" id="ColumnAlias.describe"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.describe">[docs]</a>    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provides a description of the model element.</span>
+
+<span class="sd">        :return: a user-friendly string representation of the model element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Column name: &#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="se">\t</span><span class="s2">Alias for: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> \
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;the url encoded name&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fqname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;the url encoded fully qualified name&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">fqname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">instancename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">instancename</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A descending sort modifier based on this column.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SortDescending</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="ColumnAlias.eq"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.eq">[docs]</a>    <span class="k">def</span> <span class="nf">eq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an &#39;equality&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: `None` or any other literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="fm">__eq__</span> <span class="o">=</span> <span class="n">eq</span>
+
+<div class="viewcode-block" id="ColumnAlias.lt"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.lt">[docs]</a>    <span class="k">def</span> <span class="nf">lt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;less than&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="fm">__lt__</span> <span class="o">=</span> <span class="n">lt</span>
+
+<div class="viewcode-block" id="ColumnAlias.le"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.le">[docs]</a>    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;less than or equal&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="fm">__le__</span> <span class="o">=</span> <span class="n">le</span>
+
+<div class="viewcode-block" id="ColumnAlias.gt"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.gt">[docs]</a>    <span class="k">def</span> <span class="nf">gt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;greater than&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="fm">__gt__</span> <span class="o">=</span> <span class="n">gt</span>
+
+<div class="viewcode-block" id="ColumnAlias.ge"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.ge">[docs]</a>    <span class="k">def</span> <span class="nf">ge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;greater than or equal&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="fm">__ge__</span> <span class="o">=</span> <span class="n">ge</span>
+
+<div class="viewcode-block" id="ColumnAlias.regexp"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.regexp">[docs]</a>    <span class="k">def</span> <span class="nf">regexp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;regular expression&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a _string_ literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColumnAlias.ciregexp"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.ciregexp">[docs]</a>    <span class="k">def</span> <span class="nf">ciregexp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;case-insensitive regular expression&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a _string_ literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ciregexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColumnAlias.ts"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.ts">[docs]</a>    <span class="k">def</span> <span class="nf">ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a &#39;text search&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: a _string_ literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ts</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="SortDescending"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.SortDescending">[docs]</a><span class="k">class</span> <span class="nc">SortDescending</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Represents a descending sort condition.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates sort descending object.</span>
 
-<span class="sd">        :param col: a column object</span>
+<span class="sd">        :param attr: a column, column alias, or aggrfn alias object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">col</span> <span class="o">=</span> <span class="n">col</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_attr</span> <span class="o">=</span> <span class="n">attr</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">uname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;the url encoded name&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col</span><span class="o">.</span><span class="n">uname</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;::desc::&quot;</span></div>
+        <span class="k">return</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attr</span><span class="o">.</span><span class="n">uname</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;::desc::&quot;</span></div>
 
 
 <div class="viewcode-block" id="PathOperator"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.PathOperator">[docs]</a><span class="k">class</span> <span class="nc">PathOperator</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2233,74 +2385,58 @@
 
 
 <div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span> <span class="p">(</span><span class="n">PathOperator</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">renamed_attributes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Projection path component.&quot;&quot;&quot;</span>
+
+    <span class="n">ENTITY</span> <span class="o">=</span> <span class="s1">&#39;entity&#39;</span>
+    <span class="n">ATTRIBUTE</span> <span class="o">=</span> <span class="s1">&#39;attribute&#39;</span>
+    <span class="n">AGGREGATE</span> <span class="o">=</span> <span class="s1">&#39;aggregate&#39;</span>
+    <span class="n">ATTRGROUP</span> <span class="o">=</span> <span class="s1">&#39;attributegroup&#39;</span>
+    <span class="n">MODES</span> <span class="o">=</span> <span class="p">(</span><span class="n">ENTITY</span><span class="p">,</span> <span class="n">ATTRIBUTE</span><span class="p">,</span> <span class="n">AGGREGATE</span><span class="p">,</span> <span class="n">ATTRGROUP</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">ENTITY</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="p">[],</span> <span class="n">group_key</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the projection component.</span>
+
+<span class="sd">        :param r: the parent path component.</span>
+<span class="sd">        :param projection_type: valid type in MODES</span>
+<span class="sd">        :param projection: projection list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">renamed_attributes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODES</span>
+        <span class="k">assert</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ENTITY</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTRGROUP</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">projection</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">mode</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTRGROUP</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_key</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection_mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_inferred_mode</span> <span class="o">=</span> <span class="s1">&#39;attribute&#39;</span>
 
-        <span class="c1"># Validate attributes</span>
-        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Table</span><span class="p">)):</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Invalid value in attributes: </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">):</span>
-                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Aggregate functions not allowed in attributes list, use renamed attributes instead.&quot;</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Try using the explicit syntax of </span><span class="se">\&quot;</span><span class="s2">path_or_table.column_definitions[&#39;your_column_name&#39;]</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTRIBUTE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only columns or column aliases can be retrieved by an &#39;attribute&#39; query.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">AGGREGATE</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only aggregate function aliases can be retrieved by an &#39;aggregate&#39; query.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTRGROUP</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only columns, column aliases, or aggregate function aliases can be retrieved by an &#39;attributegroup&#39; query.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">group_key</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only column aliases or aggregate function aliases can be used to group an &#39;attributegroup&#39; query.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">projection_name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">group_key</span><span class="p">]</span>
 
-        <span class="c1"># Validate renamed attributes</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;group_key&#39;</span><span class="p">:</span>
-                <span class="k">continue</span>  <span class="c1"># validation of group_key is handled as a special case</span>
-            <span class="n">elem</span> <span class="o">=</span> <span class="n">renamed_attributes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)):</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Invalid value in renamed attributes: </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">elem</span><span class="p">))</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; Try using the explicit syntax of </span><span class="se">\&quot;</span><span class="si">%s</span><span class="s2">=path_or_table.column_definitions[&#39;your_column_name&#39;]</span><span class="se">\&quot;</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">key</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-        <span class="c1"># Validate group_key, if it exists</span>
-        <span class="k">if</span> <span class="s1">&#39;group_key&#39;</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="p">:</span>
-            <span class="n">group_key</span> <span class="o">=</span> <span class="n">renamed_attributes</span><span class="p">[</span><span class="s1">&#39;group_key&#39;</span><span class="p">]</span>
-            <span class="k">del</span> <span class="n">renamed_attributes</span><span class="p">[</span><span class="s1">&#39;group_key&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">group_key</span><span class="p">,</span> <span class="n">Column</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">group_key</span><span class="o">.</span><span class="n">instancename</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">group_key</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Group keys must be Column objects.&quot;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">instancename</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">group_key</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_inferred_mode</span> <span class="o">=</span> <span class="s1">&#39;attributegroup&#39;</span>
-
-        <span class="c1"># Validate generalized projection, if applicable</span>
-        <span class="n">aggregates</span> <span class="o">=</span> <span class="p">[</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">aggregates</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">aggregates</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Aggregate functions must be used exclusively or not at all.&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_inferred_mode</span> <span class="o">=</span> <span class="s1">&#39;aggregate&#39;</span>
-
-        <span class="c1"># Build the projection list</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">attr</span><span class="o">.</span><span class="n">instancename</span> <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attributes</span>
-        <span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
-            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">urlquote</span><span class="p">(</span><span class="n">out_alias</span><span class="p">),</span> <span class="n">attr</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span> <span class="k">for</span> <span class="n">out_alias</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">renamed_attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">projection_name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span>
-        <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span><span class="p">)</span>
-        <span class="n">projection</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_attrs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">grouping</span> <span class="ow">and</span> <span class="n">projection</span><span class="p">:</span>
+        <span class="n">projection</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projection_mode</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTRGROUP</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span>
+            <span class="n">grouping</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span><span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="n">grouping</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="n">grouping</span> <span class="ow">or</span> <span class="n">projection</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="n">projection</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inferred_mode</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projection_mode</span></div>
 
 
 <div class="viewcode-block" id="Link"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Link">[docs]</a><span class="k">class</span> <span class="nc">Link</span> <span class="p">(</span><span class="n">PathOperator</span><span class="p">):</span>
@@ -2465,22 +2601,26 @@
 
 <div class="viewcode-block" id="AggregateFunction"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.AggregateFunction">[docs]</a><span class="k">class</span> <span class="nc">AggregateFunction</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base class of all aggregate functions.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initializes the aggregate function.</span>
 
-<span class="sd">        :param name: name of the function per ERMrest specification.</span>
+<span class="sd">        :param op: name of the function per ERMrest specification.</span>
 <span class="sd">        :param operand: single operand of the function; a Column, Table, or TableAlias object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AggregateFunction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="n">op</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">operand</span> <span class="o">=</span> <span class="n">operand</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">instancename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AggregateFunction.alias"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.AggregateFunction.alias">[docs]</a>    <span class="k">def</span> <span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns an (output) alias for this aggregate function instance.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AggregateFunctionAlias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="Min"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Min">[docs]</a><span class="k">class</span> <span class="nc">Min</span> <span class="p">(</span><span class="n">AggregateFunction</span><span class="p">):</span>
@@ -2529,6 +2669,108 @@
     <span class="sd">&quot;&quot;&quot;Aggregate function for an array containing distinct values (including NULL).&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operand</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ArrayD</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;array_d&#39;</span><span class="p">,</span> <span class="n">operand</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Bin"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Bin">[docs]</a><span class="k">class</span> <span class="nc">Bin</span> <span class="p">(</span><span class="n">AggregateFunction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Binning function.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operand</span><span class="p">,</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">minval</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the bin function.</span>
+
+<span class="sd">        If `minval` or `maxval` are not given, they will be set based on the min and/or max values for the column</span>
+<span class="sd">        (`operand` parameter) as determined by issuing an aggregate query over the current data path.</span>
+
+<span class="sd">        :param operand: a column or aliased column instance</span>
+<span class="sd">        :param nbins: number of bins</span>
+<span class="sd">        :param minval: minimum value (optional)</span>
+<span class="sd">        :param maxval: maximum value (optional)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Bin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="n">operand</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">operand</span><span class="p">,</span> <span class="n">ColumnAlias</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Bin operand must be a column or column alias&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbins</span> <span class="o">=</span> <span class="n">nbins</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minval</span> <span class="o">=</span> <span class="n">minval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxval</span> <span class="o">=</span> <span class="n">maxval</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minval</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxval</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">instancename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">;</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operand</span><span class="o">.</span><span class="n">instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minval</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxval</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AggregateFunctionAlias"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.AggregateFunctionAlias">[docs]</a><span class="k">class</span> <span class="nc">AggregateFunctionAlias</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Alias for aggregate functions.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the aggregate function alias.</span>
+
+<span class="sd">        :param fn: aggregate function instance</span>
+<span class="sd">        :param alias_name: alias name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AggregateFunctionAlias</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">AggregateFunction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fn</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">alias_name</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A descending sort modifier based on this alias.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SortDescending</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AttributeGroup"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.AttributeGroup">[docs]</a><span class="k">class</span> <span class="nc">AttributeGroup</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A computed attribute group.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">queryfn</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes an attribute group instance.</span>
+
+<span class="sd">        :param source: the source object for the group (DataPath, Table, TableAlias)</span>
+<span class="sd">        :param queryfn: a query function that takes mode, projection, and group_key parameters</span>
+<span class="sd">        :param keys: an iterable collection of group keys</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AttributeGroup</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">valid_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">valid_type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DataPath</span><span class="p">,</span> <span class="n">Table</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No groupby keys.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queryfn</span> <span class="o">=</span> <span class="n">queryfn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AttributeGroup.attributes"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.AttributeGroup.attributes">[docs]</a>    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">attributes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a results set of attributes projected and optionally renamed from this group.</span>
+
+<span class="sd">        :param attributes: the columns, aliased columns, and/or aliased aggregate functions to be retrieved for this group.</span>
+<span class="sd">        :return: a results set of the projected attributes from this group.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_binning_ranges</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queryfn</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">Project</span><span class="o">.</span><span class="n">ATTRGROUP</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">attributes</span><span class="p">),</span> <span class="n">group_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_grouping_keys</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_resolve_binning_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper method to resolve any unspecified binning ranges.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grouping_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">AggregateFunctionAlias</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">fn</span><span class="p">,</span> <span class="n">Bin</span><span class="p">):</span>
+                <span class="nb">bin</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">fn</span>
+                <span class="n">aggrs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">if</span> <span class="nb">bin</span><span class="o">.</span><span class="n">minval</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">aggrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Min</span><span class="p">(</span><span class="nb">bin</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;minval&#39;</span><span class="p">))</span>
+                <span class="k">if</span> <span class="nb">bin</span><span class="o">.</span><span class="n">maxval</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">aggrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Max</span><span class="p">(</span><span class="nb">bin</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;maxval&#39;</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">aggrs</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="o">.</span><span class="n">aggregates</span><span class="p">(</span><span class="o">*</span><span class="n">aggrs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="nb">bin</span><span class="o">.</span><span class="n">minval</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minval&#39;</span><span class="p">,</span> <span class="nb">bin</span><span class="o">.</span><span class="n">minval</span><span class="p">)</span>
+                    <span class="nb">bin</span><span class="o">.</span><span class="n">maxval</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maxval&#39;</span><span class="p">,</span> <span class="nb">bin</span><span class="o">.</span><span class="n">maxval</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -1336,12 +1336,42 @@
 <span id="deriva-core-datapath-module"></span><h2>deriva.core.datapath module<a class="headerlink" href="#module-deriva.core.datapath" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.datapath.AggregateFunction">
-<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">AggregateFunction</code><span class="sig-paren">(</span><em>name</em>, <em>operand</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AggregateFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AggregateFunction" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">AggregateFunction</code><span class="sig-paren">(</span><em>op</em>, <em>operand</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AggregateFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AggregateFunction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class of all aggregate functions.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.AggregateFunction.alias">
+<code class="descname">alias</code><span class="sig-paren">(</span><em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AggregateFunction.alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AggregateFunction.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an (output) alias for this aggregate function instance.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="deriva.core.datapath.AggregateFunction.instancename">
 <code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.AggregateFunction.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.AggregateFunctionAlias">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">AggregateFunctionAlias</code><span class="sig-paren">(</span><em>fn</em>, <em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AggregateFunctionAlias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AggregateFunctionAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Alias for aggregate functions.</p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.AggregateFunctionAlias.desc">
+<code class="descname">desc</code><a class="headerlink" href="#deriva.core.datapath.AggregateFunctionAlias.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descending sort modifier based on this alias.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.AggregateFunctionAlias.projection_name">
+<code class="descname">projection_name</code><a class="headerlink" href="#deriva.core.datapath.AggregateFunctionAlias.projection_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>In a projection, the object uses this name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.AggregateFunctionAlias.uname">
+<code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.AggregateFunctionAlias.uname" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1361,10 +1391,45 @@
 </dd></dl>
 
 <dl class="class">
+<dt id="deriva.core.datapath.AttributeGroup">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">AttributeGroup</code><span class="sig-paren">(</span><em>source</em>, <em>queryfn</em>, <em>keys</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AttributeGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AttributeGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A computed attribute group.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.AttributeGroup.attributes">
+<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#AttributeGroup.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.AttributeGroup.attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a results set of attributes projected and optionally renamed from this group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attributes</strong> – the columns, aliased columns, and/or aliased aggregate functions to be retrieved for this group.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a results set of the projected attributes from this group.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="deriva.core.datapath.Avg">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Avg</code><span class="sig-paren">(</span><em>operand</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Avg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Avg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.AggregateFunction" title="deriva.core.datapath.AggregateFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.AggregateFunction</span></code></a></p>
 <p>Aggregate function for average of non-NULL values.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.Bin">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Bin</code><span class="sig-paren">(</span><em>operand</em>, <em>nbins</em>, <em>minval=None</em>, <em>maxval=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.AggregateFunction" title="deriva.core.datapath.AggregateFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.AggregateFunction</span></code></a></p>
+<p>Binning function.</p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.Bin.instancename">
+<code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.Bin.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1393,6 +1458,12 @@
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Represents a column in a table.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.Column.alias">
+<code class="descname">alias</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Column.alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an alias for this column.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.datapath.Column.ciregexp">
 <code class="descname">ciregexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Column.ciregexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.ciregexp" title="Permalink to this definition">¶</a></dt>
@@ -1520,6 +1591,12 @@
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.datapath.Column.projection_name">
+<code class="descname">projection_name</code><a class="headerlink" href="#deriva.core.datapath.Column.projection_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>In a projection, the object uses this name.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.datapath.Column.regexp">
 <code class="descname">regexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Column.regexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Column.regexp" title="Permalink to this definition">¶</a></dt>
@@ -1555,6 +1632,184 @@
 <dl class="attribute">
 <dt id="deriva.core.datapath.Column.uname">
 <code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.Column.uname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded name</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.datapath.ColumnAlias">
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">ColumnAlias</code><span class="sig-paren">(</span><em>base_column</em>, <em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Represents an (output) alias for a column instance in a path.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.ciregexp">
+<code class="descname">ciregexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.ciregexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.ciregexp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘case-insensitive regular expression’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a _string_ literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ColumnAlias.desc">
+<code class="descname">desc</code><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A descending sort modifier based on this column.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.describe">
+<code class="descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.describe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a description of the model element.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a user-friendly string representation of the model element.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.eq">
+<code class="descname">eq</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.eq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an ‘equality’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – <cite>None</cite> or any other literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ColumnAlias.fqname">
+<code class="descname">fqname</code><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.fqname" title="Permalink to this definition">¶</a></dt>
+<dd><p>the url encoded fully qualified name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.ge">
+<code class="descname">ge</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.ge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.ge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘greater than or equal’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.gt">
+<code class="descname">gt</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.gt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.gt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘greater than’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ColumnAlias.instancename">
+<code class="descname">instancename</code><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.instancename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.le">
+<code class="descname">le</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.le"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.le" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘less than or equal’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.lt">
+<code class="descname">lt</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.lt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.lt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘less than’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ColumnAlias.projection_name">
+<code class="descname">projection_name</code><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.projection_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>In a projection, the object uses this name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.regexp">
+<code class="descname">regexp</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.regexp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.regexp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘regular expression’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a _string_ literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.ColumnAlias.ts">
+<code class="descname">ts</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ColumnAlias.ts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ‘text search’ comparison predicate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – a _string_ literal value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a filter predicate object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.ColumnAlias.uname">
+<code class="descname">uname</code><a class="headerlink" href="#deriva.core.datapath.ColumnAlias.uname" title="Permalink to this definition">¶</a></dt>
 <dd><p>the url encoded name</p>
 </dd></dl>
 
@@ -1622,21 +1877,21 @@
 <p>Represents an arbitrary data path.</p>
 <dl class="method">
 <dt id="deriva.core.datapath.DataPath.aggregates">
-<code class="descname">aggregates</code><span class="sig-paren">(</span><em>**functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.aggregates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">aggregates</code><span class="sig-paren">(</span><em>*functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.aggregates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of computed aggregates from this data path.</p>
 <p>By using the built-in subclasses of the <cite>AggregateFunction</cite> class, including <cite>Min</cite>, <cite>Max</cite>, <cite>Sum</cite>, <cite>Avg</cite>, <cite>Cnt</cite>,
 <cite>CntD</cite>, <cite>Array</cite>, and <cite>ArrayD</cite>, aggregates can be computed and fetched. These aggregates must be passed as named
 parameters since they require _alias <a href="#id1"><span class="problematic" id="id2">names_</span></a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(min_col1=Min(col1),</span> <span class="pre">arr_col2=Array(col2))</span>
-<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(Min(col1),</span> <span class="pre">Array(col2))</span>&#160; <span class="pre">#</span> <span class="pre">Error!</span> <span class="pre">Aggregates</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">named.</span>
-<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(col1,</span> <span class="pre">arr_col2=Array(col2))</span>&#160; <span class="pre">#</span> <span class="pre">Error!</span> <span class="pre">Cannot</span> <span class="pre">mix</span> <span class="pre">columns</span> <span class="pre">and</span> <span class="pre">aggregate</span> <span class="pre">functions.</span>
+<span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(Min(col1).alias('mincol1'),</span> <span class="pre">Array(col2).alias('arrcol2'))</span>
+<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(Min(col1),</span> <span class="pre">Array(col2))</span>&#160; <span class="pre">#</span> <span class="pre">Error!</span> <span class="pre">Aggregates</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">aliased.</span>
+<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.aggregates(col1,</span> <span class="pre">Array(col2).alias('arrcol2'))</span>&#160; <span class="pre">#</span> <span class="pre">Error!</span> <span class="pre">Cannot</span> <span class="pre">mix</span> <span class="pre">columns</span> <span class="pre">and</span> <span class="pre">aggregate</span> <span class="pre">functions.</span>
 <span class="pre">`</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>functions</strong> – named parameters of type AggregateFunction</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>functions</strong> – aliased functions of type AggregateFunctionAlias</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a results set with a single row of results.</td>
 </tr>
@@ -1645,54 +1900,21 @@ parameters since they require _alias <a href="#id1"><span class="problematic" id
 </dd></dl>
 
 <dl class="method">
-<dt id="deriva.core.datapath.DataPath.attributegroups">
-<code class="descname">attributegroups</code><span class="sig-paren">(</span><em>group_key</em>, <em>**functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.attributegroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.attributegroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a results set of computed aggregates for groups of attributes from this data path.</p>
-<p>Aggregates over groups, as specified by a <cite>group_key</cite>, can be computed and fetched. Note that the <cite>group_key</cite>
-named parameter is therefore _reserved_ for any invocation of the <cite>attributegroups(…)</cite> method.</p>
-<p><code class="docutils literal notranslate"><span class="pre">`</span>
-<span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.attributegroups(group_key=col1,</span> <span class="pre">min_col1=Min(col2),</span> <span class="pre">arr_col2=Array(col3))</span>&#160; <span class="pre">#</span> <span class="pre">1</span> <span class="pre">group</span> <span class="pre">key</span>
-<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.attributegroups(group_key=(col1,</span> <span class="pre">col2),</span> <span class="pre">min_col1=Min(col3),</span> <span class="pre">arr_col2=Array(col4))</span>&#160; <span class="pre">#</span> <span class="pre">&gt;1</span> <span class="pre">group</span> <span class="pre">keys</span>
-<span class="pre">`</span></code></p>
-<p>As with aggregation, callers must not mix ordinary columns in with grouped aggregates.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>group_key</strong> – a Column or a set of Columns to be used as the group key for grouping the computations on.</li>
-<li><strong>functions</strong> – named parameters of type AggregateFunction</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a results set with a row of results for each group.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="deriva.core.datapath.DataPath.attributes">
-<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.attributes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of attributes projected and optionally renamed from this data path.</p>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
 <span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.attributes(col1,</span> <span class="pre">col2)</span>&#160; <span class="pre">#</span> <span class="pre">fetch</span> <span class="pre">a</span> <span class="pre">subset</span> <span class="pre">of</span> <span class="pre">attributes</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">path</span>
-<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.attributes(foo=col1,</span> <span class="pre">bar=col2)</span>&#160; <span class="pre">#</span> <span class="pre">fetch</span> <span class="pre">and</span> <span class="pre">rename</span> <span class="pre">the</span> <span class="pre">attributes</span>
-<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.attributes(col1,</span> <span class="pre">bar=col2)</span>&#160; <span class="pre">#</span> <span class="pre">rename</span> <span class="pre">some</span> <span class="pre">but</span> <span class="pre">not</span> <span class="pre">others</span>
+<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.attributes(col1.alias('col_1'),</span> <span class="pre">col2.alias('col_2'))</span>&#160; <span class="pre">#</span> <span class="pre">fetch</span> <span class="pre">and</span> <span class="pre">rename</span> <span class="pre">the</span> <span class="pre">attributes</span>
+<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.attributes(col1,</span> <span class="pre">col2.alias('col_2'))</span>&#160; <span class="pre">#</span> <span class="pre">rename</span> <span class="pre">some</span> <span class="pre">but</span> <span class="pre">not</span> <span class="pre">others</span>
 <span class="pre">`</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>attributes</strong> – a list of Columns.</li>
-<li><strong>renamed_attributes</strong> – a list of renamed Columns.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attributes</strong> – a list of Columns.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a results set of the projected attributes from this data path.</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a results set of the projected attributes from this data path.</td>
 </tr>
 </tbody>
 </table>
@@ -1711,24 +1933,16 @@ named parameter is therefore _reserved_ for any invocation of the <cite>attribut
 
 <dl class="method">
 <dt id="deriva.core.datapath.DataPath.entities">
-<code class="descname">entities</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.entities" title="Permalink to this definition">¶</a></dt>
+<code class="descname">entities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.entities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of whole entities from this data path’s current context.</p>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
 <span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.entities()</span>
-<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.entities(col1,</span> <span class="pre">col2)</span>&#160; <span class="pre">#</span> <span class="pre">WARNING.</span> <span class="pre">Deprecated</span> <span class="pre">usage.</span> <span class="pre">Use</span> <span class="pre">the</span> <span class="pre">`attributes(...)`</span> <span class="pre">method</span> <span class="pre">instead.</span>
 <span class="pre">`</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>attributes</strong> – DEPRECATED.</li>
-<li><strong>renamed_attributes</strong> – DEPRECATED.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a result set of entities where each element is a whole entity per the table definition and policy.</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a result set of entities where each element is a whole entity per the table definition and policy.</td>
 </tr>
 </tbody>
 </table>
@@ -1748,6 +1962,41 @@ named parameter is therefore _reserved_ for any invocation of the <cite>attribut
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.groupby">
+<code class="descname">groupby</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.groupby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.groupby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an attribute group object.</p>
+<p>The attribute group object returned by this method can be used to get a results set of computed aggregates for
+groups of attributes from this data path.</p>
+<p>With a single group key:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">results1</span> <span class="pre">=</span> <span class="pre">my_path.groupby(col1).attributes(Min(col2).alias('min_col1'),</span> <span class="pre">Array(col3).alias('arr_col2'))</span>
+<span class="pre">`</span></code></p>
+<p>With more than one group key:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">results2</span> <span class="pre">=</span> <span class="pre">my_path.groupby(col1,</span> <span class="pre">col2).attributes(Min(col3).alias('min_col1'),</span> <span class="pre">Array(col4).alias('arr_col2'))</span>
+<span class="pre">`</span></code></p>
+<p>With aliased group keys:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.groupby(col1.alias('key_one'),</span> <span class="pre">col2.alias('keyTwo'))</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">.attributes(Min(col3).alias('min_col1'),</span> <span class="pre">Array(col4).alias('arr_col2'))</span>
+<span class="pre">`</span></code></p>
+<p>With binning:
+<code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">results3</span> <span class="pre">=</span> <span class="pre">my_path.groupby(col1.alias('key_one'),</span> <span class="pre">Bin(col2;10;0;9999).alias('my_bin'))</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">.attributes(Min(col3).alias('min_col1'),</span> <span class="pre">Array(col4).alias('arr_col2'))</span>
+<span class="pre">`</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> – a list of columns, aliased columns, or aliased bins, to be used as the grouping key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an attribute group that supports an <cite>.attributes(…)</cite> method that accepts columns, aliased columns,</td>
+</tr>
+</tbody>
+</table>
+<p>and/or aliased aggregate functions as its arguments.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1931,8 +2180,34 @@ parameter can be used to specify <cite>left</cite>, <cite>right</cite>, or <cite
 
 <dl class="class">
 <dt id="deriva.core.datapath.Project">
-<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>r</em>, <em>attributes</em>, <em>renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Project" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>r</em>, <em>mode='entity'</em>, <em>projection=[]</em>, <em>group_key=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Project" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.PathOperator" title="deriva.core.datapath.PathOperator"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.PathOperator</span></code></a></p>
+<p>Projection path component.</p>
+<dl class="attribute">
+<dt id="deriva.core.datapath.Project.AGGREGATE">
+<code class="descname">AGGREGATE</code><em class="property"> = 'aggregate'</em><a class="headerlink" href="#deriva.core.datapath.Project.AGGREGATE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Project.ATTRGROUP">
+<code class="descname">ATTRGROUP</code><em class="property"> = 'attributegroup'</em><a class="headerlink" href="#deriva.core.datapath.Project.ATTRGROUP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Project.ATTRIBUTE">
+<code class="descname">ATTRIBUTE</code><em class="property"> = 'attribute'</em><a class="headerlink" href="#deriva.core.datapath.Project.ATTRIBUTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Project.ENTITY">
+<code class="descname">ENTITY</code><em class="property"> = 'entity'</em><a class="headerlink" href="#deriva.core.datapath.Project.ENTITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Project.MODES">
+<code class="descname">MODES</code><em class="property"> = ('entity', 'attribute', 'aggregate', 'attributegroup')</em><a class="headerlink" href="#deriva.core.datapath.Project.MODES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -1949,39 +2224,35 @@ parameter can be used to specify <cite>left</cite>, <cite>right</cite>, or <cite
 <p>The ResultSet is produced by a path. The results may be explicitly fetched. The ResultSet behaves like a
 container. If the ResultSet has not been fetched explicitly, on first use of container operations, it will
 be implicitly fetched from the catalog.</p>
-<dl class="attribute">
-<dt id="deriva.core.datapath.ResultSet.dataframe">
-<code class="descname">dataframe</code><a class="headerlink" href="#deriva.core.datapath.ResultSet.dataframe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pandas DataFrame representation of this path.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.ResultSet.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><em>limit=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ResultSet.fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ResultSet.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the results from the catalog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a pandas dataframe object</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>limit</strong> – maximum number of results to fetch from the catalog.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ImportError" title="(in Python v3.8)"><strong>ImportError</strong></a> – exception if the ‘pandas’ library is not available</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">self</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="deriva.core.datapath.ResultSet.fetch">
-<code class="descname">fetch</code><span class="sig-paren">(</span><em>limit=None</em>, <em>sort=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ResultSet.fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ResultSet.fetch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fetches the results from the catalog.</p>
+<dt id="deriva.core.datapath.ResultSet.sort">
+<code class="descname">sort</code><span class="sig-paren">(</span><em>*attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#ResultSet.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.ResultSet.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Orders the results set by the given attributes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>limit</strong> – maximum number of results to fetch from the catalog.</li>
-<li><strong>sort</strong> – collection of columns to use for sorting. Note that if using the <cite>attributes(…)</cite> query interface,</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>keys</strong> – Columns, column aliases, or aggregate function aliases. The sort attributes must be projected by</td>
 </tr>
 </tbody>
 </table>
-<p>the columns in the sort list _must_ be explicitly listed in the <cite>attributes(…)</cite> call.
+<p>the originating query.
 :return: self</p>
 </dd></dl>
 
@@ -2016,7 +2287,7 @@ be implicitly fetched from the catalog.</p>
 
 <dl class="class">
 <dt id="deriva.core.datapath.SortDescending">
-<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">SortDescending</code><span class="sig-paren">(</span><em>col</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#SortDescending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.SortDescending" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">SortDescending</code><span class="sig-paren">(</span><em>attr</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#SortDescending"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.SortDescending" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Represents a descending sort condition.</p>
 <dl class="attribute">
@@ -2041,7 +2312,7 @@ be implicitly fetched from the catalog.</p>
 <p>Represents a Table.</p>
 <dl class="method">
 <dt id="deriva.core.datapath.Table.aggregates">
-<code class="descname">aggregates</code><span class="sig-paren">(</span><em>**functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.aggregates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">aggregates</code><span class="sig-paren">(</span><em>*functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.aggregates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.aggregates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of computed aggregates from this data path.</p>
 <p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
 </dd></dl>
@@ -2054,15 +2325,8 @@ be implicitly fetched from the catalog.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="deriva.core.datapath.Table.attributegroups">
-<code class="descname">attributegroups</code><span class="sig-paren">(</span><em>group_key</em>, <em>**functions</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.attributegroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.attributegroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a results set of computed aggregates for groups of attributes from this data path.</p>
-<p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="deriva.core.datapath.Table.attributes">
-<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.attributes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.attributes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of attributes projected and optionally renamed from this data path.</p>
 <p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
 </dd></dl>
@@ -2083,7 +2347,7 @@ be implicitly fetched from the catalog.</p>
 
 <dl class="method">
 <dt id="deriva.core.datapath.Table.entities">
-<code class="descname">entities</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.entities" title="Permalink to this definition">¶</a></dt>
+<code class="descname">entities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.entities" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a results set of whole entities from this data path’s current context.</p>
 <p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
 </dd></dl>
@@ -2104,6 +2368,13 @@ be implicitly fetched from the catalog.</p>
 <dt id="deriva.core.datapath.Table.fromname">
 <code class="descname">fromname</code><a class="headerlink" href="#deriva.core.datapath.Table.fromname" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.datapath.Table.groupby">
+<code class="descname">groupby</code><span class="sig-paren">(</span><em>*keys</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Table.groupby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Table.groupby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an attribute group object.</p>
+<p>See the docs for this method in <cite>DataPath</cite> for more information.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="deriva.core.datapath.Table.insert">
@@ -2132,6 +2403,12 @@ be implicitly fetched from the catalog.</p>
 <code class="descname">path</code><a class="headerlink" href="#deriva.core.datapath.Table.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Always a new DataPath instance that is rooted at this table.
 Note that this table will be automatically aliased using its own table name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.Table.projection_name">
+<code class="descname">projection_name</code><a class="headerlink" href="#deriva.core.datapath.Table.projection_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>In a projection, the object uses this name.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -2197,6 +2474,12 @@ not defined as ‘system columns’ by ERMrest, as the targets if <cite>targets<
 <dt id="deriva.core.datapath.TableAlias.path">
 <code class="descname">path</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parent path for this alias.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.datapath.TableAlias.projection_name">
+<code class="descname">projection_name</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.projection_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>In a projection, the object uses this name.</p>
 </dd></dl>
 
 <dl class="attribute">

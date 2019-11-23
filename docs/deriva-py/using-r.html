@@ -1282,10 +1282,6 @@
 <div class="section" id="calling-deriva-py-from-r">
 <span id="calling-deriva-py-from-r"></span><h1>Calling deriva-py from R<a class="headerlink" href="#calling-deriva-py-from-r" title="Permalink to this headline">¶</a></h1>
 <p>The <a class="reference external" href="https://rstudio.github.io/reticulate/">reticulate</a> package can be used to call deriva-py functions from R. This writeup assumes familiarity with R and with the python-based examples in the deriva-py datapath tutorials.</p>
-<p>To call deriva-py within R, first install the python <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">user</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">pandas</span>
-</pre></div>
-</div>
 <p>Then, in R, install reticulate:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s2">&quot;reticulate&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1342,18 +1338,21 @@ dataset &lt;- pb$isa$dataset
 </div>
 <p>A couple things to notice: <code class="docutils literal notranslate"><span class="pre">catalog_number</span></code> is set to “1L”; setting it to “1” would lead to it being misinterpreted as a floating-point number, and R uses <code class="docutils literal notranslate"><span class="pre">NULL</span></code> where python uses <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <p>At this point, we could look at the contents of the entire dataset:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dataset$entities().dataframe
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>results &lt;- dataset$entities()
+iterate(results, print)
 </pre></div>
 </div>
 <p>But that’s a large table, so let’s do some filtering. In Python, this is how we’d get a data frame of all dataset
 records that were created more recently than November 1, 2018:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">RCT</span> <span class="o">&gt;</span> <span class="s2">&quot;2018-11-01&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span><span class="o">.</span><span class="n">dataframe</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">RCT</span> <span class="o">&gt;</span> <span class="s2">&quot;2018-11-01&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">entities</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> filter operator won’t work in R, so we need to use an alternate syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dataset$filter(dataset$RCT$gt(&quot;2018-11-01&quot;))$entities()$dataframe
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>results &lt;- dataset$filter(dataset$RCT$gt(&quot;2018-11-01&quot;))$entities()
+iterate(results, print)
 </pre></div>
 </div>
+<p>Other filters may be converted similarly.</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1383,7 +1382,12 @@ records that were created more recently than November 1, 2018:</p>
 <td>col$ge(val)</td>
 </tr>
 </tbody>
-</table><p>For more information, see the datapath tutorial and the <a class="reference external" href="https://rstudio.github.io/reticulate/index.html">reticulate documentation</a>.</p>
+</table><p>Datapath results can also be converted into dataframes via the python <code class="docutils literal notranslate"><span class="pre">pandas</span></code> library.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pandas &lt;- import(&quot;pandas&quot;)
+results &lt;- pandas$DataFrame(iterate(dataset$entities()))
+</pre></div>
+</div>
+<p>For more information, see the datapath tutorial and the <a class="reference external" href="https://rstudio.github.io/reticulate/index.html">reticulate documentation</a>.</p>
 </div>
 
 

@@ -2343,7 +2343,12 @@ The json object follows the same rules as <a class="reference external" href="ht
 <div class="section" id="tag-2019-source-definitions">
 <span id="tag-2019-source-definitions"></span><h3>Tag: 2019 Source Definitions<a class="headerlink" href="#tag-2019-source-definitions" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2019:source-definitions</span></code></p>
-<p>This key allows specification of sources that can be used in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreignKeys</span></code> annotations. It will also allow defining the list of column names and outbound foreign keys that should be available in the templating environments. Please refer to <a class="reference internal" href="pseudo-column-template.html"><span class="doc">this document</span></a> for more information about how to use this annotation.</p>
+<p>Using this key you can,</p>
+<ul class="simple">
+<li>Define <code class="docutils literal notranslate"><span class="pre">sources</span></code> that can be used in <code class="docutils literal notranslate"><span class="pre">visible-column</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreignkeys</span></code> annotations.</li>
+<li>Define list of column names and outbound foreign keys that should be available in the templating environments (Please refer to <a class="reference internal" href="pseudo-column-template.html"><span class="doc">this document</span></a> for more information).</li>
+<li>Modify the behavior of main search box in recordset page.</li>
+</ul>
 <p>Example:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;tag:isrd.isi.edu,2019:source-definitions&quot;: {
     &quot;columns&quot;: true,
@@ -2353,6 +2358,13 @@ The json object follows the same rules as <a class="reference external" href="ht
             &quot;source&quot;: [{&quot;inbound&quot;: [&quot;schema&quot;, &quot;fk1&quot;]}, &quot;RID&quot;],
             &quot;entity&quot;: true,
             &quot;aggregate&quot;: &quot;array_d&quot;
+        },
+        &quot;search-box&quot;: {
+            &quot;or&quot;: [
+                {&quot;source&quot;: &quot;column1&quot;, &quot;markdown_name&quot;: &quot;another name&quot;},
+                {&quot;source&quot;: &quot;column2&quot;},
+                {&quot;source&quot;: &quot;column3&quot;, &quot;markdown_name&quot;: &quot;Column 3 name&quot;},
+            ]
         }
     }
 }
@@ -2368,11 +2380,13 @@ The json object follows the same rules as <a class="reference external" href="ht
 </ul>
 <p>Supported <em>sourcedefinitions</em> patterns:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">{&quot;</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">&quot;:</span></code> <em>sourceentry</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: where <em>sourcekey</em> is a name that will be used to refer to the defined <em>sourceentry</em>. <em>sourcekey</em>,<ul>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: where <em>sourcekey</em> is a name that will be used to refer to the defined <em>sourceentry</em>. <em>sourcekey</em>,<ul>
 <li>Cannot start with <code class="docutils literal notranslate"><span class="pre">$</span></code>.</li>
 <li>Should not be any of the table’s column names.</li>
+<li><code class="docutils literal notranslate"><span class="pre">search-box</span></code> is a reserved <em>sourcekey</em> and cannot be used.</li>
 </ul>
 </li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;search-box&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>searchcolumn</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code>: Configure list of search columns.</li>
 </ul>
 <p>Supported <em>sourceentry</em> pattern:</p>
 <ul>
@@ -2383,6 +2397,13 @@ The json object follows the same rules as <a class="reference external" href="ht
 </pre></div>
 </div>
 <p>Where <em>direction</em> is either <code class="docutils literal notranslate"><span class="pre">inbound</span></code>, or <code class="docutils literal notranslate"><span class="pre">outbound</span></code>.</p>
+</li>
+</ul>
+<p>Supported <em>searchcolumn</em> pattern:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;source&quot;:</span></code> <em>columnname</em>  <code class="docutils literal notranslate"><span class="pre">}</span></code>: Defines a search column based on the given string literal of <em>columnname</em>. Other optional attributes that this JSON document can have are:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The client will show the displayname of columns as placeholder in the search box. To modify this default behavior, you can use this attribute.</li>
+</ul>
 </li>
 </ul>
 <p>Supported <em>fkeylist</em> patterns:</p>

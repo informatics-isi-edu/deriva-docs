@@ -1527,7 +1527,11 @@
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
                     <span class="k">raise</span>
 
-        <span class="k">return</span> <span class="n">outputs</span></div></div>
+        <span class="k">return</span> <span class="n">outputs</span></div>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">session</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="GenericDownloader"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.GenericDownloader">[docs]</a><span class="k">class</span> <span class="nc">GenericDownloader</span><span class="p">(</span><span class="n">DerivaDownload</span><span class="p">):</span>

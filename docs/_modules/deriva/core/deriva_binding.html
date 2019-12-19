@@ -1398,6 +1398,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">session_config</span><span class="p">:</span>
             <span class="n">session_config</span> <span class="o">=</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_new_session</span><span class="p">(</span><span class="n">session_config</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span> <span class="o">=</span> <span class="n">caching</span>
@@ -1413,6 +1414,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span></div>
 
     <span class="k">def</span> <span class="nf">_get_new_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">get_new_requests_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_pre_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="p">):</span>
@@ -1595,8 +1597,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">url</span><span class="p">,</span> <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pre_mutate</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">guard_response</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raise_for_status_412</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raise_for_status_412</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
 
+    <span class="k">def</span> <span class="nf">_close_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_session</span><span class="p">()</span></div>
 </pre></div>
 
            </div>

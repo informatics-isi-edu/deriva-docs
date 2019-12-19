@@ -1258,7 +1258,6 @@
 
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span>
 
-<span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -1267,7 +1266,7 @@
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="ne">ConnectionError</span>
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span>
 
 <span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">format_exception</span>
 <span class="kn">from</span> <span class="nn">deriva.core.utils</span> <span class="k">import</span> <span class="n">eprint</span>
@@ -1280,7 +1279,6 @@
 <span class="kn">from</span> <span class="nn">deriva.core.ermrest_config</span> <span class="k">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">chaise_tags</span>
 <span class="kn">from</span> <span class="nn">deriva.utils.catalog.manage.deriva_file_templates</span> <span class="k">import</span> <span class="n">table_file_template</span><span class="p">,</span> <span class="n">schema_file_template</span><span class="p">,</span> \
     <span class="n">catalog_file_template</span>
-<span class="kn">from</span> <span class="nn">deriva.utils.catalog.components.deriva_model</span> <span class="k">import</span> <span class="n">DerivaCatalog</span><span class="p">,</span> <span class="n">DerivaModel</span>
 
 <span class="kn">from</span> <span class="nn">deriva.utils.catalog.version</span> <span class="k">import</span> <span class="n">__version__</span> <span class="k">as</span> <span class="n">VERSION</span>
 <span class="kn">from</span> <span class="nn">deriva.utils.catalog.manage.graph_catalog</span> <span class="k">import</span> <span class="n">DerivaCatalogToGraph</span>
@@ -1323,9 +1321,9 @@
 
 
 <div class="viewcode-block" id="DerivaCatalogToString"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.dump_catalog.DerivaCatalogToString">[docs]</a><span class="k">class</span> <span class="nc">DerivaCatalogToString</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">provide_system_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">())</span><span class="o">.</span><span class="n">hostname</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">provide_system_columns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">get_server_uri</span><span class="p">())</span><span class="o">.</span><span class="n">hostname</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">catalog_id</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_provide_system_columns</span> <span class="o">=</span> <span class="n">provide_system_columns</span>
@@ -1334,7 +1332,7 @@
         <span class="k">if</span> <span class="n">groups</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_groups</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">(</span>
-                    <span class="p">{</span><span class="n">e</span><span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">]:</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">entities</span><span class="p">()}</span>
+                    <span class="p">{</span><span class="n">e</span><span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">]:</span> <span class="n">e</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">ERMrest_Group</span><span class="o">.</span><span class="n">entities</span><span class="p">()}</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cannot access ERMrest_Group table. Check ACLs&#39;</span><span class="p">)</span>
@@ -1621,7 +1619,7 @@
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">table_string</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_dump_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">stringer</span> <span class="o">=</span> <span class="n">DerivaCatalogToString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">stringer</span> <span class="o">=</span> <span class="n">DerivaCatalogToString</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span>
         <span class="n">catalog_string</span> <span class="o">=</span> <span class="n">stringer</span><span class="o">.</span><span class="n">catalog_to_str</span><span class="p">()</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.py&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dumpdir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_id</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>

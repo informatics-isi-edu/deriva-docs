@@ -1322,7 +1322,8 @@
                 <span class="n">v</span><span class="p">[</span><span class="s2">&quot;workspaces&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">workspaces</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DerivaDownloadError</span><span class="p">(</span><span class="s2">&quot;Unable to create workspace: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span></div></div>
 </pre></div>
 

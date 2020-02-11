@@ -1564,7 +1564,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>815
+<span></span>855
 </pre></div>
 </div>
 </div>
@@ -1585,27 +1585,8 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">path</span>
 <span class="n">path</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">experiment</span><span class="p">)</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">replicate</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">attributes</span><span class="p">()</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-3132
-https://www.facebase.org/ermrest/catalog/1/entity/D:=isa:dataset/experiment:=isa:experiment/replicate:=isa:replicate
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">results</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">D</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1615,6 +1596,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/D:=isa:dataset/experiment:=isa
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+3272
 https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=isa:experiment/replicate:=isa:replicate/D:*
 </pre></div></div>
 </div>
@@ -1624,7 +1606,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=
 <h3>Example: selecting from multiple table instances<a class="headerlink" href="#Example:-selecting-from-multiple-table-instances" title="Permalink to this headline">¶</a></h3>
 <p>More than one table instance may be selected in this manner and it can be mixed and matched with columns from other tables instances.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1641,13 +1623,13 @@ https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-3132
+3272
 https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=isa:experiment/replicate:=isa:replicate/D:*,experiment:experiment_type,replicate:*
 </pre></div></div>
 </div>
 <p>If you want to base the results on a different entity, you can introduce a table instance alias into the end of the path, before calling the attributes function. In this case, even though we are asking for the same attributes, we are getting the set of datasets, not the set of replicates. Also, since we are including the attributes from dataset in our query, we know that we will not be seeing any duplicate rows.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1664,7 +1646,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-120
+142
 https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=isa:experiment/replicate:=isa:replicate/$D/D:*,experiment:experiment_type,replicate:*
 </pre></div></div>
 </div>
@@ -1676,7 +1658,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=
 <h3>Example: filter on <code class="docutils literal notranslate"><span class="pre">null</span></code> attribute<a class="headerlink" href="#Example:-filter-on-null-attribute" title="Permalink to this headline">¶</a></h3>
 <p>To test for a <code class="docutils literal notranslate"><span class="pre">null</span></code> attribute value, do an equality comparison against the <code class="docutils literal notranslate"><span class="pre">None</span></code> identity.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1692,7 +1674,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/D:=isa:dataset/experiment:=
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experiment:=isa:experiment/molecule_type::null::
-415
+438
 </pre></div></div>
 </div>
 </div>
@@ -1700,7 +1682,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 <h3>Example: advanced text filters<a class="headerlink" href="#Example:-advanced-text-filters" title="Permalink to this headline">¶</a></h3>
 <p>Deriva supports advanced text filters for regular expressions (<code class="docutils literal notranslate"><span class="pre">regexp</span></code>), case-instansitive regexp (<code class="docutils literal notranslate"><span class="pre">ciregexp</span></code>), and text search (<code class="docutils literal notranslate"><span class="pre">ts</span></code>). You may have to review your text and full-text indexes in your ERMrest catalog before using these features.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1716,7 +1698,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/description::ciregexp::palate
-32
+40
 </pre></div></div>
 </div>
 </div>
@@ -1724,7 +1706,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/descripti
 <h3>Example: negate a filter<a class="headerlink" href="#Example:-negate-a-filter" title="Permalink to this headline">¶</a></h3>
 <p>Use the “inverse” (‘<code class="docutils literal notranslate"><span class="pre">~</span></code>’) operator to negate a filter. Negation works against simple comparison filters as demonstrated above as well as on logical operators to be discussed next. You must wrap the comparison or logical operators in an extra parens to use the negate operation, e.g., “<code class="docutils literal notranslate"><span class="pre">~</span> <span class="pre">(...)</span></code>”.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1740,7 +1722,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/descripti
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/!(description::ciregexp::palate)
-780
+811
 </pre></div></div>
 </div>
 </div>
@@ -1748,7 +1730,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/!(descrip
 <h3>Example: filters with logical operators<a class="headerlink" href="#Example:-filters-with-logical-operators" title="Permalink to this headline">¶</a></h3>
 <p>This example shows how to combine two comparisons with a conjuncting (i.e., <code class="docutils literal notranslate"><span class="pre">and</span></code> operator). Because Python’s logical-and (<code class="docutils literal notranslate"><span class="pre">and</span></code>) keyword cannot be overloaded, we instead overload the bitwise-and (<code class="docutils literal notranslate"><span class="pre">&amp;</span></code>) operator. This approach has become customary among many similar data access libraries.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1768,7 +1750,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1777,7 +1759,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1799,749 +1781,149 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>RCB</th>
-      <th>RCT</th>
       <th>RID</th>
-      <th>RMB</th>
-      <th>RMT</th>
-      <th>_keywords</th>
-      <th>anatomy</th>
-      <th>cell_characterization</th>
-      <th>cell_source</th>
-      <th>collection_date</th>
-      <th>...</th>
-      <th>litter</th>
+      <th>dataset</th>
       <th>local_identifier</th>
-      <th>mutation</th>
-      <th>origin</th>
-      <th>phenotype</th>
       <th>species</th>
       <th>specimen</th>
-      <th>stage</th>
+      <th>gene</th>
+      <th>genotype</th>
       <th>strain</th>
-      <th>theiler_stage</th>
+      <th>mutation</th>
+      <th>stage</th>
+      <th>...</th>
+      <th>gender</th>
+      <th>litter</th>
+      <th>collection_date</th>
+      <th>_keywords</th>
+      <th>RCB</th>
+      <th>RMB</th>
+      <th>RCT</th>
+      <th>RMT</th>
+      <th>cell_source</th>
+      <th>cell_characterization</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
-      <td>2018-12-10T19:42:13.870864-08:00</td>
       <td>1-4TT8</td>
-      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
-      <td>2018-12-10T19:43:19.779894-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>None</td>
+      <td>1-4TSP</td>
       <td>scWFE18_S197</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNR</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
+      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
+      <td>2018-12-10T19:42:13.870864-08:00</td>
+      <td>2018-12-10T19:43:19.779894-08:00</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XEJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-5</td>
+      <td>TJP</td>
       <td>A8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.379287-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XEP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.068132-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>9/29/14AL1-5</td>
+      <td>TJP</td>
       <td>A8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>9/29/14AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.068132-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XW6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-5</td>
+      <td>TJP</td>
       <td>A8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.644948-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2YAT</td>
+      <td>TJP</td>
+      <td>A8IF3FR</td>
+      <td>NCBITAXON:10090</td>
+      <td>FACEBASE:1-4GNG</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
+      <td>FACEBASE:1-4GYR</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-1</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
       <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2018-11-27T16:53:35.57911-08:00</td>
       <td>None</td>
-      <td>UBERON:0002490</td>
       <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-1</td>
-      <td>A8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2YWJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-7</td>
-      <td>A6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2Z2A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-4</td>
-      <td>A6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2Z46</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/8/16AL1-4</td>
-      <td>A6IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2ZAE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/16/15AL1-1</td>
-      <td>A8IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2ZEJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>5/18/15AL1-4</td>
-      <td>A8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>30F6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-4</td>
-      <td>A6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>30XA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-1</td>
-      <td>A8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>310A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-7</td>
-      <td>A6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>311E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.475782-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>None</td>
-      <td>MUST ADD VALUE-15</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNY</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>311P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>5/18/15AL1-4</td>
-      <td>A8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31AE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/16/15AL1-1</td>
-      <td>A8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31J2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/8/16AL1-4</td>
-      <td>A6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31N6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>9/29/14AL1-5</td>
-      <td>A8IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31RP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-6</td>
-      <td>A6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31RY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/14/16AL1-6</td>
-      <td>A6IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>32F6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/14/16AL1-6</td>
-      <td>A6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>32FY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-6</td>
-      <td>A6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PX2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-07-10</td>
-      <td>...</td>
-      <td>7/10/14TL1-8</td>
-      <td>T6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PX6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-01</td>
-      <td>...</td>
-      <td>8/1/14TL2-8</td>
-      <td>T6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-14</td>
-      <td>...</td>
-      <td>8/14/14TL1-6</td>
-      <td>T6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-21</td>
-      <td>...</td>
-      <td>8/21/14TL1-4</td>
-      <td>T6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.006637-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-21</td>
-      <td>...</td>
-      <td>8/21/14TL1-9</td>
-      <td>T6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-07-10</td>
-      <td>...</td>
-      <td>7/10/14TL1-8</td>
-      <td>T6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-01</td>
-      <td>...</td>
-      <td>8/1/14TL2-8</td>
-      <td>T6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-14</td>
-      <td>...</td>
-      <td>8/14/14TL1-6</td>
-      <td>T6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2568,724 +1950,124 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
       <td>...</td>
     </tr>
     <tr>
-      <th>32</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-3</td>
-      <td>T8IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-5</td>
-      <td>T8IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-9</td>
-      <td>T8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL2-3</td>
-      <td>T8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL1-3</td>
-      <td>T8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PYY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-3</td>
-      <td>T8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZ2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-5</td>
-      <td>T8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZ6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-9</td>
-      <td>T8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL2-3</td>
-      <td>T8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL1-3</td>
-      <td>T8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-5</td>
-      <td>W6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-6</td>
-      <td>W6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-1</td>
-      <td>W6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-2</td>
-      <td>W6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3Q02</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-4</td>
-      <td>W6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q06</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-5</td>
-      <td>W6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-6</td>
-      <td>W6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-1</td>
-      <td>W6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0J</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-2</td>
-      <td>W6IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-4</td>
-      <td>W6IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q0T</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-1</td>
-      <td>W8IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q0Y</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-2</td>
-      <td>W8IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q12</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/14/14WL1-6</td>
-      <td>W8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>55</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q16</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-7</td>
-      <td>W8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q1A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-28</td>
-      <td>...</td>
-      <td>4/28/14WL1-1</td>
-      <td>W8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
       <th>57</th>
+      <td>3Q1E</td>
+      <td>VHE</td>
+      <td>W8IF1SM</td>
+      <td>NCBITAXON:10090</td>
+      <td>FACEBASE:1-4GNG</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
+      <td>FACEBASE:1-4GYR</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/15/14WL1-1</td>
+      <td>2014-04-15</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
       <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
       <td>2018-03-16T12:03:38.228586-07:00</td>
-      <td>3Q1E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
       <td>2018-11-27T16:53:35.681942-08:00</td>
       <td>None</td>
-      <td>UBERON:0002490</td>
       <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-1</td>
-      <td>W8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
     </tr>
     <tr>
       <th>58</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1J</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-2</td>
+      <td>VHE</td>
       <td>W8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/15/14WL1-2</td>
+      <td>2014-04-15</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>59</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-14</td>
-      <td>...</td>
-      <td>4/14/14WL1-6</td>
+      <td>VHE</td>
       <td>W8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/14/14WL1-6</td>
+      <td>2014-04-14</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>60</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1T</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-7</td>
+      <td>VHE</td>
       <td>W8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/15/14WL1-7</td>
+      <td>2014-04-15</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>61</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1Y</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-28</td>
-      <td>...</td>
-      <td>4/28/14WL1-1</td>
+      <td>VHE</td>
       <td>W8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/28/14WL1-1</td>
+      <td>2014-04-28</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
   </tbody>
 </table>
@@ -3297,7 +2079,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 <h3>Example: combine conjunction and disjunctions in filters<a class="headerlink" href="#Example:-combine-conjunction-and-disjunctions-in-filters" title="Permalink to this headline">¶</a></h3>
 <p>Similar to the prior example, the filters allow combining of conjunctive and disjunctive operators. Like the bitwise-and operator, we also overload the bitwise-or (<code class="docutils literal notranslate"><span class="pre">|</span></code>) operator because the logical-or (<code class="docutils literal notranslate"><span class="pre">or</span></code>) operatar cannot be overloaded.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -3318,7 +2100,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -3327,7 +2109,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -3349,749 +2131,149 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>RCB</th>
-      <th>RCT</th>
       <th>RID</th>
-      <th>RMB</th>
-      <th>RMT</th>
-      <th>_keywords</th>
-      <th>anatomy</th>
-      <th>cell_characterization</th>
-      <th>cell_source</th>
-      <th>collection_date</th>
-      <th>...</th>
-      <th>litter</th>
+      <th>dataset</th>
       <th>local_identifier</th>
-      <th>mutation</th>
-      <th>origin</th>
-      <th>phenotype</th>
       <th>species</th>
       <th>specimen</th>
-      <th>stage</th>
+      <th>gene</th>
+      <th>genotype</th>
       <th>strain</th>
-      <th>theiler_stage</th>
+      <th>mutation</th>
+      <th>stage</th>
+      <th>...</th>
+      <th>gender</th>
+      <th>litter</th>
+      <th>collection_date</th>
+      <th>_keywords</th>
+      <th>RCB</th>
+      <th>RMB</th>
+      <th>RCT</th>
+      <th>RMT</th>
+      <th>cell_source</th>
+      <th>cell_characterization</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
-      <td>2018-12-10T19:42:13.870864-08:00</td>
       <td>1-4TT8</td>
-      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
-      <td>2018-12-10T19:43:19.779894-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>None</td>
+      <td>1-4TSP</td>
       <td>scWFE18_S197</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNR</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
+      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
+      <td>2018-12-10T19:42:13.870864-08:00</td>
+      <td>2018-12-10T19:43:19.779894-08:00</td>
+      <td>None</td>
       <td>None</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XEJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-5</td>
+      <td>TJP</td>
       <td>A8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.379287-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XEP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.068132-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>9/29/14AL1-5</td>
+      <td>TJP</td>
       <td>A8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>9/29/14AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.068132-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2XW6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-5</td>
+      <td>TJP</td>
       <td>A8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-5</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
+      <td>2018-11-27T16:53:36.644948-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2YAT</td>
+      <td>TJP</td>
+      <td>A8IF3FR</td>
+      <td>NCBITAXON:10090</td>
+      <td>FACEBASE:1-4GNG</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GT6</td>
+      <td>FACEBASE:1-4GYR</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>3/30/15AL1-1</td>
+      <td>2016-06-20</td>
+      <td>None</td>
+      <td>None</td>
       <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-12T18:12:27.599487-07:00</td>
       <td>2018-11-27T16:53:35.57911-08:00</td>
       <td>None</td>
-      <td>UBERON:0002490</td>
       <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-1</td>
-      <td>A8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2YWJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-7</td>
-      <td>A6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2Z2A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-4</td>
-      <td>A6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2Z46</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/8/16AL1-4</td>
-      <td>A6IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2ZAE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/16/15AL1-1</td>
-      <td>A8IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>2ZEJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>5/18/15AL1-4</td>
-      <td>A8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>30F6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-4</td>
-      <td>A6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>30XA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/30/15AL1-1</td>
-      <td>A8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>310A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-7</td>
-      <td>A6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>311E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.475782-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>None</td>
-      <td>MUST ADD VALUE-15</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNY</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>311P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>5/18/15AL1-4</td>
-      <td>A8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31AE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>3/16/15AL1-1</td>
-      <td>A8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31J2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/8/16AL1-4</td>
-      <td>A6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31N6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>9/29/14AL1-5</td>
-      <td>A8IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31RP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-6</td>
-      <td>A6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>31RY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/14/16AL1-6</td>
-      <td>A6IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>32F6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>1/14/16AL1-6</td>
-      <td>A6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>32FY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.368619-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2016-06-20</td>
-      <td>...</td>
-      <td>12/17/15AL1-6</td>
-      <td>A6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PX2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-07-10</td>
-      <td>...</td>
-      <td>7/10/14TL1-8</td>
-      <td>T6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PX6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-01</td>
-      <td>...</td>
-      <td>8/1/14TL2-8</td>
-      <td>T6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-14</td>
-      <td>...</td>
-      <td>8/14/14TL1-6</td>
-      <td>T6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-21</td>
-      <td>...</td>
-      <td>8/21/14TL1-4</td>
-      <td>T6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:14:22.078525-07:00</td>
-      <td>3PXJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.006637-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-21</td>
-      <td>...</td>
-      <td>8/21/14TL1-9</td>
-      <td>T6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-07-10</td>
-      <td>...</td>
-      <td>7/10/14TL1-8</td>
-      <td>T6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-01</td>
-      <td>...</td>
-      <td>8/1/14TL2-8</td>
-      <td>T6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:27:21.14095-07:00</td>
-      <td>3PXY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-08-14</td>
-      <td>...</td>
-      <td>8/14/14TL1-6</td>
-      <td>T6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
     </tr>
     <tr>
       <th>...</th>
@@ -4118,724 +2300,124 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
       <td>...</td>
     </tr>
     <tr>
-      <th>34</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-9</td>
-      <td>T8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL2-3</td>
-      <td>T8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:34:07.27416-07:00</td>
-      <td>3PYT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL1-3</td>
-      <td>T8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PYY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-3</td>
-      <td>T8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZ2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-5</td>
-      <td>T8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZ6</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-05-20</td>
-      <td>...</td>
-      <td>5/20/14TL1-9</td>
-      <td>T8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZA</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL2-3</td>
-      <td>T8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:41:49.754798-07:00</td>
-      <td>3PZE</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.379287-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-06-16</td>
-      <td>...</td>
-      <td>6/16/14TL1-3</td>
-      <td>T8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GB0</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZJ</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-5</td>
-      <td>W6IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZP</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-6</td>
-      <td>W6IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-1</td>
-      <td>W6IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3PZY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-2</td>
-      <td>W6IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:48:36.601391-07:00</td>
-      <td>3Q02</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.223031-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-4</td>
-      <td>W6IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q06</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-5</td>
-      <td>W6IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-17</td>
-      <td>...</td>
-      <td>4/17/14WL1-6</td>
-      <td>W6IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-1</td>
-      <td>W6IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0J</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-2</td>
-      <td>W6IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:53:43.256172-07:00</td>
-      <td>3Q0P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.315017-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-18</td>
-      <td>...</td>
-      <td>4/18/14WL1-4</td>
-      <td>W6IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJ8</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJT</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q0T</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-1</td>
-      <td>W8IF1FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>53</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q0Y</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-2</td>
-      <td>W8IF2FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>54</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q12</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/14/14WL1-6</td>
-      <td>W8IF3FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>55</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q16</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-7</td>
-      <td>W8IF4FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>56</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T11:59:22.349814-07:00</td>
-      <td>3Q1A</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.559226-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-28</td>
-      <td>...</td>
-      <td>4/28/14WL1-1</td>
-      <td>W8IF5FR</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FTR</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>57</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
-      <td>3Q1E</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-1</td>
-      <td>W8IF1SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
-      <th>58</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
-      <td>3Q1J</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-2</td>
-      <td>W8IF2SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
-      <td>NCBITAXON:10090</td>
-      <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
-      <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
-    </tr>
-    <tr>
       <th>59</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-14</td>
-      <td>...</td>
-      <td>4/14/14WL1-6</td>
+      <td>VHE</td>
       <td>W8IF3SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/14/14WL1-6</td>
+      <td>2014-04-14</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>60</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1T</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-15</td>
-      <td>...</td>
-      <td>4/15/14WL1-7</td>
+      <td>VHE</td>
       <td>W8IF4SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/15/14WL1-7</td>
+      <td>2014-04-15</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>61</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-16T12:03:38.228586-07:00</td>
       <td>3Q1Y</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.473682-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002490</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2014-04-28</td>
-      <td>...</td>
-      <td>4/28/14WL1-1</td>
+      <td>VHE</td>
       <td>W8IF5SM</td>
-      <td>None</td>
-      <td>FACEBASE:1-4FV6</td>
-      <td>FACEBASE:1-4GBE</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNG</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>4/28/14WL1-1</td>
+      <td>2014-04-28</td>
+      <td>None</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-03-16T12:03:38.228586-07:00</td>
+      <td>2018-11-27T16:53:35.473682-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>62</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-05-02T11:27:13.657825-07:00</td>
       <td>3V06</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:36.644948-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002489</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2017-06-06</td>
-      <td>...</td>
-      <td>6/6/17WL1,L2,L3</td>
+      <td>3TYP</td>
       <td>scWCE18_S198</td>
-      <td>None</td>
-      <td>UBERON:0002489</td>
-      <td>None</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNR</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>6/6/17WL1,L2,L3</td>
+      <td>2017-06-06</td>
+      <td>None</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-05-02T11:27:13.657825-07:00</td>
+      <td>2018-11-27T16:53:36.644948-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>63</th>
-      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
-      <td>2018-05-02T11:50:12.225872-07:00</td>
       <td>3V1P</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:53:35.681942-08:00</td>
-      <td>None</td>
-      <td>UBERON:0002491</td>
-      <td>None</td>
-      <td>None</td>
-      <td>2017-06-06</td>
-      <td>...</td>
-      <td>6/6/17WL1,L2,L3</td>
+      <td>3V0E</td>
       <td>scWLE18_S199</td>
-      <td>None</td>
-      <td>UBERON:0002491</td>
-      <td>None</td>
       <td>NCBITAXON:10090</td>
       <td>FACEBASE:1-4GNR</td>
-      <td>FACEBASE:1-4GJA</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GV2</td>
       <td>FACEBASE:1-4GYR</td>
-      <td>FACEBASE:1-4GJW</td>
+      <td>None</td>
+      <td>FACEBASE:1-4GJA</td>
+      <td>...</td>
+      <td>None</td>
+      <td>6/6/17WL1,L2,L3</td>
+      <td>2017-06-06</td>
+      <td>None</td>
+      <td>https://auth.globus.org/8ae274db-d033-47eb-bd3...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-05-02T11:50:12.225872-07:00</td>
+      <td>2018-11-27T16:53:35.681942-08:00</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
   </tbody>
 </table>
@@ -4847,7 +2429,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/biosample
 <h3>Example: filtering at different stages of the path<a class="headerlink" href="#Example:-filtering-at-different-stages-of-the-path" title="Permalink to this headline">¶</a></h3>
 <p>Filtering a path does not have to be done at the end of a path. In fact, the initial intention of the ERMrest URI was to mimick “RESTful” semantics where a RESTful “resource” is identified, then filtered, then a “sub-resource” is identified, and then filtered, and so on.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -4868,7 +2450,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -4877,7 +2459,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -4899,408 +2481,83 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>RCB</th>
-      <th>RCT</th>
       <th>RID</th>
-      <th>RMB</th>
-      <th>RMT</th>
-      <th>bioreplicate_number</th>
-      <th>biosample</th>
       <th>dataset</th>
-      <th>experiment</th>
+      <th>biosample</th>
+      <th>bioreplicate_number</th>
       <th>technical_replicate_number</th>
+      <th>RCB</th>
+      <th>RMB</th>
+      <th>RCT</th>
+      <th>RMT</th>
+      <th>experiment</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3T5A</td>
+      <td>1-3SWE</td>
+      <td>1-3T0A</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>2018-06-13T16:41:16.162698-07:00</td>
-      <td>1</td>
-      <td>1-3T0A</td>
-      <td>1-3SWE</td>
+      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3SZA</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3T5E</td>
+      <td>1-3SWE</td>
+      <td>1-3T0E</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>2018-06-13T16:41:16.162698-07:00</td>
-      <td>1</td>
-      <td>1-3T0E</td>
-      <td>1-3SWE</td>
+      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3SZA</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3T5J</td>
+      <td>1-3SWE</td>
+      <td>1-3T0J</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>2018-06-13T16:41:16.162698-07:00</td>
-      <td>1</td>
-      <td>1-3T0J</td>
-      <td>1-3SWE</td>
+      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3SZA</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3T5P</td>
+      <td>1-3SWE</td>
+      <td>1-3T0P</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>2018-06-13T16:41:16.162698-07:00</td>
-      <td>1</td>
-      <td>1-3T0P</td>
-      <td>1-3SWE</td>
+      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3SZA</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3T5T</td>
+      <td>1-3SWE</td>
+      <td>1-3T0T</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
       <td>2018-06-13T16:41:16.162698-07:00</td>
-      <td>1</td>
-      <td>1-3T0T</td>
-      <td>1-3SWE</td>
+      <td>2018-06-13T16:41:16.162698-07:00</td>
       <td>1-3SZA</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1-3T6T</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1</td>
-      <td>1-3T0Y</td>
-      <td>1-3SWE</td>
-      <td>1-3SZE</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1-3T6Y</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1</td>
-      <td>1-3T12</td>
-      <td>1-3SWE</td>
-      <td>1-3SZE</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1-3T72</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1</td>
-      <td>1-3T16</td>
-      <td>1-3SWE</td>
-      <td>1-3SZE</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1-3T76</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1</td>
-      <td>1-3T1A</td>
-      <td>1-3SWE</td>
-      <td>1-3SZE</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1-3T7A</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:47:38.483851-07:00</td>
-      <td>1</td>
-      <td>1-3T1E</td>
-      <td>1-3SWE</td>
-      <td>1-3SZE</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1-3T86</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1</td>
-      <td>1-3T1J</td>
-      <td>1-3SWE</td>
-      <td>1-3SZJ</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1-3T8A</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1</td>
-      <td>1-3T1P</td>
-      <td>1-3SWE</td>
-      <td>1-3SZJ</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1-3T8E</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1</td>
-      <td>1-3T1T</td>
-      <td>1-3SWE</td>
-      <td>1-3SZJ</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1-3T8J</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1</td>
-      <td>1-3T1Y</td>
-      <td>1-3SWE</td>
-      <td>1-3SZJ</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1-3T8P</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:51:59.083357-07:00</td>
-      <td>1</td>
-      <td>1-3T22</td>
-      <td>1-3SWE</td>
-      <td>1-3SZJ</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1-3T9J</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1</td>
-      <td>1-3T26</td>
-      <td>1-3SWE</td>
-      <td>1-3SZP</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1-3T9P</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1</td>
-      <td>1-3T2A</td>
-      <td>1-3SWE</td>
-      <td>1-3SZP</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1-3T9T</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1</td>
-      <td>1-3T2E</td>
-      <td>1-3SWE</td>
-      <td>1-3SZP</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1-3T9Y</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1</td>
-      <td>1-3T2J</td>
-      <td>1-3SWE</td>
-      <td>1-3SZP</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1-3TA2</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:54:25.409906-07:00</td>
-      <td>1</td>
-      <td>1-3T2P</td>
-      <td>1-3SWE</td>
-      <td>1-3SZP</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1-3TB2</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1</td>
-      <td>1-3T2T</td>
-      <td>1-3SWE</td>
-      <td>1-3SZT</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1-3TB6</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1</td>
-      <td>1-3T2Y</td>
-      <td>1-3SWE</td>
-      <td>1-3SZT</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1-3TBA</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1</td>
-      <td>1-3T32</td>
-      <td>1-3SWE</td>
-      <td>1-3SZT</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1-3TBE</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1</td>
-      <td>1-3T36</td>
-      <td>1-3SWE</td>
-      <td>1-3SZT</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1-3TBJ</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:55:48.137336-07:00</td>
-      <td>1</td>
-      <td>1-3T3A</td>
-      <td>1-3SWE</td>
-      <td>1-3SZT</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1-3TCJ</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1</td>
-      <td>1-3T3E</td>
-      <td>1-3SWE</td>
-      <td>1-3SZY</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1-3TCP</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1</td>
-      <td>1-3T3J</td>
-      <td>1-3SWE</td>
-      <td>1-3SZY</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1-3TCT</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1</td>
-      <td>1-3T3P</td>
-      <td>1-3SWE</td>
-      <td>1-3SZY</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1-3TCY</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1</td>
-      <td>1-3T3T</td>
-      <td>1-3SWE</td>
-      <td>1-3SZY</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1-3TD2</td>
-      <td>https://auth.globus.org/f8ae714f-6015-48da-971...</td>
-      <td>2018-06-13T16:57:27.431803-07:00</td>
-      <td>1</td>
-      <td>1-3T3Y</td>
-      <td>1-3SWE</td>
-      <td>1-3SZY</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -5316,398 +2573,73 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
       <td>...</td>
     </tr>
     <tr>
-      <th>246</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>367E</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>31BJ</td>
-      <td>TMJ</td>
-      <td>340A</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>247</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>367J</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>30J2</td>
-      <td>TMJ</td>
-      <td>340E</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>248</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>367P</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2ZCY</td>
-      <td>TMJ</td>
-      <td>340J</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>249</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>376P</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2YPT</td>
-      <td>TTR</td>
-      <td>340P</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>250</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>376T</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>32FA</td>
-      <td>TTR</td>
-      <td>340T</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>251</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AME</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>31TA</td>
-      <td>23RT</td>
-      <td>340Y</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>252</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3ANE</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>32P2</td>
-      <td>23RT</td>
-      <td>3412</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>253</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3ANJ</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2XX6</td>
-      <td>23RT</td>
-      <td>3416</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>254</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3APE</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>30SP</td>
-      <td>23RT</td>
-      <td>341A</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>255</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3APT</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2Z5T</td>
-      <td>23RT</td>
-      <td>341E</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>256</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AQE</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2XHE</td>
-      <td>23RT</td>
-      <td>341J</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>257</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3ARE</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>31E6</td>
-      <td>23RT</td>
-      <td>341P</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>258</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AS2</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>30FT</td>
-      <td>23RT</td>
-      <td>341T</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>259</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AW2</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>301E</td>
-      <td>2ARP</td>
-      <td>342E</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>260</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AWT</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2ZYY</td>
-      <td>2ARP</td>
-      <td>342J</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>261</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AX6</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>31V2</td>
-      <td>2ARP</td>
-      <td>342P</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>262</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AXT</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2Z8E</td>
-      <td>2ARP</td>
-      <td>342T</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>263</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AY2</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>2ZK2</td>
-      <td>2ARP</td>
-      <td>342Y</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>264</th>
-      <td>None</td>
-      <td>2018-03-12T18:12:27.599487-07:00</td>
-      <td>3AZ2</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>31WY</td>
-      <td>2ARP</td>
-      <td>3432</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>265</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:11:16.687248-07:00</td>
-      <td>3S22</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RVJ</td>
-      <td>VQ4</td>
-      <td>3S0J</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>266</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:21:05.877047-07:00</td>
-      <td>3S2P</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RW6</td>
-      <td>VQ4</td>
-      <td>3S16</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>267</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:26:07.727117-07:00</td>
-      <td>3S3A</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RWT</td>
-      <td>VQ4</td>
-      <td>3S1A</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>268</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:27:25.257361-07:00</td>
-      <td>3S3Y</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RXE</td>
-      <td>VQ4</td>
-      <td>3S1E</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>269</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:28:45.616213-07:00</td>
-      <td>3S4J</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RY2</td>
-      <td>VQ4</td>
-      <td>3S1J</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>270</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:33:11.783556-07:00</td>
-      <td>3S56</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RYP</td>
-      <td>VQ4</td>
-      <td>3S1P</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>271</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:34:43.289759-07:00</td>
-      <td>3S5T</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RZA</td>
-      <td>VQ4</td>
-      <td>3S1T</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>272</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:34:43.289759-07:00</td>
-      <td>3S6A</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RZT</td>
-      <td>VQ4</td>
-      <td>3S1T</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>273</th>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-03-26T16:36:10.863089-07:00</td>
-      <td>3S6E</td>
-      <td>None</td>
-      <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>3RZY</td>
-      <td>VQ4</td>
-      <td>3S1Y</td>
-      <td>1</td>
-    </tr>
-    <tr>
       <th>274</th>
+      <td>3S5T</td>
+      <td>VQ4</td>
+      <td>3RZA</td>
+      <td>1</td>
+      <td>1</td>
       <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-04-11T12:26:16.576316-07:00</td>
-      <td>3TSE</td>
       <td>None</td>
+      <td>2018-03-26T16:34:43.289759-07:00</td>
       <td>2018-06-05T18:44:38.502116-07:00</td>
-      <td>1</td>
-      <td>30AA</td>
-      <td>2ARP</td>
-      <td>341Y</td>
-      <td>1</td>
+      <td>3S1T</td>
     </tr>
     <tr>
       <th>275</th>
+      <td>3S6A</td>
+      <td>VQ4</td>
+      <td>3RZT</td>
+      <td>1</td>
+      <td>1</td>
       <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-04-11T12:28:24.259798-07:00</td>
-      <td>3TSJ</td>
       <td>None</td>
+      <td>2018-03-26T16:34:43.289759-07:00</td>
       <td>2018-06-05T18:44:38.502116-07:00</td>
+      <td>3S1T</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>3S6E</td>
+      <td>VQ4</td>
+      <td>3RZY</td>
       <td>1</td>
-      <td>30GP</td>
+      <td>1</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>None</td>
+      <td>2018-03-26T16:36:10.863089-07:00</td>
+      <td>2018-06-05T18:44:38.502116-07:00</td>
+      <td>3S1Y</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>3TSE</td>
       <td>2ARP</td>
-      <td>3422</td>
+      <td>30AA</td>
       <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>None</td>
+      <td>2018-04-11T12:26:16.576316-07:00</td>
+      <td>2018-06-05T18:44:38.502116-07:00</td>
+      <td>341Y</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>3TSJ</td>
+      <td>2ARP</td>
+      <td>30GP</td>
+      <td>1</td>
+      <td>1</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>None</td>
+      <td>2018-04-11T12:28:24.259798-07:00</td>
+      <td>2018-06-05T18:44:38.502116-07:00</td>
+      <td>3422</td>
     </tr>
   </tbody>
 </table>
-<p>276 rows × 10 columns</p>
+<p>279 rows × 10 columns</p>
 </div></div>
 </div>
 </div>
@@ -5720,7 +2652,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/release_d
 <p>The problem with implicit links is that it become <em>ambiguous</em> if there are more than one foreign key reference between tables. To support these situations, ERMrest and the <code class="docutils literal notranslate"><span class="pre">DataPath</span></code>’s <code class="docutils literal notranslate"><span class="pre">link(...)</span></code> method can specify the columns to use for the link condition, explicitly.</p>
 <p>The structure of the <code class="docutils literal notranslate"><span class="pre">on</span></code> clause is: - an equality comparison operation where - the <em>left</em> operand is a column of the <em>left</em> table instance which is also the path <em>context</em> before the link method is called, and - the <em>right</em> operand is a column of the <em>right</em> table instance which is the table <em>to be linked</em> to the path.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -5739,7 +2671,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 </div>
 <p><strong>IMPORTANT</strong> Not all tables are related by foreign key references. ERMrest does not allow arbitrary relational joins. Tables must be related by a foreign key reference in order to link them in a data path.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -5748,7 +2680,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -5770,85 +2702,85 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>RCB</th>
-      <th>RCT</th>
       <th>RID</th>
-      <th>RMB</th>
-      <th>RMT</th>
-      <th>chromatin_modifier</th>
-      <th>control_assay</th>
       <th>dataset</th>
-      <th>experiment_type</th>
-      <th>histone_modification</th>
       <th>local_identifier</th>
+      <th>experiment_type</th>
       <th>molecule_type</th>
-      <th>protocol</th>
-      <th>rnaseq_selection</th>
       <th>strandedness</th>
+      <th>rnaseq_selection</th>
       <th>target_of_assay</th>
+      <th>chromatin_modifier</th>
       <th>transcription_factor</th>
+      <th>histone_modification</th>
+      <th>control_assay</th>
+      <th>protocol</th>
+      <th>RCB</th>
+      <th>RMB</th>
+      <th>RCT</th>
+      <th>RMT</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
-      <td>2018-06-08T12:40:48.98831-07:00</td>
       <td>1-3SD2</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:54:17.199655-08:00</td>
-      <td>None</td>
-      <td>None</td>
       <td>1-3SB2</td>
+      <td>3XhET4_pHsp68-lacZ-tdTomato</td>
       <td>OBI:0002083</td>
       <td>None</td>
-      <td>3XhET4_pHsp68-lacZ-tdTomato</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-06-08T12:40:48.98831-07:00</td>
+      <td>2018-11-27T16:54:17.199655-08:00</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
-      <td>2018-06-08T14:29:49.540747-07:00</td>
       <td>1-3SHT</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:54:17.199655-08:00</td>
-      <td>None</td>
-      <td>None</td>
       <td>1-3SGA</td>
+      <td>3XcET4_pHsp68-lacZ-tdTomato</td>
       <td>OBI:0002083</td>
       <td>None</td>
-      <td>3XcET4_pHsp68-lacZ-tdTomato</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-06-08T14:29:49.540747-07:00</td>
+      <td>2018-11-27T16:54:17.199655-08:00</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
-      <td>2018-06-08T14:47:53.103435-07:00</td>
       <td>1-3SNY</td>
-      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
-      <td>2018-11-27T16:54:17.199655-08:00</td>
-      <td>None</td>
-      <td>None</td>
       <td>1-3SM2</td>
+      <td>3XhET7_pHsp68-lacZ-tdTomato</td>
       <td>OBI:0002083</td>
       <td>None</td>
-      <td>3XhET7_pHsp68-lacZ-tdTomato</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
       <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>https://auth.globus.org/a1d30d14-b3b0-49de-854...</td>
+      <td>https://auth.globus.org/b506963e-d274-11e5-99f...</td>
+      <td>2018-06-08T14:47:53.103435-07:00</td>
+      <td>2018-11-27T16:54:17.199655-08:00</td>
     </tr>
   </tbody>
 </table>
@@ -5859,7 +2791,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/experimen
 <h3>Example: explicit column links combined with table aliasing<a class="headerlink" href="#Example:-explicit-column-links-combined-with-table-aliasing" title="Permalink to this headline">¶</a></h3>
 <p>As usual, table instances are generated automatically unless we provide a table alias.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -5884,7 +2816,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/dataset:=isa:dataset/S:=(RID)=
 <p>The <code class="docutils literal notranslate"><span class="pre">link(...)</span></code> method accepts a “<code class="docutils literal notranslate"><span class="pre">join_type</span></code>” parameter, i.e., “<code class="docutils literal notranslate"><span class="pre">.link(...</span> <span class="pre">join_type=TYPE)</span></code>”, where <em>TYPE</em> may be <code class="docutils literal notranslate"><span class="pre">'left'</span></code>, <code class="docutils literal notranslate"><span class="pre">'right'</span></code>, <code class="docutils literal notranslate"><span class="pre">'full'</span></code>, and defaults to <code class="docutils literal notranslate"><span class="pre">''</span></code> which indicates inner join type.</p>
 <p>By ‘<code class="docutils literal notranslate"><span class="pre">left</span></code>’ outer joining in the link from <code class="docutils literal notranslate"><span class="pre">'dataset'</span></code> to <code class="docutils literal notranslate"><span class="pre">'experiment</span></code>’ and to <code class="docutils literal notranslate"><span class="pre">'biosample'</span></code>, and then reseting the context of the path to <code class="docutils literal notranslate"><span class="pre">'dataset'</span></code>, the following path gives us a reference to <code class="docutils literal notranslate"><span class="pre">'dataset'</span></code> entities that <em>whether or not</em> they have any experiments or biosamples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -5915,17 +2847,17 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>815
+<span></span>855
 </pre></div>
 </div>
 </div>
 <p>We can see above that we have a full set of datasets <em>whether or not</em> they have any experiments with biosamples. For further evidence, we can convert to a DataFrame and look at a slice of its entries. Note that the biosample’s ‘species’ and ‘stage’ attributes do not exist for some results (i.e., <code class="docutils literal notranslate"><span class="pre">NaN</span></code>) because those attributes did not exist for the join condition.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -5934,7 +2866,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -5957,81 +2889,81 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
     <tr style="text-align: right;">
       <th></th>
       <th>RID</th>
+      <th>title</th>
       <th>experiment_type</th>
       <th>species</th>
-      <th>title</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1-3SB2</td>
-      <td>OBI:0002083</td>
-      <td>NCBITAXON:10090</td>
-      <td>Activity of human neural crest enhancer near G...</td>
+      <td>TZP</td>
+      <td>Gene expression microarray - mouse E10.5 maxil...</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1-3SGA</td>
-      <td>OBI:0002083</td>
-      <td>NCBITAXON:10090</td>
-      <td>Activity of chimp neural crest enhancer near G...</td>
+      <td>VTG</td>
+      <td>Gene expression microarray - mouse E10.5 mandi...</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1-3SM2</td>
-      <td>OBI:0002083</td>
-      <td>NCBITAXON:10090</td>
-      <td>Activity of human neural crest enhancer near F...</td>
+      <td>V4G</td>
+      <td>miRNAs expressed in the E13.5 mouse mandible</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1-3SQJ</td>
-      <td>OBI:0002083</td>
-      <td>NCBITAXON:10090</td>
-      <td>Activity of chimp neural crest enhancer near F...</td>
+      <td>TMP</td>
+      <td>miRNAs expressed in the 72hpf zebrafish head</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1-3SVP</td>
+      <td>TVA</td>
+      <td>Gene expression microarray - mouse E10.5 media...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0023_18mo male with hypertelorism_Candidate ...</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>1-3SVT</td>
+      <td>V1C</td>
+      <td>Gene expression microarray - mouse E11.5 singl...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0043_3 male cousins with natal teeth and ano...</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>1-3SVY</td>
+      <td>V8A</td>
+      <td>Gene expression microarray - mouse E10.5 later...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0051_6 year old male with hypertelorism (mar...</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>1-3SW2</td>
+      <td>VM6</td>
+      <td>Gene expression microarray - mouse E10.5 media...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0064_Male with Congenital craniosynostosis_C...</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>1-3SW6</td>
+      <td>VHR</td>
+      <td>Gene expression profiling of palatal and mandi...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0115_11yo male with dysmorphic facial featur...</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>1-3SWA</td>
+      <td>V9A</td>
+      <td>Gene expression microarray - mouse E10.5 olfac...</td>
       <td>None</td>
       <td>None</td>
-      <td>FB0122_29yo female with bilateral hearing loss...</td>
     </tr>
   </tbody>
 </table>
@@ -6049,7 +2981,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
 <p>We may say that <code class="docutils literal notranslate"><span class="pre">species</span></code> and <code class="docutils literal notranslate"><span class="pre">stage</span></code> are <em>related</em> to the <code class="docutils literal notranslate"><span class="pre">biosample</span></code> table in the sense that <code class="docutils literal notranslate"><span class="pre">biosample</span></code> has a direct foreign key relationship from it to them.</p>
 <p>For convenience, we will get local variables for the species and stage tables.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -6060,7 +2992,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/dataset:=isa:dataset/E:=lef
 </div>
 <p>First, let’s link samples with species and filter on the term “Mus musculus” (i.e., “mouse”).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -6081,7 +3013,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/S:=isa:biosample/species:=voca
 <p>Now the <em>context</em> of the path is the <code class="docutils literal notranslate"><span class="pre">species</span></code> table instance, but we need to link from the <code class="docutils literal notranslate"><span class="pre">biosample</span></code> to the age <code class="docutils literal notranslate"><span class="pre">stage</span></code> table.</p>
 <p>To do so, we reference the <code class="docutils literal notranslate"><span class="pre">biosample</span></code> table instance, in this case using its alias <code class="docutils literal notranslate"><span class="pre">S</span></code>. Then we link off of that table instance which updates the <code class="docutils literal notranslate"><span class="pre">path</span></code> itself.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -6100,7 +3032,7 @@ https://www.facebase.org/ermrest/catalog/1/entity/S:=isa:biosample/species:=voca
 </div>
 <p>Now, the path <em>context</em> is the age <code class="docutils literal notranslate"><span class="pre">stage</span></code> table instance, but we wanted to get the entities for the <code class="docutils literal notranslate"><span class="pre">biosample</span></code> table. To do so, again we will reference the <code class="docutils literal notranslate"><span class="pre">biosample</span></code> table instance by the alias <code class="docutils literal notranslate"><span class="pre">S</span></code> we used. From there, we will call the <code class="docutils literal notranslate"><span class="pre">entities(...)</span></code> method to get the samples.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -6123,7 +3055,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -6132,7 +3064,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -6165,8 +3097,8 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
   <tbody>
     <tr>
       <th>0</th>
-      <td>2XHT</td>
-      <td>2015-07-14</td>
+      <td>1-4TQ8</td>
+      <td>None</td>
       <td>Mus musculus</td>
       <td>https://www.facebase.org/id/1-4FZJ</td>
       <td>E10.5</td>
@@ -6174,8 +3106,8 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
     </tr>
     <tr>
       <th>1</th>
-      <td>2XST</td>
-      <td>2015-07-14</td>
+      <td>1-4TR6</td>
+      <td>None</td>
       <td>Mus musculus</td>
       <td>https://www.facebase.org/id/1-4FZJ</td>
       <td>E10.5</td>
@@ -6183,7 +3115,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
     </tr>
     <tr>
       <th>2</th>
-      <td>2XXT</td>
+      <td>1-4TRG</td>
       <td>None</td>
       <td>Mus musculus</td>
       <td>https://www.facebase.org/id/1-4FZJ</td>
@@ -6192,8 +3124,8 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
     </tr>
     <tr>
       <th>3</th>
-      <td>2XXY</td>
-      <td>None</td>
+      <td>2XHT</td>
+      <td>2015-07-14</td>
       <td>Mus musculus</td>
       <td>https://www.facebase.org/id/1-4FZJ</td>
       <td>E10.5</td>
@@ -6201,43 +3133,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
     </tr>
     <tr>
       <th>4</th>
-      <td>2XYA</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2XYJ</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>2Y1A</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>2Y4E</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2YBY</td>
+      <td>2XST</td>
       <td>2015-07-14</td>
       <td>Mus musculus</td>
       <td>https://www.facebase.org/id/1-4FZJ</td>
@@ -6245,403 +3141,16 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
       <td>https://www.facebase.org/id/1-4GJ0</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>2YMA</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>2YPA</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2YPE</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>2YV6</td>
-      <td>2018-03-05</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>2YVY</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>2YZT</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>2Z0E</td>
-      <td>2018-03-05</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>2Z0J</td>
-      <td>2018-03-05</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>2Z0P</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>2Z0T</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>2Z2T</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>2Z2Y</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>2ZCE</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>2ZPJ</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>2ZPT</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>2ZTJ</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>2ZVT</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>26</th>
-      <td>2ZWT</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>2ZWY</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>28</th>
-      <td>2ZXA</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>29</th>
-      <td>2ZXJ</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>30</th>
-      <td>2ZXT</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>2ZZP</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>2ZZT</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>2ZZY</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>34</th>
-      <td>300A</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>300E</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>36</th>
-      <td>300J</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>300P</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>3062</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>309T</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>309Y</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>41</th>
-      <td>30A2</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>42</th>
-      <td>30A6</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>30H2</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>44</th>
-      <td>30K6</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>45</th>
-      <td>30KA</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>46</th>
-      <td>30KE</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>47</th>
-      <td>30V6</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>48</th>
-      <td>30X2</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>49</th>
-      <td>30XJ</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>50</th>
-      <td>3126</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>51</th>
-      <td>315P</td>
-      <td>None</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>52</th>
-      <td>31KJ</td>
-      <td>2015-07-14</td>
-      <td>Mus musculus</td>
-      <td>https://www.facebase.org/id/1-4FZJ</td>
-      <td>E10.5</td>
-      <td>https://www.facebase.org/id/1-4GJ0</td>
-    </tr>
-    <tr>
-      <th>53</th>
+      <th>56</th>
       <td>32HP</td>
       <td>2015-07-14</td>
       <td>Mus musculus</td>
@@ -6650,7 +3159,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
       <td>https://www.facebase.org/id/1-4GJ0</td>
     </tr>
     <tr>
-      <th>54</th>
+      <th>57</th>
       <td>3RPT</td>
       <td>None</td>
       <td>Mus musculus</td>
@@ -6659,7 +3168,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
       <td>https://www.facebase.org/id/1-4GJ0</td>
     </tr>
     <tr>
-      <th>55</th>
+      <th>58</th>
       <td>3T3P</td>
       <td>None</td>
       <td>Mus musculus</td>
@@ -6668,7 +3177,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
       <td>https://www.facebase.org/id/1-4GJ0</td>
     </tr>
     <tr>
-      <th>56</th>
+      <th>59</th>
       <td>3T3T</td>
       <td>None</td>
       <td>Mus musculus</td>
@@ -6677,7 +3186,7 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
       <td>https://www.facebase.org/id/1-4GJ0</td>
     </tr>
     <tr>
-      <th>57</th>
+      <th>60</th>
       <td>3T3Y</td>
       <td>None</td>
       <td>Mus musculus</td>
@@ -6687,7 +3196,252 @@ https://www.facebase.org/ermrest/catalog/1/attribute/S:=isa:biosample/species:=v
     </tr>
   </tbody>
 </table>
+<p>61 rows × 6 columns</p>
 </div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Grouping-Examples">
+<h2>Grouping Examples<a class="headerlink" href="#Grouping-Examples" title="Permalink to this headline">¶</a></h2>
+<p>Now support you would like to aggregate all of the vocabulary terms associated with a Dataset. Here, we examine what happens when you have a model such that <code class="docutils literal notranslate"><span class="pre">dataset</span> <span class="pre">&lt;-</span> <span class="pre">dataset_VOCAB</span> <span class="pre">-&gt;</span> <span class="pre">VOCAB</span></code> where <code class="docutils literal notranslate"><span class="pre">VOCAB</span></code> is a placeholder for a table that includes a vocabulary term set. These tables typically have a <code class="docutils literal notranslate"><span class="pre">name</span></code> column for the human-readable preferred label to go along with the formal URI or CURIE of the concept class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># We need to import the `ArrayD` aggregate function for this example.</span>
+<span class="kn">from</span> <span class="nn">deriva.core.datapath</span> <span class="k">import</span> <span class="n">ArrayD</span>
+
+<span class="c1"># For convenience, get python objects for the additional tables.</span>
+<span class="n">dataset_organism</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">isa</span><span class="o">.</span><span class="n">dataset_organism</span>
+<span class="n">dataset_experiment_type</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">isa</span><span class="o">.</span><span class="n">dataset_experiment_type</span>
+<span class="n">species</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">species</span>
+<span class="n">experiment_type</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">experiment_type</span>
+
+<span class="c1"># Start by doing a couple left outer joins on the dataset-term association tables, then link</span>
+<span class="c1"># (i.e., inner join) the associated vocabulary term table, then reset the context back to the</span>
+<span class="c1"># dataset table.</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dataset_organism</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">dataset_organism</span><span class="o">.</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span> \
+              <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">species</span><span class="p">)</span> \
+              <span class="o">.</span><span class="n">dataset</span> \
+              <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dataset_experiment_type</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">id</span><span class="o">==</span><span class="n">dataset_experiment_type</span><span class="o">.</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span> \
+              <span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">experiment_type</span><span class="p">)</span>
+
+<span class="c1"># Again, notice that we reset the context to the `dataset` table alias so that we will retrieve</span>
+<span class="c1"># dataset entities based on the groupings to be defined next. For the groupby key we will use the</span>
+<span class="c1"># dataset.RID, but for this example any primary key would work. Then we will get aggregate arrays</span>
+<span class="c1"># of the linked vocabulary tables.</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">RID</span><span class="p">)</span><span class="o">.</span><span class="n">attributes</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+    <span class="n">ArrayD</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">species</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;species&#39;</span><span class="p">),</span>
+    <span class="n">ArrayD</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">experiment_type</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;experiment_type&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1">#results = path.dataset.entities()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">uri</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+https://www.facebase.org/ermrest/catalog/1/attributegroup/dataset:=isa:dataset/dataset_organism:=left(id)=(isa:dataset_organism:dataset_id)/species:=vocab:species/$dataset/dataset_experiment_type:=left(id)=(isa:dataset_experiment_type:dataset_id)/experiment_type:=vocab:experiment_type/$dataset/RID;title,species:=array_d(species:name),experiment_type:=array_d(experiment_type:name)
+855
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RID</th>
+      <th>species</th>
+      <th>experiment_type</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1-3SB2</td>
+      <td>[Mus musculus]</td>
+      <td>[enhancer activity detection by reporter gene ...</td>
+      <td>Activity of human neural crest enhancer near G...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1-3SGA</td>
+      <td>[Mus musculus]</td>
+      <td>[enhancer activity detection by reporter gene ...</td>
+      <td>Activity of chimp neural crest enhancer near G...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1-3SM2</td>
+      <td>[Mus musculus]</td>
+      <td>[enhancer activity detection by reporter gene ...</td>
+      <td>Activity of human neural crest enhancer near F...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1-3SQJ</td>
+      <td>[Mus musculus]</td>
+      <td>[enhancer activity detection by reporter gene ...</td>
+      <td>Activity of chimp neural crest enhancer near F...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1-3SVP</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0023_18mo male with hypertelorism_Candidate ...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1-3SVT</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0043_3 male cousins with natal teeth and ano...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1-3SVY</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0051_6 year old male with hypertelorism (mar...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1-3SW2</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0064_Male with Congenital craniosynostosis_C...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1-3SW6</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0115_11yo male with dysmorphic facial featur...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1-3SWA</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0122_29yo female with bilateral hearing loss...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1-3SWE</td>
+      <td>[Mus musculus]</td>
+      <td>[RNA-seq assay]</td>
+      <td>Interpalatine suture, WT and Fgfr2+/S252W (Ape...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1-3SXY</td>
+      <td>[Mus musculus]</td>
+      <td>[RNA-seq assay]</td>
+      <td>Maxillary-Palatine Suture, WT and Fgfr2+/S252W...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1-3V7A</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0011_9 year old female with single central m...</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1-3V7J</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0015_Male with bilateral cleft lip and palate</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1-3V7P</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0027_29 month old male_Multiple congenital a...</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1-3V8A</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0039_"Identical Male Twins"_Treacher Collins...</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1-3V8Y</td>
+      <td>[Homo sapiens]</td>
+      <td>[genotyping assay, imaging assay, Morphometric...</td>
+      <td>FB0041_8 yo male_Brachi-Oto-Renal (BOR) Syndrome</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1-3V9E</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0049_17 month old male with bilateral macros...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>1-3VAT</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0062_Proband Only Saliva_Blepharo-cheilo-don...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>1-3VBE</td>
+      <td>[Homo sapiens]</td>
+      <td>[exome sequencing assay, genotyping assay, ima...</td>
+      <td>FB0124_Trio Saliva_5 mo male with Hallermann S...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
 </div>
 </div>
 </div>

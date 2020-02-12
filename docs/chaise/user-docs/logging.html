@@ -39,7 +39,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Auxiliary web services for DERIVA (deriva-web)" href="../../deriva-web/index.html" />
+    <link rel="next" title="Logging (Pre-February 2020)" href="logging-pre-feb-20.html" />
     <link rel="prev" title="Useful Browser Console Commands" href="console.html" /> 
 </head>
 
@@ -1130,26 +1130,50 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#action-list">Action List</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#client-button-action-list">Client Button Action List</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#button-action-attributes">Button Action Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#action-definition">Action definition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list-of-requests">List of requests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#server-vs-client">Server vs. Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stack-structure">Stack structure</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#error-log">Error Log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#facet-compressed-syntax">Facet compressed syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#error-log">Error log</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#truncation">Truncation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#analysis">Analysis</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#asset-download-csv-default-export">Asset Download &amp; CSV Default Export</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#finding-the-displayed-recordset-request">Finding the displayed recordset request</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#pcid-list">PCID list</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#change-log">Change Log</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#">10/??/19</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#">07/16/19</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#">07/12/19</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#">05/06/19</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#">04/18/19</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#">03/08/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#">02/12/20</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logging-pre-feb-20.html">Logging (Pre-February 2020)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#attributes">Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#action-list">Action List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#client-button-action-list">Client Button Action List</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#button-action-attributes">Button Action Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#error-log">Error Log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#truncation">Truncation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#analysis">Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#asset-download-csv-default-export">Asset Download &amp; CSV Default Export</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#pcid-list">PCID list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging-pre-feb-20.html#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">10/??/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">07/16/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">07/12/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">05/06/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">04/18/19</a></li>
+<li class="toctree-l4"><a class="reference internal" href="logging-pre-feb-20.html#">03/08/19</a></li>
 </ul>
 </li>
 </ul>
@@ -1285,31 +1309,70 @@
 </style>
 <div class="section" id="logging">
 <span id="logging"></span><h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
-<p>By providing <code class="docutils literal notranslate"><span class="pre">Deriva-Client-Context</span></code> header in ermrset requests we can log extra objects alongside the request. ERMrest will log the provided object in the <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> attribute of logs. For example the following is a line from <code class="docutils literal notranslate"><span class="pre">/var/log/messages</span></code> file in dev.isrd:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Jan</span> <span class="mi">24</span> <span class="mi">16</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">50</span> <span class="n">dev</span><span class="o">.</span><span class="n">isrd</span><span class="o">.</span><span class="n">isi</span><span class="o">.</span><span class="n">edu</span> <span class="n">ermrest</span><span class="p">[</span><span class="mf">4313.139635548755712</span><span class="p">]:</span>
-<span class="p">{</span>
-  <span class="s2">&quot;elapsed&quot;</span><span class="p">:</span><span class="mf">0.014</span><span class="p">,</span>
-  <span class="s2">&quot;req&quot;</span><span class="p">:</span><span class="s2">&quot;OSGHMz7JSySiS0Y5UOLA6w&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;scheme&quot;</span><span class="p">:</span><span class="s2">&quot;https&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;host&quot;</span><span class="p">:</span><span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;status&quot;</span><span class="p">:</span><span class="s2">&quot;304 Not Modified&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;method&quot;</span><span class="p">:</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;path&quot;</span><span class="p">:</span><span class="s2">&quot;/ermrest/catalog/1/attributegroup/M:=isa:dataset/F5:=left(thumbnail)=(isa:file:id)/$M/F4:=left(owner)=(isa:person:name)/$M/F3:=left(gene_summary)=(vocabulary:gene_summary:id)/$M/F2:=left(status)=(isa:dataset_status:id)/$M/F1:=left(project)=(isa:project:id)/$M/release_date,id;M:=array(M:*),F5:=array(F5:*),F4:=array(F4:*),F3:=array(F3:*),F2:=array(F2:*),F1:=array(F1:*)@sort(release_date::desc::,id)?limit=26&quot;</span><span class="p">,</span> <span class="s2">&quot;client&quot;</span><span class="p">:</span><span class="s2">&quot;128.9.184.94&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;referrer&quot;</span><span class="p">:</span><span class="s2">&quot;https://dev.isrd.isi.edu/~ashafaei/chaise/recordset/&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;agent&quot;</span><span class="p">:</span><span class="s2">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;track&quot;</span><span class="p">:</span><span class="s2">&quot;f671a1bf.559966234faaf&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;dcctx&quot;</span><span class="p">:{</span>
-    <span class="s2">&quot;wid&quot;</span><span class="p">:</span><span class="s2">&quot;2d1a297p1l3t24942o261ot1&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cid&quot;</span><span class="p">:</span><span class="s2">&quot;recordset&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;schema_table&quot;</span><span class="p">:</span><span class="s2">&quot;isa:dataset&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pid&quot;</span><span class="p">:</span><span class="s2">&quot;1fyj2i5t2ew02qg41xuc2mxf&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;page_size&quot;</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span>
-    <span class="s2">&quot;action&quot;</span><span class="p">:</span><span class="s2">&quot;recordset/main/load&quot;</span>
+<blockquote>
+<div>On February 2020 we redesigned the whole logging mechanism in chaise. If you want to analysis a data prior to this date, please refer to <a class="reference internal" href="logging-pre-feb-20.html"><span class="doc">the old documentation</span></a>.</div></blockquote>
+<p>This document will describe how chaise is logging server requests as well as client actions.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#logging">Logging</a><ul>
+<li><a class="reference external" href="#Overview">Overview</a></li>
+<li><a class="reference external" href="#attributes">Attributes</a></li>
+<li><a class="reference external" href="#action-definition">Action definition</a></li>
+<li><a class="reference external" href="#list-of-requests">List of requests</a><ul>
+<li><a class="reference external" href="#server-vs-client">Server vs. Client</a></li>
+<li><a class="reference external" href="#stack-structure">Stack structure</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#facet-compressed-syntax">Facet compressed syntax</a></li>
+<li><a class="reference external" href="#error-log">Error log</a></li>
+<li><a class="reference external" href="#truncation">Truncation</a></li>
+<li><a class="reference external" href="#analysis">Analysis</a><ul>
+<li><a class="reference external" href="#asset-download--csv-default-export">Asset Download &amp; CSV Default Export</a></li>
+<li><a class="reference external" href="#finding-the-displayed-recordset-request">Finding the displayed recordset request</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#change-log">Change Log</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<span id="overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>By providing <code class="docutils literal notranslate"><span class="pre">Deriva-Client-Context</span></code> header in ermrset requests we can log extra objects alongside the request. ERMrest will log the provided object in the <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> attribute of logs. For example the following is a line from <code class="docutils literal notranslate"><span class="pre">/var/log/messages</span></code> file in dev.isrd that is for the request to getting one of the facet options.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;scheme&quot;</span><span class="o">:</span><span class="s2">&quot;https&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;host&quot;</span><span class="o">:</span><span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="s2">&quot;200 OK&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;method&quot;</span><span class="o">:</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;/ermrest/catalog/1/entity/T:=isa:experiment/dataset=1-3VFJ/$T/M:=(experiment_type)=(vocab:experiment_type:id)@sort(name,RID)?limit=11&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;dcctx&quot;</span><span class="o">:</span><span class="p">{</span>
+      <span class="s2">&quot;catalog&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;schema_table&quot;</span><span class="o">:</span><span class="s2">&quot;vocab:experiment_type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;stack&quot;</span><span class="o">:</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;set&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;s_t&quot;</span><span class="o">:</span><span class="s2">&quot;isa:experiment&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;filters&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;experiment_dataset_fkey&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span> <span class="s2">&quot;ch&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;1-3VFJ&quot;</span><span class="p">]}]}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;s_t&quot;</span><span class="o">:</span><span class="s2">&quot;vocab:experiment_type&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;experiment_experiment_type_fkey&quot;</span><span class="p">]},</span> <span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;entity&quot;</span><span class="o">:</span><span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;action&quot;</span><span class="o">:</span><span class="s2">&quot;:set/facet,;load&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cid&quot;</span><span class="o">:</span><span class="s2">&quot;recordset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pid&quot;</span><span class="o">:</span><span class="s2">&quot;1lp2236a1p1g2age1l1a2pxo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wid&quot;</span><span class="o">:</span><span class="s2">&quot;1tw6218n1xbr2mvq251y2rsd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;elapsed_ms&quot;</span><span class="o">:</span><span class="mi">646</span>
  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You can see the <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> attribute. This belongs to the request for showing the entities in the recordset app.</p>
+<p>In the following, we’re going to summarize what are the attributes that are being logged in the <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> attribute alongside each request.</p>
+</div>
 <div class="section" id="attributes">
 <span id="attributes"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <p>The following are the default attributes that you can find on all the requests:</p>
@@ -1318,1337 +1381,234 @@
 <li><code class="docutils literal notranslate"><span class="pre">wid</span></code>: The window id (randomly generated).</li>
 <li><code class="docutils literal notranslate"><span class="pre">pid</span></code>: The page id (randomly generated).</li>
 <li><code class="docutils literal notranslate"><span class="pre">catalog</span></code>: The catalog id.</li>
-<li><code class="docutils literal notranslate"><span class="pre">schema_table</span></code>: The <code class="docutils literal notranslate"><span class="pre">schema:table</span></code> combination.</li>
-<li><code class="docutils literal notranslate"><span class="pre">action</span></code>: A pre-defined string that implies what the request was for. Refer to <a class="reference external" href="#action-list">the action list</a> for more information.</li>
-<li><code class="docutils literal notranslate"><span class="pre">elapsed_s</span></code>: A value set to determine the elapsed time since the ermrestJS http service has been available. This will always be in seconds</li>
+<li><code class="docutils literal notranslate"><span class="pre">schema_table</span></code>: The <code class="docutils literal notranslate"><span class="pre">schema:table</span></code> combination. This captures the table that the current action is performed on.</li>
+<li><code class="docutils literal notranslate"><span class="pre">action</span></code>: A pre-defined string that implies what the request was for. Please refer to <a class="reference external" href="#action-definition">Action definition</a> section for more information.</li>
+<li><code class="docutils literal notranslate"><span class="pre">elapsed_ms</span></code>: A value set to determine the elapsed time since the ermrestJS http service has been available. This will always be in milliseconds</li>
 </ul>
-<p>The following are the optional attributes that you might find on requests:</p>
+<p>Depending on the request, we might log extra attributes that we are gong to list in the following. You can find more information about each one in the next section.</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">ppid</span></code>: The parent <code class="docutils literal notranslate"><span class="pre">pid</span></code>. This attributes will be available only on a number of requests. It will indicate which app and page led to this current request. These request are:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code>: The parent <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code>. These two attributes will be available only on a number of requests. It will indicate which app and page led to this current request. These are the requests that might have <code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code>.<ul>
 <li>recordset: First read of the main entity.</li>
 <li>record: First read of the main entity.</li>
-<li>recordedit: The create/edit request (the request generated when user clicks on submit).</li>
+<li>recordedit: The create/update request (the request generated when user clicks on submit).</li>
 <li>viewer: First read of the main entity.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">facet</span></code>: If url contains filter, this attributes gives you the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/wiki/Facets-JSON-Structure">facet</a> equivalent of that filter.</li>
-<li><code class="docutils literal notranslate"><span class="pre">filter</span></code>: If we couldn’t represent the given filter in terms of facet. This will be just a simple string.</li>
-<li><code class="docutils literal notranslate"><span class="pre">cfacet</span></code>: If url contains custom-facets (<code class="docutils literal notranslate"><span class="pre">*::cfacets::</span></code>), this attribute will be equal to one. In this case one of the following attributes will be available:<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">pcid</span></code>: The parent <code class="docutils literal notranslate"><span class="pre">cid</span></code>. Please refer to <code class="docutils literal notranslate"><span class="pre">ppid</span></code> to find more information on where you mind find this attribute. The following is the list of <code class="docutils literal notranslate"><span class="pre">pcid</span></code>’s that will be present on main entity requests in the chaise apps. <code class="docutils literal notranslate"><span class="pre">cid</span></code> will always represent what app the request was made from, <code class="docutils literal notranslate"><span class="pre">pcid</span></code> will represent what app the user navigated from when the main entity request was triggered.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">record</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">recordset</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">recordedit</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/record</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/recordset</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">navbar/recordedit</span></code></li>
+</ul>
+<p>If the user clicked on a link in the navbar, the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will properly denote what app the user came from that had the navbar present. A static page that uses the navbar app, will set the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> as <code class="docutils literal notranslate"><span class="pre">navbar</span></code>. Otherwise the appname will be appended (i.e.   <code class="docutils literal notranslate"><span class="pre">navbar/&lt;appname&gt;</span></code>). This is true for the <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/wiki/Logging-in-WebApps#pcid-list">deriva-webapps</a> as well.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">stack</span></code>: This attribute can be found on almost all the requests. It will capture the path that user took to get to the performed action. For example, if the logged request is for when a user interacts with a add pure and binary picker, using this stack you can figure out which main table and related (or inline table) user is interacting with. <code class="docutils literal notranslate"><span class="pre">stack</span></code> is an array of objects that each node can have the following attributes:</p>
+<ul class="simple">
+<li>Required attributes:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">s_t</span></code>: The end table of this node in the format of <code class="docutils literal notranslate"><span class="pre">schema:table</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: The type of the node request. It can be any of: <code class="docutils literal notranslate"><span class="pre">entity</span></code> (row based), <code class="docutils literal notranslate"><span class="pre">set</span></code> (rowset based), <code class="docutils literal notranslate"><span class="pre">col</span></code> (column), <code class="docutils literal notranslate"><span class="pre">pcol</span></code> (pseudo-column), <code class="docutils literal notranslate"><span class="pre">fk</span></code> (foreign key), <code class="docutils literal notranslate"><span class="pre">related</span></code>, <code class="docutils literal notranslate"><span class="pre">related-inline</span></code>, <code class="docutils literal notranslate"><span class="pre">related-link-picker</span></code>, <code class="docutils literal notranslate"><span class="pre">fk-picker</span></code>, <code class="docutils literal notranslate"><span class="pre">facet-popup</span></code>.</li>
+</ul>
+</li>
+<li>Optional attributes:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">filters</span></code>: The facet object using the <a class="reference external" href="#facet-compressed-syntax">compressed syntax</a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">source</span></code>, and <code class="docutils literal notranslate"><span class="pre">entity</span></code>: The source path that defines this node using the compressed syntax.</li>
+<li><code class="docutils literal notranslate"><span class="pre">agg</span></code>: The aggregate function.</li>
+<li><code class="docutils literal notranslate"><span class="pre">picker</span></code>: If the request is happening on a picker, <code class="docutils literal notranslate"><span class="pre">&quot;picker&quot;:1</span></code> is added to the last node of the <code class="docutils literal notranslate"><span class="pre">stack</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">cfacet</span></code>: Only applicable to the first node. If url contains custom-facets (<code class="docutils literal notranslate"><span class="pre">*::cfacets::</span></code>), this attribute will be equal to one. In this case one of the following attributes will be available:<ul>
 <li><code class="docutils literal notranslate"><span class="pre">cfacet_str</span></code>: the displayname of custom-facet (if provided in url).</li>
 <li><code class="docutils literal notranslate"><span class="pre">cfacet_path</span></code>: the ERMrest path that was sent with the custom-facet.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">page_size</span></code>: The number of entities that we requested.</li>
-<li><code class="docutils literal notranslate"><span class="pre">source</span></code>: The source path of facet. You will find this attribute in the requests that belong to a facet.</li>
-<li><code class="docutils literal notranslate"><span class="pre">column</span></code>: The column that is used for faceting. It will be attached to scalar facet requests.</li>
-<li><code class="docutils literal notranslate"><span class="pre">referrer</span></code>: It’s an object that has <code class="docutils literal notranslate"><span class="pre">schema_table</span></code> and <code class="docutils literal notranslate"><span class="pre">facet</span></code>/<code class="docutils literal notranslate"><span class="pre">filter</span></code>/<code class="docutils literal notranslate"><span class="pre">cfacet_str</span></code>/<code class="docutils literal notranslate"><span class="pre">cfacet_path</span></code> as its attributes. This attribute is available on the request that needs to capture their parent context, which are<ul>
-<li>record page: Any secondary request (related entities and aggregate columns). The <code class="docutils literal notranslate"><span class="pre">referrer</span></code> for these request is the main table of the page.</li>
-<li>record page: The first request generated after clicking on “add” pure and binary association entity. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> will be the main entity.</li>
-<li>recordedit page: The request for getting the pre-filled value of foreign key. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> is the main entity.</li>
-<li>recordset page: Any request for getting the facet data. The <code class="docutils literal notranslate"><span class="pre">referrer</span></code> is the main entity and it will include all the selected facets and filters.</li>
+<li><code class="docutils literal notranslate"><span class="pre">custom_filters</span></code>: Only applicable to the first node, it captures the usage of “ermrest filters”. If we could turn an “ermrest filter” into facet, this will return <code class="docutils literal notranslate"><span class="pre">true</span></code>. Otherwise it will return the given “ermrest filters”.</li>
+<li><code class="docutils literal notranslate"><span class="pre">causes</span></code>: The “reload” requests are using this attribute to give more clue of why this request was generated. It is an array of unique values. The possible values are different based on the “reload” request and you should refer to each request for more information. The following is all the possible causes values:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">clear-all</span></code>: Clear all button clicked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">clear-cfacet</span></code>: Clear “cfacet” button in breadcrumbs clicked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">clear-custom-filter</span></code>: Clear “custom filter” button in breadcrumbs clicked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">entity-create</span></code>: New rows have been created for the current table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">entity-delete</span></code>: A row in the  current table has been deleted.</li>
+<li><code class="docutils literal notranslate"><span class="pre">entity-update</span></code>: Some rows in the table have been updated.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-clear</span></code>: Clear facet button in breadcrumb clicked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-deselect</span></code>: Facet checkbox unchecked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-select</span></code>: Facet checkbox checked.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-modified</span></code>: Facet changed in the modal.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-search-box</span></code>: Facet search box changed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-plot-relayout</span></code>: Users interact with plot and we need to get new info for it.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-retry</span></code>: Users click on retry for a facet that timed out.</li>
+<li><code class="docutils literal notranslate"><span class="pre">page-limit</span></code>: Change page limit.</li>
+<li><code class="docutils literal notranslate"><span class="pre">page-next</span></code>: Go to next page,</li>
+<li><code class="docutils literal notranslate"><span class="pre">page-prev</span></code>: Go to previous page.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-create</span></code>: New rows have been created for a related table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-delete</span></code>: A row in one of related tables has been deleted.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-update</span></code>: Some rows in one of related table have been updated.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-inline-create</span></code>: New rows have been created for an inline related table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-inline-delete</span></code>: A row in one of inline related tables has been deleted.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-inline-update</span></code>: Some rows in one of inline related table have been updated.</li>
+<li><code class="docutils literal notranslate"><span class="pre">sort</span></code>: sort changed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">search-box</span></code>: search-box changed.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">t</span></code>: If this attribute exists and its value is <code class="docutils literal notranslate"><span class="pre">1</span></code>, then the given object is truncated since it was lengthy. Refer to <a class="reference external" href="#truncation">truncation</a> for more information.</li>
-<li><code class="docutils literal notranslate"><span class="pre">template</span></code>: This object will only be available for export request. It’s an object with only <code class="docutils literal notranslate"><span class="pre">displayname</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> attributes.</li>
+<li><code class="docutils literal notranslate"><span class="pre">start_ms</span></code>: Used only on “reload” requests to indicate the time that the page become dirty first.</li>
+<li><code class="docutils literal notranslate"><span class="pre">end_ms</span></code>: Used only on “reload” requests to indicate the time that we’re sending the request. If you join all the “reload” requests by their <code class="docutils literal notranslate"><span class="pre">start_ms</span></code>, the longest <code class="docutils literal notranslate"><span class="pre">end_ms</span></code> will return the request that the user actually sees. The other requests were generated by flow-control as user kept interacting with the page without actually showing their result.</li>
+<li><code class="docutils literal notranslate"><span class="pre">search-str</span></code>: Available only on client actions that are based on interacting with a search box. It returns the new search string.</li>
+<li><code class="docutils literal notranslate"><span class="pre">num_created</span></code>: The number of rows that have been asked to be created in that request.</li>
+<li><code class="docutils literal notranslate"><span class="pre">num_updated</span></code>: The number of rows that have been asked to be updated in that request.</li>
+<li><code class="docutils literal notranslate"><span class="pre">updated_keys</span></code>: Available only on “update” request, it will return the key columns and their submitted values. It’s an object that and the <code class="docutils literal notranslate"><span class="pre">cols</span></code> attribute returns an array of key column names, while <code class="docutils literal notranslate"><span class="pre">vals</span></code> returns an array of values that corresponds to the given <code class="docutils literal notranslate"><span class="pre">cols</span></code> array (So it’s an array of arrays).</li>
+<li><code class="docutils literal notranslate"><span class="pre">template</span></code>: Used only for the “export” request and will return an object with <code class="docutils literal notranslate"><span class="pre">displayname</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> attributes to give more information about the used export template.</li>
 <li><code class="docutils literal notranslate"><span class="pre">cqp</span></code> (chaise query parameter): When a user uses a link that includes the <code class="docutils literal notranslate"><span class="pre">?</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">#</span></code>. These urls are only used to help with google indexing and should be used only for navigating users from search engines to chaise apps.</li>
 </ul>
+</li>
+</ul>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">names</span></code>: Used in “navbar” request to capture the path that user took to end up in a particular menu option. It is an array of navbar option “name”s. The last item in the array if the name of the navbar option that user is acting on, and the rest are the name of its ancestors.</p>
+</li>
+</ul>
 </div>
-<div class="section" id="action-list">
-<span id="action-list"></span><h2>Action List<a class="headerlink" href="#action-list" title="Permalink to this headline">¶</a></h2>
-<p>The table below summarizes all the requests that we currently are logging in chaise and their respective <code class="docutils literal notranslate"><span class="pre">action</span></code>.</p>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>App</th>
-<th>Description</th>
-<th>Action</th>
-<th>Extra</th>
-<th>Notes</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>chaise-wide (record, recordset, recordedit, viewer)</td>
-<td>get catalog snapshot  information</td>
-<td>model/snaptime</td>
-<td></td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a> <a href="#10??19">updated (10/??/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>get catalog schemas information</td>
-<td>model/schema</td>
-<td></td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>load main entity</td>
-<td>record/main</td>
-<td>ppid, pcid</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>load aggregates in main entity</td>
-<td>record/aggregate</td>
-<td>referrer</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>load inline entities</td>
-<td>record/inline</td>
-<td>referrer</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>load aggregates in inline entities</td>
-<td>record/inline/aggregate</td>
-<td>referrer</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>load related entities</td>
-<td>record/related</td>
-<td>referrer</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>load aggregates in related entities</td>
-<td>record/related/aggregate</td>
-<td>referrer</td>
-<td></td>
-<td><a href="#041819">bug fix (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>update main entity</td>
-<td>record/main/update</td>
-<td></td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update aggregates in main entity</td>
-<td>record/aggregate/update</td>
-<td>referrer</td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update inline entities</td>
-<td>record/inline/update</td>
-<td>referrer</td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update aggregates in inline entities</td>
-<td>record/inline/aggregate/update</td>
-<td>referrer</td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update related entities</td>
-<td>record/related/update</td>
-<td>referrer</td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update aggregates in related entities</td>
-<td>record/related/aggregate/update</td>
-<td>referrer</td>
-<td>due to change made to any of related entities</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>read association values to add</td>
-<td>pre-create/prefill/association</td>
-<td>referrer</td>
-<td>due to click on "add" in the inline/related section entity for pure and binary associative relationship</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>read existing values in association table</td>
-<td>pre-create/prefill/association/disabled</td>
-<td>referrer</td>
-<td>the request explained in previous row will return all the possible values to add. With this request, we know which rows should be disabled in the UI.</td>
-<td><a href="#030819">bug fix (03/08/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>create association entities</td>
-<td>create/prefill/association</td>
-<td>referrer</td>
-<td>due to click on "submit" button on the modal for adding pure and binary association relationship.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>create new entities</td>
-<td>create/new</td>
-<td>page_size, ppid, pcid</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>read the foreign key values that must be pre-filled</td>
-<td>pre-create/prefill</td>
-<td>referrer</td>
-<td>when user ends up in recordedit after clicking on "add" in a related entity. This request is for pre-filling the fk values.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>create new records with foreign key pre-filled values</td>
-<td>create/prefill</td>
-<td>ppid, pcid</td>
-<td>the create request that is paired with the previous explained action in this table. due to click on the "submit" button.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>read the current row for copy</td>
-<td>pre-create/copy</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>create record from copy</td>
-<td>create/copy</td>
-<td>page_size, ppid, pcid</td>
-<td>due to click on "submit" button.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>creating row by clicking on add in fk modal</td>
-<td>create/modal</td>
-<td>page_size, ppid, pcid</td>
-<td>when user clicks on "+" button in the foreign key modal picker and then end up creating new rows in the opened tab. due to click on "submit" button.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>read entities to be updated</td>
-<td>pre-update</td>
-<td></td>
-<td>page_size is inaccurate</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>update entities</td>
-<td>update</td>
-<td>page_size, ppid, pcid</td>
-<td>due to click on "submit" button.</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>get default value for fks</td>
-<td>default</td>
-<td></td>
-<td></td>
-<td><a href="#041819">changed (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>recordset main data read on load</td>
-<td>recordset/main/load</td>
-<td>page_size, ppid, pcid</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset main data read on update</td>
-<td>recordset/main/update</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset main data read on page change</td>
-<td>recordset/main/page</td>
-<td>sort, page, type</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset main data read on sort change</td>
-<td>recordset/main/sort</td>
-<td>sort</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset main data read on limit change</td>
-<td>recordset/main/limit</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset main data read on facet change</td>
-<td>recordset/main/facet</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset get main count</td>
-<td>recordset/main/count</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset get aggregated values</td>
-<td>recordset/main/aggregate</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset</td>
-<td>recordset/main/<code>&lt;ANY_SUBACTION&gt;</code>/correct-page</td>
-<td></td>
-<td>please refer to change log for more information.</td>
-<td><a href="#071219">added (7/12/19)</a></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset read facet</td>
-<td>recordset/facet</td>
-<td>referrer, source, column</td>
-<td>facet/filter state are only reported inside the referrer</td>
-<td></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset initialize preselected entity facets</td>
-<td>recordset/facet/init</td>
-<td>referrer, source</td>
-<td>facet/filterstate are only reported inside the referrer</td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset get buckets for a facet</td>
-<td>recordset/facet/histogram</td>
-<td>referrer, source, column</td>
-<td>facet/filter state are only reported inside the referrer</td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td>chaise-wide except viewer</td>
-<td>recordset click on show details</td>
-<td>recordset/viewmore</td>
-<td>referrer, source, column</td>
-<td>facet/filter state are only reported inside the referrer</td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>export</td>
-<td>export</td>
-<td>template (displayname, type)</td>
-<td></td>
-<td><a href="#041819">changed (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>delete from record</td>
-<td>delete/record</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>delete from recordedit</td>
-<td>delete/recordedit</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>delete row from recordset table</td>
-<td>delete/recordset</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>delete related entity rows</td>
-<td>delete/record/related</td>
-<td></td>
-<td></td>
-<td><a href="#041819">changed (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>viewer</td>
-<td>main request</td>
-<td>main</td>
-<td>ppid, pcid</td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>get annotation table</td>
-<td>annotation</td>
-<td></td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>get annotation comments</td>
-<td>comment</td>
-<td></td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-<tr>
-<td></td>
-<td>get anatomy data</td>
-<td>anatomy</td>
-<td></td>
-<td></td>
-<td><a href="#041819">added (4/18/19)</a></td>
-</tr>
-</tbody>
-</table></div>
-<div class="section" id="client-button-action-list">
-<span id="client-button-action-list"></span><h2>Client Button Action List<a class="headerlink" href="#client-button-action-list" title="Permalink to this headline">¶</a></h2>
-<p>The following table will include the actions that are triggered when the user clicks on buttons or other elements on the page that don’t send a request to the server. We make a head request as part of this click event to store the log info.</p>
-<p>Each head request for the below client action events will be made to the same path in ermrest, namely <code class="docutils literal notranslate"><span class="pre">.../ermrest/client_action</span></code>. To figure out which table or record the action was performed on, locate the server request sent on page load associated with the same <code class="docutils literal notranslate"><span class="pre">pid</span></code>.</p>
-<div class="section" id="button-action-attributes">
-<span id="button-action-attributes"></span><h3>Button Action Attributes<a class="headerlink" href="#button-action-attributes" title="Permalink to this headline">¶</a></h3>
-<p>The default attributes that you can find on all client action requests are the same as the ones define above in <a class="reference external" href="#attributes">attributes</a>. The only difference for the default attributes is that <code class="docutils literal notranslate"><span class="pre">action</span></code> will be from the list below.</p>
-<p>The following are the optional attributes that you might find on requests:</p>
+<div class="section" id="action-definition">
+<span id="action-definition"></span><h2>Action definition<a class="headerlink" href="#action-definition" title="Permalink to this headline">¶</a></h2>
+<p>As it is mentioned in the previous section, <code class="docutils literal notranslate"><span class="pre">action</span></code> is one of the required attributes in the logs. <code class="docutils literal notranslate"><span class="pre">action</span></code> is a string that is created using the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">app</span><span class="o">-</span><span class="n">mode</span><span class="o">&gt;</span><span class="p">]</span><span class="o">*</span><span class="p">:[</span><span class="o">&lt;</span><span class="n">stack</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span><span class="p">]</span><span class="o">*</span><span class="p">,[</span><span class="o">&lt;</span><span class="n">ui</span><span class="o">-</span><span class="n">context</span><span class="o">&gt;</span><span class="p">]</span><span class="o">*</span><span class="p">;</span><span class="o">&lt;</span><span class="n">verb</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Where,</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">app-mode</span></code> (optional) is used when for apps that have different modes. Currently only recordedit is using app-mode and the possible values are:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">facet</span></code>: If url contains filter, this attributes gives you the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/wiki/Facets-JSON-Structure">facet</a> equivalent of that filter.<ul>
-<li>recordedit page: facet is used for <code class="docutils literal notranslate"><span class="pre">update/remove</span></code> to notify which form was removed from being edited</li>
-<li>facet “show more” (all 3 apps): In each case, the “Show More” dialog will be for a specific facet which is constrained by all other facets and the main entity that this facet is a part of.</li>
+<li><code class="docutils literal notranslate"><span class="pre">edit</span></code>: Edit mode of the app.</li>
+<li><code class="docutils literal notranslate"><span class="pre">create-copy</span></code>: When users end up in this app by clicking on “copy” button in record app.</li>
+<li><code class="docutils literal notranslate"><span class="pre">create-preselect</span></code>: When users end up in this app by clicking on “Add” button of related entities (In this case, we’re preselecting the foreignkey relationship between related entity and the main).</li>
+<li><code class="docutils literal notranslate"><span class="pre">create</span></code>: Create mode of the app that is not the other more specific versions.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">column</span></code>: The column that is used for faceting for faceting popups. The column that is being acted on in recordedit when using multi select/set functionality.</li>
-<li><code class="docutils literal notranslate"><span class="pre">referrer</span></code>: It’s an object that has <code class="docutils literal notranslate"><span class="pre">schema_table</span></code>, <code class="docutils literal notranslate"><span class="pre">facet</span></code>, and <code class="docutils literal notranslate"><span class="pre">source</span></code> as its attributes. This attribute is available on the request that needs to capture their parent context, which are<ul>
-<li>record page:<ul>
-<li>Any client actions taken to interact with related entities sections (inline or below). The <code class="docutils literal notranslate"><span class="pre">referrer</span></code> for these actions is the main table of the page.</li>
-<li>Each action in Pure and binary popup, points to main table of page.</li>
-<li>Each action in facet popup from Pure and binary popup, points to main table for pure and binary popup.</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">stack-path</span></code> (optional) is available only when <code class="docutils literal notranslate"><span class="pre">stack</span></code> is used and summarizes the <code class="docutils literal notranslate"><span class="pre">stack</span></code>. To distinguish between each stack nodes in this string, we’re using <code class="docutils literal notranslate"><span class="pre">/</span></code>. The values used for each node are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">entity</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">entity</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">set</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">set</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">col</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">col</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">pcol</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">pcol</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related</span></code>, <code class="docutils literal notranslate"><span class="pre">related-inline</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">related</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">related-link-picker</span></code>: Used for the association link picker.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">facet</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">facet-picker</span></code>: Used for facet picker.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fk</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">fk</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">fk-picker</span></code>: Used for foreign key picker.</li>
 </ul>
+<p>Based on this, <code class="docutils literal notranslate"><span class="pre">entity/related-inline</span></code> is a possible <code class="docutils literal notranslate"><span class="pre">stack-path</span></code>.</p>
 </li>
-<li>recordedit page: Each action taken on a foreign key picker row. Includes the select/set all input actions and the foreign key popup dialog actions. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> is the main entity for the create/edit form.</li>
-<li>facet “show more” (all 3 apps): In each case, the “Show More” dialog will be for a specific facet. <code class="docutils literal notranslate"><span class="pre">referrer</span></code> pertains to the main table of the page “show more” was clicked on.</li>
-</ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">ui-context</span></code> (optional) is used to give more clue as to where in the UI this request belongs to.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">verb</span></code> is the actual user action.</p>
 </li>
 </ul>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>App</th>
-<th>Description (button name)</th>
-<th>Action</th>
-<th>Extra</th>
-<th>Notes</th>
-<th>Change</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>record/recordset</td>
-<td>delete clicked</td>
-<td>delete/intend</td>
-<td>facet</td>
-<td>Delete was clicked from the main record page and confirm delete was shown. (use cid to determine app)</td>
-<td></td>
-</tr>
-<tr>
-<td>record/recordset</td>
-<td>confirm delete cancelled</td>
-<td>delete/cancel</td>
-<td>facet</td>
-<td>User closed the confirm delete modal without deleting (facet attribute included when record app)</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordset/record</td>
-<td>export dropdown</td>
-<td>export/open</td>
-<td></td>
-<td>Dropdown was opened (record request will include extra attribute, facet)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>copy permalink</td>
-<td>permalink/lclick</td>
-<td></td>
-<td>User left clicked on permalink button (copies link to clipboard)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>permalink</td>
-<td>permalink/rclick</td>
-<td></td>
-<td>User right clicked on permalink button and opened the context menu (we can't track which action was clicked)</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>show empty sections</td>
-<td>show-empty/show</td>
-<td></td>
-<td>"Show empty sections" button clicked in submenu bar</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>hide empty sections</td>
-<td>show-empty/hide</td>
-<td></td>
-<td>"Hide empty sections" button clicked in submenu bar</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>share popup</td>
-<td>share</td>
-<td></td>
-<td>Share dialog was opened</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>copy live link</td>
-<td>share/live</td>
-<td></td>
-<td>Live link was copied to clipboard</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>copy version link</td>
-<td>share/version</td>
-<td></td>
-<td>Versioned link was copied to clipboard</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>cite, download bibtex</td>
-<td>cite/bibtex</td>
-<td></td>
-<td>Bibtex citation downloaded</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Scroll top clicked</td>
-<td>scroll-top</td>
-<td></td>
-<td>Bottom right, "Scroll to top" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>ToC panel open</td>
-<td>toc/show</td>
-<td></td>
-<td>"Show side panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>ToC panel collapse</td>
-<td>toc/hide</td>
-<td></td>
-<td>"Hide panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Scroll top clicked</td>
-<td>toc/scroll-top</td>
-<td></td>
-<td>first heading in Table of contents clicked (Summary)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>ToC panel options selected</td>
-<td>toc/scroll-to</td>
-<td></td>
-<td>Related table heading clicked in Table of contents</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>toggle related table open</td>
-<td>related/open</td>
-<td></td>
-<td>Related table section toggled open</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>toggle related table close</td>
-<td>related/close</td>
-<td></td>
-<td>Related table section toggled close</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>items per page dropdown</td>
-<td>related/page-size</td>
-<td></td>
-<td>Dropdown was opened for related table. Selecting a page size will trigger a read request.</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Table mode</td>
-<td>related/display/table</td>
-<td></td>
-<td>User changed display format to show table display (user does not have permission to edit)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Custom mode</td>
-<td>related/display/mkdn</td>
-<td></td>
-<td>User changed display format to show markdown display (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Edit mode</td>
-<td>related/display/edit</td>
-<td></td>
-<td>User changed display format to show table display (user has permission to edit)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>row delete clicked</td>
-<td>related/delete/intend</td>
-<td>facet</td>
-<td>Delete was clicked from related table and confirm delete was shown (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>confirm delete cancelled</td>
-<td>related/delete/cancel</td>
-<td>facet</td>
-<td>User closed the confirm delete modal without deleting</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>row unlink clicked</td>
-<td>related/unlink/intend</td>
-<td>facet</td>
-<td>Unlink was clicked from related table and confirm unlink was shown (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>confirm unlink cancelled</td>
-<td>related/unlink/cancel</td>
-<td>facet</td>
-<td>User closed the confirm unlink modal without unlinking</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>items per page dropdown</td>
-<td>inline/page-size</td>
-<td></td>
-<td>Dropdown was opened for inline related table. Selecting a page size will trigger a read request.</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Table mode</td>
-<td>inline/display/table</td>
-<td></td>
-<td>User changed display format to show table display (user does not have permission to edit)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Custom mode</td>
-<td>inline/display/mkdn</td>
-<td></td>
-<td>User changed display format to show markdown display (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Edit mode</td>
-<td>inline/display/edit</td>
-<td></td>
-<td>User changed display format to show table display (user has permission to edit)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>row delete clicked</td>
-<td>inline/delete/intend</td>
-<td>facet</td>
-<td>Delete was clicked from inline related table and confirm delete was shown (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>confirm delete cancelled</td>
-<td>inline/delete/cancel</td>
-<td>facet</td>
-<td>User closed the confirm delete modal without deleting</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>row unlink clicked</td>
-<td>inline/unlink/intend</td>
-<td>facet</td>
-<td>Unlink was clicked from inline related table and confirm unlink was shown (for both edit and not edit permission)</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>confirm unlink cancelled</td>
-<td>inline/unlink/cancel</td>
-<td>facet</td>
-<td>User closed the confirm unlink modal without unlinking</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>Add 1 record</td>
-<td>create/clone</td>
-<td></td>
-<td>User cloned 1 form</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>Add x records</td>
-<td>create/clone-x</td>
-<td>x</td>
-<td>User cloned more than 1 form</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>remove form</td>
-<td>create/remove</td>
-<td></td>
-<td>1 form was removed from being created</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>open set all</td>
-<td>create/set-all/open</td>
-<td>column</td>
-<td>set all row opened, referrer used for FK rows (pencil icon button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>close set all</td>
-<td>create/set-all/close</td>
-<td>column</td>
-<td>set all row closed, referrer used for FK rows (chevron up icon button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>cancel set all</td>
-<td>create/set-all/cancel</td>
-<td>column</td>
-<td>set all row closed, referrer used for FK rows ("Cancel" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>apply set all</td>
-<td>create/set-all/apply</td>
-<td>column</td>
-<td>set all row applied, referrer used for FK rows ("Apply All" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>clear all</td>
-<td>create/set-all/clear</td>
-<td>column</td>
-<td>set all row cleared, referrer used for FK rows ("Clear All" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>remove form</td>
-<td>update/remove</td>
-<td>facet</td>
-<td>1 form was removed from being updated</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>open set all</td>
-<td>update/set-all/open</td>
-<td>column</td>
-<td>set all row opened, referrer used for FK rows (pencil icon button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>close set all</td>
-<td>update/set-all/close</td>
-<td>column</td>
-<td>set all row closed, referrer used for FK rows (chevron up icon button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>cancel set all</td>
-<td>update/set-all/cancel</td>
-<td>column</td>
-<td>set all row closed, referrer used for FK rows ("Cancel" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>apply set all</td>
-<td>update/set-all/apply</td>
-<td>column</td>
-<td>set all row applied, referrer used for FK rows ("Apply All" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>clear all</td>
-<td>update/set-all/clear</td>
-<td>column</td>
-<td>set all row cleared, referrer used for FK rows ("Clear All" button)</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>branding link clicked</td>
-<td>branding</td>
-<td></td>
-<td>branding logo in the top left clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>user dropdown menu</td>
-<td>user</td>
-<td></td>
-<td>user dropdown menu was opened (no <code>catalog</code> or <code>schema_table</code>)</td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>My profile</td>
-<td>user/profile</td>
-<td></td>
-<td>My Profile button in top right dropdown to view profile details (no <code>catalog</code> or <code>schema_table</code>)</td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>Navbar menu dropdown</td>
-<td>menu/submenu</td>
-<td>name</td>
-<td>Navbar dropdown menu was opened (applies to top level and each nested sub menu)</td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>Navbar menu internal link</td>
-<td>menu/internal</td>
-<td>name</td>
-<td>Navbar menu option was selected that redirects to static/internal resource (same domain)</td>
-<td></td>
-</tr>
-<tr>
-<td>navbar</td>
-<td>Navbar menu external link</td>
-<td>menu/external</td>
-<td>name</td>
-<td>Navbar menu option was selected that redirects to an external resource (different domain)</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>facet panel open</td>
-<td>panel/show</td>
-<td></td>
-<td>"Show filter panel" button in recordset app clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>facet panel close</td>
-<td>panel/hide</td>
-<td></td>
-<td>"Hide panel" button in recordset app clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>items per page dropdown</td>
-<td>page-size</td>
-<td></td>
-<td>Dropdown was opened. Selecting a page size will trigger a read request</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>items per page dropdown</td>
-<td>facet/page-size</td>
-<td></td>
-<td>In facet "show more" popup, dropdown was opened. Selecting a page size will trigger a read request</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>All on page</td>
-<td>facet/all</td>
-<td></td>
-<td>In facet "show more" popup, "All on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>None on page</td>
-<td>facet/none</td>
-<td></td>
-<td>In facet "show more" popup, "None on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>Reset selection</td>
-<td>facet/reset</td>
-<td></td>
-<td>In facet "show more" popup, "Reset selection" button clicked to remove selections</td>
-<td></td>
-</tr>
-<tr>
-<td>recordset</td>
-<td>Modal closed</td>
-<td>facet/cancel</td>
-<td></td>
-<td>In facet "show more" popup, modal closed with no selection made</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>facet panel open</td>
-<td>pb/panel/show</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, "Show filter panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>facet panel close</td>
-<td>pb/panel/hide</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, "Hide panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>items per page dropdown</td>
-<td>pb/page-size</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, dropdown was opened. Selecting a page size will trigger a read request</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>All on page</td>
-<td>pb/all</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, "All on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>None on page</td>
-<td>pb/none</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, "None on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Reset selection</td>
-<td>pb/reset</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, "Reset selection" button clicked to remove selections</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Modal closed</td>
-<td>pb/cancel</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, modal closed with no selection made</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>items per page dropdown</td>
-<td>pb/facet/page-size</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, then in facet "show more" popup, dropdown was opened</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>All on page</td>
-<td>pb/facet/all</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, then in facet "show more" popup, "All on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>None on page</td>
-<td>pb/facet/none</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, then in facet "show more" popup, "None on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Reset selection</td>
-<td>pb/facet/reset</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, then in facet "show more" popup, "Reset selection" button clicked to remove selections</td>
-<td></td>
-</tr>
-<tr>
-<td>record</td>
-<td>Modal closed</td>
-<td>pb/facet/cancel</td>
-<td></td>
-<td>In pure &amp; binary "Add record" popup, then in facet "show more" popup, modal closed with no selection made</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>facet panel open</td>
-<td>fk/panel/show</td>
-<td></td>
-<td>In foreign key popup, "Show filter panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>facet panel closed</td>
-<td>fk/panel/hide</td>
-<td></td>
-<td>In foreign key popup, "Hide panel" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>items per page dropdown</td>
-<td>fk/page-size</td>
-<td></td>
-<td>In foreign key popup, dropdown was opened. Selecting a page size will trigger a read request</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>Modal closed</td>
-<td>fk/cancel</td>
-<td></td>
-<td>In foreign key popup, modal closed with no selection made</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>items per page dropdown</td>
-<td>fk/facet/page-size</td>
-<td></td>
-<td>In foreign key popup, then in facet "show more" popup, dropdown was opened. Selecting a page size will trigger a read request</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>All on page</td>
-<td>fk/facet/all</td>
-<td></td>
-<td>In foreign key popup, then in facet "show more" popup, "All on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>None on page</td>
-<td>fk/facet/none</td>
-<td></td>
-<td>In foreign key popup, then in facet "show more" popup, "None on page" button clicked</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>Reset selection</td>
-<td>fk/facet/reset</td>
-<td></td>
-<td>In foreign key popup, then in facet "show more" popup, "Reset selection" button clicked to remove all selections</td>
-<td></td>
-</tr>
-<tr>
-<td>recordedit</td>
-<td>Modal closed</td>
-<td>fk/facet/cancel</td>
-<td></td>
-<td>In foreign key popup, then in facet "show more" popup, modal closed with no selection made</td>
-<td></td>
-</tr>
-<tr>
-<td>&ensp;</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table></div>
+<p>Extra rules followed in the action string:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">/</span></code> is used in each of these sections, to indicate another level. For example <code class="docutils literal notranslate"><span class="pre">entity/related</span></code> in <code class="docutils literal notranslate"><span class="pre">stack-path</span></code> means that the whole <code class="docutils literal notranslate"><span class="pre">stack-path</span></code> of page is <code class="docutils literal notranslate"><span class="pre">entity</span></code>, and this request is part of <code class="docutils literal notranslate"><span class="pre">entity/related</span></code> subsection.</li>
+<li><code class="docutils literal notranslate"><span class="pre">stack-path</span></code> has the same number of levels as <code class="docutils literal notranslate"><span class="pre">stack</span></code> and each level corresponds to each stack node. But the string used to represent a stack node can be different from the <code class="docutils literal notranslate"><span class="pre">type</span></code> used in the stack. This has been done to add more information in the action string. For example, the <code class="docutils literal notranslate"><span class="pre">load</span></code> request for both facet, and facet picker are using an stack that has <code class="docutils literal notranslate"><span class="pre">set</span></code>, and <code class="docutils literal notranslate"><span class="pre">facet</span></code> nodes. But their <code class="docutils literal notranslate"><span class="pre">stack-path</span></code>s are <code class="docutils literal notranslate"><span class="pre">set/facet</span></code> and <code class="docutils literal notranslate"><span class="pre">set/facet-picker</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">-</span></code> is used to separate the words at the same level. The <code class="docutils literal notranslate"><span class="pre">-</span></code> could imply hierarchy or just a separator for words, and we’re not going to distinguish the two cases by using different delimiters to avoid confusion.</li>
+</ul>
 </div>
-<div class="section" id="error-log">
-<span id="error-log"></span><h2>Error Log<a class="headerlink" href="#error-log" title="Permalink to this headline">¶</a></h2>
-<p>Currently we’re only logging terminal errors (we might want to change that to log 5xx errors too). To find the errors in log, you can search for <code class="docutils literal notranslate"><span class="pre">terminal_error</span></code> path. This is what a error log would look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-   <span class="n">e</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="n">message</span><span class="p">:</span> <span class="s2">&quot;ERROR MESSAGE&quot;</span><span class="p">,</span>
-   <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;ERROR TITLE&quot;</span>
+<div class="section" id="list-of-requests">
+<span id="list-of-requests"></span><h2>List of requests<a class="headerlink" href="#list-of-requests" title="Permalink to this headline">¶</a></h2>
+<p>You can find the full list of log requests in <a class="reference external" href="https://docs.google.com/spreadsheets/d/1cHhPR0AacvuH2o3QavWlJCIIyPajfn93fJzFnc7VA5M">this google sheet</a>. The following sections have been added to provide more information about the content of this google sheet.</p>
+<div class="section" id="server-vs-client">
+<span id="server-vs-client"></span><h3>Server vs. Client<a class="headerlink" href="#server-vs-client" title="Permalink to this headline">¶</a></h3>
+<p>When users open a page, or interact with the page, we might send some requests to server based on the action. You can gather more information about the request just by looking at the url associated withe request. We call these server logs. On the other hand, some user interactions won’t necessarily generate a server request and therefore we are logging these by sending a HEAD request to a predefined ermrest path. Currently we’re using <code class="docutils literal notranslate"><span class="pre">/ermrest/client_action</span></code> path for these client logs.</p>
+</div>
+<div class="section" id="stack-structure">
+<span id="stack-structure"></span><h3>Stack structure<a class="headerlink" href="#stack-structure" title="Permalink to this headline">¶</a></h3>
+<p>As we previously explained, <code class="docutils literal notranslate"><span class="pre">stack</span></code> is used to capture the user path. It’s an array of “stack nodes”, where each node summarizes the user path. This has been mainly done to distinguish between the same actions that users might have taken in different paths. For instance, we show the same controls that we have in recordset app, in all of our modal pickers. Without the stack, the user path (context) would be lost. We tried to summarize the stack structure associated with each request in the google sheet. Each cell, represent a node in the stack with attributes that will be available on it</p>
+<p>To give you a better idea of how to read the table, let’s consider the case that the user is interacting with a facet picker, that was opened from an association link picker on an inline related entity. So,</p>
+<ul class="simple">
+<li>first stack node should capture the record page app and the filters that it had.</li>
+<li>second stack node should capture the association link picker and the filters that it had before opening the facet picker.</li>
+<li>third stack node should capture the state of facet picker.</li>
+</ul>
+<p>Therefore this is how the stack should look like:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;stack&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;schema:main_table&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;filters&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;and&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span> <span class="s2">&quot;RID&quot;</span><span class="p">,</span> <span class="s2">&quot;ch&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;RID_VALUE&quot;</span><span class="p">]}]}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;related&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;schema:related_table&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;i&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;constraint&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+      <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="s2">&quot;picker&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;filters&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;and&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span> <span class="s2">&quot;SOME_COLUMN&quot;</span><span class="p">,</span> <span class="s2">&quot;ch&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;SOME_VALUE&quot;</span><span class="p">]}]}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facet&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;schema:facet_table&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;constraint2&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+      <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="s2">&quot;picker&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;filters&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;and&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;key&quot;</span><span class="o">:</span> <span class="s2">&quot;search-box&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;TERM&quot;</span><span class="p">]}]}</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>And this stack would be added to any logs that we generate from that picker, and will be reflected in the action string. For example if the user opens the page-limit dropdown menu, the action would be <code class="docutils literal notranslate"><span class="pre">:entity/related-link-picker/facet-picker,page-size;open</span></code>.</p>
+</div>
+</div>
+<div class="section" id="facet-compressed-syntax">
+<span id="facet-compressed-syntax"></span><h2>Facet compressed syntax<a class="headerlink" href="#facet-compressed-syntax" title="Permalink to this headline">¶</a></h2>
+<p>Since the facet object can be lengthy, we decide to modify it for the log purposes. The structure is the same, we are just going to compress some of the attribute names. These are the compressed version of each attribute used in the facet syntax:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">i</span></code> for <code class="docutils literal notranslate"><span class="pre">inbound</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">o</span></code> for <code class="docutils literal notranslate"><span class="pre">outbound</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">src</span></code> for <code class="docutils literal notranslate"><span class="pre">source</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">key</span></code> for <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">ch</span></code> for <code class="docutils literal notranslate"><span class="pre">choices</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">r</span></code> for <code class="docutils literal notranslate"><span class="pre">ranges</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">s</span></code> for <code class="docutils literal notranslate"><span class="pre">search</span></code></li>
+</ul>
+<p>So for example if the facet object is</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;and&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="s2">&quot;search-box&quot;</span><span class="p">,</span> <span class="s2">&quot;search&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;cons1&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;cons2&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span> <span class="s2">&quot;choices&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">&quot;sourcekey&quot;</span><span class="o">:</span><span class="s2">&quot;some-key&quot;</span><span class="p">,</span> <span class="s2">&quot;ranges&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;min&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}]}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>We’re going to log it as the following:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;and&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span><span class="s2">&quot;search-box&quot;</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;u&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;cons1&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;cons2&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span> <span class="s2">&quot;ch&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="o">:</span><span class="s2">&quot;some-key&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;min&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">}]}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="error-log">
+<span id="error-log"></span><h2>Error log<a class="headerlink" href="#error-log" title="Permalink to this headline">¶</a></h2>
+<p>To find the errors in log, you can search for <code class="docutils literal notranslate"><span class="pre">/ermrest/terminal_error</span></code> path. This is what a error log would look like:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;e&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+   <span class="s2">&quot;message&quot;</span><span class="o">:</span> <span class="s2">&quot;ERROR MESSAGE&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;ERROR TITLE&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As the name suggests, we currently are only logging terminal errors.</p>
 </div>
 <div class="section" id="truncation">
 <span id="truncation"></span><h2>Truncation<a class="headerlink" href="#truncation" title="Permalink to this headline">¶</a></h2>
-<p>The object that we want to log might be lengthy. So we should truncate this object if it’s exceeding the maximum length (we’re currently limiting it to 6500). An object with <code class="docutils literal notranslate"><span class="pre">t:1</span></code> indicates that some attributes have been truncated.
-The truncation is done based on a set priority. We keep adding more and more attributes and as soon as we hit the limit, we’re going to return that object. Attributes are added in the following order (attribute one has more priority over the next and so on):</p>
-<ul class="simple">
-<li>cid, pid, wid, schema_table, catalog, cfacet, cqp, ppid, pcid</li>
-<li>template</li>
-<li>referrer</li>
-<li>source</li>
-<li>column</li>
-<li>cfacet_str</li>
-<li>cfacet_path</li>
-<li>filter</li>
-<li>facet</li>
-</ul>
-<p>For example, assume that we were trying to send the following object and it’s lengthy.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;cid&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span> <span class="s2">&quot;pid&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span> <span class="s2">&quot;wid&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;catalog&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span> <span class="s2">&quot;schema_table&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;referrer&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;schema_table&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="p">,</span> <span class="s2">&quot;facet&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">referrer</span><span class="o">-</span><span class="n">facet</span><span class="o">-</span><span class="n">obj</span><span class="o">&gt;</span><span class="p">},</span>
-    <span class="s2">&quot;facet&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">facet</span><span class="o">-</span><span class="n">obj</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">source</span><span class="o">-</span><span class="n">obj</span><span class="o">&gt;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>We’re going to include <code class="docutils literal notranslate"><span class="pre">cid</span></code>, <code class="docutils literal notranslate"><span class="pre">pid</span></code>, <code class="docutils literal notranslate"><span class="pre">wid</span></code>, <code class="docutils literal notranslate"><span class="pre">catalog</span></code>, <code class="docutils literal notranslate"><span class="pre">schema_table</span></code>, and <code class="docutils literal notranslate"><span class="pre">t</span></code> (with value 1) first. Then we’re going to go based on the priority list and try to add each attribute. So we’re going to add <code class="docutils literal notranslate"><span class="pre">referrer</span></code>’s <code class="docutils literal notranslate"><span class="pre">facet</span></code> step by step. As soon as we hit the limit, we’re going to return that partial object. otherwise we’re going to continue to <code class="docutils literal notranslate"><span class="pre">source</span></code> and then <code class="docutils literal notranslate"><span class="pre">facet</span></code>.</p>
+<p>The object that we want to log might be lengthy. So we should truncate this object if it’s exceeding the maximum length (we’re currently limiting it to 6500 characeters after encoding). In truncation logic we perform each of the described steps below to shorten the length of the object. If one step was not enough, we would perform the next step and so on until the length goes below the limit. The steps are:</p>
+<ol class="simple">
+<li>Replace all foreign key constraints with their RID.</li>
+<li>Replace values (<code class="docutils literal notranslate"><span class="pre">choices</span></code>, <code class="docutils literal notranslate"><span class="pre">ranges</span></code>, <code class="docutils literal notranslate"><span class="pre">search</span></code>) in the <code class="docutils literal notranslate"><span class="pre">filters</span></code> with the number of values.</li>
+<li>Replace all <code class="docutils literal notranslate"><span class="pre">filters.and</span></code> with the number of filters.</li>
+<li>Replace all source paths with the number of path nodes.</li>
+<li>Replace <code class="docutils literal notranslate"><span class="pre">stack</span></code> value with the number of stack nodes.</li>
+</ol>
 </div>
 <div class="section" id="analysis">
 <span id="analysis"></span><h2>Analysis<a class="headerlink" href="#analysis" title="Permalink to this headline">¶</a></h2>
@@ -2666,158 +1626,26 @@ The truncation is done based on a set priority. We keep adding more and more att
 <li>CSV default export: <code class="docutils literal notranslate"><span class="pre">uinit=1&amp;cid=</span></code></li>
 </ul>
 </div>
+<div class="section" id="finding-the-displayed-recordset-request">
+<span id="finding-the-displayed-recordset-request"></span><h3>Finding the displayed recordset request<a class="headerlink" href="#finding-the-displayed-recordset-request" title="Permalink to this headline">¶</a></h3>
+<p>In recordset app, or any of the other places that use the recordset view, e.g, modal pickers, chaise will communicate with server as soon as user interacts with the page as long as we have enough flow-control slots to send the request. So there might be some requests that we generate while the user is interacting with the page that will be discarded. To find the actual request that the user sees on the page, you can use <code class="docutils literal notranslate"><span class="pre">start_ms</span></code>, and <code class="docutils literal notranslate"><span class="pre">end_ms</span></code>. All these reload requests will have these two attributes. If you join all the reload request by <code class="docutils literal notranslate"><span class="pre">start_ms</span></code>, you can find all the requests that we sent when the user started interacting at <code class="docutils literal notranslate"><span class="pre">start_ms</span></code>. So the request with the longest <code class="docutils literal notranslate"><span class="pre">end_ms</span></code> would give you the actual request that users will see on the page.</p>
 </div>
-<div class="section" id="pcid-list">
-<span id="pcid-list"></span><h2>PCID list<a class="headerlink" href="#pcid-list" title="Permalink to this headline">¶</a></h2>
-<p>The following is the list of <code class="docutils literal notranslate"><span class="pre">PCID</span></code>’s that will be present on main entity requests in the chaise apps. <code class="docutils literal notranslate"><span class="pre">CID</span></code> will always represent what app the request was made from, <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will represent what app the user navigated from when the main entity request was triggered.</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">record</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">recordset</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">recordedit</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">navbar/record</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">navbar/recordset</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">navbar/recordedit</span></code></li>
-</ul>
-<p>If the user clicked on a link in the navbar, the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will properly denote what app the user came from that had the navbar present. A static page that uses the navbar app, will set the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> as <code class="docutils literal notranslate"><span class="pre">navbar</span></code>. Otherwise the appname will be appended (i.e.   <code class="docutils literal notranslate"><span class="pre">navbar/&lt;appname&gt;</span></code>). This is true for the <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/wiki/Logging-in-WebApps#pcid-list">deriva-webapps</a> as well.</p>
 </div>
 <div class="section" id="change-log">
 <span id="change-log"></span><h2>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id1"></span><h3>10/??/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="commit-links"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
+<span id="id1"></span><h3>02/12/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="commit-pr-links">
+<span id="commit-pr-links"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>(pending, changes in branch)</li>
-</ul>
-<div class="section" id="changed">
-<span id="changed"></span><h5>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h5>
-<ul class="simple">
-<li>changed model/catalog -&gt; model/snaptime</li>
-</ul>
-</div>
-<div class="section" id="added">
-<span id="added"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
-<ul class="simple">
-<li><a class="reference external" href="#button-action-list">Button Action List</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id2"></span><h3>07/16/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="id3"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/65de409b3229533be76a1537d55a83a9bec84bb3">chaise</a></li>
-</ul>
-<div class="section" id="added">
-<span id="id4"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
-<ul class="simple">
-<li>Added <code class="docutils literal notranslate"><span class="pre">pcid</span></code> and <code class="docutils literal notranslate"><span class="pre">ppid</span></code> to navbar links that are for the same origin/host.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id5"></span><h3>07/12/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="id6"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/commit/df91573fac7ae59eee0e6bf73f7023de899de3d4">ermrestjs</a></li>
-</ul>
-<div class="section" id="added">
-<span id="id7"></span><h5>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h5>
-<ul class="simple">
-<li>Added specific action for the <code class="docutils literal notranslate"><span class="pre">recordset/main/&lt;ANY_SUBACTION&gt;/correct-page</span></code>. This action will indicate that users went to a page with <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code> in url AND there is less data than limit implies (beginning of set) OR we got the right set of data but there’s no previous set (beginning of set), and then chaise tried again without <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code> in url. This action is used for the second request that is trying the main request again without <code class="docutils literal notranslate"><span class="pre">&#64;before</span></code>.</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="">
-<span id="id8"></span><h3>05/06/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="id9"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/8dc53a5e61e3b32dfae3279bb000baf9b2f51fb1">chaise</a></li>
-</ul>
-</div>
-<div class="section" id="added">
-<span id="id10"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>We are going to send <code class="docutils literal notranslate"><span class="pre">cid</span></code>, <code class="docutils literal notranslate"><span class="pre">wid</span></code>, and <code class="docutils literal notranslate"><span class="pre">pid</span></code> headers with authen requests from now on.</li>
-</ul>
-</div>
-</div>
-<div class="section" id="">
-<span id="id11"></span><h3>04/18/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="id12"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/777febb1811620522344314e383238ece936047f">chaise</a></li>
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/commit/af7ac83359647e232dbb5385ec25be7add7dc89e">ermrestjs</a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/1889">chaise</a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/pull/829">ermrestjs</a></li>
 </ul>
 </div>
 <div class="section" id="changed">
-<span id="id13"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
-<ul>
-<li><p class="first">Changed the action for removing related entity rows from <code class="docutils literal notranslate"><span class="pre">delete/recordset/related</span></code> to <code class="docutils literal notranslate"><span class="pre">delete/record/related</span></code>.</p>
-</li>
-<li><p class="first">Fixed a bug that would cause record load requests to be reported as update.</p>
-</li>
-<li><p class="first">Fixed the issue of reporting both load and update requests of record page as <code class="docutils literal notranslate"><span class="pre">record/main</span></code>. Now they are being logged with proper action.</p>
+<span id="changed"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Impact: We cannot determine the number of record page loads prior to this fix. This only affects deployments that allow their users to create new records since the update request would only fire if the user updates any of the related entities.</li>
-</ul>
-</li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">recordset/export</span></code> was used as action for export from both record and recordset which is changed to <code class="docutils literal notranslate"><span class="pre">export</span></code>.</p>
-</li>
-<li><p class="first">Changed the <code class="docutils literal notranslate"><span class="pre">template</span></code> object that is reported with <code class="docutils literal notranslate"><span class="pre">export</span></code> action to only include the <code class="docutils literal notranslate"><span class="pre">displayname</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>.</p>
-</li>
-<li><p class="first">Instead of logging the whole template document in the <code class="docutils literal notranslate"><span class="pre">export</span></code> action, we’re just going to include <code class="docutils literal notranslate"><span class="pre">displayname</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;export&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="s2">&quot;displayname&quot;</span><span class="p">:</span> <span class="s2">&quot;sample template&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;BAG&quot;</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Fixed the action of scalar column requests.</p>
-</li>
-<li><p class="first">Changed the <code class="docutils literal notranslate"><span class="pre">recordedit/default</span></code> action to <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p>
-</li>
-</ul>
-</div>
-<div class="section" id="added">
-<span id="id14"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Added proper <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> logging to viewer app.</li>
-<li><code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code> has been added to the main request of each app which shows the parent <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">cid</span></code>.</li>
-<li>New actions have been attached to schema (<code class="docutils literal notranslate"><span class="pre">&quot;model/schema&quot;</span></code>) and catalog (<code class="docutils literal notranslate"><span class="pre">&quot;model/catalog&quot;</span></code>) requests.</li>
-<li><code class="docutils literal notranslate"><span class="pre">catalog</span></code> has been added to all the requests.</li>
-<li><code class="docutils literal notranslate"><span class="pre">column</span></code> has been added to requests for getting a scalar facet data.</li>
-<li>If there are preselected facets, in entity mode we have to get the row-name corresponding to the selected value. Customized action (<code class="docutils literal notranslate"><span class="pre">recordset/facet/init</span></code>) has been added for this request.</li>
-<li>Added proper action <code class="docutils literal notranslate"><span class="pre">recordset/facet/histogram</span></code> to the request for getting buckets of a range picker facet.</li>
-<li>Added <code class="docutils literal notranslate"><span class="pre">cfacet</span></code>, <code class="docutils literal notranslate"><span class="pre">cfacet_str</span></code>, and <code class="docutils literal notranslate"><span class="pre">cfacet_path</span></code>.</li>
-<li>Added <code class="docutils literal notranslate"><span class="pre">cqp</span></code> attribute to track urls that are using <code class="docutils literal notranslate"><span class="pre">?</span></code> (query parameter) instead of <code class="docutils literal notranslate"><span class="pre">#</span></code> (hash fragment).</li>
-</ul>
-</div>
-</div>
-<div class="section" id="">
-<span id="id15"></span><h3>03/08/19<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="commit-links">
-<span id="id16"></span><h4>Commit Links<a class="headerlink" href="#commit-links" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/commit/05108d07e37c1579b28ccfc58916db486f379005">chaise</a></li>
-</ul>
-</div>
-<div class="section" id="changed">
-<span id="id17"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>We realized that the first request of adding pure and binary is not using the correct action. It was using the <code class="docutils literal notranslate"><span class="pre">recordset/main/load</span></code>. We changed it to use the appropriate <code class="docutils literal notranslate"><span class="pre">pre-create/prefill/association</span></code> action with <code class="docutils literal notranslate"><span class="pre">referred</span></code> information.</li>
+<li>Completely changed how we’re logging in chaise. This is the starting date of logging as described in this documentation.</li>
 </ul>
 </div>
 </div>
@@ -2832,7 +1660,7 @@ The truncation is done based on a set priority. We keep adding more and more att
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../deriva-web/index.html" class="btn btn-neutral float-right" title="Auxiliary web services for DERIVA (deriva-web)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="logging-pre-feb-20.html" class="btn btn-neutral float-right" title="Logging (Pre-February 2020)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="console.html" class="btn btn-neutral float-left" title="Useful Browser Console Commands" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

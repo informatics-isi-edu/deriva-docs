@@ -1113,10 +1113,10 @@
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Custom CSS Styling Tips</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#changing-chaise-table-styles">Changing chaise table styles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#character-replacement">Character replacement</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#general-html-structure">General HTML structure:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen):</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#caveats">Caveats</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-markdown-styles">Custom Markdown Styles</a></li>
@@ -1382,6 +1382,17 @@
 </li>
 </ul>
 <p>More often than not, you will want to apply styling for each of the columns rather than at the table level, so the <code class="docutils literal notranslate"><span class="pre">c_&lt;column.name&gt;</span></code> identifier should almost always be included in the selector.</p>
+<div class="section" id="character-replacement">
+<span id="character-replacement"></span><h3>Character replacement<a class="headerlink" href="#character-replacement" title="Permalink to this headline">¶</a></h3>
+<p>For both class names and id attributes:</p>
+<ul class="simple">
+<li>Must begin with a letter A-Z or a-z</li>
+<li>Can be followed by: letters (A-Za-z), digits (0-9), hyphens (“-“), and underscores (“_”)</li>
+</ul>
+<p>This means that if the schema, table, or column name contains any other characters, they will be replaced with a “-“.
+If the name contains multiple unsafe characters in a row, all will be replaced by 1 single “-“.
+For example, if your column name is <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">(name)</span></code>, chaise will rewrite this as <code class="docutils literal notranslate"><span class="pre">text-name-</span></code> and then will use <code class="docutils literal notranslate"><span class="pre">c_text-name-</span></code> as the class name.</p>
+</div>
 <div class="section" id="general-html-structure">
 <span id="general-html-structure"></span><h3>General HTML structure:<a class="headerlink" href="#general-html-structure" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>&lt;html id=&quot;&lt;appname&gt;&quot;
@@ -1507,18 +1518,6 @@
 <li>useful if multiple Images columns are defined in many different tables in many different schemas</li>
 </ul>
 </li>
-</ul>
-</div>
-<div class="section" id="caveats">
-<span id="caveats"></span><h3>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h3>
-<p>Some characters are not allowed in HTML class names. We replace those characters with HTML safe characters:</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> is replaced by: <code class="docutils literal notranslate"><span class="pre">&amp;amp;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">\s</span></code> (any whitespace character) is replaced by <code class="docutils literal notranslate"><span class="pre">&amp;nbsp;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&lt;</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">&amp;lt;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&gt;</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">&amp;gt;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">&quot;</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">&amp;quot;</span></code></li>
-<li><code class="docutils literal notranslate"><span class="pre">'</span></code> is replaced by <code class="docutils literal notranslate"><span class="pre">&amp;#39;</span></code></li>
 </ul>
 <p>For pseudocolumns, it’s not immediately obvious what they name will be. We use a hashing function in <code class="docutils literal notranslate"><span class="pre">ermrestJS</span></code> that is based on the full path of the column. So <code class="docutils literal notranslate"><span class="pre">this/path/id=value</span></code> will become something like <code class="docutils literal notranslate"><span class="pre">hsoinel</span></code>.</p>
 </div>

@@ -497,6 +497,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#example-configuration-file">Example configuration file:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
@@ -1756,6 +1757,8 @@
 </li>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.deriva_model.DerivaTable.create_columns">create_columns() (deriva.utils.catalog.components.deriva_model.DerivaTable method)</a>
 </li>
+      <li><a href="deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.base_query_processor.BaseQueryProcessor.create_default_paths">create_default_paths() (deriva.transfer.download.processors.query.base_query_processor.BaseQueryProcessor method)</a>
+</li>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_columns">create_default_visible_columns() (deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure method)</a>
 </li>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.components.html#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_foreign_keys">create_default_visible_foreign_keys() (deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure method)</a>
@@ -1962,8 +1965,6 @@
 </li>
       <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#module-deriva.transfer.download.processors.postprocess.transfer_post_processor">deriva.transfer.download.processors.postprocess.transfer_post_processor (module)</a>
 </li>
-      <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#module-deriva.transfer.download.processors.postprocess.workspace_post_processor">deriva.transfer.download.processors.postprocess.workspace_post_processor (module)</a>
-</li>
       <li><a href="deriva-py/api/deriva.transfer.download.processors.query.html#module-deriva.transfer.download.processors.query">deriva.transfer.download.processors.query (module)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.download.processors.query.html#module-deriva.transfer.download.processors.query.bag_fetch_query_processor">deriva.transfer.download.processors.query.bag_fetch_query_processor (module)</a>
@@ -1986,10 +1987,10 @@
 </li>
       <li><a href="deriva-py/api/deriva.transfer.upload.html#module-deriva.transfer.upload.deriva_upload_cli">deriva.transfer.upload.deriva_upload_cli (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.components.html#module-deriva.utils.catalog.components.configure_catalog">deriva.utils.catalog.components.configure_catalog (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.components.html#module-deriva.utils.catalog.components.deriva_model">deriva.utils.catalog.components.deriva_model (module)</a>
 </li>
       <li><a href="deriva-catalog-manage/api/deriva.utils.catalog.manage.html#module-deriva.utils.catalog.manage.config">deriva.utils.catalog.manage.config (module)</a>
@@ -2564,8 +2565,6 @@
 </li>
       <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.identifier_post_processor.GlobusIdentifierPostProcessor">GlobusIdentifierPostProcessor (class in deriva.transfer.download.processors.postprocess.identifier_post_processor)</a>
 </li>
-      <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.workspace_post_processor.GlobusWorkspacePortalPostProcessor">GlobusWorkspacePortalPostProcessor (class in deriva.transfer.download.processors.postprocess.workspace_post_processor)</a>
-</li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.groupby">groupby() (deriva.core.datapath.DataPath method)</a>
 
       <ul>
@@ -3024,8 +3023,6 @@
         <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.transfer_post_processor.Boto3UploadPostProcessor.process">(deriva.transfer.download.processors.postprocess.transfer_post_processor.Boto3UploadPostProcessor method)</a>
 </li>
         <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.transfer_post_processor.UploadPostProcessor.process">(deriva.transfer.download.processors.postprocess.transfer_post_processor.UploadPostProcessor method)</a>
-</li>
-        <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.workspace_post_processor.GlobusWorkspacePortalPostProcessor.process">(deriva.transfer.download.processors.postprocess.workspace_post_processor.GlobusWorkspacePortalPostProcessor method)</a>
 </li>
         <li><a href="deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.bag_fetch_query_processor.BagFetchQueryProcessor.process">(deriva.transfer.download.processors.query.bag_fetch_query_processor.BagFetchQueryProcessor method)</a>
 </li>
@@ -3528,22 +3525,20 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="deriva-py/api/deriva.transfer.download.processors.postprocess.html#deriva.transfer.download.processors.postprocess.workspace_post_processor.GlobusWorkspacePortalPostProcessor.WORKSPACE_API_URL">WORKSPACE_API_URL (deriva.transfer.download.processors.postprocess.workspace_post_processor.GlobusWorkspacePortalPostProcessor attribute)</a>
-</li>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.write_config">write_config() (in module deriva.core)</a>
 
       <ul>
         <li><a href="deriva-py/api/deriva.core.utils.html#deriva.core.utils.core_utils.write_config">(in module deriva.core.utils.core_utils)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.core.html#deriva.core.write_credential">write_credential() (in module deriva.core)</a>
 
       <ul>
         <li><a href="deriva-py/api/deriva.core.utils.html#deriva.core.utils.core_utils.write_credential">(in module deriva.core.utils.core_utils)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="deriva-py/api/deriva.seo.html#deriva.seo.sitemap_builder.SitemapBuilder.write_sitemap">write_sitemap() (deriva.seo.sitemap_builder.SitemapBuilder method)</a>
 </li>
       <li><a href="deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.writeTransferState">writeTransferState() (deriva.transfer.upload.deriva_upload.DerivaUpload method)</a>

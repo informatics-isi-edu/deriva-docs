@@ -496,6 +496,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#example-configuration-file">Example configuration file:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
@@ -1489,10 +1490,11 @@
                     <span class="k">if</span> <span class="n">rowcount</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">delete_file</span> <span class="o">=</span> <span class="kc">True</span>
 
-                <span class="k">if</span> <span class="n">delete_file</span><span class="p">:</span>
-                    <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destfilename</span><span class="p">)</span>
-                    <span class="n">destfile</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="c1"># automatically delete zero-length files or detected &quot;empty&quot; content</span>
+            <span class="k">if</span> <span class="n">delete_file</span><span class="p">:</span>
+                <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destfilename</span><span class="p">)</span>
+                <span class="n">destfile</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="n">log_msg</span> <span class="o">=</span> <span class="s2">&quot;File [</span><span class="si">%s</span><span class="s2">] transfer successful. </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> \
                       <span class="p">(</span><span class="n">destfilename</span><span class="p">,</span> <span class="n">summary</span><span class="p">,</span>

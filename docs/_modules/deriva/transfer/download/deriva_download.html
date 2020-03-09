@@ -496,6 +496,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#configuration-file-format">Configuration file format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#example-configuration-file">Example configuration file:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-catalog">Configuration file element: <code class="docutils literal notranslate"><span class="pre">catalog</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-bag">Configuration file element: <code class="docutils literal notranslate"><span class="pre">bag</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../deriva-py/cli/deriva-download-cli.html#configuration-file-element-env">Configuration file element: <code class="docutils literal notranslate"><span class="pre">env</span></code></a></li>
@@ -1316,6 +1317,7 @@
         <span class="n">credential_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;credential_file&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_anonymous&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
         <span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2"> [Python </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">get_installed_version</span><span class="p">(</span><span class="n">VERSION</span><span class="p">),</span>
@@ -1466,7 +1468,8 @@
                                             <span class="n">ro_author_name</span><span class="o">=</span><span class="n">ro_author_name</span><span class="p">,</span>
                                             <span class="n">ro_author_orcid</span><span class="o">=</span><span class="n">ro_author_orcid</span><span class="p">,</span>
                                             <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
-                                            <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">)</span>
+                                            <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+                                            <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
                 <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -1493,7 +1496,8 @@
                         <span class="n">ro_author_name</span><span class="o">=</span><span class="n">ro_author_name</span><span class="p">,</span>
                         <span class="n">ro_author_orcid</span><span class="o">=</span><span class="n">ro_author_orcid</span><span class="p">,</span>
                         <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
-                        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">)</span>
+                        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
                     <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -1546,7 +1550,8 @@
                         <span class="n">inputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
                         <span class="n">processor_params</span><span class="o">=</span><span class="n">processor_params</span><span class="p">,</span>
                         <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
-                        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">)</span>
+                        <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
+                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
                     <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>

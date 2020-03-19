@@ -332,6 +332,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -346,6 +347,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1043,6 +1045,7 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#simple-syntax">Simple Syntax</a></li>
@@ -1057,6 +1060,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1317,8 +1321,55 @@
 <li>Outbound ForeignKey (single- and multi-hops)</li>
 <li>Inbound ForeignKey (single- and multi-hops)</li>
 <li>Aggregate columns</li>
+<li>Virtual columns (columns without any source)</li>
 </ul>
-<p>If you want to just look at some examples, go <a class="reference external" href="#examples">here</a>.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#pseudo-columns-logic-and-heuristics">Pseudo-Columns Logic And Heuristics</a><ul>
+<li><a class="reference external" href="#where-to-use">Where To Use</a></li>
+<li><a class="reference external" href="#syntax">Syntax</a><ul>
+<li><a class="reference external" href="#simple-syntax">Simple Syntax</a></li>
+<li><a class="reference external" href="#general-syntax">General Syntax</a></li>
+<li><a class="reference external" href="#source-definition-attributes">Source Definition Attributes</a><ul>
+<li><a class="reference external" href="#source">source</a></li>
+<li><a class="reference external" href="#entity--vs-scalar-">entity (v.s. scalar)</a></li>
+<li><a class="reference external" href="#self-link">self-link</a></li>
+<li><a class="reference external" href="#aggregate">aggregate</a></li>
+<li><a class="reference external" href="#sourcekey">sourcekey</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#display-attributes">Display Attributes</a><ul>
+<li><a class="reference external" href="#markdown-name">markdown_name</a></li>
+<li><a class="reference external" href="#comment">comment</a></li>
+<li><a class="reference external" href="#display">display</a><ul>
+<li><a class="reference external" href="#markdown-pattern">markdown_pattern</a></li>
+<li><a class="reference external" href="#show-foreign-key-link">show_foreign_key_link</a></li>
+<li><a class="reference external" href="#array-ux-mode">array_ux_mode</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#array-options">array_options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#logic-and-heuristics">Logic And Heuristics</a><ul>
+<li><a class="reference external" href="#displayname">Displayname</a></li>
+<li><a class="reference external" href="#value">Value</a></li>
+<li><a class="reference external" href="#sort">Sort</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#virtual-column">Virtual Column</a></li>
+<li><a class="reference external" href="#examples">Examples</a><ul>
+<li><a class="reference external" href="#visible-column-list">Visible Column List</a></li>
+<li><a class="reference external" href="#visible-foreignkey-list">Visible ForeignKey List</a></li>
+<li><a class="reference external" href="#specific-pseudo-columns">Specific Pseudo Columns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="where-to-use">
 <span id="where-to-use"></span><h2>Where To Use<a class="headerlink" href="#where-to-use" title="Permalink to this headline">¶</a></h2>
 <p>You can use pseudo-columns while defining list of <a class="reference internal" href="annotation.html#tag-2016-visible-columns"><span class="std std-ref">visible columns</span></a> and <a class="reference internal" href="annotation.html#tag-2016-visible-foreign-keys"><span class="std std-ref">visible foreign keys</span></a>. You can use any type of pseudo-columns in your list of visible columns, but only the pseudo-columns that have a path to another table will be allowed for visible foreign keys.</p>
@@ -1454,6 +1505,10 @@
 <span id="markdown-pattern"></span><h5>markdown_pattern<a class="headerlink" href="#markdown-pattern" title="Permalink to this headline">¶</a></h5>
 <p>In the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> you can access the current pseudo-column data with <code class="docutils literal notranslate"><span class="pre">$self</span></code> namespace alongside the defined source definitions. Please refer to the <a class="reference internal" href="pseudo-column-display.html"><span class="doc">pseudo-column display documentation</span></a> for more information.</p>
 </div>
+<div class="section" id="wait-for">
+<span id="wait-for"></span><h5>wait_for<a class="headerlink" href="#wait-for" title="Permalink to this headline">¶</a></h5>
+<p>Used to signal Chaise that this pseudo-column relies on the values of other pseudo-columns. It’s an array of <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>s that are defined in the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions annotation</span></a> of the table. You can access the value of pseudo-columns that you define here, in your defined <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>. Please refer to the <a class="reference internal" href="pseudo-column-display.html"><span class="doc">pseudo-column display documentation</span></a> for more information.</p>
+</div>
 <div class="section" id="show-foreign-key-link">
 <span id="show-foreign-key-link"></span><h5>show_foreign_key_link<a class="headerlink" href="#show-foreign-key-link" title="Permalink to this headline">¶</a></h5>
 <p>While generating a default presentation for all outbound foreign key paths, ermrestjs will add a link to the referred row. Using this attribute you can modify this behavior. If this attribute is missing, we are going to use the inherited behavior from the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/annotation.md#tag-2016-foreign-key">foreign key</a> annotation defined on the last foreign key in the path. If that one is missing too, <a class="reference internal" href="annotation.html#tag-2015-display"><span class="std std-ref">display annotation</span></a> will be applied.</p>
@@ -1548,7 +1603,7 @@
 <span id="value"></span><h3>Value<a class="headerlink" href="#value" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
 <li>Return null in entry mode.</li>
-<li>If the <code class="docutils literal notranslate"><span class="pre">display</span></code> is defined, return the value based on the given <code class="docutils literal notranslate"><span class="pre">display</span></code>. If the <code class="docutils literal notranslate"><span class="pre">display</span></code> has <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>, the client will wait until all the data is avaialble before showing the value.</li>
+<li>If the <code class="docutils literal notranslate"><span class="pre">display</span></code> is defined, return the value based on the given <code class="docutils literal notranslate"><span class="pre">display</span></code>. If the <code class="docutils literal notranslate"><span class="pre">display</span></code> has <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>, the client will wait until all the data is available before showing the value.</li>
 <li>If the pseudo-column is aggregate, get the result based on the defined (or default) array_options.</li>
 <li>If the given data-path is defining a more specific pseudo-column type (Key, ForeignKey, or Inbound-Foreignkey) then the value that is returned will be based on that type.</li>
 <li>In scalar mode, return the column’s value.</li>
@@ -1564,6 +1619,19 @@
 <li>In scalar mode, use the constituent column’s logic for sorting.</li>
 </ol>
 </div>
+</div>
+<div class="section" id="virtual-column">
+<span id="virtual-column"></span><h2>Virtual Column<a class="headerlink" href="#virtual-column" title="Permalink to this headline">¶</a></h2>
+<p>If you want to have a pseudo-column that its value is made up of multiple pseudo-columns, you don’t need to define any <code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>. The only required attributes for these types of columns (we call them virtual columns) are <code class="docutils literal notranslate"><span class="pre">markdown_name</span></code> that is used for generating the display name, and <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> to get the value. For instance the following is an acceptable virtual column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;markdown_name&quot;</span><span class="p">:</span> <span class="s2">&quot;displayname value&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;display&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;markdown_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;{{</span><span class="si">{column1}</span><span class="s2">}}, {{</span><span class="si">{column2}</span><span class="s2">}}&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In order to access the data of other pseudo-columns in this virtual column, you can use the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> option.</p>
 </div>
 <div class="section" id="examples">
 <span id="examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>

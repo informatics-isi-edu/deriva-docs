@@ -332,6 +332,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -346,6 +347,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1043,6 +1045,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -1057,6 +1060,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1312,7 +1316,7 @@
 <div class="section" id="pseudo-column-in-templating-environments">
 <span id="pseudo-column-in-templating-environments"></span><h1>Pseudo Column in Templating Environments<a class="headerlink" href="#pseudo-column-in-templating-environments" title="Permalink to this headline">¶</a></h1>
 <p>This document will explain which annotations you need to use and how to use them in order to be able to access more than the current table’s values in the templating environment. To make this simpler, we will explain this using an example.</p>
-<p>Let’s assume the following is the ERD of our database. In all the examples we’re defining column list for the <code class="docutils literal notranslate"><span class="pre">Main</span></code> table (assuming <code class="docutils literal notranslate"><span class="pre">schema</span></code> is the schema name).</p>
+<p>Let’s assume the following is the ERD of our database. In all the examples, we’re defining column list for the <code class="docutils literal notranslate"><span class="pre">Main</span></code> table (assuming <code class="docutils literal notranslate"><span class="pre">schema</span></code> is the schema name). You can follow the same pattern in both <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code> and <code class="docutils literal notranslate"><span class="pre">citation</span></code> annotations.</p>
 <p><img alt="erd_01" src="https://raw.githubusercontent.com/informatics-isi-edu/ermrestjs/master/docs/resources/pseudo_columns_erd_01.png" /></p>
 <div class="section" id="defining-sources">
 <span id="defining-sources"></span><h2>1. Defining Sources<a class="headerlink" href="#defining-sources" title="Permalink to this headline">¶</a></h2>
@@ -1372,6 +1376,14 @@
                     <span class="s2">&quot;f5_int&quot;</span>
                 <span class="p">],</span>
                 <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">false</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;entity_set-custom-name&quot;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[</span>
+                    <span class="p">{</span><span class="s2">&quot;inbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;fk3_cons&quot;</span><span class="p">]},</span>
+                    <span class="p">{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;main_f3_cons&quot;</span><span class="p">]},</span>
+                    <span class="s2">&quot;f3_id&quot;</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">true</span>
             <span class="p">},</span>
             <span class="s2">&quot;entity_array_d_aggregate-custom-name&quot;</span><span class="o">:</span> <span class="p">{</span>
                 <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[</span>
@@ -1434,7 +1446,7 @@
 <div class="section" id="accessing-columns-and-fkeys">
 <span id="accessing-columns-and-fkeys"></span><h3>Accessing Columns and Fkeys<a class="headerlink" href="#accessing-columns-and-fkeys" title="Permalink to this headline">¶</a></h3>
 <p>In the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> defined, by default, you can access the <code class="docutils literal notranslate"><span class="pre">&quot;columns&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;</span></code> that you have in the <code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotation.</p>
-<p>Based on the given source-definition, the following is the object that is available in templating in all the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>s defined in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code>:</p>
+<p>Based on the given source-definition, the following is the object that is available in templating in all the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>s defined in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code>, and patterns of <code class="docutils literal notranslate"><span class="pre">citation</span></code> annotation:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
   <span class="nt">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span>
@@ -1484,7 +1496,7 @@ formatted: {{{int_col}}}, raw: {{{_int_col}}}
 </div>
 <div class="section" id="pseudo-column-templating-variable-data-structure">
 <span id="pseudo-column-templating-variable-data-structure"></span><h4>Pseudo-Column Templating Variable Data Structure<a class="headerlink" href="#pseudo-column-templating-variable-data-structure" title="Permalink to this headline">¶</a></h4>
-<p>The data structure that you have access to by using the given sourcekey is different based on its types. The data-structure is aligned with the $self structure which is as follows.</p>
+<p>The data structure of the object that you have access to by using the given sourcekey is different based on depending on the type. The data-structure is aligned with the $self structure which is as follows.</p>
 <ul>
 <li><p class="first">Entity <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">array_d</span></code> aggregate</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1506,6 +1518,37 @@ formatted: {{{int_col}}}, raw: {{{_int_col}}}
 </pre></div>
 </div>
 <p>Example: <code class="docutils literal notranslate"><span class="pre">{{#each</span> <span class="pre">entity_array_d_aggregate-custom-name}}[{{{this.rowName}}}]({{{this.uri.detailed}}}){{/each}}</span></code></p>
+</li>
+<li><p class="first">Entity sets (only available in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> contexts):</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;entity_set-custom-name&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;col&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// formatted</span>
+        <span class="s2">&quot;_col&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// raw</span>
+        <span class="p">...</span> <span class="c1">// other columns</span>
+        <span class="s2">&quot;$fkey_schema_fk1&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;values&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;fk_col&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// formatted</span>
+            <span class="s2">&quot;_fk_col&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="c1">// raw</span>
+            <span class="p">...</span>
+          <span class="p">},</span>
+          <span class="s2">&quot;rowName&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+          <span class="s2">&quot;uri&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;detailed&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">...</span> <span class="c1">// other outbound foreign keys</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;rowName&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;uri&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;detailed&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span> <span class="c1">// link to record page</span>
+      <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">...</span> <span class="c1">// other rows</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example: <code class="docutils literal notranslate"><span class="pre">{{#each</span> <span class="pre">entity_set-custom-name}}[{{{this.rowName}}}]({{{this.uri.detailed}}}){{/each}}</span></code></p>
 </li>
 <li><p class="first">All-outbound entity:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>

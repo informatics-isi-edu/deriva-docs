@@ -330,6 +330,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -344,6 +345,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../users-guide/annotations/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1041,6 +1043,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -1055,6 +1058,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../../../ermrestjs/user-docs/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1293,7 +1297,8 @@
 <span class="kn">from</span> <span class="nn">deriva.core</span> <span class="k">import</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">get_new_requests_session</span><span class="p">,</span> <span class="n">stob</span><span class="p">,</span> <span class="n">make_dirs</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download</span> <span class="k">import</span> <span class="n">DerivaDownloadError</span><span class="p">,</span> <span class="n">DerivaDownloadConfigurationError</span><span class="p">,</span> \
     <span class="n">DerivaDownloadAuthenticationError</span><span class="p">,</span> <span class="n">DerivaDownloadAuthorizationError</span>
-<span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.base_processor</span> <span class="k">import</span> <span class="n">BaseProcessor</span><span class="p">,</span> <span class="n">LOCAL_PATH_KEY</span><span class="p">,</span> <span class="n">SOURCE_URL_KEY</span>
+<span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.base_processor</span> <span class="k">import</span> <span class="n">BaseProcessor</span><span class="p">,</span> \
+    <span class="n">LOCAL_PATH_KEY</span><span class="p">,</span> <span class="n">FILE_SIZE_KEY</span><span class="p">,</span> <span class="n">SOURCE_URL_KEY</span>
 <span class="kn">from</span> <span class="nn">bdbag</span> <span class="k">import</span> <span class="n">bdbag_ro</span> <span class="k">as</span> <span class="n">ro</span>
 
 
@@ -1327,16 +1332,19 @@
 
 <div class="viewcode-block" id="BaseQueryProcessor.process"><a class="viewcode-back" href="../../../../../../deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.base_query_processor.BaseQueryProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalogQuery</span><span class="p">(</span><span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;accept&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">})</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_file_provenance</span><span class="p">:</span>
-            <span class="n">ro</span><span class="o">.</span><span class="n">add_file_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span><span class="p">,</span>
-                                 <span class="n">source_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-                                 <span class="n">local_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span>
-                                 <span class="n">media_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
-                                 <span class="n">retrieved_on</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_on</span><span class="p">(),</span>
-                                 <span class="n">retrieved_by</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_by</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_name</span><span class="p">,</span> <span class="n">orcid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_orcid</span><span class="p">),</span>
-                                 <span class="n">bundled_as</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_bundled_as</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">:</span> <span class="p">{</span><span class="n">LOCAL_PATH_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">,</span> <span class="n">SOURCE_URL_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">}})</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ro_file_provenance</span><span class="p">:</span>
+                <span class="n">ro</span><span class="o">.</span><span class="n">add_file_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_manifest</span><span class="p">,</span>
+                                     <span class="n">source_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                     <span class="n">local_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">,</span>
+                                     <span class="n">media_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_type</span><span class="p">,</span>
+                                     <span class="n">retrieved_on</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_on</span><span class="p">(),</span>
+                                     <span class="n">retrieved_by</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_retrieved_by</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_name</span><span class="p">,</span>
+                                                                       <span class="n">orcid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_orcid</span><span class="p">),</span>
+                                     <span class="n">bundled_as</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_bundled_as</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="bp">self</span><span class="o">.</span><span class="n">output_relpath</span><span class="p">:</span> <span class="p">{</span><span class="n">LOCAL_PATH_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">,</span>
+                                                       <span class="n">FILE_SIZE_KEY</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">),</span>
+                                                       <span class="n">SOURCE_URL_KEY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">}})</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span></div>
 
 <div class="viewcode-block" id="BaseQueryProcessor.catalogQuery"><a class="viewcode-back" href="../../../../../../deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.base_query_processor.BaseQueryProcessor.catalogQuery">[docs]</a>    <span class="k">def</span> <span class="nf">catalogQuery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">as_file</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>

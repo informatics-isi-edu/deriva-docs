@@ -330,6 +330,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -344,6 +345,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1041,6 +1043,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#where-to-use">Where To Use</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#syntax">Syntax</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#simple-syntax">Simple Syntax</a></li>
@@ -1055,6 +1058,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#sort">Sort</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#virtual-column">Virtual Column</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/pseudo-columns.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
@@ -1307,33 +1311,38 @@
 </style>
 <div class="section" id="flow-control">
 <span id="flow-control"></span><h1>Flow Control<a class="headerlink" href="#flow-control" title="Permalink to this headline">¶</a></h1>
-<p>In this document, we’ll explain how flow control is implemented in chaise. Flow control has been added to different module/apps in Chaise to handle the generation of huge amounts of requests.</p>
+<p>In this document, we’ll explain how flow control is implemented in Chaise. Flow control has been added to different modules/apps in Chaise to handle the generation of vast amounts of requests.</p>
 <div class="section" id="recordset">
 <span id="recordset"></span><h2>Recordset<a class="headerlink" href="#recordset" title="Permalink to this headline">¶</a></h2>
 <p>For showing a recordset view (whether its recordset app or a modal-picker in record and recordedit apps), we need to generate requests for the following:</p>
 <ul class="simple">
-<li>Main entity rows</li>
+<li>Main entity rows (this includes all the all-outbound paths as well)</li>
 <li>Main entity count (total number of rows)</li>
-<li>Main entity aggregate columns</li>
+<li>Main entity pseudo-columns</li>
 <li>Open facets data</li>
 </ul>
-<p>Since the main entity can have multiple aggregate columns and we might have more than one open facet, we might have to generate more than 4 requests at a time to just update the page. The following is how flow control is going to control these requests:</p>
+<div class="section" id="flow-control-logic">
+<span id="flow-control-logic"></span><h3>Flow-Control Logic<a class="headerlink" href="#flow-control-logic" title="Permalink to this headline">¶</a></h3>
+<p>Since the main entity can have multiple pseudo-columns and we might have more than one open facet, we might have to generate more than 4 requests at a time to update the page. The following is how flow control is going to control these requests:</p>
 <ul>
 <li><p class="first">Only 4 requests will be generated at a time. If a request gets back, we will fire the next cycle of requests.</p>
 </li>
-<li><p class="first">We don’t have a queue of requests in here. Each time that page has been updated or a response gets back, we will go through all the sections to make sure if we need to update them or not. This is the order:</p>
+<li><p class="first">We don’t have a queue of requests here. Each time that page has been updated or a response gets back; we will go through all the sections to make sure if we need to update them or not. ُThe following is the order:</p>
 <ol class="simple">
 <li>Main entity.</li>
 </ol>
-<p>1.1. Main entity aggregate columns from left to right: This is dependent on the previous request. If the main entity request is still pending, we won’t send request for these.</p>
+<p>1.1. Main entity pseudo-columns from left to right (ERMrestJS’s activeList API dictates this order): This is dependent on the previous request. If the main entity request is still pending, we won’t send any requests for these.</p>
 <ol class="simple">
 <li>Main entity count.</li>
 <li>Open facet data from top to bottom.</li>
 </ol>
 </li>
 </ul>
-<p>For example when you go to the recordset page (assume that there’s just one facet open and we don’t have any aggregate columns), the request for main entity, the open facet, and main count will be fired at the same time and sent to ERMrest. If you open three other facets without waiting for the previous one to get back, you will eventually hit the limit of having only 4 pending requests.</p>
-<p>The best way to handle these would be using states and state-management. But in the first implementation, we decided to go with a easier route and used booleans to indicate the state of the page. The following is the list of variables used:</p>
+<p>For example, when you go to the recordset page (assume that there’s just one facet open and we don’t have any pseudo-columns), the request for the main entity, the open facet, and main count will be fired at the same time and sent to ERMrest. If you open three other facets without waiting for the previous one to get back, you will eventually hit the limit of having only 4 pending requests.</p>
+</div>
+<div class="section" id="implementation-details">
+<span id="implementation-details"></span><h3>Implementation Details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h3>
+<p>The best way to handle these would be using states and state-management. But in the first implementation, we decided to go with an easier option and used booleans to indicate the state of the page. The following is the list of variables used:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">flowControlObject</span></code>: This object describes the current cycle of flow control. It has<ul>
 <li><code class="docutils literal notranslate"><span class="pre">maxRequests</span></code>: The maximum concurrent requests (4).</li>
@@ -1346,19 +1355,18 @@
 <li><code class="docutils literal notranslate"><span class="pre">hasLoaded</span></code>: If the request is done and we should show the data.</li>
 <li><code class="docutils literal notranslate"><span class="pre">dirtyResult</span></code>: Whether we should send a request to get the new results.</li>
 <li><code class="docutils literal notranslate"><span class="pre">dirtyCount</span></code>: Whether we should send a request to get the number of matching rows.</li>
-<li><code class="docutils literal notranslate"><span class="pre">aggregatesToInitialize</span></code>: An array that contains the index of aggregate columns that we should get the data for. This is going to populated after each successful request for the main entity.</li>
 <li><code class="docutils literal notranslate"><span class="pre">facetsToPreProcess</span></code>: An array that contains the index of facets that are already open when the page loads (because of annotation or pre-existing filters). This will be populated once during the initialization of recordset and will be used only on the first cycle of flow-control.</li>
 </ul>
 </li>
 </ul>
 <p>Aggregate (pseudo-column) attributes:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">processed</span></code>: <code class="docutils literal notranslate"><span class="pre">processed=false</span></code> means that we have to schedule a request to get the aggregate data. If its value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means either the request is pending or the request is already done.</li>
+<li><code class="docutils literal notranslate"><span class="pre">processed</span></code>: <code class="docutils literal notranslate"><span class="pre">processed=false</span></code> means that we have to schedule a request to get the aggregate data. If its value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means either the request is pending, or the request is already done.</li>
 <li>Facet attributes:<ul>
-<li><code class="docutils literal notranslate"><span class="pre">preProccessed</span></code>: If a facet has some pre-selected filters, we have to call the <code class="docutils literal notranslate"><span class="pre">preProcessFacet</span></code> function for them. If <code class="docutils literal notranslate"><span class="pre">preProccessed=false</span></code>, that means that we have to call that function for the facet or the request has not got back yet and we have to wait. This will function will behave differently based on different facet types.</li>
+<li><code class="docutils literal notranslate"><span class="pre">preProccessed</span></code>: If a facet has some pre-selected filters, we have to call the <code class="docutils literal notranslate"><span class="pre">preProcessFacet</span></code> function for them. If <code class="docutils literal notranslate"><span class="pre">preProccessed=false</span></code>, it means that we have to call the function or the request has not got back yet and we have to wait. The <code class="docutils literal notranslate"><span class="pre">preProcessFacet</span></code> function behaves differently based on different facet types.</li>
 <li>for entity choice-picker facet: It will get the row-names that we need to display for the selected facets.</li>
 <li>for other types of facets: It will create the pre-selected checkboxes without calling ERMrest.</li>
-<li><code class="docutils literal notranslate"><span class="pre">initialized</span></code>: <code class="docutils literal notranslate"><span class="pre">initialized=false</span></code> indicates that we have not initialized the facet yet so we should not display the facet column data. This will be changed to <code class="docutils literal notranslate"><span class="pre">true</span></code>, when we get the initial facet options. It will remain <code class="docutils literal notranslate"><span class="pre">true</span></code> as long as the facet is open. If users close the facet and change the state of page (by changing other facets), this attribute will be changed to <code class="docutils literal notranslate"><span class="pre">false</span></code> in order to hide its outdated content.</li>
+<li><code class="docutils literal notranslate"><span class="pre">initialized</span></code>: <code class="docutils literal notranslate"><span class="pre">initialized=false</span></code> indicates that we have not initialized the facet yet, and we should not display the facet column data. This will be changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> when we get the initial facet options. It will remain <code class="docutils literal notranslate"><span class="pre">true</span></code> as long as the facet is open. If users close the facet and change the state of the page (by changing other facets), this attribute will be changed to <code class="docutils literal notranslate"><span class="pre">false</span></code> to hide its outdated content.</li>
 <li><code class="docutils literal notranslate"><span class="pre">processed</span></code>: <code class="docutils literal notranslate"><span class="pre">processed=false</span></code> means that we have to schedule a request to get the facet data. If its value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means either the request is pending or the displayed data is updated.</li>
 <li><code class="docutils literal notranslate"><span class="pre">isLoading</span></code>: This attribute is used to display the loader for facets. It has no effect on flow-control.</li>
 <li><code class="docutils literal notranslate"><span class="pre">isOpen</span></code>: Indicates whether the facet is open.</li>
@@ -1367,6 +1375,95 @@
 </ul>
 </li>
 </ul>
+</div>
+</div>
+<div class="section" id="record">
+<span id="record"></span><h2>Record<a class="headerlink" href="#record" title="Permalink to this headline">¶</a></h2>
+<p>Record page is different from the recordset page, as in the whole page relies on the main entity request. So no matter what, we have to send the main entity request first, and then we can generate the rest of the requests. The actual flow-control of Record page relies heavily on Recordset flow-control since we’re showing the simplified view of recordset for inline and related tables.</p>
+<p>The following are the category of requests that we need to send in record page:</p>
+<ul class="simple">
+<li>The main entity (this includes all the all-outbound paths as well).</li>
+<li>Inline entity tables.</li>
+<li>All the pseudo-columns (entity set and aggregate) that are displayed or the displayed columns rely on (as part of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> definition).</li>
+<li>Related entity tables.</li>
+<li>All the pseudo-columns (entity set and aggregate) that the related entity tables rely on (as part of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> definition).</li>
+</ul>
+<div class="section" id="flow-control-logic">
+<span id="id1"></span><h3>Flow-Control Logic<a class="headerlink" href="#flow-control-logic" title="Permalink to this headline">¶</a></h3>
+<p>The flow-control of record page is the same as recordset. We don’t have a queue of requests and each time that page has been updated or a response gets back; we will go through all the sections to make sure if we need to update them or not. ُThe following is the order:</p>
+<ol>
+<li><p class="first">Main entity request. If we need to send a request for the main entity (due to an update in some part of the page), flow-control will stop here and waits for the main entity request to get back.</p>
+</li>
+<li><p class="first">Use the ERMrestJS’s activeList API to generate the secondary requests for the page. The following is how this API works:</p>
+<ol class="simple">
+<li>Since we want to allow users to open the citation popup as soon as possible, we’re going to first send all the requests needed for it. So all the pseudo-columns listed in the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> of citation annotation will be sent first.</li>
+<li>We want to show the main section of record app from top to bottom to avoid the jumps as much as possible. But since we can assume that the aggregates are slower than entity set and inline entity requests, we will:</li>
+</ol>
+<p>2.1. Traverse the list of visible columns from top to bottom and generate the requests for columns that only have entity set in their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> or inline columns without any <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>.</p>
+<p>2.2. Traverse the list of visible columns the second time from top to bottom and if the column is aggregate, or has aggregate in its <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>; generate requests for them (and their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> list definition).</p>
+<ol class="simple">
+<li>For the related section, since we’re showing the tables from top to bottom, we don’t need to do the optimization that we did for the main section. We can send the requests from top to bottom (and left to right of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> list).</li>
+</ol>
+<p>To better understand this, let’s assume the following definition (<code class="docutils literal notranslate"><span class="pre">i</span></code> is used to indicate inline table, <code class="docutils literal notranslate"><span class="pre">es</span></code> for entity set, <code class="docutils literal notranslate"><span class="pre">agg</span></code> for aggregate, and <code class="docutils literal notranslate"><span class="pre">r</span></code> for related):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;tag:isrd.isi.edu,2016:visible-columns&quot;: {
+    &quot;detailed&quot;: [
+        {&quot;sourcekey&quot;: &quot;col_1&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;agg_1&quot;]}},
+        {&quot;sourcekey&quot;: &quot;i_1&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;agg_1&quot;, &quot;agg_2&quot;]}},
+        {&quot;sourcekey&quot;: &quot;i_2&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;es_1&quot;, &quot;es_3&quot;, &quot;agg_1&quot;, &quot;agg_3&quot;]}},
+        {&quot;sourcekey&quot;: &quot;col_2&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;es_4&quot;]}},
+        {&quot;sourcekey&quot;: &quot;i_3&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;es_1&quot;, &quot;es_2&quot;]}},
+        {&quot;sourcekey&quot;: &quot;agg_4&quot;},
+        {&quot;sourcekey&quot;: &quot;i_4&quot;},
+    ]
+},
+&quot;tag:isrd.isi.edu,2016:visible-foreign-keys&quot;: {
+    &quot;detailed&quot;: [
+        {&quot;sourcekey&quot;: &quot;r_1&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;agg_4&quot;, &quot;agg_5&quot;]}},
+        {&quot;sourcekey&quot;: &quot;r_2&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;es_1&quot;, &quot;es_5&quot;, &quot;agg_6&quot;, &quot;agg_7&quot;]}},
+        {&quot;sourcekey&quot;: &quot;r_3&quot;, &quot;display&quot;: {&quot;wait_for&quot;: [&quot;es_1&quot;, &quot;es_6&quot;]}},
+        {&quot;sourcekey&quot;: &quot;r_4&quot;},
+    ]
+}
+</pre></div>
+</div>
+<p>The following would be the order of sending the requests (paranthesis has been added for readibility purposes):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">es_4</span><span class="p">),</span> <span class="p">(</span><span class="n">i_3</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_2</span><span class="p">),</span> <span class="p">(</span><span class="n">i_4</span><span class="p">),</span> <span class="p">(</span><span class="n">agg_1</span><span class="p">),</span> <span class="p">(</span><span class="n">i_1</span><span class="p">,</span> <span class="n">agg_2</span><span class="p">),</span> <span class="p">(</span><span class="n">i_2</span><span class="p">,</span> <span class="n">es_3</span><span class="p">,</span> <span class="n">agg_3</span><span class="p">),</span> <span class="p">(</span><span class="n">agg_4</span><span class="p">)</span>
+<span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">agg_4</span><span class="p">,</span> <span class="n">agg_5</span><span class="p">),</span> <span class="p">(</span><span class="n">r_2</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_5</span><span class="p">,</span> <span class="n">agg_6</span><span class="p">,</span> <span class="n">agg_7</span><span class="p">),</span> <span class="p">(</span><span class="n">r_3</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_6</span><span class="p">),</span> <span class="p">(</span><span class="n">r4</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Send requests for all the aggregate columns that are used in the tabular mode of inline tables from to bottom.</p>
+</li>
+<li><p class="first">Send requests for all the aggregate columns that are used in the tabular mode of related tables from top to bottom.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="implementation-details">
+<span id="id2"></span><h3>Implementation Details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h3>
+<p>As we mentioned the logic of ordering the secondary requests is hidden from Chaise and all Chaise knows is the list of <code class="docutils literal notranslate"><span class="pre">requests</span></code> that it has to create. Each returned <code class="docutils literal notranslate"><span class="pre">Request</span></code> object from ERMrestJS is going to have different attributes depending on the type of the request. Each object has a boolean attribute to indicate its type. The following are the list of available attributes for each type:</p>
+<ul class="simple">
+<li>aggregates: If the <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">true</span></code> is avaiable in the returned object, we know that it’s pseudo-column aggregate. The other available attributes are:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">column</span></code>: An <code class="docutils literal notranslate"><span class="pre">ERMrest.PseudoColumn</span></code> object that can be used for generating the requests.</li>
+<li><code class="docutils literal notranslate"><span class="pre">objects</span></code>: An array of objects that signal which part of the page needs this pseudo-column value.<ul>
+<li>If <code class="docutils literal notranslate"><span class="pre">&quot;citation&quot;:</span> <span class="pre">true</span></code> is available on an object, citation is waiting for this value.</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">&quot;column&quot;:</span> <span class="pre">true</span></code> is available on an object, a visible column is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute can be used to find the column.</li>
+<li>If <code class="docutils literal notranslate"><span class="pre">&quot;related&quot;:</span> <span class="pre">true</span></code> is available on an object, a related entity is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute can be used to find the related entity.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>entity sets: If the <code class="docutils literal notranslate"><span class="pre">&quot;entityset&quot;:</span> <span class="pre">true</span></code> is available in the returned object, we know that it’s pseudo-column entity set. It will have the same attributes as aggregate but we had to distinguish between them because Chaise has to use a different API call to get the value.</li>
+<li>inline entities: If <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;:</span> <span class="pre">true</span></code> is available in the returened object, the request belongs to an inline table. <code class="docutils literal notranslate"><span class="pre">index</span></code> is the other attribute that Chaise is using to generate a request for the inline entity.</li>
+<li>related entities: If <code class="docutils literal notranslate"><span class="pre">&quot;related&quot;:</span> <span class="pre">true</span></code> is available in the returened object, the request belongs to an inline table. <code class="docutils literal notranslate"><span class="pre">index</span></code> is the other attribute that Chaise is using to generate a request for the inline entity.</li>
+</ul>
+<p>‌Based on this, Chaise uses the returned list of requests and creates its own copy called <code class="docutils literal notranslate"><span class="pre">requestModels</span></code>. This will allow chaise to add extra attributes for book-keeping. <code class="docutils literal notranslate"><span class="pre">requestModels</span></code> is an array of object with the following attributes:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">activeListModel</span></code>: the exact object that ERMrestJS returns.</li>
+<li><code class="docutils literal notranslate"><span class="pre">processed</span></code>: A boolean to help track of the processed requests. If this is <code class="docutils literal notranslate"><span class="pre">false</span></code>, Chaise will attempt to send a new request for it.</li>
+<li><code class="docutils literal notranslate"><span class="pre">reference</span></code>: Only available on entity set requests. Used for generating the request.</li>
+<li>Other extra log related attributes are only available for entity set and aggregate requests.</li>
+</ul>
+</div>
 </div>
 </div>
 

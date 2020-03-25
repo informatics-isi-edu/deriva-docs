@@ -1365,8 +1365,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">HatracStore</span><span class="p">(</span>
             <span class="n">protocol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="n">session_config</span><span class="p">)</span>
 
-        <span class="c1"># init dcctx cid to a default</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="c1"># init dcctx cid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dcctx_cid&quot;</span><span class="p">,</span> <span class="s2">&quot;api/&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
 
         <span class="c1"># process config file</span>
         <span class="k">if</span> <span class="n">config_file</span><span class="p">:</span>

@@ -1349,7 +1349,7 @@
     <span class="n">DefaultTransferStateBaseName</span> <span class="o">=</span> <span class="s2">&quot;.deriva-upload-state&quot;</span>
     <span class="n">DefaultTransferStateFileName</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">-</span><span class="si">%s</span><span class="s2">.json&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dcctx_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dcctx_cid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server_url</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">catalog_model</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1371,7 +1371,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">override_config_file</span> <span class="o">=</span> <span class="n">config_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">override_credential_file</span> <span class="o">=</span> <span class="n">credential_file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDefaultServer</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">server</span> <span class="k">else</span> <span class="n">server</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dcctx_id</span> <span class="o">=</span> <span class="n">dcctx_id</span> <span class="k">if</span> <span class="n">dcctx_id</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dcctx_cid</span> <span class="o">=</span> <span class="n">dcctx_cid</span> <span class="k">if</span> <span class="n">dcctx_cid</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1414,7 +1414,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">HatracStore</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">credentials</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="n">session_config</span><span class="p">)</span>
 
         <span class="c1"># init dcctx cid to a default</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dcctx_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dcctx_cid</span><span class="p">)</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">         Configuration initialization - this is a bit complex because we allow for:</span>
@@ -2373,8 +2373,12 @@
 
 <div class="viewcode-block" id="GenericUploader"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.GenericUploader">[docs]</a><span class="k">class</span> <span class="nc">GenericUploader</span><span class="p">(</span><span class="n">DerivaUpload</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">DerivaUpload</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">,</span> <span class="n">credential_file</span><span class="o">=</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dcctx_cid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">DerivaUpload</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                              <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">,</span>
+                              <span class="n">credential_file</span><span class="o">=</span><span class="n">credential_file</span><span class="p">,</span>
+                              <span class="n">server</span><span class="o">=</span><span class="n">server</span><span class="p">,</span>
+                              <span class="n">dcctx_cid</span><span class="o">=</span><span class="n">dcctx_cid</span><span class="p">)</span>
 
 <div class="viewcode-block" id="GenericUploader.getVersion"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.GenericUploader.getVersion">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">getVersion</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>

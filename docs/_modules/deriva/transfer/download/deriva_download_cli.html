@@ -1313,7 +1313,7 @@
 
 <div class="viewcode-block" id="DerivaDownloadCLI.get_downloader"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download_cli.DerivaDownloadCLI.get_downloader">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_downloader</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">GenericDownloader</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">GenericDownloader</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">dcctx_cid</span><span class="o">=</span><span class="s2">&quot;cli/&quot;</span> <span class="o">+</span> <span class="n">DerivaDownloadCLI</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DerivaDownloadCLI.download"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download_cli.DerivaDownloadCLI.download">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
@@ -1330,7 +1330,6 @@
             <span class="n">server</span><span class="p">[</span><span class="s2">&quot;host&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">host</span>
 
         <span class="n">downloader</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_downloader</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
-        <span class="n">downloader</span><span class="o">.</span><span class="n">set_dcctx_cid</span><span class="p">(</span><span class="n">downloader</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">downloader</span><span class="o">.</span><span class="n">download</span><span class="p">()</span></div>
 

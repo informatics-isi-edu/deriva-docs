@@ -11,36 +11,43 @@ DERIVA Documentation
 
 .. toctree::
   :maxdepth: 1
-  :caption: User's Guide to DERIVA
+  :caption: User's Guide
 
-  using-deriva/introduction
-  using-deriva/key-concepts
-  using-deriva/discovering-data
-  using-deriva/exporting-data
-  using-deriva/sharing-and-citing-data
-
-.. toctree::
-  :maxdepth: 1
-  :caption: Data Submitter's Guide to DERIVA
-
-  submitting-data-guide/introduction
-  submitting-data-guide/key-concepts
-  submitting-data-guide/create-edit-delete-records-metadata
-  submitting-data-guide/uploading-files
+  user-guide/introduction
+  user-guide/key-concepts
+  user-guide/discovering-data
+  user-guide/exporting-data
+  user-guide/sharing-and-citing-data
 
 .. toctree::
   :maxdepth: 1
-  :caption: Original Guide
+  :caption: Data Submitter's Guide
 
-  users-guide/using-chaise
-  users-guide/managing-data
-  users-guide/project-tutorial
-  users-guide/annotations/index
+  data-submitter-guide/introduction
+  data-submitter-guide/key-concepts
+  data-submitter-guide/create-edit-delete-records-metadata
+  data-submitter-guide/uploading-files
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Programmer's Guide
+
+  programmer-guide/introduction
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Data Modeler's Guide
+
+  data-modeler-guide/introduction
+  data-modeler-guide/key-concepts
+  data-modeler-guide/project-tutorial
+  data-modeler-guide/annotations/index
 
 .. toctree::
   :maxdepth: 2
   :caption: Reference
 
+  deriva-client
   deriva-py/index
   deriva-qt/index
   deriva-catalog-manage/index

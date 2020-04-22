@@ -42,7 +42,7 @@ rm -f ./ermrestjs && ln -sv ../repo-src/ermrestjs/docs/ ./ermrestjs
 rm -f ./chaise && ln -sv ../repo-src/chaise/docs/ ./chaise
 rm -f ./deriva-catalog-manage && ln -sv ../repo-src/deriva-catalog-manage/docs/ ./deriva-catalog-manage
 
-cd ./users-guide/
+cd ./data-modeler-guide/
 ln -sfv ../deriva-py/project-tutorial.md
 
 cd ./annotations/

@@ -1,1 +1,0 @@
-../ermrestjs/user-docs/pseudo-columns.md

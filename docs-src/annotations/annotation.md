@@ -1,1 +1,0 @@
-../ermrestjs/user-docs/annotation.md

@@ -44,6 +44,11 @@ DERIVA Documentation
   data-modeler-guide/annotations/index
 
 .. toctree::
+  :maxdepth: 1
+  :caption: Annotations Guide
+  annotations/index
+
+.. toctree::
   :maxdepth: 2
   :caption: Reference
 

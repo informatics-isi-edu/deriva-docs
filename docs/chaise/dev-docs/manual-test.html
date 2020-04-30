@@ -1335,15 +1335,6 @@ You are not authorized to perform this action. <a class="reference external" hre
 </li>
 </ul>
 </div>
-<div class="section" id="error-without-session-401-error">
-<span id="error-without-session-401-error"></span><h2>409 error without session -&gt; 401 error<a class="headerlink" href="#error-without-session-401-error" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li>Navigate to a creation form that has columns that require a user to be logged in to change (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordedit/#2/RNASeq:Study">Example</a>)</li>
-<li>open another tab and log out of the application</li>
-<li>go back to original tab and submit the data</li>
-<li>instead of a 409 conflict error (because an anonymous user can’t modify some columns like RCB), a login dialog should be provided to the user</li>
-</ul>
-</div>
 <div class="section" id="record-url-to-page-pending">
 <span id="record-url-to-page-pending"></span><h2>Record (url to page pending..)<a class="headerlink" href="#record-url-to-page-pending" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -1506,6 +1497,56 @@ You are not authorized to perform this action. <a class="reference external" hre
 </ul>
 </li>
 </ol>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="testing-session-timed-out-and-different-user-data-mutation-events">
+<span id="testing-session-timed-out-and-different-user-data-mutation-events"></span><h1>Testing Session Timed out (and different user) data mutation events<a class="headerlink" href="#testing-session-timed-out-and-different-user-data-mutation-events" title="Permalink to this headline">¶</a></h1>
+<p>The UX currently doesn’t update the user when their session state has changed. In some cases a user could log in and navigate to a page that allows create or update, then have their log in status change prior to submitting the data to be mutated. They could have had their session time out (treated as an anonymous user) or changed to a  different user entirely. This pertains to create/update in <code class="docutils literal notranslate"><span class="pre">recordedit</span></code>, pure and binary add in <code class="docutils literal notranslate"><span class="pre">record</span></code>, and anywhere that we show tables with shows thatcan be deleted.</p>
+<div class="section" id="testing-workflow">
+<span id="testing-workflow"></span><h2>Testing workflow<a class="headerlink" href="#testing-workflow" title="Permalink to this headline">¶</a></h2>
+<p>For each of the pages listed below, the following should be done to verify that the appropriate errors occur and dialogs are shown:</p>
+<ul class="simple">
+<li>Navigate to a creation form that requires a user to be logged in (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordedit/#2/RNASeq:Study">Example</a>)<ul>
+<li>fill in the required fields</li>
+<li>open another tab and log out of the application</li>
+<li>go back to original tab and submit the data</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to a <strong>different</strong> user</li>
+<li>now the “Unexpected Change of Login Status” error dialog should be shown</li>
+<li>in another tab, log out again</li>
+<li>go back to the original tab and click “continue” as if the login state was fixed</li>
+<li>a different error dialog with the same title, “Unexpected Change of Login Status”, should be shown</li>
+<li>click the “login” button and log in as the orignial user</li>
+<li>the data should submit properly after that</li>
+</ul>
+</li>
+<li>Navigate to a record page that requires a user to be logged in to mutate one of the related entities (<a class="reference external" href="https://dev.rebuildingakidney.org/~jchudy/chaise/record/#2/Gene_Expression:Specimen/RID=N-GXA4">Example</a>)<ul>
+<li>click “add record” for a related entity that is pure and binary. The “Anatomical Source” related entity should be pure and binary</li>
+<li>select 1 or more rows to link to the specimen</li>
+<li>open another tab and log out of the application</li>
+<li>then login to a <strong>different</strong> user</li>
+<li>go back to the original tab and submit the selected rows</li>
+<li>the “Unexpected Change of Login Status” error dialog should be shown with a continue button</li>
+<li>in another tab, log out again and log back in as the original user</li>
+<li>go back to the original tab and click “continue” once the login state has been resolved</li>
+<li>the rows should be properly added after clicking continue</li>
+</ul>
+</li>
+<li>Navigate to a page with rows that can be deleted (<a class="reference external" href="https://dev.rebuildingakidney.org/~jchudy/chaise/recordset/#2/Gene_Expression:Specimen/">Example</a>)<ul>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and delete one of the rows</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to a <strong>different</strong> user</li>
+<li>now the “Unexpected Change of Login Status” error dialog should be shown</li>
+<li>in another tab, log out again and log back in as the original user</li>
+<li>go back to the original tab and click “continue” once the login state has been resolved</li>
+<li>either the confirm dialog will show, or the row will be deleted<ul>
+<li>hopefully you followed the link above and removed a row on dev :)</li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 </div>

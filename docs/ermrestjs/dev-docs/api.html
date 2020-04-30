@@ -1380,7 +1380,7 @@ to use for ERMrest JavaScript agents.</p>
 <li><a class="reference external" href="#new_ERMrest.Catalogs_new">new Catalogs(server)</a></li>
 <li><a class="reference external" href="#ERMrest.Catalogs+length">.length()</a> ⇒ <code>Number</code></li>
 <li><a class="reference external" href="#ERMrest.Catalogs+names">.names()</a> ⇒ <code>Array</code></li>
-<li><a class="reference external" href="#ERMrest.Catalogs+get">.get(id)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Catalogs+get">.get(id, dontFetchSchema)</a> ⇒ <code>Promise</code></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.Catalog">.Catalog</a><ul>
@@ -2396,7 +2396,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#new_ERMrest.Catalogs_new">new Catalogs(server)</a></li>
 <li><a class="reference external" href="#ERMrest.Catalogs+length">.length()</a> ⇒ <code>Number</code></li>
 <li><a class="reference external" href="#ERMrest.Catalogs+names">.names()</a> ⇒ <code>Array</code></li>
-<li><a class="reference external" href="#ERMrest.Catalogs+get">.get(id)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Catalogs+get">.get(id, dontFetchSchema)</a> ⇒ <code>Promise</code></li>
 </ul>
 </li>
 </ul>
@@ -2429,8 +2429,8 @@ boolean<p>&amp;gt;</p>
 <span id="catalogs-names-code-array-code"></span><h3>catalogs.names() ⇒ <code>Array</code><a class="headerlink" href="#catalogs-names-code-array-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Catalogs"><code>Catalogs</code></a><strong>Returns</strong>: <code>Array</code> - Returns an array of names of catalogs.<a name="ERMrest.Catalogs+get"></a></p>
 </div>
-<div class="section" id="catalogs-get-id-code-promise-code">
-<span id="catalogs-get-id-code-promise-code"></span><h3>catalogs.get(id) ⇒ <code>Promise</code><a class="headerlink" href="#catalogs-get-id-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="catalogs-get-id-dontfetchschema-code-promise-code">
+<span id="catalogs-get-id-dontfetchschema-code-promise-code"></span><h3>catalogs.get(id, dontFetchSchema) ⇒ <code>Promise</code><a class="headerlink" href="#catalogs-get-id-dontfetchschema-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Get a catalog by id. This call does catalog introspection.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Catalogs"><code>Catalogs</code></a><strong>Returns</strong>: <code>Promise</code> - a promise that returns the catalog  if resolved or
 <a class="reference external" href="#ERMrest.TimedOutError">TimedOutError</a>, <a class="reference external" href="#ERMrest.InternalServerError">InternalServerError</a>, <a class="reference external" href="#ERMrest.ServiceUnavailableError">ServiceUnavailableError</a>,
@@ -2448,6 +2448,11 @@ boolean<p>&amp;gt;</p>
 <td>id</td>
 <td><code>string</code></td>
 <td>Catalog ID.</td>
+</tr>
+<tr>
+<td>dontFetchSchema</td>
+<td><code>Boolean</code></td>
+<td>whether we should fetch the schemas</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Catalog"></a></p>

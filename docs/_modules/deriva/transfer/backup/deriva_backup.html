@@ -1311,8 +1311,8 @@
             <span class="s2">&quot;output_path&quot;</span><span class="p">:</span> <span class="s2">&quot;catalog-schema&quot;</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="n">BASE_DATA_QUERY_PATH</span> <span class="o">=</span> <span class="s2">&quot;/entity/</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">?limit=none&quot;</span>
-    <span class="n">BASE_DATA_OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;records/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">.json&quot;</span>
+    <span class="n">BASE_DATA_QUERY_PATH</span> <span class="o">=</span> <span class="s2">&quot;/entity/</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span>
+    <span class="n">BASE_DATA_OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;records/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span>
     <span class="n">BASE_ASSET_OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;assets&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1377,7 +1377,10 @@
                     <span class="n">query_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BASE_DATA_QUERY_PATH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">q_sname</span><span class="p">,</span> <span class="n">q_tname</span><span class="p">)</span>
                     <span class="n">query_proc</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                     <span class="n">query_proc</span><span class="p">[</span><span class="s2">&quot;processor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_format</span>
-                    <span class="n">query_proc</span><span class="p">[</span><span class="s2">&quot;processor_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;query_path&quot;</span><span class="p">:</span> <span class="n">query_path</span><span class="p">,</span> <span class="s2">&quot;output_path&quot;</span><span class="p">:</span> <span class="n">output_path</span><span class="p">}</span>
+                    <span class="n">query_proc_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;query_path&quot;</span><span class="p">:</span> <span class="n">query_path</span><span class="p">,</span> <span class="s2">&quot;output_path&quot;</span><span class="p">:</span> <span class="n">output_path</span><span class="p">}</span>
+                    <span class="k">if</span> <span class="n">data_format</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;json-stream&quot;</span><span class="p">,</span> <span class="s2">&quot;csv&quot;</span><span class="p">):</span>
+                        <span class="n">query_proc_params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;paged_query&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;paged_query_size&quot;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">})</span>
+                    <span class="n">query_proc</span><span class="p">[</span><span class="s2">&quot;processor_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_proc_params</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;catalog&quot;</span><span class="p">][</span><span class="s2">&quot;query_processors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query_proc</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">generate_asset_configs</span><span class="p">()</span>

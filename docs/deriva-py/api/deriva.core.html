@@ -1341,7 +1341,7 @@
 <span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.base_cli.BaseCLI">
-<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.0.3'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.1'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="deriva.core.base_cli.BaseCLI.parse_cli">
@@ -2851,12 +2851,12 @@ to assure change is only applied to expected state.</p>
 
 <dl class="method">
 <dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">
-<code class="descname">getAsFile</code><span class="sig-paren">(</span><em>path</em>, <em>destfilename</em>, <em>headers={}</em>, <em>callback=None</em>, <em>delete_if_empty=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getAsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getAsFile</code><span class="sig-paren">(</span><em>path</em>, <em>destfilename</em>, <em>headers={}</em>, <em>callback=None</em>, <em>delete_if_empty=False</em>, <em>paged=False</em>, <em>page_size=100000</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getAsFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve catalog data streamed to destination file.
 Caller is responsible to clean up file even on error, when the file may or may not be exist.
 If “delete_if_empty” is True, the file will be inspected for “empty” content. In the case of
 json/json-stream content, the presence of a single empty JSON object will be tested for. In the case of
-CSV content, the file will be parsed with CSV reader to determine that only a single header line and now row
+CSV content, the file will be parsed with CSV reader to determine that only a single header line and no row
 data is present.</p>
 </dd></dl>
 

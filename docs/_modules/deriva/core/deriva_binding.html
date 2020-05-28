@@ -1132,6 +1132,30 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/console.html#global-variables">Global Variables</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html">Use navbar app in external HTML pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#how-to-add-navbar-app">How to add navbar app</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#install-chaise">1. Install Chaise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#include-chaise-dependencies">2. Include Chaise dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#use-navbar">3. Use navbar</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#sample-html-page">Sample HTML page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/navbar-app.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../chaise/user-docs/login-app.html">Use login app in external HTML pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#how-to-add-login-app">How to add login app</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#install-chaise">1. Install Chaise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#include-chaise-dependencies">2. Include Chaise dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#use-login">3. Use login</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#sample-html-page">Sample HTML page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/login-app.html#notes">Notes</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../../chaise/user-docs/logging.html">Logging</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/logging.html#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/logging.html#overview">Overview</a></li>
@@ -1498,14 +1522,16 @@
         <span class="k">return</span> <span class="n">r</span>
 
 <div class="viewcode-block" id="DerivaBinding.set_credentials"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaBinding.set_credentials">[docs]</a>    <span class="k">def</span> <span class="nf">set_credentials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">server</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">credentials</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;cookie&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;cookie&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
             <span class="n">cname</span><span class="p">,</span> <span class="n">cval</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;cookie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">server</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span> <span class="ow">in</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="s1">&#39;password&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">post_authn_session</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">&#39;bearer-token&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer </span><span class="si">{token}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;bearer-token&#39;</span><span class="p">])})</span></div>
+        <span class="k">elif</span> <span class="s1">&#39;bearer-token&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer </span><span class="si">{token}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;bearer-token&#39;</span><span class="p">])})</span>
+        <span class="k">elif</span> <span class="s1">&#39;username&#39;</span> <span class="ow">in</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="s1">&#39;password&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">post_authn_session</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DerivaBinding.get_authn_session"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaBinding.get_authn_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_authn_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;deriva-client-context&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dcctx</span><span class="o">.</span><span class="n">encoded</span><span class="p">()</span> <span class="p">}</span>

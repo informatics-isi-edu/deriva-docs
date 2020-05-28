@@ -1132,6 +1132,30 @@
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/console.html#global-variables">Global Variables</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html">Use navbar app in external HTML pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#how-to-add-navbar-app">How to add navbar app</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#install-chaise">1. Install Chaise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#include-chaise-dependencies">2. Include Chaise dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#use-navbar">3. Use navbar</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#sample-html-page">Sample HTML page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/navbar-app.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../chaise/user-docs/login-app.html">Use login app in external HTML pages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/login-app.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/login-app.html#how-to-add-login-app">How to add login app</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/login-app.html#install-chaise">1. Install Chaise</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/login-app.html#include-chaise-dependencies">2. Include Chaise dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/login-app.html#use-login">3. Use login</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/login-app.html#sample-html-page">Sample HTML page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/login-app.html#notes">Notes</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="../../chaise/user-docs/logging.html">Logging</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/logging.html#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/logging.html#overview">Overview</a></li>
@@ -1318,35 +1342,42 @@
 <ol class="simple">
 <li><a class="reference external" href="https://en.wikipedia.org/wiki/Makefile">make</a>: Make is required for any build or development. With <code class="docutils literal notranslate"><span class="pre">make</span></code> only the non-minified package can be built and installed.</li>
 <li><a class="reference external" href="https://www.nodejs.org">Node.js</a> (v 6.x): Node is required for most development operations including linting, minifying, and testing.</li>
-<li>[]</li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestdatautils">ErmrestDataUtils</a>: This package is only used in test framework. If you just want to install ERMrestJS, you won’t need it.</li>
 </ol>
 </div>
 <div class="section" id="building-the-package">
 <span id="building-the-package"></span><h2>Building The Package<a class="headerlink" href="#building-the-package" title="Permalink to this headline">¶</a></h2>
-<p>To build the non-minified and angular binding packages run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make package
-</pre></div>
-</div>
-<p>If you want to build the minified package, you will need to have <code class="docutils literal notranslate"><span class="pre">Node.js</span></code> installed and on your path. The build script will pull in all of the
-dependencies into the <code class="docutils literal notranslate"><span class="pre">/build/</span></code> directory.</p>
+<p>If you want to build the package, you will need to have <code class="docutils literal notranslate"><span class="pre">Node.js</span></code> installed and on your path. The build script will pull in all of the
+dependencies into the <code class="docutils literal notranslate"><span class="pre">/dist/</span></code> directory.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make all
 </pre></div>
 </div>
+<p>Even though this command will not deploy the package, during build we will inject some build-related parameters into the code. So you should make sure these environment variables are properly defined. You can find more information about these variables in the next section.</p>
 </div>
 <div class="section" id="deploying">
 <span id="deploying"></span><h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
 <ol>
-<li><p class="first">First you need to set <code class="docutils literal notranslate"><span class="pre">ERMRESTJSDIR</span></code> to specify a target deployment location. By default, the
-install target is <code class="docutils literal notranslate"><span class="pre">/var/www/html/ermrestjs</span></code>. If this directory does not exist,
-it will first create it. You may need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <em>super user</em>
-privileges depending on the installation directory you choose.</p>
-<p><strong>Important Note</strong>: A very silly thing to do would be to set your deployment directory to root <code class="docutils literal notranslate"><span class="pre">/</span></code> and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>. This would be very silly indeed, and would probably result in some corruption of your operating system. Surely, no one would ever do this. But, in the off chance that one might attempt such silliness, the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> rule specifies a <code class="docutils literal notranslate"><span class="pre">dont_install_in_root</span></code> prerequisite that attempts to put a stop to any such silliness before it goes to far.</p>
+<li><p class="first">First you need to setup some environment variables to tell ERMRestJS where it should install the package. The following are the variables and their default values:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WEB_URL_ROOT</span><span class="o">=/</span>
+<span class="n">WEB_INSTALL_ROOT</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span>
+<span class="n">ERMRESTJS_REL_PATH</span><span class="o">=</span><span class="n">ermrestjs</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>Which means EMRrestJS build folder will be copied to <code class="docutils literal notranslate"><span class="pre">/var/www/html/ermrestjs/</span></code> location by default. And ERMrestJS will be access by <code class="docutils literal notranslate"><span class="pre">/ermrestjs/</span></code> URL path when deployed. If that is not the case in your deployment, you should modify the variables accordingly.</p>
+<p>Notes:</p>
+<ul class="simple">
+<li>All the variables MUST have a trailing <code class="docutils literal notranslate"><span class="pre">/</span></code>.</li>
+<li>If you’re installing remotely, since we’re using the <code class="docutils literal notranslate"><span class="pre">WEB_INSTALL_ROOT</span></code> in <code class="docutils literal notranslate"><span class="pre">rsync</span></code> command, you can use a remote location <code class="docutils literal notranslate"><span class="pre">username&#64;host:public_html/</span></code> for this variable.</li>
+<li>A very silly thing to do would be to set your deployment directory to root <code class="docutils literal notranslate"><span class="pre">/</span></code> and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>. This would be very silly indeed, and would probably result in some corruption of your operating system. Surely, no one would ever do this. But, in the off chance that one might attempt such silliness, the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> rule specifies a <code class="docutils literal notranslate"><span class="pre">dont_install_in_root</span></code> prerequisite that attempts to put a stop to any such silliness before it goes too far.</li>
+</ul>
 </li>
-<li><p class="first">Run the following command,</p>
+<li><p class="first">After making sure the variables are properly set, run the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make install
 </pre></div>
 </div>
+<blockquote>
+<div><p>If the given directory does not exist, it will first create it. So you may need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <em>super user</em> privileges depending on the installation directory you choose.</p>
+</div></blockquote>
 </li>
 </ol>
 </div>
@@ -1358,6 +1389,8 @@ markdown API documentation.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make doc
 </pre></div>
 </div>
+<p>By doing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>, it will automatically create the API documentation for you.
+So you don’t necessarily need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">doc</span></code>.</p>
 </div>
 <div class="section" id="unit-testing">
 <span id="unit-testing"></span><h2>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h2>

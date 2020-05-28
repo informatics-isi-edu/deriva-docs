@@ -1339,20 +1339,21 @@
 </style>
 <div class="section" id="use-login-app-in-external-html-pages">
 <span id="use-login-app-in-external-html-pages"></span><h1>Use login app in external HTML pages<a class="headerlink" href="#use-login-app-in-external-html-pages" title="Permalink to this headline">¶</a></h1>
-<p>This documentation focuses on login and how it can be used in external  HTML pages.</p>
+<p>This documentation focuses on login and how it can be used in external HTML pages.</p>
 <div class="section" id="table-of-contents">
 <span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="#how-to-add-login-app">How to add login app</a><ul>
+<li><a class="reference external" href="#how-to-add-navbar-app">How to add navbar app</a><ul>
 <li><a class="reference external" href="#1-install-chaise">1. Install Chaise</a></li>
 <li><a class="reference external" href="#2-include-chaise-dependencies">2. Include Chaise dependencies</a><ul>
-<li><a class="reference external" href="#21-prefetch-chaise-dependencies">2.1. Prefetch Chaise dependencies</a></li>
+<li><a class="reference external" href="#21-prefetch-chaise-dependencies-optional">2.1. Prefetch Chaise dependencies</a></li>
+<li><a class="reference external" href="#22-prefetch-custom-styles-optional">2.2. Prefetch custom styles</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#3-use-login">3. Use login</a></li>
+<li><a class="reference external" href="#3-use-navbar">3. Use navbar</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#sample-html-pages">Sample HTML page</a></li>
+<li><a class="reference external" href="#sample-html-page">Sample HTML page</a></li>
 <li><a class="reference external" href="#notes">Notes</a></li>
 </ul>
 </div>
@@ -1380,7 +1381,8 @@
 <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>The position of where you’re adding these include statements is very important. It HAS TO be BEFORE <code class="docutils literal notranslate"><span class="pre">login.app.js</span></code>.  Adding them after <code class="docutils literal notranslate"><span class="pre">login.app.js</span></code> defeats the purpose of prefetching and actually causes duplicated fetching. You should not copy the contents of <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> manually and this should be part of the automated process of building Chaise and your other apps (Since the list generation is controlled by Chaise, we might update the list and therefore you should make sure you’re always getting the latest list of dependencies.)</p>
+<p>The position of where you’re adding these include statements is very important. It HAS TO be BEFORE <code class="docutils literal notranslate"><span class="pre">login.app.js</span></code>.  Adding them after <code class="docutils literal notranslate"><span class="pre">login.app.js</span></code> defeats the purpose of prefetching and actually causes duplicated fetching.</p>
+<p>You should not copy the contents of <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> manually and this should be part of the automated process of building Chaise and your other apps (Since the list generation is controlled by Chaise, we might update the list and therefore you should make sure you’re always getting the latest list of dependencies.)</p>
 <p>If you’re using Jekyll, you can:</p>
 <ul>
 <li><p class="first">After <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done Chaise, copy the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> file into your <code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder.</p>
@@ -1420,7 +1422,7 @@
 </div>
 <div class="section" id="sample-html-page">
 <span id="sample-html-page"></span><h2>Sample HTML page<a class="headerlink" href="#sample-html-page" title="Permalink to this headline">¶</a></h2>
-<p>If you want to look at a sample HTML page, you can take a look at <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/lib/login/sample-login.html">sample-login.html file in chaise</a>.</p>
+<p>If you want to look at a sample HTML page, you can take a look at <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/lib/login/sample-login.html">sample-login.html file in Chaise</a>.</p>
 <p><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/lib/login/sample-loginOnRbk.html">This</a> is the RBK home page with the login app in the login. The styling of this page will be a little off as there are conflicts in the CSS classes used on this page and in chaise. These CSS rule conflicts will have to be resolved manually on the RBK home page by either changing the common class names like header and footer or overriding the chaise styles.</p>
 </div>
 <div class="section" id="notes">

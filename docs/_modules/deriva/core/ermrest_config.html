@@ -789,6 +789,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#download-query-parameter">Download Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#defaults-query-parameter">Defaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
@@ -797,6 +798,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/rest.html#entity-resolution">Entity Resolution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/rest.html#entity-creation">Entity Creation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrest/api-doc/data/rest.html#entity-creation-with-defaults">Entity Creation with Defaults</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../ermrest/api-doc/data/rest.html#idempotent-entity-creation">Idempotent Entity Creation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrest/api-doc/data/rest.html#entity-update">Entity Update</a></li>
@@ -1862,7 +1864,7 @@
 <div class="viewcode-block" id="KeyedList.append"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_config.KeyedList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Append element to list and record its key.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Element name </span><span class="si">%s</span><span class="s1"> already exists.&#39;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Element name </span><span class="si">%s</span><span class="s1"> already exists.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">,))</span>
         <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elements</span><span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span></div></div>
 
@@ -2222,7 +2224,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="n">_constraint_name_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_doc</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unique_columns</span> <span class="o">=</span> <span class="n">KeyedList</span><span class="p">([</span>
             <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">key_doc</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">]</span>
@@ -2300,7 +2302,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="n">_constraint_name_parts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fkey_doc</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">else</span><span class="p">:</span>

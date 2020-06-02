@@ -791,6 +791,7 @@
 <li class="toctree-l3"><a class="reference internal" href="naming.html#download-query-parameter">Download Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="naming.html#defaults-query-parameter">Defaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="naming.html#limit-query-parameter">Limit Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="naming.html#data-paging">Data Paging</a></li>
 </ul>
@@ -799,6 +800,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#entity-resolution">Entity Resolution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#entity-creation">Entity Creation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#entity-creation-with-defaults">Entity Creation with Defaults</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#idempotent-entity-creation">Idempotent Entity Creation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#entity-update">Entity Update</a></li>
@@ -1470,6 +1472,18 @@ column1,column2
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>
 </ul>
+</div>
+<div class="section" id="idempotent-entity-creation">
+<span id="idempotent-entity-creation"></span><h3>Idempotent Entity Creation<a class="headerlink" href="#idempotent-entity-creation" title="Permalink to this headline">¶</a></h3>
+<p>The POST operation is also used to create new entity records unless they already exist, using an entity resource data name of the form:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">?onconflict=skip</span></code></li>
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">?onconflict=skip</span></code></li>
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">?defaults=</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">&amp;onconflict=skip</span></code></li>
+</ul>
+<p>In this request variant, input rows with keys matching existing data are presumed to be redundant and are discarded. No attempt is made to
+compare or preserve non-key material from the discarded inputs. This <code class="docutils literal notranslate"><span class="pre">onconflict=skip</span></code> behavior may be mixed with the other <code class="docutils literal notranslate"><span class="pre">defaults</span></code> and <code class="docutils literal notranslate"><span class="pre">nondefaults</span></code> query parameters described previously.</p>
+<p>The input and output are identical to previous descriptions, except that discarded input rows will not be represented in the response.</p>
 </div>
 </div>
 <div class="section" id="entity-update">

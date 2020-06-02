@@ -791,6 +791,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#download-query-parameter">Download Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#defaults-query-parameter">Defaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#limit-query-parameter">Limit Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-paging">Data Paging</a></li>
 </ul>
@@ -799,6 +800,7 @@
 <li class="toctree-l3"><a class="reference internal" href="rest.html#entity-resolution">Entity Resolution</a></li>
 <li class="toctree-l3"><a class="reference internal" href="rest.html#entity-creation">Entity Creation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="rest.html#entity-creation-with-defaults">Entity Creation with Defaults</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rest.html#idempotent-entity-creation">Idempotent Entity Creation</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="rest.html#entity-update">Entity Update</a></li>
@@ -1363,6 +1365,7 @@
 <li>the <code class="docutils literal notranslate"><span class="pre">limit</span></code> parameter to define query result paging length</li>
 <li>the <code class="docutils literal notranslate"><span class="pre">accept</span></code> parameter to override HTTP <code class="docutils literal notranslate"><span class="pre">Accept</span></code> header for content negotiation</li>
 <li>the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> and <code class="docutils literal notranslate"><span class="pre">nondefaults</span></code> parameters to modify the behavior of POST operations to the <code class="docutils literal notranslate"><span class="pre">entity</span></code> API</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">onconflict</span></code> paramter to modify the behavior of POST operations to the <code class="docutils literal notranslate"><span class="pre">entity</span></code> API</li>
 </ul>
 </li>
 </ul>
@@ -1880,6 +1883,18 @@
 <li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">?nondefaults=</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> …</li>
 </ul>
 <p>A list of one or more <em>column name</em> indicates columns of the target table which should be populated using client-supplied values, overriding an implicit default behavior. This is primarily useful for administrative clients who are copying table data including existing <code class="docutils literal notranslate"><span class="pre">RID</span></code> values from one table or catalog to another. See the <a class="reference internal" href="rest.html#entity-creation-with-defaults"><span class="std std-ref">Entity Creation with Defaults</span></a> operation documentation for more explanation.</p>
+</div>
+<div class="section" id="onconflict-query-parameter">
+<span id="onconflict-query-parameter"></span><h2>Onconflict Query Parameter<a class="headerlink" href="#onconflict-query-parameter" title="Permalink to this headline">¶</a></h2>
+<p>An optional <code class="docutils literal notranslate"><span class="pre">onconflict</span></code> query parameter can be used with the <code class="docutils literal notranslate"><span class="pre">POST</span></code> operation on the <code class="docutils literal notranslate"><span class="pre">entity</span></code> API:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>table name</em> <code class="docutils literal notranslate"><span class="pre">?onconflict=</span></code> <em>action</em></li>
+</ul>
+<p>An action name specifies behavior when an input row matches an existing row in named table:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">skip</span></code>: discard the input row as a presumed idempotent duplicate</li>
+<li><code class="docutils literal notranslate"><span class="pre">abort</span></code>: abort the request on this collision of unique keys (default)</li>
+</ul>
 </div>
 <div class="section" id="limit-query-parameter">
 <span id="limit-query-parameter"></span><h2>Limit Query Parameter<a class="headerlink" href="#limit-query-parameter" title="Permalink to this headline">¶</a></h2>

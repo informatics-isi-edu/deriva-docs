@@ -1385,9 +1385,14 @@
 </div>
 <p>The position of where you’re adding these include statements is very important. It HAS TO be BEFORE <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code>.  Adding them after <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code> defeats the purpose of prefetching and actually causes duplicated fetching.</p>
 <p>You should not copy the contents of <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> manually and this should be part of the automated process of building Chaise and your other apps (Since the list generation is controlled by Chaise, we might update the list and therefore you should make sure you’re always getting the latest list of dependencies.)</p>
-<p>If you’re using Jekyll, you can:</p>
-<ul>
-<li><p class="first">After <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done Chaise, copy the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> file into your <code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder.</p>
+<p>If you’re using <a class="reference external" href="https://jekyllrb.com">Jekyll</a>, the following are the steps on how you can achieve this:</p>
+<ol>
+<li><p class="first">After <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done in Chaise, copy the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> file into your <code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder.</p>
+<ul class="simple">
+<li>As it was mentioned, this part MUST be part of your automated build process, and should not be done manually.g</li>
+<li><code class="docutils literal notranslate"><span class="pre">dist</span></code> folder is created by <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> in your speicified build target (by default it’s <code class="docutils literal notranslate"><span class="pre">/var/www/html/chaise/</span></code>), so you have to make sure <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done before copying the file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder <a class="reference external" href="https://jekyllrb.com/docs/includes/">is specific to Jekyll</a>. You should be able to find it in the root location of your Jekyll website.</li>
+</ul>
 </li>
 <li><p class="first">Include the file using <code class="docutils literal notranslate"><span class="pre">%include</span></code> statement:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -1397,7 +1402,7 @@
 </pre></div>
 </div>
 </li>
-</ul>
+</ol>
 </div>
 <div class="section" id="prefetch-custom-styles-optional">
 <span id="prefetch-custom-styles-optional"></span><h4>2.2. Prefetch custom styles (optional)<a class="headerlink" href="#prefetch-custom-styles-optional" title="Permalink to this headline">¶</a></h4>

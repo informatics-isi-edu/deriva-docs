@@ -1387,11 +1387,16 @@
 <p>You should not copy the contents of <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> manually and this should be part of the automated process of building Chaise and your other apps (Since the list generation is controlled by Chaise, we might update the list and therefore you should make sure you’re always getting the latest list of dependencies.)</p>
 <p>If you’re using <a class="reference external" href="https://jekyllrb.com">Jekyll</a>, the following are the steps on how you can achieve this:</p>
 <ol>
-<li><p class="first">After <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done in Chaise, copy the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> file into your <code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder.</p>
+<li><p class="first">Make sure <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done in Chaise.</p>
 <ul class="simple">
-<li>As it was mentioned, this part MUST be part of your automated build process, and should not be done manually.</li>
-<li><code class="docutils literal notranslate"><span class="pre">dist</span></code> folder is created by <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> in your speicified build target (by default it’s <code class="docutils literal notranslate"><span class="pre">/var/www/html/chaise/</span></code>), so you have to make sure <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> is done before copying the file.</li>
-<li><code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder <a class="reference external" href="https://jekyllrb.com/docs/includes/">is specific to Jekyll</a>. You should be able to find it in the root location of your Jekyll website.</li>
+<li>This will create the <code class="docutils literal notranslate"><span class="pre">dist</span></code> folder in your specified build target (by default it’s <code class="docutils literal notranslate"><span class="pre">/var/www/html/chaise</span></code>).</li>
+<li>It will also generate the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code>.</li>
+</ul>
+</li>
+<li><p class="first">Copy the <code class="docutils literal notranslate"><span class="pre">dist/chaise-dependencies.html</span></code> file into your <code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder.</p>
+<ul class="simple">
+<li>As it was mentioned, this MUST be part of your automated build process that is responsible for building Chaise, and should not be done manually.</li>
+<li><code class="docutils literal notranslate"><span class="pre">_includes</span></code> folder <a class="reference external" href="https://jekyllrb.com/docs/includes/">is specific to Jekyll</a>. You should be able to find it in the root location of your Jekyll website repository.</li>
 </ul>
 </li>
 <li><p class="first">Include the file using <code class="docutils literal notranslate"><span class="pre">%include</span></code> statement:</p>
@@ -1401,6 +1406,11 @@
 <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Build your Jekyll site as you normally would (using <code class="docutils literal notranslate"><span class="pre">jekyll</span> <span class="pre">build</span></code> or <code class="docutils literal notranslate"><span class="pre">jekyll</span> <span class="pre">serve</span></code> commands.)</p>
+<ul class="simple">
+<li>As you most probably might know, this MUST be part of your automated build process, and should not be done manually. You just have to make sure that copying of <code class="docutils literal notranslate"><span class="pre">chaise-dependencies.html</span></code> is done prior to rebuilding the Jekyll site.</li>
+</ul>
 </li>
 </ol>
 </div>

@@ -46,7 +46,19 @@ DERIVA Documentation
 .. toctree::
   :maxdepth: 1
   :caption: Annotations Guide
-  annotations/index
+
+  annotations/annotations-overview
+  annotations/annotation
+  annotations/contexts
+  annotations/facet-json-structure
+  annotations/facet-examples
+  annotations/template-markdown
+  annotations/pre-format
+  annotations/pseudo-columns
+  annotations/pseudo-column-display
+  annotations/pseudo-column-template
+  annotations/table-alternatives
+  annotations/export
 
 .. toctree::
   :maxdepth: 2

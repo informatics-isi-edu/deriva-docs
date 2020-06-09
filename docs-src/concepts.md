@@ -24,9 +24,15 @@ DERIVA organizes data by specifying an explicit _data model_ using the well know
 
 REVIEW: (What do we mean by "entity" in DERIVA? How is this different from "asset"?:) In DERIVA, an _entity_ is equivalent to the representation of a single unit of data (or "type of data"?) that will be ingested into a particular DERIVA deployment. The ER model maps out relationships between these entities.
 
-REVIEW: For example, in the (Re)Building A Kidney deployment, one of the types of data shared in its repository are antibodies. The following data model describes the different _entities_ needed for a complete representation of an "Antibody" as well as what other entities are related; e.g., antibody tests have a direct relation to "proteins".
+## Example Data Model (tutorial.derivacloud.org)
 
-![Antibody model for RBK](/images/antibody_schema.jpg)
+To help demonstrate the principles in these guides, we'll use an example deployment you can find at [tutorial.derivacloud.org](https://tutorial.derivacloud.org/)
+
+The following diagram describes the data model in this sample deployment - where the different _entities_ are organized around `Data:Study` entities, which include one or more `Data:Experiment`s, which include one or more `Data:Replicate`s. The replicates in their turn are linked to `Data:Specimen`s.
+
+![Tutorial data model](/images/tutorial-data-model.jpg)
+
+## New heading
 
 DERIVA provides mechanisms for:
 - creating and modifying an ER model,
@@ -36,7 +42,11 @@ The DERIVA platform uses _model introspection_ to continually track the current 
 
 DERIVA keeps track of both the data files (or _assets_) and the model that organizes the data.
 
+## Object store (HATRAC and checksums)
+
 Because DERIVA is used to support reproducible science, we generally assume that once an asset is made known to DERIVA (or ingested), its actual contents **will not change**. To ensure this, DERIVA uses an _object store_ called _HATRAC_ to hold assets.  Other object stores such as AWS S3 may also be used but in any case, DERIVA models generally assume that the asset can be referred to uniquely by a URL, and that the contents of the asset will not change.  DERIVA usually makes sure this is the case by **using checksums on every object**.
+
+## Catalog (ERMRest)
 
 The data model and instance information about specific entities are stored in our _data catalog_ which is called [ERMRest](ermrest/index.html). ERMRest is a catalog service with a web services interface for:
 
@@ -46,36 +56,48 @@ The data model and instance information about specific entities are stored in ou
 
 Each ERMRest service is referred to by a URL in the form:
 ```
-https://mycatalog.isi.edu/ermrest/1
+https://tutorial.derivacloud.org/ermrest/1
 ```
 
 DERIVA allows many catalogs to co-exist and each catalog is referred to by an integer catalog ID, so we might also have:
 ```
-https://mycatalog.isi.edu/ermrest/2.
+https://mycatalog.isi.edu/ermrest/2
 ```
-The catalog and assets can be accessed directly using a RESTful web services interface.  However, to make it easy to use on a daily basis, DERIVA has a powerful, browser-based user interface called _Chaise_. Chaise is a model-driven user interface (UI), which means that it uses catalog introspection to dynamically adapt the UI to the current data model. Changes to the model, such as adding a new attribute or entity type, are immediately reflected in the user interface. 
+
+## User interface (Chaise)
+
+The catalog and assets can be accessed directly using a RESTful web services interface.  However, to make it easy to use on a daily basis, DERIVA has a powerful, browser-based user interface called _Chaise_. Chaise is a model-driven user interface (UI), which means that it uses catalog introspection to dynamically adapt the UI to the current data model. Changes to the model, such as adding a new attribute or entity type, are immediately reflected in the user interface.
 
 The Chaise UI is highly configurable to specify how data is presented, which entities should be displayed and in what order, and many other display elements.
 
-To support this customization, Chaise uses an extensible set of [_annotations_](users-guide/annotations/) that are stored in the catalog along with the data model.
+To support this customization, Chaise uses an extensible set of [_annotations_](annotations/) that are stored in the catalog along with the data model.
 
 DERIVA also has a programmatic interface written in Python called _deriva-py_.
-It is more convenient to use the Python SDK
+(REVIEW: It is more convenient to use the Python SDK)
 
 ## Assets
 
 One of the primary objectives of Deriva is to manage collections of _assets_. In Deriva,  an asset is a blob, a sequence of bytes with some basic properties:
+
 * It can be referred to by a globally unique resource name, i.e. a URL
 * In general, the sequence will not change without the resource name changing
 * It will often be characterized by a checksum which is computed from its contents
 * It will have a known length
 * It may have a convenient human understandable name
 
-A deriva catalog will generally contain one or more asset tables, which are then orginized into more complex data descriptions to help interpret the different types of assets and figure out how assets relate to one another.
+A Deriva catalog will generally contain one or more asset tables, which are then organized into more complex data descriptions to help interpret the different types of assets and figure out how assets relate to one another.
 
 ## The Catalog Model
 
-TBD: Describe catalog, schema, table, columns, and constraints
+### Catalog
+
+### Schema
+
+### Table
+
+### Columns
+
+### Constraints
 
 ## Representing entities in a catalog
 

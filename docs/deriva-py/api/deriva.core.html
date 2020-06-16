@@ -1367,7 +1367,7 @@
 <span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.base_cli.BaseCLI">
-<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.1.0'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.1.1'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="deriva.core.base_cli.BaseCLI.parse_cli">
@@ -4504,7 +4504,7 @@ object.</p>
 
 <dl class="method">
 <dt id="deriva.core.hatrac_store.HatracStore.put_obj">
-<code class="descname">put_obj</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>parents=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_obj</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>parents=True</em>, <em>content_type=None</em>, <em>content_disposition=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Idempotent upload of object, returning object location URI.</p>
 <dl class="docutils">
 <dt>Arguments:</dt>
@@ -4513,7 +4513,9 @@ data: filename or seekable file-like object
 headers: additional headers
 md5: a base64 encoded md5 digest may be provided in order to skip the automatic hash computation
 sha256: a base64 encoded sha256 digest may be provided in order to skip the automatic hash computation
-parents: automatically create parent namespace(s) if missing</dd>
+parents: automatically create parent namespace(s) if missing
+content_type: the content-type of the object (optional)
+content_disposition: the preferred content-disposition of the object (optional)</dd>
 </dl>
 <p>Automatically computes and sends Content-MD5 if no digests provided.</p>
 <p>If an object-version already exists under the same name

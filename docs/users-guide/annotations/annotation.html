@@ -2469,13 +2469,17 @@ The json object follows the same rules as <a class="reference external" href="ht
 </ul>
 <p>Supported <em>sourcedefinitions</em> patterns:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: where <em>sourcekey</em> is a name that will be used to refer to the defined <em>sourceentry</em>. <em>sourcekey</em>,<ul>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">&quot;:{</span> <span class="pre">&quot;source&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">},</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: where <em>sourcekey</em> is a name that will be used to refer to the defined <em>sourceentry</em>. Since you’re defining a pseudo-column here, you can use <a class="reference internal" href="pseudo-columns.html"><span class="doc">any of the pseudo-column optional parameters that the syntax allows (e.g., aggregate, entity, display, markdown_name)</span></a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;search-box&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>searchcolumn</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code>: Configure list of search columns.</li>
+</ul>
+<p>Supported <em>sourcekey</em> pattern:</p>
+<ul class="simple">
+<li>A string literal that,<ul>
 <li>Cannot start with <code class="docutils literal notranslate"><span class="pre">$</span></code>.</li>
 <li>Should not be any of the table’s column names.</li>
 <li><code class="docutils literal notranslate"><span class="pre">search-box</span></code> is a reserved <em>sourcekey</em> and cannot be used.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;search-box&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>searchcolumn</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code>: Configure list of search columns.</li>
 </ul>
 <p>Supported <em>sourceentry</em> pattern:</p>
 <ul>

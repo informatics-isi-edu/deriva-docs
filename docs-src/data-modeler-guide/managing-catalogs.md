@@ -1,4 +1,4 @@
-# Managing Catalogs in DERIVA
+# Managing Catalogs
 
 Coming soon?
 

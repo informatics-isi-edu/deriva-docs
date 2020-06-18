@@ -1,10 +1,10 @@
-# Introduction
+# Introduction for End Users
 
 ## Who is this for?
 
 This guide is for those who want to use a deployment of DERIVA Chaise (usually referred to as a Data Browser or Data Explorer) to filter through a usually very large repository of disparate data types to find particular data that is, for example, related to a particular gene or antibody you are using in a current experiment.
 
-Talk about different kinds of users to date: biomedical researchers, clinicians, students, etc..
+*Talk about different kinds of users to date: biomedical researchers, clinicians, students, etc..*
 
 ## Features and capabilities
 

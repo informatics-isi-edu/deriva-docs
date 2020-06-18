@@ -1,13 +1,59 @@
-# Key Concepts
+# Key Concepts for Data Submitters
 
-## Data model
 
-TBD
+## Data Submission Overview
 
-## Catalog
+DERIVA uses a self-serve process for data submission that includes a combination of online forms for metadata entry and a few options for uploading data that include online forms, GUI and commandline client.
 
-TBD
+## Deployment-specific considerations
 
-## Assets
+Because of DERIVA's flexibility, there are many aspects of data submission that will be configured specifically for a deployment. They include:
 
-TBD
+* Who can submit data
+* Supported and required data types
+* Underlying data model
+
+As an example, we'll be using the Demo deployment's data model and then provide instructions for submitting sample data to give you an idea of how data submission in DERIVA works.
+
+### Data model
+
+![Diagram of Demo server data model](images/erd.png)
+
+If you are submitting data to FaceBase, we recommend that you begin by reviewing our data model. Key concepts and relationships:
+
+- **Project**: represents a research project (e.g., a Spoke project, R01 investigation, etc.)
+- **Person**: a directory of persons (name, email, etc.)
+  - a person is related to the project as an investigator or a member
+- **Dataset**: represents a unit of data collected and submitted to the FaceBase site. Typically, a dataset represents a whole or a logical unit of an investigation (i.e., a study within an overall investigation/project).
+- **Experiment** (a.k.a., assay): represents an experiment at a fine-grained unit of detail. It is intended to broadly cover multiple "bioinformatics" (i.e., sequencing or array) and imaging (i.e., various forms of microscopy) assay types. An experiment will generally be conducted on multiple biological replicates. An experiment may reference another experiment as its "control."
+- **Biosample**: represents the biosample used in an study. There may be many biosamples in a dataset and biosamples are generally grouped together and associated with an Experiment as a collection of biological replicates. Note that FaceBase does not collect physical tissue samples. The 'biosample' here is only the metadata used to describe the physical samples used in your experiments.
+- **Replicate**: a 'replicate' entity in the database represents the association between an Experiment and a Biosample. To keep things simple for data entry and display, the 'replicate' has simple numeric columns to record the "biological replicate number" and "technical replicate number."
+- **Enhancer (Assay)**: represents an enhancer reporter assay.
+- **Clinical (Assay)**: represents clinical assays.
+
+### Vocabulary
+
+At present, vocabulary terms are managed by the Hub. If you cannot find a term
+you need in order to describe your data, please contact [FaceBase Help](mailto:help@facebase.org).
+
+We are currently working on a major overhaul of our vocabulary terms and data structures. We will
+update this documentation when the revised vocabulary is released on the site.
+
+### Data types
+
+Most data files in FaceBase should be associated with a Replicate entity. If you are submitting sequencing, array, or imaging data, it must be recorded in the following classes of entities and associated with a replicate entity.
+- Sequencing Data: "raw" sequencing data (fastq files). These must be gzipped and use the '.fastq.gz' file extension. If you use the common naming scheme to indicate the sequence read number, 'example_1.fastq.gz' or 'example_R2.fastq.gz', the system will automatically extract the read number from the file name.
+- Processed Data: data that are derived from sequencing data through a particular pipeline. Usually fastqc reports (.fastqc.tgz or .fastqc.zip), count files (.count, .tpm, .fpkm), measures in tab-separated format (.tsv), and of course alignment mapping files (.bam) and indexes (.bam.bai).
+- Track Data: data that are derived from sequencing or processed data and used in genome browsers, such as BED (.bed), bigBed (.bb), and bigWig (.bw) files.
+- Array Data: "raw" microarray data (CEL files). These must be gzipped and use the '.CEL.gz' file extension.
+- Imaging Data: high-resolution 3D or 2D imaging data, such as micro-CT accepted in NIfTI format gzipped (.nii.gz), confocal or other microscopy sources in TIFF or OME-TIFF (.tiff or .ome.tiff), and other sources in JPEG (.jpg or .jpeg).
+- Surface Model / Mesh Data: 3D surface models (a.k.a., "polygon mesh" files) that are generally derived from hard tissue imaging data. Currently, we only accept Wavefront OBJ format and it must be gzipped (.obj.gz). If you want these files to be visible online in the Hub's online mesh viewer, we strongly advise that you limit the size of any model (which may include more than one obj.gz mesh object) to under 10 MB. The entire model must be downloaded to the user's browser in order to view, and therefore larger models can be prohibitively time consuming to download for users on slower networks. Multiple mesh data entities can be associated with each imaging data entity. Note that _human subjects_ "mesh" files are handled through a completely separate and secure data upload process and released only under approval of our Data Access Committee (DAC).
+- Thumbnails: smaller images that give a representation of imaging data. These thumbnails are displayed online in the Hub's data browser and do not require login for users to view and therefore a good way of showing users enough about the images to encourage them to login (or signup) and download your data.  Multiple thumbnails can be associated with each imaging data entity.
+
+Finally, the site allows for an "other" or "generic" files category for the dataset. However, this is only to be used for data files that fall outside of the above categories. Please do not submit any of the above data types in this general "file" category. For example, a good use for the generic file category is a spreadsheet that gives additional measures about your imaging or sequencing experiment that are relevant across your entire dataset and are not specific to any one experiment or replicate or file.
+
+Thumbnails can also be uploaded and displayed directly on the main page of your dataset. In order for a thumbnail to appear on the main page of your dataset, you need to reference your dataset from the thumbnail record's "dataset" field *and* you need to set the "Show On Dataset" field to "True."
+
+### References to External Data and Visualization
+
+For some types of Datasets, such as Genome Wide Association Studies (GWAS), it may be appropriate to include references to external sources of data and visualization. For example, a GWAS study may have produced or reused genomic data submitted to dbGaP, in addition derived results would have been generated from the original data, and the derived data may have been submitted to [LocusZoom](http://locuszoom.org/) for online visualization. In cases such as these, you should enter a Dataset with a clear Description of the data and a thorough Study Design. You should provide accession numbers to data at external repositories (e.g., dbGaP) and Web references to the visualizations of your data using the `[label](url)` syntax available in the Description field; e.g., `[View results for ABC](https://example.org/to/abc)`. By following these guidelines, users of your data will be able to find your datasets on FaceBase and then navigate to the visualization interface for your data.

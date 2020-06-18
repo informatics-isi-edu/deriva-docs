@@ -6,8 +6,12 @@ DERIVA Documentation
    :caption: Getting to know DERIVA
 
    about
-   platform
-   concepts
+   architecture
+   relationships
+   demo-model
+   primary-components
+   client-libraries
+   client-applications
 
 .. toctree::
   :maxdepth: 1
@@ -16,7 +20,8 @@ DERIVA Documentation
   user-guide/introduction
   user-guide/key-concepts
   user-guide/discovering-data
-  user-guide/exporting-data
+  user-guide/exporting-data-csv
+  user-guide/exporting-data-bag
   user-guide/sharing-and-citing-data
 
 .. toctree::
@@ -30,18 +35,12 @@ DERIVA Documentation
 
 .. toctree::
   :maxdepth: 1
-  :caption: Programmer's Guide
-
-  programmer-guide/introduction
-
-.. toctree::
-  :maxdepth: 1
   :caption: Data Modeler's Guide
 
   data-modeler-guide/introduction
   data-modeler-guide/key-concepts
+  data-modeler-guide/managing-catalogs
   data-modeler-guide/project-tutorial
-  data-modeler-guide/annotations/index
 
 .. toctree::
   :maxdepth: 1
@@ -52,7 +51,6 @@ DERIVA Documentation
   annotations/contexts
   annotations/facet-json-structure
   annotations/facet-examples
-  annotations/template-markdown
   annotations/pre-format
   annotations/pseudo-columns
   annotations/pseudo-column-display
@@ -61,12 +59,27 @@ DERIVA Documentation
   annotations/export
 
 .. toctree::
+  :maxdepth: 1
+  :caption: Template and Markdown Guide
+
+  annotations/template-markdown-overview.md
+  annotations/mustache-templating.md
+  annotations/handlebars.md
+  annotations/markdown-formatting.md
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Programmer's Guide
+
+  programmer-guide/introduction
+
+.. toctree::
   :maxdepth: 2
   :caption: Reference
 
+  deriva-auth
   deriva-client
   deriva-py/index
-  deriva-qt/index
   deriva-catalog-manage/index
   ermrest/index
   hatrac/index

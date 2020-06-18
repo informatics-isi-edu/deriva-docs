@@ -6,8 +6,7 @@ client software for use with the DERIVA platform. These tools provide functions 
 1. Authentication services for programmatic and non browser-based application access.
 2. Bulk import and export of catalog assets and (meta) data.
 3. Catalog configuration, mutation and administration.
-4. Tools for working with [`bdbags`](https://github.com/fair-research/bdbag),
-a file container format used by DERIVA for the import and export of data.
+4. Tools for working with [`bdbags`](https://github.com/fair-research/bdbag), a file container format used by DERIVA for the import and export of data.
 
 ## Installed Applications
 
@@ -214,3 +213,5 @@ The source code for the primary components of `deriva-client` can be found at th
 * [`deriva-py`](https://github.com/informatics-isi-edu/deriva-py)
 * [`deriva-qt`](https://github.com/informatics-isi-edu/deriva-qt)
 * [`deriva-catalog-manage`](https://github.com/informatics-isi-edu/deriva-catalog-manage)
+
+## REVIEW: add links to how to info in the various guides

@@ -6,3 +6,5 @@ Describe some use cases for programmers to access data in a repository (ie, inte
 high level overview of using DERIVA APIs.
 
 high level overview of using CLI
+
+Then link to notebooks and reference docs

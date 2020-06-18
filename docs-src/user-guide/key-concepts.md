@@ -1,6 +1,6 @@
-# Key Concepts
+# Key Concepts for End Users
 
-## Representing relationships between data (ie, data modeling)
+## How data is organized
 
 Per deployment, data must be organized in a model that describes different metadata, data types and their relationship to each other, usually to accurately represent the mechanics of actual experiments.
 
@@ -45,7 +45,7 @@ It's helpful to understand the different types of pages that represent most of u
 
 One of the major features of Chaise that allows deep interlinking of data records so that data from various sources (ie, a large group of labs within a consortium) can be linked together and discovered via search and filtering is the ability to link records to each other.
 
-On many record pages, you'll find a list of metadata at the top of the page, which includes significant metadata (which are also interlinked between records) and then there are usually (though not always) sections listed underneath with their own tabular rows of data. These represent records from a different table that have been associated with this record. 
+On many record pages, you'll find a list of metadata at the top of the page, which includes significant metadata (which are also interlinked between records) and then there are usually (though not always) sections listed underneath with their own tabular rows of data. These represent records from a different table that have been associated with this record.
 
 ## FAIR Principles
 

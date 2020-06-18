@@ -1,4 +1,4 @@
-# Introduction
+# Introduction for Data Submitters
 
 In the DERIVA ecosystem, data is submitted to our data catalog service, ERMrest, and the assets/files are stored in Hatrac.
 

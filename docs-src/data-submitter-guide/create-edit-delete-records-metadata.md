@@ -62,9 +62,7 @@ Once the administrator approves your application, you’ll receive email confirm
 
 In the data browser, you can now click "Log in" using the credentials you chose above.
 
-A cookie is place on your commputer that will automatically log you in on subsequent visits. Once the cookie is deleted or you are on another device, you will need to log in manually again.
-
-
+A cookie is place on your computer that will automatically log you in on subsequent visits. Once the cookie is deleted or you are on another device, you will need to log in manually again.
 
 
 ## Creating records and metadata

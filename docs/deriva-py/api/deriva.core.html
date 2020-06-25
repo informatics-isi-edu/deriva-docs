@@ -1367,7 +1367,7 @@
 <span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.base_cli.BaseCLI">
-<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.1.1'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.2.0'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="deriva.core.base_cli.BaseCLI.parse_cli">
@@ -1493,6 +1493,27 @@
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">Catalog</code><span class="sig-paren">(</span><em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Catalog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Handle to a Catalog.</p>
+<dl class="classmethod">
+<dt id="deriva.core.datapath.Catalog.compose">
+<em class="property">classmethod </em><code class="descname">compose</code><span class="sig-paren">(</span><em>*paths</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#Catalog.compose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.Catalog.compose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose path fragments into a path.</p>
+<p>The root of any path fragment must be found in the table instances of the currently composed path from left
+to right, _but_ it does not have to be the current context (last table instance) of the last left hand path.</p>
+<p>Paths must not have overlapping table instances with the currently composed path from left to right, except for
+each subsequent path’s root table instance which _must_ be defined in one of the left hand paths.</p>
+<p>No input path in ‘paths’ will be mutated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>paths</strong> – instances of <cite>DataPath</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a new <cite>DataPath</cite> instance composed from the ‘paths’</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -2095,6 +2116,24 @@ parameter can be used to specify <cite>left</cite>, <cite>right</cite>, or <cite
 :return: self</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="deriva.core.datapath.DataPath.merge">
+<code class="descname">merge</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#DataPath.merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.DataPath.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merges the current path with the given path.</p>
+<p>The right-hand ‘path’ must be rooted on a <cite>TableAlias</cite> object that exists (by alias name) within this path
+(the left-hand path). It _must <a href="#id3"><span class="problematic" id="id4">not_</span></a> have other shared table aliases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – a <cite>DataPath</cite> object rooted on a table alias that can be found in this path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">this path merged with the given (right-hand) path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="deriva.core.datapath.DataPath.table_instances">
 <code class="descname">table_instances</code><a class="headerlink" href="#deriva.core.datapath.DataPath.table_instances" title="Permalink to this definition">¶</a></dt>
@@ -2178,6 +2217,27 @@ parameter can be used to specify <cite>left</cite>, <cite>right</cite>, or <cite
 <dt id="deriva.core.datapath.PathOperator">
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">PathOperator</code><span class="sig-paren">(</span><em>r</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#PathOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.PathOperator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="method">
+<dt id="deriva.core.datapath.PathOperator.rebase">
+<code class="descname">rebase</code><span class="sig-paren">(</span><em>base</em>, <em>root_context</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#PathOperator.rebase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.PathOperator.rebase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebases the current path expression to begin as a reset context following ‘base’.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>base</strong> – a valid path expresion</li>
+<li><strong>root_context</strong> – root context on which to rebase this path expression</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">rebased expresion _or_ a new <cite>ResetContext</cite> instance if <cite>self</cite> was the root</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -2510,6 +2570,22 @@ not defined as ‘system columns’ by ERMrest, as the targets if <cite>targets<
 <em class="property">class </em><code class="descclassname">deriva.core.datapath.</code><code class="descname">TableAlias</code><span class="sig-paren">(</span><em>base_table</em>, <em>alias_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#TableAlias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.TableAlias" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.datapath.Table" title="deriva.core.datapath.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.datapath.Table</span></code></a></p>
 <p>Represents a table alias.</p>
+<dl class="method">
+<dt id="deriva.core.datapath.TableAlias.equivalent">
+<code class="descname">equivalent</code><span class="sig-paren">(</span><em>alias</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/datapath.html#TableAlias.equivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.datapath.TableAlias.equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Equivalence comparison between table aliases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alias</strong> – another table alias</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True, if the base table and alias name match, else False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="deriva.core.datapath.TableAlias.fqname">
 <code class="descname">fqname</code><a class="headerlink" href="#deriva.core.datapath.TableAlias.fqname" title="Permalink to this definition">¶</a></dt>
@@ -2789,11 +2865,6 @@ snaptime: e.g., ‘2PM-DGYP-56Z4’ (optional)</dd>
 paths. Caller has to understand ERMrest APIs and compose
 appropriate paths, headers, and/or content.</p>
 <p>Additional utility methods provided for accessing catalog metadata.</p>
-<dl class="method">
-<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.applyCatalogConfig">
-<code class="descname">applyCatalogConfig</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.applyCatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.applyCatalogConfig" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="attribute">
 <dt id="deriva.core.ermrest_catalog.ErmrestCatalog.catalog_id">
 <code class="descname">catalog_id</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.catalog_id" title="Permalink to this definition">¶</a></dt>
@@ -2887,11 +2958,6 @@ data is present.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogConfig">
-<code class="descname">getCatalogConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getCatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogConfig" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogModel">
 <code class="descname">getCatalogModel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.getCatalogModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.getCatalogModel" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -2968,754 +3034,14 @@ of the catalog.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-deriva.core.ermrest_config">
-<span id="deriva-core-ermrest-config-module"></span><h2>deriva.core.ermrest_config module<a class="headerlink" href="#module-deriva.core.ermrest_config" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="deriva.core.ermrest_config.AttrDict">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">AttrDict</code><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#AttrDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.AttrDict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
-<p>Dictionary with optional attribute-based lookup.</p>
-<p>For keys that are valid attributes, self.key is equivalent to
-self[key].</p>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.AttrDict.update">
-<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>E</em>, <span class="optional">]</span><em>**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from dict/iterable E and F.<a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#AttrDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.AttrDict.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
-If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
-In either case, this is followed by: for k in F:  D[k] = F[k]</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogColumn">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogColumn</code><span class="sig-paren">(</span><em>table</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
-<p>Column-level configuration management.</p>
-<p>acl_bindings: column-level dynamic ACL bindings
-acls: column-level ACL configuration
-annotations: column-level annotations
-comment: column-level comment string
-name: name of column</p>
-<dl class="docutils">
-<dt>Convenience access to common annotations:</dt>
-<dd>self.asset: tag.asset object
-self.column_display:: tag.column_display object
-self.display: tag.display object
-self.generated: treat tag.generated as a boolean
-self.immutable: treat tag.immutable as a boolean</dd>
-</dl>
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogColumn.asset">
-<code class="descname">asset</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.asset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2017:asset">tag:isrd.isi.edu,2017:asset</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogColumn.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogColumn.column_display">
-<code class="descname">column_display</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.column_display" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:column-display">tag:isrd.isi.edu,2016:column-display</a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogColumn.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogColumn.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogColumn.prejson_colref">
-<code class="descname">prejson_colref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogColumn.prejson_colref"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.prejson_colref" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogColumn.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogColumn.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogConfig">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogConfig</code><span class="sig-paren">(</span><em>catalog</em>, <em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
-<p>Top-level catalog configuration management.</p>
-<p>acls: catalog-level ACL configuration
-annotations: catalog-level annotations
-schemas: all schemas in catalog, by name</p>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply catalog configuration to catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self will be applied recursively to the
-corresponding model nodes in schema. For each node, the
-comment, annotations, acls, and/or acl_bindings will be
-applied where applicable.</p>
-<p>If existing is not provided (default), the current whole
-configuration will be retrieved from the catalog and used
-automatically to determine whether the configuration goals
-under this CatalogConfig instance are already met or need to
-be remotely applied.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogConfig.bulk_upload">
-<code class="descname">bulk_upload</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.bulk_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2017:bulk-upload">tag:isrd.isi.edu,2017:bulk-upload</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogConfig.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear all configuration in catalog and children.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.column">
-<code class="descname">column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>cname</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return column configuration for column with given name.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.digest_fkeys">
-<code class="descname">digest_fkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.digest_fkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.digest_fkeys" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finish second-pass digestion of foreign key definitions using full model w/ all schemas and tables.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.fkey">
-<code class="descname">fkey</code><span class="sig-paren">(</span><em>constraint_name_pair</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.fkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.fkey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return configuration for foreign key with given name pair.</p>
-<p>Accepts (schema_name, constraint_name) pairs as found in many
-faceting annotations and (schema_obj, constraint_name) pairs
-as found in fkey.name fields.</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="deriva.core.ermrest_config.CatalogConfig.fromcatalog">
-<em class="property">classmethod </em><code class="descname">fromcatalog</code><span class="sig-paren">(</span><em>catalog</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.fromcatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.fromcatalog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve catalog config as a CatalogConfig management object.</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="deriva.core.ermrest_config.CatalogConfig.fromfile">
-<em class="property">classmethod </em><code class="descname">fromfile</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema_file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.fromfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.fromfile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deserialize a JSON schema file as a CatalogConfig management object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogConfig.table">
-<code class="descname">table</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogConfig.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.table" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return table configuration for table with given name.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogConfig.update_uri_path">
-<code class="descname">update_uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.update_uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to use as base for sub-resources ./acl ./annotation etc.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogConfig.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogConfig.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogForeignKey</code><span class="sig-paren">(</span><em>table</em>, <em>fkey_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
-<p>Foreign key-level configuration management.</p>
-<p>acl_bindings: foreign key-level acl-bindings
-acls: foreign key-level acls
-annotations: foreign key-level annotations
-comment: foreign key-level comment string
-name: (self.schema, name_str) pair of foreign key constraint</p>
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.column_map">
-<code class="descname">column_map</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.column_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mapping of foreign_key_columns elements to referenced_columns elements.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.columns">
-<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sugared access to self.column_definitions</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.digest_referenced_columns">
-<code class="descname">digest_referenced_columns</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogForeignKey.digest_referenced_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.digest_referenced_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finish construction deferred until model is known with all tables.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.foreign_key">
-<code class="descname">foreign_key</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.foreign_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:foreign-key">tag:isrd.isi.edu,2016:foreign-key</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.name">
-<code class="descname">name</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.name_in_model">
-<code class="descname">name_in_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogForeignKey.name_in_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.name_in_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</p>
-<p>While self.name works as a key within the same model tree,
-self.name_in_model(dstmodel) works in dstmodel tree by finding
-the equivalent schemaobj in that model via schema name lookup.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.names">
-<code class="descname">names</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.names" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint names field as seen in JSON document.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogForeignKey.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogForeignKey.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogForeignKey.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogKey">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogKey</code><span class="sig-paren">(</span><em>table</em>, <em>key_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfig" title="deriva.core.ermrest_config.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfig</span></code></a></p>
-<p>Key-level configuration management.</p>
-<p>annotations: column-level annotations
-comment: key-level comment string
-name: (self.schema, name_str) pair of key constraint</p>
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogKey.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogKey.columns">
-<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sugared access to self.unique_columns</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogKey.name">
-<code class="descname">name</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogKey.name_in_model">
-<code class="descname">name_in_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogKey.name_in_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.name_in_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</p>
-<p>While self.name works as a key within the same model tree,
-self.name_in_model(dstmodel) works in dstmodel tree by finding
-the equivalent schemaobj in that model via schema name lookup.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogKey.names">
-<code class="descname">names</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.names" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constraint names field as seen in JSON document.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogKey.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogKey.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogKey.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogKey.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogSchema">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogSchema</code><span class="sig-paren">(</span><em>model</em>, <em>sname</em>, <em>schema_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
-<p>Schema-level configuration management.</p>
-<p>acls: schema-level ACL configuration
-annotations: schema-level annotations
-comment: schema-level comment string
-tables: all tables in schema, by name</p>
-<dl class="docutils">
-<dt>Convenience access for common annotations:</dt>
-<dd>self.display: access mutable tag.display object</dd>
-</dl>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogSchema.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogSchema.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply schema configuration to catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self will be applied recursively to the
-corresponding model nodes in catalog. For each node, the
-comment, annotations, acls, and/or acl_bindings will be
-applied where applicable unless existing value is equivalent.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogSchema.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogSchema.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogSchema.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear all configuration in schema and children.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogSchema.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogSchema.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogSchema.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogSchema.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.CatalogTable">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">CatalogTable</code><span class="sig-paren">(</span><em>schema</em>, <em>tname</em>, <em>table_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="deriva.core.ermrest_config.NodeConfigAclBinding"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAclBinding</span></code></a></p>
-<p>Table-level configuration management.</p>
-<p>acl_bindings: table-level dynamic ACL bindings
-acls: table-level ACL configuration
-annotations: table-level annotations
-column_definitions: columns in table
-comment: table-level comment string</p>
-<dl class="docutils">
-<dt>Convenience access to common annotations:</dt>
-<dd>self.alternatives: tag.table_alternatives object
-self.display: tag.display object
-self.generated: treat tag.generated as a boolean
-self.immutable: treat tag.immutable as a boolean
-self.table_display: tag.table_display object
-self.visible_columns: tag.visible_columns object
-self.visible_foreign_keys: tag.visible_foreign_keys object</dd>
-</dl>
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.alternatives">
-<code class="descname">alternatives</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.alternatives" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:table-alternatives">tag:isrd.isi.edu,2016:table-alternatives</a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply table configuration to catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self will be applied recursively to the
-corresponding model nodes in catalog. For each node, the
-comment, annotations, acls, and/or acl_bindings will be
-applied where applicable unless existing is supplied and is
-equivalent.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear all configuration in table and children.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.columns">
-<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sugared access to self.column_definitions</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.fkey_by_column_map">
-<code class="descname">fkey_by_column_map</code><span class="sig-paren">(</span><em>from_to_map</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.fkey_by_column_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.fkey_by_column_map" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return fkey from self.foreign_keys with matching {referencing: referenced} column mapping.</p>
-<p>from_to_map: dict-like mapping with items() method yielding (from_col, to_col) pairs
-raise_nomatch: for True, raise KeyError on non-match, else return None</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.fkeys_by_columns">
-<code class="descname">fkeys_by_columns</code><span class="sig-paren">(</span><em>from_columns</em>, <em>partial=False</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.fkeys_by_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.fkeys_by_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterable of fkeys from self.foreign_keys with matching columns.</p>
-<p>from_columns: iterable of referencing column instances or column names
-partial: include fkeys which cover a superset of from_columns
-raise_nomatch: for True, raise KeyError on empty iterable</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.is_association">
-<code class="descname">is_association</code><span class="sig-paren">(</span><em>min_arity=2</em>, <em>max_arity=2</em>, <em>unqualified=True</em>, <em>pure=True</em>, <em>no_overlap=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.is_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.is_association" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return (truthy) integer arity if self is a matching association, else False.</p>
-<p>min_arity: minimum number of associated fkeys (default 2)
-max_arity: maximum number of associated fkeys (default 2) or None
-unqualified: reject qualified associations when True (default True)
-pure: reject impure assocations when True (default True)
-no_overlap: reject overlapping associations when True (default True)</p>
-<p>The default behavior with no arguments is to test for pure,
-unqualified, non-overlapping, binary assocations.</p>
-<p>An association is comprised of several foreign keys which are
-covered by a non-nullable composite row key. This allows
-specific combinations of foreign keys to appear at most once.</p>
-<p>The arity of an association is the number of foreign keys
-being associated. A typical binary association has arity=2.</p>
-<p>An unqualified association contains <em>only</em> the foreign key
-material in its row key. Conversely, a qualified association
-mixes in other material which means that a specific
-combination of foreign keys may repeat with different
-qualifiers.</p>
-<p>A pure association contains <em>only</em> row key
-material. Conversely, an impure association includes
-additional metadata columns not covered by the row key. Unlike
-qualifiers, impure metadata merely decorates an association
-without augmenting its identifying characteristics.</p>
-<p>A non-overlapping association does not share any columns
-between multiple foreign keys. This means that all
-combinations of foreign keys are possible. Conversely, an
-overlapping association shares some columns between multiple
-foreign keys, potentially limiting the combinations which can
-be represented in an association row.</p>
-<p>These tests ignore the five ERMrest system columns and any
-corresponding constraints.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.key_by_columns">
-<code class="descname">key_by_columns</code><span class="sig-paren">(</span><em>unique_columns</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.key_by_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.key_by_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return key from self.keys with matching unique columns.</p>
-<p>unique_columns: iterable of column instances or column names
-raise_nomatch: for True, raise KeyError on non-match, else return None</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.CatalogTable.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#CatalogTable.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.table_display">
-<code class="descname">table_display</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.table_display" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:table-display">tag:isrd.isi.edu,2016:table-display</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model element.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.visible_columns">
-<code class="descname">visible_columns</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.visible_columns" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:visible-columns">tag:isrd.isi.edu,2016:visible-columns</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.CatalogTable.visible_foreign_keys">
-<code class="descname">visible_foreign_keys</code><a class="headerlink" href="#deriva.core.ermrest_config.CatalogTable.visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:visible-foreign-keys">tag:isrd.isi.edu,2016:visible-foreign-keys</a></p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.KeyedList">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">KeyedList</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#KeyedList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.KeyedList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
-<p>Keyed list.</p>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.KeyedList.append">
-<code class="descname">append</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#KeyedList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.KeyedList.append" title="Permalink to this definition">¶</a></dt>
-<dd><p>Append element to list and record its key.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.NodeConfig">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfig</code><span class="sig-paren">(</span><em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Generic model document node configuration management.</p>
-<p>annotations: map of annotations for node by key
-comment: comment string or None (if supported by sub-class)</p>
-<dl class="docutils">
-<dt>Convenience access for common annotations:</dt>
-<dd>self.display: access mutable tag.display object
-self.generated: treat tag.generated as a boolean
-self.immutable: treat tag.immutable as a boolean</dd>
-</dl>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfig.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfig.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self.comment and self.annotations will be
-applied to the remote model node corresponding to self, unless
-existing node configuration is supplied and is equivalent.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.catalog">
-<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.catalog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfig.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfig.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear existing annotations on node, also clearing comment if clear_comment is True.</p>
-<p>NOTE: as a backwards-compatible heuristic, comments are
-retained by default so that a typical configuration-management
-client does not strip useful documentation from existing models.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.comment">
-<code class="descname">comment</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.comment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Comment on this node in model, if supported.</p>
-<p>Raises TypeError if accessed when unsupported, e.g. on top-level catalog objects.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.display">
-<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.display" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.generated">
-<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.generated" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:generated">tag:isrd.isi.edu,2016:generated</a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.immutable">
-<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.immutable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:immutable">tag:isrd.isi.edu,2016:immutable</a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfig.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfig.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.update_uri_path">
-<code class="descname">update_uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.update_uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to use as base for sub-resources ./comment ./annotation etc.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="deriva.core.ermrest_config.NodeConfig.uri_path">
-<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfig.uri_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>URI to this model resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.NodeConfigAcl">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfigAcl</code><span class="sig-paren">(</span><em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAcl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfig" title="deriva.core.ermrest_config.NodeConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfig</span></code></a></p>
-<p>Generic model acl-bearing document node configuration management.</p>
-<p>acls: map of acls for node by key
-annotations: map of annotations for node by key
-comment: comment string or None (if supported by sub-class)</p>
-<dl class="docutils">
-<dt>Convenience access for common annotations:</dt>
-<dd>self.display: access mutable tag.display object
-self.generated: treat tag.generated as a boolean
-self.immutable: treat tag.immutable as a boolean</dd>
-</dl>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAcl.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self.comment, self.annotations, and
-self.acls will be applied to the remote model node
-corresponding to self, unless existing node configuration is
-supplied and is equivalent.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAcl.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear existing acls and annotations on node.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAcl.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAcl.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAcl.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="deriva.core.ermrest_config.NodeConfigAclBinding">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">NodeConfigAclBinding</code><span class="sig-paren">(</span><em>node_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.NodeConfigAcl" title="deriva.core.ermrest_config.NodeConfigAcl"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.NodeConfigAcl</span></code></a></p>
-<p>Generic model acl_binding-bearing document node configuration management.</p>
-<p>acl_bindings: map of acl bindings for node by key
-acls: map of acls for node by key
-annotations: map of annotations for node by key
-comment: comment string or None (if supported by sub-class)</p>
-<dl class="docutils">
-<dt>Convenience access for common annotations:</dt>
-<dd>self.display: access mutable tag.display object
-self.generated: treat tag.generated as a boolean
-self.immutable: treat tag.immutable as a boolean</dd>
-</dl>
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.apply">
-<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.apply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply configuration to corresponding node in catalog unless existing already matches.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self, or None to apply configuration unconditionally.</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration in self.comment, self.annotations,
-self.acls, and self.acl_bindings will be applied to the remote
-model node corresponding to self, unless existing node
-configuration is supplied and is equivalent.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.clear">
-<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear existing acl_bindings, acls, and annotations on node.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="deriva.core.ermrest_config.NodeConfigAclBinding.prejson">
-<code class="descname">prejson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#NodeConfigAclBinding.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.NodeConfigAclBinding.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="deriva.core.ermrest_config.equivalent">
-<code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">equivalent</code><span class="sig-paren">(</span><em>doc1</em>, <em>doc2</em>, <em>method=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#equivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.equivalent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determine whether two dict/array/literal documents are structurally equivalent.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="deriva.core.ermrest_config.object_annotation">
-<code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">object_annotation</code><span class="sig-paren">(</span><em>tag_uri</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#object_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.object_annotation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator to establish property getter/setter/deleter for object annotations.</p>
-<p>Usage example:</p>
-<blockquote>
-<div>&#64;presence_annotation(tag.display)
-def display(self): pass</div></blockquote>
-<p>The stub method will be discarded.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="deriva.core.ermrest_config.presence_annotation">
-<code class="descclassname">deriva.core.ermrest_config.</code><code class="descname">presence_annotation</code><span class="sig-paren">(</span><em>tag_uri</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_config.html#presence_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_config.presence_annotation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator to establish property getter/setter/deleter for presence annotations.</p>
-<p>Usage example:</p>
-<blockquote>
-<div>&#64;presence_annotation(tag.generated)
-def generated(self): pass</div></blockquote>
-<p>The stub method will be discarded.</p>
-</dd></dl>
-
+<div class="section" id="deriva-core-ermrest-config-module">
+<h2>deriva.core.ermrest_config module<a class="headerlink" href="#deriva-core-ermrest-config-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-deriva.core.ermrest_model">
 <span id="deriva-core-ermrest-model-module"></span><h2>deriva.core.ermrest_model module<a class="headerlink" href="#module-deriva.core.ermrest_model" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.ermrest_model.ArrayType">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ArrayType</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ArrayType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ArrayType" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ArrayType</code><span class="sig-paren">(</span><em>type_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ArrayType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ArrayType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_model.Type" title="deriva.core.ermrest_model.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_model.Type</span></code></a></p>
 <p>Named domain type.</p>
 <dl class="method">
@@ -3726,9 +3052,26 @@ def generated(self): pass</div></blockquote>
 </dd></dl>
 
 <dl class="class">
+<dt id="deriva.core.ermrest_model.AttrDict">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">AttrDict</code><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#AttrDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.AttrDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Dictionary with optional attribute-based lookup.</p>
+<p>For keys that are valid attributes, self.key is equivalent to
+self[key].</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.AttrDict.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>E</em>, <span class="optional">]</span><em>**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from dict/iterable E and F.<a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#AttrDict.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.AttrDict.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
+If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
+In either case, this is followed by: for k in F:  D[k] = F[k]</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="deriva.core.ermrest_model.Column">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>table</em>, <em>column_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogColumn" title="deriva.core.ermrest_config.CatalogColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogColumn</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Column</code><span class="sig-paren">(</span><em>table</em>, <em>column_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named column.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Column.alter">
@@ -3772,10 +3115,42 @@ self.acl_bindings will be applied to the server unless they
 match their corresponding state in existing.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.asset">
+<code class="descname">asset</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2017:asset">tag:isrd.isi.edu,2017:asset</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Column.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in column</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.column_display">
+<code class="descname">column_display</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.column_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:column-display">tag:isrd.isi.edu,2016:column-display</a></p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="deriva.core.ermrest_model.Column.define">
 <em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>cname</em>, <em>ctype</em>, <em>nullok=True</em>, <em>default=None</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.define" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a column definition.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
 </dd></dl>
 
 <dl class="method">
@@ -3784,17 +3159,39 @@ match their corresponding state in existing.</p>
 <dd><p>Remove this column from the remote database.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.generated">
+<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.generated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:generated">tag:isrd.isi.edu,2016:generated</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.immutable">
+<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.immutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:immutable">tag:isrd.isi.edu,2016:immutable</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Column.prejson">
 <code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Column.prejson_colref">
+<code class="descname">prejson_colref</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Column.prejson_colref"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Column.prejson_colref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model resource.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.DomainType">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">DomainType</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#DomainType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.DomainType" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">DomainType</code><span class="sig-paren">(</span><em>type_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#DomainType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.DomainType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_model.Type" title="deriva.core.ermrest_model.Type"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_model.Type</span></code></a></p>
 <p>Named domain type.</p>
 <dl class="method">
@@ -3806,8 +3203,8 @@ match their corresponding state in existing.</p>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.ForeignKey">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ForeignKey</code><span class="sig-paren">(</span><em>table</em>, <em>fkey_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogForeignKey" title="deriva.core.ermrest_config.CatalogForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogForeignKey</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">ForeignKey</code><span class="sig-paren">(</span><em>table</em>, <em>fkey_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named foreign key.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.ForeignKey.alter">
@@ -3850,15 +3247,73 @@ self.acl_bindings will be applied to the server unless they
 match their corresponding state in existing.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.ForeignKey.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in foreign key</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.column_map">
+<code class="descname">column_map</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.column_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sugared access to self.column_definitions</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="deriva.core.ermrest_model.ForeignKey.define">
 <em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>fk_colnames</em>, <em>pk_sname</em>, <em>pk_tname</em>, <em>pk_colnames</em>, <em>on_update='NO ACTION'</em>, <em>on_delete='NO ACTION'</em>, <em>constraint_names=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.define" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="deriva.core.ermrest_model.ForeignKey.digest_referenced_columns">
+<code class="descname">digest_referenced_columns</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey.digest_referenced_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.digest_referenced_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish construction deferred until model is known with all tables.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="deriva.core.ermrest_model.ForeignKey.drop">
 <code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove this foreign key from the remote database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.foreign_key">
+<code class="descname">foreign_key</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.foreign_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:foreign-key">tag:isrd.isi.edu,2016:foreign-key</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.ForeignKey.name_in_model">
+<code class="descname">name_in_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#ForeignKey.name_in_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.name_in_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</p>
+<p>While self.name works as a key within the same model tree,
+self.name_in_model(dstmodel) works in dstmodel tree by finding
+the equivalent schemaobj in that model via schema name lookup.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.names">
+<code class="descname">names</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint names field as seen in JSON document.</p>
 </dd></dl>
 
 <dl class="method">
@@ -3867,12 +3322,18 @@ match their corresponding state in existing.</p>
 <dd><p>Produce a representation of configuration as generic Python data structures</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.ForeignKey.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.ForeignKey.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model resource.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.Key">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Key</code><span class="sig-paren">(</span><em>table</em>, <em>key_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogKey" title="deriva.core.ermrest_config.CatalogKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogKey</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Key</code><span class="sig-paren">(</span><em>table</em>, <em>key_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named key.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Key.alter">
@@ -3911,6 +3372,26 @@ to the server unless they match their corresponding state in
 existing.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Key.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.Key.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Key.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in key</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Key.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_model.Key.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sugared access to self.unique_columns</p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="deriva.core.ermrest_model.Key.define">
 <em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>colnames</em>, <em>constraint_names=[]</em>, <em>comment=None</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.define" title="Permalink to this definition">¶</a></dt>
@@ -3923,19 +3404,106 @@ existing.</p>
 <dd><p>Remove this key from the remote database.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Key.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.core.ermrest_model.Key.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Key.name_in_model">
+<code class="descname">name_in_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key.name_in_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.name_in_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint name (schemaobj, name_str) used in API dictionaries fetching schema from model.</p>
+<p>While self.name works as a key within the same model tree,
+self.name_in_model(dstmodel) works in dstmodel tree by finding
+the equivalent schemaobj in that model via schema name lookup.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Key.names">
+<code class="descname">names</code><a class="headerlink" href="#deriva.core.ermrest_model.Key.names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constraint names field as seen in JSON document.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Key.prejson">
 <code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Key.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Key.prejson" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce a representation of configuration as generic Python data structures</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Key.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Key.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_model.KeyedList">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">KeyedList</code><span class="sig-paren">(</span><em>l</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#KeyedList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.KeyedList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></p>
+<p>Keyed list.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.KeyedList.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>e</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#KeyedList.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.KeyedList.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append element to list and record its key.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.Model">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>catalog</em>, <em>model_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogConfig" title="deriva.core.ermrest_config.CatalogConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogConfig</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Model</code><span class="sig-paren">(</span><em>catalog</em>, <em>model_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Top-level catalog model.</p>
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply catalog configuration to catalog unless existing already matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>existing</strong> – An instance comparable to self.</td>
+</tr>
+</tbody>
+</table>
+<p>The configuration in self will be applied recursively to the
+corresponding model nodes in schema.</p>
+<p>If existing is not provided (default), the current whole
+configuration will be retrieved from the catalog and used
+automatically to determine whether the configuration goals
+under this Model tree are already met or need to be remotely
+applied.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.bulk_upload">
+<code class="descname">bulk_upload</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.bulk_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2017:bulk-upload">tag:isrd.isi.edu,2017:bulk-upload</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in catalog and children.</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.column">
+<code class="descname">column</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em>, <em>cname</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return column configuration for column with given name.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Model.create_schema">
 <code class="descname">create_schema</code><span class="sig-paren">(</span><em>schema_def</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.create_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.create_schema" title="Permalink to this definition">¶</a></dt>
@@ -3943,6 +3511,57 @@ existing.</p>
 <p>Returns a new Schema instance based on the server-supplied
 representation of the newly created schema.</p>
 <p>The returned Schema is also added to self.schemas.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.digest_fkeys">
+<code class="descname">digest_fkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.digest_fkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.digest_fkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finish second-pass digestion of foreign key definitions using full model w/ all schemas and tables.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.fkey">
+<code class="descname">fkey</code><span class="sig-paren">(</span><em>constraint_name_pair</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.fkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.fkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return configuration for foreign key with given name pair.</p>
+<p>Accepts (schema_name, constraint_name) pairs as found in many
+faceting annotations and (schema_obj, constraint_name) pairs
+as found in fkey.name fields.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Model.fromcatalog">
+<em class="property">classmethod </em><code class="descname">fromcatalog</code><span class="sig-paren">(</span><em>catalog</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.fromcatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.fromcatalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve catalog config as a Model management object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Model.fromfile">
+<em class="property">classmethod </em><code class="descname">fromfile</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema_file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.fromfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.fromfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a JSON schema file as a Model management object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.prejson">
+<code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.prejson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a representation of configuration as generic Python data structures</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.table">
+<code class="descname">table</code><span class="sig-paren">(</span><em>sname</em>, <em>tname</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return table configuration for table with given name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model resource.</p>
 </dd></dl>
 
 </dd></dl>
@@ -3959,8 +3578,8 @@ representation of the newly created schema.</p>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.Schema">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>model</em>, <em>sname</em>, <em>schema_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogSchema" title="deriva.core.ermrest_config.CatalogSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogSchema</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Schema</code><span class="sig-paren">(</span><em>model</em>, <em>sname</em>, <em>schema_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named schema.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Schema.alter">
@@ -4000,6 +3619,20 @@ will be applied to the server unless they match their
 corresponding state in existing.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Schema.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in schema and children.</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Schema.create_table">
 <code class="descname">create_table</code><span class="sig-paren">(</span><em>table_def</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.create_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.create_table" title="Permalink to this definition">¶</a></dt>
@@ -4015,6 +3648,12 @@ representation of the newly created table.</p>
 <dd><p>Build a schema definition.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Schema.drop">
 <code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.drop" title="Permalink to this definition">¶</a></dt>
@@ -4024,15 +3663,21 @@ representation of the newly created table.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Schema.prejson">
 <code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
+<dd><p>Produce native Python representation of schema, suitable for JSON serialization.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model resource.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.Table">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Table</code><span class="sig-paren">(</span><em>schema</em>, <em>tname</em>, <em>table_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_config.CatalogTable" title="deriva.core.ermrest_config.CatalogTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_config.CatalogTable</span></code></a></p>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Table</code><span class="sig-paren">(</span><em>schema</em>, <em>tname</em>, <em>table_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named table.</p>
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Table.alter">
@@ -4060,6 +3705,12 @@ containing schema).</p>
 <p>Returns self (to allow for optional chained access).</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.alternatives">
+<code class="descname">alternatives</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.alternatives" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:table-alternatives">tag:isrd.isi.edu,2016:table-alternatives</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Table.apply">
 <code class="descname">apply</code><span class="sig-paren">(</span><em>existing=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.apply" title="Permalink to this definition">¶</a></dt>
@@ -4075,6 +3726,26 @@ containing schema).</p>
 <p>The state of self.comment, self.annotations, self.acls, and
 self.acl_bindings will be applied to the server unless they
 match their corresponding state in existing.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.catalog">
+<code class="descname">catalog</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.catalog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><em>clear_comment=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all configuration in table and children.</p>
+<p>NOTE: as a backwards-compatible heuristic, comments are
+retained by default so that a typical configuration-management
+client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sugared access to self.column_definitions</p>
 </dd></dl>
 
 <dl class="method">
@@ -4215,6 +3886,12 @@ absent from the input column_defs.</p>
 <p>However, caller-supplied definitions override the default.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Table.drop">
 <code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.drop" title="Permalink to this definition">¶</a></dt>
@@ -4222,10 +3899,82 @@ absent from the input column_defs.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="deriva.core.ermrest_model.Table.fkey_by_column_map">
+<code class="descname">fkey_by_column_map</code><span class="sig-paren">(</span><em>from_to_map</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.fkey_by_column_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.fkey_by_column_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return fkey from self.foreign_keys with matching {referencing: referenced} column mapping.</p>
+<p>from_to_map: dict-like mapping with items() method yielding (from_col, to_col) pairs
+raise_nomatch: for True, raise KeyError on non-match, else return None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.fkeys_by_columns">
+<code class="descname">fkeys_by_columns</code><span class="sig-paren">(</span><em>from_columns</em>, <em>partial=False</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.fkeys_by_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.fkeys_by_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterable of fkeys from self.foreign_keys with matching columns.</p>
+<p>from_columns: iterable of referencing column instances or column names
+partial: include fkeys which cover a superset of from_columns
+raise_nomatch: for True, raise KeyError on empty iterable</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.generated">
+<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.generated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:generated">tag:isrd.isi.edu,2016:generated</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.immutable">
+<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.immutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:immutable">tag:isrd.isi.edu,2016:immutable</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.is_association">
+<code class="descname">is_association</code><span class="sig-paren">(</span><em>min_arity=2</em>, <em>max_arity=2</em>, <em>unqualified=True</em>, <em>pure=True</em>, <em>no_overlap=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.is_association"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.is_association" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return (truthy) integer arity if self is a matching association, else False.</p>
+<p>min_arity: minimum number of associated fkeys (default 2)
+max_arity: maximum number of associated fkeys (default 2) or None
+unqualified: reject qualified associations when True (default True)
+pure: reject impure assocations when True (default True)
+no_overlap: reject overlapping associations when True (default True)</p>
+<p>The default behavior with no arguments is to test for pure,
+unqualified, non-overlapping, binary assocations.</p>
+<p>An association is comprised of several foreign keys which are
+covered by a non-nullable composite row key. This allows
+specific combinations of foreign keys to appear at most once.</p>
+<p>The arity of an association is the number of foreign keys
+being associated. A typical binary association has arity=2.</p>
+<p>An unqualified association contains <em>only</em> the foreign key
+material in its row key. Conversely, a qualified association
+mixes in other material which means that a specific
+combination of foreign keys may repeat with different
+qualifiers.</p>
+<p>A pure association contains <em>only</em> row key
+material. Conversely, an impure association includes
+additional metadata columns not covered by the row key. Unlike
+qualifiers, impure metadata merely decorates an association
+without augmenting its identifying characteristics.</p>
+<p>A non-overlapping association does not share any columns
+between multiple foreign keys. This means that all
+combinations of foreign keys are possible. Conversely, an
+overlapping association shares some columns between multiple
+foreign keys, potentially limiting the combinations which can
+be represented in an association row.</p>
+<p>These tests ignore the five ERMrest system columns and any
+corresponding constraints.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Table.key_by_columns">
+<code class="descname">key_by_columns</code><span class="sig-paren">(</span><em>unique_columns</em>, <em>raise_nomatch=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.key_by_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.key_by_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return key from self.keys with matching unique columns.</p>
+<p>unique_columns: iterable of column instances or column names
+raise_nomatch: for True, raise KeyError on non-match, else return None</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="deriva.core.ermrest_model.Table.prejson">
 <code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.prejson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce a representation of configuration as generic Python data structures</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="classmethod">
 <dt id="deriva.core.ermrest_model.Table.system_column_defs">
@@ -4239,11 +3988,35 @@ absent from the input column_defs.</p>
 <dd><p>Build standard system key definitions, merging optional custom definitions.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.table_display">
+<code class="descname">table_display</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.table_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:table-display">tag:isrd.isi.edu,2016:table-display</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.uri_path">
+<code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.uri_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI to this model element.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.visible_columns">
+<code class="descname">visible_columns</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.visible_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:visible-columns">tag:isrd.isi.edu,2016:visible-columns</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.visible_foreign_keys">
+<code class="descname">visible_foreign_keys</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:visible-foreign-keys">tag:isrd.isi.edu,2016:visible-foreign-keys</a></p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="deriva.core.ermrest_model.Type">
-<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Type</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Type" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">Type</code><span class="sig-paren">(</span><em>type_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Named type.</p>
 <dl class="method">
@@ -4254,9 +4027,37 @@ absent from the input column_defs.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="deriva.core.ermrest_model.equivalent">
+<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">equivalent</code><span class="sig-paren">(</span><em>doc1</em>, <em>doc2</em>, <em>method=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#equivalent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether two dict/array/literal documents are structurally equivalent.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="deriva.core.ermrest_model.make_type">
-<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">make_type</code><span class="sig-paren">(</span><em>type_doc</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#make_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.make_type" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">make_type</code><span class="sig-paren">(</span><em>type_doc</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#make_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.make_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create instance of Type, DomainType, or ArrayType as appropriate for type_doc.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.ermrest_model.object_annotation">
+<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">object_annotation</code><span class="sig-paren">(</span><em>tag_uri</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#object_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.object_annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to establish property getter/setter/deleter for object annotations.</p>
+<p>Usage example:</p>
+<blockquote>
+<div>&#64;presence_annotation(tag.display)
+def display(self): pass</div></blockquote>
+<p>The stub method will be discarded.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.ermrest_model.presence_annotation">
+<code class="descclassname">deriva.core.ermrest_model.</code><code class="descname">presence_annotation</code><span class="sig-paren">(</span><em>tag_uri</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#presence_annotation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.presence_annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator to establish property getter/setter/deleter for presence annotations.</p>
+<p>Usage example:</p>
+<blockquote>
+<div>&#64;presence_annotation(tag.generated)
+def generated(self): pass</div></blockquote>
+<p>The stub method will be discarded.</p>
 </dd></dl>
 
 <dl class="function">

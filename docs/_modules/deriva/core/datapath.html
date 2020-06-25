@@ -1311,11 +1311,11 @@
             
   <h1>Source code for deriva.core.datapath</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span>
+<span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">date</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="k">import</span> <span class="n">HTTPError</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;Logger for this module&quot;&quot;&quot;</span>
@@ -1392,7 +1392,31 @@
         <span class="k">if</span> <span class="n">a</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">Catalog</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">a</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">Catalog</span><span class="p">,</span> <span class="bp">self</span><span class="p">),</span> <span class="n">a</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Catalog.compose"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Catalog.compose">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">paths</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compose path fragments into a path.</span>
+
+<span class="sd">        The root of any path fragment must be found in the table instances of the currently composed path from left</span>
+<span class="sd">        to right, _but_ it does not have to be the current context (last table instance) of the last left hand path.</span>
+
+<span class="sd">        Paths must not have overlapping table instances with the currently composed path from left to right, except for</span>
+<span class="sd">        each subsequent path&#39;s root table instance which _must_ be defined in one of the left hand paths.</span>
+
+<span class="sd">        No input path in &#39;paths&#39; will be mutated.</span>
+
+<span class="sd">        :param paths: instances of `DataPath`</span>
+<span class="sd">        :return: a new `DataPath` instance composed from the &#39;paths&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">paths</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No input path(s) given&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">DataPath</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Input &#39;paths&#39; must be an instance of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">DataPath</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">base</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base</span></div></div>
 
 
 <div class="viewcode-block" id="Schema"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Schema">[docs]</a><span class="k">class</span> <span class="nc">Schema</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1446,6 +1470,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_identifiers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bind_table_instance</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="n">DataPath</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">alias</span> <span class="o">!=</span> <span class="n">cp</span><span class="o">.</span><span class="n">_root</span><span class="p">:</span>
+                <span class="n">cp</span><span class="o">.</span><span class="n">_bind_table_instance</span><span class="p">(</span><span class="n">alias</span><span class="p">)</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">_path_expression</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">cp</span><span class="o">.</span><span class="n">_table_instances</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">_identifiers</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_table_instances</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_identifiers</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifiers</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">cp</span><span class="o">.</span><span class="n">_table_instances</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_root</span> <span class="o">==</span> <span class="n">cp</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="n">cp</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_root</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_context</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">cp</span><span class="o">.</span><span class="n">_path_expression</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span>
+        <span class="k">return</span> <span class="n">cp</span>
 
     <span class="k">def</span> <span class="nf">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">dir</span><span class="p">(</span><span class="n">DataPath</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifiers</span>
@@ -1702,7 +1746,40 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">e</span>
 
-        <span class="k">return</span> <span class="n">ResultSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span> <span class="o">+</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">fetcher</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ResultSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span> <span class="o">+</span> <span class="n">base_path</span><span class="p">,</span> <span class="n">fetcher</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataPath.merge"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.DataPath.merge">[docs]</a>    <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Merges the current path with the given path.</span>
+
+<span class="sd">        The right-hand &#39;path&#39; must be rooted on a `TableAlias` object that exists (by alias name) within this path</span>
+<span class="sd">        (the left-hand path). It _must not_ have other shared table aliases.</span>
+
+<span class="sd">        :param path: a `DataPath` object rooted on a table alias that can be found in this path</span>
+<span class="sd">        :return: this path merged with the given (right-hand) path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">DataPath</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;path&#39; must be an instance of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;right-hand path root not found in this path&#39;s table instances&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;right-hand path root is not equivalent to the matching table instance in this path&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">path</span><span class="o">.</span><span class="n">_table_instances</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">!=</span> <span class="p">{</span><span class="n">path</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span><span class="p">}:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;overlapping table instances found in right-hand path&quot;</span><span class="p">)</span>
+
+        <span class="c1"># update this path as rebased right-hand path</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">)</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">rebase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span> <span class="o">=</span> <span class="n">temp</span>
+
+        <span class="c1"># copy and bind table instances from right-hand path</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">path</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">alias</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_instances</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_bind_table_instance</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="n">alias</span><span class="p">]))</span>
+
+        <span class="c1"># set the context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_instances</span><span class="p">[</span><span class="n">path</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div></div>
 
 
 <div class="viewcode-block" id="ResultSet"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ResultSet">[docs]</a><span class="k">class</span> <span class="nc">ResultSet</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2026,6 +2103,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">alias_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="c1"># deep copy implementation of a table alias should not make copies of model objects (ie, the base table)</span>
+        <span class="k">return</span> <span class="n">TableAlias</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_table</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TableAlias.equivalent"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.TableAlias.equivalent">[docs]</a>    <span class="k">def</span> <span class="nf">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Equivalence comparison between table aliases.</span>
+
+<span class="sd">        :param alias: another table alias</span>
+<span class="sd">        :return: True, if the base table and alias name match, else False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;alias&#39; must be an instance of &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">alias</span><span class="o">.</span><span class="n">name</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_table</span> <span class="o">==</span> <span class="n">alias</span><span class="o">.</span><span class="n">_base_table</span></div>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">uname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;the url encoded name&quot;&quot;&quot;</span>
@@ -2246,7 +2337,11 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_column</span><span class="p">,</span> <span class="n">Column</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ColumnAlias</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">alias_name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span> <span class="o">=</span> <span class="n">base_column</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span> <span class="o">=</span> <span class="n">base_column</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="c1"># deep copy implementation of a column alias should not make copies of model objects (ie, the base column)</span>
+        <span class="k">return</span> <span class="n">ColumnAlias</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ColumnAlias.describe"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.describe">[docs]</a>    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Provides a description of the model element.</span>
@@ -2254,7 +2349,7 @@
 <span class="sd">        :return: a user-friendly string representation of the model element.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;Column name: &#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="se">\t</span><span class="s2">Alias for: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> \
-               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
 
     <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -2267,16 +2362,16 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fqname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;the url encoded fully qualified name&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">fqname</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">fqname</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">instancename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">instancename</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">instancename</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;In a projection, the object uses this name.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">instancename</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2292,7 +2387,7 @@
 <span class="sd">        :param other: `None` or any other literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__eq__</span> <span class="o">=</span> <span class="n">eq</span>
 
@@ -2302,7 +2397,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">lt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__lt__</span> <span class="o">=</span> <span class="n">lt</span>
 
@@ -2312,7 +2407,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__le__</span> <span class="o">=</span> <span class="n">le</span>
 
@@ -2322,7 +2417,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">gt</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__gt__</span> <span class="o">=</span> <span class="n">gt</span>
 
@@ -2332,7 +2427,7 @@
 <span class="sd">        :param other: a literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
     <span class="fm">__ge__</span> <span class="o">=</span> <span class="n">ge</span>
 
@@ -2342,7 +2437,7 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">regexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ColumnAlias.ciregexp"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.ciregexp">[docs]</a>    <span class="k">def</span> <span class="nf">ciregexp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a &#39;case-insensitive regular expression&#39; comparison predicate.</span>
@@ -2350,7 +2445,7 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ciregexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">ciregexp</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ColumnAlias.ts"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.ColumnAlias.ts">[docs]</a>    <span class="k">def</span> <span class="nf">ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a &#39;text search&#39; comparison predicate.</span>
@@ -2358,7 +2453,7 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_column</span><span class="o">.</span><span class="n">ts</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">ts</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="SortDescending"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.SortDescending">[docs]</a><span class="k">class</span> <span class="nc">SortDescending</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2380,10 +2475,13 @@
 
 <div class="viewcode-block" id="PathOperator"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.PathOperator">[docs]</a><span class="k">class</span> <span class="nc">PathOperator</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">Project</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Cannot extend a path after an attribute projection&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_r</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2396,13 +2494,32 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_mode</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot;/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PathOperator.rebase"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.PathOperator.rebase">[docs]</a>    <span class="k">def</span> <span class="nf">rebase</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">root_context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Rebases the current path expression to begin as a reset context following &#39;base&#39;.</span>
+
+<span class="sd">        :param base: a valid path expresion</span>
+<span class="sd">        :param root_context: root context on which to rebase this path expression</span>
+<span class="sd">        :return: rebased expresion _or_ a new `ResetContext` instance if `self` was the root</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root_context</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Root</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ResetContext</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pathobj</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pathobj</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">Root</span><span class="p">):</span>
+                <span class="n">pathobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_r</span>
+            <span class="k">assert</span> <span class="n">root_context</span><span class="o">.</span><span class="n">equivalent</span><span class="p">(</span><span class="n">pathobj</span><span class="o">.</span><span class="n">_r</span><span class="o">.</span><span class="n">_table</span><span class="p">)</span>
+            <span class="n">pathobj</span><span class="o">.</span><span class="n">_r</span> <span class="o">=</span> <span class="n">ResetContext</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">root_context</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span></div></div>
 
 
 <div class="viewcode-block" id="Root"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Root">[docs]</a><span class="k">class</span> <span class="nc">Root</span> <span class="p">(</span><span class="n">PathOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Root</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_table</span> <span class="o">=</span> <span class="n">r</span>
 
     <span class="nd">@property</span>
@@ -2422,6 +2539,9 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_alias</span> <span class="o">=</span> <span class="n">alias</span>
 
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="n">ResetContext</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">),</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alias</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">))</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span>
@@ -2433,6 +2553,9 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">Filter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_formula</span> <span class="o">=</span> <span class="n">formula</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="n">Filter</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">),</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_formula</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">))</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2453,8 +2576,9 @@
         <span class="sd">&quot;&quot;&quot;Initializes the projection component.</span>
 
 <span class="sd">        :param r: the parent path component.</span>
-<span class="sd">        :param projection_type: valid type in MODES</span>
-<span class="sd">        :param projection: projection list</span>
+<span class="sd">        :param r: the &#39;mode&#39; of the projection (entity, attribute, etc.)</span>
+<span class="sd">        :param projection: projection list.</span>
+<span class="sd">        :param group_key: grouping keys list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">MODES</span>
@@ -2479,6 +2603,13 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">projection_name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">]</span>
 
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">cp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__deepcopy__</span><span class="p">(</span><span class="n">memodict</span><span class="o">=</span><span class="n">memodict</span><span class="p">)</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">_projection_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_projection_mode</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">_projection</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_projection</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">)</span>
+        <span class="n">cp</span><span class="o">.</span><span class="n">_group_key</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_key</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cp</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">PathOperator</span><span class="p">)</span>
@@ -2497,14 +2628,29 @@
 
 <div class="viewcode-block" id="Link"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Link">[docs]</a><span class="k">class</span> <span class="nc">Link</span> <span class="p">(</span><span class="n">PathOperator</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the Link operator</span>
+
+<span class="sd">        :param r: parent path operator</span>
+<span class="sd">        :param on: a table alias, a comparison predicate, or a conjunction of comparisons</span>
+<span class="sd">        :param as_: table alias</span>
+<span class="sd">        :param join_type: left, right or full for outer join semantics, or &#39;&#39; for inner join semantics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Link</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">Table</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
-                <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">),</span> <span class="s2">&quot;Invalid join &#39;on&#39; clause&quot;</span>
         <span class="k">assert</span> <span class="n">as_</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">as_</span><span class="p">,</span> <span class="n">TableAlias</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">join_type</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="p">(</span><span class="n">join_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;full&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">Predicate</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on</span> <span class="o">=</span> <span class="n">on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_as</span> <span class="o">=</span> <span class="n">as_</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_join_type</span> <span class="o">=</span> <span class="n">join_type</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="k">return</span> <span class="n">Link</span><span class="p">(</span>
+            <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_r</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">),</span>
+            <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">),</span>
+            <span class="n">as_</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_as</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="n">memodict</span><span class="p">),</span>
+            <span class="n">join_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_join_type</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2571,6 +2717,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lop</span> <span class="o">=</span> <span class="n">lop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_op</span> <span class="o">=</span> <span class="n">op</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span> <span class="o">=</span> <span class="n">rop</span>
+
+    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="c1"># deep copy of predicate should not deep copy the model object references (i.e., Column objects)</span>
+        <span class="k">return</span> <span class="n">ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">is_equality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

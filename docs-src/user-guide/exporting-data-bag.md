@@ -25,11 +25,11 @@ We'll walk you through an example from the Demo deployment in greater detail bel
 
 The following are some steps and things to consider before exporting files to a BAG.
 
-### Available storage
+### Consider available storage
 
 Make sure your system has enough space for the data you are downloading, as BAGs may be quite large.
 
-### Consider Time
+### Consider time
 
 With large files, it may take a while for all of the data to download.
 
@@ -39,7 +39,7 @@ But if the file cannot be downloaded (ie, network outage), run the `bdbag --mate
 
 ### Download and install DERIVA Client
 
-DERIVA Client is an app suite that includes the BDBag command-line program (`bdbag`) as well as the DERIVA-Auth GUI and command line programs that you will also need to authenticate your downloads. (Note that there are other programs within this suite that are useful for data submitters, such as the upload client.)
+DERIVA Client is an app suite that includes the BDBag command-line program (`bdbag`) as well as the DERIVA Auth GUI app and command line programs that you will also need to authenticate your downloads. (Note that there are other programs within this suite that are useful for data submitters, such as the upload client.)
 
 This program is built on Python and is available via the command `pip install deriva-client`. For complete installation instructions, see the [DERIVA Client Tools](deriva-client.html) page.
 

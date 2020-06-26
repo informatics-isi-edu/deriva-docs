@@ -20,6 +20,8 @@ DERIVA Documentation
   user-guide/introduction
   user-guide/key-concepts
   user-guide/discovering-data
+  user-guide/search-page
+  user-guide/detail-page
   user-guide/exporting-data-csv
   user-guide/exporting-data-bag
   user-guide/sharing-and-citing-data
@@ -31,7 +33,8 @@ DERIVA Documentation
   data-submitter-guide/introduction
   data-submitter-guide/key-concepts
   data-submitter-guide/create-edit-delete-records-metadata
-  data-submitter-guide/uploading-files
+  data-submitter-guide/submitting-files
+  data-submitter-guide/uploading
 
 .. toctree::
   :maxdepth: 1

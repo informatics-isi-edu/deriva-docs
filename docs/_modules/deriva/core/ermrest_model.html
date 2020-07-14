@@ -1590,7 +1590,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sname</span><span class="p">,</span> <span class="n">cname</span> <span class="o">=</span> <span class="n">constraint_name_pair</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">CatalogSchema</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="ow">is</span> <span class="n">sname</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">sname</span><span class="o">.</span><span class="n">_fkeys</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
@@ -2525,7 +2525,7 @@
             <span class="s2">&quot;column_name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="p">}</span></div>
 
-    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Column.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Column.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
@@ -2536,7 +2536,7 @@
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="n">prune</span><span class="p">),</span>
             <span class="s2">&quot;nullok&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nullok</span><span class="p">,</span>
             <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="p">}</span></div>
 
 <div class="viewcode-block" id="Column.define"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Column.define">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">define</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cname</span><span class="p">,</span> <span class="n">ctype</span><span class="p">,</span> <span class="n">nullok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">acls</span><span class="o">=</span><span class="p">{},</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
@@ -2667,16 +2667,6 @@
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="Column.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Column.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Column</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="n">prune</span><span class="p">)</span>
-        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">prejson</span><span class="p">(</span><span class="n">prune</span><span class="p">),</span>
-            <span class="s1">&#39;nullok&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nullok</span><span class="p">,</span>
-            <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">,</span>
-            <span class="s1">&#39;comment&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span>
-        <span class="p">})</span>
-        <span class="k">return</span> <span class="n">d</span></div>
-        
 <div class="viewcode-block" id="Column.drop"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Column.drop">[docs]</a>    <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove this column from the remote database.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2869,7 +2859,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Key </span><span class="si">%s</span><span class="s1"> does not appear to belong to table </span><span class="si">%s</span><span class="s1">.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_uri_path</span><span class="p">)</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uri_path</span><span class="p">)</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span></div></div>
 
 <div class="viewcode-block" id="ForeignKey"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.ForeignKey">[docs]</a><span class="k">class</span> <span class="nc">ForeignKey</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -2962,13 +2952,6 @@
     <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constraint names field as seen in JSON document.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_schema</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">]</span> <span class="p">]</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">column_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="n">fk_col</span><span class="p">:</span> <span class="n">pk_col</span>
-            <span class="k">for</span> <span class="n">fk_col</span><span class="p">,</span> <span class="n">pk_col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">)</span>
-        <span class="p">}</span>
 
 <div class="viewcode-block" id="ForeignKey.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.ForeignKey.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce a representation of configuration as generic Python data structures&quot;&quot;&quot;</span>

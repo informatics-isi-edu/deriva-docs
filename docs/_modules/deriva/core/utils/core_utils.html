@@ -1735,6 +1735,51 @@
         <span class="n">ordered</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">additions</span><span class="p">)</span>
         <span class="n">additions</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">return</span> <span class="n">ordered</span></div>
+
+
+<div class="viewcode-block" id="AttrDict"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.AttrDict">[docs]</a><span class="k">class</span> <span class="nc">AttrDict</span> <span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dictionary with optional attribute-based lookup.</span>
+
+<span class="sd">       For keys that are valid attributes, self.key is equivalent to</span>
+<span class="sd">       self[key].</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">a</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+<div class="viewcode-block" id="AttrDict.update"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.AttrDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># convenient enumeration of common annotation tags</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="n">AttrDict</span><span class="p">({</span>
+    <span class="s1">&#39;display&#39;</span><span class="p">:</span>            <span class="s1">&#39;tag:misd.isi.edu,2015:display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;table_alternatives&#39;</span><span class="p">:</span> <span class="s1">&#39;tag:isrd.isi.edu,2016:table-alternatives&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;column_display&#39;</span><span class="p">:</span>     <span class="s1">&#39;tag:isrd.isi.edu,2016:column-display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;key_display&#39;</span><span class="p">:</span>        <span class="s1">&#39;tag:isrd.isi.edu,2017:key-display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;foreign_key&#39;</span><span class="p">:</span>        <span class="s1">&#39;tag:isrd.isi.edu,2016:foreign-key&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;generated&#39;</span><span class="p">:</span>          <span class="s1">&#39;tag:isrd.isi.edu,2016:generated&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;immutable&#39;</span><span class="p">:</span>          <span class="s1">&#39;tag:isrd.isi.edu,2016:immutable&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;non_deletable&#39;</span><span class="p">:</span>      <span class="s1">&#39;tag:isrd.isi.edu,2016:non-deletable&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;app_links&#39;</span><span class="p">:</span>          <span class="s1">&#39;tag:isrd.isi.edu,2016:app-links&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;table_display&#39;</span><span class="p">:</span>      <span class="s1">&#39;tag:isrd.isi.edu,2016:table-display&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;visible_columns&#39;</span><span class="p">:</span>    <span class="s1">&#39;tag:isrd.isi.edu,2016:visible-columns&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;visible_foreign_keys&#39;</span><span class="p">:</span> <span class="s1">&#39;tag:isrd.isi.edu,2016:visible-foreign-keys&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;export&#39;</span><span class="p">:</span>             <span class="s1">&#39;tag:isrd.isi.edu,2016:export&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;export_2019&#39;</span><span class="p">:</span>        <span class="s1">&#39;tag:isrd.isi.edu,2019:export&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;asset&#39;</span><span class="p">:</span>              <span class="s1">&#39;tag:isrd.isi.edu,2017:asset&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;citation&#39;</span><span class="p">:</span>           <span class="s1">&#39;tag:isrd.isi.edu,2018:citation&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;required&#39;</span><span class="p">:</span>           <span class="s1">&#39;tag:isrd.isi.edu,2018:required&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;indexing_preferences&#39;</span><span class="p">:</span> <span class="s1">&#39;tag:isrd.isi.edu,2018:indexing-preferences&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bulk_upload&#39;</span><span class="p">:</span>        <span class="s1">&#39;tag:isrd.isi.edu,2017:bulk-upload&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;chaise_config&#39;</span><span class="p">:</span>      <span class="s1">&#39;tag:isrd.isi.edu,2019:chaise-config&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;source_definitions&#39;</span><span class="p">:</span> <span class="s1">&#39;tag:isrd.isi.edu,2019:source-definitions&#39;</span>
+<span class="p">})</span>
 </pre></div>
 
            </div>

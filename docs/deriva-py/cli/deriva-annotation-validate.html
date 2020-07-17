@@ -1508,6 +1508,42 @@ foreign key names, etc. used in <code class="docutils literal notranslate"><span
 per the catalog schema.</p>
 </div>
 </div>
+<div class="section" id="examples">
+<span id="examples"></span><h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>The simplest usage example will check all known annotations on all model objects.
+For best results, you should run the tool when logged in with <code class="docutils literal notranslate"><span class="pre">owner</span></code> rights on
+a catalog. Otherwise, the model name validation may not be accurate, if you are
+unable to enumerate the entire catalog schema. To ignore model name errors, use
+the <code class="docutils literal notranslate"><span class="pre">--skip-model-names</span></code> flag.</p>
+<div class="highlight-shell script notranslate"><div class="highlight"><pre><span></span>$ deriva-annotation-validate HOSTNAME CATALOG
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">HOSTNAME</span></code> is a host name such as <code class="docutils literal notranslate"><span class="pre">www.example.org</span></code> and <code class="docutils literal notranslate"><span class="pre">CATALOG</span></code> is a
+catalog identifier such as <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<p>To validate only within a single schema named <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<div class="highlight-shell script notranslate"><div class="highlight"><pre><span></span>$ deriva-annotation-validate HOSTNAME CATALOG -s &#39;^foo$&#39;
+</pre></div>
+</div>
+<p>To validate any table that has the word <code class="docutils literal notranslate"><span class="pre">bar</span></code> in it within the schema <code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p>
+<div class="highlight-shell script notranslate"><div class="highlight"><pre><span></span>$ deriva-annotation-validate HOSTNAME CATALOG -s &#39;^foo$&#39; -t &#39;bar&#39;
+</pre></div>
+</div>
+<p>Note that the above patterns will also validate annotations on the columns,
+keys, and foreign keys of any matching table.</p>
+<p>To validate only the tables with <code class="docutils literal notranslate"><span class="pre">bar</span></code> in the name.</p>
+<div class="highlight-shell script notranslate"><div class="highlight"><pre><span></span>$ deriva-annotation-validate HOSTNAME CATALOG -s &#39;^foo$&#39; -t &#39;bar&#39; -c &#39;^$&#39; -k &#39;^$&#39; -f &#39;^$&#39;
+</pre></div>
+</div>
+<p>The patterns <code class="docutils literal notranslate"><span class="pre">^$</span></code> will match empty strings and therefore will not match any model
+objects by name, since they cannot have empty strings as names.</p>
+<p>To validate only the <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:visible-columns</span></code> annotation on any
+model object.</p>
+<div class="highlight-shell script notranslate"><div class="highlight"><pre><span></span>$ deriva-annotation-validate HOSTNAME CATALOG -a tag:isrd.isi.edu,2016:visible-columns
+</pre></div>
+</div>
+<p>The above command can be combined with other examples above to validate a
+subset of model objects against only a single annotation schema.</p>
+</div>
 </div>
 </div>
 

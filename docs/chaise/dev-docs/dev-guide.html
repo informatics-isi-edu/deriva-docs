@@ -1117,7 +1117,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../user-docs/custom-css.html">Custom CSS Styling Tips</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../user-docs/custom-css.html#changing-chaise-table-styles">Changing chaise table styles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/custom-css.html#changing-chaise-styles">Changing chaise styles</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/custom-css.html#character-replacement">Character replacement</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/custom-css.html#general-html-structure">General HTML structure:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/custom-css.html#examples">Examples:</a></li>
@@ -1382,6 +1382,28 @@
 <li><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS">MDN CSS reference</a>: a very thorough CSS reference that you can use to learn more about different CSS features.</li>
 <li><a class="reference external" href="https://caniuse.com/">caniuse.com</a>: can be used to quickly figure out if a feature can be used based on our browser support or not.</li>
 <li><a class="reference external" href="https://sass-lang.com/guide">Sass basics</a>: a very good starting point for learning Sass basics (we’re using SCSS syntax.)</li>
+<li><a class="reference external" href="https://www.keycdn.com/blog/chrome-devtools">Guide to Chrome DevTools</a>: Very useful for CSS debugging.</li>
+<li><a class="reference external" href="https://css-tricks.com/snippets/html/glyphs/">Glyph-icons</a> : An amazing comprehensive guide to include any glyphs in your css code</li>
+<li><a class="reference external" href="https://www.smashingmagazine.com/2018/05/print-stylesheets-in-2018/">CSS Printing Guide - 1</a> : A-Z about CSS print rules</li>
+<li><a class="reference external" href="https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/">CSS Printing Guide - 2</a> : Essentials for CSS Print rules
+(part - 2)</li>
+<li><a class="reference external" href="https://css-tricks.com/override-inline-styles-with-css/">Overriding inline styles</a> : Inline styles have the highest priority but they
+too can be overwritten when the element is accessed as shown in the document.</li>
+</ul>
+</div>
+<div class="section" id="useful-css-rules">
+<span id="useful-css-rules"></span><h3>Useful CSS rules<a class="headerlink" href="#useful-css-rules" title="Permalink to this headline">¶</a></h3>
+<p>How each browser renders printing styles is different from the other. Mac and Windows behave differently for the same browser type (Firefox, Chrome, etc). Hence we need to keep in mind the following while writing print rules in css.</p>
+<ul class="simple">
+<li>If table borders or other line elements are not visible in the print preview or the PDF, check if there exists any overriding
+bootstrap rules. These bootstrap rules could be a <code class="docutils literal notranslate"><span class="pre">background-color</span></code>, <code class="docutils literal notranslate"><span class="pre">background-border</span></code>, etc. and they always take precedence over the custom css rules that are defined in the &#64;media-print section of the css file.</li>
+<li>If yes, then we must override those rules with <code class="docutils literal notranslate"><span class="pre">!important</span></code> to get the desired effect.</li>
+<li>A new class has been defined to apply custom styling to the case of Firefox browser in combination with MacOs which can be found here
+: (https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/custom-css.md)</li>
+<li>Use the print mode in the rendering tab to see how the document looks when printed in Chrome browser. On Firefox, this can be achieved
+by clicking on a small page icon in the “Inspect Element mode”.</li>
+<li>The print preview that is seen when doing a <code class="docutils literal notranslate"><span class="pre">Ctrl-P</span></code> on Windows or a <code class="docutils literal notranslate"><span class="pre">Cmd-P</span></code> on Mac doesn’t necessarily give you the right picture of
+the document to be printed. To view what will be printed, either save to PDF file or chose to switch to the ‘Print mode’ as described above.</li>
 </ul>
 </div>
 <div class="section" id="scss-structure">

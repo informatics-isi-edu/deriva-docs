@@ -14,7 +14,7 @@ ERMRest is a catalog service with a RESTful web services interface for:
 
 GRAPHIC
 
-scientific assets are organized and cataloged using an Entity Relationship Model (ERM) which is subject to frequent schema evolution and differential access control.
+Scientific assets are organized and cataloged using an Entity Relationship Model (ERM) which is subject to frequent schema evolution and differential access control.
 
 Assets may be digital objects (i.e. files) or references to physical objects, such as proteins, mice, or biosamples. Assets are characterized by contextual metadata which places an asset into the domain model by relating it to a specific entity. Additional metadata are used to enrich the descriptions and relationships between assets.
 

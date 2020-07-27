@@ -22,8 +22,7 @@ DERIVA Documentation
   user-guide/discovering-data
   user-guide/search-page
   user-guide/detail-page
-  user-guide/exporting-data-csv
-  user-guide/exporting-data-bag
+  user-guide/exporting-data
   user-guide/sharing-and-citing-data
 
 .. toctree::

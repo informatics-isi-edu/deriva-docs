@@ -1,4 +1,4 @@
-#Deployment Tutorial
+# Deployment Tutorial
 
 This is a basic tutorial that will walk you through a simple deployment using the major components of the DERIVA framework. At the end of this tutorial, you'll have a system using ERMrest, Chaise, Hatrac (what else is needed for the simplest deployment?)
 
@@ -24,5 +24,3 @@ Any guidance and then supply the model for the tutorial.
 
 * [Follow these instructions](https://github.com/informatics-isi-edu/ermrestjs#ermrestjs-----ermrest-client-library-in-javascript) to install Chaise.
 * Configure chaise - provide simple configuration options.
-
-

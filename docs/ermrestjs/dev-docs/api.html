@@ -8401,7 +8401,9 @@ Therefore heuristic is as follows:</p>
 <li>If in scalar mode -&gt; resolve with list of filters (don’t change their displaynames.)</li>
 <li>Otherwise (entity-mode) -&gt; generate an ermrest request to get the displaynames.</li>
 </ul>
-<p>NOTE This function will not return the null filter.</p>
+<p>NOTE This function will not return the null filter.
+NOTE the request might not return any result for a given filter (because of user access or missing data),
+in this case, we will return the raw value instead.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with list of objects that have <code class="docutils literal notranslate"><span class="pre">uniqueId</span></code>, and <code class="docutils literal notranslate"><span class="pre">displayname</span></code>.</p>
 <table border="1" class="docutils">
 <thead>

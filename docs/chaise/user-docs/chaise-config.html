@@ -1357,92 +1357,12 @@
 </thead>
 <tbody>
 <tr>
-<td>catalog</td>
-<td>A catalog id</td>
-<td>1</td>
-<td>"catalog":\&lt;id></td>
-<td>catalog=\&lt;id></td>
-<td>The catalog id has a numeric value</td>
-</tr>
-<tr>
-<td>schema</td>
-<td>A schema name</td>
-<td>N/A</td>
-<td>"schema":\&lt;name></td>
-<td>schema=\&lt;name></td>
-<td>A default value can be established through the <a href="/chaise/search/annotation.html#schema-annotations">schema annotation default keys</a>. <br> A random schema of the catalog is selected if it is not specified otherwise.</td>
-</tr>
-<tr>
-<td>layout</td>
-<td>list <br> table <br> card</td>
-<td>list</td>
-<td>"layout":\&lt;value></td>
-<td>layout=\&lt;value></td>
-<td>The view the summary page will be rendered.</td>
-</tr>
-<tr>
-<td>facetPolicy</td>
-<td>on_demand</td>
-<td>N/A</td>
-<td>"facetPolicy":\&lt;value></td>
-<td>N/A</td>
-<td>If present with the <em>on_demand</em> value, requests (for facets count and for facets distinct values) will be issued only for the selected facets. <br> At start up, the facets with the "top" annotation will be selected.<br>  On demand, you can check also other facets.</td>
-</tr>
-<tr>
-<td>feedbackURL</td>
-<td>A URL for a form to provide feedback.</td>
-<td>None</td>
-<td>"feedbackURL":\&lt;URL></td>
-<td>N/A</td>
-<td></td>
-</tr>
-<tr>
-<td>helpURL</td>
-<td>A URL for getting help using Chaise.</td>
-<td>None</td>
-<td>"helpURL":\&lt;URL></td>
-<td>N/A</td>
-<td></td>
-</tr>
-<tr>
 <td>ermrestLocation</td>
 <td>The base URL for the ERMrest service</td>
 <td>window.location.protocol + // + window.location.host</td>
 <td>"ermrestLocation": \&lt;URL></td>
 <td>N/A</td>
 <td>The location of the ERMrest service.</td>
-</tr>
-<tr>
-<td>recordResource</td>
-<td>The sub path for the record resource</td>
-<td>/record</td>
-<td>"recordResource":\&lt;value></td>
-<td>N/A</td>
-<td></td>
-</tr>
-<tr>
-<td>showBadgeCounts</td>
-<td>true <br> false</td>
-<td>false</td>
-<td>"showBadgeCounts":\&lt;value></td>
-<td>N/A</td>
-<td>If true, facet counts will be displayed in the sidebar.</td>
-</tr>
-<tr>
-<td>tableThreshold</td>
-<td>Number of rows.</td>
-<td>0</td>
-<td>"tableThreshold":\&lt;value></td>
-<td>N/A</td>
-<td>Max number of rows default to transpose view.</td>
-</tr>
-<tr>
-<td>showAllAttributes</td>
-<td>A boolean</td>
-<td>False</td>
-<td>"showAllAttributes":\&lt;value></td>
-<td>N/A</td>
-<td>If present and True, select all the attributes in the search page.</td>
 </tr>
 <tr>
 <td>headTitle</td>
@@ -1503,10 +1423,10 @@
 <tr>
 <td>dataBrowser</td>
 <td>A URL</td>
-<td>/chaise/search</td>
+<td>/chaise/recordset</td>
 <td>"dataBrowser":\&lt;value></td>
 <td>N/A</td>
-<td>The URL to continue after a logout.</td>
+<td>The URL to continue after a logout. Also used when an error is thrown and we don't know where to redirect the user.</td>
 </tr>
 <tr>
 <td>defaultAnnotationColor</td>
@@ -1533,22 +1453,6 @@
 <td>Whether the search box for attributes names and values should be hidden</td>
 </tr>
 <tr>
-<td>maxColumns</td>
-<td>An integer</td>
-<td>6</td>
-<td>"maxColumns":\&lt;value></td>
-<td>N/A</td>
-<td>The maximum number of columns to be displayed in the search result table</td>
-</tr>
-<tr>
-<td>showUnfilteredResults</td>
-<td>A boolean</td>
-<td>false</td>
-<td>"showUnfilteredResults":\&lt;value></td>
-<td>N/A</td>
-<td>If present and equal <strong>true</strong>, data will be displayed in the search result table even if no filter was selected.</td>
-</tr>
-<tr>
 <td>editRecord</td>
 <td>A boolean</td>
 <td>N/A</td>
@@ -1570,7 +1474,7 @@
 <td>N/A</td>
 <td>"defaultCatalog":\&lt;id></td>
 <td>N/A</td>
-<td>The catalog id has a numeric value. Use this parameter to specify which catalog Chaise shows by default. It is strongly recommended defining this in your <code>chaise-config.js</code> file.</td>
+<td>Use this parameter to specify which catalog Chaise shows by default. When a user navigates to "/chaise/recordset" and omits the rest of the path, the <code>defaultCatalog</code> paired with <code>defaultTables</code> are used to generate a valid recordset link for the user. It is strongly recommended defining this in your <code>chaise-config.js</code> file. This property is used to fetch the catalog annotation information for pages that rely on <code>chaise-config.js</code> but don't have a catalog id in the path. For example, the navbar on static pages uses this property to try to fetch a catalog annotation for configuring the navbar.</td>
 </tr>
 <tr>
 <td>defaultTables</td>
@@ -1635,14 +1539,6 @@
 <td>"allowErrorDismissal" : \&lt;value></td>
 <td>N/A</td>
 <td>All terminal error message display an error message dialog that is not dismissable by default. Set this property to true if you want to allow dismissable error message dialogs.\nThis property when defined as <code>true</code>, will cause a degraded UX experience that will prevent future errors from being thrown and other functionality might not behave as expected. This should ONLY be used in development environments.</td>
-</tr>
-<tr>
-<td>searchPageSize</td>
-<td>Integer</td>
-<td>25</td>
-<td>"searchPageSize" : \&lt;value></td>
-<td>N/A</td>
-<td>If present, its value represents the number of records to be displayed on a page in the search view.</td>
 </tr>
 <tr>
 <td>footerMarkdown</td>
@@ -1725,20 +1621,28 @@
 <td>This variable can be used to force chaise to include a <link> tag in the <head> tag that defines the canonical link for each of the entities and other resource pages.</td>
 </tr>
 <tr>
-<td>SystemColumnsDisplayCompact</td>
+<td>systemColumnsDisplayCompact</td>
 <td>Boolean/Array</td>
 <td>false</td>
-<td>"SystemColumnsDisplayCompact" : \&lt;value></td>
+<td>"systemColumnsDisplayCompact" : \&lt;value></td>
 <td>N/A</td>
 <td>If set to true,  apply the system columns heuristics when no visible columns list is defined. This will put the RID system column as the first self referencing key column. 'RCB', 'RMB', 'RCT', 'RMT' will be placed at the very end of the list respectively. If set to an array, only system columns in the array will be displayed in the order mentioned earlier. This applies to compact and all subcontexts.</td>
 </tr>
 <tr>
-<td>SystemColumnsDisplayDetailed</td>
+<td>systemColumnsDisplayDetailed</td>
 <td>Boolean/Array</td>
 <td>false</td>
-<td>"SystemColumnsDisplayDetailed" : \&lt;value></td>
+<td>"systemColumnsDisplayDetailed" : \&lt;value></td>
 <td>N/A</td>
-<td>See above description for <code>SystemColumnsDisplayCompact</code>. This property behaves the same way except only for the detailed context.</td>
+<td>See above description for <code>systemColumnsDisplayCompact</code>. This property behaves the same way except only for the detailed context.</td>
+</tr>
+<tr>
+<td>systemColumnsDisplayEntry</td>
+<td>Boolean/Array</td>
+<td>false</td>
+<td>"systemColumnsDisplayEntry" : \&lt;value></td>
+<td>N/A</td>
+<td>See above description for <code>systemColumnsDisplayCompact</code>. This property behaves the same way except only for the entry contexts.</td>
 </tr>
 <tr>
 <td>logClientActions</td>

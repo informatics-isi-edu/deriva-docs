@@ -1343,6 +1343,16 @@
 <span id="configuration-file-chaise-config-js"></span><h1>Configuration File: chaise-config.js<a class="headerlink" href="#configuration-file-chaise-config-js" title="Permalink to this headline">¶</a></h1>
 <p><strong>Chaise</strong> uses a set of default configuration parameters. You can overwrite them through the <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file and/or the search parameters in the URL.</p>
 <p>A Chaise deployment includes a sample config file (<a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/chaise-config-sample.js">chaise-config-sample.js</a>) at the root directory that you can edit and then rename to <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code>.</p>
+<p>Each chaise config property below can be defined in each place that we allow for a chaise configuration with a few exceptions noted below. Chaise config uses a set order for determining which chaise configuration’s properties will be used. The order that the properties will be checked and then applied are as follows:</p>
+<ol class="simple">
+<li>Default values defined in <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/chaise-config.md">chaise configuration document</a>.</li>
+<li>Any properties defined at the root of the object returned from <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/chaise-config-sample.js">chaise-config.js</a>.</li>
+<li>Any matching <code class="docutils literal notranslate"><span class="pre">configRules</span></code> in the order they appear in the <code class="docutils literal notranslate"><span class="pre">configRules</span></code> array. Properties in the last matching rule will take precedence</li>
+<li>Any properties defined at the root of the object returned from this annotation.</li>
+<li>Step 3 from above, but with the <code class="docutils literal notranslate"><span class="pre">configRules</span></code> from this annotation.</li>
+</ol>
+<p>Notes: is that as the <code class="docutils literal notranslate"><span class="pre">configRules</span></code> are checked, properties set in step 2 will be overridden by properties defined in step 3 that have the same name. This allows the server wide configuration to be a base configuration for the chaise apps and allows for further configuration based on a combination of hostname and catalog id. This applies for step 4 and 5 as well when reading the values from the catalog annotation.</p>
+<p>If a property appears in the same configuration twice, the property defined later will be used.</p>
 <p>The below table explains the usage of the default parameters:</p>
 <table border="1" class="docutils">
 <thead>
@@ -1506,7 +1516,7 @@
 <td>N/A</td>
 <td>"navbarMenu":{...}</td>
 <td>N/A</td>
-<td>Use this parameter to customize the menu items displayed in the navbar at the top of all Chaise apps by supplying an object with your links and/or dropdown menus. Each option accepts an 'acls' object that has two attribute arrays ('show' and 'enable') used to define lists of globus groups or users that can see and click that link. The <code>url</code> property of each menu object allows for templating of the catalog id parameter using handlebars. Consult the <em>chaise-config.js</em> file for more details about format.</td>
+<td>Use this parameter to customize the menu items displayed in the navbar at the top of all Chaise apps by supplying an object with your links and/or dropdown menus. Each option accepts an 'acls' object that has two attribute arrays ('show' and 'enable') used to define lists of globus groups or users that can see and click that link. The <code>url</code> property of each menu object allows for templating of the catalog id parameter using handlebars. The <code>header</code> property of each menu object will create an unclickable bold header with class <code>chaise-dropdown-header</code>. Consult the <em>chaise-config-sample.js</em> file for more details about format.</td>
 </tr>
 <tr>
 <td>sidebarPosition</td>

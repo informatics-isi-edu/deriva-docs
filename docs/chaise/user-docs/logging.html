@@ -1180,6 +1180,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#">08/26/20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">02/12/20</a></li>
 </ul>
 </li>
@@ -1503,6 +1504,7 @@
 <li><code class="docutils literal notranslate"><span class="pre">template</span></code>: Used only for the “export” request and will return an object with <code class="docutils literal notranslate"><span class="pre">displayname</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code> attributes to give more information about the used export template.</li>
 <li><code class="docutils literal notranslate"><span class="pre">old_thickness</span></code>, <code class="docutils literal notranslate"><span class="pre">new_thickness</span></code>: Available only on “line thickness adjustment” client log in viewer app. It will capture the old and new value after user interacted with the UI to change the line thickness.</li>
 <li><code class="docutils literal notranslate"><span class="pre">file</span></code>: If the displayed image annotation in viewer app is derived from a while (and not database), <code class="docutils literal notranslate"><span class="pre">&quot;file&quot;:</span> <span class="pre">1</span></code> will be added to the stack (<code class="docutils literal notranslate"><span class="pre">s_t</span></code> will not be available.)</li>
+<li><code class="docutils literal notranslate"><span class="pre">rid</span></code>: Available on the “go to RID” client action, to indicate the RID value that users searched for.</li>
 <li><code class="docutils literal notranslate"><span class="pre">cqp</span></code> (chaise query parameter): When a user uses a link that includes the <code class="docutils literal notranslate"><span class="pre">?</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">#</span></code>. These urls are only used to help with google indexing and should be used only for navigating users from search engines to chaise apps.</li>
 </ul>
 </li>
@@ -1736,16 +1738,39 @@
 <div class="section" id="change-log">
 <span id="change-log"></span><h2>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id1"></span><h3>02/12/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>08/26/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-pr-links">
 <span id="commit-pr-links"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2001">chaise (viewer changes)</a></li>
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2000">chaise (go to RID changes)</a></li>
+</ul>
+</div>
+<div class="section" id="changed">
+<span id="changed"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Changed the initial load requests of viewer app to be aligned with the rest of the apps.</li>
+</ul>
+</div>
+<div class="section" id="added">
+<span id="added"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added proper log support to viewer app. This includes properly logging the requests that viewer app was already making and adding client logs. Please refer to the PR and documentation for more information.</li>
+<li>Added client log action for “go to RID” feature.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="">
+<span id="id2"></span><h3>02/12/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="commit-pr-links">
+<span id="id3"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/1889">chaise</a></li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/pull/829">ermrestjs</a></li>
 </ul>
 </div>
 <div class="section" id="changed">
-<span id="changed"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
+<span id="id4"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Completely changed how we’re logging in chaise. This is the starting date of logging as described in this documentation.</li>
 </ul>

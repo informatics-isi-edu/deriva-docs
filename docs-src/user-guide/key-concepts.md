@@ -75,6 +75,6 @@ On many record pages, you'll find a list of metadata at the top of the page (the
 
 To support these principals, DERIVA emphasizes well-defined metadata and data models, the use of controlled vocabularies and ontologies, and any other ways to include enough measurable metadata for all data entered to allow the right data to show up in searches, and allow others to reproduce experiments, etc.
 
-## RID (Record ID)
+## RID (Resource IDentifier)
 
-Every record within Chaise has its own unique identifier, the Record ID (or RID). 
+Every record within Chaise has its own unique identifier, the Resource IDentifier (or RID). This is a permanent, citable, globally unique identifier displayed for every data record, much like an Accession number. Such identifiers are a critical part of making data FAIR (findable, accessable, interoperable, and reusable).

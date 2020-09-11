@@ -19,15 +19,13 @@ As an example, we'll be using the Demo deployment's data model and then provide 
 
 The underlying data model of a DERIVA deployment could represent practically anything from business widgets to social networks - in any case where there is more than one entity with relationships between them.
 
-In general, data models of DERIVA deployments center around those useful for biomedical science. The Demo deployment LINK uses a simple version of such a model that we'll use to demonstrate how the data model impacts data submission.
-
-REVIEW: link to data model SVG. (link to it or we need to convert this page to rst)
+In general, data models of DERIVA deployments center around those useful for biomedical science. The [Demo deployment](https://tutorial.derivacloud.org) uses a simple version of such a model that we'll use to demonstrate how the data model impacts data submission.
 
 Where:
 
 - **Collection**: represents an adhoc unit of any records from within the DERIVA deployment. This can be useful for grouping data together from a publication in order to create one citable location to reference all of the source data.
 - **Study**: represents a sequencing or metabalomics study - a whole or a logical unit of an investigation (i.e., a study within an overall investigation/project).
-- **Experiment** (a.k.a., assay): represents an experiment at a fine-grained unit of detail. It is intended to broadly cover multiple "bioinformatics" (i.e., sequencing or array) and imaging (i.e., various forms of microscopy) assay types. An experiment will generally be conducted on multiple biological replicates. An experiment may reference another experiment as its "control." *REVIEW: on the tutorial site, the results for Experiment in record set or a related table should include column for the display name (it currently does not and it's difficult to tell the difference between them without drilling down)*
+- **Experiment** (a.k.a., assay): represents an experiment at a fine-grained unit of detail. It is intended to broadly cover multiple "bioinformatics" (i.e., sequencing or array) and imaging (i.e., various forms of microscopy) assay types. An experiment will generally be conducted on multiple biological replicates. An experiment may reference another experiment as its "control."
 - **Replicate**: represents the association between an Experiment and a Specimen. To keep things simple for data entry and display, the 'replicate' has simple numeric columns to record the "biological replicate number" and "technical replicate number."
 - **File**: represents a data file. In this model, there are no restrictions on what types of files may be added. However, usually with a particular deployment there are requirements and restrictions to what files a submitter may upload.
 - **Specimen**: represents the biological specimen used in the experiment (i.e, mouse tissue). This does not represent the actual tissue itself (as in a Tissue Bank) but is the record that represents and contains information about that specimen.
@@ -35,8 +33,6 @@ Where:
 ### Vocabulary
 
 DERIVA places an emphasis on using controlled vocabularies where possible. This results in many dropdown fields in data entry instead of the user coming up with their own terms.
-
-In the
 
 ### Data types
 

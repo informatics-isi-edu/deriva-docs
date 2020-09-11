@@ -39,9 +39,6 @@ DERIVA Documentation
   :maxdepth: 1
   :caption: Data Modeler's Guide
 
-  data-modeler-guide/introduction
-  data-modeler-guide/key-concepts
-  data-modeler-guide/managing-catalogs
   data-modeler-guide/project-tutorial
 
 .. toctree::
@@ -68,12 +65,6 @@ DERIVA Documentation
   annotations/mustache-templating.md
   annotations/handlebars.md
   annotations/markdown-formatting.md
-
-.. toctree::
-  :maxdepth: 1
-  :caption: Programmer's Guide
-
-  programmer-guide/introduction
 
 .. toctree::
   :maxdepth: 2

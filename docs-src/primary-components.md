@@ -1,18 +1,16 @@
 # Primary Components of DERIVA
 
-Let's take a closer look at the primary components of a DERIVA deployment: ERMrest, Hatrac and Chaise.
+Let's take a closer look at the primary components of a DERIVA deployment: **ERMrest**, **Hatrac** and **Chaise**.
 
 ## ERMrest - Data model manager/Metadata catalog
 
-[ERMrest](ermrest/index.html) is an entity/relationship database web service that acts as a powerful _metadata catalog_ for the data. It enables rich data models and lets you create, then evolve data models that accurately represent the concepts of your domain.
+[ERMrest](ermrest/index.html) is an entity/relationship database web service that acts as a powerful _metadata catalog_ for the data. It enables rich data models and lets you create, then evolve, data models that accurately represent the concepts of a particular domain.
 
 ERMRest is a catalog service with a RESTful web services interface for:
 
 * modifying and retrieving the ER model,
 * creating and modifying new entities, and
 * enforcing policies at row-level access, providing fine-grained security.
-
-GRAPHIC
 
 Scientific assets are organized and cataloged using an Entity Relationship Model (ERM) which is subject to frequent schema evolution and differential access control.
 
@@ -36,8 +34,6 @@ Hatrac provides:
 * Hierarchical naming scheme
 * Access Control Lists (ACLs)
 
-GRAPHIC
-
 ## Chaise - Model-driven Web interface
 
 The catalog and assets can be accessed directly using a RESTful web services interface.  However, to make it easy to use on a daily basis, DERIVA has a powerful, browser-based user interface called [Chaise](chaise/index.html). Chaise, a suite of web applications providing adaptive GUIs for scientists to search, browse, edit, organize, and share research data and metadata throughout the data lifecycle.
@@ -55,5 +51,3 @@ Users interact with the data (records) via the following capabilities:
 * Export collections of assets and metadata
 * Share collections with others
 * Annotate data.
-
-SCREENSHOT

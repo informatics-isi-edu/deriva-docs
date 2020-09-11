@@ -4,9 +4,9 @@ It is becoming more and more important to be able to specifically cite data. Thi
 
 To that end, every record in a DERIVA deployment is citable using Record IDs and Share links. A citation to a record in DERIVA is essentially equivalent to a citation to a paper or other scholarly work.
 
-## Record IDs (RIDs)
+## Resource IDentifiers (RIDs)
 
-Each record in Chaise has a corresponding Record ID (or RID). This is a resource identifier that is also a persistent identifier and can be used to cite data in the same way you cite publications.
+Every record within Chaise has its own unique identifier, the Resource IDentifier (or RID). This is a permanent, citable, globally unique identifier displayed for every data record, much like an Accession number.
 
 The RID is displayed for every row of search results.
 
@@ -14,7 +14,7 @@ The RID is displayed for every row of search results.
 
 You can also find the RID on every record page, as well as at the end of the URL to a record page.
 
-**IMPORTANT:** However, note that the URL of a record page does **not** hold the same citable significance as the "Share" links described below. When sharing DERIVA records, we strongly recommend using the Share links.
+**IMPORTANT:** However, note that the URL of a record page does **not** hold the same citable significance as the "Share" links described below. When sharing DERIVA records, we strongly recommend using the "Share and cite" button (see below).
 
 ![RIDs displayed on search results](images/share-and-cite-large-view.png)
 
@@ -33,8 +33,6 @@ There are usually two types of Share links displayed:
 
 ![RIDs displayed on search results](images/share-and-cite-window.png)
 
-REVIEW: This is not the correct description because I don't think that using a versioned link would actually take you to the old version of the record page. But I'm not clear what the practical usage is between the two types.
-
 A full data citation should include the following information:
 
 > Authors. Title. <em>[deployment-name]</em> Identifier (Publication Year)
@@ -48,7 +46,3 @@ Where:
 * **Publication Year** - Use the year in the "Release Date" field.
 
 Learn more about citing data at [DataCite](https://datacite.org/cite-your-data.html) and [Nature Research](https://www.nature.com/documents/nr-data-availability-statements-data-citations.pdf).
-
-## Data Collections? Is this something that will become a common feature or a recommended feature for data modelers to add for any DERIVA deployment?
-
-TBD

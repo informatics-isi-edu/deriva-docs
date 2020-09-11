@@ -1,6 +1,5 @@
 # Introduction for Data Modelers
 
-reference linkedin course: https://www.linkedin.com/learning/relational-databases-essential-training/develop-a-model-of-the-real-world?u=76870426
 
 Introduce the concept of a data modeler - and then the important behind the scenes work of a DM including updating data models, creating and editing annotations, etc.
 

@@ -1,6 +1,6 @@
 # Organizing the relationships between the data
 
-**This page is still under major construction**
+**This page is a Draft**
 
 DERIVA is a platform for acquiring, organizing, discovering and managing collections of scientific data.
 
@@ -20,7 +20,7 @@ To keep track of where the images came from, you might have a more "meaningful" 
 
 If you want to share your data with a collaborator, you need to make sure that they understand your directory and file naming conventions, and if you want to make sure you are looking at the same data, you need to make sure no one updates the files that you are sharing.
 
-[Talk about metadata entry in spreadsheets: Further, because CSV/spreadsheet files tend to allow free text entry, it's likely there will be inconsistent entries and data entry errors across all spreadsheets.]
+Further, because CSV/spreadsheet files tend to allow free text entry for metadata, it's likely there will be inconsistent entries and data entry errors across all spreadsheets.
 
 It's not too hard to see how this strategy will become too complex very rapidly.
 
@@ -28,33 +28,25 @@ It's not too hard to see how this strategy will become too complex very rapidly.
 
 DERIVA helps manage the complexity by making it easy to **describe the relationships between different files** and use those descriptions to help find and share data of interest.  
 
-Of course, there are many different types of files one might be interested in, and the relationships between those files might change over time, so DERIVA also makes it easy to **adapt to changing data types and relationships**. That allows the system to work with early-phase projects, before they have data, start with an initial model that makes sense. But as the project evolves over time and becomes more complex, or unexpected results and directions change the types and relationships of data, we can adapt the model to meet new needs.
+Of course, there are many different types of files one might be interested in, and the relationships between those files might change over time, so DERIVA also makes it easy to **adapt to changing data types and relationships**. That allows the system to work with early-phase projects, before they have data, so they can start with an initial model that makes sense. But as the project evolves over time and becomes more complex, or unexpected results and directions change the types and relationships of data, we can adapt the model to meet new needs.
 
-DERIVA organizes data by specifying an explicit _data model_ using the well known _entity/relationship (ER)_ modeling approach. [This relational approach is part of most large, complex modern-day applications, such as online banking and online shopping.]
+DERIVA organizes data by specifying an explicit _data model_ using the well known _entity/relationship (ER)_ modeling approach. This relational approach powers most complex modern-day applications that we use regularly, such as online banking and online shopping.
 
 In DERIVA, an _entity_ is equivalent to the representation of a single unit of data that will be ingested into a particular DERIVA deployment. The ER model maps out relationships between these entities.
 
-[Now here is where we could give a 'for dummies' approach to ER or link to a good tutorial video. these concepts are pretty integral to understanding DERIVA]
+Within a deployment, DERIVA provides mechanisms for creating and modifying an ER model and then querying, adding and updating entities that conform to that model.  
 
-Within a deployment, DERIVA provides mechanisms for:
-- creating and modifying an ER model,
-- querying, adding and updating entities that conform to that model.  
-
-The DERIVA platform uses _model introspection_ to continually track the current set of relationships between data and to adapt the user and programmatic interfaces to the current model.
+The DERIVA platform uses _model introspection_ to continually track the current set of relationships between data (entities) and to adapt the user and programmatic interfaces to the current model.
 
 DERIVA keeps track of both the data files (or _assets_) and the model that organizes the data.
 
-[also speak to data integrity? DERIVA emphasizes use of controlled vocabularies for data entry; also many practices that ensure data validity and integrity]
-
-flexible, efficient and highly scalable
+DERIVA emphasizes use of controlled vocabularies for data entry and many many practices that ensure data validity and integrity so that you know that the data that was uploaded is exactly the same as the data that is downloaded.
 
 ## Elements of data model management in DERIVA
 
-Modeling is action of creating the "blueprint" for the data and the relationships between data. This is done at the beginning of a DERIVA deployment but because of the adaptive nature of DERIVA, the model will be revisited and evolve over time.
+Modeling is the action of creating the "blueprint" for the data and the relationships between data. This is done at the beginning of a DERIVA deployment but because of the adaptive nature of DERIVA, the model will be revisited and evolve over time.
 
 [Data is split up among multiple tables that are related by common values.]
-
-Assets (sequence of bytes) - this basically means the data (which usually equates to some kind of file.)
 
 Catalog model
 * schemas
@@ -68,11 +60,11 @@ Catalog model
 
 One of the primary objectives of Deriva is to manage collections of _assets_. In Deriva, an asset is a blob, a sequence of bytes with some basic properties:
 
-* It can be referred to by a globally unique resource name, i.e. a URL
-* In general, the sequence will not change without the resource name changing
-* It will often be characterized by a checksum which is computed from its contents
-* It will have a known length
-* It may have a convenient human understandable name
+* It can be referred to by a globally unique resource name, i.e. a URL.
+* In general, the sequence will not change without the resource name changing.
+* It will often be characterized by a checksum which is computed from its contents.
+* It will have a known length.
+* It may have a convenient human understandable name.
 
 A Deriva catalog will generally contain one or more asset tables, which are then organized into more complex data descriptions to help interpret the different types of assets and figure out how assets relate to one another.
 

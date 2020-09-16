@@ -2063,7 +2063,8 @@ with additional presentation information.</p>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;display&quot;:</span> <span class="pre">{</span></code> <em>context</em><code class="docutils literal notranslate"><span class="pre">:</span></code> <em>option</em> …<code class="docutils literal notranslate"><span class="pre">}</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Apply each <em>option</em> to the presentation of referenced content for any number of <em>context</em> names.</li>
-<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;domain_filter_pattern&quot;:</span></code> <em>pattern</em> …<code class="docutils literal notranslate"><span class="pre">}</span></code>: The <em>pattern</em> yields a <em>filter</em> via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>. The <em>filter</em> is a URL substring using the ERMrest filter language, which can be applied to the referenced table. The defined <em>filter</em> will be appended directly to the reference uri and therefore must be properly url encoded (chaise WILL NOT apply additional url encoding).</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;domain_filter_pattern&quot;:</span></code> <em>pathpattern</em> …<code class="docutils literal notranslate"><span class="pre">}</span></code> (<em>deprecated</em>): The <em>pathpattern</em> yields a <em>filter</em> via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>. The domain filter will be used while selecting a value for this particular foreign key in the entry contexts. This syntax has been deprecated in favor of the next syntax (<code class="docutils literal notranslate"><span class="pre">domain_filter</span></code>). The new syntax allows you to provide the visual presentation of the filter.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;domain_filter&quot;:</span></code> <em>domainfilter</em> …<code class="docutils literal notranslate"><span class="pre">}</span></code>: The domain filter that will be used while selecting a value for this particular foreign key in the entry contexts. This attribute can be used to limit the available options to the user.</li>
 </ul>
 <p>Supported <em>comment</em> syntax:</p>
 <ul class="simple">
@@ -2083,6 +2084,43 @@ with additional presentation information.</p>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;column&quot;:</span></code> <em>columnname</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;descending&quot;:</span> <span class="pre">false</span> <span class="pre">}</span></code>: Sort according to the values in the <em>columnname</em> column.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;column&quot;:</span></code> <em>columnname</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: If omitted, the <code class="docutils literal notranslate"><span class="pre">&quot;descending&quot;</span></code> field defaults to <code class="docutils literal notranslate"><span class="pre">false</span></code> as per above.</li>
 <li><em>columnname</em>: A bare <em>columnname</em> is a short-hand for <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;column&quot;:</span></code> <em>columnname</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>. <em>columnname</em> can be the name of any columns from the table that the foreign key is referring to.</li>
+</ul>
+<p>Supported <em>domainfilter</em> syntax:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;ermrest_path_pattern&quot;:</span></code> <em>pathpattern</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: The <em>pathpattern</em> yields a <em>filter</em> via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>. With this syntax, the applied filter will be hidden from the user.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;ermrest_path_pattern&quot;:</span></code> <em>pathpattern</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;display_markdown_pattern&quot;:</span></code> <em>displaypattern</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: The <em>pathpattern</em> yields a <em>filter</em> via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>. <em>displaypattern</em> will provide the visual presentation of the filter which will be computed by performing <a class="reference external" href="#pattern-expansion">Pattern Expansion</a> to obtain a markdown-formatted text value which MAY be rendered using a markdown-aware renderer.</li>
+</ul>
+<p>Supported <em>filter</em> syntax:</p>
+<ul class="simple">
+<li>The <em>filter</em> is a URL substring that can be applied to the referenced table.
+The defined <em>filter</em> will be appended directly to the reference URI sent to ERMrest. Therefore,<ul>
+<li>must be properly URL encoded (chaise WILL NOT apply additional URL encoding);</li>
+<li>supports any ERMrest-supported <a class="reference external" href="https://docs.derivacloud.org/ermrest/api-doc/data/naming.html#path-filters">path filters</a> (simple predicate filters, e.g., <code class="docutils literal notranslate"><span class="pre">col=value</span></code>) or <a class="reference external" href="https://docs.derivacloud.org/ermrest/api-doc/data/naming.html#entity-links">entity links</a> (join with other tables) as long as the projected table stays the same.<ul>
+<li>If using entity links,<ul>
+<li>cannot use <code class="docutils literal notranslate"><span class="pre">T#</span></code> (where <code class="docutils literal notranslate"><span class="pre">#</span></code> is a number, e.g., T0, T1), <code class="docutils literal notranslate"><span class="pre">F#</span></code> (where <code class="docutils literal notranslate"><span class="pre">#</span></code> is a number, e.g., F0, F1), and <code class="docutils literal notranslate"><span class="pre">M</span></code> aliases. ERMrestJS internally use these aliases.</li>
+<li>use <code class="docutils literal notranslate"><span class="pre">M</span></code> alias for referring to the referenced table.</li>
+</ul>
+</li>
+<li>The following is a summary of supported path filters in ERMrest:<ul>
+<li>Grouping: <code class="docutils literal notranslate"><span class="pre">(</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">)</span></code></li>
+<li>Disjunction: <em>filter</em> <code class="docutils literal notranslate"><span class="pre">;</span></code> <em>filter</em></li>
+<li>Conjunction: <em>filter</em> <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> <em>filter</em></li>
+<li>Negation: <code class="docutils literal notranslate"><span class="pre">!</span></code> <em>filter</em></li>
+<li>Unary predicates: <em>column</em> <code class="docutils literal notranslate"><span class="pre">::null::</span></code></li>
+<li>Binary predicates: <em>column</em> <em>op</em> <em>value</em><ul>
+<li>Equality: <code class="docutils literal notranslate"><span class="pre">=</span></code></li>
+<li>Inequality: <code class="docutils literal notranslate"><span class="pre">::gt::</span></code>, <code class="docutils literal notranslate"><span class="pre">::lt::</span></code>, <code class="docutils literal notranslate"><span class="pre">::geq::</span></code>, <code class="docutils literal notranslate"><span class="pre">::leq::</span></code></li>
+<li>Regular expressions: <code class="docutils literal notranslate"><span class="pre">::regexp::</span></code>, <code class="docutils literal notranslate"><span class="pre">::ciregexp::</span></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The leading and trailing slash that you might have defined
+in <em>filter</em> value will be stripped off and ignored.</li>
 </ul>
 <p>Set-naming heuristics (use first applicable rule):</p>
 <ol class="simple">
@@ -2108,37 +2146,6 @@ with additional presentation information.</p>
 <li>Otherwise, disable sort for psuedo-column.</li>
 </ol>
 <p>The first applicable rule MAY cause sorting to be disabled. Consider that determination final and do not continue to search subsequent rules.</p>
-<p>Domain value presentation heuristics:</p>
-<ol class="simple">
-<li>If <em>pattern</em> expands to <em>filter</em> and forms a valid filter string, present filtered results as domain values.<ul>
-<li>With <em>filter</em> <code class="docutils literal notranslate"><span class="pre">F</span></code>, the effective domain query would be <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/ermrest/catalog/N/entity/S:T/F</span></code> or equivalent.</li>
-<li>The <em>filter</em> SHOULD be validated according to the syntax summary below.</li>
-<li>If a server response suggests the filter is invalid, an application SHOULD retry as if the <em>pattern</em> is not present.</li>
-</ul>
-</li>
-<li>If <em>filter</em> is not a valid filter string, proceed as if <em>pattern</em> is not present.</li>
-<li>If <em>pattern</em> is not present, present unfiltered results.</li>
-</ol>
-<p>Supported <em>filter</em> language is the subset of ERMrest query path syntax
-allowed in a single path element:</p>
-<ul class="simple">
-<li>Grouping: <code class="docutils literal notranslate"><span class="pre">(</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">)</span></code></li>
-<li>Disjunction: <em>filter</em> <code class="docutils literal notranslate"><span class="pre">;</span></code> <em>filter</em></li>
-<li>Conjunction: <em>filter</em> <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> <em>filter</em></li>
-<li>Negation: <code class="docutils literal notranslate"><span class="pre">!</span></code> <em>filter</em></li>
-<li>Unary predicates: <em>column</em> <code class="docutils literal notranslate"><span class="pre">::null::</span></code></li>
-<li>Binary predicates: <em>column</em> <em>op</em> <em>value</em><ul>
-<li>Equality: <code class="docutils literal notranslate"><span class="pre">=</span></code></li>
-<li>Inequality: <code class="docutils literal notranslate"><span class="pre">::gt::</span></code>, <code class="docutils literal notranslate"><span class="pre">::lt::</span></code>, <code class="docutils literal notranslate"><span class="pre">::geq::</span></code>, <code class="docutils literal notranslate"><span class="pre">::leq::</span></code></li>
-<li>Regular expressions: <code class="docutils literal notranslate"><span class="pre">::regexp::</span></code>, <code class="docutils literal notranslate"><span class="pre">::ciregexp::</span></code></li>
-</ul>
-</li>
-</ul>
-<p>Notably, <em>filters</em> MUST NOT contain the path divider <code class="docutils literal notranslate"><span class="pre">/</span></code> nor any other
-reserved syntax not summarized above. All <em>column</em> names and <em>value</em>
-literals MUST be URL-escaped to protect any special characters. All
-<em>column</em> names MUST match columns in the referenced table and MUST NOT
-be qualified with table instance aliases.</p>
 </div>
 <div class="section" id="tag-2016-column-display">
 <span id="tag-2016-column-display"></span><h3>Tag: 2016 Column Display<a class="headerlink" href="#tag-2016-column-display" title="Permalink to this headline">¶</a></h3>

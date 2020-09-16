@@ -831,6 +831,7 @@
 <li class="toctree-l3"><a class="reference internal" href="history/rest.html#amend-historical-acl-bindings">Amend Historical ACL Bindings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="history/rest.html#amend-historical-annotations">Amend Historical Annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="history/rest.html#redact-historical-attributes">Redact Historical Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="history/rest.html#suppress-table-history-collection">Suppress Table History Collection</a></li>
 </ul>
 </li>
 </ul>
@@ -1385,10 +1386,28 @@
   <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;tag:isrd.isi.edu,2018:example&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;my example annotation&quot;</span><span class="p">}</span>
   <span class="p">},</span>
-  <span class="s2">&quot;snaptime&quot;</span><span class="p">:</span> <span class="s2">&quot;2PX-WS30-E58W&quot;</span>
+  <span class="s2">&quot;snaptime&quot;</span><span class="p">:</span> <span class="s2">&quot;2PX-WS30-E58W&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="o">...</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code> field is where ERMrest may advertise software
+features added in subsequent revisions. This allows fine-grained
+feature detection by clients concerned with exploiting new features,
+when available, but falling back to simpler access modes if accessing
+older catalogs.</p>
+<p>Known feature flags at time of writing of this document:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">history_control</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2020,history-capture</span></code> table annotation to disable history capture.</li>
+</ul>
+<p>Generally, absence of a feature flag means the service is running
+older software which predates the release of the feature. A flag will
+be present with boolean value <code class="docutils literal notranslate"><span class="pre">true</span></code> to advertise presence of a
+feature. Specific flags may be documented with other advertisement
+values in the future, i.e. to indicate runtime status of a feature
+which can be disabled selectively by the administrator.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
 <li>404 Not Found</li>

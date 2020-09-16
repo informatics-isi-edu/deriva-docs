@@ -831,6 +831,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#amend-historical-acl-bindings">Amend Historical ACL Bindings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#amend-historical-annotations">Amend Historical Annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#redact-historical-attributes">Redact Historical Attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#suppress-table-history-collection">Suppress Table History Collection</a></li>
 </ul>
 </li>
 </ul>
@@ -1498,6 +1499,36 @@ matches a given value <em>X</em> are redacted.  More rich filtering syntax
 may be considered in future enhancements to ERMrest. This syntax is
 sufficient to target one row by its actual <code class="docutils literal notranslate"><span class="pre">RID</span></code> or all rows with a
 certain <em>bad value</em> <em>X</em> in the column being redacted.</p>
+</div>
+<div class="section" id="suppress-table-history-collection">
+<span id="suppress-table-history-collection"></span><h2>Suppress Table History Collection<a class="headerlink" href="#suppress-table-history-collection" title="Permalink to this headline">¶</a></h2>
+<p>A special table-level annotation can be supplied during table creation
+or set on an existing table to suppress the collection of row content
+history. Set the annotation URI
+<code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2020,history-capture</span></code> with one of these annotation
+values to control per-table history capture:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">false</span></code>: Disable history capture and make the table invisible in versioned catalog snapshots</li>
+<li><code class="docutils literal notranslate"><span class="pre">true</span></code>: Enable normal history capture and make the table visible in versioned catalog snapshots</li>
+</ul>
+<p>In the absence of this annotation, the default behavior of ERMrest is
+the same as if this annotation where set with the value <code class="docutils literal notranslate"><span class="pre">true</span></code>.  Any
+other value besides the JSON boolean values may produce undefined
+behavior and is reserved for future use.</p>
+<p>A table which is created with history-capture disabled will avoid the
+storage and write operation overhead of maintaining history.</p>
+<p>If the history-capture mechanism is disabled during the table’s
+lifecycle, prior history is retained but the history is not captured
+on subsequent writes to the live table content. Prior versions of the
+table are still visible in older snapshots, but the table is invisible
+in catalog snapshots beginning with the one where the history capture
+is disabled.</p>
+<p>If the history-capture mechanism is enabled during the table’s
+lifecycle, the current state of the table is interred into history and
+collection resumes for subsequent writes to the live table
+content. The table remains invisible in older catalog snapshots, but
+new versions of the table become visible in catalog snapshots
+beginning with the one where history capture is enabled.</p>
 </div>
 </div>
 

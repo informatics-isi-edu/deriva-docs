@@ -2258,10 +2258,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_wrapped_column</span> <span class="o">=</span> <span class="n">column</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span> <span class="o">=</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fqname</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">_fqname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_instancename</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">_uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">)</span> \
-                              <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">,</span> <span class="n">_TableAlias</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_projection_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instancename</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_fqname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Late binding needed for table alias instances.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">_fqname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_instancename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Late binding needed for table alias instances.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">_uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">,</span> <span class="n">_TableAlias</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Late binding needed for table alias instances.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instancename</span>
 
     <span class="nd">@deprecated</span>
     <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2386,9 +2397,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">alias_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span> <span class="o">=</span> <span class="n">base_column</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_uname</span> <span class="o">=</span> <span class="n">urlquote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fqname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">_fqname</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_instancename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">_instancename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_projection_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">_instancename</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_projection_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Late binding needed for table alias instances.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">:=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_uname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">_instancename</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">memodict</span><span class="o">=</span><span class="p">{}):</span>
         <span class="c1"># deep copy implementation of a column alias should not make copies of model objects (ie, the base column)</span>

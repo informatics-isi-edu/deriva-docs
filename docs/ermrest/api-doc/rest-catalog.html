@@ -616,6 +616,7 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Catalog Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service-ad-retrieval">Service Ad Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-deletion">Catalog Deletion</a></li>
@@ -1345,6 +1346,49 @@
 <div class="section" id="catalog-operations">
 <span id="catalog-operations"></span><h1>Catalog Operations<a class="headerlink" href="#catalog-operations" title="Permalink to this headline">¶</a></h1>
 <p>In this documentation and examples, the <em>service</em> as described in the previous section on <a class="reference internal" href="model/naming.html"><span class="doc">model resource naming</span></a> is assumed to be <code class="docutils literal notranslate"><span class="pre">https://www.example.com/ermrest</span></code>.</p>
+<div class="section" id="service-ad-retrieval">
+<span id="service-ad-retrieval"></span><h2>Service Ad Retrieval<a class="headerlink" href="#service-ad-retrieval" title="Permalink to this headline">¶</a></h2>
+<p>Outside of any catalog context, the <strong>service</strong> itself offers a brief advertisement of its capability.</p>
+<p>The GET method is used to retrieve the service advertisement. This
+request also serves as a basic health-check of the ERMrest service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>On success, this request yields the service advertisement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="o">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>400 Bad Request (on legacy versions lacking this feature)</li>
+<li>503 Service Unavailable (if basic service health-check is failing)</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;version&quot;</span></code> field is the ermrest Python package version as
+installed.  The <code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code> field is where ERMrest may advertise
+software features added in subsequent revisions. This allows
+fine-grained feature detection by clients concerned with exploiting
+new features, when available, but falling back to simpler access modes
+if accessing older catalogs.</p>
+<p>Known feature flags at time of writing of this document:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">history_control</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2020,history-capture</span></code> table annotation to disable history capture.</li>
+</ul>
+<p>Generally, absence of a feature flag means the service is running
+older software which predates the release of the feature. A flag will
+be present with boolean value <code class="docutils literal notranslate"><span class="pre">true</span></code> to advertise presence of a
+feature. Specific flags may be documented with other advertisement
+values in the future, i.e. to indicate runtime status of a feature
+which can be disabled selectively by the administrator.</p>
+</div>
 <div class="section" id="catalog-creation">
 <span id="catalog-creation"></span><h2>Catalog Creation<a class="headerlink" href="#catalog-creation" title="Permalink to this headline">¶</a></h2>
 <p>The POST method is used to create an empty catalog:</p>
@@ -1393,21 +1437,8 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code> field is where ERMrest may advertise software
-features added in subsequent revisions. This allows fine-grained
-feature detection by clients concerned with exploiting new features,
-when available, but falling back to simpler access modes if accessing
-older catalogs.</p>
-<p>Known feature flags at time of writing of this document:</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">history_control</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2020,history-capture</span></code> table annotation to disable history capture.</li>
-</ul>
-<p>Generally, absence of a feature flag means the service is running
-older software which predates the release of the feature. A flag will
-be present with boolean value <code class="docutils literal notranslate"><span class="pre">true</span></code> to advertise presence of a
-feature. Specific flags may be documented with other advertisement
-values in the future, i.e. to indicate runtime status of a feature
-which can be disabled selectively by the administrator.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code> field is previously described in the <a class="reference external" href="#service-ad-retrieval">Service Ad
+Retrieval request</a>.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
 <li>404 Not Found</li>

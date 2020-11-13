@@ -1355,7 +1355,9 @@
 <span class="n">DEFAULT_GLOBUS_CREDENTIAL_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_PATH</span><span class="p">,</span> <span class="s1">&#39;globus-credential.json&#39;</span><span class="p">)</span>
 <span class="n">DEFAULT_CONFIG_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_PATH</span><span class="p">,</span> <span class="s1">&#39;config.json&#39;</span><span class="p">)</span>
 <span class="n">DEFAULT_COOKIE_JAR_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_PATH</span><span class="p">,</span> <span class="s1">&#39;cookies.txt&#39;</span><span class="p">)</span>
+<span class="n">DEFAULT_REQUESTS_TIMEOUT</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>  <span class="c1"># (connect, read), in seconds</span>
 <span class="n">DEFAULT_SESSION_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;timeout&quot;</span><span class="p">:</span> <span class="n">DEFAULT_REQUESTS_TIMEOUT</span><span class="p">,</span>
     <span class="s2">&quot;retry_connect&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
     <span class="s2">&quot;retry_read&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
     <span class="s2">&quot;retry_backoff_factor&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -1466,6 +1468,21 @@
         <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">log_format</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="TimeoutHTTPAdapter"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.TimeoutHTTPAdapter">[docs]</a><span class="k">class</span> <span class="nc">TimeoutHTTPAdapter</span><span class="p">(</span><span class="n">HTTPAdapter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">DEFAULT_REQUESTS_TIMEOUT</span>
+        <span class="k">if</span> <span class="s2">&quot;timeout&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TimeoutHTTPAdapter.send"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.TimeoutHTTPAdapter.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
 <div class="viewcode-block" id="get_new_requests_session"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.get_new_requests_session">[docs]</a><span class="k">def</span> <span class="nf">get_new_requests_session</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="n">DEFAULT_SESSION_CONFIG</span><span class="p">):</span>
     <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">session</span><span class="p">()</span>
     <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_connect&#39;</span><span class="p">],</span>
@@ -1473,11 +1490,12 @@
                     <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
                     <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">],</span>
                     <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">adapter</span> <span class="o">=</span> <span class="n">TimeoutHTTPAdapter</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">session_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="n">DEFAULT_REQUESTS_TIMEOUT</span><span class="p">),</span> <span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">adapter</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;https://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">adapter</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;https://&#39;</span><span class="p">,</span> <span class="n">adapter</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">session</span></div>
 

@@ -1383,6 +1383,41 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a></p>
 </dd></dl>
 
+<dl class="class">
+<dt id="deriva.core.utils.core_utils.TimeoutHTTPAdapter">
+<em class="property">class </em><code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">TimeoutHTTPAdapter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#TimeoutHTTPAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.TimeoutHTTPAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.adapters.HTTPAdapter</span></code></p>
+<dl class="method">
+<dt id="deriva.core.utils.core_utils.TimeoutHTTPAdapter.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>request</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#TimeoutHTTPAdapter.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.TimeoutHTTPAdapter.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends PreparedRequest object. Returns Response object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request</strong> – The <code class="xref py py-class docutils literal notranslate"><span class="pre">PreparedRequest</span></code> being sent.</li>
+<li><strong>stream</strong> – (optional) Whether to stream the request content.</li>
+<li><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a><em> or </em><em>urllib3 Timeout object</em>) – (optional) How long to wait for the server to send
+data before giving up, as a float, or a <span class="xref std std-ref">(connect timeout,
+read timeout)</span> tuple.</li>
+<li><strong>verify</strong> – (optional) Either a boolean, in which case it controls whether
+we verify the server’s TLS certificate, or a string, in which case it
+must be a path to a CA bundle to use</li>
+<li><strong>cert</strong> – (optional) Any user-provided SSL certificate to be trusted.</li>
+<li><strong>proxies</strong> – (optional) The proxies dictionary to apply to the request.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">requests.Response</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.add_logging_level">
 <code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">add_logging_level</code><span class="sig-paren">(</span><em>level_name</em>, <em>level_num</em>, <em>method_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#add_logging_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.add_logging_level" title="Permalink to this definition">¶</a></dt>
@@ -1415,7 +1450,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.get_new_requests_session">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">get_new_requests_session</code><span class="sig-paren">(</span><em>url=None</em>, <em>session_config={'cookie_jar': '/root/.deriva/cookies.txt'</em>, <em>'retry_backoff_factor': 1.0</em>, <em>'retry_connect': 2</em>, <em>'retry_read': 4</em>, <em>'retry_status_forcelist': [500</em>, <em>503</em>, <em>504]}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#get_new_requests_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.get_new_requests_session" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">get_new_requests_session</code><span class="sig-paren">(</span><em>url=None, session_config={'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 503, 504], 'timeout': (5, 12)}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#get_new_requests_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.get_new_requests_session" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1450,7 +1485,7 @@ In either case, this is followed by: for k in F:  D[k] = F[k]</p>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.read_config">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json'</em>, <em>create_default=False</em>, <em>default={'download_processor_whitelist': []</em>, <em>'oauth2_scopes': {}</em>, <em>'server': {'catalog_id': 1</em>, <em>'host': 'ddb44bbe8223'</em>, <em>'protocol': 'https'}</em>, <em>'session': {'cookie_jar': '/root/.deriva/cookies.txt'</em>, <em>'retry_backoff_factor': 1.0</em>, <em>'retry_connect': 2</em>, <em>'retry_read': 4</em>, <em>'retry_status_forcelist': [500</em>, <em>503</em>, <em>504]}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.read_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', create_default=False, default={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'e88760112e89', 'protocol': 'https'}, 'session': {'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 503, 504], 'timeout': (5, 12)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.read_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1501,7 +1536,7 @@ value.</p>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.write_config">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">write_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json'</em>, <em>config={'download_processor_whitelist': []</em>, <em>'oauth2_scopes': {}</em>, <em>'server': {'catalog_id': 1</em>, <em>'host': 'ddb44bbe8223'</em>, <em>'protocol': 'https'}</em>, <em>'session': {'cookie_jar': '/root/.deriva/cookies.txt'</em>, <em>'retry_backoff_factor': 1.0</em>, <em>'retry_connect': 2</em>, <em>'retry_read': 4</em>, <em>'retry_status_forcelist': [500</em>, <em>503</em>, <em>504]}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.write_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">write_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', config={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'e88760112e89', 'protocol': 'https'}, 'session': {'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 503, 504], 'timeout': (5, 12)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.write_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">

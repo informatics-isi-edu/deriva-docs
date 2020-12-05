@@ -1298,6 +1298,8 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../core.html">deriva.core</a> &raquo;</li>
+        
       <li>deriva.core.polling_ermrest_catalog</li>
     
     
@@ -1362,7 +1364,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="p">{},</span> <span class="n">caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="o">=</span><span class="p">{},</span> <span class="n">caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">amqp_server</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create ERMrest catalog binding.</span>
 
 <span class="sd">           Arguments:</span>
@@ -1374,7 +1376,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ErmrestCatalog</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">catalog_id</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">caching</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">amqp_server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amqp_server</span> <span class="o">=</span> <span class="n">amqp_server</span> <span class="k">if</span> <span class="n">amqp_server</span> <span class="k">else</span> <span class="n">server</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">amqp_connection</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">notice_exchange</span> <span class="o">=</span> <span class="s2">&quot;ermrest_changes&quot;</span>
 

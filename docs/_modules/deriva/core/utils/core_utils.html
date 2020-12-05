@@ -1298,6 +1298,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../core.html">deriva.core</a> &raquo;</li>
+        
           <li><a href="../utils.html">deriva.core.utils</a> &raquo;</li>
         
       <li>deriva.core.utils.core_utils</li>
@@ -1584,50 +1586,6 @@
     <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">credential</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_credential"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.get_credential">[docs]</a><span class="k">def</span> <span class="nf">get_credential</span><span class="p">(</span><span class="n">host</span><span class="p">,</span>
-                   <span class="n">credential_file</span><span class="o">=</span><span class="n">DEFAULT_CREDENTIAL_FILE</span><span class="p">,</span>
-                   <span class="n">globus_credential_file</span><span class="o">=</span><span class="n">DEFAULT_GLOBUS_CREDENTIAL_FILE</span><span class="p">,</span>
-                   <span class="n">config_file</span><span class="o">=</span><span class="n">DEFAULT_CONFIG_FILE</span><span class="p">,</span>
-                   <span class="n">requested_scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                   <span class="n">force_scope_lookup</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                   <span class="n">match_scope_tag</span><span class="o">=</span><span class="s2">&quot;deriva-all&quot;</span><span class="p">):</span>
-    <span class="c1"># load deriva credential set first</span>
-    <span class="n">credentials</span> <span class="o">=</span> <span class="n">read_credential</span><span class="p">(</span><span class="n">credential_file</span> <span class="ow">or</span> <span class="n">DEFAULT_CREDENTIAL_FILE</span><span class="p">,</span> <span class="n">create_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">creds</span> <span class="o">=</span> <span class="n">credentials</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">credentials</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">host</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="nb">dict</span><span class="p">()))</span>
-
-    <span class="c1"># if present, load globus credentials and merge</span>
-    <span class="n">globus_credentials</span> <span class="o">=</span> <span class="n">read_credential</span><span class="p">(</span><span class="n">globus_credential_file</span> <span class="ow">or</span> <span class="n">DEFAULT_GLOBUS_CREDENTIAL_FILE</span><span class="p">,</span> <span class="n">create_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">globus_credentials</span><span class="p">:</span>
-        <span class="n">scopes</span> <span class="o">=</span> <span class="n">get_oauth_scopes_for_host</span><span class="p">(</span><span class="n">host</span><span class="p">,</span>
-                                           <span class="n">config_file</span><span class="o">=</span><span class="n">config_file</span><span class="p">,</span>
-                                           <span class="n">force_refresh</span><span class="o">=</span><span class="n">force_scope_lookup</span><span class="p">,</span>
-                                           <span class="n">warn_on_discovery_failure</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">creds</span> <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">resource</span><span class="p">,</span> <span class="n">g_creds</span> <span class="ow">in</span> <span class="n">globus_credentials</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># 1. look for the explicitly requested scope in the token store, if specified</span>
-            <span class="k">if</span> <span class="n">requested_scope</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">g_creds</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">requested_scope</span><span class="p">:</span>
-                <span class="n">creds</span><span class="p">[</span><span class="s2">&quot;bearer-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_creds</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-                <span class="k">break</span>
-
-            <span class="c1"># 2. try to determine the scope to use based on host-to-scope(s) mappings</span>
-            <span class="k">if</span> <span class="n">scopes</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">scopes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">g_creds</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]:</span>
-                        <span class="k">if</span> <span class="n">match_scope_tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">match_scope_tag</span> <span class="o">!=</span> <span class="n">k</span><span class="p">:</span>
-                            <span class="k">continue</span>
-                        <span class="n">creds</span><span class="p">[</span><span class="s2">&quot;bearer-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_creds</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-                        <span class="k">break</span>
-                <span class="k">if</span> <span class="n">creds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bearer-token&quot;</span><span class="p">):</span>
-                    <span class="k">break</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># 3. if we did not find any host-to-scope(s) mappings in the config file, just fall back and</span>
-                <span class="c1"># try to find a token by matching the hostname to the resource server name</span>
-                <span class="k">if</span> <span class="n">host</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">resource</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
-                    <span class="n">creds</span><span class="p">[</span><span class="s2">&quot;bearer-token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g_creds</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
-                    <span class="k">break</span>
-
-    <span class="k">return</span> <span class="n">creds</span> <span class="ow">or</span> <span class="kc">None</span></div>
-
-
 <div class="viewcode-block" id="get_oauth_scopes_for_host"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.get_oauth_scopes_for_host">[docs]</a><span class="k">def</span> <span class="nf">get_oauth_scopes_for_host</span><span class="p">(</span><span class="n">host</span><span class="p">,</span>
                               <span class="n">config_file</span><span class="o">=</span><span class="n">DEFAULT_CONFIG_FILE</span><span class="p">,</span>
                               <span class="n">force_refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1637,6 +1595,8 @@
     <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="n">upr</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">upr</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">and</span> <span class="n">upr</span><span class="o">.</span><span class="n">netloc</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">upr</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="s2">&quot;https&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">result</span>
         <span class="n">url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="s2">&quot;/authn/discovery&quot;</span><span class="p">)</span>
         <span class="n">host</span> <span class="o">=</span> <span class="n">upr</span><span class="o">.</span><span class="n">hostname</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1712,9 +1672,6 @@
 
 
 <div class="viewcode-block" id="resource_path"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.resource_path">[docs]</a><span class="k">def</span> <span class="nf">resource_path</span><span class="p">(</span><span class="n">relative_path</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)):</span>
-    <span class="c1"># required to find bundled data at runtime in Pyinstaller single-file exe mode</span>
-    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_MEIPASS&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">),</span> <span class="n">relative_path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">relative_path</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span></div>

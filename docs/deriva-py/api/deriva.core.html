@@ -1397,7 +1397,7 @@
 <span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.base_cli.BaseCLI">
-<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.4.0'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.4.1'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="deriva.core.base_cli.BaseCLI.parse_cli">
@@ -3185,7 +3185,7 @@ all of the ACL’s roles. This option is only valid when a list of one role is g
 <span id="deriva-core-polling-ermrest-catalog-module"></span><h2>deriva.core.polling_ermrest_catalog module<a class="headerlink" href="#module-deriva.core.polling_ermrest_catalog" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.polling_ermrest_catalog.PollingErmrestCatalog">
-<em class="property">class </em><code class="descclassname">deriva.core.polling_ermrest_catalog.</code><code class="descname">PollingErmrestCatalog</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>catalog_id</em>, <em>credentials={}</em>, <em>caching=True</em>, <em>session_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/polling_ermrest_catalog.html#PollingErmrestCatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.polling_ermrest_catalog.</code><code class="descname">PollingErmrestCatalog</code><span class="sig-paren">(</span><em>scheme</em>, <em>server</em>, <em>catalog_id</em>, <em>credentials={}</em>, <em>caching=True</em>, <em>session_config=None</em>, <em>amqp_server=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/polling_ermrest_catalog.html#PollingErmrestCatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.polling_ermrest_catalog.PollingErmrestCatalog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#deriva.core.ermrest_catalog.ErmrestCatalog" title="deriva.core.ermrest_catalog.ErmrestCatalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.core.ermrest_catalog.ErmrestCatalog</span></code></a></p>
 <p>Persistent handle for an ERMrest catalog.</p>
 <p>Provides a higher-level state_change_once() idiom to
@@ -3273,8 +3273,71 @@ etc. for safety.</p>
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-deriva.core" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="deriva.core.get_credential">
-<code class="descclassname">deriva.core.</code><code class="descname">get_credential</code><span class="sig-paren">(</span><em>host</em>, <em>credential_file=DEFAULT_CREDENTIAL_FILE</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#get_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.get_credential" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">deriva.core.</code><code class="descname">get_credential</code><span class="sig-paren">(</span><em>host</em>, <em>credential_file='/root/.deriva/credential.json'</em>, <em>globus_credential_file='/root/.deriva/globus-credential.json'</em>, <em>config_file='/root/.deriva/config.json'</em>, <em>requested_scope=None</em>, <em>force_scope_lookup=False</em>, <em>match_scope_tag='deriva-all'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core.html#get_credential"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.get_credential" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to get authorization credentials (in dict form) for use with various deriva-py API calls
+which take it as a parameter. A user must have already authenticated to the target host using either <cite>deriva-auth</cite>
+or <cite>deriva-globus-auth-utils login</cite> prior to calling this function, or the credential set for the host will not be
+found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>host</strong> – The hostname to retrieve the credential set for.</li>
+<li><strong>credential_file</strong> – Optional path to non-default location of the webauthn cookie credential file.</li>
+<li><strong>globus_credential_file</strong> – Optional path to non-default location of the GlobusAuth bearer token store.</li>
+<li><strong>config_file</strong> – Optional path to the non-default location of the deriva-py config file.</li>
+<li><strong>requested_scope</strong> – Optional, specific scope request string for the given host. If not specified, the webauthn
+service on the host will be queried to determine the host-to-scope mapping that should be used.</li>
+<li><strong>force_scope_lookup</strong> – Optional parameter to force the webauthn scope query and update the cached value in the
+deriva-py config file. A scope lookup will always be performed the first time a host-to-scope mapping is needed
+and is not already present in the configuration file for a given host.</li>
+<li><strong>match_scope_tag</strong> – In the case that a host-to-scope mapping request returns multiple scopes, this is the key
+value (“tag”) to match against in the result dict. By convention, the default is set to “deriva-all”, which is
+the expected response from webauthn.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict containing credential authorization values mapped by authorization type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descclassname">deriva.core.</code><code class="descname">get_credential</code><span class="sig-paren">(</span><em>host</em>, <em>credential_file=DEFAULT_CREDENTIAL_FILE</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core.html#get_credential"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>This function is used to get authorization credentials (in dict form) for use with various deriva-py API calls
+which take it as a parameter. A user must have already authenticated to the target host using either <cite>deriva-auth</cite>
+or <cite>deriva-globus-auth-utils login</cite> prior to calling this function, or the credential set for the host will not be
+found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>host</strong> – The hostname to retrieve the credential set for.</li>
+<li><strong>credential_file</strong> – Optional path to non-default location of the webauthn cookie credential file.</li>
+<li><strong>globus_credential_file</strong> – Optional path to non-default location of the GlobusAuth bearer token store.</li>
+<li><strong>config_file</strong> – Optional path to the non-default location of the deriva-py config file.</li>
+<li><strong>requested_scope</strong> – Optional, specific scope request string for the given host. If not specified, the webauthn
+service on the host will be queried to determine the host-to-scope mapping that should be used.</li>
+<li><strong>force_scope_lookup</strong> – Optional parameter to force the webauthn scope query and update the cached value in the
+deriva-py config file. A scope lookup will always be performed the first time a host-to-scope mapping is needed
+and is not already present in the configuration file for a given host.</li>
+<li><strong>match_scope_tag</strong> – In the case that a host-to-scope mapping request returns multiple scopes, this is the key
+value (“tag”) to match against in the result dict. By convention, the default is set to “deriva-all”, which is
+the expected response from webauthn.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict containing credential authorization values mapped by authorization type</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="deriva.core.read_credential">

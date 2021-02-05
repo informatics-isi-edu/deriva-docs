@@ -1875,6 +1875,7 @@ string<p>&amp;gt;</p>
 boolean<p>&amp;gt;</p>
 </code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+displayname">.displayname</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+rowName">.rowName</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+uniqueId">.uniqueId</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+citation">.citation</a> : <code>ERMrest.Citation</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+templateVariables">.templateVariables</a> : <code>Object</code></li>
@@ -6658,6 +6659,7 @@ string<p>&amp;gt;</p>
 boolean<p>&amp;gt;</p>
 </code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+displayname">.displayname</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+rowName">.rowName</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+uniqueId">.uniqueId</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+citation">.citation</a> : <code>ERMrest.Citation</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+templateVariables">.templateVariables</a> : <code>Object</code></li>
@@ -6822,7 +6824,19 @@ reference (see <a class="reference external" href="#ERMrest.Reference+columns">c
 <span id="tuple-displayname-code-string-code"></span><h3>tuple.displayname : <code>string</code><a class="headerlink" href="#tuple-displayname-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The <em>display name</em> of this tuple. For example, if this tuple is a
 row from a table, then the display name is defined by the
-row_markdown_pattern annotation for the <em>row name</em> context
+row_markdown_pattern annotation for the <em>row_name/title</em> context
+or by the heuristics (title, name, id(text), SHORTESTKEY Concatenation using ‘:’)</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;This tuple has a displayable name of &quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="o">.</span><span class="n">value</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+rowName"></a></p>
+</div>
+<div class="section" id="tuple-rowname-code-string-code">
+<span id="tuple-rowname-code-string-code"></span><h3>tuple.rowName : <code>string</code><a class="headerlink" href="#tuple-rowname-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>The row name_ of this tuple. For example, if this tuple is a
+row from a table, then the display name is defined by the
+row_markdown_pattern annotation for the <em>row_name</em> context
 or by the heuristics (title, name, id(text), SHORTESTKEY Concatenation using ‘:’)</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;This tuple has a displayable name of &quot;</span><span class="p">,</span> <span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="o">.</span><span class="n">value</span><span class="p">);</span>

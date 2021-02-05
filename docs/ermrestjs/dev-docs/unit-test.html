@@ -1594,14 +1594,14 @@ $ node test/jasmine-runner.js
 <div class="section" id="other-useful-information">
 <span id="other-useful-information"></span><h2>Other Useful Information<a class="headerlink" href="#other-useful-information" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li>You might come across some test cases that are specific to travis environment or local. To enforce some test cases to just run in a specific environment, you can do the following:</li>
+<li>You might come across some test cases that are specific to CI environment or local. To enforce some test cases to just run in a specific environment, you can do the following:</li>
 </ol>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TRAVIS</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// anything that is specific to TRAVIS</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// anything that is specific to CI</span>
 <span class="p">}</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TRAVIS</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// these test cases will only run locally and not on travis.</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// these test cases will only run locally and not on CI.</span>
 <span class="p">}</span>
 </pre></div>
 </div>

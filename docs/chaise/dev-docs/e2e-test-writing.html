@@ -1417,11 +1417,11 @@
 <span class="p">});</span>
 </pre></div>
 </div>
-<div class="section" id="detecting-travis-environment">
-<span id="detecting-travis-environment"></span><h3>Detecting Travis Environment<a class="headerlink" href="#detecting-travis-environment" title="Permalink to this headline">¶</a></h3>
-<p>There’re scenarios where you might need to determine which environment are your tests running; TRAVIS or locally. To determine that you can simply refer the variable <code class="docutils literal notranslate"><span class="pre">process.env.TRAVIS</span></code>. If it is true then the environment is Travis else it is something else.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TRAVIS</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">// DO something Travis specific</span>
+<div class="section" id="detecting-ci-environment">
+<span id="detecting-ci-environment"></span><h3>Detecting CI Environment<a class="headerlink" href="#detecting-ci-environment" title="Permalink to this headline">¶</a></h3>
+<p>There’re scenarios where you might need to determine which environment are your tests running; CI or locally. To determine that you can simply refer the variable <code class="docutils literal notranslate"><span class="pre">process.env.CI</span></code>. If it is true then the environment is CI else it is something else.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// DO something CI specific</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
   <span class="c1">// DO something specific to local environment</span>
 <span class="p">}</span>
@@ -1449,7 +1449,7 @@
 </pre></div>
 </div>
 <p>You should try to put the performLogin function inside an <code class="docutils literal notranslate"><span class="pre">it</span></code> statement or <code class="docutils literal notranslate"><span class="pre">beforeAll</span></code>/<code class="docutils literal notranslate"><span class="pre">beforeEach</span></code> statement, so that it is executed in the flow of test.</p>
-<p><strong>NOTE</strong>: Our Travis environment doesn’t uses HTTPS for CHAISE. When we setup the cookie we set the secure flag in the path for cookie depending on environment. <a class="reference external" href="http://resources.infosecinstitute.com/securing-cookies-httponly-secure-flags/#gref">Reference</a></p>
+<p><strong>NOTE</strong>: Our CI environment doesn’t uses HTTPS for CHAISE. When we setup the cookie we set the secure flag in the path for cookie depending on environment. <a class="reference external" href="http://resources.infosecinstitute.com/securing-cookies-httponly-secure-flags/#gref">Reference</a></p>
 </div>
 </div>
 <div class="section" id="asynchronous-actions">

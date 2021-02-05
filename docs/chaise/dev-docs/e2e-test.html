@@ -1348,8 +1348,8 @@
 <li><strong>Protractor</strong>: E2E framework tailored for AngularJS apps</li>
 <li><strong>Jasmine</strong>: the way in which the automation tests are written</li>
 <li><strong>NPM</strong>: to install necessary NodeJS packages</li>
-<li><strong>SauceLabs</strong>: platform for executing E2E tests and record (in video) the testing results by Travis CI</li>
-<li><strong>Travis CI</strong>: to test automatically every time code is pushed to Github repo</li>
+<li><strong>SauceLabs</strong>: platform for executing E2E tests and record (in video) the testing results by CI</li>
+<li><strong>Github workflow</strong>: to do continuous integration (CI) by automatically testing every time code is pushed to Github repo</li>
 <li><strong>Makefile</strong>: to invoke NPM to install packages necessary for running tests and invoke Protractor (which will run the tests).</li>
 <li><strong>ErmrestDataUtils</strong>: tool created in house for catalog/schema creation and seeding data (<a class="reference external" href="https://github.com/informatics-isi-edu/ErmrestDataUtils">Found here</a>)</li>
 </ul>
@@ -1557,7 +1557,7 @@ $ ssh-add PATH/TO/KEY
 $ <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise
 </pre></div>
 </div>
-<p><strong>TRAVIS</strong>: For TRAVIS there is no need to set <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> as it copies the actual file to the <strong>chaise-config.js</strong> in its local directory where it is running the test-suite.</p>
+<p><strong>CI</strong>: For CI there is no need to set <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> as it copies the actual file to the <strong>chaise-config.js</strong> in its local directory where it is running the test-suite.</p>
 </div>
 </div>
 <div class="section" id="test-configuration-json-file">
@@ -1643,10 +1643,10 @@ The <code class="docutils literal notranslate"><span class="pre">tests</span></c
 </div>
 <p>Now when you run the tests, they will be executed on Sauce Labs instead of your machine. You can monitor them on their dashboard.</p>
 </div>
-<div class="section" id="running-tests-in-travis">
-<span id="running-tests-in-travis"></span><h2>Running tests in TRAVIS<a class="headerlink" href="#running-tests-in-travis" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="travis-testing-workflow">
-<span id="travis-testing-workflow"></span><h3>Travis Testing workflow<a class="headerlink" href="#travis-testing-workflow" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="running-tests-in-ci">
+<span id="running-tests-in-ci"></span><h2>Running tests in CI<a class="headerlink" href="#running-tests-in-ci" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ci-testing-workflow">
+<span id="ci-testing-workflow"></span><h3>CI Testing workflow<a class="headerlink" href="#ci-testing-workflow" title="Permalink to this headline">¶</a></h3>
 <p>in the Chaise folder, invoke command</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>npm <span class="nb">test</span>
 </pre></div>
@@ -1666,22 +1666,20 @@ sauceKey: process.env.SAUCE_ACCESS_KEY,
 </pre></div>
 </div>
 <p>These lines will set up credentials necessary to login SauceLabs and when detected, will execute these tests on SauceLabs. SauceLabs will then print the testing result on terminal and record the testing video on that account as well. When tests are finished, there will be a URL printed on terminal directing you to see the recorded results.</p>
-<p>When the code is pushed to ISI repo, the existence of <strong>.travis.yml</strong> will run “npm test” command in Travis CI, which will trigger the testing chain specified above.</p>
+<p>When the code is pushed to ISI repo, the “Chaise end-to-end tests” Github workflow will run appropriate make commands, which will trigger the testing chain specified above.</p>
 </div>
 <div class="section" id="environment-variables">
 <span id="environment-variables"></span><h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
-<p><strong>.travis.yml</strong>: <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/.travis.yml">.travis.yml</a>
-specifies environment variables in Travis CI so that tests can be run successfully. Usually the env variables are set using terminal locally, to set them up in Travis CI one has to configure .travis.yml file.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>env:
-    global:
-        - CHAISE_BASE_URL: http://localhost/chaise
-        - ERMREST_URL: http://localhost/ermrest
-        - secure: KKPijZEdaQ7wyubNojHcJi/pgqwemhOzD8lHBV9c521+iybrHJRyR8fJE22OoMrn9UVPlk2pYgljpF1Vjubms10Kga4GT3vxjZ7kbadkgs09vIzo4SUQDi7XBrm3NbWIgYgcLhE8ZqhZo75idtkFMJCQclwLQ7vn5P5xSzNI3CUVxoQJ+uB6ZgVDn0b2ldfmqCBM5B52ocOBF1c4yLTmJwCkSRNdM2aVj4scf+S0h3InGCitHNyuu0WUYNvrIVIFhjCi7VuadCtJ7fy7Z2uFksHIxkT5Lx9WkdZX1M522ckvKhlFrOOB8ejIl//JsPsvy7cPAs7R9w+8LwiE3lmU376fxO9cKCrY7vnW78zHhbs3q6iFO2hhAiPILlcK3H626zbblHms8wsqUHkXlFx19FyTU8pqW86/4LKr6sdVRPyutokMdrFtgjFC1KevseK7GUWzOepOBJazXCc0WvQvUOUIWET5auRztLPEt0P9fh0hNamKWqYUiaW/nl0cUGAL/70PWSQBwIAHAry9mI9xVsBVVl0JhF5ljzqGmzFxRik7ylaYSZh1nTrjwjZDmBEOvycNsDqZBmU6Vc0KXtHaWF/AbCj1Lyng72YCe5jks058DGzv4nKonphNsG0bn3sb1oNHzFoHMncx8FxjZACsmuVzvzXtWTcv9O/iu+rbYxg<span class="o">=</span>
-        - secure: hSGHl2cRYx9gmE2lrjRWu3H45ogd8hIiI9QlLZpvXonROZJSw8VqQWpLe/7m+95L8UDhOpnCXKct/V9+qUDsQM2kDpEP+9bNCf3skg7MFLkpr1te+y1mCkO0xu2vhoqrzJKtvXGIenZ/aEY1nQrnIYuF/5MaOzNRliHQ+7rmhigW7M4LSFqDQdj7CvqXsyk3cfNMbIeUI9H8/SrG9mxYfAa61H1zJtPmdDegvjFNcQeeT57lgYyoArOw4lcGm9KHQp2Hn4EtXv1L65DS7eogFit0CnS/1QHEinU2ibpgfb/vnAnRun5OAmjsiPAURLb6AuhevzDHeyMZrTPIGUHiIyuzG8qP264sWq1ukyjolyarwcwJoifJAdGWhVPT41XAlgAy+xgfN4xSKNp+tGPo9+iJqVGgccbpKAYqMQKvWSXO6DVQEqPHtpFuXsqNBBwvzCBAS+VdHFoKOy9bv2AEIpVOZJszIkuaNAQVqG/iD0pXQT9rEsZ4Ghm0N/RQf7qhGA4Ot1u5yOko1zgm15ATzpacy6qEzqQQwG3qilO2hUNK8xehqU52a4KQu79yGOG8zFkyvcUS3H/e4NQVeBFQ8GIrfcjg1vD5PXzdnun3iiLwwSXSk9CMHMW0B2z34qvg0q4++LWP2UMHkrx+yf/MzABoYuiZ6LshCvobftU7zmQ<span class="o">=</span>
-</pre></div>
-</div>
-<p>The two “secure”s above set up the SauceLabs username and password and the ERMRest authCookie, and encrypt them. The last 2 lines set up env variable “CHAISE_BASE_URL” and “ERMREST_URL” without encryption. More details about it, take a look at Travis CI official website.</p>
-<p>While running tests on <strong>TRAVIS</strong> you don’t need to set the <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> in <strong>travis.yml</strong> file.</p>
+<p><strong>./.github/workflows/main.yml</strong>: <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/.github/workflows/e2e.yml">.e2e.yml</a>
+specifies environment variables in Github workflow so that tests can be run successfully. Usually the env variables are set using terminal locally, to set them up in CI environment one has to configure e2e.yml file.</p>
+<ul class="simple">
+<li>Since CI e2e test require connecting to saucelabs, <code class="docutils literal notranslate"><span class="pre">SAUCE_USERNAME</span></code>, <code class="docutils literal notranslate"><span class="pre">SAUCE_ACCESS_KEY</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">SAUCE_TUNNEL_IDENTIFIER</span></code> are defined . <code class="docutils literal notranslate"><span class="pre">SAUCE_TUNNEL_IDENTIFIER</span></code> is used
+internally in the <code class="docutils literal notranslate"><span class="pre">e2e.yml</span></code> to create a saucelab tunnel with that identifier. And then
+during the setup the same identifier is used to ensure connecting to the correct tunnel.</li>
+<li><code class="docutils literal notranslate"><span class="pre">SHARDING:</span> <span class="pre">true</span></code> ensures running test cases in parallel.</li>
+</ul>
+<p>While running tests on <strong>CI</strong> you don’t need to set the <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> in <strong>main.yml</strong> file.</p>
 </div>
 </div>
 <div class="section" id="writing-test">

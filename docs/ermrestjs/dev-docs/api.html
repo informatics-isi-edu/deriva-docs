@@ -2095,7 +2095,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+ermrestPath">.ermrestPath</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+filterLogInfo">.filterLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], contextHeaderParams)</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], [contextHeaderParams], [dontCorrectPage])</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+getColumnByName">.getColumnByName(name)</a> ⇒ <code>ERMrest.AttributeGroupColumn</code></li>
 </ul>
 </li>
@@ -2307,7 +2307,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+ermrestPath">.ermrestPath</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+filterLogInfo">.filterLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], contextHeaderParams)</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], [contextHeaderParams], [dontCorrectPage])</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+getColumnByName">.getColumnByName(name)</a> ⇒ <code>ERMrest.AttributeGroupColumn</code></li>
 </ul>
 </li>
@@ -9025,7 +9025,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+ermrestPath">.ermrestPath</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+filterLogInfo">.filterLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], contextHeaderParams)</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], [contextHeaderParams], [dontCorrectPage])</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+getColumnByName">.getColumnByName(name)</a> ⇒ <code>ERMrest.AttributeGroupColumn</code></li>
 </ul>
 </li>
@@ -9165,8 +9165,8 @@ Returns a reference that points to all entities of current table</p>
 Currently only includes the search term.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+read"></a></p>
 </div>
-<div class="section" id="attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code">
-<span id="attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code"></span><h3>attributeGroupReference.read([limit], contextHeaderParams) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="attributegroupreference-read-limit-contextheaderparams-dontcorrectpage-code-ermrest-attributegrouppage-code">
+<span id="attributegroupreference-read-limit-contextheaderparams-dontcorrectpage-code-ermrest-attributegrouppage-code"></span><h3>attributeGroupReference.read([limit], [contextHeaderParams], [dontCorrectPage]) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-dontcorrectpage-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></p>
 <table border="1" class="docutils">
 <thead>
@@ -9183,9 +9183,14 @@ Currently only includes the search term.</p>
 <td></td>
 </tr>
 <tr>
-<td>contextHeaderParams</td>
+<td>[contextHeaderParams]</td>
 <td><code>Object</code></td>
 <td>the object that we want to log.</td>
+</tr>
+<tr>
+<td>[dontCorrectPage]</td>
+<td><code>Boolean</code></td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.AttributeGroupReference+getColumnByName"></a></p>
@@ -11324,7 +11329,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+ermrestPath">.ermrestPath</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+defaultLogInfo">.defaultLogInfo</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+filterLogInfo">.filterLogInfo</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], contextHeaderParams)</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupReference+read">.read([limit], [contextHeaderParams], [dontCorrectPage])</a> ⇒ <code>ERMRest.AttributeGroupPage</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupReference+getColumnByName">.getColumnByName(name)</a> ⇒ <code>ERMrest.AttributeGroupColumn</code></li>
 </ul>
 </li>
@@ -11464,8 +11469,8 @@ Returns a reference that points to all entities of current table</p>
 Currently only includes the search term.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a name="ERMrest.AttributeGroupReference+read"></a></p>
 </div>
-<div class="section" id="attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code">
-<span id="id63"></span><h3>attributeGroupReference.read([limit], contextHeaderParams) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="attributegroupreference-read-limit-contextheaderparams-dontcorrectpage-code-ermrest-attributegrouppage-code">
+<span id="id63"></span><h3>attributeGroupReference.read([limit], [contextHeaderParams], [dontCorrectPage]) ⇒ <code>ERMRest.AttributeGroupPage</code><a class="headerlink" href="#attributegroupreference-read-limit-contextheaderparams-dontcorrectpage-code-ermrest-attributegrouppage-code" title="Permalink to this headline">¶</a></h3>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></p>
 <table border="1" class="docutils">
 <thead>
@@ -11482,9 +11487,14 @@ Currently only includes the search term.</p>
 <td></td>
 </tr>
 <tr>
-<td>contextHeaderParams</td>
+<td>[contextHeaderParams]</td>
 <td><code>Object</code></td>
 <td>the object that we want to log.</td>
+</tr>
+<tr>
+<td>[dontCorrectPage]</td>
+<td><code>Boolean</code></td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.AttributeGroupReference+getColumnByName"></a></p>

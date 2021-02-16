@@ -22,11 +22,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-        
+      - name: Checkout
+        uses: actions/checkout@v2
+      
       # Build and Push Docs back to GitHubPages
       - name: Build Docs
-      - env:
+        env:
           GITHUB_TOKEN: ${{ secrets.DERIVA_DOCS_PUSH_TOKEN }}
         run: docker run --rm isrddev/deriva-docs build  
         # run: docker run --rm -e GITHUB_TOKEN isrddev/deriva-docs build

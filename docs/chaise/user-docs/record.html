@@ -1360,10 +1360,20 @@
 <ul class="simple">
 <li>If it’s a pure and binary association related entity, Chaise will open a modal picker that will allow users to select entities for the related table.<ul>
 <li><a class="reference external" href="https://en.wikipedia.org/wiki/Associative_entity">Associative entities</a> are entities in another table that establish <em>many-to-many</em> relationships between entities. To illustrate this, let’s assume table <code class="docutils literal notranslate"><span class="pre">A</span></code> has two foreign keys, one to table <code class="docutils literal notranslate"><span class="pre">B</span></code> and another to <code class="docutils literal notranslate"><span class="pre">C</span></code> (<code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">&lt;-</span> <span class="pre">A</span> <span class="pre">-&gt;</span> <span class="pre">C</span></code>). Then we can say that <code class="docutils literal notranslate"><span class="pre">C</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span></code> are in associative relationship and for a reference that encapsulates <code class="docutils literal notranslate"><span class="pre">B</span></code>, a reference that encapsulates <code class="docutils literal notranslate"><span class="pre">C</span></code> is a related reference. Table <code class="docutils literal notranslate"><span class="pre">A</span></code> must have the following properties to be counted as pure and binary associative table:<ul>
-<li>Should have only two foreign keys (binary).</li>
-<li>Must have a unique constraint key of the foreign key columns.</li>
-<li>Cannot have any other unique constraint key (As an exception to this rule, table can have an extra key that is made of one serial type column.).</li>
-<li>There is no extra column that is not part of any keys (pure).</li>
+<li>Must have only two outbound foreign keys.<ul>
+<li>Exception: foreign keys that are based on system columns are allowed.</li>
+</ul>
+</li>
+<li>Must have a unique constraint key based on the columns of the two outbound foreign keys.</li>
+<li>Cannot have any other unique constraint keys.<ul>
+<li>Exception: simple keys that are based on system columns or <code class="docutils literal notranslate"><span class="pre">serial</span></code> typed columns are allowed.</li>
+</ul>
+</li>
+<li>Cannot have any extra column that is not part of any keys.<ul>
+<li>Exception: system columns are allowed.</li>
+</ul>
+</li>
+<li>Cannot have any inbound foreign keys.</li>
 </ul>
 </li>
 </ul>

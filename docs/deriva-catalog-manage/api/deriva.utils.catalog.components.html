@@ -1350,11 +1350,1235 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="deriva-utils-catalog-components-configure-catalog-module">
-<h2>deriva.utils.catalog.components.configure_catalog module<a class="headerlink" href="#deriva-utils-catalog-components-configure-catalog-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-deriva.utils.catalog.components.configure_catalog">
+<span id="deriva-utils-catalog-components-configure-catalog-module"></span><h2>deriva.utils.catalog.components.configure_catalog module<a class="headerlink" href="#module-deriva.utils.catalog.components.configure_catalog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.configure_catalog.</code><code class="descname">DerivaCatalogConfigure</code><span class="sig-paren">(</span><em>host</em>, <em>scheme='https'</em>, <em>catalog_id=1</em>, <em>validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaCatalogConfigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog" title="deriva.utils.catalog.components.deriva_model.DerivaCatalog"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCatalog</span></code></a></p>
+<p>DerovaCatalogConfigure extends DerivaCatalog by providing methods for creating a default configuration for a
+catalog.</p>
+<p>The only method of interest in this class is configure_baseline_catalog.</p>
+<dl class="method">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.configure_baseline_catalog">
+<code class="descname">configure_baseline_catalog</code><span class="sig-paren">(</span><em>catalog_name=None</em>, <em>admin=None</em>, <em>curator=None</em>, <em>writer=None</em>, <em>reader=None</em>, <em>set_policy=True</em>, <em>public=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaCatalogConfigure.configure_baseline_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaCatalogConfigure.configure_baseline_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put catalog into standard configuration which includes:</p>
+<ol class="arabic simple">
+<li>Setting default display mode to be to turn underscores to spaces.</li>
+<li>Set access control assuming admin, curator, writer, and reader groups.</li>
+<li>Configure ermrest_client to have readable names.</li>
+</ol>
+<p>4. Create a schema called <em>WWW</em> and create a <em>Page</em> table in that schema configured to display web-page like
+content.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>catalog_name</strong> – Name to use when looking up catalog groups.  Defaults to host name if not provided.</li>
+<li><strong>admin</strong> – Name of the admin group.  Defaults to catalog-admin, where catalog is the catalog_name</li>
+<li><strong>curator</strong> – Name of the curator group. Defaults to catalog-curator</li>
+<li><strong>writer</strong> – Name of the writer group. Defaults to catalog-writer</li>
+<li><strong>reader</strong> – Name of the reader group. Defaults to catalog-reader</li>
+<li><strong>set_policy</strong> – Set policy for catalog to support reader/writer/curator/admin groups.</li>
+<li><strong>public</strong> – Set to true if anonymous read access should be allowed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.configure_catalog.</code><code class="descname">DerivaTableConfigure</code><span class="sig-paren">(</span><em>catalog</em>, <em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaTableConfigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#deriva.utils.catalog.components.deriva_model.DerivaTable" title="deriva.utils.catalog.components.deriva_model.DerivaTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaTable</span></code></a></p>
+<p>This class is used to create a default configuration for a Deriva Table.</p>
+<dl class="method">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.configure_self_serve_policy">
+<code class="descname">configure_self_serve_policy</code><span class="sig-paren">(</span><em>groups</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaTableConfigure.configure_self_serve_policy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.configure_self_serve_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up a table so it has a self service policy.  Add an owner column if one is not present, and set the acl
+binding so that it follows the self service policy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>groups</strong> – dictionary of core catalog groups</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.configure_table_defaults">
+<code class="descname">configure_table_defaults</code><span class="sig-paren">(</span><em>set_policy=True</em>, <em>public=False</em>, <em>reset_visible_columns=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaTableConfigure.configure_table_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.configure_table_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function adds the following basic configuration details to an existing table:</p>
+<ol class="arabic simple">
+<li>Creates a self service modification policy in which creators can update update any row they create.
+Optionally, an Owner column can be provided, which allows the creater of a row to delegate row ownership to
+a specific group.</li>
+<li>Adds display annotations and foreign key declarations so that system columns RCB, RMB display in a user
+friendly way.</li>
+<li>Adds a visible_foreign_keys and visible_columns annotation.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>set_policy</strong> – If true, then configure the table to have a self service policy</li>
+<li><strong>public</strong> – Make table acessible without logging in.</li>
+<li><strong>reset_visible_columns</strong> – Overwrite any existing visible_columns annotation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_columns">
+<code class="descname">create_default_visible_columns</code><span class="sig-paren">(</span><em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaTableConfigure.create_default_visible_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_foreign_keys">
+<code class="descname">create_default_visible_foreign_keys</code><span class="sig-paren">(</span><em>really=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/configure_catalog.html#DerivaTableConfigure.create_default_visible_foreign_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.configure_catalog.DerivaTableConfigure.create_default_visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="deriva-utils-catalog-components-deriva-model-module">
-<h2>deriva.utils.catalog.components.deriva_model module<a class="headerlink" href="#deriva-utils-catalog-components-deriva-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-deriva.utils.catalog.components.deriva_model">
+<span id="deriva-utils-catalog-components-deriva-model-module"></span><h2>deriva.utils.catalog.components.deriva_model module<a class="headerlink" href="#module-deriva.utils.catalog.components.deriva_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaModel">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaModel</code><span class="sig-paren">(</span><em>catalog</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaLogging</span></code></p>
+<p>Representation of a deriva model. Is primarily used as a resource manager to group catalog operations so as to
+minimize network round trips.  For example:</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a>`
+with DerivaModel(catalog)</p>
+<blockquote>
+<div>table = schema.create_table(‘MyTable’,[])
+table.display = ‘My Nice Table’</div></blockquote>
+<p><a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaModel.catalog_model">
+<code class="descname">catalog_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaModel.catalog_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaModel.catalog_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaModel.contexts">
+<code class="descname">contexts</code><em class="property"> = {&lt;DerivaContext.row_name: 'row_name'&gt;, &lt;DerivaContext.entry_create: 'entry/create'&gt;, &lt;DerivaContext.row_name_title: 'row_name/title'&gt;, &lt;DerivaContext.compact: 'compact'&gt;, &lt;DerivaContext.row_name_detailed: 'row_name/detailed'&gt;, &lt;DerivaContext.filter: 'filter'&gt;, &lt;DerivaContext.entry_edit: 'entry/edit'&gt;, &lt;DerivaContext.row_name_compact: 'row_name/compact'&gt;, &lt;DerivaContext.star: '*'&gt;, &lt;DerivaContext.compact_select: 'compact/select'&gt;, &lt;DerivaContext.entry: 'entry'&gt;, &lt;DerivaContext.compact_brief: 'compact/brief'&gt;, &lt;DerivaContext.detailed: 'detailed'&gt;}</em><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaModel.contexts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaModel.model_element">
+<code class="descname">model_element</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaModel.model_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaModel.model_element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaCatalog</code><span class="sig-paren">(</span><em>host</em>, <em>scheme='https'</em>, <em>catalog_id=1</em>, <em>ermrest_catalog=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<p>A Dervia catalog.  Operations on the catalog will alter both the ERMrest service as well as the annotations used
+by Chaise.</p>
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.bulk_upload">
+<code class="descname">bulk_upload</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.bulk_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set the navigation bar menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.catalog_id">
+<code class="descname">catalog_id</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.catalog_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get catalog id</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">catalog identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.create_schema">
+<code class="descname">create_schema</code><span class="sig-paren">(</span><em>schema_name</em>, <em>comment=None</em>, <em>acls={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.create_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.create_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new schema in this catalog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>schema_name</strong> – The name of the schema</li>
+<li><strong>comment</strong> – A comment for the schema</li>
+<li><strong>acls</strong> – ACLs for the schema</li>
+<li><strong>annotations</strong> – Schema annotations.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DerivaSchema object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.describe">
+<code class="descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.describe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.getPathBuilder">
+<code class="descname">getPathBuilder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.getPathBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.getPathBuilder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.get_groups">
+<code class="descname">get_groups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.get_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.get_groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.host">
+<code class="descname">host</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.host" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get catalog host.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Hostname of the current catalog</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.navbar_menu">
+<code class="descname">navbar_menu</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.navbar_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get/Set the navigation bar menu.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.refresh">
+<code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh the any cached model values from the server.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.rename_visible_columns">
+<code class="descname">rename_visible_columns</code><span class="sig-paren">(</span><em>column_map</em>, <em>validate=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.rename_visible_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.rename_visible_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.schema">
+<code class="descname">schema</code><span class="sig-paren">(</span><em>schema_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.schemas">
+<code class="descname">schemas</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.schemas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an interable for the schemas contained in the the catalog. The return value can be indexed by
+schema name, or iterated over.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.server_uri">
+<code class="descname">server_uri</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.server_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>URI for the catalog server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">server uri</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate all of the objects in the catalog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaCatalog.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaCatalog.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaCatalog.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaSchema</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.create_asset">
+<code class="descname">create_asset</code><span class="sig-paren">(</span><em>table_name</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>file_pattern='.*'</em>, <em>extensions=[]</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.create_asset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.create_asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an asset table.  This function creates a new table that has the standard asset columns in addition
+to columns provided by the caller.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>table_name</strong> – </li>
+<li><strong>column_defs</strong> – </li>
+<li><strong>key_defs</strong> – </li>
+<li><strong>fkey_defs</strong> – </li>
+<li><strong>comment</strong> – </li>
+<li><strong>acls</strong> – </li>
+<li><strong>acl_bindings</strong> – </li>
+<li><strong>annotations</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DerivaTable object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.create_table">
+<code class="descname">create_table</code><span class="sig-paren">(</span><em>table_name</em>, <em>column_defs</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>default_config=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.create_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.create_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new table from the provided arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>table_name</strong> – The name of the new table to be created.</li>
+<li><strong>column_defs</strong> – </li>
+<li><strong>key_defs</strong> – </li>
+<li><strong>fkey_defs</strong> – </li>
+<li><strong>comment</strong> – </li>
+<li><strong>acls</strong> – </li>
+<li><strong>acl_bindings</strong> – </li>
+<li><strong>annotations</strong> – </li>
+<li><strong>default_config</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.create_vocabulary">
+<code class="descname">create_vocabulary</code><span class="sig-paren">(</span><em>vocab_name</em>, <em>curie_template</em>, <em>uri_template='/id/{RID}'</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.create_vocabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.create_vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a vocabulary table that can be used to reference externally defined terms. This funcion provides the
+option to add additional columns to the table, as well as set access control and additional table annotations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vocab_name</strong> – Name of the vocabulary table to be created.</li>
+<li><strong>curie_template</strong> – Default shortform name for the term, in the form of ‘NAMESPACE:{RID}’,</li>
+<li><strong>uri_template</strong> – </li>
+<li><strong>column_defs</strong> – Additional columns to be added to the vocabulary table.</li>
+<li><strong>key_defs</strong> – </li>
+<li><strong>fkey_defs</strong> – </li>
+<li><strong>comment</strong> – Comment string.</li>
+<li><strong>acls</strong> – </li>
+<li><strong>acl_bindings</strong> – </li>
+<li><strong>annotations</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A DerivaTable object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.describe">
+<code class="descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.describe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.drop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.table">
+<code class="descname">table</code><span class="sig-paren">(</span><em>table_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a DerivaTable object for the named table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>table_name</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.tables">
+<code class="descname">tables</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the annotations associated with the tables in this schema.  Look at all visable column,
+visible foreign key, display and other configurable fields associated with the catalog and check to ensure
+they use valid column and key definitions.  Some limited syntax checking is done as well.  Throws an
+exception if an invalid value is found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if all values are valid.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaSchema.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaSchema.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaSchema.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaTable</code><span class="sig-paren">(</span><em>catalog</em>, <em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.associate_tables">
+<code class="descname">associate_tables</code><span class="sig-paren">(</span><em>target_table</em>, <em>table_column='RID'</em>, <em>target_column='RID'</em>, <em>inline=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.associate_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.associate_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a pure binary association table that connects rows in the table to rows in the target table.
+Assume that RIDs are used for linking. however, this can be over riden.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>target_schema</strong> – Schema of the table that is to be associated with current table</li>
+<li><strong>target_table</strong> – Name of the table that is to be associated with the current table</li>
+<li><strong>table_column</strong> – Name of the column in the current table that is used for the foreign key, defaults to RID</li>
+<li><strong>target_column</strong> – Name of the column in the target table that is to be used for the foreign key, defaults
+to RID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Association table.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.associate_vocabulary">
+<code class="descname">associate_vocabulary</code><span class="sig-paren">(</span><em>term_table</em>, <em>table_column='RID'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.associate_vocabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.associate_vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an existing column in the table to refer to an existing vocabulary table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>column_name</strong> – Name of the column whose value is to be from the vocabular</li>
+<li><strong>term_table</strong> – The term table.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.associated_tables">
+<code class="descname">associated_tables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.associated_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.associated_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assuming the table is an pure binary association table, return the two table endpoints</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>table</strong> – ermrest table object for a table that is a pure binary association table.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of 2-tuples that are the schema and table for the two tables in the M:N relationship</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.attributes">
+<code class="descname">attributes</code><span class="sig-paren">(</span><em>*attributes</em>, <em>**renamed_attributes</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.attributes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.chaise_uri">
+<code class="descname">chaise_uri</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.chaise_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.column">
+<code class="descname">column</code><span class="sig-paren">(</span><em>column_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.copy_columns">
+<code class="descname">copy_columns</code><span class="sig-paren">(</span><em>column_map</em>, <em>dest_table=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.copy_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.copy_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy a set of columns, updating visible columns list and keys to mirror source columns. The columns to copy
+are specified by a column map.  Column map can be a dictionary with entries SrcCol: DerviaColumnSpec or
+SrcCol:TargetCol.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>column_map</strong> – a column_map that describes the list of columns.</li>
+<li><strong>dest_table</strong> – Table name of destination table</li>
+<li><strong>column_map</strong> – A dictionary that specifies column name mapping</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.copy_table">
+<code class="descname">copy_table</code><span class="sig-paren">(</span><em>schema_name</em>, <em>table_name</em>, <em>column_map={}</em>, <em>clone=False</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.copy_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.copy_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the current table to the specified target schema and table. All annotations and keys are modified to
+capture the new schema and table name. Columns can be renamed in the target table by providing a column mapping.
+Key and foreign key definitions can be augmented or overwritten by providing appropriate arguments. Lastly
+if the clone argument is set to true, the RIDs of the source table are reused, so that the equivalent of a
+move operation can be obtained.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>schema_name</strong> – Target schema name</li>
+<li><strong>table_name</strong> – Target table name</li>
+<li><strong>column_map</strong> – A dictionary that is used to rename columns in the target table.</li>
+<li><strong>clone</strong> – </li>
+<li><strong>key_defs</strong> – </li>
+<li><strong>fkey_defs</strong> – </li>
+<li><strong>comment</strong> – </li>
+<li><strong>acls</strong> – </li>
+<li><strong>acl_bindings</strong> – </li>
+<li><strong>annotations</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The new table</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.create_asset_table">
+<code class="descname">create_asset_table</code><span class="sig-paren">(</span><em>key_column</em>, <em>extensions=[]</em>, <em>file_pattern='.*'</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>set_policy=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.create_asset_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.create_asset_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a basic asset table and configures the bulk upload annotation to load the table along with a table of
+associated metadata. This routine assumes that the metadata table has already been defined, and there is a key
+associated metadata. This routine assumes that the metadata table has already been defined, and there is a key
+column the metadata table that can be used to associate the asset with a row in the table. The default
+configuration assumes that the assets are in a directory named with the table name for the metadata and that
+they either are in a subdirectory named by the key value, or that they are in a file whose name starts with the
+key value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key_column</strong> – The column in the metadata table to be used to correlate assets with entries. Assets will be
+named using the key column.</li>
+<li><strong>extensions</strong> – List file extensions to be matched. Default is to match any extension.</li>
+<li><strong>file_pattern</strong> – Regex that identified the files to be considered for upload</li>
+<li><strong>column_defs</strong> – a list of Column.define() results for extra or overridden column definitions</li>
+<li><strong>key_defs</strong> – a list of Key.define() results for extra or overridden key constraint definitions</li>
+<li><strong>fkey_defs</strong> – a list of ForeignKey.define() results for foreign key definitions</li>
+<li><strong>comment</strong> – a comment string for the asset table</li>
+<li><strong>acls</strong> – a dictionary of ACLs for specific access modes</li>
+<li><strong>acl_bindings</strong> – a dictionary of dynamic ACL bindings</li>
+<li><strong>annotations</strong> – a dictionary of annotations</li>
+<li><strong>set_policy</strong> – If true, add ACLs for self serve policy to the asset table</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.create_columns">
+<code class="descname">create_columns</code><span class="sig-paren">(</span><em>columns</em>, <em>positions={}</em>, <em>visible=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.create_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.create_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new column in the table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>columns</strong> – A list of DerivaColumn.</li>
+<li><strong>positions</strong> – Where the column should be added into the visible columns spec.</li>
+<li><strong>visible</strong> – Include this column in the visible columns spec.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.create_foreign_key">
+<code class="descname">create_foreign_key</code><span class="sig-paren">(</span><em>columns</em>, <em>referenced_table</em>, <em>referenced_columns</em>, <em>name=None</em>, <em>comment=None</em>, <em>on_update='NO ACTION'</em>, <em>on_delete='NO ACTION'</em>, <em>acls=None</em>, <em>acl_bindings=None</em>, <em>annotations=None</em>, <em>position=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.create_foreign_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.create_foreign_key" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>columns</strong> – Column names in current table that are used for the foreign key</li>
+<li><strong>referenced_table</strong> – Dervia table that is being referenced by this foreign key</li>
+<li><strong>referenced_columns</strong> – </li>
+<li><strong>name</strong> – </li>
+<li><strong>comment</strong> – </li>
+<li><strong>on_update</strong> – </li>
+<li><strong>on_delete</strong> – </li>
+<li><strong>acls</strong> – ACLs, defaults to {}</li>
+<li><strong>acl_bindings</strong> – defaults to {}</li>
+<li><strong>annotations</strong> – defaults to {}</li>
+<li><strong>position</strong> – defaults to {}</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.create_key">
+<code class="descname">create_key</code><span class="sig-paren">(</span><em>columns</em>, <em>name=None</em>, <em>comment=None</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.create_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.create_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.datapath">
+<code class="descname">datapath</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.datapath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.delete_columns">
+<code class="descname">delete_columns</code><span class="sig-paren">(</span><em>columns</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.delete_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.delete_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop a set of columns from a table, cleaning up visible columns and keys.  You cannot delete columns if they
+are being used by a foreign key in another table, or if they are part of a composite key and you are only
+deleting a subset of the columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>columns</strong> – A list of column names or DerivaColumn instances for the current table</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.describe">
+<code class="descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.describe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.disassociate_tables">
+<code class="descname">disassociate_tables</code><span class="sig-paren">(</span><em>target_table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.disassociate_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.disassociate_tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a table
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.entities">
+<code class="descname">entities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.entities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.entities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.foreign_key">
+<code class="descname">foreign_key</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.foreign_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.foreign_keys">
+<code class="descname">foreign_keys</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.foreign_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.is_pure_binary">
+<code class="descname">is_pure_binary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.is_pure_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.is_pure_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if the table has the propoerties of a pure binary association.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>It only has two foreign keys,</li>
+<li>There is a uniqueness constraint on the two keys.</li>
+<li>NULL values are not allowed in the foreign keys.</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.is_vocabulary_table">
+<code class="descname">is_vocabulary_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.is_vocabulary_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.is_vocabulary_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if a table is a deriva vocabulary table.
+:return: True or False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.key">
+<code class="descname">key</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.key_referenced">
+<code class="descname">key_referenced</code><span class="sig-paren">(</span><em>columns</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.key_referenced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.key_referenced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a set of columns that are a key, return the list of foreign keys that reference those columns.
+:param columns:
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.keys">
+<code class="descname">keys</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.link_tables">
+<code class="descname">link_tables</code><span class="sig-paren">(</span><em>target_table</em>, <em>column_name=None</em>, <em>target_column='RID'</em>, <em>create_column=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.link_tables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.link_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a foreign key link from the specified column to the target table and column.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>column_name</strong> – Column or list of columns in current table which will hold the FK</li>
+<li><strong>target_table</strong> – Target table to link to.</li>
+<li><strong>target_column</strong> – Column to link the table on.  Defaults to <em>RID</em></li>
+<li><strong>create_column</strong> – Create a new column for the foreign key.  Name defaults to the target table name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.link_vocabulary">
+<code class="descname">link_vocabulary</code><span class="sig-paren">(</span><em>column_name</em>, <em>term_table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.link_vocabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.link_vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set an existing column in the table to refer to an existing vocabulary table.
+:param column_name: Name of the column whose value is to be from the vocabular
+:param term_table: The term table.
+:return: None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.move_table">
+<code class="descname">move_table</code><span class="sig-paren">(</span><em>schema_name</em>, <em>table_name</em>, <em>delete=True</em>, <em>column_map={}</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.move_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.move_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a table, renaming and inserting new columns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>schema_name</strong> – Schema for new table</li>
+<li><strong>table_name</strong> – Name of new table</li>
+<li><strong>delete</strong> – Delete the origional table.  Defaults to True</li>
+<li><strong>column_map</strong> – A DerivaColumnMap that defines and column renaming or insertions.</li>
+<li><strong>key_defs</strong> – New keys that should be defined in the target table</li>
+<li><strong>fkey_defs</strong> – </li>
+<li><strong>comment</strong> – </li>
+<li><strong>acls</strong> – </li>
+<li><strong>acl_bindings</strong> – </li>
+<li><strong>annotations</strong> – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">New DerivaTable object</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.path">
+<code class="descname">path</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.referenced_by">
+<code class="descname">referenced_by</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.referenced_by" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.rename_column">
+<code class="descname">rename_column</code><span class="sig-paren">(</span><em>from_column</em>, <em>to_column</em>, <em>default=None</em>, <em>nullok=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.rename_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.rename_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename a column by copying it and then deleting the origional column. THe type of the new column is the same
+as the old column. It is possible to alter the settings of nullok and default.
+:param from_column: Name of the column being copied.
+:param to_column: Name of the new column
+:param default: Set default value on new column, otherwise, copy existing
+:param nullok: Set NullOK to provided value on new column, otherwise copy existing
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.rename_columns">
+<code class="descname">rename_columns</code><span class="sig-paren">(</span><em>column_map</em>, <em>dest_table=None</em>, <em>delete=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.rename_columns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.rename_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename a column by copying it and then deleting the origional column.
+:param dest_table:
+:param column_map:
+:param delete:
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.schema">
+<code class="descname">schema</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.schema" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.sources">
+<code class="descname">sources</code><span class="sig-paren">(</span><em>merge_outbound=False</em>, <em>filter=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.sources"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.sources" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create source lists from table columns.</p>
+<p>Go through the columns and keys in the current table and create a list of DerivaSourceSpecs for each of them.
+If filter is provided, only the column or key names in the list are examined.
+If merge_outbound is true and a column is used in a simple foreign key, used return an outbound source rather
+then the column source.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>merge_outbound</strong> – If True and the column is in a simple foreign_key s</li>
+<li><strong>filter</strong> – List of column or key names to include in the returned source lists.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A triple of DerivaSourceSpec lists for columns, foreign_keys and incoming foreign_keys.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.table_display">
+<code class="descname">table_display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.table_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.validate_table_display">
+<code class="descname">validate_table_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaTable.validate_table_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.validate_table_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.visible_columns">
+<code class="descname">visible_columns</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.visible_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaTable.visible_foreign_keys">
+<code class="descname">visible_foreign_keys</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaTable.visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaColumn</code><span class="sig-paren">(</span><em>catalog</em>, <em>column</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<p>Class that represents columns in Deriva catalog.</p>
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.column_display">
+<code class="descname">column_display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.column_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.default">
+<code class="descname">default</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.define">
+<em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>name</em>, <em>type</em>, <em>nullok=True</em>, <em>default=None</em>, <em>fill=None</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.define" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a single column.
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.fill">
+<code class="descname">fill</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.fill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.get_acl_bindings">
+<code class="descname">get_acl_bindings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.get_acl_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.get_acl_bindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary from of acl_bindings
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.get_acls">
+<code class="descname">get_acls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.get_acls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.get_acls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary form of ACL
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.nullok">
+<code class="descname">nullok</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.nullok" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.type">
+<code class="descname">type</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.update_table">
+<code class="descname">update_table</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.update_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.update_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaColumn.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaColumn.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaColumn.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaKey</code><span class="sig-paren">(</span><em>catalog</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.define">
+<em class="property">static </em><code class="descname">define</code><span class="sig-paren">(</span><em>columns</em>, <em>name=[]</em>, <em>comment=None</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.define" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.display">
+<code class="descname">display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.drop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.full_name">
+<code class="descname">full_name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.full_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.get_acls">
+<code class="descname">get_acls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.get_acls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.get_acls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary form of ACL
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.key_display">
+<code class="descname">key_display</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.key_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.table">
+<code class="descname">table</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.update_table">
+<code class="descname">update_table</code><span class="sig-paren">(</span><em>table</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.update_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.update_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaKey.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaKey.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaKey.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey">
+<em class="property">class </em><code class="descclassname">deriva.utils.catalog.components.deriva_model.</code><code class="descname">DerivaForeignKey</code><span class="sig-paren">(</span><em>catalog</em>, <em>fkey</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">deriva.utils.catalog.components.deriva_model.DerivaCore</span></code></p>
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.column_map">
+<code class="descname">column_map</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.column_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.columns">
+<code class="descname">columns</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.comment">
+<code class="descname">comment</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.define">
+<em class="property">static </em><code class="descname">define</code><span class="sig-paren">(</span><em>columns</em>, <em>dest_schema</em>, <em>dest_table</em>, <em>dest_columns</em>, <em>name=None</em>, <em>comment=None</em>, <em>on_update='NO ACTION'</em>, <em>on_delete='NO ACTION'</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.define" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.definition">
+<code class="descname">definition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.definition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.definition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.drop">
+<code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.drop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.full_name">
+<code class="descname">full_name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.full_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.get_acl_bindings">
+<code class="descname">get_acl_bindings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.get_acl_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.get_acl_bindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary from of acl_bindings
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.get_acls">
+<code class="descname">get_acls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.get_acls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.get_acls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary form of ACL
+:return:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.name">
+<code class="descname">name</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.on_delete">
+<code class="descname">on_delete</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.on_delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.on_update">
+<code class="descname">on_update</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.on_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.referenced_columns">
+<code class="descname">referenced_columns</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.referenced_columns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.referenced_table">
+<code class="descname">referenced_table</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.referenced_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.standardize_name">
+<code class="descname">standardize_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.standardize_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.standardize_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.table">
+<code class="descname">table</code><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="deriva.utils.catalog.components.deriva_model.DerivaForeignKey.validate_display">
+<code class="descname">validate_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/utils/catalog/components/deriva_model.html#DerivaForeignKey.validate_display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.utils.catalog.components.deriva_model.DerivaForeignKey.validate_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 

@@ -1350,7 +1350,7 @@
 <p><a class="reference external" href="http://handlebarsjs.com/">Handlebars</a> is almost similar to Mustache with some additional benefits. There are some things that you can’t do in Mustache (e.g if-else statement) that Handlebars allows us to do easily using <code class="docutils literal notranslate"><span class="pre">helpers</span></code>.</p>
 <p>Handlebars supports most of the Mustache syntax. However, there are a few features that are not supported by Handlebars. For example:</p>
 <ul class="simple">
-<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annoations to perform boolean (or null) check. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
+<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annotations to perform boolean (or null) check. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
 </ul>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span>// Mustache
 
@@ -1365,7 +1365,7 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li>encode/decode <code class="docutils literal notranslate"><span class="pre">{{#encode}}...{{/encode}}</span></code>/<code class="docutils literal notranslate"><span class="pre">{{#decode}}...{{/decode}}</span></code>: With handlebards the value to be encoded is passed to the <code class="docutils literal notranslate"><span class="pre">encode</span></code>/<code class="docutils literal notranslate"><span class="pre">decode</span></code> helper e.g. <code class="docutils literal notranslate"><span class="pre">{{#encode</span> <span class="pre">...}}{{/encode}}</span></code> or <code class="docutils literal notranslate"><span class="pre">{{#decode</span> <span class="pre">...}}{{/decode}}</span></code>.</li>
+<li>encode/decode <code class="docutils literal notranslate"><span class="pre">{{#encode}}...{{/encode}}</span></code>/<code class="docutils literal notranslate"><span class="pre">{{#decode}}...{{/decode}}</span></code>: With handlebars the value to be encoded is passed to the <code class="docutils literal notranslate"><span class="pre">encode</span></code>/<code class="docutils literal notranslate"><span class="pre">decode</span></code> helper e.g. <code class="docutils literal notranslate"><span class="pre">{{#encode</span> <span class="pre">...}}{{/encode}}</span></code> or <code class="docutils literal notranslate"><span class="pre">{{#decode</span> <span class="pre">...}}{{/decode}}</span></code>.</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Mustache</span>
 <span class="p">{{</span><span class="c1">#encode}}My URL{{/encode}}</span>
@@ -1374,7 +1374,7 @@
 <span class="p">{{</span><span class="c1">#encode &#39;My URL&#39;}}{{/encode}}</span>
 </pre></div>
 </div>
-<p>Handlebars supports more complicated expression syntax and allow the comparison to be done at the finer level e.g. null v.s. false comparsion. This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
+<p>Handlebars supports more complicated expression syntax and allow the comparison to be done at the finer level e.g. null v.s. false comparison. This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
 <ul class="simple">
 <li><a class="reference external" href="#handlebars-paths">Handlebar Paths</a></li>
 <li><a class="reference external" href="#helpers">Helpers</a><ul>
@@ -1390,6 +1390,8 @@
 <li><a class="reference external" href="#encode-helper">Encode</a></li>
 <li><a class="reference external" href="#escape-helper">Escape</a></li>
 <li><a class="reference external" href="#encodefacet-helper">EncodeFacet</a></li>
+<li><a class="reference external" href="#findfirst-helper">FindFirst</a></li>
+<li><a class="reference external" href="#findall-helper">FindAll</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#using-arrays">Using Arrays</a></li>
@@ -1560,7 +1562,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>The first and last steps of iteration are noted via the <code class="docutils literal notranslate"><span class="pre">&#64;first</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;last</span></code> variables when iterating over an array. When iterating over an object only the <code class="docutils literal notranslate"><span class="pre">&#64;first</span></code> is available.</p>
-<p>When looping throw items in <code class="docutils literal notranslate"><span class="pre">each</span></code>, you can reference the iterable object usin <code class="docutils literal notranslate"><span class="pre">../</span></code> syntax. The following will allow you to access the array and calculate it’s length:</p>
+<p>When looping throw items in <code class="docutils literal notranslate"><span class="pre">each</span></code>, you can reference the iterable object using <code class="docutils literal notranslate"><span class="pre">../</span></code> syntax. The following will allow you to access the array and calculate it’s length:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each array}}</span>
   <span class="p">{{</span><span class="o">../</span><span class="n">array</span><span class="o">.</span><span class="n">length</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
@@ -1673,6 +1675,22 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>As you can see in this example I am escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
+</div>
+<div class="section" id="findfirst-helper">
+<span id="findfirst-helper"></span><h3>Findfirst helper<a class="headerlink" href="#findfirst-helper" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">regexFindFirst</span></code> helper will take the input regular expression and return the first matching substring from the supplied string. Will return <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> otherwise.</p>
+<p>An example template to extract the filename from a given path with testString = “/var/www/html/index.html”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;[^\/]+$&quot;}}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;index.html&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="findall-helper">
+<span id="findall-helper"></span><h3>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array . Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
 </div>
 </div>
 <div class="section" id="using-arrays">

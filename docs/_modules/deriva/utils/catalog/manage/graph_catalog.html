@@ -1342,8 +1342,8 @@
 <div class="viewcode-block" id="DerivaCatalogToGraph.clear"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">view</span><span class="p">()</span>
+<div class="viewcode-block" id="DerivaCatalogToGraph.view"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph.view">[docs]</a>    <span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">view</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DerivaCatalogToGraph.catalog_to_graph"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph.catalog_to_graph">[docs]</a>    <span class="k">def</span> <span class="nf">catalog_to_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">schemas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">skip_terms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">skip_association_tables</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1354,7 +1354,7 @@
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">schemas</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_acl_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;WWW&#39;</span><span class="p">]]</span> \
+        <span class="n">schemas</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;_acl_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;WWW&#39;</span><span class="p">]]</span> \
             <span class="k">if</span> <span class="n">schemas</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">schemas</span>
 
         <span class="k">for</span> <span class="n">schema</span> <span class="ow">in</span> <span class="n">schemas</span><span class="p">:</span>
@@ -1444,9 +1444,6 @@
 
     <span class="k">def</span> <span class="nf">_repr_svg_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">_repr_svg_</span><span class="p">()</span>
-
-<div class="viewcode-block" id="DerivaCatalogToGraph.view"><a class="viewcode-back" href="../../../../../deriva-catalog-manage/api/deriva.utils.catalog.manage.html#deriva.utils.catalog.manage.graph_catalog.DerivaCatalogToGraph.view">[docs]</a>    <span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">view</span><span class="p">()</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_is_vocabulary_table</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>

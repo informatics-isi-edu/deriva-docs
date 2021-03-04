@@ -1363,7 +1363,8 @@
     <span class="s2">&quot;retry_connect&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
     <span class="s2">&quot;retry_read&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
     <span class="s2">&quot;retry_backoff_factor&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
-    <span class="s2">&quot;retry_status_forcelist&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">],</span>
+    <span class="s2">&quot;retry_status_forcelist&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">],</span>
+    <span class="s2">&quot;allow_retry_on_all_methods&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="s2">&quot;cookie_jar&quot;</span><span class="p">:</span> <span class="n">DEFAULT_COOKIE_JAR_FILE</span>
 <span class="p">}</span>
 <span class="n">OAUTH2_SCOPES_KEY</span> <span class="o">=</span> <span class="s2">&quot;oauth2_scopes&quot;</span>
@@ -1491,6 +1492,9 @@
                     <span class="n">read</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_read&#39;</span><span class="p">],</span>
                     <span class="n">backoff_factor</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_backoff_factor&#39;</span><span class="p">],</span>
                     <span class="n">status_forcelist</span><span class="o">=</span><span class="n">session_config</span><span class="p">[</span><span class="s1">&#39;retry_status_forcelist&#39;</span><span class="p">],</span>
+                    <span class="n">method_whitelist</span><span class="o">=</span><span class="n">Retry</span><span class="o">.</span><span class="n">DEFAULT_METHOD_WHITELIST</span> <span class="k">if</span>
+                    <span class="c1"># Passing False to method_whitelist means allow all methods</span>
+                    <span class="ow">not</span> <span class="n">session_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_retry_on_all_methods&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
                     <span class="n">raise_on_status</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">adapter</span> <span class="o">=</span> <span class="n">TimeoutHTTPAdapter</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">session_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="n">DEFAULT_REQUESTS_TIMEOUT</span><span class="p">),</span> <span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">url</span><span class="p">:</span>

@@ -1679,6 +1679,14 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="findfirst-helper">
 <span id="findfirst-helper"></span><h3>Findfirst helper<a class="headerlink" href="#findfirst-helper" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">regexFindFirst</span></code> helper will take the input regular expression and return the first matching substring from the supplied string. Will return <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> otherwise.</p>
+<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;jpg|png&quot;}}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png&quot;</span>
+</pre></div>
+</div>
 <p>An example template to extract the filename from a given path with testString = “/var/www/html/index.html”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;[^\/]+$&quot;}}{{this}}{{/regexFindFirst}}</span>
 </pre></div>
@@ -1691,6 +1699,14 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="findall-helper">
 <span id="findall-helper"></span><h3>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array . Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
+<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (regexFindAll testString &quot;jpg|png&quot;)}}{{this}}\n{{/each}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png</span><span class="se">\n</span><span class="s2">jpg</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="using-arrays">

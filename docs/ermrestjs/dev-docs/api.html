@@ -1918,6 +1918,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+aggregate">.aggregate</a> : <a class="reference external" href="#ERMrest.ColumnAggregateFn"><code>ColumnAggregateFn</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+groupAggregate">.groupAggregate</a> : <a class="reference external" href="#ERMrest.ColumnGroupAggregateFn"><code>ColumnGroupAggregateFn</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+comment">.comment</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+hideColumnHeader">.hideColumnHeader</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+inputDisabled">.inputDisabled</a> : <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sortable">.sortable</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+hasWaitFor">.hasWaitFor</a> ⇒ <code>Boolean</code></li>
@@ -1928,7 +1929,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatvalue">.formatvalue(data, [context], [options])</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+getInputDisabled">.getInputDisabled()</a> : <code>boolean</code> | <code>object</code></li>
-<li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLinks">._getShowForeignKeyLinks(context)</a> ⇒ <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
@@ -6958,6 +6959,7 @@ access this constructor for purposes of fetching aggregate data about the table.
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+aggregate">.aggregate</a> : <a class="reference external" href="#ERMrest.ColumnAggregateFn"><code>ColumnAggregateFn</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+groupAggregate">.groupAggregate</a> : <a class="reference external" href="#ERMrest.ColumnGroupAggregateFn"><code>ColumnGroupAggregateFn</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+comment">.comment</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+hideColumnHeader">.hideColumnHeader</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+inputDisabled">.inputDisabled</a> : <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sortable">.sortable</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+hasWaitFor">.hasWaitFor</a> ⇒ <code>Boolean</code></li>
@@ -6968,7 +6970,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatvalue">.formatvalue(data, [context], [options])</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+getInputDisabled">.getInputDisabled()</a> : <code>boolean</code> | <code>object</code></li>
-<li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLinks">._getShowForeignKeyLinks(context)</a> ⇒ <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
 </ul>
 </li>
@@ -7064,6 +7066,11 @@ ReferenceColumn<p>&amp;gt;</p>
 <div class="section" id="referencecolumn-comment-code-string-code">
 <span id="referencecolumn-comment-code-string-code"></span><h3>referenceColumn.comment : <code>string</code><a class="headerlink" href="#referencecolumn-comment-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>Documentation for this reference-column</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+hideColumnHeader"></a></p>
+</div>
+<div class="section" id="referencecolumn-hidecolumnheader-code-boolean-code">
+<span id="referencecolumn-hidecolumnheader-code-boolean-code"></span><h3>referenceColumn.hideColumnHeader : <code>boolean</code><a class="headerlink" href="#referencecolumn-hidecolumnheader-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether the UI should hide the column header or not.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+inputDisabled"></a></p>
 </div>
 <div class="section" id="referencecolumn-inputdisabled-code-boolean-code-code-object-code">
@@ -7186,10 +7193,10 @@ true: input must be disabled
 false:  input can be enabled
 object: input msut be disabled (show .message to user)
 TODO should be removed in favor of inputDisabled</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+_getShowForeignKeyLinks"></a></p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+_getShowForeignKeyLink"></a></p>
 </div>
-<div class="section" id="referencecolumn-getshowforeignkeylinks-context-code-boolean-code">
-<span id="referencecolumn-getshowforeignkeylinks-context-code-boolean-code"></span><h3>referenceColumn._getShowForeignKeyLinks(context) ⇒ <code>boolean</code><a class="headerlink" href="#referencecolumn-getshowforeignkeylinks-context-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="referencecolumn-getshowforeignkeylink-context-code-boolean-code">
+<span id="referencecolumn-getshowforeignkeylink-context-code-boolean-code"></span><h3>referenceColumn._getShowForeignKeyLink(context) ⇒ <code>boolean</code><a class="headerlink" href="#referencecolumn-getshowforeignkeylink-context-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Whether we should show the link for the foreignkey value.
 this can be based on:</p>
 <ul class="simple">

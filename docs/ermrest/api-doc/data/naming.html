@@ -763,6 +763,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#supported-column-types-for-binning">Supported Column Types for Binning</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#rights-summary">Rights Summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-paths">Data Paths</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#path-root">Path Root</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#path-filters">Path Filters</a></li>
@@ -1496,6 +1497,18 @@
 <li><code class="docutils literal notranslate"><span class="pre">timestamptz</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code></li>
 </ul>
 </div>
+</div>
+<div class="section" id="rights-summary">
+<span id="rights-summary"></span><h2>Rights Summary<a class="headerlink" href="#rights-summary" title="Permalink to this headline">¶</a></h2>
+<p>In order to discover dynamic, data-dependent access rights for specific records, special <em>rights summary</em> operators are allowed in an attribute projection in place of a bare column reference:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">trs(RID)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">trs(</span></code> <em>in alias</em> <code class="docutils literal notranslate"><span class="pre">:RID)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">tcrs(RID)</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">tcrs(</span></code> <em>in alias</em> <code class="docutils literal notranslate"><span class="pre">:RID)</span></code></li>
+</ul>
+<p>These operators summarize the rights for the table instance containing the referenced RID column. The <code class="docutils literal notranslate"><span class="pre">trs</span></code> or <em>table rights summary</em> operator yields a JSON formatted object with keys <code class="docutils literal notranslate"><span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">delete</span></code> mapped to boolean values indicating whether that access is allowed on the record. The <code class="docutils literal notranslate"><span class="pre">tcrs</span></code> or <em>table and column rights summary</em> operator includes the same content and extends it with a third <code class="docutils literal notranslate"><span class="pre">column_update</span></code> key mapped to a sub-object that is keyed by column names, each mapped to a boolean for whether update of that given column is allowed on the record.</p>
+<p>These features are advertised as <code class="docutils literal notranslate"><span class="pre">&quot;trs&quot;:</span> <span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;tcrs&quot;:</span> <span class="pre">true</span></code> in the service features advertisement.</p>
 </div>
 <div class="section" id="data-paths">
 <span id="data-paths"></span><h2>Data Paths<a class="headerlink" href="#data-paths" title="Permalink to this headline">¶</a></h2>

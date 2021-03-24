@@ -763,6 +763,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#supported-column-types-for-binning">Supported Column Types for Binning</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#rights-summary">Rights Summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paths">Data Paths</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#path-root">Path Root</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#path-filters">Path Filters</a></li>
@@ -1397,7 +1398,7 @@
 <span id="deriva-core-base-cli-module"></span><h2>deriva.core.base_cli module<a class="headerlink" href="#module-deriva.core.base_cli" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="deriva.core.base_cli.BaseCLI">
-<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.4.5'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">deriva.core.base_cli.</code><code class="descname">BaseCLI</code><span class="sig-paren">(</span><em>description</em>, <em>epilog</em>, <em>version='1.5.0'</em>, <em>hostname_required=False</em>, <em>config_file_required=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/base_cli.html#BaseCLI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.base_cli.BaseCLI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="method">
 <dt id="deriva.core.base_cli.BaseCLI.parse_cli">
@@ -3110,7 +3111,7 @@ object.</p>
 
 <dl class="method">
 <dt id="deriva.core.hatrac_store.HatracStore.put_loc">
-<code class="descname">put_loc</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>content_type=None</em>, <em>content_disposition=None</em>, <em>chunked=False</em>, <em>chunk_size=10485760</em>, <em>create_parents=True</em>, <em>allow_versioning=True</em>, <em>callback=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_loc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_loc" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_loc</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>content_type=None</em>, <em>content_disposition=None</em>, <em>chunked=False</em>, <em>chunk_size=10485760</em>, <em>create_parents=True</em>, <em>allow_versioning=True</em>, <em>callback=None</em>, <em>cancel_job_on_error=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_loc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_loc" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3128,6 +3129,7 @@ object.</p>
 <li><strong>create_parents</strong> – </li>
 <li><strong>allow_versioning</strong> – </li>
 <li><strong>callback</strong> – </li>
+<li><strong>cancel_job_on_error</strong> – </li>
 </ul>
 </td>
 </tr>
@@ -3161,7 +3163,7 @@ instead of creating a new one.</p>
 
 <dl class="method">
 <dt id="deriva.core.hatrac_store.HatracStore.put_obj_chunked">
-<code class="descname">put_obj_chunked</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>job_id</em>, <em>chunk_size=10485760</em>, <em>callback=None</em>, <em>start_chunk=0</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj_chunked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj_chunked" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_obj_chunked</code><span class="sig-paren">(</span><em>path</em>, <em>file_path</em>, <em>job_id</em>, <em>chunk_size=10485760</em>, <em>callback=None</em>, <em>start_chunk=0</em>, <em>cancel_job_on_error=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj_chunked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj_chunked" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

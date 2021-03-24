@@ -761,6 +761,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrest/api-doc/data/naming.html#supported-column-types-for-binning">Supported Column Types for Binning</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../ermrest/api-doc/data/naming.html#rights-summary">Rights Summary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../ermrest/api-doc/data/naming.html#data-paths">Data Paths</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrest/api-doc/data/naming.html#path-root">Path Root</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../ermrest/api-doc/data/naming.html#path-filters">Path Filters</a></li>
@@ -1329,8 +1330,7 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">portalocker</span>
 <span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="k">import</span> <span class="n">HTTPAdapter</span>
-<span class="kn">from</span> <span class="nn">requests.packages.urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
-<span class="kn">from</span> <span class="nn">requests.packages.urllib3.exceptions</span> <span class="k">import</span> <span class="n">MaxRetryError</span>
+<span class="kn">from</span> <span class="nn">urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">distutils</span> <span class="k">import</span> <span class="n">util</span> <span class="k">as</span> <span class="n">du_util</span>
 
@@ -1475,7 +1475,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">DEFAULT_REQUESTS_TIMEOUT</span>
         <span class="k">if</span> <span class="s2">&quot;timeout&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">timeout</span>
             <span class="k">del</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;timeout&quot;</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 

@@ -30,7 +30,7 @@ git clone -b ${DERIVA_CATALOG_MANAGE_TAG} --depth 1 https://${GITHUB_AUTH}github
 
 echo -e "\nInstall code dependencies:\n"
 # temp hack for setuptools_scm
-pip install --no-warn-script-location --user setuptools_scm<6.0
+pip install --no-warn-script-location --user "setuptools_scm<6.0"
 pip install --no-warn-script-location --user ../repo-src/deriva-py
 pip install --no-warn-script-location --user ../repo-src/deriva-catalog-manage
 

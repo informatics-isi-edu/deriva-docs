@@ -1148,6 +1148,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#sample-html-page">Sample HTML page</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-navbar">4. Configuring Navbar</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
 </ul>
 </li>
@@ -1358,6 +1359,7 @@
 </ul>
 </li>
 <li><a class="reference external" href="#3-use-navbar">3. Use navbar</a></li>
+<li><a class="reference external" href="#4-configuring-navbar">4. Configuring navbar</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#sample-html-page">Sample HTML page</a></li>
@@ -1445,6 +1447,30 @@
 <div class="section" id="sample-html-page">
 <span id="sample-html-page"></span><h2>Sample HTML page<a class="headerlink" href="#sample-html-page" title="Permalink to this headline">¶</a></h2>
 <p>If you want to look at a sample HTML page, you can take a look at <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/lib/navbar/sample-navbar.html">sample-navbar.html file in Chaise</a>.</p>
+</div>
+<div class="section" id="configuring-navbar">
+<span id="configuring-navbar"></span><h2>4. Configuring Navbar<a class="headerlink" href="#configuring-navbar" title="Permalink to this headline">¶</a></h2>
+<p>The navbar app can be customized by defining different properties in the <code class="docutils literal notranslate"><span class="pre">chaise-config</span></code>. The following list of properties is further described in <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/chaise-config.md">chaise-config.md</a>:</p>
+<ul class="simple">
+<li>navbarBrand</li>
+<li>navbarBrandText</li>
+<li>navbarBrandImage</li>
+<li>navbarMenu</li>
+<li>hideGoToRID</li>
+<li>defaultCatalog</li>
+<li>signUpURL</li>
+<li>profileURL</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">navbarMenu</span></code> property is the most complex of the above properties. This parameter is used to customize the menu items displayed in the navbar at the top of all Chaise apps by supplying an object with links and/or dropdown menus. Consult the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/chaise-config-sample.js">chaise-config-sample.js</a> file for more details about format.</p>
+<ul class="simple">
+<li>Each option has an optional newTab property that can be defined at any level. If undefined at root, newTab is treated as true. Each child menu item checks for a newTab property on itself, if nothing is set, the child inherits from it’s parent.</li>
+<li>Each option accepts an ‘acls’ object that has two attribute arrays (‘show’ and ‘enable’) used to define lists of globus groups or users that can see and click that link.</li>
+<li>The url property of each menu object allows for templating of the catalog id parameter.<ul>
+<li>More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/mustache-templating.md">templating document</a></li>
+</ul>
+</li>
+<li>The header property of each menu object will create an unclickable bold header with class chaise-dropdown-header when set to <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
+</ul>
 </div>
 <div class="section" id="notes">
 <span id="notes"></span><h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>

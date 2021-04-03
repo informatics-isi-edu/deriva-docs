@@ -1184,6 +1184,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/logging.html#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">04/02/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">08/26/20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/logging.html#">02/12/20</a></li>
 </ul>
@@ -3143,7 +3144,7 @@ object.</p>
 
 <dl class="method">
 <dt id="deriva.core.hatrac_store.HatracStore.put_obj">
-<code class="descname">put_obj</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>parents=True</em>, <em>content_type=None</em>, <em>content_disposition=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_obj</code><span class="sig-paren">(</span><em>path</em>, <em>data</em>, <em>headers={}</em>, <em>md5=None</em>, <em>sha256=None</em>, <em>parents=True</em>, <em>content_type=None</em>, <em>content_disposition=None</em>, <em>allow_versioning=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Idempotent upload of object, returning object location URI.</p>
 <dl class="docutils">
 <dt>Arguments:</dt>
@@ -3154,7 +3155,8 @@ md5: a base64 encoded md5 digest may be provided in order to skip the automatic 
 sha256: a base64 encoded sha256 digest may be provided in order to skip the automatic hash computation
 parents: automatically create parent namespace(s) if missing
 content_type: the content-type of the object (optional)
-content_disposition: the preferred content-disposition of the object (optional)</dd>
+content_disposition: the preferred content-disposition of the object (optional)
+allow_versioning: reject with NotModified if content already exists (optional)</dd>
 </dl>
 <p>Automatically computes and sends Content-MD5 if no digests provided.</p>
 <p>If an object-version already exists under the same name

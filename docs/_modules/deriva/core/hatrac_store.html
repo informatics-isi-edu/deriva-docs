@@ -1182,6 +1182,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/logging.html#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/logging.html#">04/02/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/logging.html#">08/26/20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/logging.html#">02/12/20</a></li>
 </ul>
@@ -1474,7 +1475,8 @@
                 <span class="n">sha256</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">content_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">content_disposition</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="n">content_disposition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Idempotent upload of object, returning object location URI.</span>
 
 <span class="sd">           Arguments:</span>
@@ -1486,6 +1488,7 @@
 <span class="sd">              parents: automatically create parent namespace(s) if missing</span>
 <span class="sd">              content_type: the content-type of the object (optional)</span>
 <span class="sd">              content_disposition: the preferred content-disposition of the object (optional)</span>
+<span class="sd">              allow_versioning: reject with NotModified if content already exists (optional)</span>
 <span class="sd">           Automatically computes and sends Content-MD5 if no digests provided.</span>
 
 <span class="sd">           If an object-version already exists under the same name</span>
@@ -1509,13 +1512,18 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> \
-                    <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
-                     <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
-                <span class="c1"># object already has same content so skip upload</span>
-                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
+                        <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
+                    <span class="c1"># object already has same content so skip upload</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The data cannot be uploaded because content already exists for this object &quot;</span>
+                                      <span class="s2">&quot;and multiple versions are not allowed.&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
             <span class="k">pass</span>
 
         <span class="c1"># TODO: verify incoming hashes if supplied?</span>
@@ -1586,21 +1594,22 @@
                                 <span class="n">sha256</span><span class="p">,</span>
                                 <span class="n">content_type</span><span class="o">=</span><span class="n">content_type</span><span class="p">,</span>
                                 <span class="n">content_disposition</span><span class="o">=</span><span class="n">content_disposition</span><span class="p">,</span>
-                                <span class="n">parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">)</span>
+                                <span class="n">parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">,</span>
+                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">allow_versioning</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">or</span> <span class="n">sha256</span><span class="p">):</span>
             <span class="n">md5</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">compute_file_hashes</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">hashes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;md5&#39;</span><span class="p">])[</span><span class="s1">&#39;md5&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span> <span class="ow">and</span> \
-                    <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
-                     <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
-                <span class="c1"># object already has same content so skip upload</span>
-                <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The file [</span><span class="si">%s</span><span class="s2">] cannot be uploaded because content already exists for this object &quot;</span>
-                                  <span class="s2">&quot;and multiple versions are not allowed.&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
+                        <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
+                    <span class="c1"># object already has same content so skip upload</span>
+                    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The file [</span><span class="si">%s</span><span class="s2">] cannot be uploaded because content already exists for this object &quot;</span>
+                                      <span class="s2">&quot;and multiple versions are not allowed.&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -1614,7 +1623,12 @@
                                         <span class="n">content_disposition</span><span class="o">=</span><span class="n">content_disposition</span><span class="p">,</span>
                                         <span class="n">create_parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">put_obj_chunked</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="n">chunk_size</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">cancel_job_on_error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">put_obj_chunked</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
+                                 <span class="n">file_path</span><span class="p">,</span>
+                                 <span class="n">job_id</span><span class="p">,</span>
+                                 <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
+                                 <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+                                 <span class="n">cancel_job_on_error</span><span class="o">=</span><span class="n">cancel_job_on_error</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">finalize_upload_job</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">Timeout</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RetryError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">HatracJobTimeout</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
@@ -1627,7 +1641,7 @@
         <span class="n">job_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_upload_job</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-            <span class="n">chunks</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">/</span> <span class="n">chunk_size</span>
+            <span class="n">chunks</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">//</span> <span class="n">chunk_size</span>
             <span class="k">if</span> <span class="n">file_size</span> <span class="o">%</span> <span class="n">chunk_size</span><span class="p">:</span>
                 <span class="n">chunks</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>

@@ -1435,6 +1435,7 @@ to use for ERMrest JavaScript agents.</p>
 <li><a class="reference external" href="#new_ERMrest.Catalog_new">new Catalog(server, id)</a></li>
 <li><a class="reference external" href="#ERMrest.Catalog+id">.id</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+schemas">.schemas</a> : <a class="reference external" href="#ERMrest.Schemas"><code>Schemas</code></a></li>
+<li><a class="reference external" href="#ERMrest.Catalog+features">.features</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+chaiseConfig">.chaiseConfig</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+constraintByNamePair">.constraintByNamePair(pair, subject)</a> ⇒ <code>Object</code> | <code>null</code></li>
@@ -1817,12 +1818,12 @@ ERMRest.ReferenceColumn<p>&amp;gt;</p>
 </code> | <code>false</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+location">.location</a> ⇒ <code>ERMrest.Location</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+display">.display</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related</a> : <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
@@ -1837,7 +1838,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -1884,14 +1885,16 @@ Tuple<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Tuple+linkedData">.linkedData</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+data">.data</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+data">.data</a></li>
-<li><a class="reference external" href="#ERMrest.Tuple+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Tuple+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+values">.values</a> : <code>Array.<p>&amp;lt;</p>
 string<p>&amp;gt;</p>
 </code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+isHTML">.isHTML</a> : <code>Array.<p>&amp;lt;</p>
 boolean<p>&amp;gt;</p>
 </code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdateValues">.canUpdateValues</a></li>
 <li><a class="reference external" href="#ERMrest.Tuple+displayname">.displayname</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+rowName">.rowName</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+uniqueId">.uniqueId</a> : <code>string</code></li>
@@ -1931,7 +1934,6 @@ ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatvalue">.formatvalue(data, [context], [options])</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.ReferenceColumn+getInputDisabled">.getInputDisabled()</a> : <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
 </ul>
@@ -2259,12 +2261,12 @@ ERMRest.ReferenceColumn<p>&amp;gt;</p>
 </code> | <code>false</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+location">.location</a> ⇒ <code>ERMrest.Location</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+display">.display</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related</a> : <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
@@ -2279,7 +2281,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -2525,6 +2527,7 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#new_ERMrest.Catalog_new">new Catalog(server, id)</a></li>
 <li><a class="reference external" href="#ERMrest.Catalog+id">.id</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+schemas">.schemas</a> : <a class="reference external" href="#ERMrest.Schemas"><code>Schemas</code></a></li>
+<li><a class="reference external" href="#ERMrest.Catalog+features">.features</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+chaiseConfig">.chaiseConfig</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+currentSnaptime">.currentSnaptime(contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Catalog+constraintByNamePair">.constraintByNamePair(pair, subject)</a> ⇒ <code>Object</code> | <code>null</code></li>
@@ -2565,6 +2568,11 @@ boolean<p>&amp;gt;</p>
 </div>
 <div class="section" id="catalog-schemas-code-schemas-code">
 <span id="catalog-schemas-code-schemas-code"></span><h3>catalog.schemas : <a class="reference external" href="#ERMrest.Schemas"><code>Schemas</code></a><a class="headerlink" href="#catalog-schemas-code-schemas-code" title="Permalink to this headline">¶</a></h3>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Catalog"><code>Catalog</code></a><a name="ERMrest.Catalog+features"></a></p>
+</div>
+<div class="section" id="catalog-features-code-object-code">
+<span id="catalog-features-code-object-code"></span><h3>catalog.features : <code>Object</code><a class="headerlink" href="#catalog-features-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>The ERMrest features that the catalog supports</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Catalog"><code>Catalog</code></a><a name="ERMrest.Catalog+chaiseConfig"></a></p>
 </div>
 <div class="section" id="catalog-chaiseconfig-code-object-code">
@@ -5543,12 +5551,12 @@ ERMRest.ReferenceColumn<p>&amp;gt;</p>
 </code> | <code>false</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+location">.location</a> ⇒ <code>ERMrest.Location</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+display">.display</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related</a> : <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
@@ -5563,7 +5571,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -5758,46 +5766,48 @@ tuple.</p>
 </div>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canCreate"></a></p>
 </div>
-<div class="section" id="reference-cancreate-code-boolean-code-code-undefined-code">
-<span id="reference-cancreate-code-boolean-code-code-undefined-code"></span><h3>reference.canCreate : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-cancreate-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-cancreate-code-boolean-code">
+<span id="reference-cancreate-code-boolean-code"></span><h3>reference.canCreate : <code>boolean</code><a class="headerlink" href="#reference-cancreate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>create</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canCreateReason"></a></p>
 </div>
-<div class="section" id="reference-cancreatereason-code-string-code-code-undefined-code">
-<span id="reference-cancreatereason-code-string-code-code-undefined-code"></span><h3>reference.canCreateReason : <code>String</code> | <code>undefined</code><a class="headerlink" href="#reference-cancreatereason-code-string-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates the reason as to why a user cannot create for
-the referenced resource(s). In some cases, this won’t be set
-because the user can create, so the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="reference-cancreatereason-code-string-code">
+<span id="reference-cancreatereason-code-string-code"></span><h3>reference.canCreateReason : <code>String</code><a class="headerlink" href="#reference-cancreatereason-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates the reason as to why a user cannot create the
+referenced resource(s).</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canRead"></a></p>
 </div>
-<div class="section" id="reference-canread-code-boolean-code-code-undefined-code">
-<span id="reference-canread-code-boolean-code-code-undefined-code"></span><h3>reference.canRead : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-canread-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-canread-code-boolean-code">
+<span id="reference-canread-code-boolean-code"></span><h3>reference.canRead : <code>boolean</code><a class="headerlink" href="#reference-canread-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>read</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canUpdate"></a></p>
 </div>
-<div class="section" id="reference-canupdate-code-boolean-code-code-undefined-code">
-<span id="reference-canupdate-code-boolean-code-code-undefined-code"></span><h3>reference.canUpdate : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-canupdate-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-canupdate-code-boolean-code">
+<span id="reference-canupdate-code-boolean-code"></span><h3>reference.canUpdate : <code>boolean</code><a class="headerlink" href="#reference-canupdate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>update</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canUpdateReason"></a></p>
 </div>
-<div class="section" id="reference-canupdatereason-code-string-code-code-undefined-code">
-<span id="reference-canupdatereason-code-string-code-code-undefined-code"></span><h3>reference.canUpdateReason : <code>String</code> | <code>undefined</code><a class="headerlink" href="#reference-canupdatereason-code-string-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates the reason as to why a user cannot update for
-the referenced resource(s). In some cases, this won’t be set
-because the user can update, so the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="reference-canupdatereason-code-string-code">
+<span id="reference-canupdatereason-code-string-code"></span><h3>reference.canUpdateReason : <code>String</code><a class="headerlink" href="#reference-canupdatereason-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates the reason as to why a user cannot update the
+referenced resource(s).</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canDelete"></a></p>
 </div>
-<div class="section" id="reference-candelete-code-boolean-code-code-undefined-code">
-<span id="reference-candelete-code-boolean-code-code-undefined-code"></span><h3>reference.canDelete : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-candelete-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-candelete-code-boolean-code">
+<span id="reference-candelete-code-boolean-code"></span><h3>reference.canDelete : <code>boolean</code><a class="headerlink" href="#reference-candelete-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>delete</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+display"></a></p>
 </div>
 <div class="section" id="reference-display-code-object-code">
@@ -6008,8 +6018,8 @@ or rejected with any of the following errors:</p>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>
 </div>
-<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code">
-<span id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-getunlinktrs-code-promise-code">
+<span id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-getunlinktrs-code-promise-code"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-getunlinktrs-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Reads the referenced resources and returns a promise for a page of
 tuples. The <code class="docutils literal notranslate"><span class="pre">limit</span></code> parameter is required and must be a positive
 integer. The page of tuples returned will be described by the
@@ -6062,7 +6072,12 @@ or rejected with any of these errors:</p>
 <tr>
 <td>dontCorrectPage</td>
 <td><code>Boolean</code></td>
-<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check. NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check.</td>
+</tr>
+<tr>
+<td>getUnlinkTRS</td>
+<td><code>Boolean</code></td>
+<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>
@@ -6096,10 +6111,12 @@ but I’m not sure how much adding that validation will affect other apis and cl
 <div class="section" id="reference-update-tuples-contextheaderparams-code-promise-code">
 <span id="reference-update-tuples-contextheaderparams-code-promise-code"></span><h3>reference.update(tuples, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-update-tuples-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Updates a set of resources.</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with a object containing <code class="docutils literal notranslate"><span class="pre">successful</span></code> and <code class="docutils literal notranslate"><span class="pre">failure</span></code> attributes.
-Both are <a class="reference external" href="#ERMrest.Page">Page</a> of results.
-or rejected with any of these errors:</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with a object containing:</p>
 <ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">successful</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that were stored.</li>
+<li><code class="docutils literal notranslate"><span class="pre">failed</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that failed to be stored.</li>
+<li><code class="docutils literal notranslate"><span class="pre">disabled</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that were not sent to ermrest (because of acl)
+or rejected with any of these errors:</li>
 <li><a class="reference external" href="#ERMrest.InvalidInputError">InvalidInputError</a>: If <code class="docutils literal notranslate"><span class="pre">limit</span></code> is invalid or reference is not in <code class="docutils literal notranslate"><span class="pre">entry/edit</span></code> context.</li>
 <li>ERMrestjs corresponding http errors, if ERMrest returns http error.</li>
 </ul>
@@ -6565,7 +6582,7 @@ See <a class="reference external" href="#ERMrest.Reference+read">read</a>.</p>
 <tr>
 <td>extraData</td>
 <td><code>Object</code></td>
-<td>if</td>
+<td>based on pagination, the extra data after/before current page</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Page+reference"></a></p>
@@ -6669,14 +6686,16 @@ For more info you can refer {ERM.reference.display}</p>
 <li><a class="reference external" href="#ERMrest.Tuple+linkedData">.linkedData</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+data">.data</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+data">.data</a></li>
-<li><a class="reference external" href="#ERMrest.Tuple+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Tuple+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+values">.values</a> : <code>Array.<p>&amp;lt;</p>
 string<p>&amp;gt;</p>
 </code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+isHTML">.isHTML</a> : <code>Array.<p>&amp;lt;</p>
 boolean<p>&amp;gt;</p>
 </code></li>
+<li><a class="reference external" href="#ERMrest.Tuple+canUpdateValues">.canUpdateValues</a></li>
 <li><a class="reference external" href="#ERMrest.Tuple+displayname">.displayname</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+rowName">.rowName</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Tuple+uniqueId">.uniqueId</a> : <code>string</code></li>
@@ -6775,31 +6794,41 @@ for proper updating.</p>
 </tbody>
 </table><p><a name="ERMrest.Tuple+canUpdate"></a></p>
 </div>
-<div class="section" id="tuple-canupdate-code-boolean-code-code-undefined-code">
-<span id="tuple-canupdate-code-boolean-code-code-undefined-code"></span><h3>tuple.canUpdate : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#tuple-canupdate-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates whether the client can update this tuple. Because
-some policies may be undecidable until query execution, this
-property may also be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="tuple-canupdate-code-boolean-code">
+<span id="tuple-canupdate-code-boolean-code"></span><h3>tuple.canUpdate : <code>boolean</code><a class="headerlink" href="#tuple-canupdate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates whether the client can update this tuple. Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code>
+value DOES NOT guarantee the user right since some policies may be
+undecidable until query execution.</p>
 <p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">canUpdate</span> <span class="o">==</span> <span class="n">true</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;can be updated by this client&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">canUpdate</span> <span class="o">==</span> <span class="n">false</span><span class="p">)</span> <span class="p">{</span>
-  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;cannot be updated by this client&quot;</span><span class="p">);</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">canUpdate</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;may be updated by this client&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="k">else</span> <span class="p">{</span>
-  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;update permission cannot be determied&quot;</span><span class="p">);</span>
+  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;cannot be updated by this client&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+canUpdateReason"></a></p>
+</div>
+<div class="section" id="tuple-canupdatereason-code-string-code">
+<span id="tuple-canupdatereason-code-string-code"></span><h3>tuple.canUpdateReason : <code>String</code><a class="headerlink" href="#tuple-canupdatereason-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates the reason as to why a user cannot update this tuple.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+canDelete"></a></p>
 </div>
-<div class="section" id="tuple-candelete-code-boolean-code-code-undefined-code">
-<span id="tuple-candelete-code-boolean-code-code-undefined-code"></span><h3>tuple.canDelete : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#tuple-candelete-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates whether the client can delete this tuple. Because
-some policies may be undecidable until query execution, this
-property may also be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
-<p>See <a class="reference external" href="#ERMrest.Tuple+canUpdate">canUpdate</a> for a usage example.</p>
+<div class="section" id="tuple-candelete-code-boolean-code">
+<span id="tuple-candelete-code-boolean-code"></span><h3>tuple.canDelete : <code>boolean</code><a class="headerlink" href="#tuple-candelete-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates whether the client can delete this tuple. Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code>
+value DOES NOT guarantee the user right since some policies may be
+undecidable until query execution.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">canDelete</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;may be deleted by this client&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+  <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">tuple</span><span class="o">.</span><span class="n">displayname</span><span class="p">,</span> <span class="s2">&quot;cannot be deleted by this client&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+values"></a></p>
 </div>
 <div class="section" id="tuple-values-code-array-lt-string-gt-code">
@@ -6837,6 +6866,11 @@ reference (see <a class="reference external" href="#ERMrest.Reference+columns">c
 }
 </pre></div>
 </div>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+canUpdateValues"></a></p>
+</div>
+<div class="section" id="tuple-canupdatevalues">
+<span id="tuple-canupdatevalues"></span><h3>tuple.canUpdateValues<a class="headerlink" href="#tuple-canupdatevalues" title="Permalink to this headline">¶</a></h3>
+<p>currently only populated in entry context</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Tuple"><code>Tuple</code></a><a name="ERMrest.Tuple+displayname"></a></p>
 </div>
 <div class="section" id="tuple-displayname-code-string-code">
@@ -6972,7 +7006,6 @@ ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatvalue">.formatvalue(data, [context], [options])</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.ReferenceColumn+getInputDisabled">.getInputDisabled()</a> : <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
 </ul>
@@ -7187,16 +7220,7 @@ It will return:</p>
 <td>(optional)</td>
 </tr>
 </tbody>
-</table><p><a name="ERMrest.ReferenceColumn+getInputDisabled"></a></p>
-</div>
-<div class="section" id="referencecolumn-getinputdisabled-code-boolean-code-code-object-code">
-<span id="referencecolumn-getinputdisabled-code-boolean-code-code-object-code"></span><h3>referenceColumn.getInputDisabled() : <code>boolean</code> | <code>object</code><a class="headerlink" href="#referencecolumn-getinputdisabled-code-boolean-code-code-object-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates if the input should be disabled, in different contexts
-true: input must be disabled
-false:  input can be enabled
-object: input msut be disabled (show .message to user)
-TODO should be removed in favor of inputDisabled</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+_getShowForeignKeyLink"></a></p>
+</table><p><a name="ERMrest.ReferenceColumn+_getShowForeignKeyLink"></a></p>
 </div>
 <div class="section" id="referencecolumn-getshowforeignkeylink-context-code-boolean-code">
 <span id="referencecolumn-getshowforeignkeylink-context-code-boolean-code"></span><h3>referenceColumn._getShowForeignKeyLink(context) ⇒ <code>boolean</code><a class="headerlink" href="#referencecolumn-getshowforeignkeylink-context-code-boolean-code" title="Permalink to this headline">¶</a></h3>
@@ -10375,12 +10399,12 @@ ERMRest.ReferenceColumn<p>&amp;gt;</p>
 </code> | <code>false</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+location">.location</a> ⇒ <code>ERMrest.Location</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code> | <code>undefined</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code> | <code>undefined</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreate">.canCreate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canCreateReason">.canCreateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canRead">.canRead</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdate">.canUpdate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canUpdateReason">.canUpdateReason</a> : <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+canDelete">.canDelete</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+display">.display</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+related">.related</a> : <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
@@ -10395,7 +10419,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
-<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+delete">.delete(contextHeaderParams)</a> ⇒ <code>Promise</code><ul>
@@ -10590,46 +10614,48 @@ tuple.</p>
 </div>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canCreate"></a></p>
 </div>
-<div class="section" id="reference-cancreate-code-boolean-code-code-undefined-code">
-<span id="id17"></span><h3>reference.canCreate : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-cancreate-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-cancreate-code-boolean-code">
+<span id="id17"></span><h3>reference.canCreate : <code>boolean</code><a class="headerlink" href="#reference-cancreate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>create</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canCreateReason"></a></p>
 </div>
-<div class="section" id="reference-cancreatereason-code-string-code-code-undefined-code">
-<span id="id18"></span><h3>reference.canCreateReason : <code>String</code> | <code>undefined</code><a class="headerlink" href="#reference-cancreatereason-code-string-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates the reason as to why a user cannot create for
-the referenced resource(s). In some cases, this won’t be set
-because the user can create, so the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="reference-cancreatereason-code-string-code">
+<span id="id18"></span><h3>reference.canCreateReason : <code>String</code><a class="headerlink" href="#reference-cancreatereason-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates the reason as to why a user cannot create the
+referenced resource(s).</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canRead"></a></p>
 </div>
-<div class="section" id="reference-canread-code-boolean-code-code-undefined-code">
-<span id="id19"></span><h3>reference.canRead : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-canread-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-canread-code-boolean-code">
+<span id="id19"></span><h3>reference.canRead : <code>boolean</code><a class="headerlink" href="#reference-canread-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>read</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canUpdate"></a></p>
 </div>
-<div class="section" id="reference-canupdate-code-boolean-code-code-undefined-code">
-<span id="id20"></span><h3>reference.canUpdate : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-canupdate-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-canupdate-code-boolean-code">
+<span id="id20"></span><h3>reference.canUpdate : <code>boolean</code><a class="headerlink" href="#reference-canupdate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>update</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canUpdateReason"></a></p>
 </div>
-<div class="section" id="reference-canupdatereason-code-string-code-code-undefined-code">
-<span id="id21"></span><h3>reference.canUpdateReason : <code>String</code> | <code>undefined</code><a class="headerlink" href="#reference-canupdatereason-code-string-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
-<p>Indicates the reason as to why a user cannot update for
-the referenced resource(s). In some cases, this won’t be set
-because the user can update, so the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<div class="section" id="reference-canupdatereason-code-string-code">
+<span id="id21"></span><h3>reference.canUpdateReason : <code>String</code><a class="headerlink" href="#reference-canupdatereason-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates the reason as to why a user cannot update the
+referenced resource(s).</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+canDelete"></a></p>
 </div>
-<div class="section" id="reference-candelete-code-boolean-code-code-undefined-code">
-<span id="id22"></span><h3>reference.canDelete : <code>boolean</code> | <code>undefined</code><a class="headerlink" href="#reference-candelete-code-boolean-code-code-undefined-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-candelete-code-boolean-code">
+<span id="id22"></span><h3>reference.canDelete : <code>boolean</code><a class="headerlink" href="#reference-candelete-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates whether the client has the permission to <em>delete</em>
-the referenced resource(s). In some cases, this permission cannot
-be determined and the value will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+the referenced resource(s). Reporting a <code class="docutils literal notranslate"><span class="pre">true</span></code> value DOES NOT
+guarantee the user right since some policies may be undecidable until
+query execution.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+display"></a></p>
 </div>
 <div class="section" id="reference-display-code-object-code">
@@ -10840,8 +10866,8 @@ or rejected with any of the following errors:</p>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>
 </div>
-<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code">
-<span id="id35"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-read-limit-contextheaderparams-useentity-dontcorrectpage-getunlinktrs-code-promise-code">
+<span id="id35"></span><h3>reference.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getUnlinkTRS) ⇒ <code>Promise</code><a class="headerlink" href="#reference-read-limit-contextheaderparams-useentity-dontcorrectpage-getunlinktrs-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Reads the referenced resources and returns a promise for a page of
 tuples. The <code class="docutils literal notranslate"><span class="pre">limit</span></code> parameter is required and must be a positive
 integer. The page of tuples returned will be described by the
@@ -10894,7 +10920,12 @@ or rejected with any of these errors:</p>
 <tr>
 <td>dontCorrectPage</td>
 <td><code>Boolean</code></td>
-<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check. NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
+<td>whether we should modify the page. If there's a @before in url and the number of results is less than the given limit, we will remove the @before and run the read again. Setting dontCorrectPage to true, will not do this extra check.</td>
+</tr>
+<tr>
+<td>getUnlinkTRS</td>
+<td><code>Boolean</code></td>
+<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>
@@ -10928,10 +10959,12 @@ but I’m not sure how much adding that validation will affect other apis and cl
 <div class="section" id="reference-update-tuples-contextheaderparams-code-promise-code">
 <span id="id37"></span><h3>reference.update(tuples, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-update-tuples-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Updates a set of resources.</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with a object containing <code class="docutils literal notranslate"><span class="pre">successful</span></code> and <code class="docutils literal notranslate"><span class="pre">failure</span></code> attributes.
-Both are <a class="reference external" href="#ERMrest.Page">Page</a> of results.
-or rejected with any of these errors:</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Promise</code> - A promise resolved with a object containing:</p>
 <ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">successful</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that were stored.</li>
+<li><code class="docutils literal notranslate"><span class="pre">failed</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that failed to be stored.</li>
+<li><code class="docutils literal notranslate"><span class="pre">disabled</span></code>: <a class="reference external" href="#ERMrest.Page">Page</a> of results that were not sent to ermrest (because of acl)
+or rejected with any of these errors:</li>
 <li><a class="reference external" href="#ERMrest.InvalidInputError">InvalidInputError</a>: If <code class="docutils literal notranslate"><span class="pre">limit</span></code> is invalid or reference is not in <code class="docutils literal notranslate"><span class="pre">entry/edit</span></code> context.</li>
 <li>ERMrestjs corresponding http errors, if ERMrest returns http error.</li>
 </ul>

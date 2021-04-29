@@ -1549,10 +1549,15 @@ expect([&quot;Value&quot;]).toBeyAnyOf([[&quot;Value&quot;], [&quot;Not the Valu
 <span id="how-to-run-tests"></span><h2>How To Run Tests<a class="headerlink" href="#how-to-run-tests" title="Permalink to this headline">¶</a></h2>
 <p>Before running the test cases you need to set <code class="docutils literal notranslate"><span class="pre">ERMREST_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>, and <code class="docutils literal notranslate"><span class="pre">RESTRICTED_AUTH_COOKIE</span></code>  environment variables.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>YOUR_ERMREST_URL
-<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_ERMREST_COOKIE
-<span class="nb">export</span> <span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span>YOUR_SECOND_USER_ERMREST_COOKIE
+<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_WEBAUTHN_COOKIE
+<span class="nb">export</span> <span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span>YOUR_SECOND_USER_WEBAUTHN_COOKIE
 </pre></div>
 </div>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">ERMREST_URL</span></code>: the URL to the ERMrest service on a (possibly, remote) host.</li>
+<li><code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>: a primary user cookie valid to the (possibly, remote) host running the ERMrest service.</li>
+<li><code class="docutils literal notranslate"><span class="pre">RESTRICTED_AUTH_COOKIE</span></code>: a secondary user cookie valid to the (possibly, remote) host running the ERMrest service.</li>
+</ul>
 <p>The build needs to be generated for the tests to work, which means running the following commands to execute the test cases.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install
 $ make <span class="nb">test</span>

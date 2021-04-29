@@ -1365,10 +1365,11 @@
 <li><strong>JAVA</strong></li>
 <li><strong>JDK</strong></li>
 </ul>
-<p>Before running the test cases you also need to set <code class="docutils literal notranslate"><span class="pre">ERMREST_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">CHAISE_BASE_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>, and <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> environment variables.</p>
+<p>Before running the test cases you also need to set <code class="docutils literal notranslate"><span class="pre">ERMREST_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">CHAISE_BASE_URL</span></code>, <code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>, <code class="docutils literal notranslate"><span class="pre">RESTRICTED_AUTH_COOKIE</span></code>, and <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> environment variables.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>YOUR_CHAISE_BASE_URL
 <span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>YOUR_ERMREST_URL
-<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_ERMREST_COOKIE
+<span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_WEBAUTHN_COOKIE
+<span class="nb">export</span> <span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span>YOUR_SECOND_USER_ERMREST_COOKIE
 <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>USERNAME@HOST:public_html/chaise
 </pre></div>
 </div>
@@ -1376,6 +1377,7 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;chaise <span class="c1"># No trailing `/`</span>
 <span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/ermrest <span class="c1"># No trailing `/`</span>
 <span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span><span class="s2">&quot;webauthn=PutYourCookieHere;&quot;</span> <span class="c1"># You have to put `webauthn=` at the beginging and `;` at the end.</span>
+<span class="nb">export</span> <span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span><span class="s2">&quot;webauthn=PutAnotherCookieHere;&quot;</span> <span class="c1"># You have to put `webauthn=` at the beginging and `;` at the end.</span>
 <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise <span class="c1"># No trailing `/`</span>
 <span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">false</span>
 </pre></div>

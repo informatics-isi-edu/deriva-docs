@@ -1381,33 +1381,47 @@
 <span id="overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>By providing <code class="docutils literal notranslate"><span class="pre">Deriva-Client-Context</span></code> header in ermrset requests we can log extra objects alongside the request. ERMrest will log the provided object in the <code class="docutils literal notranslate"><span class="pre">dcctx</span></code> attribute of logs. For example the following is a line from <code class="docutils literal notranslate"><span class="pre">/var/log/messages</span></code> file in dev.isrd that is for the request to getting one of the facet options.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;scheme&quot;</span><span class="o">:</span><span class="s2">&quot;https&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;host&quot;</span><span class="o">:</span><span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;elapsed&quot;</span><span class="o">:</span> <span class="mf">0.037084000000000006</span><span class="p">,</span>
+  <span class="s2">&quot;req&quot;</span><span class="o">:</span> <span class="s2">&quot;Le-1bpTwSfSxddRT8Y0T5g&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;scheme&quot;</span><span class="o">:</span> <span class="s2">&quot;https&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;host&quot;</span><span class="o">:</span> <span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
   <span class="s2">&quot;status&quot;</span><span class="o">:</span> <span class="s2">&quot;200 OK&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;method&quot;</span><span class="o">:</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;/ermrest/catalog/1/entity/T:=isa:experiment/dataset=1-3VFJ/$T/M:=(experiment_type)=(vocab:experiment_type:id)@sort(name,RID)?limit=11&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;dcctx&quot;</span><span class="o">:</span><span class="p">{</span>
-      <span class="s2">&quot;catalog&quot;</span><span class="o">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;schema_table&quot;</span><span class="o">:</span><span class="s2">&quot;vocab:experiment_type&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;stack&quot;</span><span class="o">:</span><span class="p">[</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;set&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;s_t&quot;</span><span class="o">:</span><span class="s2">&quot;isa:experiment&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;filters&quot;</span><span class="o">:</span> <span class="p">{</span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;src&quot;</span><span class="o">:</span><span class="p">[{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;experiment_dataset_fkey&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span> <span class="s2">&quot;ch&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;1-3VFJ&quot;</span><span class="p">]}]}</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;type&quot;</span><span class="o">:</span><span class="s2">&quot;facet&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;s_t&quot;</span><span class="o">:</span><span class="s2">&quot;vocab:experiment_type&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;o&quot;</span><span class="o">:</span><span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;experiment_experiment_type_fkey&quot;</span><span class="p">]},</span> <span class="s2">&quot;id&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;entity&quot;</span><span class="o">:</span><span class="kc">true</span>
-        <span class="p">}</span>
+  <span class="s2">&quot;method&quot;</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;/ermrest/catalog/1/entity/T:=isa:dataset/(id)=(isa:dataset_organism:dataset_id)/M:=(organism)=(vocab:species:id)@sort(name,RID)?limit=11&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;client&quot;</span><span class="o">:</span> <span class="s2">&quot;128.9.180.218&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;referrer&quot;</span><span class="o">:</span> <span class="s2">&quot;https://dev.isrd.isi.edu/chaise/recordset/&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;agent&quot;</span><span class="o">:</span> <span class="s2">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;track&quot;</span><span class="o">:</span> <span class="s2">&quot;916d434.5aa5c5cf6b595&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;dcctx&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;catalog&quot;</span><span class="o">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;schema_table&quot;</span><span class="o">:</span> <span class="s2">&quot;vocab:species&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stack&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;set&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;isa:dataset&quot;</span>
+      <span class="p">},</span> 
+      <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facet&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;vocab:species&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[</span>
+          <span class="p">{</span>
+            <span class="s2">&quot;i&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset_organism_dataset_id_fkey&quot;</span><span class="p">]</span>
+          <span class="p">},</span> 
+          <span class="p">{</span>
+            <span class="s2">&quot;o&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset_organism_organism_fkey&quot;</span><span class="p">]</span>
+          <span class="p">},</span> 
+          <span class="s2">&quot;id&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">true</span>
+      <span class="p">}</span>
     <span class="p">],</span>
-    <span class="s2">&quot;action&quot;</span><span class="o">:</span><span class="s2">&quot;:set/facet,;load&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;cid&quot;</span><span class="o">:</span><span class="s2">&quot;recordset&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;pid&quot;</span><span class="o">:</span><span class="s2">&quot;1lp2236a1p1g2age1l1a2pxo&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;wid&quot;</span><span class="o">:</span><span class="s2">&quot;1tw6218n1xbr2mvq251y2rsd&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;elapsed_ms&quot;</span><span class="o">:</span><span class="mi">646</span>
- <span class="p">}</span>
+    <span class="s2">&quot;action&quot;</span><span class="o">:</span> <span class="s2">&quot;:set/facet,choice;load&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cid&quot;</span><span class="o">:</span> <span class="s2">&quot;recordset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pid&quot;</span><span class="o">:</span> <span class="s2">&quot;1sy623td1kht2cyu2bv01w3e&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wid&quot;</span><span class="o">:</span> <span class="s2">&quot;1kcg21wn27ah1hr52djl269e&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;elapsed_ms&quot;</span><span class="o">:</span> <span class="mi">4578</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>

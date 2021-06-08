@@ -620,10 +620,15 @@
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-deletion">Catalog Deletion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-alias-creation">Catalog Alias Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-alias-retrieval">Catalog Alias Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-alias-update">Catalog Alias Update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-alias-deletion">Catalog Alias Deletion</a></li>
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Model Resource Naming</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-names">Catalog Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catalog-aliases">Catalog Aliases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#generic-model-sub-resources">Generic Model Sub-Resources</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#annotations">Annotations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#comments">Comments</a></li>
@@ -1367,6 +1372,24 @@
 read-only retrieval of historical resource representations. Only the
 latest, <em>live</em> catalog represented by <em>cid</em> without a <em>revision</em>
 supports mutation.</p>
+</div>
+<div class="section" id="catalog-aliases">
+<span id="catalog-aliases"></span><h2>Catalog Aliases<a class="headerlink" href="#catalog-aliases" title="Permalink to this headline">¶</a></h2>
+<p>Through an optional alias-management interface, the administrator can bind (or re-bind) additional identifiers for a catalog:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/alias/</span></code> <em>alias</em></li>
+</ul>
+<p>where the components of this management path are:</p>
+<ul class="simple">
+<li><em>service</em>: the ERMrest service endpoint such as <code class="docutils literal notranslate"><span class="pre">https://www.example.com/ermrest</span></code>.</li>
+<li><em>alias</em>: the additional catalog identifier for one dataset such as <code class="docutils literal notranslate"><span class="pre">42</span></code> or <code class="docutils literal notranslate"><span class="pre">production</span></code>.</li>
+</ul>
+<p>The catalog alias has a representation which provides basic management state information about the binding of <em>alias</em> to a storage catalog <em>cid</em> and an alias ownership access control list.</p>
+<p>When an alias is bound to a live catalog, it also implicitly exists in the catalog resource space:</p>
+<ul class="simple">
+<li><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>alias</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ]</li>
+</ul>
+<p>where it has a representation mostly based on the bound storage catalog. However, certain lifecycle states can result in <em>alias</em> only existing in the <code class="docutils literal notranslate"><span class="pre">alias/</span></code> management space while not appearing in the <code class="docutils literal notranslate"><span class="pre">catalog/</span></code> access space, i.e. when the alias does not currently resolve to an accessible catalog.</p>
 </div>
 <div class="section" id="generic-model-sub-resources">
 <span id="generic-model-sub-resources"></span><h2>Generic Model Sub-Resources<a class="headerlink" href="#generic-model-sub-resources" title="Permalink to this headline">¶</a></h2>

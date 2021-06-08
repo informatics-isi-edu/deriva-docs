@@ -620,10 +620,15 @@
 <li class="toctree-l3"><a class="reference internal" href="#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-deletion">Catalog Deletion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catalog-alias-creation">Catalog Alias Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catalog-alias-retrieval">Catalog Alias Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catalog-alias-update">Catalog Alias Update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#catalog-alias-deletion">Catalog Alias Deletion</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="model/naming.html">Model Resource Naming</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="model/naming.html#catalog-names">Catalog Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model/naming.html#catalog-aliases">Catalog Aliases</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/naming.html#generic-model-sub-resources">Generic Model Sub-Resources</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="model/naming.html#annotations">Annotations</a></li>
 <li class="toctree-l4"><a class="reference internal" href="model/naming.html#comments">Comments</a></li>
@@ -1388,6 +1393,8 @@ if accessing older catalogs.</p>
 <li><code class="docutils literal notranslate"><span class="pre">tcrs</span></code>: Service supports the <code class="docutils literal notranslate"><span class="pre">tcrs(RID)</span></code> projection functions to retrieve row-level, per-column access rights.</li>
 <li><code class="docutils literal notranslate"><span class="pre">history_control</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2020,history-capture</span></code> table annotation to disable history capture.</li>
 <li><code class="docutils literal notranslate"><span class="pre">implicit_fkey_index</span></code>: Service will produce indexes for compound foreign keys to allow index-based joins on these reference patterns.</li>
+<li><code class="docutils literal notranslate"><span class="pre">catalog_post_input</span></code>: The POST <code class="docutils literal notranslate"><span class="pre">/ermrest/catalog</span></code> method accepts JSON input to customize the catalog ID or initial owner ACL.</li>
+<li><code class="docutils literal notranslate"><span class="pre">catalog_alias</span></code>: The <code class="docutils literal notranslate"><span class="pre">/ermrest/alias</span></code> resource space and related catalog aliasing features are available.</li>
 </ul>
 <p>Generally, absence of a feature flag means the service is running
 older software which predates the release of the feature. A flag will
@@ -1403,49 +1410,84 @@ which can be disabled selectively by the administrator.</p>
 <span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
+<p>This method supports an optional JSON input document:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">desired</span> <span class="n">catalog</span> <span class="nb">id</span><span class="p">,</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">administrative</span> <span class="n">ACL</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These fields are optional and, if present, override the default behavior obtained in a POST without input:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code>: The desired <em>cid</em> to bind (default is a service-generated serial number)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code>: Initial owner-level access control list for the new catalog (default is the requesting client’s identity)</li>
+</ul>
 <p>On success, this request yields the new catalog identifier, e.g. <code class="docutils literal notranslate"><span class="pre">42</span></code> in this example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">201</span> <span class="n">Created</span>
 <span class="n">Location</span><span class="p">:</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span>
 <span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
 
 <span class="p">{</span>
-  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;snaptime&quot;</span><span class="p">:</span> <span class="s2">&quot;2PX-WS30-E58W&quot;</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>The configured <code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code> will also appear in the <code class="docutils literal notranslate"><span class="pre">&quot;acls&quot;</span></code> sub-resource of the resulting catalog resource.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
 <li>404 Not Found</li>
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>
 </ul>
+<p>In the rare event that there is a system error during catalog creation, the ERMrest registry of catalogs may retain a record of a claimed catalog identifier without a corresponding catalog database. This record includes the <code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code> and only clients authorized by that access control list may retry catalog creation with the same desired catalog id.</p>
 </div>
 <div class="section" id="catalog-retrieval">
 <span id="catalog-retrieval"></span><h2>Catalog Retrieval<a class="headerlink" href="#catalog-retrieval" title="Permalink to this headline">¶</a></h2>
-<p>The GET method is used to get a short description of a catalog:</p>
+<p>The GET method is used to get a short description of a catalog by its canonical identifier or an alias:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
-<p>On success, this request yields a description:</p>
+<p>On success, this request yields a catalog description:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
 <span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
 
 <span class="p">{</span>
   <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;alias_target&quot;</span><span class="p">:</span> <span class="n">target</span> <span class="n">catalog</span> <span class="n">identifier</span><span class="p">,</span>
+  <span class="s2">&quot;rights&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">boolean</span><span class="p">,</span>
+    <span class="s2">&quot;create&quot;</span><span class="p">:</span> <span class="n">boolean</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;acls&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">access</span> <span class="n">control</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="o">...</span>
+  <span class="p">},</span>
   <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;tag:isrd.isi.edu,2018:example&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;my example annotation&quot;</span><span class="p">}</span>
   <span class="p">},</span>
   <span class="s2">&quot;snaptime&quot;</span><span class="p">:</span> <span class="s2">&quot;2PX-WS30-E58W&quot;</span><span class="p">,</span>
   <span class="s2">&quot;features&quot;</span><span class="p">:</span> <span class="p">{</span>
-     <span class="o">...</span>
+    <span class="o">...</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code> field is previously described in the <a class="reference external" href="#service-ad-retrieval">Service Ad
-Retrieval request</a>.</p>
+<p>The fields of this representation are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code>: The identifier for the catalog being addressed (may be an alias or storage catalog identifier).</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code>: The canonical identifier for the storage catalog (only present when <code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code> is showing an alias instead).</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;snaptime&quot;</span></code>: The identifier for the snapshot being addressed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;rights&quot;</span></code>: A summary of rights for the requesting client.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;acls&quot;</span></code>: Configured access control lists for this catalog.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;annotations&quot;</span></code>: Configured annotations for this catalog.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;features&quot;</span></code>: The service features advertisement as described in the <a class="reference external" href="#service-ad-retrieval">Service Ad Retrieval request</a>.</li>
+</ul>
+<p>This representation summarizes the catalog which is affectively addressed by the catalog URL. Other catalog sub-resources described in this API documentation are likewise available relative to this catalog URL prefix. Access to sub-resources for catalog, schema, and content management and access are consistent whether the catalog URL prefix is using a canonical storage catalog <em>cid</em> or a catalog <em>alias</em>.</p>
 <p>Typical error response codes include:</p>
 <ul class="simple">
 <li>404 Not Found</li>
@@ -1455,8 +1497,144 @@ Retrieval request</a>.</p>
 </div>
 <div class="section" id="catalog-deletion">
 <span id="catalog-deletion"></span><h2>Catalog Deletion<a class="headerlink" href="#catalog-deletion" title="Permalink to this headline">¶</a></h2>
-<p>The DELETE method is used to delete a catalog and all its content:</p>
+<p>The DELETE method is used to delete a catalog:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DELETE</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>There are two cases for catalog deletion via this API:</p>
+<ol class="simple">
+<li>When DELETE <code class="docutils literal notranslate"><span class="pre">/ermrest/catalog/</span></code> <em>alias</em> names a catalog by alias: equivalent to DELETE <code class="docutils literal notranslate"><span class="pre">/ermrest/alias/</span></code> <em>alias</em> while the underlying storage catalog is unaffected.</li>
+<li>When DELETE <code class="docutils literal notranslate"><span class="pre">/ermrest/catalog/</span></code> <em>cid</em> names a storage catalog identifier, the catalog and its content are destroyed, unbinding (but not destroying) any existing aliases which have <em>cid</em> as their <code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code>.</li>
+</ol>
+<p>On success, this request yields a description:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">204</span> <span class="n">No</span> <span class="n">Content</span>
+</pre></div>
+</div>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="catalog-alias-creation">
+<span id="catalog-alias-creation"></span><h2>Catalog Alias Creation<a class="headerlink" href="#catalog-alias-creation" title="Permalink to this headline">¶</a></h2>
+<p>The POST method is used to create an alias resource:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">alias</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>This method supports an optional JSON input document:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POST</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">alias</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">desired</span> <span class="n">alias</span> <span class="nb">id</span><span class="p">,</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">administrative</span> <span class="n">access</span> <span class="n">control</span> <span class="nb">list</span><span class="p">,</span>
+  <span class="s2">&quot;alias_target&quot;</span><span class="p">:</span> <span class="n">existing</span> <span class="n">storage</span> <span class="n">catalog</span> <span class="nb">id</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These fields are optional and, if present, override the default behavior obtained in a POST without input:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code>: The desired <em>alias</em> to bind (default is a service-generated serial number)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code>: Initial access control list for the alias (default is the requesting client’s identity)</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code>: Storage catalog to bind with the new alias (default unbound)</li>
+</ul>
+<p>An unbound alias can reserve the alias for future use by clients permitted by the adminstrative access control list.</p>
+<p>On success, this request yields the new catalog alias, e.g. <code class="docutils literal notranslate"><span class="pre">my_alias</span></code> in this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">201</span> <span class="n">Created</span>
+<span class="n">Location</span><span class="p">:</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">catalog</span><span class="o">/</span><span class="mi">42</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_alias&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The configured <code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code> will also appear in the resulting alias resource.</p>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="catalog-alias-retrieval">
+<span id="catalog-alias-retrieval"></span><h2>Catalog Alias Retrieval<a class="headerlink" href="#catalog-alias-retrieval" title="Permalink to this headline">¶</a></h2>
+<p>The GET method is used to get a short description of an alias:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">alias</span><span class="o">/</span><span class="n">my_alias</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>On success, this request yields a description:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_alias&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">administrative</span> <span class="n">access</span> <span class="n">control</span> <span class="nb">list</span><span class="p">,</span>
+  <span class="s2">&quot;alias_target&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The fields of this representation are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code>: The alias identifier.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code>: The access control list granting permission to manage this alias.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code>: The canonical identifier for the storage catalog (may be <code class="docutils literal notranslate"><span class="pre">null</span></code> for unbound aliases.</li>
+</ul>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="catalog-alias-update">
+<span id="catalog-alias-update"></span><h2>Catalog Alias Update<a class="headerlink" href="#catalog-alias-update" title="Permalink to this headline">¶</a></h2>
+<p>The PUT method is used to modify the configuration of an alias:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUT</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">alias</span><span class="o">/</span><span class="n">my_alias</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
+<span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_alias&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">administrative</span> <span class="n">access</span> <span class="n">control</span> <span class="nb">list</span><span class="p">,</span>
+  <span class="s2">&quot;alias_target&quot;</span><span class="p">:</span> <span class="n">new</span> <span class="n">target</span> <span class="n">catalog</span> <span class="n">identifier</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Either field is optional and defaults to leaving the respective configuration unchanged:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&quot;owner&quot;</span></code>: Set a new administrative access control list for the alias.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&quot;alias_target&quot;</span></code>: Bind or re-bind the alias to the specified storage catalog.</li>
+</ul>
+<p>For ease of use, the <code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code> field is also accepted as input, so that an existing alias representation could be edited and resubmitted. However, the included <code class="docutils literal notranslate"><span class="pre">&quot;id&quot;</span></code> field MUST match the <em>alias</em> identifier in the URL.</p>
+<p>On success, this request yields a description of the updated alias:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span> <span class="mi">200</span> <span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="p">:</span> <span class="n">application</span><span class="o">/</span><span class="n">json</span>
+
+<span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;my_alias&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="n">administrative</span> <span class="n">access</span> <span class="n">control</span> <span class="nb">list</span><span class="p">,</span>
+  <span class="s2">&quot;alias_target&quot;</span><span class="p">:</span> <span class="s2">&quot;42&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Typical error response codes include:</p>
+<ul class="simple">
+<li>404 Not Found</li>
+<li>403 Forbidden</li>
+<li>401 Unauthorized</li>
+</ul>
+</div>
+<div class="section" id="catalog-alias-deletion">
+<span id="catalog-alias-deletion"></span><h2>Catalog Alias Deletion<a class="headerlink" href="#catalog-alias-deletion" title="Permalink to this headline">¶</a></h2>
+<p>The DELETE method is used to delete a catalog alias:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DELETE</span> <span class="o">/</span><span class="n">ermrest</span><span class="o">/</span><span class="n">alias</span><span class="o">/</span><span class="n">my_alias</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>
 <span class="n">Host</span><span class="p">:</span> <span class="n">www</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>

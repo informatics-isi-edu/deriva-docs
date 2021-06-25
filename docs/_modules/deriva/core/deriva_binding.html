@@ -1467,10 +1467,9 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_server_uri</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">session_config</span><span class="p">:</span>
-            <span class="n">session_config</span> <span class="o">=</span> <span class="n">DEFAULT_SESSION_CONFIG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session_config</span> <span class="o">=</span> <span class="n">DEFAULT_SESSION_CONFIG</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">session_config</span> <span class="k">else</span> <span class="n">session_config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_get_new_session</span><span class="p">(</span><span class="n">session_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_new_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_config</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_caching</span> <span class="o">=</span> <span class="n">caching</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1484,9 +1483,10 @@
 <div class="viewcode-block" id="DerivaBinding.get_server_uri"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.deriva_binding.DerivaBinding.get_server_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_server_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_new_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_new_session</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_close_session</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">get_new_requests_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">get_new_requests_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+                                                 <span class="n">session_config</span> <span class="k">if</span> <span class="n">session_config</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_config</span><span class="p">)</span>
         <span class="c1"># allow loopback requests to bypass SSL cert verification</span>
         <span class="k">if</span> <span class="s2">&quot;https://localhost&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">verify</span> <span class="o">=</span> <span class="kc">False</span>

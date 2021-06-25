@@ -1434,7 +1434,12 @@ must be a path to a CA bundle to use</li>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.bootstrap">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">bootstrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.bootstrap" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">bootstrap</code><span class="sig-paren">(</span><em>logging_level=20</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#bootstrap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.bootstrap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="deriva.core.utils.core_utils.calculate_optimal_transfer_shape">
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">calculate_optimal_transfer_shape</code><span class="sig-paren">(</span><em>size</em>, <em>chunk_limit=10000</em>, <em>requested_chunk_size=26214400</em>, <em>byte_align=65536</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#calculate_optimal_transfer_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.calculate_optimal_transfer_shape" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1454,7 +1459,7 @@ must be a path to a CA bundle to use</li>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.get_new_requests_session">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">get_new_requests_session</code><span class="sig-paren">(</span><em>url=None, session_config={'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#get_new_requests_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.get_new_requests_session" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">get_new_requests_session</code><span class="sig-paren">(</span><em>url=None, session_config={'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'max_chunk_limit': 10000, 'max_request_size': 104857600, 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#get_new_requests_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.get_new_requests_session" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1469,7 +1474,7 @@ must be a path to a CA bundle to use</li>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.init_logging">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">init_logging</code><span class="sig-paren">(</span><em>level=20</em>, <em>log_format=None</em>, <em>file_path=None</em>, <em>file_mode='w'</em>, <em>capture_warnings=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#init_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.init_logging" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">init_logging</code><span class="sig-paren">(</span><em>level=20</em>, <em>log_format=None</em>, <em>file_path=None</em>, <em>file_mode='w'</em>, <em>capture_warnings=True</em>, <em>logger_config={'boto3': 30</em>, <em>'botocore': 30</em>, <em>'globus_sdk.auth': 30</em>, <em>'globus_sdk.authorizers': 30}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#init_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.init_logging" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1489,7 +1494,7 @@ must be a path to a CA bundle to use</li>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.read_config">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', create_default=False, default={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'localhost', 'protocol': 'https'}, 'session': {'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.read_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">read_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', create_default=False, default={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'localhost', 'protocol': 'https'}, 'session': {'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'max_chunk_limit': 10000, 'max_request_size': 104857600, 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#read_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.read_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -1540,7 +1545,7 @@ value.</p>
 
 <dl class="function">
 <dt id="deriva.core.utils.core_utils.write_config">
-<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">write_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', config={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'localhost', 'protocol': 'https'}, 'session': {'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.write_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">deriva.core.utils.core_utils.</code><code class="descname">write_config</code><span class="sig-paren">(</span><em>config_file='/root/.deriva/config.json', config={'download_processor_whitelist': [], 'oauth2_scopes': {}, 'server': {'catalog_id': 1, 'host': 'localhost', 'protocol': 'https'}, 'session': {'allow_retry_on_all_methods': False, 'cookie_jar': '/root/.deriva/cookies.txt', 'max_chunk_limit': 10000, 'max_request_size': 104857600, 'retry_backoff_factor': 1.0, 'retry_connect': 2, 'retry_read': 4, 'retry_status_forcelist': [500, 502, 503, 504], 'timeout': (6.3, 63)}}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/utils/core_utils.html#write_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.utils.core_utils.write_config" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">

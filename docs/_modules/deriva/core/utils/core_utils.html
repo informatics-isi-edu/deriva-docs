@@ -1333,6 +1333,7 @@
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">errno</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">platform</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -1356,8 +1357,17 @@
 
 <span class="n">Kilobyte</span> <span class="o">=</span> <span class="mi">1024</span>
 <span class="n">Megabyte</span> <span class="o">=</span> <span class="n">Kilobyte</span> <span class="o">**</span> <span class="mi">2</span>
-<span class="n">DEFAULT_CHUNK_SIZE</span> <span class="o">=</span> <span class="n">Megabyte</span> <span class="o">*</span> <span class="mi">10</span>  <span class="c1"># above the minimum 5MB chunk size for AWS S3 multipart uploads</span>
-<span class="n">MAX_CHUNK_SIZE</span> <span class="o">=</span> <span class="n">Megabyte</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="c1"># Set the default chunk size above the minimum 5MB chunk size for AWS S3 multipart uploads, but also try to find a sweet</span>
+<span class="c1"># spot between a minimal number of chunks and payloads big enough to be efficient but not incur retries for slow clients</span>
+<span class="c1"># or situations where network connectivity is unreliable for whatever reason.</span>
+<span class="n">DEFAULT_CHUNK_SIZE</span> <span class="o">=</span> <span class="n">Megabyte</span> <span class="o">*</span> <span class="mi">25</span>
+<span class="c1"># 5GB is the max chunk limit imposed by AWS S3, also a (generous) hard limit.</span>
+<span class="n">HARD_MAX_CHUNK_SIZE</span> <span class="o">=</span> <span class="n">Megabyte</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="c1"># Max number of &quot;parts&quot; for AWS S3.</span>
+<span class="n">DEFAULT_MAX_CHUNK_LIMIT</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="c1"># A practical default limit for single request body payload size, similar to AWS S3 recommendation for payload sizes.</span>
+<span class="n">DEFAULT_MAX_REQUEST_SIZE</span> <span class="o">=</span> <span class="n">Megabyte</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="n">DEFAULT_HEADERS</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">DEFAULT_CONFIG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span> <span class="s1">&#39;.deriva&#39;</span><span class="p">)</span>
@@ -1373,7 +1383,9 @@
     <span class="s2">&quot;retry_backoff_factor&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="s2">&quot;retry_status_forcelist&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">],</span>
     <span class="s2">&quot;allow_retry_on_all_methods&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="s2">&quot;cookie_jar&quot;</span><span class="p">:</span> <span class="n">DEFAULT_COOKIE_JAR_FILE</span>
+    <span class="s2">&quot;cookie_jar&quot;</span><span class="p">:</span> <span class="n">DEFAULT_COOKIE_JAR_FILE</span><span class="p">,</span>
+    <span class="s2">&quot;max_request_size&quot;</span><span class="p">:</span> <span class="n">DEFAULT_MAX_REQUEST_SIZE</span><span class="p">,</span>
+    <span class="s2">&quot;max_chunk_limit&quot;</span><span class="p">:</span> <span class="n">DEFAULT_MAX_CHUNK_LIMIT</span>
 <span class="p">}</span>
 <span class="n">OAUTH2_SCOPES_KEY</span> <span class="o">=</span> <span class="s2">&quot;oauth2_scopes&quot;</span>
 <span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
@@ -1388,6 +1400,12 @@
     <span class="n">OAUTH2_SCOPES_KEY</span><span class="p">:</span> <span class="p">{}</span>
 <span class="p">}</span>
 <span class="n">DEFAULT_CREDENTIAL</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">DEFAULT_LOGGER_OVERRIDES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;globus_sdk.auth&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+    <span class="s2">&quot;globus_sdk.authorizers&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+    <span class="s2">&quot;boto3&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+    <span class="s2">&quot;botocore&quot;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span>
+<span class="p">}</span>
 
 
 <div class="viewcode-block" id="NotModified"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.NotModified">[docs]</a><span class="k">class</span> <span class="nc">NotModified</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
@@ -1431,7 +1449,7 @@
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
     <span class="n">exc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;] &quot;</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">):</span>
-        <span class="n">resp</span> <span class="o">=</span> <span class="s2">&quot; - Server responded: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="s2">&quot; - Server responded: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">text</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">exc</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="n">resp</span><span class="p">))</span>
     <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">exc</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span></div>
 
@@ -1467,12 +1485,16 @@
                  <span class="n">log_format</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">file_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">file_mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
-                 <span class="n">capture_warnings</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                 <span class="n">capture_warnings</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">logger_config</span><span class="o">=</span><span class="n">DEFAULT_LOGGER_OVERRIDES</span><span class="p">):</span>
     <span class="n">add_logging_level</span><span class="p">(</span><span class="s2">&quot;TRACE&quot;</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="n">capture_warnings</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">log_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">log_format</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)s</span><span class="s2">:</span><span class="si">%(funcName)s</span><span class="s2">()] </span><span class="si">%(message)s</span><span class="s2">&quot;</span> \
+        <span class="n">log_format</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2">:</span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(lineno)s</span><span class="s2">:</span><span class="si">%(funcName)s</span><span class="s2">()] </span><span class="si">%(message)s</span><span class="s2">&quot;</span> \
             <span class="k">if</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span> <span class="k">else</span> <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">&gt;</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+        <span class="c1"># If we&#39;re above DEBUG level, allow for reconfiguration of module-specific logging levels</span>
+        <span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">logger_config</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
     <span class="k">if</span> <span class="n">file_path</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span> <span class="n">filemode</span><span class="o">=</span><span class="n">file_mode</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="n">log_format</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -1659,8 +1681,8 @@
     <span class="k">return</span> <span class="n">credential</span></div>
 
 
-<div class="viewcode-block" id="bootstrap"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.bootstrap">[docs]</a><span class="k">def</span> <span class="nf">bootstrap</span><span class="p">():</span>
-    <span class="n">init_logging</span><span class="p">()</span>
+<div class="viewcode-block" id="bootstrap"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.bootstrap">[docs]</a><span class="k">def</span> <span class="nf">bootstrap</span><span class="p">(</span><span class="n">logging_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+    <span class="n">init_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging_level</span><span class="p">)</span>
     <span class="n">read_config</span><span class="p">(</span><span class="n">create_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">read_credential</span><span class="p">(</span><span class="n">create_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
@@ -1699,6 +1721,25 @@
     <span class="n">summary</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> transferred</span><span class="si">%s</span><span class="s2">. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> \
               <span class="p">(</span><span class="n">transferred</span><span class="p">,</span> <span class="s2">&quot;KB&quot;</span> <span class="k">if</span> <span class="n">total_bytes</span> <span class="o">&lt;</span> <span class="n">Megabyte</span> <span class="k">else</span> <span class="s2">&quot;MB&quot;</span><span class="p">,</span> <span class="n">throughput</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">summary</span></div>
+
+
+<div class="viewcode-block" id="calculate_optimal_transfer_shape"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.calculate_optimal_transfer_shape">[docs]</a><span class="k">def</span> <span class="nf">calculate_optimal_transfer_shape</span><span class="p">(</span><span class="n">size</span><span class="p">,</span>
+                                     <span class="n">chunk_limit</span><span class="o">=</span><span class="n">DEFAULT_MAX_CHUNK_LIMIT</span><span class="p">,</span>
+                                     <span class="n">requested_chunk_size</span><span class="o">=</span><span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span>
+                                     <span class="n">byte_align</span><span class="o">=</span><span class="n">Kilobyte</span> <span class="o">*</span> <span class="mi">64</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">chunk_limit</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">byte_align</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">HARD_MAX_CHUNK_SIZE</span> <span class="o">*</span> <span class="n">chunk_limit</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Size </span><span class="si">%d</span><span class="s2"> exceeds limit for max chunk size </span><span class="si">%d</span><span class="s2"> and chunk count </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span>
+                         <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">HARD_MAX_CHUNK_SIZE</span><span class="p">,</span> <span class="n">chunk_limit</span><span class="p">))</span>
+    <span class="n">calculated_chunk_size</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">size</span> <span class="o">/</span> <span class="n">chunk_limit</span><span class="p">)</span> <span class="o">/</span> <span class="n">byte_align</span><span class="p">)</span> <span class="o">*</span> <span class="n">byte_align</span>
+    <span class="n">chosen_chunk_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">HARD_MAX_CHUNK_SIZE</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">requested_chunk_size</span><span class="p">,</span> <span class="n">calculated_chunk_size</span><span class="p">))</span>
+    <span class="n">remainder</span> <span class="o">=</span> <span class="n">size</span> <span class="o">%</span> <span class="n">chosen_chunk_size</span>
+    <span class="n">chunk_count</span> <span class="o">=</span> <span class="n">size</span> <span class="o">//</span> <span class="n">chosen_chunk_size</span>
+    <span class="k">if</span> <span class="n">remainder</span><span class="p">:</span>
+        <span class="n">chunk_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">chosen_chunk_size</span><span class="p">,</span> <span class="n">chunk_count</span><span class="p">,</span> <span class="n">remainder</span></div>
 
 
 <div class="viewcode-block" id="topo_sorted"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.topo_sorted">[docs]</a><span class="k">def</span> <span class="nf">topo_sorted</span><span class="p">(</span><span class="n">depmap</span><span class="p">):</span>

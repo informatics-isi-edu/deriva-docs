@@ -265,8 +265,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#markdown-name">markdown_name</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#open">open</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#ux-mode">ux_mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#comment">comment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#hide-null-choice-hide-not-null-choice">hide_null_choice/hide_not_null_choice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#bar-plot">bar_plot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#order">order</a></li>
@@ -286,6 +285,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-examples.html#choice-vs-range">Choice Vs. Range</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-examples.html#facet-title">Facet Title</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-examples.html#open-vs-close">Open Vs. Close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-examples.html#change-order-of-scalar-values">Change order of scalar values</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/template-markdown.html">Template and Markdown Guide</a><ul>
@@ -1031,8 +1031,7 @@
 <li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#markdown-name">markdown_name</a></li>
-<li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#open">open</a></li>
-<li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#ux-mode">ux_mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#comment">comment</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#hide-null-choice-hide-not-null-choice">hide_null_choice/hide_not_null_choice</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#bar-plot">bar_plot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#order">order</a></li>
@@ -1052,6 +1051,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#choice-vs-range">Choice Vs. Range</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#facet-title">Facet Title</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#open-vs-close">Open Vs. Close</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#change-order-of-scalar-values">Change order of scalar values</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pseudo-columns.html">Pseudo-Columns Logic And Heuristics</a><ul>
@@ -1417,6 +1417,28 @@ By default (If <code class="docutils literal notranslate"><span class="pre">ux_m
 <p>If you want the facet to be open by default, you can add <code class="docutils literal notranslate"><span class="pre">open:true</span></code> to any of the facets. This attribute is available in all possible facet modes (entity, scalar, choices, ranges, etc.)</p>
 <div class="highlight-JavaScript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="s2">&quot;fk_col&quot;</span><span class="p">,</span> <span class="s2">&quot;open&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
 <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;fk1_cons&quot;</span><span class="p">]},</span> <span class="s2">&quot;f1_text&quot;</span><span class="p">],</span> <span class="s2">&quot;open&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="change-order-of-scalar-values">
+<span id="change-order-of-scalar-values"></span><h2>Change order of scalar values<a class="headerlink" href="#change-order-of-scalar-values" title="Permalink to this headline">¶</a></h2>
+<p>In a scalar facet that is using the <code class="docutils literal notranslate"><span class="pre">choices</span></code> UX mode, the values are sorted in a desencing order of “Number of occurences” (frequency), and tie breaking is done based on the ascending value of the scalar column:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="c1">// if you just want to hide the &quot;Number of occurences&quot;</span>
+<span class="p">{</span>
+    <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;fk1_cons&quot;</span><span class="p">]},</span> <span class="s2">&quot;f1_text&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;hide_num_occurrences&quot;</span><span class="o">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="c1">// if you don&#39;t want to show nor sort based on &quot;Number of occurences&quot;</span>
+<span class="p">{</span>
+    <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;fk1_cons&quot;</span><span class="p">]},</span> <span class="s2">&quot;f1_text&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="s2">&quot;hide_num_occurrences&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s2">&quot;order&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;column&quot;</span><span class="o">:</span> <span class="s2">&quot;f1_text&quot;</span><span class="p">,</span> <span class="s2">&quot;descending&quot;</span><span class="o">:</span> <span class="kc">false</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

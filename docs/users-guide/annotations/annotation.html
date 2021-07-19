@@ -2279,7 +2279,13 @@ in <em>filter</em> value will be stripped off and ignored.</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;row_markdown_pattern&quot;:</span></code> <em>rowpattern</em>: Render the row by composing a markdown representation only when <code class="docutils literal notranslate"><span class="pre">row_markdown_pattern</span></code> is non-null.<ul>
-<li>Expand <em>rowpattern</em> to obtain a markdown representation of each row via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>. The pattern has access to column values <strong>after</strong> any processing implied by <a class="reference external" href="#column-display">2016 Column Display</a>.</li>
+<li>Expand <em>rowpattern</em> to obtain a markdown representation of each row via <a class="reference external" href="#pattern-expansion">Pattern Expansion</a>.</li>
+<li>The pattern has access to column values <strong>after</strong> any processing implied by <a class="reference external" href="#column-display">2016 Column Display</a>.</li>
+<li>If used in any context other than <code class="docutils literal notranslate"><span class="pre">row_name</span></code>, the pattern also has access to a <code class="docutils literal notranslate"><span class="pre">$self</span></code> object that has the following attributes:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">rowName</span></code>: Row-name of the represented row.</li>
+<li><code class="docutils literal notranslate"><span class="pre">uri.detailed</span></code>: a uri to the row in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;separator_markdown&quot;:</span></code> <em>separator</em>: Insert <em>separator</em> markdown text between each expanded <em>rowpattern</em> when presenting row sets. (Default new-line <code class="docutils literal notranslate"><span class="pre">&quot;\n&quot;</span></code>.)<ul>
@@ -2492,6 +2498,9 @@ the alternative one has modified the representation of each entity in some way.<
 </ul>
 <p>Default heuristics:</p>
 <ul class="simple">
+<li>Apart from the main table data, all-outbound foreignkeys, and listed psuedo-columns in the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>, the pattern has access to a <code class="docutils literal notranslate"><span class="pre">$self</span></code> object that has the following attributes:</li>
+<li><code class="docutils literal notranslate"><span class="pre">rowName</span></code>: Row-name of the represented row.</li>
+<li><code class="docutils literal notranslate"><span class="pre">uri.detailed</span></code>: a uri to the row in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context.</li>
 <li><code class="docutils literal notranslate"><span class="pre">journal_pattern</span></code>, <code class="docutils literal notranslate"><span class="pre">year_pattern</span></code>, and <code class="docutils literal notranslate"><span class="pre">url_pattern</span></code> MUST be specified for citation. If any of the 3 are not specified or if one of them produces a null value, citation will be disabled.</li>
 <li>If any of the other values are not present or produce a null value, it is up to the client to decide how to display the citation.</li>
 </ul>

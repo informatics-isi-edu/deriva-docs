@@ -250,6 +250,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/annotation.html#tag-2018-indexing-preferences">Tag: 2018 Indexing Preferences</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/annotation.html#tag-2019-chaise-config">Tag: 2019 Chaise Config</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/annotation.html#tag-2019-source-definitions">Tag: 2019 Source Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/annotation.html#tag-2021-google-dataset">Tag: 2021 Google Dataset</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/annotation.html#context-names">Context Names</a></li>
 </ul>
 </li>
@@ -973,6 +976,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#tag-2018-indexing-preferences">Tag: 2018 Indexing Preferences</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tag-2019-chaise-config">Tag: 2019 Chaise Config</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tag-2019-source-definitions">Tag: 2019 Source Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tag-2021-google-dataset">Tag: 2021 Google Dataset</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#context-names">Context Names</a></li>
 </ul>
 </li>
@@ -1632,6 +1638,16 @@ here is a quick matrix to locate them.</p>
 <td>-</td>
 <td>-</td>
 <td>Describe source definitions</td>
+</tr>
+<tr>
+<td><a href="#tag-2021-google-dataset">2021 Google Dataset</a></td>
+<td>-</td>
+<td>-</td>
+<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>Describe metadata for rich results in Google Dataset</td>
 </tr>
 </tbody>
 </table><p>For brevity, the annotation keys are listed above by their section
@@ -2643,6 +2659,64 @@ The json object follows the same rules as <a class="reference external" href="ht
 <li><em>Any other values</em> : In this case chaise will not provide any foreign key data in templating environments.</li>
 </ul>
 </div>
+</div>
+<div class="section" id="tag-2021-google-dataset">
+<span id="tag-2021-google-dataset"></span><h2>Tag: 2021 Google Dataset<a class="headerlink" href="#tag-2021-google-dataset" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2021:google-dataset</span></code></p>
+<p>This key indicates the metadata that will be converted to valid and well-formed JSON-LD referencing a table. In terms of SEO, JSON-LD is implemented leveraging the Schema.org vocabulary, which is a unified structured data vocabulary for the web. <a class="reference external" href="https://datasetsearch.research.google.com/">Google Dataset Search</a> discovers datasets when a valid JSON-LD of type <a class="reference external" href="https://www.schema.org/Dataset">Dataset</a> is added to the HTML page.</p>
+<p>Supported JSON payload pattern:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <em>context</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <code class="docutils literal notranslate"><span class="pre">&quot;dataset&quot;:</span></code> <em>jsonld</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code> : Configure JSON-LD to be used for this context.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <em>context1</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>context2</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Short-hand to allow <em>context1</em> to use the same configuration that is used for <em>context2</em>.</li>
+</ul>
+<p>Supported <em>jsonld</em> payload pattern:</p>
+<ul class="simple">
+<li>JSON-LD keywords:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;context</span></code>: It is a schema for your data, not only defining the property datatypes but also the classes of json resources. Default applied if none exists is <code class="docutils literal notranslate"><span class="pre">http://schema.org</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&#64;type</span></code>: Used to set the data type of a node or typed value. At the top level, only a value of <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> is supported. Default applied if none exists is <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>.</li>
+</ul>
+</li>
+<li>Schema.org volabulary: The supported attributes and types are <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/js/utils/jsonldSchema.js">here</a>. This is a subset of the original vocabulary provided by schema.org. All the properties support <a class="reference external" href="#pattern-expansion">pattern expansion</a> and the <code class="docutils literal notranslate"><span class="pre">template_engine</span></code> property should be defined outside the <code class="docutils literal notranslate"><span class="pre">dataset</span></code> definition. Apart from the main table data and all-outbound foreignkeys the pattern has access to a <code class="docutils literal notranslate"><span class="pre">$self</span></code> object that has the following attributes:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">rowName</span></code>: Row-name of the represented row.</li>
+<li><code class="docutils literal notranslate"><span class="pre">uri.detailed</span></code>: a uri to the row in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context.</li>
+</ul>
+</li>
+</ul>
+<p>After generating the JSON-LD based on the given specifications, the client will validate it. If the generated JSON-LD has any of the following issues, the given JSON-LD will be completely invalidated and ignored:</p>
+<ul class="simple">
+<li>Incorrect value of <code class="docutils literal notranslate"><span class="pre">&#64;context</span></code> (Must refer to <code class="docutils literal notranslate"><span class="pre">schema.org</span></code>.)</li>
+<li>Incorrect value of <code class="docutils literal notranslate"><span class="pre">&#64;type</span></code> (Must be <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>.)</li>
+<li>Missing or empty value of mandatory attribute <code class="docutils literal notranslate"><span class="pre">name</span></code></li>
+<li>Missing or empty value of mandatory attribute <code class="docutils literal notranslate"><span class="pre">description</span></code></li>
+</ul>
+<p>In all remaining scenarios, the problematic attribute (attributes that don’t follow the expected structure or type) will simply be ignored and the reason for that will be logged in the browser console.</p>
+<p>You can use <a class="reference external" href="https://search.google.com/test/rich-results">this</a> tool by Google to validate any JSON-LD yourself if needed, it accepts both a URL or a code snippet.</p>
+<p>Example of annotation:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;tag:isrd.isi.edu,2021:google-dataset&quot;</span><span class="p">:</span> <span class="p">{</span>  
+    <span class="nt">&quot;detailed&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;@context&quot;</span><span class="p">:</span> <span class="s2">&quot;http://schema.org&quot;</span><span class="p">,</span> 
+        <span class="nt">&quot;@type&quot;</span><span class="p">:</span> <span class="s2">&quot;Dataset&quot;</span><span class="p">,</span> 
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{title}}}&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{summary}}}&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{$self.uri.detailed}}}&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;creator&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://data.world/smartcolumbusos&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{website}}}&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;@type&quot;</span><span class="p">:</span> <span class="s2">&quot;Organization&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{category}}}&quot;</span><span class="p">,</span>
+          <span class="nt">&quot;parentOrganization&quot;</span><span class="p">:</span> <span class="s2">&quot;Smart Columbus Operating System&quot;</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;dateModified&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{RMT}}}&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;datePublished&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{RCT}}}&quot;</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;template_engine&quot;</span><span class="p">:</span> <span class="s2">&quot;handlebars&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <div class="section" id="context-names">
 <span id="context-names"></span><h3>Context Names<a class="headerlink" href="#context-names" title="Permalink to this headline">¶</a></h3>
 <p>List of <em>context</em> names that are used in ERMrest:</p>
@@ -2818,6 +2892,21 @@ The json object follows the same rules as <a class="reference external" href="ht
 <tr>
 <td><a href="#tag-2019-export">2019 Export</a></td>
 <td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>X</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td><a href="#tag-2021-google-dataset">2021 Google Dataset</a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>

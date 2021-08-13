@@ -261,9 +261,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html">Facet JSON Structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#logical-operators">Logical operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source">Data Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source">Data source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source-with-reusable-prefix">Data source with reusable prefix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#constraints">Constraints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#extra-attributes">Extra attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#markdown-name">markdown_name</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#comment">comment</a></li>
@@ -1030,9 +1034,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../user-docs/facet-json-structure.html">Facet JSON Structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#logical-operators">Logical operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#data-source">Data Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#data-source">Data source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/facet-json-structure.html#data-source-with-reusable-prefix">Data source with reusable prefix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#constraints">Constraints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/facet-json-structure.html#extra-attributes">Extra attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/facet-json-structure.html#markdown-name">markdown_name</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/facet-json-structure.html#comment">comment</a></li>
@@ -1602,6 +1610,8 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ermrestDefault">.ermrestDefault</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Column+default">.default</a> ⇒ <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isUniqueNotNull">.isUniqueNotNull</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+uniqueNotNullKey">.uniqueNotNullKey</a> : <a class="reference external" href="#ERMrest.Key"><code>Key</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+formatvalue">.formatvalue(data, context)</a> ⇒ <code>string</code> | <code>Array.<p>&amp;lt;</p>
 string<p>&amp;gt;</p>
 </code></li>
@@ -1947,7 +1957,7 @@ boolean<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn">.ReferenceColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObject, name, mainTuple)</a></li>
+<li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+name">.name</a> : <code>string</code></li>
@@ -1974,23 +1984,20 @@ ReferenceColumn<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.VirtualColumn">.VirtualColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.VirtualColumn_new">new VirtualColumn(reference, column, sourceObject, name, mainTuple)</a></li>
+<li><a class="reference external" href="#new_ERMrest.VirtualColumn_new">new VirtualColumn(reference, column, sourceObjectWrapper, name, mainTuple)</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn">.PseudoColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, sourceObject, name, mainTuple)</a></li>
+<li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+hasPath">.hasPath</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+commentDisplay">.commentDisplay</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+key">.key</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+hasPath">.hasPath</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+foreignKeys">.foreignKeys</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>Array.<p>&amp;lt;</p>
-ForeignKeyRef<p>&amp;gt;</p>
-</code></a></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+getAggregatedValue">.getAggregatedValue(page, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -2042,18 +2049,18 @@ ForeignKeyRef<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.FacetColumn">.FacetColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.FacetColumn_new">new FacetColumn(reference, index, column, facetObject, filters)</a></li>
+<li><a class="reference external" href="#new_ERMrest.FacetColumn_new">new FacetColumn(reference, index, facetObject, filters)</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+_column">._column</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+index">.index</a> : <code>int</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+dataSource">.dataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+compressedDataSource">.compressedDataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
@@ -3125,14 +3132,7 @@ Column<p>&amp;gt;</p>
 <ul class="simple">
 <li>fkeys: array of ForeignKeyRef objects</li>
 <li>columns: Array of columns</li>
-<li>sources: hash-map of name to an object that has<ul>
-<li>sourceObject</li>
-<li>column</li>
-<li>hasPath</li>
-<li>hasInbound</li>
-<li>isEntity</li>
-</ul>
-</li>
+<li>sources: hash-map of name to the SourceObjectWrapper object.</li>
 <li>sourceMapping: hashname to all the names</li>
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+searchSourceDefinition"></a></p>
@@ -3141,14 +3141,7 @@ Column<p>&amp;gt;</p>
 <span id="table-searchsourcedefinition-code-array-lt-object-gt-code-code-false-code"></span><h3>table.searchSourceDefinition : <code>Array.<p>&amp;lt;</p>
 Object<p>&amp;gt;</p>
 </code> | <code>false</code><a class="headerlink" href="#table-searchsourcedefinition-code-array-lt-object-gt-code-code-false-code" title="Permalink to this headline">¶</a></h3>
-<p>Returns an array of objects with the followin attributes:</p>
-<ul class="simple">
-<li>sourceObject</li>
-<li>column</li>
-<li>hasPath</li>
-<li>hasInbound</li>
-<li>isEntity</li>
-</ul>
+<p>Returns an array of SourceObjectWrapper objects.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+pureBinaryForeignKeys"></a></p>
 </div>
 <div class="section" id="table-purebinaryforeignkeys-code-array-lt-foreignkeyref-gt-code">
@@ -3742,6 +3735,8 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ermrestDefault">.ermrestDefault</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.Column+default">.default</a> ⇒ <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isUniqueNotNull">.isUniqueNotNull</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+uniqueNotNullKey">.uniqueNotNullKey</a> : <a class="reference external" href="#ERMrest.Key"><code>Key</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+formatvalue">.formatvalue(data, context)</a> ⇒ <code>string</code> | <code>Array.<p>&amp;lt;</p>
 string<p>&amp;gt;</p>
 </code></li>
@@ -3757,9 +3752,6 @@ string<p>&amp;gt;</p>
 <div class="section" id="new-column-table-jsoncolumn">
 <span id="new-column-table-jsoncolumn"></span><h3>new Column(table, jsonColumn)<a class="headerlink" href="#new-column-table-jsoncolumn" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a Column.</p>
-<p>TODO: The Column will need to change. We need to be able to use the
-column in the context the new <a class="reference external" href="ERMrest.Reference+columns">ERMrest.Reference+columns</a> where
-a Column <em>may not</em> be a part of a Table.</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -3879,6 +3871,17 @@ To get the default value that is suitable for client-side, please use .default</
 <div class="section" id="column-default-code-string-code">
 <span id="column-default-code-string-code"></span><h3>column.default ⇒ <code>string</code><a class="headerlink" href="#column-default-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>return the default value for a column after checking whether it’s a primitive that can be displayed properly</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isUniqueNotNull"></a></p>
+</div>
+<div class="section" id="column-isuniquenotnull-code-boolean-code">
+<span id="column-isuniquenotnull-code-boolean-code"></span><h3>column.isUniqueNotNull : <code>Boolean</code><a class="headerlink" href="#column-isuniquenotnull-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether this column is unique (part of a simple key) and not-null</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+uniqueNotNullKey"></a></p>
+</div>
+<div class="section" id="column-uniquenotnullkey-code-key-code">
+<span id="column-uniquenotnullkey-code-key-code"></span><h3>column.uniqueNotNullKey : <a class="reference external" href="#ERMrest.Key"><code>Key</code></a><a class="headerlink" href="#column-uniquenotnullkey-code-key-code" title="Permalink to this headline">¶</a></h3>
+<p>If the column is unique and not-null, will return the simple key
+that is made of this column. Otherwise it will return <code class="docutils literal notranslate"><span class="pre">null</span></code></p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+formatvalue"></a></p>
 </div>
 <div class="section" id="column-formatvalue-data-context-code-string-code-code-array-lt-string-gt-code">
@@ -6563,9 +6566,9 @@ this should include</p>
 <ul class="simple">
 <li>requests: An array of the secondary request objects which inlcudes aggregates, entitysets, inline tables, and related tables.
 Depending on the type of request it can have different attibutes.<ul>
-<li>for aggregate and entitysets:
+<li>for aggregate, entitysets, and uniquefilterd:
 {column: ERMrest.ReferenceColumn, <type>: true, objects: [{index: integer, column: boolean, related: boolean, inline: boolean, citation: boolean}]
-where the type is <code class="docutils literal notranslate"><span class="pre">entityset</span></code> or <code class="docutils literal notranslate"><span class="pre">aggregate</span></code>. Each object is capturing where in the page needs this pseudo-column.</li>
+where the type is aggregate<code class="docutils literal notranslate"><span class="pre">,</span></code>entity<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">or</span></code>entityset`. Each object is capturing where in the page needs this pseudo-column.</li>
 <li>for related and inline tables:
 {<type>: true, index: integer}
 where the type is <code class="docutils literal notranslate"><span class="pre">inline</span></code> or <code class="docutils literal notranslate"><span class="pre">related</span></code>.</li>
@@ -7139,7 +7142,7 @@ access this constructor for purposes of fetching aggregate data about the table.
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.ReferenceColumn">.ReferenceColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObject, name, mainTuple)</a></li>
+<li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+name">.name</a> : <code>string</code></li>
@@ -7167,8 +7170,8 @@ ReferenceColumn<p>&amp;gt;</p>
 </li>
 </ul>
 <p><a name="new_ERMrest.ReferenceColumn_new"></a></p>
-<div class="section" id="new-referencecolumn-reference-basecols-sourceobject-name-maintuple">
-<span id="new-referencecolumn-reference-basecols-sourceobject-name-maintuple"></span><h3>new ReferenceColumn(reference, baseCols, sourceObject, name, mainTuple)<a class="headerlink" href="#new-referencecolumn-reference-basecols-sourceobject-name-maintuple" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-referencecolumn-reference-basecols-sourceobjectwrapper-name-maintuple">
+<span id="new-referencecolumn-reference-basecols-sourceobjectwrapper-name-maintuple"></span><h3>new ReferenceColumn(reference, baseCols, sourceObjectWrapper, name, mainTuple)<a class="headerlink" href="#new-referencecolumn-reference-basecols-sourceobjectwrapper-name-maintuple" title="Permalink to this headline">¶</a></h3>
 <p>Constructor for ReferenceColumn. This class is a wrapper for <a class="reference external" href="#ERMrest.Column">Column</a>.</p>
 <table border="1" class="docutils">
 <thead>
@@ -7190,9 +7193,9 @@ ReferenceColumn<p>&amp;gt;</p>
 <td>List of columns that this reference-column will be created based on.</td>
 </tr>
 <tr>
-<td>sourceObject</td>
-<td><code>object</code></td>
-<td>the whole column object</td>
+<td>sourceObjectWrapper</td>
+<td><code>ERMrest.SourceObjectWrapper</code></td>
+<td>the sourceObjectWrapper object (might be undefined)</td>
 </tr>
 <tr>
 <td>name</td>
@@ -7441,8 +7444,8 @@ Should be called once every value is retrieved</p>
 <div class="section" id="ermrest-virtualcolumn">
 <span id="ermrest-virtualcolumn"></span><h2>ERMrest.VirtualColumn<a class="headerlink" href="#ermrest-virtualcolumn" title="Permalink to this headline">¶</a></h2>
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><a name="new_ERMrest.VirtualColumn_new"></a></p>
-<div class="section" id="new-virtualcolumn-reference-column-sourceobject-name-maintuple">
-<span id="new-virtualcolumn-reference-column-sourceobject-name-maintuple"></span><h3>new VirtualColumn(reference, column, sourceObject, name, mainTuple)<a class="headerlink" href="#new-virtualcolumn-reference-column-sourceobject-name-maintuple" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-virtualcolumn-reference-column-sourceobjectwrapper-name-maintuple">
+<span id="new-virtualcolumn-reference-column-sourceobjectwrapper-name-maintuple"></span><h3>new VirtualColumn(reference, column, sourceObjectWrapper, name, mainTuple)<a class="headerlink" href="#new-virtualcolumn-reference-column-sourceobjectwrapper-name-maintuple" title="Permalink to this headline">¶</a></h3>
 <p>A pseudo-column without any actual source definition behind it.
 This constructor assumes that the sourceObject has markdown_name and display.markdown_pattern.</p>
 <p>The name is currently generated by the visible columns logic. It will use the
@@ -7468,9 +7471,9 @@ it will append “-<integer>” to it.</p>
 <td>the column that this pseudo-column is representing</td>
 </tr>
 <tr>
-<td>sourceObject</td>
-<td><code>object</code></td>
-<td>the whole column object</td>
+<td>sourceObjectWrapper</td>
+<td><code>ERMrest.SourceObjectWrapper</code></td>
+<td>the sourceObjectWrapper object (might be undefined)</td>
 </tr>
 <tr>
 <td>name</td>
@@ -7491,19 +7494,16 @@ it will append “-<integer>” to it.</p>
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.PseudoColumn">.PseudoColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, sourceObject, name, mainTuple)</a></li>
+<li><a class="reference external" href="#new_ERMrest.PseudoColumn_new">new PseudoColumn(reference, column, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+hasPath">.hasPath</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+commentDisplay">.commentDisplay</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+key">.key</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+hasPath">.hasPath</a> : <code>boolean</code></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+foreignKeys">.foreignKeys</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>Array.<p>&amp;lt;</p>
-ForeignKeyRef<p>&amp;gt;</p>
-</code></a></li>
-<li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+getAggregatedValue">.getAggregatedValue(page, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -7511,8 +7511,8 @@ ForeignKeyRef<p>&amp;gt;</p>
 </li>
 </ul>
 <p><a name="new_ERMrest.PseudoColumn_new"></a></p>
-<div class="section" id="new-pseudocolumn-reference-column-sourceobject-name-maintuple">
-<span id="new-pseudocolumn-reference-column-sourceobject-name-maintuple"></span><h3>new PseudoColumn(reference, column, sourceObject, name, mainTuple)<a class="headerlink" href="#new-pseudocolumn-reference-column-sourceobject-name-maintuple" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-pseudocolumn-reference-column-sourceobjectwrapper-name-maintuple">
+<span id="new-pseudocolumn-reference-column-sourceobjectwrapper-name-maintuple"></span><h3>new PseudoColumn(reference, column, sourceObjectWrapper, name, mainTuple)<a class="headerlink" href="#new-pseudocolumn-reference-column-sourceobjectwrapper-name-maintuple" title="Permalink to this headline">¶</a></h3>
 <p>If you want to create an object of this type, use the <code class="docutils literal notranslate"><span class="pre">module._createPseudoColumn</span></code> method.
 This will only be used for general purpose pseudo-columns, using that method ensures That
 we’re creating the more specific object instead. Therefore only these cases should
@@ -7542,9 +7542,9 @@ entity (inbound or p&amp;b association)</li>
 <td>the column that this pseudo-column is representing</td>
 </tr>
 <tr>
-<td>sourceObject</td>
-<td><code>object</code></td>
-<td>the whole column object</td>
+<td>sourceObjectWrapper</td>
+<td><code>ERMrest.SourceObjectWrapper</code></td>
+<td>the sourceObjectWrapper object (might be undefined)</td>
 </tr>
 <tr>
 <td>name</td>
@@ -7562,6 +7562,26 @@ entity (inbound or p&amp;b association)</li>
 <div class="section" id="pseudocolumn-ispseudo-code-boolean-code">
 <span id="pseudocolumn-ispseudo-code-boolean-code"></span><h3>pseudoColumn.isPseudo : <code>boolean</code><a class="headerlink" href="#pseudocolumn-ispseudo-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>indicates that this object represents a PseudoColumn.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+hasPath"></a></p>
+</div>
+<div class="section" id="pseudocolumn-haspath-code-boolean-code">
+<span id="pseudocolumn-haspath-code-boolean-code"></span><h3>pseudoColumn.hasPath : <code>boolean</code><a class="headerlink" href="#pseudocolumn-haspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If the pseudo-column is connected via a path to the table or not.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+isEntityMode"></a></p>
+</div>
+<div class="section" id="pseudocolumn-isentitymode-code-boolean-code">
+<span id="pseudocolumn-isentitymode-code-boolean-code"></span><h3>pseudoColumn.isEntityMode : <code>boolean</code><a class="headerlink" href="#pseudocolumn-isentitymode-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If the pseudoColumn is in entity mode</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+isUnique"></a></p>
+</div>
+<div class="section" id="pseudocolumn-isunique-code-boolean-code">
+<span id="pseudocolumn-isunique-code-boolean-code"></span><h3>pseudoColumn.isUnique : <code>boolean</code><a class="headerlink" href="#pseudocolumn-isunique-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If the pseudoColumn is referring to a unique row (the path is one to one)</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+hasAggregate"></a></p>
+</div>
+<div class="section" id="pseudocolumn-hasaggregate-code-boolean-code">
+<span id="pseudocolumn-hasaggregate-code-boolean-code"></span><h3>pseudoColumn.hasAggregate : <code>boolean</code><a class="headerlink" href="#pseudocolumn-hasaggregate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If aggregate function is defined on the column.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+comment"></a></p>
 </div>
 <div class="section" id="pseudocolumn-comment-code-object-code">
@@ -7599,38 +7619,11 @@ It will return the first applicable rule:</p>
 <li>In entity mode, return the table’s displayname.</li>
 <li>In scalar return the column’s displayname.</li>
 </ol>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+isUnique"></a></p>
-</div>
-<div class="section" id="pseudocolumn-isunique-code-boolean-code">
-<span id="pseudocolumn-isunique-code-boolean-code"></span><h3>pseudoColumn.isUnique : <code>boolean</code><a class="headerlink" href="#pseudocolumn-isunique-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>If the pseudoColumn is referring to a unique row (the path is one to one)</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+isEntityMode"></a></p>
-</div>
-<div class="section" id="pseudocolumn-isentitymode-code-boolean-code">
-<span id="pseudocolumn-isentitymode-code-boolean-code"></span><h3>pseudoColumn.isEntityMode : <code>boolean</code><a class="headerlink" href="#pseudocolumn-isentitymode-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>If the pseudoColumn is in entity mode</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+key"></a></p>
 </div>
 <div class="section" id="pseudocolumn-key-code-boolean-code">
 <span id="pseudocolumn-key-code-boolean-code"></span><h3>pseudoColumn.key : <code>boolean</code><a class="headerlink" href="#pseudocolumn-key-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>If the pseudoColumn is in entity mode will return the key that this column represents</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+hasPath"></a></p>
-</div>
-<div class="section" id="pseudocolumn-haspath-code-boolean-code">
-<span id="pseudocolumn-haspath-code-boolean-code"></span><h3>pseudoColumn.hasPath : <code>boolean</code><a class="headerlink" href="#pseudocolumn-haspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>If the pseudo-column is connected via a path to the table or not.</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+foreignKeys"></a></p>
-</div>
-<div class="section" id="pseudocolumn-foreignkeys-code-array-lt-foreignkeyref-gt-code">
-<span id="pseudocolumn-foreignkeys-code-array-lt-foreignkeyref-gt-code"></span><h3>pseudoColumn.foreignKeys : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>Array.<p>&amp;lt;</p>
-ForeignKeyRef<p>&amp;gt;</p>
-</code></a><a class="headerlink" href="#pseudocolumn-foreignkeys-code-array-lt-foreignkeyref-gt-code" title="Permalink to this headline">¶</a></h3>
-<p>List of foreignkeys on the path</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+hasAggregate"></a></p>
-</div>
-<div class="section" id="pseudocolumn-hasaggregate-code-boolean-code">
-<span id="pseudocolumn-hasaggregate-code-boolean-code"></span><h3>pseudoColumn.hasAggregate : <code>boolean</code><a class="headerlink" href="#pseudocolumn-hasaggregate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>If aggregate function is defined on the column.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+reference"></a></p>
 </div>
 <div class="section" id="pseudocolumn-reference-code-reference-code">
@@ -8281,18 +8274,18 @@ of current table. This wrapper is for inbound foreignkeys. It is actually warppi
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.FacetColumn">.FacetColumn</a><ul>
-<li><a class="reference external" href="#new_ERMrest.FacetColumn_new">new FacetColumn(reference, index, column, facetObject, filters)</a></li>
+<li><a class="reference external" href="#new_ERMrest.FacetColumn_new">new FacetColumn(reference, index, facetObject, filters)</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+_column">._column</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+index">.index</a> : <code>int</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+dataSource">.dataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+compressedDataSource">.compressedDataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
@@ -8333,13 +8326,12 @@ ERMREst.RangeFacetFilter<p>&amp;gt;</p>
 </li>
 </ul>
 <p><a name="new_ERMrest.FacetColumn_new"></a></p>
-<div class="section" id="new-facetcolumn-reference-index-column-facetobject-filters">
-<span id="new-facetcolumn-reference-index-column-facetobject-filters"></span><h3>new FacetColumn(reference, index, column, facetObject, filters)<a class="headerlink" href="#new-facetcolumn-reference-index-column-facetobject-filters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-facetcolumn-reference-index-facetobject-filters">
+<span id="new-facetcolumn-reference-index-facetobject-filters"></span><h3>new FacetColumn(reference, index, facetObject, filters)<a class="headerlink" href="#new-facetcolumn-reference-index-facetobject-filters" title="Permalink to this headline">¶</a></h3>
 <p>Represent facet columns that are available.
 NOTE:
 Based on facets JSON structure we can have joins that result in facets
 on columns that are not part of reference column.</p>
-<p>TODO This is just experimental, the arguments might change eventually.</p>
 <p>If the ReferenceColumn is not provided, then the FacetColumn is for reference</p>
 <table border="1" class="docutils">
 <thead>
@@ -8361,13 +8353,8 @@ on columns that are not part of reference column.</p>
 <td>The index of this FacetColumn in the list of facetColumns</td>
 </tr>
 <tr>
-<td>column</td>
-<td><a href="#ERMrest.Column"><code>Column</code></a></td>
-<td>the column that filters will be based on.</td>
-</tr>
-<tr>
 <td>facetObject</td>
-<td><code>object</code></td>
+<td><code>ERMrest.SourceObjectWrapper</code></td>
 <td>The filter object that this FacetColumn will be created based on</td>
 </tr>
 <tr>
@@ -8408,13 +8395,7 @@ NOTE: we’re not validating this data-source, we assume that this is valid.</p>
 <div class="section" id="facetcolumn-filters">
 <span id="facetcolumn-filters"></span><h3>facetColumn.filters<a class="headerlink" href="#facetcolumn-filters" title="Permalink to this headline">¶</a></h3>
 <p>Filters that are applied to this facet.</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><strong>Type{facetfilter[]}</strong>:<a name="ERMrest.FacetColumn+isOpen"></a></p>
-</div>
-<div class="section" id="facetcolumn-isopen-code-boolean-code">
-<span id="facetcolumn-isopen-code-boolean-code"></span><h3>facetColumn.isOpen : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isopen-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>If has filters it will return true,
-otherwise returns facetObject[‘open’]</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+hasPath"></a></p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><strong>Type{facetfilter[]}</strong>:<a name="ERMrest.FacetColumn+hasPath"></a></p>
 </div>
 <div class="section" id="facetcolumn-haspath-code-boolean-code">
 <span id="facetcolumn-haspath-code-boolean-code"></span><h3>facetColumn.hasPath : <code>Boolean</code><a class="headerlink" href="#facetcolumn-haspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
@@ -8428,6 +8409,19 @@ The path that is defined on the facet might be different from the one that
 we are going to use to talk with ermrest. We might optmize the path.
 Facets with only one hop where the column used in foreignkey is the same column for faceting, and is not nullable
 can be optmized by completely ignoring the foreignkey path and just doing a value check on main table.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isEntityMode"></a></p>
+</div>
+<div class="section" id="facetcolumn-isentitymode-code-boolean-code">
+<span id="facetcolumn-isentitymode-code-boolean-code"></span><h3>facetColumn.isEntityMode : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isentitymode-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Returns true if the source is on a key column.
+If facetObject[‘entity’] is defined as false, it will return false,
+otherwise it will true if filter is based on key.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isOpen"></a></p>
+</div>
+<div class="section" id="facetcolumn-isopen-code-boolean-code">
+<span id="facetcolumn-isopen-code-boolean-code"></span><h3>facetColumn.isOpen : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isopen-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If has filters it will return true,
+otherwise returns facetObject[‘open’]</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+preferredMode"></a></p>
 </div>
 <div class="section" id="facetcolumn-preferredmode-code-string-code">
@@ -8445,13 +8439,6 @@ always return <code class="docutils literal notranslate"><span class="pre">choic
 <li>return choices if int or serial, part of key, and not null.</li>
 <li>return ranges or choices based on the type.</li>
 </ol>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isEntityMode"></a></p>
-</div>
-<div class="section" id="facetcolumn-isentitymode-code-boolean-code">
-<span id="facetcolumn-isentitymode-code-boolean-code"></span><h3>facetColumn.isEntityMode : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isentitymode-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>Returns true if the source is on a key column.
-If facetObject[‘entity’] is defined as false, it will return false,
-otherwise it will true if filter is based on key.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isAllOutboundNotNull"></a></p>
 </div>
 <div class="section" id="facetcolumn-isalloutboundnotnull-code-boolean-code">
@@ -11494,9 +11481,9 @@ this should include</p>
 <ul class="simple">
 <li>requests: An array of the secondary request objects which inlcudes aggregates, entitysets, inline tables, and related tables.
 Depending on the type of request it can have different attibutes.<ul>
-<li>for aggregate and entitysets:
+<li>for aggregate, entitysets, and uniquefilterd:
 {column: ERMrest.ReferenceColumn, <type>: true, objects: [{index: integer, column: boolean, related: boolean, inline: boolean, citation: boolean}]
-where the type is <code class="docutils literal notranslate"><span class="pre">entityset</span></code> or <code class="docutils literal notranslate"><span class="pre">aggregate</span></code>. Each object is capturing where in the page needs this pseudo-column.</li>
+where the type is aggregate<code class="docutils literal notranslate"><span class="pre">,</span></code>entity<code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">or</span></code>entityset`. Each object is capturing where in the page needs this pseudo-column.</li>
 <li>for related and inline tables:
 {<type>: true, index: integer}
 where the type is <code class="docutils literal notranslate"><span class="pre">inline</span></code> or <code class="docutils literal notranslate"><span class="pre">related</span></code>.</li>

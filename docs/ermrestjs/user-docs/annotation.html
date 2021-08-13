@@ -263,9 +263,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html">Facet JSON Structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#logical-operators">Logical operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source">Data Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source">Data source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#data-source-with-reusable-prefix">Data source with reusable prefix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#constraints">Constraints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#extra-attributes">Extra attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#markdown-name">markdown_name</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/facet-json-structure.html#comment">comment</a></li>
@@ -1032,9 +1036,13 @@
 <li class="toctree-l2"><a class="reference internal" href="facet-json-structure.html">Facet JSON Structure</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#logical-operators">Logical operators</a></li>
-<li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#data-source">Data Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#data-source">Data source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#data-source-with-reusable-prefix">Data source with reusable prefix</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#constraints">Constraints</a></li>
-<li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#extra-attributes">Extra Attributes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="facet-json-structure.html#extra-attributes">Extra attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#markdown-name">markdown_name</a></li>
 <li class="toctree-l4"><a class="reference internal" href="facet-json-structure.html#comment">comment</a></li>
@@ -1955,7 +1963,7 @@ columns in a table, overriding the defined table structure.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;sourcekey&quot;:</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: Defines a pseudo-column based on the given <em>sourcekey</em>. For more information please refer to <a class="reference internal" href="pseudo-columns.html"><span class="doc">pseudo-column document</span></a>.</p>
 </li>
-<li><p class="first"><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;source&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Defines a pseudo-column based on the given <em>sourceentry</em>. For detailed explanation and examples please refer to <a class="reference internal" href="pseudo-columns.html#examples"><span class="std std-ref">here</span></a>. Other optional attributes that this JSON document can have are:</p>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;source&quot;:</span></code> <em>sourceentry</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Defines a pseudo-column based on the given <em>sourceentry</em>. For detailed explanation and examples please refer to <a class="reference internal" href="pseudo-columns.html"><span class="doc">here</span></a>. Other optional attributes that this JSON document can have are:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The markdown to use in place of the default heuristics for title of column.</li>
 <li><code class="docutils literal notranslate"><span class="pre">&quot;hide_column_header&quot;:</span> <span class="pre">true</span></code>: Hide the column header (and still show the value). This is only supported in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context.</li>
@@ -2011,10 +2019,16 @@ columns in a table, overriding the defined table structure.</p>
 <li><p class="first"><em>columnname</em>: : A string literal. <em>columnname</em> identifies a constituent column of the table.</p>
 </li>
 <li><p class="first"><em>path</em>: An array of <em>foreign key path</em> that ends with a <em>columnname</em> that will be projected. <em>foreign key path</em> is in the following format:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{` _direction_ `:[` *schema name*`,` *constraint name* `]}` &quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{` _direction_ `:[` &lt;schema-name&gt; `,` &lt;constraint-name&gt; `]}` &quot;</span>
 </pre></div>
 </div>
 <p>Where <em>direction</em> is either <code class="docutils literal notranslate"><span class="pre">inbound</span></code>, or <code class="docutils literal notranslate"><span class="pre">outbound</span></code>.</p>
+</li>
+<li><p class="first"><em>path_w_prefix</em>: An array that starts with a <em>sourcekey prefix</em> and MUST have one or more _foreign key path_s and end with a <em>columnname</em>. <em>sourcekey prefix</em> is in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{&quot;</span><span class="n">sourcekey</span><span class="s2">&quot;:` &lt;source-key-name&gt; `}` &quot;</span>
+</pre></div>
+</div>
+<p>Where &lt;source-key-name&gt; is a string literal that refers to any of the defined sources in <a class="reference external" href="#tag-2019-source-definitions"><code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotations</a>.</p>
 </li>
 </ul>
 <p>Supported <em>sourcekey</em> pattern in here:</p>
@@ -2382,10 +2396,16 @@ foreign keys referencing a table, useful when presenting “related entities”.
 <p>Supported <em>sourceentry</em> pattern in here:</p>
 <ul>
 <li><p class="first"><em>path</em>: An array of <em>foreign key path</em> that ends with a <em>columnname</em> that will be projected. <em>foreign key path</em> is in the following format:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{` _direction_ `:[` *schema name*`,` *constraint name* `]}` &quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;`{` _direction_ `:[` &lt;schema-name&gt;,` &lt;constraint-name&gt; `]}` &quot;</span>
 </pre></div>
 </div>
 <p>Where <em>direction</em> is either <code class="docutils literal notranslate"><span class="pre">inbound</span></code>, or <code class="docutils literal notranslate"><span class="pre">outbound</span></code>.</p>
+</li>
+<li><p class="first"><em>path_w_prefix</em>: An array that starts with a <em>sourcekey prefix</em> and MUST have one or more _foreign key path_s and end with a <em>columnname</em>. <em>sourcekey prefix</em> is in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{&quot;</span><span class="n">sourcekey</span><span class="s2">&quot;:` &lt;source-key-name&gt; `}` &quot;</span>
+</pre></div>
+</div>
+<p>Where &lt;source-key-name&gt; is a string literal that refers to any of the defined sources in <a class="reference external" href="#tag-2019-source-definitions"><code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotations</a>.</p>
 </li>
 </ul>
 <p>Supported <em>sourcekey</em> pattern in here:</p>
@@ -2601,6 +2621,17 @@ The json object follows the same rules as <a class="reference external" href="ht
             &quot;entity&quot;: true,
             &quot;aggregate&quot;: &quot;array_d&quot;
         },
+        &quot;source-2&quot;: {
+            &quot;source&quot;: &quot;column&quot;,
+            &quot;markdown_name&quot;: &quot;Column displayname&quot;
+        },
+        &quot;source-3&quot;: {
+            &quot;source&quot;: [
+                {&quot;sourcekey&quot;: &quot;source-1&quot;},
+                {&quot;outbound&quot;: [&quot;schema&quot;, &quot;fk2&quot;]},
+                &quot;RID&quot;
+            ]
+        },
         &quot;search-box&quot;: {
             &quot;or&quot;: [
                 {&quot;source&quot;: &quot;column1&quot;, &quot;markdown_name&quot;: &quot;another name&quot;},
@@ -2639,10 +2670,16 @@ The json object follows the same rules as <a class="reference external" href="ht
 <li><p class="first"><em>columnname</em>: : A string literal. <em>columnname</em> identifies a constituent column of the table.</p>
 </li>
 <li><p class="first"><em>path</em>: An array of <em>foreign key path</em> that ends with a <em>columnname</em> that will be projected. <em>foreign key path</em> is in the following format:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{` _direction_ `:[` *schema name*`,` *constraint name* `]}` &quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;`{` _direction_ `:[` &lt;schema-name&gt; `,` &lt;constraint-name&gt; `]}` &quot;</span>
 </pre></div>
 </div>
 <p>Where <em>direction</em> is either <code class="docutils literal notranslate"><span class="pre">inbound</span></code>, or <code class="docutils literal notranslate"><span class="pre">outbound</span></code>.</p>
+</li>
+<li><p class="first"><em>path_w_prefix</em>: An array that starts with a <em>sourcekey prefix</em> and MUST have one or more _foreign key path_s and end with a <em>columnname</em>. <em>sourcekey prefix</em> is in the following format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;`{&quot;</span><span class="n">sourcekey</span><span class="s2">&quot;:` &lt;source-key-name&gt; `}` &quot;</span>
+</pre></div>
+</div>
+<p>Where &lt;source-key-name&gt; is a string literal that refers to any of the source definitions.</p>
 </li>
 </ul>
 <p>Supported <em>searchcolumn</em> pattern:</p>

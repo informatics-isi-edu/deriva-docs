@@ -396,7 +396,10 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/export.html">Export Annotation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/export.html#structure">Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/export.html#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/export.html#default-csv-option">Default CSV option</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1126,7 +1129,10 @@
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Export Annotation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#structure">Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-ermrestjs-interperts-it">How ERMrestJS Interperts It</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#default-csv-option">Default CSV option</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1399,27 +1405,41 @@
 <p>This annotation only applies to a table, but MAY be annotated at the schema level to set a schema-wide default. If the annotation is missing on the table, we will get the export definition from the schema. If the annotation is missing from both schema and table, we are going to apply default heuristics for this annotation only in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. This means if you navigate to a page with <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context (record page in chaise) and you haven’t defined any export annotation, we are going to use the default export template. The following is the content of the generated default export template:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API request to the main table.<ul>
-<li>The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> defined for the <code class="docutils literal notranslate"><span class="pre">export</span></code> context (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> if <code class="docutils literal notranslate"><span class="pre">export</span></code> annotation is not specified).</li>
+<li>The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> defined for the <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> context (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> if <code class="docutils literal notranslate"><span class="pre">export</span></code> context is not specified).</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API for all the other related entities.<ul>
-<li>The List of related entities is populated using the <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context in <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code> annotation.</li>
+<li>The List of related entities is populated using the <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> (or <code class="docutils literal notranslate"><span class="pre">export</span></code> or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context in <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code> annotation.</li>
 <li>The projection list includes all the visible columns of the related table based on <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context.</li>
 <li>The foreign key column of the main entity is added to the projection list, so we don’t lose the relationship of the related entity.</li>
 <li>This request is grouped by the value of table’s key and foreign key value.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all visible assets of the main entity in <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all visible assets of the main entity in <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> (or <code class="docutils literal notranslate"><span class="pre">export</span></code> or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context.<ul>
 <li>The <code class="docutils literal notranslate"><span class="pre">destination.name</span></code> is generated using the <code class="docutils literal notranslate"><span class="pre">assets/&lt;column</span> <span class="pre">name&gt;</span></code> pattern, where <code class="docutils literal notranslate"><span class="pre">&lt;column</span> <span class="pre">name&gt;</span></code> is the name of your asset column.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all visible assets of the related entities in <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> ) context.<ul>
+<li><code class="docutils literal notranslate"><span class="pre">fetch</span></code> all visible assets of the related entities in <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> (or <code class="docutils literal notranslate"><span class="pre">export</span></code> or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> ) context.<ul>
 <li>The <code class="docutils literal notranslate"><span class="pre">destination.name</span></code> is generated using the <code class="docutils literal notranslate"><span class="pre">assets/&lt;table</span> <span class="pre">displayname&gt;/&lt;column</span> <span class="pre">name&gt;</span></code> pattern, where <code class="docutils literal notranslate"><span class="pre">&lt;table</span> <span class="pre">displayname&gt;</span></code> is the displayname of the related table, and <code class="docutils literal notranslate"><span class="pre">&lt;column</span> <span class="pre">name&gt;</span></code> is the name of your asset column.</li>
 </ul>
 </li>
 </ul>
 <blockquote>
 <div>If the generated path for any of the <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API requests is lengthy, we will use the <code class="docutils literal notranslate"><span class="pre">entity</span></code> API instead.</div></blockquote>
+<div class="section" id="default-csv-option">
+<span id="default-csv-option"></span><h3>Default CSV option<a class="headerlink" href="#default-csv-option" title="Permalink to this headline">¶</a></h3>
+<p>Chaise will add a default CSV option to the presented list of export templates. This option will prompt a download for a <code class="docutils literal notranslate"><span class="pre">csv</span></code> file that uses <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API of ERMrest. The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and depending on the app it will use different contexts.</p>
+<ul class="simple">
+<li>In recordset app, Chaise will use <code class="docutils literal notranslate"><span class="pre">export/compact</span></code> context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>. If not defined, it will try <code class="docutils literal notranslate"><span class="pre">export</span></code> and then <code class="docutils literal notranslate"><span class="pre">compact</span></code>.</li>
+<li>In record app, Chaise will use <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code>context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>. If not defined, it will try <code class="docutils literal notranslate"><span class="pre">export</span></code> and then <code class="docutils literal notranslate"><span class="pre">detailed</span></code>.</li>
+</ul>
+<p>If you don’t want Chaise to add this option, you should define an empty <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> list like the following:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;tag:isrd.isi.edu,2016:visible-columns&quot;: {
+  &quot;export&quot;: []
+}
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

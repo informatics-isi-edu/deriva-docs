@@ -2806,6 +2806,14 @@ The json object follows the same rules as <a class="reference external" href="ht
 </li>
 </ul>
 </li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Define a list of not-null columns that should be used as “stable key”.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: An alternative syntax to <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;</span></code> that allows you to refer to an existing key instead of defining your own list of columns.</li>
+</ul>
+<p>Note:</p>
+<ul class="simple">
+<li>If both <code class="docutils literal notranslate"><span class="pre">stable_key_columns</span></code> and <code class="docutils literal notranslate"><span class="pre">stable_key</span></code> are defined, <code class="docutils literal notranslate"><span class="pre">stable_key_columns</span></code> will be used.</li>
+<li>Current implementation of <code class="docutils literal notranslate"><span class="pre">stable_key_columns</span></code> (and <code class="docutils literal notranslate"><span class="pre">stable_key</span></code>) DOES NOT allow composite keys, and only single column is allowed.</li>
+<li>“Stable key” is used to provide a more stable and presistent value for entity facets and used in combination of “save query” feature. In some cases the model might change and the facet definitions are optimized to be performant and not stable/persistence. In these circumstances you can define a “stable key” for the table and Chaise will store value of stable key instead.</li>
 </ul>
 <div class="section" id="context-names">
 <span id="context-names"></span><h3>Context Names<a class="headerlink" href="#context-names" title="Permalink to this headline">¶</a></h3>

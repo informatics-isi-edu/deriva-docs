@@ -1901,7 +1901,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+validateFacetsFilters">.validateFacetsFilters(facetAndFilters, facetObjectWrappers, searchTerm, skipMappingEntityChoices, changeLocation)</a></li>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams, skipOnConflict)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getTRS, getTCRS, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -2347,7 +2347,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+validateFacetsFilters">.validateFacetsFilters(facetAndFilters, facetObjectWrappers, searchTerm, skipMappingEntityChoices, changeLocation)</a></li>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams, skipOnConflict)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getTRS, getTCRS, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -5742,7 +5742,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+validateFacetsFilters">.validateFacetsFilters(facetAndFilters, facetObjectWrappers, searchTerm, skipMappingEntityChoices, changeLocation)</a></li>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams, skipOnConflict)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getTRS, getTCRS, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -6256,8 +6256,8 @@ in the end will update the list</p>
 <p>Will return a reference with the same facets but hidden.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+create"></a></p>
 </div>
-<div class="section" id="reference-create-data-contextheaderparams-code-promise-code">
-<span id="reference-create-data-contextheaderparams-code-promise-code"></span><h3>reference.create(data, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-create-data-contextheaderparams-skiponconflict-code-promise-code">
+<span id="reference-create-data-contextheaderparams-skiponconflict-code-promise-code"></span><h3>reference.create(data, contextHeaderParams, skipOnConflict) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-skiponconflict-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Creates a set of tuples in the references relation. Note, this
 operation sets the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> list according to the table
 specification, and not according to the contents of in the input
@@ -6288,6 +6288,11 @@ or rejected with any of the following errors:</p>
 <td>contextHeaderParams</td>
 <td><code>Object</code></td>
 <td>the object that we want to log.</td>
+</tr>
+<tr>
+<td>skipOnConflict</td>
+<td><code>Boolean</code></td>
+<td>if true, it will not complain about conflict</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>
@@ -10733,7 +10738,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+validateFacetsFilters">.validateFacetsFilters(facetAndFilters, facetObjectWrappers, searchTerm, skipMappingEntityChoices, changeLocation)</a></li>
 <li><a class="reference external" href="#ERMrest.Reference+removeAllFacetFilters">.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet)</a> ⇒ <code>ERMrest.reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+hideFacets">.hideFacets()</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+create">.create(data, contextHeaderParams, skipOnConflict)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+read">.read(limit, contextHeaderParams, useEntity, dontCorrectPage, getTRS, getTCRS, getUnlinkTRS)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+sort">.sort(sort)</a> ⇒ <code>Reference</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+update">.update(tuples, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
@@ -11247,8 +11252,8 @@ in the end will update the list</p>
 <p>Will return a reference with the same facets but hidden.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+create"></a></p>
 </div>
-<div class="section" id="reference-create-data-contextheaderparams-code-promise-code">
-<span id="id39"></span><h3>reference.create(data, contextHeaderParams) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-code-promise-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="reference-create-data-contextheaderparams-skiponconflict-code-promise-code">
+<span id="id39"></span><h3>reference.create(data, contextHeaderParams, skipOnConflict) ⇒ <code>Promise</code><a class="headerlink" href="#reference-create-data-contextheaderparams-skiponconflict-code-promise-code" title="Permalink to this headline">¶</a></h3>
 <p>Creates a set of tuples in the references relation. Note, this
 operation sets the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> list according to the table
 specification, and not according to the contents of in the input
@@ -11279,6 +11284,11 @@ or rejected with any of the following errors:</p>
 <td>contextHeaderParams</td>
 <td><code>Object</code></td>
 <td>the object that we want to log.</td>
+</tr>
+<tr>
+<td>skipOnConflict</td>
+<td><code>Boolean</code></td>
+<td>if true, it will not complain about conflict</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+read"></a></p>

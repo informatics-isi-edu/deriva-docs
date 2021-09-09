@@ -1390,7 +1390,10 @@
 <li><a class="reference external" href="#inline-vs-block">Inline Vs. Block</a></li>
 <li><a class="reference external" href="#attributes">Attributes</a><ul>
 <li><a class="reference external" href="#tooltip">Tooltip</a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
 <li><a class="reference external" href="#special-classes">Special Classes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference external" href="#examples">Examples</a><ul>
@@ -1467,21 +1470,9 @@
 </div>
 <div class="section" id="attributes">
 <span id="attributes"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
-<p>You can attach attributes to any element in your markdown. Generally you can attach the attributes in <code class="docutils literal notranslate"><span class="pre">{}</span></code> to your element. For example if you want to add attributes to a link, you can use the <code class="docutils literal notranslate"><span class="pre">[caption](link){attributes}</span></code> template. The acceptable format for attributes:</p>
+<p>You can attach attributes to any element in your markdown. Generally you can attach the attributes in <code class="docutils literal notranslate"><span class="pre">{}</span></code> to your element. For example if you want to add attributes to a link, you can use the <code class="docutils literal notranslate"><span class="pre">[caption](link){attributes}</span></code> template. You can have any number of attributes and to separate the attributes you just need to have white space between them. The following are some examples of attaching attributes:</p>
 <ul>
-<li><p class="first">Any attribute that starts with a <code class="docutils literal notranslate"><span class="pre">.</span></code> will be treated as class name.</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[class example](http://example.com){.test}
-
-#OUTPUT
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>class example<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p><a href="http://example.com" class="test">class example</a></p></div></blockquote>
-</li>
-<li><p class="first">If you want to define multiple attributes just seperate them with space.</p>
+<li><p class="first">Attaching multiple attributes:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>**Multiple attributes Example**{.test .cls-2 val=1 disabled}
 
 #OUTPUT
@@ -1493,9 +1484,7 @@
 <blockquote>
 <div><p><strong class="test cls-2" val="1" disabled="">Multiple attributes Example</strong></p></div></blockquote>
 </li>
-<li><p class="first">Attach attributes to markdown table</p>
-</li>
-</ul>
+<li><p class="first">Attaching attributes to markdown table</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>|header|\n|-|\n|text|{.class-name}
 
 #OUTPUT
@@ -1515,6 +1504,9 @@
 </div>
 <blockquote>
 <div><table class="class-name"><thead><tr><th>heading</th></tr></thead><tbody><tr><td>text</td></tr></tbody></table></div></blockquote>
+</li>
+</ul>
+<p>Depending on the markdown element type, different attrbiutes will be acceptable and throughout this document we will mention them. The following are some of the general attributes:</p>
 <div class="section" id="tooltip">
 <span id="tooltip"></span><h3>Tooltip<a class="headerlink" href="#tooltip" title="Permalink to this headline">¶</a></h3>
 <p>Using <code class="docutils literal notranslate"><span class="pre">title</span></code> attribute you can add a tooltip to any HTML element.</p>
@@ -1528,8 +1520,21 @@
 <blockquote>
 <div><p> <a href="http://example.com" title="tooltip for this link">tooltip example</a></p></div></blockquote>
 </div>
+<div class="section" id="classes">
+<span id="classes"></span><h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<p>Any attribute that starts with a <code class="docutils literal notranslate"><span class="pre">.</span></code> will be treated as class name.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[class example](http://example.com){.test}
+
+#OUTPUT
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;test&quot;</span><span class="p">&gt;</span>class example<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><a href="http://example.com" class="test">class example</a></p></div></blockquote>
 <div class="section" id="special-classes">
-<span id="special-classes"></span><h3>Special Classes<a class="headerlink" href="#special-classes" title="Permalink to this headline">¶</a></h3>
+<span id="special-classes"></span><h4>Special Classes<a class="headerlink" href="#special-classes" title="Permalink to this headline">¶</a></h4>
 <p>The following is the list of special class names that you can use:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">.chaise-btn</span></code>: This class is used to represent buttons. You should use it in conjunction with any of the following classes:<ul>
@@ -1546,6 +1551,7 @@
 <li><code class="docutils literal notranslate"><span class="pre">.chaise-autofill</span></code>: Used to set the height and width to fill the parent container based on the user’s browser.</li>
 <li><code class="docutils literal notranslate"><span class="pre">.fullscreen-off</span></code>: When applied in iframe template, this class hides the full screen button that appears at the top right corner.</li>
 </ul>
+</div>
 </div>
 </div>
 <div class="section" id="examples">

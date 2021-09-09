@@ -1389,6 +1389,7 @@
 <ul class="simple">
 <li><a class="reference external" href="#inline-vs-block">Inline Vs. Block</a></li>
 <li><a class="reference external" href="#attributes">Attributes</a><ul>
+<li><a class="reference external" href="#tooltip">Tooltip</a></li>
 <li><a class="reference external" href="#special-classes">Special Classes</a></li>
 </ul>
 </li>
@@ -1467,9 +1468,8 @@
 <div class="section" id="attributes">
 <span id="attributes"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
 <p>You can attach attributes to any element in your markdown. Generally you can attach the attributes in <code class="docutils literal notranslate"><span class="pre">{}</span></code> to your element. For example if you want to add attributes to a link, you can use the <code class="docutils literal notranslate"><span class="pre">[caption](link){attributes}</span></code> template. The acceptable format for attributes:</p>
-<ul class="simple">
-<li>Any attribute that starts with a <code class="docutils literal notranslate"><span class="pre">.</span></code> will be treated as class name.</li>
-</ul>
+<ul>
+<li><p class="first">Any attribute that starts with a <code class="docutils literal notranslate"><span class="pre">.</span></code> will be treated as class name.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[class example](http://example.com){.test}
 
 #OUTPUT
@@ -1480,9 +1480,8 @@
 </div>
 <blockquote>
 <div><p><a href="http://example.com" class="test">class example</a></p></div></blockquote>
-<ul class="simple">
-<li>If you want to define multiple attributes just seperate them with space.</li>
-</ul>
+</li>
+<li><p class="first">If you want to define multiple attributes just seperate them with space.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>**Multiple attributes Example**{.test .cls-2 val=1 disabled}
 
 #OUTPUT
@@ -1493,8 +1492,9 @@
 </div>
 <blockquote>
 <div><p><strong class="test cls-2" val="1" disabled="">Multiple attributes Example</strong></p></div></blockquote>
-<ul class="simple">
-<li>Attach attributes to markdown table</li>
+</li>
+<li><p class="first">Attach attributes to markdown table</p>
+</li>
 </ul>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>|header|\n|-|\n|text|{.class-name}
 
@@ -1515,6 +1515,19 @@
 </div>
 <blockquote>
 <div><table class="class-name"><thead><tr><th>heading</th></tr></thead><tbody><tr><td>text</td></tr></tbody></table></div></blockquote>
+<div class="section" id="tooltip">
+<span id="tooltip"></span><h3>Tooltip<a class="headerlink" href="#tooltip" title="Permalink to this headline">¶</a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">title</span></code> attribute you can add a tooltip to any HTML element.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[tooltip example](http://example.com){title=&quot;tooltip for this link&quot;}
+#OUTPUT
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;tooltip for this link&quot;</span><span class="p">&gt;</span>tooltip example<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p> <a href="http://example.com" title="tooltip for this link">tooltip example</a></p></div></blockquote>
+</div>
 <div class="section" id="special-classes">
 <span id="special-classes"></span><h3>Special Classes<a class="headerlink" href="#special-classes" title="Permalink to this headline">¶</a></h3>
 <p>The following is the list of special class names that you can use:</p>

@@ -1415,20 +1415,36 @@
 <td>The location of the ERMrest service.</td>
 </tr>
 <tr>
+<td>defaultCatalog</td>
+<td>A catalog id</td>
+<td>N/A</td>
+<td>"defaultCatalog":\&lt;id></td>
+<td>N/A</td>
+<td>Use this parameter to specify which catalog Chaise shows by default. When a user navigates to "/chaise/recordset" and omits the rest of the path, the <code>defaultCatalog</code> paired with <code>defaultTables</code> are used to generate a valid recordset link for the user. It is strongly recommended defining this in your <code>chaise-config.js</code> file. This property is used to fetch the catalog annotation information for pages that rely on <code>chaise-config.js</code> but don't have a catalog id in the path. For example, the navbar on static pages uses this property to try to fetch a catalog annotation for configuring the navbar.</td>
+</tr>
+<tr>
+<td>defaultTables</td>
+<td>An object that specifies a catalog's the default schema and table</td>
+<td>N/A</td>
+<td>"defaultTables": {N: {"schema": S, "table": T}, ...}</td>
+<td>N/A</td>
+<td>Use this parameter to specify for each catalog <code>N</code>, which table <code>T</code> Chaise shows by default.</td>
+</tr>
+<tr>
+<td><strong>navbar configuration:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td>headTitle</td>
 <td>An application name</td>
 <td>Chaise</td>
 <td>"headTitle":\&lt;value></td>
 <td>N/A</td>
 <td>The application name.</td>
-</tr>
-<tr>
-<td>customCSS</td>
-<td>A URL</td>
-<td>N/A</td>
-<td>"customCSS":\&lt;value></td>
-<td>N/A</td>
-<td>The URL for a style sheet file to be applied for the application header. This is typically a relative URL to a dedicated stylesheet in the CSS folder of the related static site repo (For example, in RBK, it's /assets/css/chaise.css in the rbk-www repo). More information can be found <a href="custom-css.md">here</a></td>
 </tr>
 <tr>
 <td>navbarBrand</td>
@@ -1455,20 +1471,28 @@
 <td>The URL for an image to be displayed in the navigation bar.</td>
 </tr>
 <tr>
+<td>navbarMenu</td>
+<td>An object</td>
+<td>N/A</td>
+<td>"navbarMenu":{...}</td>
+<td>N/A</td>
+<td>Use this parameter to customize the menu items displayed in the navbar at the top of all Chaise apps by supplying an object with your links and/or dropdown menus. Each option accepts an 'acls' object that has two attribute arrays ('show' and 'enable') used to define lists of globus groups or users that can see and click that link. The <code>url</code> property of each menu object allows for templating of the catalog id parameter using the pattern <code>{{$catalog.id}}</code>. The <code>header</code> property of each menu object will create an unclickable bold header with class <code>chaise-dropdown-header</code>. Consult the <em>chaise-config-sample.js</em> file for more details about format.</td>
+</tr>
+<tr>
+<td><strong>login/logout:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td>logoutURL</td>
 <td>A URL</td>
 <td>/</td>
 <td>"logoutURL":\&lt;value></td>
 <td>N/A</td>
 <td>The URL to the logout page, root if not defined.</td>
-</tr>
-<tr>
-<td>maxRecordsetRowHeight</td>
-<td>A boolean/number</td>
-<td>160</td>
-<td>"maxRecordsetRowHeight":\&lt;value></td>
-<td>N/A</td>
-<td>Set this property to false if you don't want content to be clipped in tables else set it to a number which represent the maximum row height when not expanded.</td>
 </tr>
 <tr>
 <td>dataBrowser</td>
@@ -1479,12 +1503,52 @@
 <td>The URL to continue after a logout. Also used when an error is thrown and we don't know where to redirect the user.</td>
 </tr>
 <tr>
-<td>defaultAnnotationColor</td>
-<td>red, orange, gold, green, blue, purple</td>
-<td>red</td>
-<td>"defaultAnnotationColor":\&lt;value></td>
+<td>signUpURL</td>
+<td>A URL</td>
 <td>N/A</td>
-<td>In <code>/chaise/viewer</code>, annotations' borders and colors will default to this value.</td>
+<td>"signUpURL":\&lt;your_URL></td>
+<td>N/A</td>
+<td>Use this parameter to specify what the "Sign Up" link in the navbar should link to. If <code>signUpURL</code> is unspecified, the navbar will not display a "Sign Up" link.</td>
+</tr>
+<tr>
+<td>profileURL</td>
+<td>A URL</td>
+<td>N/A</td>
+<td>"profileURL":\&lt;your_URL></td>
+<td>N/A</td>
+<td>When a user is logged in, the navbar displays the user's username. Use this parameter to specify what the username in the navbar should link to (e.g. <code>https://app.globus.org/account</code> if your deployment uses Globus authentication). If <code>profileURL</code> is unspecified, the navbar will display the username as regular text.</td>
+</tr>
+<tr>
+<td>termsAndConditionsConfig</td>
+<td>Object</td>
+<td>null</td>
+<td>"termsAndConditionsConfig": {groupId: \&lt;value>, joinUrl: \&lt;value>, groupName: \&lt;value>}</td>
+<td>N/A</td>
+<td>Use this property to enforce joining a globus group before continuing use of the application as a logged in user. <code>groupId</code> is a string in the form of "https://auth.globus.org/123a4bcd-ef5a-67bc-8912-d34e5fa67b89". <code>joinUrl</code> is a string in the form of "https://app.globus.org/groups/123a4bcd-ef5a-67bc-8912-d34e5fa67b89/join". <code>groupName</code> is the name of the group as it appears in globus. This config property defaults to null when undefined. If the property is not an object containing all of the above 3 properties, this will be set to null.</td>
+</tr>
+<tr>
+<td><strong>display:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>customCSS</td>
+<td>A URL</td>
+<td>N/A</td>
+<td>"customCSS":\&lt;value></td>
+<td>N/A</td>
+<td>The URL for a style sheet file to be applied for the application header. This is typically a relative URL to a dedicated stylesheet in the CSS folder of the related static site repo (For example, in RBK, it's /assets/css/chaise.css in the rbk-www repo). More information can be found <a href="custom-css.md">here</a></td>
+</tr>
+<tr>
+<td>maxRecordsetRowHeight</td>
+<td>A boolean/number</td>
+<td>160</td>
+<td>"maxRecordsetRowHeight":\&lt;value></td>
+<td>N/A</td>
+<td>Set this property to false if you don't want content to be clipped in tables else set it to a number which represent the maximum row height when not expanded.</td>
 </tr>
 <tr>
 <td>confirmDelete</td>
@@ -1519,84 +1583,12 @@
 <td>If present and equal to <strong>true</strong>, the recordedit page will show delete button if editRecord is also true, and record page will show delete button if this is true. Otherwise, hide delete buttons.</td>
 </tr>
 <tr>
-<td>defaultCatalog</td>
-<td>A catalog id</td>
-<td>N/A</td>
-<td>"defaultCatalog":\&lt;id></td>
-<td>N/A</td>
-<td>Use this parameter to specify which catalog Chaise shows by default. When a user navigates to "/chaise/recordset" and omits the rest of the path, the <code>defaultCatalog</code> paired with <code>defaultTables</code> are used to generate a valid recordset link for the user. It is strongly recommended defining this in your <code>chaise-config.js</code> file. This property is used to fetch the catalog annotation information for pages that rely on <code>chaise-config.js</code> but don't have a catalog id in the path. For example, the navbar on static pages uses this property to try to fetch a catalog annotation for configuring the navbar.</td>
-</tr>
-<tr>
-<td>defaultTables</td>
-<td>An object that specifies a catalog's the default schema and table</td>
-<td>N/A</td>
-<td>"defaultTables": {N: {"schema": S, "table": T}, ...}</td>
-<td>N/A</td>
-<td>Use this parameter to specify for each catalog <code>N</code>, which table <code>T</code> Chaise shows by default.</td>
-</tr>
-<tr>
-<td>signUpURL</td>
-<td>A URL</td>
-<td>N/A</td>
-<td>"signUpURL":\&lt;your_URL></td>
-<td>N/A</td>
-<td>Use this parameter to specify what the "Sign Up" link in the navbar should link to. If <code>signUpURL</code> is unspecified, the navbar will not display a "Sign Up" link.</td>
-</tr>
-<tr>
-<td>profileURL</td>
-<td>A URL</td>
-<td>N/A</td>
-<td>"profileURL":\&lt;your_URL></td>
-<td>N/A</td>
-<td>When a user is logged in, the navbar displays the user's username. Use this parameter to specify what the username in the navbar should link to (e.g. <code>https://app.globus.org/account</code> if your deployment uses Globus authentication). If <code>profileURL</code> is unspecified, the navbar will display the username as regular text.</td>
-</tr>
-<tr>
-<td>navbarMenu</td>
-<td>An object</td>
-<td>N/A</td>
-<td>"navbarMenu":{...}</td>
-<td>N/A</td>
-<td>Use this parameter to customize the menu items displayed in the navbar at the top of all Chaise apps by supplying an object with your links and/or dropdown menus. Each option accepts an 'acls' object that has two attribute arrays ('show' and 'enable') used to define lists of globus groups or users that can see and click that link. The <code>url</code> property of each menu object allows for templating of the catalog id parameter using the pattern <code>{{$catalog.id}}</code>. The <code>header</code> property of each menu object will create an unclickable bold header with class <code>chaise-dropdown-header</code>. Consult the <em>chaise-config-sample.js</em> file for more details about format.</td>
-</tr>
-<tr>
-<td>sidebarPosition</td>
-<td>"left" <br> "right"</td>
-<td>"right"</td>
-<td>"sidebarPosition": \&lt;value></td>
-<td>N/A</td>
-<td>Applies to the Search app only. If \&lt;value> is "left", the sidebar will be on the left and the main content will shift left correspondingly. If \&lt;value> is "right", the sidebar will be on the right.</td>
-</tr>
-<tr>
-<td>attributesSidebarHeading</td>
-<td>String</td>
-<td>"Choose Attributes"</td>
-<td>"attributesSidebarHeading": \&lt;value></td>
-<td>N/A</td>
-<td>Applies to Search app only. Use this parameter to customize the heading displayed in at the top of the Attributes sidebar (usually the first sidebar that appears when the Search app loads).</td>
-</tr>
-<tr>
-<td>userGroups</td>
-<td>An object</td>
-<td>N/A</td>
-<td>"userGroups" : {"curators": <group id>, "annotators": <group id>, "curators": <group id>}</td>
-<td>N/A</td>
-<td>For Viewer app only. The Viewer app assigns an authenticated user one of three permission levels depending on the user's Globus memberships. The permission levels, from highest to lowest, are <code>curator</code>, <code>annotator</code>, <code>user</code>. The default Globus group IDs that determine who's a <code>curator</code>, <code>annotator</code>, or <code>user</code> are set by <a href="https://github.com/informatics-isi-edu/rbk-project">RBK</a>. To override these default group IDs for each permission level, you may specify your own via this <code>userGroups</code> setting.</td>
-</tr>
-<tr>
 <td>allowErrorDismissal</td>
 <td>Boolean</td>
 <td>false</td>
 <td>"allowErrorDismissal" : \&lt;value></td>
 <td>N/A</td>
 <td>All terminal error message display an error message dialog that is not dismissable by default. Set this property to true if you want to allow dismissable error message dialogs.\nThis property when defined as <code>true</code>, will cause a degraded UX experience that will prevent future errors from being thrown and other functionality might not behave as expected. This should ONLY be used in development environments.</td>
-</tr>
-<tr>
-<td>footerMarkdown</td>
-<td>A footer markdown string</td>
-<td>N/A</td>
-<td>"footerMarkdown" : \&lt;value></td>
-<td>N/A</td>
-<td>If present, it creates a footer at the bottom of the app with the markdown text.</td>
 </tr>
 <tr>
 <td>maxRelatedTablesOpen</td>
@@ -1631,20 +1623,84 @@
 <td>If true, hides the table of contents panel on the record app. By default table of contents will be visible.</td>
 </tr>
 <tr>
+<td>disableExternalLinkModal</td>
+<td>Boolean</td>
+<td>false</td>
+<td>"disableExternalLinkModal": \&lt;value></td>
+<td>N/A</td>
+<td>Set this to false to disable the external link notification.</td>
+</tr>
+<tr>
+<td>hideGoToRID</td>
+<td>Boolean</td>
+<td>false</td>
+<td>"hideGoToRID": \&lt;value></td>
+<td>N/A</td>
+<td>Use this property to hide the RID search box in the navbar. The RID search box is present in the navbar when <code>resolverImplicitCatalog !== null</code> (meaning the resolver is in use) and <code>hideGoToRID !== true</code></td>
+</tr>
+<tr>
+<td><strong>search:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>sidebarPosition</td>
+<td>"left" <br> "right"</td>
+<td>"right"</td>
+<td>"sidebarPosition": \&lt;value></td>
+<td>N/A</td>
+<td>Applies to the Search app only. If \&lt;value> is "left", the sidebar will be on the left and the main content will shift left correspondingly. If \&lt;value> is "right", the sidebar will be on the right.</td>
+</tr>
+<tr>
+<td>attributesSidebarHeading</td>
+<td>String</td>
+<td>"Choose Attributes"</td>
+<td>"attributesSidebarHeading": \&lt;value></td>
+<td>N/A</td>
+<td>Applies to Search app only. Use this parameter to customize the heading displayed in at the top of the Attributes sidebar (usually the first sidebar that appears when the Search app loads).</td>
+</tr>
+<tr>
+<td><strong>viewer:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>defaultAnnotationColor</td>
+<td>red, orange, gold, green, blue, purple</td>
+<td>red</td>
+<td>"defaultAnnotationColor":\&lt;value></td>
+<td>N/A</td>
+<td>In <code>/chaise/viewer</code>, annotations' borders and colors will default to this value.</td>
+</tr>
+<tr>
+<td>userGroups</td>
+<td>An object</td>
+<td>N/A</td>
+<td>"userGroups" : {"curators": <group id>, "annotators": <group id>, "curators": <group id>}</td>
+<td>N/A</td>
+<td>For Viewer app only. The Viewer app assigns an authenticated user one of three permission levels depending on the user's Globus memberships. The permission levels, from highest to lowest, are <code>curator</code>, <code>annotator</code>, <code>user</code>. The default Globus group IDs that determine who's a <code>curator</code>, <code>annotator</code>, or <code>user</code> are set by <a href="https://github.com/informatics-isi-edu/rbk-project">RBK</a>. To override these default group IDs for each permission level, you may specify your own via this <code>userGroups</code> setting.</td>
+</tr>
+<tr>
+<td><strong>export:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td>showExportButton</td>
 <td>Boolean</td>
 <td>false</td>
 <td>"showExportButton" : \&lt;value></td>
 <td>N/A</td>
 <td>If true, shows the experimental export button.</td>
-</tr>
-<tr>
-<td>resolverImplicitCatalog</td>
-<td>Integer</td>
-<td>N/A</td>
-<td>"resolverImplicitCatalog" : \&lt;value></td>
-<td>N/A</td>
-<td>Set to a catalog number, N, if your resolver accepts <code>/id/X</code> instead of <code>/id/N/X</code> and you prefer to share records with this shorter URL. If the property is <code>null</code>, the resolver functionality will be turned off and the default permalink will be used. Anything else will be ignored and the default behavior will be applied which is to always use the catalog-qualified form, <code>/id/N/X</code>.</td>
 </tr>
 <tr>
 <td>disableDefaultExport</td>
@@ -1663,20 +1719,36 @@
 <td>You can use this variable to switch between different export services that might be available in the deployment.</td>
 </tr>
 <tr>
-<td>assetDownloadPolicyURL</td>
-<td>String</td>
-<td>N/A</td>
-<td>"assetDownloadPolicyURL" : \&lt;value></td>
-<td>N/A</td>
-<td>Set this property to the url that points to the download policy for when an asset is fetched but the user is unauthorized to fetch that asset.</td>
+<td><strong>share and cite:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td>includeCanonicalTag</td>
-<td>Boolean</td>
-<td>false</td>
-<td>"includeCanonicalTag" : \&lt;value></td>
+<td>resolverImplicitCatalog</td>
+<td>Integer</td>
 <td>N/A</td>
-<td>This variable can be used to force chaise to include a <link> tag in the <head> tag that defines the canonical link for each of the entities and other resource pages.</td>
+<td>"resolverImplicitCatalog" : \&lt;value></td>
+<td>N/A</td>
+<td>Set to a catalog number, N, if your resolver accepts <code>/id/X</code> instead of <code>/id/N/X</code> and you prefer to share records with this shorter URL. If the property is <code>null</code>, the resolver functionality will be turned off and the default permalink will be used. Anything else will be ignored and the default behavior will be applied which is to always use the catalog-qualified form, <code>/id/N/X</code>.</td>
+</tr>
+<tr>
+<td>shareCiteAcls</td>
+<td>Object</td>
+<td>{show: ["<em>"], enable: ["</em>"]}</td>
+<td>"shareCiteAcls": {show: [\&lt;value>, ...], enable: [\&lt;value>, ...]}</td>
+<td>N/A</td>
+<td>Use this property to show/hide or enable/disable the button used to open the share and cite dialog on Record app. The accepted values for the array for both show and enable are "*" or any valid globus group key. If either key/value pair is undefined in the object, it will default to <code>["*"]</code>. Consult the <em>chaise-config-sample.js</em> file for more details.</td>
+</tr>
+<tr>
+<td><strong>system columns:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>systemColumnsDisplayCompact</td>
@@ -1703,20 +1775,12 @@
 <td>See above description for <code>systemColumnsDisplayCompact</code>. This property behaves the same way except only for the entry contexts.</td>
 </tr>
 <tr>
-<td>logClientActions</td>
-<td>Boolean</td>
-<td>true</td>
-<td>"logClientActions" : \&lt;value></td>
-<td>N/A</td>
-<td>Set this to false to disable the logging of client side actions which occurs when users interact with the app in ways that don't generate a request to the database.</td>
-</tr>
-<tr>
-<td>disableExternalLinkModal</td>
-<td>Boolean</td>
-<td>false</td>
-<td>"disableExternalLinkModal": \&lt;value></td>
-<td>N/A</td>
-<td>Set this to false to disable the external link notification.</td>
+<td><strong>system configs:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>internalHosts</td>
@@ -1727,20 +1791,28 @@
 <td>If external link notification is enabled, Chaise will use this array to determine whether the current host is external. List any hostnames that should be considered internal. If defined, <code>&lt;current hostname&gt;</code> will not be automatically added to the list.</td>
 </tr>
 <tr>
-<td>hideGoToRID</td>
+<td>includeCanonicalTag</td>
 <td>Boolean</td>
 <td>false</td>
-<td>"hideGoToRID": \&lt;value></td>
+<td>"includeCanonicalTag" : \&lt;value></td>
 <td>N/A</td>
-<td>Use this property to hide the RID search box in the navbar. The RID search box is present in the navbar when <code>resolverImplicitCatalog !== null</code> (meaning the resolver is in use) and <code>hideGoToRID !== true</code></td>
+<td>This variable can be used to force chaise to include a <link> tag in the <head> tag that defines the canonical link for each of the entities and other resource pages.</td>
 </tr>
 <tr>
-<td>shareCiteAcls</td>
-<td>Object</td>
-<td>{show: ["<em>"], enable: ["</em>"]}</td>
-<td>"shareCiteAcls": {show: [\&lt;value>, ...], enable: [\&lt;value>, ...]}</td>
+<td>logClientActions</td>
+<td>Boolean</td>
+<td>true</td>
+<td>"logClientActions" : \&lt;value></td>
 <td>N/A</td>
-<td>Use this property to show/hide or enable/disable the button used to open the share and cite dialog on Record app. The accepted values for the array for both show and enable are "*" or any valid globus group key. If either key/value pair is undefined in the object, it will default to <code>["*"]</code>. Consult the <em>chaise-config-sample.js</em> file for more details.</td>
+<td>Set this to false to disable the logging of client side actions which occurs when users interact with the app in ways that don't generate a request to the database.</td>
+</tr>
+<tr>
+<td>configRules</td>
+<td>Array</td>
+<td>N/A</td>
+<td>"configRules" : [{host: \&lt;value> | [\&lt;value>, ...], config: {}},...]</td>
+<td>N/A</td>
+<td>Allows for host specific configuration rules. Each object in the array contains 2 properties, <code>host</code> and <code>config</code>. <code>Host</code> is expected to be in the format of a single <code>string</code> value or an array of <code>string</code> values. <code>Config</code> mimics the <code>chaise-config</code> properties. All chaise config properties can be defined in this block except this property (<code>configRules</code>).</td>
 </tr>
 <tr>
 <td>savedQueryConfig</td>
@@ -1751,20 +1823,28 @@
 <td>Use this property to define the path to the saved query table for the saved query feature. The storageTable is required to be an object with 3 properties, catalog, schema, and table. This config property defaults to null when undefined. If the property is not an object with an object containing all of the above 3 properties, this will be set to null.</td>
 </tr>
 <tr>
-<td>termsAndConditionsConfig</td>
-<td>Object</td>
-<td>null</td>
-<td>"termsAndConditionsConfig": {groupId: \&lt;value>, joinUrl: \&lt;value>, groupName: \&lt;value>}</td>
-<td>N/A</td>
-<td>Use this property to enforce joining a globus group before continuing use of the application as a logged in user. <code>groupId</code> is a string in the form of "https://auth.globus.org/123a4bcd-ef5a-67bc-8912-d34e5fa67b89". <code>joinUrl</code> is a string in the form of "https://app.globus.org/groups/123a4bcd-ef5a-67bc-8912-d34e5fa67b89/join". <code>groupName</code> is the name of the group as it appears in globus. This config property defaults to null when undefined. If the property is not an object containing all of the above 3 properties, this will be set to null.</td>
+<td><strong>misc:</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr>
-<td>configRules</td>
-<td>Array</td>
+<td>footerMarkdown</td>
+<td>A footer markdown string</td>
 <td>N/A</td>
-<td>"configRules" : [{host: \&lt;value> | [\&lt;value>, ...], config: {}},...]</td>
+<td>"footerMarkdown" : \&lt;value></td>
 <td>N/A</td>
-<td>Allows for host specific configuration rules. Each object in the array contains 2 properties, <code>host</code> and <code>config</code>. <code>Host</code> is expected to be in the format of a single <code>string</code> value or an array of <code>string</code> values. <code>Config</code> mimics the <code>chaise-config</code> properties. All chaise config properties can be defined in this block except this property (<code>configRules</code>).</td>
+<td>If present, it creates a footer at the bottom of the app with the markdown text.</td>
+</tr>
+<tr>
+<td>assetDownloadPolicyURL</td>
+<td>String</td>
+<td>N/A</td>
+<td>"assetDownloadPolicyURL" : \&lt;value></td>
+<td>N/A</td>
+<td>Set this property to the url that points to the download policy for when an asset is fetched but the user is unauthorized to fetch that asset.</td>
 </tr>
 </tbody>
 </table></div>

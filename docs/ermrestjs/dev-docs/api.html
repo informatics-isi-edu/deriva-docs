@@ -2082,7 +2082,6 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.FacetColumn+compressedDataSource">.compressedDataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
@@ -3205,6 +3204,8 @@ NOTE doesn’t support composite keys for now</p>
 <li>columns: Array of columns</li>
 <li>sources: hash-map of name to the SourceObjectWrapper object.</li>
 <li>sourceMapping: hashname to all the names</li>
+<li>sourceDependencies: for each sourcekey, what are the other sourcekeys that it depends on (includes self as well)
+this has been added because of path prefix where a sourcekey might rely on other sourcekeys</li>
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+searchSourceDefinition"></a></p>
 </div>
@@ -8460,7 +8461,6 @@ of current table. This wrapper is for inbound foreignkeys. It is actually warppi
 <li><a class="reference external" href="#ERMrest.FacetColumn+compressedDataSource">.compressedDataSource</a> : <code>obj</code> | <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+filters">.filters</a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hasPath">.hasPath</a> : <code>Boolean</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+ermrestHasPath">.ermrestHasPath</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
@@ -8578,15 +8578,6 @@ NOTE: we’re not validating this data-source, we assume that this is valid.</p>
 <div class="section" id="facetcolumn-haspath-code-boolean-code">
 <span id="facetcolumn-haspath-code-boolean-code"></span><h3>facetColumn.hasPath : <code>Boolean</code><a class="headerlink" href="#facetcolumn-haspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Whether the source has path or not</p>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+ermrestHasPath"></a></p>
-</div>
-<div class="section" id="facetcolumn-ermresthaspath-code-boolean-code">
-<span id="facetcolumn-ermresthaspath-code-boolean-code"></span><h3>facetColumn.ermrestHasPath : <code>Boolean</code><a class="headerlink" href="#facetcolumn-ermresthaspath-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>Whether the source is going to have path when sending the request to ermrest
-The path that is defined on the facet might be different from the one that
-we are going to use to talk with ermrest. We might optmize the path.
-Facets with only one hop where the column used in foreignkey is the same column for faceting, and is not nullable
-can be optmized by completely ignoring the foreignkey path and just doing a value check on main table.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isEntityMode"></a></p>
 </div>
 <div class="section" id="facetcolumn-isentitymode-code-boolean-code">
@@ -8624,7 +8615,9 @@ always return <code class="docutils literal notranslate"><span class="pre">choic
 <p>Whether the facet is defining an all outbound path that the columns used
 in the path are all not-null.
 NOTE even if the column.nullok is false, ermrest could return null value for it
-if the user rights to select that column is <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+if the user rights to select that column is <code class="docutils literal notranslate"><span class="pre">null</span></code>. But we decided not to check
+for that since it’s not the desired behavior for us:
+https://github.com/informatics-isi-edu/ermrestjs/issues/888</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+barPlot"></a></p>
 </div>
 <div class="section" id="facetcolumn-barplot-code-boolean-code">
@@ -8715,19 +8708,20 @@ In this case, we can completely ignore the foreignkey path and just do a value c
 Other types of facet that null won’t be applicable to them and therefore
 we shouldn’t even offer the option:</li>
 <li>(G4) Scalar columns of main table that are not-null.</li>
-<li>(G5) All outbound foreignkey facets that all the columns invloved are not-null
-Although if user is vewing a snapshot of catalog, ermrest might actually return null
-value for a not-null column, and therefore we should not do this check if user is in that state.</li>
+<li>(G5) All outbound foreignkey facets that all the columns invloved are not-null</li>
 </ol>
 <p>Based on this, the following will be the logic for this function:
 - If facet has <code class="docutils literal notranslate"><span class="pre">null</span></code> filter: <code class="docutils literal notranslate"><span class="pre">false</span></code>
 - If facet has <code class="docutils literal notranslate"><span class="pre">&quot;hide_null_choice&quot;:</span> <span class="pre">true</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>
-- If G1: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is not-null and user has select right otherwise <code class="docutils literal notranslate"><span class="pre">false</span></code>
+- If G1: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is not-null
 - If G5: <code class="docutils literal notranslate"><span class="pre">true</span></code>
 - If G2: <code class="docutils literal notranslate"><span class="pre">true</span></code>
 - If G3.1: <code class="docutils literal notranslate"><span class="pre">false</span></code>
 - If G3 and no other G3 has null: <code class="docutils literal notranslate"><span class="pre">false</span></code>
 - otherwise: <code class="docutils literal notranslate"><span class="pre">false</span></code></p>
+<p>NOTE this function used to check for select access as well as versioned catalog,
+but we decided to remove them since it’s not the desired behavior:
+https://github.com/informatics-isi-edu/ermrestjs/issues/888</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+hideNotNullChoice"></a></p>
 </div>
 <div class="section" id="facetcolumn-hidenotnullchoice-code-boolean-code">

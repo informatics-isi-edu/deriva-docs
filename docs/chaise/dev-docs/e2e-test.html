@@ -1720,6 +1720,38 @@ during the setup the same identifier is used to ensure connecting to the correct
 <p>While running tests on <strong>CI</strong> you don’t need to set the <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> in <strong>main.yml</strong> file.</p>
 </div>
 </div>
+<div class="section" id="debugging">
+<span id="debugging"></span><h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p>You can use <a class="reference external" href="https://nodejs.org/en/docs/inspector">the Node.js built-in inspector</a> to debug the test cases. To do so,</p>
+<ol>
+<li><p class="first">Find the configuration that you want to debug. Since we’re going to use Node.js, we have to directly target the configuration and cannot use the existing <code class="docutils literal notranslate"><span class="pre">make</span></code> targets. To make this easier, you can find the config locations in <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>. In this example, we want to only debug faceting tests which is,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="o">/</span><span class="n">e2e</span><span class="o">/</span><span class="n">specs</span><span class="o">/</span><span class="n">delete</span><span class="o">-</span><span class="n">prohibited</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="n">ind</span><span class="o">-</span><span class="n">facet</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">js</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run protractor using <code class="docutils literal notranslate"><span class="pre">--inspect-break</span></code> to ensure debugging client waits for you to open it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">node</span> <span class="o">--</span><span class="n">inspect</span><span class="o">-</span><span class="k">break</span> <span class="o">./</span><span class="n">node_modules</span><span class="o">/.</span><span class="n">bin</span><span class="o">/</span><span class="n">protractor</span> <span class="n">test</span><span class="o">/</span><span class="n">e2e</span><span class="o">/</span><span class="n">specs</span><span class="o">/</span><span class="n">delete</span><span class="o">-</span><span class="n">prohibited</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="n">ind</span><span class="o">-</span><span class="n">facet</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">js</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>By default this will use the <code class="docutils literal notranslate"><span class="pre">9229</span></code> port. You can change this by doing <code class="docutils literal notranslate"><span class="pre">--inspect-break=0.0.0.0:1234</span></code>.</li>
+</ul>
+</li>
+<li><p class="first">The previous command will create a debugger that listens to a specific port, and then waits for you to open an <a class="reference external" href="https://nodejs.org/en/docs/guides/debugging-getting-started/#inspector-clients">inspector client</a>. For the purpose of this document, we’re going to use Chrome DevTools. So open Chrome and navigate to the following location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chrome</span><span class="p">:</span><span class="o">//</span><span class="n">inspect</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In the Chrome’s inspect page, under the “Remote Target”, you should see your target. Click on “inspect” for that target.</p>
+</li>
+<li><p class="first">Chrome will open a new window that is focused on “Sources” tab. If this is the first time that you’re debugging, you need to add Chaise folder to Chrome’s workspace. To do so just click on “Add folder to workspace” and choose Chaise folder.</p>
+</li>
+<li><p class="first">Now you can go ahead and find the file that you want to debug in Chaise folder and add your break points to the test folder.</p>
+</li>
+<li><p class="first">Resume the execution after you’ve added your breakpoints and wait for protractor to reach that part of code.</p>
+</li>
+</ol>
+</div>
 <div class="section" id="writing-test">
 <span id="writing-test"></span><h2>Writing test<a class="headerlink" href="#writing-test" title="Permalink to this headline">¶</a></h2>
 <p>Please use <a class="reference internal" href="e2e-test-writing.html"><span class="doc">this link</span></a> to find more information about how to write new test cases.</p>

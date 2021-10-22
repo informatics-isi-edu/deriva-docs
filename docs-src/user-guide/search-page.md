@@ -12,7 +12,7 @@ Above is a typical search results example (sometimes referred to as the landing 
 
 ## Using the filtering sidebar
 
-The filtering sidebar is a configurable set of "filters". In this example, Species and Stage (ie, anatomical age stage). Within each filter is a set of attributes that are represented in the data (ie, the Stage filter includes the attributes TS17, TS20, TS28, etc. - which represent Theiler stages).
+The filtering sidebar is a configurable set of "filters" or "facets". In this example, Species and Stage (ie, anatomical age stage). Within each filter is a set of attributes that are represented in the data (ie, the Stage filter includes the attributes TS17, TS20, TS28, etc. - which represent Theiler stages).
 
 ### Selecting filters
 

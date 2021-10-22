@@ -1,6 +1,6 @@
 # Managing Catalogs
 
-Coming soon?
+Coming soon
 
 Include definition of 'catalog'.
 

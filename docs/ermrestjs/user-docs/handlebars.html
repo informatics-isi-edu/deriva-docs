@@ -1729,21 +1729,21 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="encodefacet-helper">
 <span id="encodefacet-helper"></span><h3>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this headline">¶</a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a url path with facets. The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
-<p>Template:</p>
+<p>Template (newline and indentation added for readability and should be removed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
-<span class="s2">&quot;{</span>
+<span class="p">{</span>
   \<span class="s2">&quot;and</span><span class="se">\&quot;</span><span class="s2">: [</span>
     <span class="p">{</span>
       \<span class="s2">&quot;source</span><span class="se">\&quot;</span><span class="s2">: [{</span><span class="se">\&quot;</span><span class="s2">inbound</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">schema</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">fk_1</span><span class="se">\&quot;</span><span class="s2">]}]}, </span><span class="se">\&quot;</span><span class="s2">RID</span><span class="se">\&quot;</span><span class="s2">],</span>
       \<span class="s2">&quot;choices</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">{{</span><span class="si">{RID}</span><span class="s2">}}</span><span class="se">\&quot;</span><span class="s2">]</span>
     <span class="p">}</span>
   <span class="p">]</span>
-<span class="p">}</span><span class="s2">&quot;</span>
+<span class="p">}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">encodeFacet</span><span class="p">}})</span>
 </pre></div>
 </div>
 <p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::FSADAUczxcafd&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>As you can see in this example I am escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
@@ -1751,23 +1751,27 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="jsonstringify-helper">
 <span id="jsonstringify-helper"></span><h3>JsonStringify helper<a class="headerlink" href="#jsonstringify-helper" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript. This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet url strings.</p>
-<p>Template:</p>
+<p>Template (newline and indentation added for readability and should be removed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
     <span class="p">{{</span><span class="c1">#jsonStringify}}</span>
-    <span class="p">{</span>
-      <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-          <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;fk_1&quot;</span><span class="p">]}]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
-          <span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;{{</span><span class="si">{RID}</span><span class="s2">}}&quot;</span><span class="p">]</span>
-        <span class="p">}</span>
-      <span class="p">]</span>
-    <span class="p">}</span>
+      <span class="p">{{{</span><span class="n">col</span><span class="p">}}}</span>
     <span class="p">{{</span><span class="o">/</span><span class="n">jsonStringify</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">encodeFacet</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::FSADAUczxcafd&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+<p>Wher <code class="docutils literal notranslate"><span class="pre">col</span></code> is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;fk_1&quot;</span><span class="p">]}]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+      <span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;{{</span><span class="si">{RID}</span><span class="s2">}}&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Would result in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>

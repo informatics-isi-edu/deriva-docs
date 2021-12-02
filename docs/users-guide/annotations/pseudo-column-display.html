@@ -1465,6 +1465,10 @@
 </pre></div>
 </div>
 <p>Example (using <a class="reference internal" href="handlebars.html"><span class="doc">handlebars</span></a>): <code class="docutils literal notranslate"><span class="pre">{{#each</span> <span class="pre">$self}}[{{{this.rowName}}}]({{{this.uri.detailed}}}){{/each}}</span></code></p>
+<p>Notes:</p>
+<ul class="simple">
+<li>As it is demonstrated in the data structure, you can access the foreign key values of each row in here. Please refer to <a class="reference external" href="#examples">examples</a> for an example of this use case.</li>
+</ul>
 </li>
 <li><p class="first"><strong>Entity <code class="docutils literal notranslate"><span class="pre">array</span></code> or <code class="docutils literal notranslate"><span class="pre">array_d</span></code> aggregate</strong></p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1593,12 +1597,12 @@
 </div>
 </li>
 <li><p class="first">Condition based on other outbound foreignkeys (example based on f3).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if ($self.$fkey_s_f4_cons.values.f4_id 13)}}</span>
-    <span class="p">{{</span><span class="c1">#each $self}}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each $self}}</span>
+    <span class="p">{{</span><span class="c1">#if (eq this.values.$fkey_s_f4_cons.values.f4_id 13)}}</span>
       <span class="p">[{{{</span><span class="n">this</span><span class="o">.</span><span class="n">rowName</span><span class="p">}}}]({{{</span><span class="n">this</span><span class="o">.</span><span class="n">uri</span><span class="o">.</span><span class="n">detailed</span><span class="p">}}})</span>
       <span class="p">{{</span><span class="c1">#unless @last}}, {{/unless}}</span>
-    <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
-<span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
+    <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
+<span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
 </li>

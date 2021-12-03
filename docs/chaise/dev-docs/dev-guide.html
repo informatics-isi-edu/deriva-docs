@@ -1418,6 +1418,7 @@
 <li><a class="reference external" href="#useful-links">Useful links</a></li>
 <li><a class="reference external" href="#scss-structure">SCSS structure</a></li>
 <li><a class="reference external" href="#idioms">Idioms</a></li>
+<li><a class="reference external" href="#font-awesome">Font Awesome</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#angularjs-related">AngularJS-related</a><ul>
@@ -1501,6 +1502,49 @@ the document to be printed. To view what will be printed, either save to PDF fil
 <li>Comment your rule to make it easier for others to figure out why a rule was added.</li>
 <li>If you’re doing some calculations don’t just use the end result. Right the calculations so later we can easily figure out why you chose that value.</li>
 <li>Use variables if you’re using the same value more than once and these values should be the same all the times (Just because you’re using value <code class="docutils literal notranslate"><span class="pre">10</span></code> in two different rules doesn’t mean they should share the same variable. Use a variable if these two rules MUST be using the same value. So if later you changed one to <code class="docutils literal notranslate"><span class="pre">20</span></code>, the other one should be updated as well).</li>
+</ul>
+</div>
+<div class="section" id="font-awesome">
+<span id="font-awesome"></span><h3>Font Awesome<a class="headerlink" href="#font-awesome" title="Permalink to this headline">¶</a></h3>
+<p>In font-awesome, each font/icon can either be solid, regular, or light. In some cases
+only one version is available in the free open-source version that we’re using.</p>
+<p>While using these types of fonts the font-awesome website directs us to use <code class="docutils literal notranslate"><span class="pre">fas</span></code> for sold,
+<code class="docutils literal notranslate"><span class="pre">far</span></code> for regular, and <code class="docutils literal notranslate"><span class="pre">fal</span></code> for light. <code class="docutils literal notranslate"><span class="pre">fal</span></code> is not available in the free version so
+we should not use it at all. From the font-awesome source, the only difference between <code class="docutils literal notranslate"><span class="pre">far</span></code> and <code class="docutils literal notranslate"><span class="pre">fas</span></code> is font-weight:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">far</span><span class="o">,</span> <span class="p">.</span><span class="nc">fas</span> <span class="p">{</span>
+    <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Font Awesome 5 Free&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">far</span> <span class="p">{</span>
+    <span class="k">font-weight</span><span class="p">:</span> <span class="mi">400</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">fas</span> <span class="p">{</span>
+    <span class="k">font-weight</span><span class="p">:</span> <span class="mi">900</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This can cause some inconsistencies where <code class="docutils literal notranslate"><span class="pre">far</span></code>/<code class="docutils literal notranslate"><span class="pre">fas</span></code> are used in places that we’re
+manually changing the <code class="docutils literal notranslate"><span class="pre">font-weight</span></code>. For example assume the following icon is used</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;fas fa-ellipsis-v some-icon&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>And we’re using the following CSS rule</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">some-icon</span> <span class="p">{</span>
+  <span class="k">font-weight</span><span class="p">:</span> <span class="mi">400</span> <span class="cp">!important</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Eventhough by using <code class="docutils literal notranslate"><span class="pre">fas</span></code> we were meant to use the solid version of the font,
+the CSS rule will make sure we’re using the regular version instead. And in this
+case, the regular version of <code class="docutils literal notranslate"><span class="pre">fa-ellipsis-v</span></code> is not available in pro.</p>
+<p>So,</p>
+<ul class="simple">
+<li>We have to be careful where we’re using font-awesome and avoid any manual changing
+of <code class="docutils literal notranslate"><span class="pre">font-family</span></code> or <code class="docutils literal notranslate"><span class="pre">font-weight</span></code> and let font-awesome handle it for us.</li>
+<li>While changing font-awesome versions we have to make sure the fonts that we’re using
+are available. In some cases we might want to change the font-weight group by
+updating the font-awesome classes that are used.</li>
 </ul>
 </div>
 </div>

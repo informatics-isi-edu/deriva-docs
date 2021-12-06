@@ -302,6 +302,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#using-arrays">Using Arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
@@ -1010,6 +1011,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#subexpressions">Subexpressions:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
@@ -1422,23 +1424,23 @@ to use for ERMrest JavaScript agents.</p>
 <div class="section" id="functions">
 <span id="functions"></span><h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
 <dl>
-<dt><a href="#formatDate">formatDate()</a> ⇒</dt>
-<dd><p>{{formatDate value format}}</p>
+<dt><a href="#escape">escape()</a> ⇒</dt>
+<dd><p>escape markdown characters</p>
 </dd>
+<dt><a href="#encode">encode()</a> ⇒</dt>
+<dd></dd>
 <dt><a href="#encodeFacet">encodeFacet()</a> ⇒</dt>
 <dd><p>{{#encodeFacet}}
  str
 {{/encodeFacet}}</p>
 </dd>
+<dt><a href="#formatDate">formatDate()</a> ⇒</dt>
+<dd><p>{{formatDate value format}}</p>
+</dd>
 <dt><a href="#jsonStringify">jsonStringify()</a> ⇒</dt>
 <dd><p>{{#jsonStringify}}
  JSON Object
 {{/jsonStringify}}</p>
-</dd>
-<dt><a href="#toTitleCase">toTitleCase()</a> ⇒</dt>
-<dd><p>{{#toTitleCase}}
- string
-{{/toTitleCase}}</p>
 </dd>
 <dt><a href="#replace">replace()</a> ⇒</dt>
 <dd><p>{{#replace substr newSubstr}}
@@ -1459,6 +1461,11 @@ to use for ERMrest JavaScript agents.</p>
 <dd><p>{{#each (regexFindAll value regexp)}}
   {{this}}
 {{/each}}</p>
+</dd>
+<dt><a href="#toTitleCase">toTitleCase()</a> ⇒</dt>
+<dd><p>{{#toTitleCase}}
+ string
+{{/toTitleCase}}</p>
 </dd>
 </dl></div>
 <div class="section" id="typedefs">
@@ -12428,33 +12435,35 @@ ERMrest.resolve(&#39;https://example.org/catalog/42/entity/s:t/k=123&#39;).then(
 <div class="section" id="ermrest-getelapsedtime-code-integer-code">
 <span id="ermrest-getelapsedtime-code-integer-code"></span><h2>ERMrest.getElapsedTime() ⇒ <code>integer</code><a class="headerlink" href="#ermrest-getelapsedtime-code-integer-code" title="Permalink to this headline">¶</a></h2>
 <p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><strong>Returns</strong>: <code>integer</code> - A value set to determine the elapsed time
-since the ermrestJS has been available (milliseconds).<a name="formatDate"></a></p>
+since the ermrestJS has been available (milliseconds).<a name="escape"></a></p>
 </div>
 </div>
-<div class="section" id="formatdate">
-<span id="formatdate"></span><h1>formatDate() ⇒<a class="headerlink" href="#formatdate" title="Permalink to this headline">¶</a></h1>
-<p>{{formatDate value format}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">format</span></code><a name="encodeFacet"></a></p>
+<div class="section" id="escape">
+<span id="escape"></span><h1>escape() ⇒<a class="headerlink" href="#escape" title="Permalink to this headline">¶</a></h1>
+<p>escape markdown characters</p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: escaped characeters<a name="encode"></a></p>
+</div>
+<div class="section" id="encode">
+<span id="encode"></span><h1>encode() ⇒<a class="headerlink" href="#encode" title="Permalink to this headline">¶</a></h1>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: url-encoded string<a name="encodeFacet"></a></p>
 </div>
 <div class="section" id="encodefacet">
 <span id="encodefacet"></span><h1>encodeFacet() ⇒<a class="headerlink" href="#encodefacet" title="Permalink to this headline">¶</a></h1>
 <p>{{#encodeFacet}}
 str
 {{/encodeFacet}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: encoded facet string that can be used in url<a name="jsonStringify"></a></p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: encoded facet string that can be used in url<a name="formatDate"></a></p>
+</div>
+<div class="section" id="formatdate">
+<span id="formatdate"></span><h1>formatDate() ⇒<a class="headerlink" href="#formatdate" title="Permalink to this headline">¶</a></h1>
+<p>{{formatDate value format}}</p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">format</span></code><a name="jsonStringify"></a></p>
 </div>
 <div class="section" id="jsonstringify">
 <span id="jsonstringify"></span><h1>jsonStringify() ⇒<a class="headerlink" href="#jsonstringify" title="Permalink to this headline">¶</a></h1>
 <p>{{#jsonStringify}}
 JSON Object
 {{/jsonStringify}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: string representation of the given JSON object<a name="toTitleCase"></a></p>
-</div>
-<div class="section" id="totitlecase">
-<span id="totitlecase"></span><h1>toTitleCase() ⇒<a class="headerlink" href="#totitlecase" title="Permalink to this headline">¶</a></h1>
-<p>{{#toTitleCase}}
-string
-{{/toTitleCase}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: string representation of the given JSON object<a name="replace"></a></p>
 </div>
 <div class="section" id="replace">
@@ -12483,7 +12492,14 @@ string
 <p>{{#each (regexFindAll value regexp)}}
 {{this}}
 {{/each}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: array of strings from value that match the regular expression or<a name="appLinkFn"></a></p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: array of strings from value that match the regular expression or<a name="toTitleCase"></a></p>
+</div>
+<div class="section" id="totitlecase">
+<span id="totitlecase"></span><h1>toTitleCase() ⇒<a class="headerlink" href="#totitlecase" title="Permalink to this headline">¶</a></h1>
+<p>{{#toTitleCase}}
+string
+{{/toTitleCase}}</p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: string representation of the given JSON object<a name="appLinkFn"></a></p>
 </div>
 <div class="section" id="applinkfn-code-function-code">
 <span id="applinkfn-code-function-code"></span><h1>appLinkFn : <code>function</code><a class="headerlink" href="#applinkfn-code-function-code" title="Permalink to this headline">¶</a></h1>

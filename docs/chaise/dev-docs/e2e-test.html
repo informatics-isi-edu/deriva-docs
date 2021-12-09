@@ -1462,25 +1462,38 @@
 <span id="how-to-run-tests"></span><h2>How To Run Tests<a class="headerlink" href="#how-to-run-tests" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="prerequistes">
 <span id="prerequistes"></span><h3>Prerequistes<a class="headerlink" href="#prerequistes" title="Permalink to this headline">¶</a></h3>
+<ol>
+<li><p class="first">After setting up the environment variables, make sure that the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> directory has the public access(if not, give the folder the following permissions <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">&lt;your-user-directory&gt;</span></code>).</p>
+</li>
+<li><p class="first">Make sure all the dependencies are installed by running the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make deps-test
+</pre></div>
+</div>
+<p>This will install all the npm dependencies that are needed and will also make sure the Selenium’s WebDriver that protractor uses is updated.</p>
 <ul class="simple">
-<li>After setting up the environment variables, make sure that the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> directory has the public access(if not, give the folder the following permissions <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">&lt;your-user-directory&gt;</span></code>).</li>
-<li>Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository. (This will upload your local code to the remote server)</li>
+<li>If you just want to update the WebDriver you can do <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-webdriver</span></code>.</li>
+<li>If the version of Chrome that is installed on your machine is different from the ChromeDriver that Selenium uses, it will throw an error. So make sure both versions are always updated and compatible.</li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install
+</li>
+<li><p class="first">Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository. (This will upload your local code to the remote server)</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install-wo-deps
 </pre></div>
 </div>
 <ul class="simple">
-<li>Make sure all the npm dependencies are installed by running <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code>.</li>
+<li>As the name suggests this will not install dependencies. That’s why you need to install all the dependencies in step 2. The following are other available targets related to install:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">install</span></code>: Will install production dependencies before installing (not advised for testing purposes and should be used for production)</li>
+<li><code class="docutils literal notranslate"><span class="pre">install-w-config</span></code>: The same as <code class="docutils literal notranslate"><span class="pre">install</span></code> and will also copy the <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file to the remote location.</li>
+<li><code class="docutils literal notranslate"><span class="pre">install-wo-deps-w-config</span></code>: The same as <code class="docutils literal notranslate"><span class="pre">install-w-deps</span></code> and will also copy the <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file to the remote location.</li>
 </ul>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ npm install
-</pre></div>
-</div>
+</li>
+</ul>
+</li>
+</ol>
 </div>
 <div class="section" id="test-cases">
 <span id="test-cases"></span><h3>Test cases<a class="headerlink" href="#test-cases" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>To execute all test cases in sequential order, set the following:</li>
-</ul>
+<ul>
+<li><p class="first">To execute all test cases in sequential order, set the following:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">false</span>
 </pre></div>
 </div>
@@ -1488,10 +1501,8 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make <span class="nb">test</span>
 </pre></div>
 </div>
-<p>This will automatically update the <em>selenium</em> web-driver that protractor is using.</p>
-<ul class="simple">
-<li>To execute all the test cases in parallel, set the following:</li>
-</ul>
+</li>
+<li><p class="first">To execute all the test cases in parallel, set the following:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">true</span>
 </pre></div>
 </div>
@@ -1499,15 +1510,13 @@
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make testparallel
 </pre></div>
 </div>
-<ul>
+</li>
 <li><p class="first">To run a specific test spec</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ node_modules/.bin/protractor test/e2e/specs/search/data-independent/protractor.conf.js
 </pre></div>
 </div>
 </li>
 </ul>
-<blockquote>
-<div>Calling protractor directly won’t install npm modules and will not update the selenium web-driver. So you have to do those steps manually.</div></blockquote>
 </div>
 </div>
 <div class="section" id="file-structure">
@@ -1516,7 +1525,7 @@
 `-- test/
     |-- unit
     `-- e2e
-    |-- data_setup                       
+    |-- data_setup
     |   |-- config                       # test configuration files
         |   |   |-- record
         |   |   |   |-- *.dev.json  # lists the schema config files (*.config.json)
@@ -1532,10 +1541,10 @@
     |   `-- SCHEMA_NAME.json         # Schema Definition json
     |-- specs
     |   `-- all-features
-    |       |-- record           
-    |       |   |-- TEST_NAME1.spec.js   
+    |       |-- record
+    |       |   |-- TEST_NAME1.spec.js
     |       |   `-- TEST_NAME1.conf.js   # protractor configuration for similarly named single test
-    |       |-- recordedit         
+    |       |-- recordedit
     |       |                            # They introspect the existing schema to run the cases*/
     |       `-- protractor.conf.js   # configuration for the parallel tests
     `-- utils

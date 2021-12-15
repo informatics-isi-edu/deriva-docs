@@ -6210,7 +6210,7 @@ per annotation as well as validation.</li>
 and ignoring the ones that don’t return any result.</li>
 </ul>
 </li>
-<li>The valid fitlers in the url will either be matched with an existing facet,
+<li>The valid filters in the url will either be matched with an existing facet,
 or result in a new facet column.
 Usage:</li>
 </ul>
@@ -6274,7 +6274,7 @@ in the end will update the list</p>
 </div>
 <div class="section" id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code">
 <span id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code"></span><h3>reference.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
-<p>Remove all the fitlers, facets, and custom-facets from the reference</p>
+<p>Remove all the filters, facets, and custom-facets from the reference</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>ERMrest.reference</code> - A reference without facet filters</p>
 <table border="1" class="docutils">
 <thead>
@@ -8776,10 +8776,13 @@ Other types of facet that null won’t be applicable to them and therefore
 we shouldn’t even offer the option:</li>
 <li>(G4) Scalar columns of main table that are not-null.</li>
 <li>(G5) All outbound foreignkey facets that all the columns invloved are not-null</li>
+<li>(G6) Facets with <code class="docutils literal notranslate"><span class="pre">filter</span></code> in their source definition. We cannot combine filter
+and null together.</li>
 </ol>
 <p>Based on this, the following will be the logic for this function:
 - If facet has <code class="docutils literal notranslate"><span class="pre">null</span></code> filter: <code class="docutils literal notranslate"><span class="pre">false</span></code>
 - If facet has <code class="docutils literal notranslate"><span class="pre">&quot;hide_null_choice&quot;:</span> <span class="pre">true</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>
+- If G6: true
 - If G1: <code class="docutils literal notranslate"><span class="pre">true</span></code> if the column is not-null
 - If G5: <code class="docutils literal notranslate"><span class="pre">true</span></code>
 - If G2: <code class="docutils literal notranslate"><span class="pre">true</span></code>
@@ -11221,7 +11224,7 @@ per annotation as well as validation.</li>
 and ignoring the ones that don’t return any result.</li>
 </ul>
 </li>
-<li>The valid fitlers in the url will either be matched with an existing facet,
+<li>The valid filters in the url will either be matched with an existing facet,
 or result in a new facet column.
 Usage:</li>
 </ul>
@@ -11285,7 +11288,7 @@ in the end will update the list</p>
 </div>
 <div class="section" id="reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code">
 <span id="id37"></span><h3>reference.removeAllFacetFilters(sameFilter, sameCustomFacet, sameFacet) ⇒ <code>ERMrest.reference</code><a class="headerlink" href="#reference-removeallfacetfilters-samefilter-samecustomfacet-samefacet-code-ermrest-reference-code" title="Permalink to this headline">¶</a></h3>
-<p>Remove all the fitlers, facets, and custom-facets from the reference</p>
+<p>Remove all the filters, facets, and custom-facets from the reference</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>ERMrest.reference</code> - A reference without facet filters</p>
 <table border="1" class="docutils">
 <thead>

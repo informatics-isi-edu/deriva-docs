@@ -1460,22 +1460,73 @@
 </pre></div>
 </div>
 </li>
-<li><p class="first">An array of <em>foreign key path</em> that ends with a <em>columnname</em> that will be projected and filtered. <em>foreign key path</em> must be in the following format:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="o">&lt;</span><span class="n">direction</span><span class="o">&gt;</span><span class="p">:</span> <span class="p">[</span> <span class="o">&lt;</span><span class="n">schema</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">constraint</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> <span class="p">]</span>  <span class="p">}</span>
+<li><p class="first">An array of <em>path element</em> that ends with a <em>columnname</em> that will be projected and filtered.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">[</span></code> <em>path element</em>  <code class="docutils literal notranslate"><span class="pre">,</span></code>  <em>columnname</em><code class="docutils literal notranslate"><span class="pre">]</span></code></li>
+</ul>
+<p>Each anterior element MAY use one of the following sub-document structures:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;sourcekey&quot;:</span></code> <em>sourcekey prefix</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>Only acceptable as the first element. Please refer to <a class="reference external" href="#data-source-with-reusable-prefix">Data source with reusable prefix</a> for more information.</li>
+<li><em>sourcekey prefix</em> is a string literal that refers to any of the defined sources in <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref">source-definitions annotations</span></a></li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> <em>direction</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>fkeyname</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>Links a new table instance to the existing path via join.</li>
+<li><em>direction</em> can either be <code class="docutils literal notranslate"><span class="pre">&quot;inbound&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;outbound&quot;</span></code>.</li>
+<li><em>fkeyname</em> is the given name of the foreign key which is usually in the following format: <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code></li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
+<li>A logical conjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.</li>
+<li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
+<li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
+<li>A logical disjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.<ul>
+<li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
+<li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;filter&quot;:</span></code> <em>column</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operand_pattern&quot;:</span></code> <em>value</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operator&quot;:</span></code> <em>operator</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
+<li>An individual filter <em>path element</em> is applied to the query or individual <em>filter</em> clauses participate in a conjunction or disjunction.</li>
+<li>The filter constrains a named <em>column</em> in the current context table.</li>
+<li>The <em>operator</em> specifies the constraint operator via one of the valid operator names in the ERMrest REST API, which are</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>    | operator  | meaning |
+    |-----------|---------|
+    | `::null::`| column is `null`     |
+    | `=`      | column equals value |
+    | `::lt::` | column less than value |
+    | `::leq::` | column less than or equal to value |
+    | `::gt::` | column greater than value |
+    | `::geq::` | column greater than or equal to value |
+    | `::regexp::` | column matches regular expression value |
+    | `::ciregexp::` | column matches regular expression value case-insensitively |
+    | `::ts::` | column matches text-search query value |
+</code></pre><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  &gt; If `operator` is missing, we will use `=` by default.
+
+- The _value_ specifies the constant operand for a binary constraint operator and must be computed to a non-empty value. Pattern expansion MAY be used to access [the pre-defined values in templating envorinment](mustache-templating.md#using-pre-defined-attributes).
+
+- The logical result of the constraint is negated only if _negate_ is `true`.
 </pre></div>
 </div>
-<p>Where</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&lt;direction&gt;</span></code> is either <code class="docutils literal notranslate"><span class="pre">&quot;inbound&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;outbound&quot;</span></code>. These labels remove any ambiguity for self-referencing table navigation scenarios.</li>
-<li>The constraint pairs <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">&lt;schema-name&gt;,</span> <span class="pre">&lt;constraint-name&gt;</span> <span class="pre">]</span></code> represent a foreign key relationship which reuses the same names appearing in the ERMrest model introspection document.</li>
-</ul>
 <p>The following are some examples of defining data source:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span> <span class="s2">&quot;FK1&quot;</span><span class="p">]},</span> <span class="s2">&quot;Column2&quot;</span><span class="p">]</span>
 <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span> <span class="s2">&quot;FK1&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;outbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;S2&quot;</span><span class="p">,</span> <span class="s2">&quot;FK2&quot;</span><span class="p">]},</span> <span class="s2">&quot;Column3&quot;</span><span class="p">]</span>
+<span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;S1&quot;</span><span class="p">,</span> <span class="s2">&quot;FK1&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="s2">&quot;RCB&quot;</span><span class="p">,</span> <span class="s2">&quot;operand_pattern&quot;</span><span class="p">:</span> <span class="s2">&quot;{{{$session.id}}}&quot;</span><span class="p">},</span> <span class="s2">&quot;Column3&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-</li>
-</ul>
 <div class="section" id="data-source-with-reusable-prefix">
 <span id="data-source-with-reusable-prefix"></span><h3>Data source with reusable prefix<a class="headerlink" href="#data-source-with-reusable-prefix" title="Permalink to this headline">¶</a></h3>
 <p>In some cases, the defined foreign key paths for different columns/facets might be sharing the same prefix. In those cases, reusing the prefix allows sharing certain joined table instances rather than introducing more “copies” as each facet is activated which in turn will increase the performance.</p>

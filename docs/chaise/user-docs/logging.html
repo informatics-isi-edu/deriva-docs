@@ -1252,6 +1252,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#">11/04/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">04/02/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">08/26/20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#">02/12/20</a></li>
@@ -1467,17 +1468,17 @@
       <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;set&quot;</span><span class="p">,</span>
         <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;isa:dataset&quot;</span>
-      <span class="p">},</span> 
+      <span class="p">},</span>
       <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;facet&quot;</span><span class="p">,</span>
         <span class="s2">&quot;s_t&quot;</span><span class="o">:</span> <span class="s2">&quot;vocab:species&quot;</span><span class="p">,</span>
         <span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[</span>
           <span class="p">{</span>
             <span class="s2">&quot;i&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset_organism_dataset_id_fkey&quot;</span><span class="p">]</span>
-          <span class="p">},</span> 
+          <span class="p">},</span>
           <span class="p">{</span>
             <span class="s2">&quot;o&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;isa&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset_organism_organism_fkey&quot;</span><span class="p">]</span>
-          <span class="p">},</span> 
+          <span class="p">},</span>
           <span class="s2">&quot;id&quot;</span>
         <span class="p">],</span>
         <span class="s2">&quot;entity&quot;</span><span class="o">:</span> <span class="kc">true</span>
@@ -1527,11 +1528,13 @@
 <li><code class="docutils literal notranslate"><span class="pre">navbar/recordset</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">navbar/recordedit</span></code></li>
 </ul>
-<p>If the user clicked on a link in the navbar, the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will properly denote what app the user came from that had the navbar present. A static page that uses the navbar app, will set the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> as <code class="docutils literal notranslate"><span class="pre">navbar</span></code>. Otherwise the appname will be appended (i.e.   <code class="docutils literal notranslate"><span class="pre">navbar/&lt;appname&gt;</span></code>). This is true for the <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/wiki/Logging-in-WebApps#pcid-list">deriva-webapps</a> as well.</p>
+<p>If the user clicked on a link in the navbar, the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> will properly denote what app the user came from that had the navbar present. A static page that uses the navbar app, will set the <code class="docutils literal notranslate"><span class="pre">PCID</span></code> as <code class="docutils literal notranslate"><span class="pre">navbar</span></code>. Otherwise the appname will be appended (i.e.   <code class="docutils literal notranslate"><span class="pre">navbar/&lt;appname&gt;</span></code>). This is true for the <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps/wiki/Logging-in-WebApps#pcid-list">deriva-webapps</a> as well. A full list of <code class="docutils literal notranslate"><span class="pre">PCID</span></code> values (including applications that are not chaise) can be <a class="reference external" href="https://docs.google.com/spreadsheets/d/1zoNTG0Vx4cedIKsHvGN1mZBTeFmDMWyQ1rfKR3ksSbU">found here</a>.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">paction</span></code>: The action in the parent page that fired the current request. Acceptable values are:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">view</span></code>: Available on the first read of the main entity in record page. Indicates that user clicked on “view” button in tabular displays.</li>
+<li><code class="docutils literal notranslate"><span class="pre">apply-sq</span></code>: Available on the first read of the main set in recordset page. Indicates that the user clicked “Apply search criteria” button in tabular displays.</li>
+<li><code class="docutils literal notranslate"><span class="pre">explore</span></code>: Available on the first read of the main set in recordset page. Indicates that the user clicked the “Explore” button on record app.</li>
 </ul>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">stack</span></code>: This attribute can be found on almost all the requests. It will capture the path that user took to get to the performed action. For example, if the logged request is for when a user interacts with a add pure and binary picker, using this stack you can figure out which main table and related (or inline table) user is interacting with. <code class="docutils literal notranslate"><span class="pre">stack</span></code> is an array of objects that each node can have the following attributes:</p>
@@ -1541,7 +1544,7 @@
 <li>As an exception, in viewer app, if an image annotation is derived from file (not database), this value will not be available on the stack object.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: The type of the node request. It can be any of: <code class="docutils literal notranslate"><span class="pre">entity</span></code> (row based), <code class="docutils literal notranslate"><span class="pre">set</span></code> (rowset based), <code class="docutils literal notranslate"><span class="pre">col</span></code> (column), <code class="docutils literal notranslate"><span class="pre">pcol</span></code> (pseudo-column), <code class="docutils literal notranslate"><span class="pre">fk</span></code> (foreign key), <code class="docutils literal notranslate"><span class="pre">related</span></code> (inline or related table), <code class="docutils literal notranslate"><span class="pre">annotation</span></code> (image annotation in viewer app).</li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: The type of the node request. It can be any of: <code class="docutils literal notranslate"><span class="pre">entity</span></code> (row based), <code class="docutils literal notranslate"><span class="pre">set</span></code> (rowset based), <code class="docutils literal notranslate"><span class="pre">col</span></code> (column), <code class="docutils literal notranslate"><span class="pre">pcol</span></code> (pseudo-column), <code class="docutils literal notranslate"><span class="pre">fk</span></code> (foreign key), <code class="docutils literal notranslate"><span class="pre">related</span></code> (inline or related table), <code class="docutils literal notranslate"><span class="pre">saved_query</span></code> (saved query dropdown functionality), <code class="docutils literal notranslate"><span class="pre">annotation</span></code> (image annotation in viewer app).</li>
 </ul>
 </li>
 <li>Optional attributes:<ul>
@@ -1597,6 +1600,8 @@
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">rid</span></code>: Available on the “go to RID” client action, to indicate the RID value that users searched for.</p>
 </li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">sq_rid</span></code>: Available on the first read of the main set in recordset page. Indicates that the user navigated to this recordset page from a saved query link.</p>
+</li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">cqp</span></code> (chaise query parameter): When a user uses a link that includes the <code class="docutils literal notranslate"><span class="pre">?</span></code> instead of the <code class="docutils literal notranslate"><span class="pre">#</span></code>. These urls are only used to help with google indexing and should be used only for navigating users from search engines to chaise apps.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">names</span></code>: Used in “navbar” request to capture the path that user took to end up in a particular menu option. It is an array of navbar option “name”s. The last item in the array if the name of the navbar option that user is acting on, and the rest are the name of its ancestors.</p>
@@ -1640,6 +1645,8 @@
 <li><code class="docutils literal notranslate"><span class="pre">facet-picker</span></code>: Used for facet picker.</li>
 <li><code class="docutils literal notranslate"><span class="pre">fk</span></code>: Based on <code class="docutils literal notranslate"><span class="pre">fk</span></code> stack node <code class="docutils literal notranslate"><span class="pre">type</span></code>.</li>
 <li><code class="docutils literal notranslate"><span class="pre">fk-picker</span></code>: Used for foreign key picker.</li>
+<li><code class="docutils literal notranslate"><span class="pre">saved-query-entity</span></code>: Used for saved query create popup.</li>
+<li><code class="docutils literal notranslate"><span class="pre">saved-query-picker</span></code>: Used for saved query apply picker.</li>
 <li><code class="docutils literal notranslate"><span class="pre">annotation-set</span></code>: Annotation list displayed on the viewer app.</li>
 <li><code class="docutils literal notranslate"><span class="pre">annotation-entity</span></code>: Each individual annotation displayed in annotation list of viewer app.</li>
 </ul>
@@ -1827,9 +1834,29 @@
 <div class="section" id="change-log">
 <span id="change-log"></span><h2>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="">
-<span id="id1"></span><h3>04/02/21<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>11/04/21<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="pr-links">
 <span id="pr-links"></span><h4>PR Links<a class="headerlink" href="#pr-links" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2137">chaise</a></li>
+</ul>
+</div>
+<div class="section" id="added">
+<span id="added"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Added a new UI context, <code class="docutils literal notranslate"><span class="pre">saved-query</span></code>, and stack path, <code class="docutils literal notranslate"><span class="pre">saved-query-entity</span></code>.
+Together these create 5 new actions, <code class="docutils literal notranslate"><span class="pre">:set,saved-query;open</span></code>,
+<code class="docutils literal notranslate"><span class="pre">create:set/saved-query-entity,;preload</span></code>, <code class="docutils literal notranslate"><span class="pre">create:set/saved-query-entity,;create</span></code>,
+<code class="docutils literal notranslate"><span class="pre">create:set/saved-query-entity,;cancel</span></code>, and <code class="docutils literal notranslate"><span class="pre">:set/saved-query-entity,;update</span></code></li>
+<li>Added stack path, <code class="docutils literal notranslate"><span class="pre">saved-query-picker</span></code>. This includes 15 actions as well
+for a recordset modal selector further documented in the action list spreadsheet.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="">
+<span id="id2"></span><h3>04/02/21<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pr-links">
+<span id="id3"></span><h4>PR Links<a class="headerlink" href="#pr-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2069">chaise</a></li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/openseadragon-viewer/pull/78">OSD viewer</a></li>
@@ -1849,7 +1876,7 @@ logged in the stack. Later this request can be used for other z-indexes as well.
 </ul>
 </div>
 <div class="section" id="added">
-<span id="added"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<span id="id4"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Added <code class="docutils literal notranslate"><span class="pre">z_index</span></code> attribute to the <code class="docutils literal notranslate"><span class="pre">:entity/annotation-set,;load</span></code> request.</li>
 <li>Added <code class="docutils literal notranslate"><span class="pre">:entity,;update</span></code> , <code class="docutils literal notranslate"><span class="pre">:entity/channel-set,;update</span></code>,
@@ -1861,7 +1888,7 @@ requests.</li>
 </div>
 </div>
 <div class="section" id="">
-<span id="id2"></span><h3>08/26/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id5"></span><h3>08/26/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-pr-links">
 <span id="commit-pr-links"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
@@ -1876,13 +1903,13 @@ requests.</li>
 </ul>
 </div>
 <div class="section" id="changed">
-<span id="id3"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
+<span id="id6"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Changed the annotation request in viewer app to be aligned with the rest of the apps (Action changed from <code class="docutils literal notranslate"><span class="pre">:entity,annotation;read</span></code> to <code class="docutils literal notranslate"><span class="pre">:entity/annotation-set,;load</span></code> and stack structure modified.)</li>
 </ul>
 </div>
 <div class="section" id="added">
-<span id="id4"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
+<span id="id7"></span><h4>Added<a class="headerlink" href="#added" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Added proper log support to viewer app. This includes properly logging the requests that viewer app was already making and adding client logs. Please refer to the PR and documentation for more information.</li>
 <li>Added client log action for “go to RID” feature.</li>
@@ -1891,16 +1918,16 @@ requests.</li>
 </div>
 </div>
 <div class="section" id="">
-<span id="id5"></span><h3>02/12/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
+<span id="id8"></span><h3>02/12/20<a class="headerlink" href="#" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="commit-pr-links">
-<span id="id6"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
+<span id="id9"></span><h4>Commit/PR Links<a class="headerlink" href="#commit-pr-links" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/1889">chaise</a></li>
 <li><a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/pull/829">ermrestjs</a></li>
 </ul>
 </div>
 <div class="section" id="changed">
-<span id="id7"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
+<span id="id10"></span><h4>Changed<a class="headerlink" href="#changed" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Completely changed how we’re logging in chaise. This is the starting date of logging as described in this documentation.</li>
 </ul>

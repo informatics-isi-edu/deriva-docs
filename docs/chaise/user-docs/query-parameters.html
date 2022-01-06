@@ -1250,6 +1250,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html#change-log">Change Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="logging.html#">11/04/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logging.html#">04/02/21</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logging.html#">08/26/20</a></li>
 <li class="toctree-l4"><a class="reference internal" href="logging.html#">02/12/20</a></li>
@@ -1466,8 +1467,22 @@
 <div class="section" id="set-by-application">
 <span id="set-by-application"></span><h1>Set by application<a class="headerlink" href="#set-by-application" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code>: These two parameters will be available only on a number of requests. They will indicate which app and page led to this current request. More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/logging.md#attributes">logging document here</a>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ppid</span></code>, <code class="docutils literal notranslate"><span class="pre">pcid</span></code>, and <code class="docutils literal notranslate"><span class="pre">paction</span></code>: These two parameters will be available only on a number of requests. They will indicate which app, page, and action led to this current request. More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/logging.md#attributes">logging document here</a>.</li>
 </ul>
+</div>
+<div class="section" id="parameters-for-developers">
+<span id="parameters-for-developers"></span><h1>Parameters for developers<a class="headerlink" href="#parameters-for-developers" title="Permalink to this headline">¶</a></h1>
+<p><details>
+<summary>Click to see detailed information about other query parameters used by the application.</summary></p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">invalidate</span></code>: This parameter is used to signal that create or edit was clicked in recordset or record app and the originating page needs to have the data refreshed after create or update succeeds and the page is focused again. This parameter is consumed by chaise and used for internal logic.</li>
+<li><code class="docutils literal notranslate"><span class="pre">savedQueryRid</span></code>: This parameter indicates that recordset app is being initialized from a saved query. This parameter is consumed by chaise and used for internal logic (<code class="docutils literal notranslate"><span class="pre">recordset</span></code> only). Note: it is used for a specific use case in CFDE to navigate to recordset and apply a saved query from a static page.</li>
+<li><code class="docutils literal notranslate"><span class="pre">promptlogin</span></code>: This parameter is used to signal that the application should present a login dialog on page load. This parameter is consumed by chaise and used for internal logic (<code class="docutils literal notranslate"><span class="pre">record</span></code> only) but could also be used to force showing a login dialog.</li>
+<li><code class="docutils literal notranslate"><span class="pre">copy</span></code>: This parameter is used to signal to recordedit app that the app should be in “copy mode”. Recordedit will read the data that mathes the filter information from the url and use that fetched data to set up a create form with information already filled in. This parameter is consumed by chaise and used for internal logic (<code class="docutils literal notranslate"><span class="pre">record</span></code> and <code class="docutils literal notranslate"><span class="pre">recordedit</span></code> only).</li>
+<li><code class="docutils literal notranslate"><span class="pre">prefill</span></code>: This parameter is used to signal to recordedit app that the app should load data from cookie storage to prefill some of the inputs fields. This is used when linking related records in record app using the “Add Records” button. This is a parameter set by the application (<code class="docutils literal notranslate"><span class="pre">record</span></code> and <code class="docutils literal notranslate"><span class="pre">recordedit</span></code> only).</li>
+<li><code class="docutils literal notranslate"><span class="pre">page</span></code>: This parameter is used to indicate which help page to load. This parameter is consumed by chaise and used for internal logic (<code class="docutils literal notranslate"><span class="pre">help</span></code> only).</li>
+</ul>
+<p></details></p>
 </div>
 
 

@@ -2045,14 +2045,12 @@ columns in a table, overriding the defined table structure.</p>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
-<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
 <li>A logical conjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.</li>
 <li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
 <li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
-<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
 <li>A logical disjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.<ul>
 <li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
 <li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
@@ -2061,7 +2059,6 @@ columns in a table, overriding the defined table structure.</p>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;filter&quot;:</span></code> <em>column</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operand_pattern&quot;:</span></code> <em>value</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operator&quot;:</span></code> <em>operator</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
-<li>Currently only limited to <code class="docutils literal notranslate"><span class="pre">filter</span></code> context of visible-columns annotation.</li>
 <li>An individual filter <em>path element</em> is applied to the query or individual <em>filter</em> clauses participate in a conjunction or disjunction.</li>
 <li>The filter constrains a named <em>column</em> in the current context table.</li>
 <li>The <em>operator</em> specifies the constraint operator via one of the valid operator names in the ERMrest REST API, which are</li>
@@ -2450,7 +2447,7 @@ foreign keys referencing a table, useful when presenting “related entities”.
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;sourcekey&quot;:</span></code> <em>sourcekey</em> <code class="docutils literal notranslate"><span class="pre">}</span></code>: Defines a pseudo-column based on the given <em>sourcekey</em>.</li>
 </ul>
-<p>Supported <em>sourceentry</em> pattern in here:</p>
+<p>Supported <em>sourceentry</em> patterns:</p>
 <ul>
 <li><p class="first">An array of <em>path element</em> that ends with a <em>columnname</em> that will be projected.</p>
 <ul class="simple">
@@ -2469,10 +2466,50 @@ foreign keys referencing a table, useful when presenting “related entities”.
 <li><em>fkeyname</em> is the given name of the foreign key which is usually in the following format: <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code></li>
 </ul>
 </li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>A logical conjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.</li>
+<li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.<ul>
+<li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
 </ul>
 </li>
 </ul>
-<p>Supported <em>sourcekey</em> pattern in here:</p>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>A logical disjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.<ul>
+<li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
+<li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;filter&quot;:</span></code> <em>column</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operand_pattern&quot;:</span></code> <em>value</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;operator&quot;:</span></code> <em>operator</em> <code class="docutils literal notranslate"><span class="pre">,</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
+<li>An individual filter <em>path element</em> is applied to the query or individual <em>filter</em> clauses participate in a conjunction or disjunction.</li>
+<li>The filter constrains a named <em>column</em> in the current context table.</li>
+<li>The <em>operator</em> specifies the constraint operator via one of the valid operator names in the ERMrest REST API, which are</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>    | operator  | meaning |
+    |-----------|---------|
+    | `::null::`| column is `null`     |
+    | `=`      | column equals value |
+    | `::lt::` | column less than value |
+    | `::leq::` | column less than or equal to value |
+    | `::gt::` | column greater than value |
+    | `::geq::` | column greater than or equal to value |
+    | `::regexp::` | column matches regular expression value |
+    | `::ciregexp::` | column matches regular expression value case-insensitively |
+    | `::ts::` | column matches text-search query value |
+</code></pre><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  &gt; If `operator` is missing, we will use `=` by default.
+
+- The _value_ specifies the constant operand for a binary constraint operator and must be computed to a non-empty value. Pattern expansion MAY be used to access [the pre-defined values in templating envorinment](mustache-templating.md#using-pre-defined-attributes).
+
+- The logical result of the constraint is negated only if _negate_ is `true`.
+</pre></div>
+</div>
+<p>Supported <em>sourcekey</em> patterns:</p>
 <ul class="simple">
 <li>A string literal that refers to any of the defined sources in <a class="reference external" href="#tag-2019-source-definitions"><code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotations</a>.</li>
 </ul>

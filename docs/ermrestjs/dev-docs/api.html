@@ -2063,6 +2063,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+commentDisplay">.commentDisplay</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
@@ -2115,6 +2116,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isInboundForeignKey">.isInboundForeignKey</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.FacetColumn">.FacetColumn</a><ul>
@@ -7747,6 +7749,7 @@ it will append “-<integer>” to it.</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isEntityMode">.isEntityMode</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+isUnique">.isUnique</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+hasAggregate">.hasAggregate</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+comment">.comment</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+commentDisplay">.commentDisplay</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
@@ -7829,6 +7832,11 @@ entity (inbound or p&amp;b association)</li>
 <div class="section" id="pseudocolumn-hasaggregate-code-boolean-code">
 <span id="pseudocolumn-hasaggregate-code-boolean-code"></span><h3>pseudoColumn.hasAggregate : <code>boolean</code><a class="headerlink" href="#pseudocolumn-hasaggregate-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>If aggregate function is defined on the column.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+isFiltered"></a></p>
+</div>
+<div class="section" id="pseudocolumn-isfiltered-code-boolean-code">
+<span id="pseudocolumn-isfiltered-code-boolean-code"></span><h3>pseudoColumn.isFiltered : <code>boolean</code><a class="headerlink" href="#pseudocolumn-isfiltered-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>If the pseudoColumn has filter in its path</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+comment"></a></p>
 </div>
 <div class="section" id="pseudocolumn-comment-code-object-code">
@@ -8458,6 +8466,7 @@ The heuristics for origin and caption:<ol>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isInboundForeignKey">.isInboundForeignKey</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 </ul>
 </li>
 </ul>
@@ -8467,6 +8476,8 @@ The heuristics for origin and caption:<ol>
 <p>Constructor for InboundForeignKeyPseudoColumn. This class is a wrapper for <a class="reference external" href="#ERMrest.ForeignKeyRef">ForeignKeyRef</a>.
 This is a bit different than the <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn">ForeignKeyPseudoColumn</a>, as that was for foreign keys
 of current table. This wrapper is for inbound foreignkeys. It is actually warpping the whole reference (table).</p>
+<p>Note: The sourceObjectWrapper might include filters and therefore the relatedReference
+might not be a simple path from main to related table and it could have filters.</p>
 <p>This class extends the <a class="reference external" href="#ERMrest.ReferenceColumn">ReferenceColumn</a></p>
 <table border="1" class="docutils">
 <thead>
@@ -8513,6 +8524,11 @@ of current table. This wrapper is for inbound foreignkeys. It is actually warppi
 <div class="section" id="inboundforeignkeypseudocolumn-isinboundforeignkey-code-boolean-code">
 <span id="inboundforeignkeypseudocolumn-isinboundforeignkey-code-boolean-code"></span><h3>inboundForeignKeyPseudoColumn.isInboundForeignKey : <code>boolean</code><a class="headerlink" href="#inboundforeignkeypseudocolumn-isinboundforeignkey-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates that this ReferenceColumn is an inbound foreign key.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn"><code>InboundForeignKeyPseudoColumn</code></a><a name="ERMrest.InboundForeignKeyPseudoColumn+isFiltered"></a></p>
+</div>
+<div class="section" id="inboundforeignkeypseudocolumn-isfiltered-code-boolean-code">
+<span id="inboundforeignkeypseudocolumn-isfiltered-code-boolean-code"></span><h3>inboundForeignKeyPseudoColumn.isFiltered : <code>boolean</code><a class="headerlink" href="#inboundforeignkeypseudocolumn-isfiltered-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Indicates that this related table has filters in its path</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.InboundForeignKeyPseudoColumn"><code>InboundForeignKeyPseudoColumn</code></a><a name="ERMrest.FacetColumn"></a></p>
 </div>
 </div>

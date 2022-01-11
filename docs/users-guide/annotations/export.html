@@ -400,8 +400,12 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it works</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#default-bdbag-template">Default BDBag template</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#default-csv-template">Default CSV template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-templates">Default templates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#default-bdbag-template">Default BDBag template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-csv-template">Default CSV template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-visible-columns-is-turned-into-export">How visible-columns is turned into export</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#example-1">Example 1</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example-2">Example 2</a></li>
@@ -1144,8 +1148,12 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#how-it-works">How it works</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#default-bdbag-template">Default BDBag template</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#default-csv-template">Default CSV template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#default-templates">Default templates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#default-bdbag-template">Default BDBag template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#default-csv-template">Default CSV template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#how-visible-columns-is-turned-into-export">How visible-columns is turned into export</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#examples">Examples</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#example-1">Example 1</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/export.html#example-2">Example 2</a></li>
@@ -1436,8 +1444,11 @@
 </ul>
 </li>
 <li><a class="reference external" href="#how-it-works">How it works</a></li>
+<li><a class="reference external" href="#default-templates">Default templates</a><ul>
 <li><a class="reference external" href="#default-bdbag-template">Default BDBag template</a></li>
 <li><a class="reference external" href="#default-csv-template">Default CSV template</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#examples">Examples</a></li>
 </ul>
 </div>
@@ -1705,17 +1716,21 @@ The type of <code class="docutils literal notranslate"><span class="pre">source.
 </li>
 </ol>
 </div>
+<div class="section" id="default-templates">
+<span id="default-templates"></span><h2>Default templates<a class="headerlink" href="#default-templates" title="Permalink to this headline">¶</a></h2>
+<p>As part of Chaise/ERMrestJS heuristics, we will try to populate default export templates. The following are
+how these templates are generated:</p>
 <div class="section" id="default-bdbag-template">
-<span id="default-bdbag-template"></span><h2>Default BDBag template<a class="headerlink" href="#default-bdbag-template" title="Permalink to this headline">¶</a></h2>
+<span id="default-bdbag-template"></span><h3>Default BDBag template<a class="headerlink" href="#default-bdbag-template" title="Permalink to this headline">¶</a></h3>
 <p>If export annotation is missing for <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context, we will add a default BDBag template. This default template is also accessible through the export fragment definitions annotation as well using <code class="docutils literal notranslate"><span class="pre">$chaise_default_bdbag_template</span></code> key. The following are the <code class="docutils literal notranslate"><span class="pre">outputs</span></code> of the generated default export template:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API request to the main table.<ul>
-<li>The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> defined for the <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> context (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> if <code class="docutils literal notranslate"><span class="pre">export</span></code> context is not specified).</li>
+<li>The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> defined for the <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> context (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code> if <code class="docutils literal notranslate"><span class="pre">export</span></code> context is not specified). Please refere to <a class="reference external" href="#how-visible-columns-is-turned-into-export">this section</a> for more info</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">csv</span></code> of <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API for all the other related entities.<ul>
 <li>The List of related entities is populated using the <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code> (or <code class="docutils literal notranslate"><span class="pre">export</span></code> or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context in <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code> annotation.</li>
-<li>The projection list includes all the visible columns of the related table based on <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context.</li>
+<li>The projection list includes <a class="reference external" href="#how-visible-columns-is-turned-into-export">the visible columns</a> of the related table based on <code class="docutils literal notranslate"><span class="pre">export</span></code> (or <code class="docutils literal notranslate"><span class="pre">detailed</span></code>) context.</li>
 <li>The foreign key column of the main entity is added to the projection list, so we don’t lose the relationship of the related entity.</li>
 <li>This request is grouped by the value of table’s key and foreign key value.</li>
 </ul>
@@ -1733,10 +1748,10 @@ The type of <code class="docutils literal notranslate"><span class="pre">source.
 <div>If the generated path for any of the <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API requests is lengthy, we will use the <code class="docutils literal notranslate"><span class="pre">entity</span></code> API instead.</div></blockquote>
 </div>
 <div class="section" id="default-csv-template">
-<span id="default-csv-template"></span><h2>Default CSV template<a class="headerlink" href="#default-csv-template" title="Permalink to this headline">¶</a></h2>
-<p>Chaise will add a default CSV option to the presented list of export templates. This option will prompt a download for a <code class="docutils literal notranslate"><span class="pre">csv</span></code> file that uses <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API of ERMrest. The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and depending on the app it will use different contexts.</p>
+<span id="default-csv-template"></span><h3>Default CSV template<a class="headerlink" href="#default-csv-template" title="Permalink to this headline">¶</a></h3>
+<p>Chaise will add a default CSV option to the presented list of export templates. This option will prompt a download for a <code class="docutils literal notranslate"><span class="pre">csv</span></code> file that uses <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> API of ERMrest. The projection list is created based on the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> as it’s described <a class="reference external" href="#how-visible-columns-is-turned-into-export">here</a> and depending on the app it will use different contexts.</p>
 <ul class="simple">
-<li>In recordset app, Chaise will use <code class="docutils literal notranslate"><span class="pre">export/compact</span></code> context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>. If not defined, it will try <code class="docutils literal notranslate"><span class="pre">export</span></code> and then <code class="docutils literal notranslate"><span class="pre">compact</span></code>.</li>
+<li>In recordset app, Chaise will use <code class="docutils literal notranslate"><span class="pre">export/compact</span></code> context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>. If not defined, it will try <code class="docutils literal notranslate"><span class="pre">export</span></code> and then <code class="docutils literal notranslate"><span class="pre">detailed</span></code>.</li>
 <li>In record app, Chaise will use <code class="docutils literal notranslate"><span class="pre">export/detailed</span></code>context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>. If not defined, it will try <code class="docutils literal notranslate"><span class="pre">export</span></code> and then <code class="docutils literal notranslate"><span class="pre">detailed</span></code>.</li>
 </ul>
 <p>If you don’t want Chaise to add this option, you should define an empty <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> list like the following:</p>
@@ -1744,6 +1759,18 @@ The type of <code class="docutils literal notranslate"><span class="pre">source.
   &quot;export&quot;: []
 }
 </pre></div>
+</div>
+</div>
+<div class="section" id="how-visible-columns-is-turned-into-export">
+<span id="how-visible-columns-is-turned-into-export"></span><h3>How visible-columns is turned into export<a class="headerlink" href="#how-visible-columns-is-turned-into-export" title="Permalink to this headline">¶</a></h3>
+<p>As part of creating default templates, we use the <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> annotation to determine the projection list for the <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> requests. To do so, ERMrestJS will go through the list of visible columns and based on its type will populate the projection list. The following is the logic:</p>
+<ul class="simple">
+<li>Local columns: The column will be added to the projection list as is.</li>
+<li>All-outbound Foreign key columns: The constituent columns will be added to the projection list. To make sure the value is easier to read (and make more sense to the users), we might also add an extra “candidate” column to the projection list. “candidate” column will be a column from the leaf where its name is “close” to <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">term</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">accessionid</span></code>, or <code class="docutils literal notranslate"><span class="pre">accessionnumber</span></code> (we said “close” because the actual name could have different capitalization, or could have <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, or <code class="docutils literal notranslate"><span class="pre">_</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">Accession_ID</span></code>). The added “candidate” column will be using an alias with <code class="docutils literal notranslate"><span class="pre">&lt;table_name&gt;.&lt;candidate_column_name&gt;</span></code> format.</li>
+<li>Key columns: The constituent columns will be added.</li>
+<li>Asset columns: All the metadata columns are added alongside the url column.</li>
+<li>Other types: ignored and not added to the projection list.</li>
+</ul>
 </div>
 </div>
 <div class="section" id="examples">

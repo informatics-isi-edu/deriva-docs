@@ -2077,6 +2077,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+key">.key</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+canUseScalarProjection">.canUseScalarProjection</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+getAggregatedValue">.getAggregatedValue(page, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 </ul>
@@ -7763,6 +7764,7 @@ it will append “-<integer>” to it.</p>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+key">.key</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
+<li><a class="reference external" href="#ERMrest.PseudoColumn+canUseScalarProjection">.canUseScalarProjection</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.PseudoColumn+getAggregatedValue">.getAggregatedValue(page, contextHeaderParams)</a> ⇒ <code>Promise</code></li>
 </ul>
@@ -7899,6 +7901,19 @@ This is how it behaves:</p>
 &lt;pseudoColumnSchema:PseudoColumnTable&gt;/<path from pseudo-column to main table>/<facets based on value of shortestkey of main table></li>
 <li>Otherwise create the path by traversing the path</li>
 </ol>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+canUseScalarProjection"></a></p>
+</div>
+<div class="section" id="pseudocolumn-canusescalarprojection-code-object-code">
+<span id="pseudocolumn-canusescalarprojection-code-object-code"></span><h3>pseudoColumn.canUseScalarProjection : <code>Object</code><a class="headerlink" href="#pseudocolumn-canusescalarprojection-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether we can use the raw column in the projection list or not.</p>
+<p>If we only need the value of scalar column and none of the other columns of the
+all-outbound path then we can simply use the scalar projection.
+Therefore the pseudo-column must:</p>
+<ul class="simple">
+<li>be all-outbound path in scalar mode</li>
+<li>the leaf column cannot have any column_display annotation</li>
+<li>the leaf column cannot be sorted or doesn’t have a sort based on other columns of the table.</li>
+</ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.PseudoColumn"><code>PseudoColumn</code></a><a name="ERMrest.PseudoColumn+formatPresentation"></a></p>
 </div>
 <div class="section" id="pseudocolumn-formatpresentation-data-context-templatevariables-options-code-object-code">

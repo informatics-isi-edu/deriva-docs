@@ -1427,7 +1427,8 @@
 </style>
 <div class="section" id="markdown-formatting">
 <span id="markdown-formatting"></span><h1>Markdown Formatting<a class="headerlink" href="#markdown-formatting" title="Permalink to this headline">¶</a></h1>
-<p>The renderer that we use (<a class="reference external" href="https://github.com/markdown-it/markdown-it">markdown-it</a>), supports the default markdown syntax with some extra features. Please refer to <a class="reference external" href="http://commonmark.org/help/">markdown reference sheet</a> for markdown syntax.</p>
+<p>Markdown is a plain text format for writing structured documents. We use <a class="reference external" href="https://github.com/markdown-it/markdown-it">markdown-it</a> to parse markdown content which follows <a class="reference external" href="https://spec.commonmark.org/0.30/">commonMark specifications</a>.</p>
+<p>For common markdown syntax please refer to <a class="reference external" href="http://commonmark.org/help/">this reference sheet</a>. The following content are mainly focused on more advanced features and/or features specific to ERMrestJS.</p>
 <div class="section" id="table-of-contents">
 <span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -1487,6 +1488,7 @@
 <li><a class="reference external" href="#12-superscript">12. Superscript</a></li>
 <li><a class="reference external" href="#13-span-attach-attributes-to-text">13. Span (Attach Attributes To Text)</a></li>
 <li><a class="reference external" href="#14-rid-link">14. RID link</a></li>
+<li><a class="reference external" href="#15-table">15. Table</a></li>
 </ul>
 </li>
 </ul>
@@ -1494,7 +1496,7 @@
 <div class="section" id="inline-vs-block">
 <span id="inline-vs-block"></span><h2>Inline Vs. Block<a class="headerlink" href="#inline-vs-block" title="Permalink to this headline">¶</a></h2>
 <p>In HTML we have block and inline elements. Block elements usually add a newline and extra spaces around the content, while inline elements will only take up as much width as is needed to display the content. Paragraphs <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code>, headers <code class="docutils literal notranslate"><span class="pre">&lt;h#&gt;</span></code>, and division <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> are some of the common block elements. Span <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code>, images <code class="docutils literal notranslate"><span class="pre">&lt;img&gt;</span></code>, and anchors <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> are examples for inline blocks.</p>
-<p>This concept exists in markdown-it too. If we parse the content as a block, if the given markdown value does not produce a proper block element, it will be wrapped in a <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag.  While rendering it inline, will not add the <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag. Also newline (<code class="docutils literal notranslate"><span class="pre">\n</span></code>) is not acceptable in values of inline elements.</p>
+<p>This concept exists in ERMrestJS markdown parser too. If we parse the content as a block, if the given markdown value does not produce a proper block element, it will be wrapped in a <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag.  While rendering it inline, will not add the <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tag. Also newline (<code class="docutils literal notranslate"><span class="pre">\n</span></code>) is not acceptable in values of inline elements.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[caption](http://example.com)
 
 #inline output
@@ -1506,7 +1508,7 @@
 <span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </pre></div>
 </div>
-<p>Therefore sometimes we prefer to render the value as inline. markdown-it also has different set of rules for inline and block. All the inline tags are acceptable while rendering a block, but not the other way around. For example you cannot have a header in inline. So you need to be careful while using the blocks. The following are different places that we are rendering inline. Other parts of code accept block elements.</p>
+<p>Therefore sometimes we prefer to render the value as inline. ERMrestJS parser also has different set of rules for inline and block. All the inline tags are acceptable while rendering a block, but not the other way around. For example you cannot have a header in inline. So you need to be careful while using the blocks. The following are different places that we are rendering inline. Other parts of code accept block elements.</p>
 <ul class="simple">
 <li>row-name logic. More specifcally the logic for processing <code class="docutils literal notranslate"><span class="pre">row_markdown_pattern</span></code>.</li>
 <li>While processing <code class="docutils literal notranslate"><span class="pre">markdown_name</span></code> (used on facets, columns, tables, and schemas).</li>
@@ -1528,8 +1530,8 @@
 <blockquote>
 <div><p><strong class="test cls-2" val="1" disabled="">Multiple attributes Example</strong></p></div></blockquote>
 </li>
-<li><p class="first">Attaching attributes to markdown table</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>|header|\n|-|\n|text|{.class-name}
+<li><p class="first">Attaching attributes to markdown table (the two newlines between the end of table and the added attributes are required):</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>|header|\n|-|\n|text|\n\n{.class-name}
 
 #OUTPUT
 <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;class-name&quot;</span><span class="p">&gt;</span>
@@ -2358,6 +2360,86 @@ Invalid attributes provided to the attribute list will be simple ignored.</li>
 </div>
 <blockquote>
 <div><a href="/id/1-3X0H">1-3X0H</a></div></blockquote>
+</div>
+<div class="section" id="table">
+<span id="table"></span><h3>15. Table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h3>
+<p>Tables are not part of the commonMark specifications, but the parser that we use follows the <a class="reference external" href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown specification for tables</a>.</p>
+<p>A table is an arrangement of data with rows and columns, consisting of a single header row, a delimiter row separating the header from the data, and zero or more data rows.</p>
+<p>Each row consists of cells containing arbitrary text, in which inlines are parsed, separated by pipes (<code class="docutils literal notranslate"><span class="pre">|</span></code>). A leading and trailing pipe is also recommended for clarity of reading, and if there’s otherwise parsing ambiguity. Spaces between pipes and cell content are trimmed. Block-level elements cannot be inserted in a table.</p>
+<p>The delimiter row consists of cells whose only content are hyphens (<code class="docutils literal notranslate"><span class="pre">-</span></code>), and optionally, a leading or trailing colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>), or both, to indicate left, right, or center alignment respectively.</p>
+<p>For example,</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>| foo | bar |\n| --- | --- |\n| baz | bim |\n
+
+#OUTPUT
+<span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>foo<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">th</span><span class="p">&gt;</span>bar<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>baz<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>bim<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><table><thead><tr><th>foo</th><th>bar</th></tr></thead><tbody><tr><td>baz</td><td>bim</td></tr></tbody></table></div></blockquote>
+<p>The table is broken at the first empty line, or beginning of another block element:</p>
+<ul>
+<li><p class="first">Example 1 (table and a header which is block-level)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">foo</span> <span class="o">|</span> <span class="n">bar</span> <span class="o">|</span>\<span class="n">n</span><span class="o">|</span> <span class="o">---</span> <span class="o">|</span> <span class="o">---</span> <span class="o">|</span>\<span class="n">n</span><span class="o">|</span> <span class="n">baz</span> <span class="o">|</span> <span class="n">bim</span> <span class="o">|</span>\<span class="n">n</span> <span class="c1">#### header</span>
+
+<span class="c1">#OUTPUT</span>
+<span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">thead</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">foo</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">bar</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">thead</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tbody</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">baz</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">bim</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tbody</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">h4</span><span class="o">&gt;</span><span class="n">header</span><span class="o">&lt;/</span><span class="n">h4</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><table><thead><tr><th>foo</th><th>bar</th></tr></thead><tbody><tr><td>baz</td><td>bim</td></tr></tbody></table><h4>header</h4></div></blockquote>
+</li>
+<li><p class="first">A table and a link (an inline element) after it with extra newline in between. If you fail to add the empty newline inbetween, parser will add the link as a new row of the table.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="n">foo</span> <span class="o">|</span> <span class="n">bar</span> <span class="o">|</span>\<span class="n">n</span><span class="o">|</span> <span class="o">---</span> <span class="o">|</span> <span class="o">---</span> <span class="o">|</span>\<span class="n">n</span><span class="o">|</span> <span class="n">baz</span> <span class="o">|</span> <span class="n">bim</span> <span class="o">|</span>\<span class="n">n</span>\<span class="n">n</span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">)</span>
+
+<span class="c1">#OUTPUT</span>
+<span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">thead</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">foo</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">bar</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">thead</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">tbody</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">baz</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">bim</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">tbody</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">h4</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><table><thead><tr><th>foo</th><th>bar</th></tr></thead><tbody><tr><td>baz</td><td>bim</td></tr></tbody></table><a href="example.com">caption</a></div></blockquote>
+</li>
+</ul>
 </div>
 </div>
 </div>

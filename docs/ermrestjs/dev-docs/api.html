@@ -1802,6 +1802,10 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#new_ERMrest.MalformedURIError_new">new MalformedURIError(message)</a></li>
 </ul>
 </li>
+<li><a class="reference external" href="#ERMrest.BatchUnlinkResponse">.BatchUnlinkResponse</a><ul>
+<li><a class="reference external" href="#new_ERMrest.BatchUnlinkResponse_new">new BatchUnlinkResponse(message)</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#ERMrest.NoDataChangedError">.NoDataChangedError</a><ul>
 <li><a class="reference external" href="#new_ERMrest.NoDataChangedError_new">new NoDataChangedError(message)</a></li>
 </ul>
@@ -1886,7 +1890,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+delete..self">~self</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#ERMrest.Reference+getBatchAssociationRef">.getBatchAssociationRef(tuples)</a> ⇒ <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+deleteBatchAssociationTuples">.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateRelatedList">.generateRelatedList([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
@@ -2335,7 +2339,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+delete..self">~self</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#ERMrest.Reference+getBatchAssociationRef">.getBatchAssociationRef(tuples)</a> ⇒ <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+deleteBatchAssociationTuples">.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateRelatedList">.generateRelatedList([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
@@ -5428,6 +5432,30 @@ will be a type understandable by database.</p>
 <td>error message</td>
 </tr>
 </tbody>
+</table><p><a name="ERMrest.BatchUnlinkResponse"></a></p>
+</div>
+</div>
+<div class="section" id="ermrest-batchunlinkresponse">
+<span id="ermrest-batchunlinkresponse"></span><h2>ERMrest.BatchUnlinkResponse<a class="headerlink" href="#ermrest-batchunlinkresponse" title="Permalink to this headline">¶</a></h2>
+<p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><a name="new_ERMrest.BatchUnlinkResponse_new"></a></p>
+<div class="section" id="new-batchunlinkresponse-message">
+<span id="new-batchunlinkresponse-message"></span><h3>new BatchUnlinkResponse(message)<a class="headerlink" href="#new-batchunlinkresponse-message" title="Permalink to this headline">¶</a></h3>
+<p>A malformed URI was passed to the API.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td><code>string</code></td>
+<td>error message</td>
+</tr>
+</tbody>
 </table><p><a name="ERMrest.NoDataChangedError"></a></p>
 </div>
 </div>
@@ -5734,7 +5762,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+delete..self">~self</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#ERMrest.Reference+getBatchAssociationRef">.getBatchAssociationRef(tuples)</a> ⇒ <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+deleteBatchAssociationTuples">.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateRelatedList">.generateRelatedList([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
@@ -6033,6 +6061,10 @@ entities in <code class="docutils literal notranslate"><span class="pre">B</span
 ignore <code class="docutils literal notranslate"><span class="pre">B</span></code> and think of this relationship as <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&lt;-&gt;</span> <span class="pre">C</span></code>, unless <code class="docutils literal notranslate"><span class="pre">B</span></code>
 has other moderating attributes, for instance that indicate the
 <code class="docutils literal notranslate"><span class="pre">type</span></code> of relationship, but this is a model-depenent detail.</p>
+<p>NOTE: This API should not be used for generating related references
+since we need the main tuple data for generating related references.
+Please use <code class="docutils literal notranslate"><span class="pre">generateRelatedList</span></code> or <code class="docutils literal notranslate"><span class="pre">generateActiveList</span></code> before
+calling this API.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+unfilteredReference"></a></p>
 </div>
 <div class="section" id="reference-unfilteredreference-code-reference-code">
@@ -6371,7 +6403,7 @@ or rejected with any of these errors:</p>
 <tr>
 <td>getUnlinkTRS</td>
 <td><code>Boolean</code></td>
-<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
+<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally. NOTE getUnlinkTRS can only be used on related references that are generated after calling <code>generateRelatedReference</code> or <code>generateActiveList</code> with the main tuple data. As part of generating related references, if the main tuple is available we will use a facet filter and the alias is added in there. Without the main tuple, the alias is not added to the path and therefore <code>getUnlinkTRS</code> cannot be used. TODO this is a bit hacky and should be refactored</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>
@@ -6471,21 +6503,35 @@ in read with joins in the request, which affects the etag. etag is in response t
 to the returned data and since join introduces extra data it is different than a request
 without any joins.</p>
 <p>github issue: #425</p>
-<p><strong>Kind</strong>: inner property of <a class="reference external" href="#ERMrest.Reference+delete"><code>delete</code></a><a name="ERMrest.Reference+getBatchAssociationRef"></a></p>
+<p><strong>Kind</strong>: inner property of <a class="reference external" href="#ERMrest.Reference+delete"><code>delete</code></a><a name="ERMrest.Reference+deleteBatchAssociationTuples"></a></p>
 </div>
 </div>
-<div class="section" id="reference-getbatchassociationref-tuples-code-array-code">
-<span id="reference-getbatchassociationref-tuples-code-array-code"></span><h3>reference.getBatchAssociationRef(tuples) ⇒ <code>Array</code><a class="headerlink" href="#reference-getbatchassociationref-tuples-code-array-code" title="Permalink to this headline">¶</a></h3>
-<p>If the current reference is derived from an association related table,
-this function will return a reference to the corresponding
-entity set from the corresponding association table denoted by the list of tuples.</p>
+<div class="section" id="reference-deletebatchassociationtuples-maintuple-tuples-contextheaderparams-code-object-code">
+<span id="reference-deletebatchassociationtuples-maintuple-tuples-contextheaderparams-code-object-code"></span><h3>reference.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams) ⇒ <code>Object</code><a class="headerlink" href="#reference-deletebatchassociationtuples-maintuple-tuples-contextheaderparams-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>If the current reference is derived from an association related table and filtered, this
+function will delete the set of tuples included and return a set of success responses and
+a set of errors for the corresponding delete actions for the provided entity set from the
+corresponding association table denoted by the list of tuples.</p>
 <p>For example, assume
 Table1(K1,C1) &lt;- AssociationTable(FK1, FK2) -&gt; Table2(K2,C2)
 and the current tuples are from Table2 with k2 = “2” and k2 = “3”.
-With origFKRData = {“k1”: “1”} this function will return a reference
-to AssocitaitonTable with FK1 = “1” as a part of the path and FK2 = “2” and FK2 = “3”
+With origFKRData = {“k1”: “1”} this function will return a set of success and error responses for
+delete requests to AssociationTable with FK1 = “1” as a part of the path and FK2 = “2” and FK2 = “3”
 as the filters that define the set and how they are related to Table1.</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Array</code> - an array of ERMrest.Reference for the AssociationTable that maps the supplied tuples to a row from Table1</p>
+<p>To make sure a deletion occurs only for the tuples specified, we need to verify each reference path that
+is created includes a parent constraint and has one or more filters based on the other side of the association
+table’s uniqueness constraint. Some more information about the validations that need to occur based on the above example:</p>
+<ul class="simple">
+<li>parent value has to be not null<ul>
+<li>FK1 has to have a not null constraint</li>
+</ul>
+</li>
+<li>child values have to have at least 1 value and all not null<ul>
+<li>for FK2, all selected values are not null</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Object</code> - an ERMrest.BatchUnlinkResponse “error” object</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -6496,9 +6542,19 @@ as the filters that define the set and how they are related to Table1.</p>
 </thead>
 <tbody>
 <tr>
+<td>mainTuple</td>
+<td><code>Array</code></td>
+<td>an ERMrest.Tuple from Table1 (from example above)</td>
+</tr>
+<tr>
 <td>tuples</td>
 <td><code>Array</code></td>
-<td>an array of ERMrest.Tuple objects from Table2 (from example above)</td>
+<td>an array of ERMrest.Tuple objects from Table2 (same as self) (from example above)</td>
+</tr>
+<tr>
+<td>contextHeaderParams</td>
+<td><code>Object</code></td>
+<td>the object that we want to log.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateRelatedList"></a></p>
@@ -6519,6 +6575,12 @@ The logic for are sorted based on following attributes:</li>
 <li>position of key columns that are involved in the foreignkey</li>
 <li>position of columns that are involved in the foreignkey</li>
 </ol>
+<p>NOTE: Passing “tuple” to this function is highly recommended.
+Without tuple related references will be generated by appending the compactPath with
+join statements. Because of this we cannot optimize the URL and other
+parts of the code cannot behave properly (e.g. getUnlinkTRS in read cannot be used).
+By passing “tuple”, we can create the related references by creaing a facet blob
+which can be integrated with other parts of the code.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></p>
 <table border="1" class="docutils">
 <thead>
@@ -10776,7 +10838,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+delete..self">~self</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#ERMrest.Reference+getBatchAssociationRef">.getBatchAssociationRef(tuples)</a> ⇒ <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.Reference+deleteBatchAssociationTuples">.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateRelatedList">.generateRelatedList([tuple])</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Array.<p>&amp;lt;</p>
 Reference<p>&amp;gt;</p>
 </code></a></li>
@@ -11075,6 +11137,10 @@ entities in <code class="docutils literal notranslate"><span class="pre">B</span
 ignore <code class="docutils literal notranslate"><span class="pre">B</span></code> and think of this relationship as <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">&lt;-&gt;</span> <span class="pre">C</span></code>, unless <code class="docutils literal notranslate"><span class="pre">B</span></code>
 has other moderating attributes, for instance that indicate the
 <code class="docutils literal notranslate"><span class="pre">type</span></code> of relationship, but this is a model-depenent detail.</p>
+<p>NOTE: This API should not be used for generating related references
+since we need the main tuple data for generating related references.
+Please use <code class="docutils literal notranslate"><span class="pre">generateRelatedList</span></code> or <code class="docutils literal notranslate"><span class="pre">generateActiveList</span></code> before
+calling this API.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a name="ERMrest.Reference+unfilteredReference"></a></p>
 </div>
 <div class="section" id="reference-unfilteredreference-code-reference-code">
@@ -11413,7 +11479,7 @@ or rejected with any of these errors:</p>
 <tr>
 <td>getUnlinkTRS</td>
 <td><code>Boolean</code></td>
-<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally.</td>
+<td>whether we should fetch the acls of association                  table. Use this only if the association is based on facet syntax NOTE setting useEntity to true, will ignore any sort that is based on pseduo-columns. TODO we might want to chagne the above statement, so useEntity can be used more generally. NOTE getUnlinkTRS can only be used on related references that are generated after calling <code>generateRelatedReference</code> or <code>generateActiveList</code> with the main tuple data. As part of generating related references, if the main tuple is available we will use a facet filter and the alias is added in there. Without the main tuple, the alias is not added to the path and therefore <code>getUnlinkTRS</code> cannot be used. TODO this is a bit hacky and should be refactored</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+sort"></a></p>
@@ -11513,21 +11579,35 @@ in read with joins in the request, which affects the etag. etag is in response t
 to the returned data and since join introduces extra data it is different than a request
 without any joins.</p>
 <p>github issue: #425</p>
-<p><strong>Kind</strong>: inner property of <a class="reference external" href="#ERMrest.Reference+delete"><code>delete</code></a><a name="ERMrest.Reference+getBatchAssociationRef"></a></p>
+<p><strong>Kind</strong>: inner property of <a class="reference external" href="#ERMrest.Reference+delete"><code>delete</code></a><a name="ERMrest.Reference+deleteBatchAssociationTuples"></a></p>
 </div>
 </div>
-<div class="section" id="reference-getbatchassociationref-tuples-code-array-code">
-<span id="id46"></span><h3>reference.getBatchAssociationRef(tuples) ⇒ <code>Array</code><a class="headerlink" href="#reference-getbatchassociationref-tuples-code-array-code" title="Permalink to this headline">¶</a></h3>
-<p>If the current reference is derived from an association related table,
-this function will return a reference to the corresponding
-entity set from the corresponding association table denoted by the list of tuples.</p>
+<div class="section" id="reference-deletebatchassociationtuples-maintuple-tuples-contextheaderparams-code-object-code">
+<span id="id46"></span><h3>reference.deleteBatchAssociationTuples(mainTuple, tuples, contextHeaderParams) ⇒ <code>Object</code><a class="headerlink" href="#reference-deletebatchassociationtuples-maintuple-tuples-contextheaderparams-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>If the current reference is derived from an association related table and filtered, this
+function will delete the set of tuples included and return a set of success responses and
+a set of errors for the corresponding delete actions for the provided entity set from the
+corresponding association table denoted by the list of tuples.</p>
 <p>For example, assume
 Table1(K1,C1) &lt;- AssociationTable(FK1, FK2) -&gt; Table2(K2,C2)
 and the current tuples are from Table2 with k2 = “2” and k2 = “3”.
-With origFKRData = {“k1”: “1”} this function will return a reference
-to AssocitaitonTable with FK1 = “1” as a part of the path and FK2 = “2” and FK2 = “3”
+With origFKRData = {“k1”: “1”} this function will return a set of success and error responses for
+delete requests to AssociationTable with FK1 = “1” as a part of the path and FK2 = “2” and FK2 = “3”
 as the filters that define the set and how they are related to Table1.</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Array</code> - an array of ERMrest.Reference for the AssociationTable that maps the supplied tuples to a row from Table1</p>
+<p>To make sure a deletion occurs only for the tuples specified, we need to verify each reference path that
+is created includes a parent constraint and has one or more filters based on the other side of the association
+table’s uniqueness constraint. Some more information about the validations that need to occur based on the above example:</p>
+<ul class="simple">
+<li>parent value has to be not null<ul>
+<li>FK1 has to have a not null constraint</li>
+</ul>
+</li>
+<li>child values have to have at least 1 value and all not null<ul>
+<li>for FK2, all selected values are not null</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><strong>Returns</strong>: <code>Object</code> - an ERMrest.BatchUnlinkResponse “error” object</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -11538,9 +11618,19 @@ as the filters that define the set and how they are related to Table1.</p>
 </thead>
 <tbody>
 <tr>
+<td>mainTuple</td>
+<td><code>Array</code></td>
+<td>an ERMrest.Tuple from Table1 (from example above)</td>
+</tr>
+<tr>
 <td>tuples</td>
 <td><code>Array</code></td>
-<td>an array of ERMrest.Tuple objects from Table2 (from example above)</td>
+<td>an array of ERMrest.Tuple objects from Table2 (same as self) (from example above)</td>
+</tr>
+<tr>
+<td>contextHeaderParams</td>
+<td><code>Object</code></td>
+<td>the object that we want to log.</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateRelatedList"></a></p>
@@ -11561,6 +11651,12 @@ The logic for are sorted based on following attributes:</li>
 <li>position of key columns that are involved in the foreignkey</li>
 <li>position of columns that are involved in the foreignkey</li>
 </ol>
+<p>NOTE: Passing “tuple” to this function is highly recommended.
+Without tuple related references will be generated by appending the compactPath with
+join statements. Because of this we cannot optimize the URL and other
+parts of the code cannot behave properly (e.g. getUnlinkTRS in read cannot be used).
+By passing “tuple”, we can create the related references by creaing a facet blob
+which can be integrated with other parts of the code.</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></p>
 <table border="1" class="docutils">
 <thead>

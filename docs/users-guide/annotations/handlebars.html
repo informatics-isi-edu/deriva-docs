@@ -270,13 +270,16 @@
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Handlebars Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#html-escaping">HTML-escaping</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accessing-current-context">Accessing current context</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subexpressions">Subexpressions:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#boolean-helpers">Boolean Helpers</a></li>
 </ul>
 </li>
@@ -944,13 +947,16 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#html-escaping">HTML-escaping</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-current-context">Accessing current context</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#subexpressions">Subexpressions:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
 </ul>
 </li>
@@ -1350,18 +1356,18 @@
 <p><a class="reference external" href="http://handlebarsjs.com/">Handlebars</a> is almost similar to Mustache with some additional benefits. There are some things that you can’t do in Mustache (e.g if-else statement) that Handlebars allows us to do easily using <code class="docutils literal notranslate"><span class="pre">helpers</span></code>.</p>
 <p>Handlebars supports most of the Mustache syntax. However, there are a few features that are not supported by Handlebars. For example:</p>
 <ul class="simple">
-<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annotations to perform boolean (or null) check. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
+<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annotations to perform boolean (or null) checks. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
 </ul>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span>// Mustache
 
-{{#name}}Hello {{name}}{{/name}}{{^name}}No name available{{/name}}
+{{#name}}Hello {{{name}}}{{/name}}{{^name}}No name available{{/name}}
 
 // name=&quot;John&quot; (or any object that evaluates to true in javascript)                 =&gt; Hello John
 // name=null (or any object that evaluate to false such as &#39;&#39;, 0, false, [], etc)   =&gt; No name available
 
 // handlebards
 
-{{#if name}}Hello {{name}}{{else}}No name available{{/if}}
+{{#if name}}Hello {{{name}}}{{else}}No name available{{/if}}
 </pre></div>
 </div>
 <ul class="simple">
@@ -1375,8 +1381,16 @@
 </pre></div>
 </div>
 <p>Handlebars supports more complicated expression syntax and allow the comparison to be done at the finer level e.g. null v.s. false comparison. This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference external" href="#handlebars-paths">Handlebar Paths</a></li>
+<li><a class="reference external" href="#html-escaping">HTML-escaping</a></li>
+<li><a class="reference external" href="#accessing-current-context">Accessing current context</a></li>
+<li><a class="reference external" href="#using-arrays">Using Arrays</a></li>
+<li><a class="reference external" href="#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
+<li><a class="reference external" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
+<li><a class="reference external" href="#subexpressions">Subexpressions</a></li>
 <li><a class="reference external" href="#helpers">Helpers</a><ul>
 <li><a class="reference external" href="#formatdate-helper">FormatDate</a></li>
 <li><a class="reference external" href="#math-helpers">Math Helpers</a></li>
@@ -1397,44 +1411,58 @@
 <li><a class="reference external" href="#totitlecase-helper">ToTitleCase</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#using-arrays">Using Arrays</a></li>
-<li><a class="reference external" href="#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
-<li><a class="reference external" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li><a class="reference external" href="#subexpressions">Subexpressions</a></li>
 <li><a class="reference external" href="#boolean-helpers">Boolean Helpers</a><ul>
 <li><a class="reference external" href="#comparison-helpers">Comparison Helpers</a></li>
 <li><a class="reference external" href="#Logical-helpers">Logical Helpers</a></li>
 <li><a class="reference external" href="#regular-expression-match">Regular Expression Match</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#math-helpers">Math Helpers</a></li>
 </ul>
+</div>
+<div class="section" id="html-escaping">
+<span id="html-escaping"></span><h2>HTML-escaping<a class="headerlink" href="#html-escaping" title="Permalink to this headline">¶</a></h2>
+<p>In Handlebars, the values returned by the <code class="docutils literal notranslate"><span class="pre">{{expression}}</span></code> are HTML-escaped. Say, if the expression contains <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, then the returned HTML-escaped output is generated as <code class="docutils literal notranslate"><span class="pre">&amp;amp;</span></code>. If you don’t want Handlebars to escape a value, use the “triple-stash”, <code class="docutils literal notranslate"><span class="pre">{{{</span></code>:</p>
+<p>In the below template, you can learn how to produce the HTML escaped and raw output.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="p">{{{</span><span class="n">specialChars</span><span class="p">}}}</span>
+<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="p">{{</span><span class="n">specialChars</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>Pass the special characters to the template</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">specialChars</span><span class="p">:</span> <span class="s2">&quot;&amp; &lt; &gt; </span><span class="se">\&quot;</span><span class="s2"> &#39; ` =&quot;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Expressions enclosed by “triple-stash” (<code class="docutils literal notranslate"><span class="pre">{{{</span></code>) produce the raw output. Otherwise, HTML-escaped output is generated as below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="o">&amp;</span> <span class="o">&lt;</span> <span class="o">&gt;</span> <span class="s2">&quot; &#39; ` =</span>
+<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span> <span class="o">&amp;</span><span class="c1">#x27; &amp;#x60; &amp;#x3D;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="handlebars-paths">
 <span id="handlebars-paths"></span><h2>Handlebars Paths<a class="headerlink" href="#handlebars-paths" title="Permalink to this headline">¶</a></h2>
 <p>Handlebars supports simple paths, just like Mustache.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="n">name</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{{</span><span class="n">name</span><span class="p">}}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Handlebars also supports nested paths, making it possible to look up properties nested below the current context.</p>
+<p>Handlebars also supports nested paths, making it possible to lookup properties nested below the current context.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">body</span> <span class="k">for</span> <span class="n">book</span> <span class="k">with</span> <span class="p">{{</span><span class="n">title</span><span class="p">}}</span> <span class="n">authored</span> <span class="n">by</span> <span class="p">{{</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="p">}}</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">body</span><span class="p">}}</span>
 </pre></div>
 </div>
 <p>That template works with this context</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;My First Blog Post!&quot;</span><span class="p">,</span>
-    <span class="nx">author</span><span class="o">:</span> <span class="p">{</span>
-        <span class="nx">id</span><span class="o">:</span> <span class="mi">47</span><span class="p">,</span>
-        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Yehuda Katz&quot;</span>
-    <span class="p">},</span>
-    <span class="nx">body</span><span class="o">:</span> <span class="s2">&quot;My first post. Wheeeee!&quot;</span>
+  <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;My First Blog Post!&quot;</span><span class="p">,</span>
+  <span class="nx">author</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="mi">47</span><span class="p">,</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Yehuda Katz&quot;</span>
+  <span class="p">},</span>
+  <span class="nx">body</span><span class="o">:</span> <span class="s2">&quot;My first post. Wheeeee!&quot;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>This makes it possible to use Handlebars templates with more raw JSON objects.</p>
 <p>Nested handlebars paths can also include ../ segments, which evaluate their paths against a parent context.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each comments}}</span>
-    <span class="p">[{{</span><span class="n">title</span><span class="p">}}](</span><span class="o">/</span><span class="n">posts</span><span class="o">/</span><span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span><span class="c1">#{{id}})</span>
-    <span class="p">{{</span><span class="n">body</span><span class="p">}}</span>
+  <span class="p">[{{</span><span class="n">title</span><span class="p">}}](</span><span class="o">/</span><span class="n">posts</span><span class="o">/</span><span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span><span class="c1">#{{id}})</span>
+  <span class="p">{{</span><span class="n">body</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1445,17 +1473,112 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
     <span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span>
 
     <span class="p">{{</span><span class="c1">#if title}}</span>
-        <span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span>
+      <span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span>
     <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
 <p>In this example all of the above reference the same <code class="docutils literal notranslate"><span class="pre">permalink</span></code> value even though they are located within different blocks.</p>
-<p><strong>NOTE</strong>: Handlebars also allows for name conflict resolution between helpers and data fields via a this reference:</p>
+<p><strong>NOTE</strong>: Handlebars also allows for name conflict resolution between helpers and data fields via a <code class="docutils literal notranslate"><span class="pre">this</span></code> reference:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="o">./</span><span class="n">name</span><span class="p">}}</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">/</span><span class="n">name</span><span class="p">}}</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">.</span><span class="p">[</span><span class="n">name</span> <span class="k">with</span> <span class="n">a</span> <span class="n">space</span><span class="p">]}}</span>
 </pre></div>
 </div>
-<p>Any of the above would cause the name field on the current context to be used rather than a helper of the same name.</p>
+<p>Any of the above would cause the name field in the current context to be used rather than a helper of the same name.</p>
+</div>
+<div class="section" id="accessing-current-context">
+<span id="accessing-current-context"></span><h2>Accessing current context<a class="headerlink" href="#accessing-current-context" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword can be used for accessing the current context. It’s mainly useful when dealing with arrays or JSON objects where it will allow you to access the values of an array of objects. For example, if you have the following JSON column:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nx">person</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">firstname</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="nx">lastname</span><span class="o">:</span> <span class="s2">&quot;smith&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>While you can use <code class="docutils literal notranslate"><span class="pre">{{{person.firstname}}}</span></code> to access the values inside the object, you can use a block like the following and utilize the <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#person}}</span>
+<span class="p">{{{</span><span class="n">this</span><span class="o">.</span><span class="n">firstname</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">this</span><span class="o">.</span><span class="n">lastname</span><span class="p">}}}</span>
+<span class="p">{{</span><span class="o">/</span><span class="n">person</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>As we mentioned <code class="docutils literal notranslate"><span class="pre">this</span></code> is also useful for arrays, for more information please refer to the <a class="reference external" href="#each-helper">Each Helper</a> section. To expand on this, you can also use <code class="docutils literal notranslate"><span class="pre">this</span></code> in the case that you have an array of objects. For example:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nx">authors</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">firstname</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+      <span class="nx">lastname</span><span class="o">:</span> <span class="s2">&quot;smith&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">firstname</span><span class="o">:</span> <span class="s2">&quot;Joe&quot;</span><span class="p">,</span>
+      <span class="nx">lastname</span><span class="o">:</span> <span class="s2">&quot;Doe&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where you can do</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each authors}}</span>
+  <span class="p">{{{</span><span class="n">this</span><span class="o">.</span><span class="n">firstname</span><span class="p">}}}</span> <span class="o">-</span> <span class="p">{{{</span><span class="n">this</span><span class="o">.</span><span class="n">lastname</span><span class="p">}}}</span>
+  <span class="p">{{</span><span class="c1">#unless @last}}\n{{/unless}</span>
+<span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">this</span></code> refers to each element of the array that is an object and can use the <code class="docutils literal notranslate"><span class="pre">.</span></code> notation to access their attributes.</p>
+</div>
+<div class="section" id="using-arrays">
+<span id="using-arrays"></span><h2>Using Arrays<a class="headerlink" href="#using-arrays" title="Permalink to this headline">¶</a></h2>
+<p>You can use the <a class="reference external" href="#each-helper">Each Helper</a> to iterate over its data. You can also use the <code class="docutils literal notranslate"><span class="pre">{{array.INDEX}}</span></code> pattern if you want to access array data by index; where the index starts from zero and it is the position of the element that you want to access.</p>
+<p>Template:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">arr</span><span class="o">.</span><span class="mf">0.</span><span class="n">value</span><span class="p">}}}</span>
+</pre></div>
+</div>
+<p>When used in this context:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nx">arr</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;first element&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;second element&quot;</span><span class="p">},</span>
+      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;third element&quot;</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="n">element</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="escaping-handlebars-expressions">
+<span id="escaping-handlebars-expressions"></span><h2>Escaping Handlebars expressions<a class="headerlink" href="#escaping-handlebars-expressions" title="Permalink to this headline">¶</a></h2>
+<p>Handlebars content may be escaped using inline escapes. Inline escapes are created by prefixing a mustache block with <code class="docutils literal notranslate"><span class="pre">\\</span></code></p>
+<p>For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="p">{{{</span><span class="n">escaped</span><span class="p">}}}</span>
+</pre></div>
+</div>
+<p>Would return</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">escaped</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-keys-with-spaces-and-special-characters">
+<span id="accessing-keys-with-spaces-and-special-characters"></span><h2>Accessing keys with spaces and special characters<a class="headerlink" href="#accessing-keys-with-spaces-and-special-characters" title="Permalink to this headline">¶</a></h2>
+<p>Handlebars allows you to access keys/variables which have spaces <code class="docutils literal notranslate"></code> or special characters like <code class="docutils literal notranslate"><span class="pre">{}</span></code> in their names. You need to enclose those variables in square brackets.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{[</span><span class="nb">str</span> <span class="k">with</span> <span class="n">a</span> <span class="n">space</span><span class="p">]}}</span>
+</pre></div>
+</div>
+<p>To access these variables in another block helper</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode [str with a space]}}{{/ecnode}}</span>
+<span class="p">{{</span><span class="c1">#escape [str with a space]}}{{/escape}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="subexpressions">
+<span id="subexpressions"></span><h2>Subexpressions<a class="headerlink" href="#subexpressions" title="Permalink to this headline">¶</a></h2>
+<p>Handlebars offers support for <code class="docutils literal notranslate"><span class="pre">subexpressions</span></code>, which allows you to invoke multiple helpers within a single mustache <code class="docutils literal notranslate"><span class="pre">{{}}</span></code>, and pass in the results of inner helper invocations as arguments to outer helpers. Subexpressions are delimited by parentheses.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape (encode arg1) arg2}}{{/escape}}</span>
+</pre></div>
+</div>
+<p>In this case, <code class="docutils literal notranslate"><span class="pre">encode</span></code> will get invoked with the string argument <code class="docutils literal notranslate"><span class="pre">arg1</span></code>, and whatever the encode function returns will get passed in as the first argument to escape (and <code class="docutils literal notranslate"><span class="pre">arg2</span></code> will get passed in as the second argument to escape).</p>
 </div>
 <div class="section" id="helpers">
 <span id="helpers"></span><h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
@@ -1508,12 +1631,12 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if author}} {{firstName}} {{lastName}}&lt;/h1&gt;{{/if}}</span>
 </pre></div>
 </div>
-<p>when used with an empty (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) context, <code class="docutils literal notranslate"><span class="pre">author</span></code> will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, resulting in empty string:</p>
+<p>when used with an empty (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) context, <code class="docutils literal notranslate"><span class="pre">author</span></code> will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, resulting in an empty string:</p>
 <p>When using a block expression, you can specify a template section to run if the expression returns a falsy value. The section, marked by <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> is called an “else section”.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if author}} {{firstName}} {{lastName}}{{else}} Unknown Author {{/if}}</span>
 </pre></div>
 </div>
-<p>Above method will return <code class="docutils literal notranslate"><span class="pre">Unknown</span> <span class="pre">Author</span></code>.</p>
+<p>The above method will return <code class="docutils literal notranslate"><span class="pre">Unknown</span> <span class="pre">Author</span></code>.</p>
 </div>
 <div class="section" id="unless-helper">
 <span id="unless-helper"></span><h3>Unless helper<a class="headerlink" href="#unless-helper" title="Permalink to this headline">¶</a></h3>
@@ -1547,9 +1670,9 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">this</span></code> expression in any context to reference the current context.</p>
 <p>You can optionally provide an <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> section which will display only when the list is empty.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each paragraphs}}</span>
-    <span class="p">{{</span><span class="n">this</span><span class="p">}}</span>
+  <span class="p">{{</span><span class="n">this</span><span class="p">}}</span>
 <span class="p">{{</span><span class="k">else</span><span class="p">}}</span>
-    <span class="n">No</span> <span class="n">content</span>
+  <span class="n">No</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1566,14 +1689,14 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>The first and last steps of iteration are noted via the <code class="docutils literal notranslate"><span class="pre">&#64;first</span></code> and <code class="docutils literal notranslate"><span class="pre">&#64;last</span></code> variables when iterating over an array. When iterating over an object only the <code class="docutils literal notranslate"><span class="pre">&#64;first</span></code> is available.</p>
-<p>When looping throw items in <code class="docutils literal notranslate"><span class="pre">each</span></code>, you can reference the iterable object using <code class="docutils literal notranslate"><span class="pre">../</span></code> syntax. The following will allow you to access the array and calculate it’s length:</p>
+<p>When looping throw items in <code class="docutils literal notranslate"><span class="pre">each</span></code>, you can reference the iterable object using <code class="docutils literal notranslate"><span class="pre">../</span></code> syntax. The following will allow you to access the array and calculate its length:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each array}}</span>
   <span class="p">{{</span><span class="o">../</span><span class="n">array</span><span class="o">.</span><span class="n">length</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>Nested <code class="docutils literal notranslate"><span class="pre">each</span></code> blocks may access the iteration variables via depth based paths. To access the parent index, for example, <code class="docutils literal notranslate"><span class="pre">{{&#64;../index}}</span></code> can be used.</p>
-<p>The each helper also supports block parameters, allowing for named references anywhere in the block.</p>
+<p>Nested <code class="docutils literal notranslate"><span class="pre">each</span></code> blocks may access the iteration variables via depth-based paths. To access the parent index, for example, <code class="docutils literal notranslate"><span class="pre">{{&#64;../index}}</span></code> can be used.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">each</span></code> helper also supports block parameters, allowing for named references anywhere in the block.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each array as |value key|}}</span>
   <span class="p">{{</span><span class="c1">#each child as |childValue childKey|}}</span>
     <span class="p">{{</span><span class="n">key</span><span class="p">}}</span> <span class="o">-</span> <span class="p">{{</span><span class="n">childKey</span><span class="p">}}</span><span class="o">.</span> <span class="p">{{</span><span class="n">childValue</span><span class="p">}}</span>
@@ -1585,7 +1708,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="with-helper">
 <span id="with-helper"></span><h3>With helper<a class="headerlink" href="#with-helper" title="Permalink to this headline">¶</a></h3>
-<p>Normally, Handlebars templates are evaluated against the context to the template.</p>
+<p>Normally, Handlebars templates are evaluated against the context of the template.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=&gt;</span> <span class="p">{{</span><span class="n">lastName</span><span class="p">}},</span> <span class="p">{{</span><span class="n">firstName</span><span class="p">}}</span>
 <span class="n">contenxt</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="n">firstName</span><span class="p">:</span> <span class="s2">&quot;Alan&quot;</span><span class="p">,</span> <span class="n">lastName</span><span class="p">:</span> <span class="s2">&quot;Johnson&quot;</span><span class="p">}</span>
 </pre></div>
@@ -1597,11 +1720,11 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <p>You can shift the context for a section of a template by using the built-in <code class="docutils literal notranslate"><span class="pre">with</span></code> block helper.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">title</span><span class="p">}}</span>
 <span class="p">{{</span><span class="c1">#with author}}</span>
-    <span class="n">By</span> <span class="p">{{</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">lastName</span><span class="p">}}</span>
+  <span class="n">By</span> <span class="p">{{</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">lastName</span><span class="p">}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>when used with this context:</p>
+<p>when used in this context:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;My first post!&quot;</span><span class="p">,</span>
   <span class="nx">author</span><span class="o">:</span> <span class="p">{</span>
@@ -1618,28 +1741,28 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <p><code class="docutils literal notranslate"><span class="pre">with</span></code> can also be used with block parameters to define known references in the current block. The example above can be converted to</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">title</span><span class="p">}}</span>
 <span class="p">{{</span><span class="c1">#with author as |myAuthor|}}</span>
-    <span class="n">By</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">lastName</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+  <span class="n">By</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">lastName</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>Which allows for complex templates to potentially provide clearer code than <code class="docutils literal notranslate"><span class="pre">../</span></code> depthed references allow for.</p>
+<p>This allows for complex templates to potentially provide clearer code than <code class="docutils literal notranslate"><span class="pre">../</span></code> depthed references allow for.</p>
 <p>You can optionally provide an <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> section which will display only when the passed value is empty.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author}}</span>
-    <span class="p">{{</span><span class="n">name</span><span class="p">}}</span>
+  <span class="p">{{</span><span class="n">name</span><span class="p">}}</span>
 <span class="p">{{</span><span class="k">else</span><span class="p">}}</span>
-    <span class="n">No</span> <span class="n">content</span>
+  <span class="n">No</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="encode-helper">
 <span id="encode-helper"></span><h3>Encode helper<a class="headerlink" href="#encode-helper" title="Permalink to this headline">¶</a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">encode</span></code> helper to get strings in URL encoded format. It accepts more than 1 strings which need to be encoded</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">encode</span></code> helper to get strings in URL encoded format. It accepts more than one string that needs to be encoded</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">=</span><span class="p">{{</span><span class="c1">#encode age}}{{/encode}}</span>
 </pre></div>
 </div>
 <p>for context <code class="docutils literal notranslate"><span class="pre">age=10</span></code> will result in <code class="docutils literal notranslate"><span class="pre">age%3D10</span></code></p>
-<p>In addition you can provide multiple inputs too which’re concatenated and then encoded. For example,</p>
+<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode key &#39;=&#39; value}}</span>
 </pre></div>
 </div>
@@ -1647,12 +1770,12 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="escape-helper">
 <span id="escape-helper"></span><h3>Escape helper<a class="headerlink" href="#escape-helper" title="Permalink to this headline">¶</a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">escape</span></code> helper to specifically escape values; for example hyphens “-” etc., you can use the escape block in this way. It accepts more than 1 strings which that needs to be escaped</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">escape</span></code> helper to specifically escape values; for example, hyphens “-” etc., you can use the escape block in this way. It accepts more than one string that needs to be escaped</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="o">=</span><span class="p">{{</span><span class="c1">#escape key}}{{/escape}}</span>
 </pre></div>
 </div>
 <p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;**somevalue</span> <span class="pre">]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">!</span> <span class="pre">special&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">name=\*\*somevalue</span> <span class="pre">\]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">\!</span> <span class="pre">special</span></code></p>
-<p>In addition you can provide multiple inputs too which’re concatenated and then encoded. For example,</p>
+<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape key &#39;-&#39; value}}{{/escape}}</span>
 </pre></div>
 </div>
@@ -1660,7 +1783,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="encodefacet-helper">
 <span id="encodefacet-helper"></span><h3>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this headline">¶</a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a url path with facets. The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
 <p>Template (newline and indentation added for readability and should be removed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
 <span class="p">{</span>
@@ -1682,7 +1805,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="jsonstringify-helper">
 <span id="jsonstringify-helper"></span><h3>JsonStringify helper<a class="headerlink" href="#jsonstringify-helper" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript. This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet url strings.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript. This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet URL strings.</p>
 <p>Template (newline and indentation added for readability and should be removed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
     <span class="p">{{</span><span class="c1">#jsonStringify}}</span>
@@ -1702,7 +1825,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Would result in:</p>
+<p>This would result in:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -1729,7 +1852,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="findall-helper">
 <span id="findall-helper"></span><h3>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array . Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array. Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
 <p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (regexFindAll testString &quot;jpg|png&quot;)}}{{this}}\n{{/each}}</span>
 </pre></div>
@@ -1764,70 +1887,16 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 </div>
-<div class="section" id="using-arrays">
-<span id="using-arrays"></span><h2>Using Arrays<a class="headerlink" href="#using-arrays" title="Permalink to this headline">¶</a></h2>
-<p>You can use the <a class="reference external" href="#each-helper">Each Helper</a> to iterate over its data. You can also use the <code class="docutils literal notranslate"><span class="pre">{{array.INDEX}}</span></code> pattern if you want to access array data by index; where index starts from zero and it is the position of element that you want to access.</p>
-<p>Template:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">arr</span><span class="o">.</span><span class="mf">0.</span><span class="n">value</span><span class="p">}}}</span>
-</pre></div>
-</div>
-<p>When used with this context:</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="nx">arr</span><span class="o">:</span> <span class="p">[</span>
-      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;first element&quot;</span><span class="p">},</span>
-      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;second element&quot;</span><span class="p">},</span>
-      <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s2">&quot;third element&quot;</span><span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">first</span> <span class="n">element</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="escaping-handlebars-expressions">
-<span id="escaping-handlebars-expressions"></span><h2>Escaping Handlebars expressions<a class="headerlink" href="#escaping-handlebars-expressions" title="Permalink to this headline">¶</a></h2>
-<p>Handlebars content may be escaped using inline escapes. Inline escapes created by prefixing a mustache block with <code class="docutils literal notranslate"><span class="pre">\\</span></code></p>
-<p>For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="p">{{{</span><span class="n">escaped</span><span class="p">}}}</span>
-</pre></div>
-</div>
-<p>Would return</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">escaped</span><span class="p">}}}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="accessing-keys-with-spaces-and-special-characters">
-<span id="accessing-keys-with-spaces-and-special-characters"></span><h2>Accessing keys with spaces and special characters<a class="headerlink" href="#accessing-keys-with-spaces-and-special-characters" title="Permalink to this headline">¶</a></h2>
-<p>Handlebars allows you to access keys/variables which have spaces <code class="docutils literal notranslate"></code> or special characters like <code class="docutils literal notranslate"><span class="pre">{}</span></code> in their names. You needs to enclose those variables in square brackets.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{[</span><span class="nb">str</span> <span class="k">with</span> <span class="n">a</span> <span class="n">space</span><span class="p">]}}</span>
-</pre></div>
-</div>
-<p>To access these variables in another block helper</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode [str with a space]}}{{/ecnode}}</span>
-<span class="p">{{</span><span class="c1">#escape [str with a space]}}{{/escape}}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="subexpressions">
-<span id="subexpressions"></span><h2>Subexpressions:<a class="headerlink" href="#subexpressions" title="Permalink to this headline">¶</a></h2>
-<p>Handlebars offers support for <code class="docutils literal notranslate"><span class="pre">subexpressions</span></code>, which allows you to invoke multiple helpers within a single mustache <code class="docutils literal notranslate"><span class="pre">{{}}</span></code>, and pass in the results of inner helper invocations as arguments to outer helpers. Subexpressions are delimited by parentheses.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape (encode arg1) arg2}}{{/escape}}</span>
-</pre></div>
-</div>
-<p>In this case, <code class="docutils literal notranslate"><span class="pre">encode</span></code> will get invoked with the string argument <code class="docutils literal notranslate"><span class="pre">arg1</span></code>, and whatever the encode function returns will get passed in as the first argument to escape (and <code class="docutils literal notranslate"><span class="pre">arg2</span></code> will get passed in as the second argument to escape).</p>
-</div>
 <div class="section" id="boolean-helpers">
 <span id="boolean-helpers"></span><h2>Boolean Helpers<a class="headerlink" href="#boolean-helpers" title="Permalink to this headline">¶</a></h2>
-<p>You can use following helper to check for specific equality checks using the default <code class="docutils literal notranslate"><span class="pre">if</span></code> helper</p>
+<p>You can use the following helper to check for specific equality checks using the default <code class="docutils literal notranslate"><span class="pre">if</span></code> helper</p>
 <div class="section" id="comparison-helpers">
 <span id="comparison-helpers"></span><h3>Comparison Helpers<a class="headerlink" href="#comparison-helpers" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Equality (<code class="docutils literal notranslate"><span class="pre">eq</span></code>)</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (eq var1 var2)}}</span>
-    <span class="o">..</span> <span class="n">content</span>
+  <span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1835,7 +1904,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <li>Inequality (<code class="docutils literal notranslate"><span class="pre">ne</span></code>)</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (ne var1 var2)}}</span>
-    <span class="o">..</span> <span class="n">content</span>
+  <span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1843,7 +1912,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <li>Lower than (<code class="docutils literal notranslate"><span class="pre">lt</span></code>)</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (lt var1 var2)}}</span>
-    <span class="o">..</span> <span class="n">content</span>
+  <span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1851,7 +1920,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <li>Greater than (<code class="docutils literal notranslate"><span class="pre">gt</span></code>)</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (gt var1 var2)}}</span>
-    <span class="o">..</span> <span class="n">content</span>
+  <span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1859,7 +1928,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <li>Lower than equal (<code class="docutils literal notranslate"><span class="pre">lte</span></code>)</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (lte var1 var2)}}</span>
-    <span class="o">..</span> <span class="n">content</span>
+  <span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>

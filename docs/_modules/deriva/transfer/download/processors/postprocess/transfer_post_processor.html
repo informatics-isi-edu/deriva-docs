@@ -1486,6 +1486,10 @@
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">DerivaDownloadError</span><span class="p">(</span><span class="s2">&quot;Upload of </span><span class="si">%s</span><span class="s2"> failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">remote_path</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
 
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Uploaded file [</span><span class="si">%s</span><span class="s2">] to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">)):</span>
+                    <span class="k">break</span>
+
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span></div></div>
 </pre></div>
 

@@ -2486,14 +2486,14 @@ The json object follows the same rules as <a class="reference external" href="ht
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The client will show the displayname of columns as placeholder in the search box. To modify this default behavior, you can use this attribute.</li>
 </ul>
-<p>While we allow defining a list of search columns, only the following combination of search columns are supported:</p>
+<p>While processing the list of given column directives, any invalid definition (invalid column names or paths), will be ignored. If none of the columns are valid, the client will fall back to the default search (searching all the local columns). Also, because of performance limitations, only the following combination of search columns are supported:</p>
 <ul>
-<li><p class="first">A list containing only one source.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;or&quot;</span><span class="o">:</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">any</span> <span class="nx">valid</span> <span class="nx">path</span><span class="o">&gt;</span><span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<li><p class="first">A list containing only one column directive.</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span>  <span class="p">{</span>
+    <span class="s2">&quot;or&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">any</span> <span class="nx">valid</span> <span class="nx">path</span><span class="o">&gt;</span><span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
 </pre></div>
 </div>
 </li>
@@ -2516,10 +2516,27 @@ The json object follows the same rules as <a class="reference external" href="ht
 </pre></div>
 </div>
 </li>
+<li><p class="first">A list of column directives that we can safely use inner join for each one of them. This includes,</p>
+<ul class="simple">
+<li>Local columns</li>
+<li>All outbound paths that all the columns used in the foreign key relationships cannot be <code class="docutils literal notranslate"><span class="pre">null</span></code>. This means that the columns are <code class="docutils literal notranslate"><span class="pre">&quot;nullok&quot;:</span> <span class="pre">false</span></code> per model and the user has static <code class="docutils literal notranslate"><span class="pre">select</span></code> access to the column.</li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;or&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="s2">&quot;col1&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;const1&quot;</span><span class="p">]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;const2&quot;</span><span class="p">]},</span> <span class="p">{</span><span class="s2">&quot;outbound&quot;</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;const2&quot;</span><span class="p">]},</span> <span class="s2">&quot;id&quot;</span><span class="p">]},</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">search-box</span></code> consists of multiple column directives that are not local or using the same <em>sourcekey prefix</em>, we will ignore the ones that are not inner join safe. And if none of the columns are inner join safe, the client will fall back to the default search (searching all the local columns).</p>
+</div></blockquote>
+</li>
 </ul>
 </li>
 </ul>
-<p>Other combinations will be ignored and client will fallback to the default behavior.</p>
 <p>Supported <em>fkeylist</em> patterns:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">[</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em><code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present foreign keys with matching <em>schema name</em> and <em>constraint name</em>, in the order specified in the list. Ignore constraint names that do not correspond to foreign keys in the catalog. Do not present foreign keys that are not mentioned in the list. These 2-element lists use the same format as each element in the <code class="docutils literal notranslate"><span class="pre">names</span></code> property of foreign keys in the JSON model introspection output of ERMrest. The foreign keys MUST represent inbound relationships to the current table.</li>

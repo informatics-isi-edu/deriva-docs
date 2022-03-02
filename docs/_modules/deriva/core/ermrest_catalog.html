@@ -1324,15 +1324,16 @@
   <h1>Source code for deriva.core.ermrest_catalog</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span><span class="p">,</span> <span class="n">Megabyte</span><span class="p">,</span> <span class="n">Kilobyte</span><span class="p">,</span> \
-    <span class="n">get_transfer_summary</span><span class="p">,</span> <span class="n">IS_PY2</span>
-<span class="kn">from</span> <span class="nn">.deriva_binding</span> <span class="k">import</span> <span class="n">DerivaBinding</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span><span class="p">,</span> \
+    <span class="n">Megabyte</span><span class="p">,</span> <span class="n">Kilobyte</span><span class="p">,</span> <span class="n">get_transfer_summary</span><span class="p">,</span> <span class="n">IS_PY2</span>
+<span class="kn">from</span> <span class="nn">.deriva_binding</span> <span class="k">import</span> <span class="n">DerivaBinding</span><span class="p">,</span> <span class="n">DerivaPathError</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ermrest_model</span>
 
 
@@ -1373,7 +1374,7 @@
 <span class="sd">             self.dcctx[&#39;cid&#39;] = &#39;my application name&#39;</span>
 
 <span class="sd">           You MAY also supply custom per-request context by passing a</span>
-<span class="sd">           headers dict to web request methods, e.g. </span>
+<span class="sd">           headers dict to web request methods, e.g.</span>
 
 <span class="sd">             self.get(..., headers={&#39;deriva-client-context&#39;: {&#39;action&#39;: &#39;myapp/function1&#39;}})</span>
 
@@ -1488,10 +1489,11 @@
                   <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                   <span class="n">delete_if_empty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                   <span class="n">paged</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                  <span class="n">page_size</span><span class="o">=</span><span class="n">DEFAULT_PAGE_SIZE</span><span class="p">):</span>
+                  <span class="n">page_size</span><span class="o">=</span><span class="n">DEFAULT_PAGE_SIZE</span><span class="p">,</span>
+                  <span class="n">page_sort_columns</span><span class="o">=</span><span class="nb">frozenset</span><span class="p">([</span><span class="s2">&quot;RID&quot;</span><span class="p">])):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">           Retrieve catalog data streamed to destination file.</span>
-<span class="sd">           Caller is responsible to clean up file even on error, when the file may or may not be exist.</span>
+<span class="sd">           Caller is responsible to clean up file even on error, when the file may or may not exist.</span>
 <span class="sd">           If &quot;delete_if_empty&quot; is True, the file will be inspected for &quot;empty&quot; content. In the case of</span>
 <span class="sd">           json/json-stream content, the presence of a single empty JSON object will be tested for. In the case of</span>
 <span class="sd">           CSV content, the file will be parsed with CSV reader to determine that only a single header line and no row</span>
@@ -1503,8 +1505,8 @@
         <span class="c1"># exception in the case that the caller might be trying to perform an opportunistic paged request without</span>
         <span class="c1"># knowing a priori if paged support for the given query is available.</span>
         <span class="n">page_size</span> <span class="o">=</span> <span class="n">page_size</span> <span class="k">if</span> <span class="n">page_size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">DEFAULT_PAGE_SIZE</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/entity&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">paged</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Paged data retrieval only supported for entity API queries.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/entity&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/attribute&quot;</span><span class="p">))</span> <span class="ow">and</span> <span class="n">paged</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Paged data retrieval only supported for entity or attribute API queries.&quot;</span><span class="p">)</span>
             <span class="n">paged</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Only &quot;application/x-json-stream&quot; or &quot;text/csv&quot; supported with paged mode at this time, otherwise fallback.</span>
@@ -1520,6 +1522,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
             <span class="k">if</span> <span class="ow">not</span> <span class="n">paged</span><span class="p">:</span>
                 <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_response_raise_for_status</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
@@ -1539,24 +1542,38 @@
                 <span class="n">first_page</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">first_line</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">last_record</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">usr</span> <span class="o">=</span> <span class="n">urlsplit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">usr</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@sort&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-                    <span class="n">qualifier</span> <span class="o">=</span> <span class="s2">&quot;@sort(RID)</span><span class="si">%s</span><span class="s2">?limit=</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> \
-                               <span class="p">((</span><span class="s2">&quot;@after(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">last_record</span><span class="p">))</span> <span class="k">if</span> <span class="n">last_record</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">page_size</span><span class="p">)</span>
+                    <span class="n">sort</span> <span class="o">=</span> <span class="s2">&quot;@sort(</span><span class="si">%s</span><span class="s2">)</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">page_sort_columns</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;RID&quot;</span><span class="p">]),</span>
+                                            <span class="p">(</span><span class="s2">&quot;@after(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">last_record</span><span class="p">))</span> <span class="k">if</span> <span class="n">last_record</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">limit</span> <span class="o">=</span> <span class="s2">&quot;limit=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">int</span><span class="p">(</span><span class="n">page_size</span><span class="p">)</span> <span class="k">if</span> <span class="n">page_size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;none&quot;</span>
+                    <span class="n">query</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([^.]*)(limit=.*?)($|[&amp;;])([^.]*)$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\1</span><span class="si">%s</span><span class="s2">\3\4&quot;</span> <span class="o">%</span> <span class="n">limit</span><span class="p">,</span> <span class="n">usr</span><span class="o">.</span><span class="n">query</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+                    <span class="n">url</span> <span class="o">=</span> <span class="n">urlunsplit</span><span class="p">((</span><span class="n">usr</span><span class="o">.</span><span class="n">scheme</span><span class="p">,</span> <span class="n">usr</span><span class="o">.</span><span class="n">netloc</span><span class="p">,</span> <span class="n">path</span> <span class="o">+</span> <span class="n">sort</span><span class="p">,</span> <span class="n">query</span> <span class="k">if</span> <span class="n">query</span> <span class="k">else</span> <span class="n">limit</span><span class="p">,</span> <span class="n">usr</span><span class="o">.</span><span class="n">fragment</span><span class="p">))</span>
+
                     <span class="c1"># 1. Try to get a page worth of data, back-off page size if query run time errors are encountered</span>
-                    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="n">qualifier</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span> <span class="k">as</span> <span class="n">r</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">400</span> <span class="ow">and</span> <span class="s2">&quot;Query run time limit exceeded&quot;</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">page_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_response_raise_for_status</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
                             <span class="n">r</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                             <span class="n">page_size</span> <span class="o">//=</span> <span class="mi">2</span>
                             <span class="n">page_size</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">page_size</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">page_size</span>
                             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Query runtime exceeded while attempting to transfer rows from </span><span class="si">%s</span><span class="s2"> to file &quot;</span>
                                             <span class="s2">&quot;[</span><span class="si">%s</span><span class="s2">]. The page size is being reduced to </span><span class="si">%s</span><span class="s2"> and the query will be retried.&quot;</span>
-                                            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">,</span> <span class="n">page_size</span><span class="p">))</span>
+                                            <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">,</span> <span class="n">page_size</span><span class="p">))</span>
+                            <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Retrying query: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">url</span><span class="p">):</span>
+                                    <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                                    <span class="k">return</span>
                             <span class="k">continue</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_response_raise_for_status</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 
-                        <span class="c1"># 2. Write the page to disk and determine the last RID processed in order to get the next page</span>
-                        <span class="n">last_line</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="c1"># 2. Write the page to disk and check the last record processed in order to get the next page</span>
+                        <span class="n">last_line</span> <span class="o">=</span> <span class="p">{}</span>
                         <span class="n">content_type</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span>
-                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Transferring file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">))</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Transferring data from [</span><span class="si">%s</span><span class="s2">] to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">))</span>
                         <span class="c1"># CSV processing iterates over lines in the response, skipping the header line(s) in all but</span>
                         <span class="c1"># the first page, and captures the last line of each page to determine the last record processed</span>
                         <span class="k">if</span> <span class="n">content_type</span> <span class="o">==</span> <span class="s2">&quot;text/csv&quot;</span><span class="p">:</span>
@@ -1597,12 +1614,12 @@
                                     <span class="k">break</span>
                             <span class="n">last_line</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
 
-                        <span class="c1"># 3. Save the last record RID and flush the destination file buffers to disk.</span>
+                        <span class="c1"># 3. Save the last record key and flush the destination file buffers to disk.</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">last_line</span><span class="p">:</span>
                             <span class="k">break</span>
                         <span class="n">destfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
                         <span class="n">os</span><span class="o">.</span><span class="n">fsync</span><span class="p">(</span><span class="n">destfile</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
-                        <span class="n">last_record</span> <span class="o">=</span> <span class="n">last_line</span><span class="p">[</span><span class="s1">&#39;RID&#39;</span><span class="p">]</span>
+                        <span class="n">last_record</span> <span class="o">=</span> <span class="p">[</span><span class="n">urlquote</span><span class="p">(</span><span class="n">last_line</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">page_sort_columns</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloading: </span><span class="si">%.2f</span><span class="s2"> MB transferred&quot;</span> <span class="o">%</span>
                                                      <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">Megabyte</span><span class="p">))):</span>

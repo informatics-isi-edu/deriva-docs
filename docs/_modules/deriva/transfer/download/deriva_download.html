@@ -1324,6 +1324,7 @@
   <h1>Source code for deriva.transfer.download.deriva_download</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">platform</span>
@@ -1337,7 +1338,7 @@
 <span class="kn">from</span> <span class="nn">deriva.transfer.download.processors.base_processor</span> <span class="k">import</span> <span class="n">LOCAL_PATH_KEY</span><span class="p">,</span> <span class="n">REMOTE_PATHS_KEY</span><span class="p">,</span> <span class="n">SERVICE_URL_KEY</span><span class="p">,</span> \
     <span class="n">FILE_SIZE_KEY</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer.download</span> <span class="k">import</span> <span class="n">DerivaDownloadError</span><span class="p">,</span> <span class="n">DerivaDownloadConfigurationError</span><span class="p">,</span> \
-    <span class="n">DerivaDownloadAuthenticationError</span><span class="p">,</span> <span class="n">DerivaDownloadAuthorizationError</span>
+    <span class="n">DerivaDownloadAuthenticationError</span><span class="p">,</span> <span class="n">DerivaDownloadAuthorizationError</span><span class="p">,</span> <span class="n">DerivaDownloadTimeoutError</span>
 
 
 <div class="viewcode-block" id="DerivaDownload"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.download.html#deriva.transfer.download.deriva_download.DerivaDownload">[docs]</a><span class="k">class</span> <span class="nc">DerivaDownload</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -1360,6 +1361,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sessions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_anonymous&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_payload_size_mb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_payload_size_mb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> v</span><span class="si">%s</span><span class="s2"> [Python </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">get_installed_version</span><span class="p">(</span><span class="n">VERSION</span><span class="p">),</span>
@@ -1447,6 +1450,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;catalog&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DerivaDownloadConfigurationError</span><span class="p">(</span><span class="s2">&quot;Catalog configuration error!&quot;</span><span class="p">)</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span><span class="p">)</span>
+
         <span class="n">ro_manifest</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">ro_author_name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">ro_author_orcid</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1524,8 +1530,12 @@
                                             <span class="n">ro_author_orcid</span><span class="o">=</span><span class="n">ro_author_orcid</span><span class="p">,</span>
                                             <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
                                             <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
-                                            <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
+                                            <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">,</span>
+                                            <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
                 <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">processor</span><span class="o">.</span><span class="n">should_abort</span><span class="p">():</span>
+                    <span class="k">raise</span> <span class="n">DerivaDownloadTimeoutError</span><span class="p">(</span><span class="s2">&quot;Timeout (</span><span class="si">%s</span><span class="s2"> seconds) waiting for processor [</span><span class="si">%s</span><span class="s2">] to complete.&quot;</span> <span class="o">%</span>
+                                                     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span><span class="p">,</span> <span class="n">processor_name</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">check_payload_size</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -1555,8 +1565,13 @@
                         <span class="n">ro_author_orcid</span><span class="o">=</span><span class="n">ro_author_orcid</span><span class="p">,</span>
                         <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
                         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
-                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
+                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">,</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
                     <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">processor</span><span class="o">.</span><span class="n">should_abort</span><span class="p">():</span>
+                        <span class="k">raise</span> <span class="n">DerivaDownloadTimeoutError</span><span class="p">(</span>
+                            <span class="s2">&quot;Timeout (</span><span class="si">%s</span><span class="s2"> seconds) waiting for processor [</span><span class="si">%s</span><span class="s2">] to complete.&quot;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span><span class="p">,</span> <span class="n">processor_name</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">check_payload_size</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">create_bag</span><span class="p">:</span>
@@ -1613,8 +1628,13 @@
                         <span class="n">processor_params</span><span class="o">=</span><span class="n">processor_params</span><span class="p">,</span>
                         <span class="n">identity</span><span class="o">=</span><span class="n">identity</span><span class="p">,</span>
                         <span class="n">wallet</span><span class="o">=</span><span class="n">wallet</span><span class="p">,</span>
-                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">)</span>
+                        <span class="n">allow_anonymous</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_anonymous</span><span class="p">,</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
                     <span class="n">outputs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">processor</span><span class="o">.</span><span class="n">should_abort</span><span class="p">():</span>
+                        <span class="k">raise</span> <span class="n">DerivaDownloadTimeoutError</span><span class="p">(</span>
+                            <span class="s2">&quot;Timeout (</span><span class="si">%s</span><span class="s2"> seconds) waiting for processor [</span><span class="si">%s</span><span class="s2">] to complete.&quot;</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout_secs</span><span class="p">,</span> <span class="n">processor_name</span><span class="p">))</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">check_payload_size</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                     <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>

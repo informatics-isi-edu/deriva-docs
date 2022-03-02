@@ -1447,6 +1447,10 @@
                                                  <span class="bp">self</span><span class="o">.</span><span class="n">ro_author_name</span><span class="p">,</span> <span class="n">orcid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ro_author_orcid</span><span class="p">),</span>
                                              <span class="n">bundled_as</span><span class="o">=</span><span class="n">ro</span><span class="o">.</span><span class="n">make_bundled_as</span><span class="p">())</span>
                     <span class="n">file_list</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">rel_path</span><span class="p">:</span> <span class="p">{</span><span class="n">LOCAL_PATH_KEY</span><span class="p">:</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">FILE_SIZE_KEY</span><span class="p">:</span> <span class="n">file_bytes</span><span class="p">}})</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloaded [</span><span class="si">%s</span><span class="s2">] to: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)):</span>
+                            <span class="k">break</span>
+
                 <span class="k">return</span> <span class="n">file_list</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">input_manifest</span><span class="p">)</span></div></div>

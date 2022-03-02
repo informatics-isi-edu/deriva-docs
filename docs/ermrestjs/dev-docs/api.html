@@ -1526,9 +1526,7 @@ Column<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Table+sourceDefinitions">.sourceDefinitions</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition">.searchSourceDefinition</a> : <code>Array.<p>&amp;lt;</p>
-Object<p>&amp;gt;</p>
-</code> | <code>false</code><ul>
+<li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition">.searchSourceDefinition</a> : <code>false</code> | <code>Object</code><ul>
 <li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition.._getSearchSourceDefinition">~_getSearchSourceDefinition()</a></li>
 </ul>
 </li>
@@ -1719,6 +1717,8 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+compressedDataSource">.compressedDataSource</a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+name">.name</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+simple">.simple</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyRef+isNotNull">.isNotNull</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyRef+isNotNullPerModel">.isNotNullPerModel</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+toString">.toString(reverse, isLeft)</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+getDomainValues">.getDomainValues(limit)</a> ⇒ <code>Promise</code></li>
 </ul>
@@ -2070,7 +2070,6 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
@@ -3024,9 +3023,7 @@ Column<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+uri">.uri</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Table+sourceDefinitions">.sourceDefinitions</a> : <code>Object</code></li>
-<li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition">.searchSourceDefinition</a> : <code>Array.<p>&amp;lt;</p>
-Object<p>&amp;gt;</p>
-</code> | <code>false</code><ul>
+<li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition">.searchSourceDefinition</a> : <code>false</code> | <code>Object</code><ul>
 <li><a class="reference external" href="#ERMrest.Table+searchSourceDefinition.._getSearchSourceDefinition">~_getSearchSourceDefinition()</a></li>
 </ul>
 </li>
@@ -3197,11 +3194,15 @@ this has been added because of path prefix where a sourcekey might rely on other
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+searchSourceDefinition"></a></p>
 </div>
-<div class="section" id="table-searchsourcedefinition-code-array-lt-object-gt-code-code-false-code">
-<span id="table-searchsourcedefinition-code-array-lt-object-gt-code-code-false-code"></span><h3>table.searchSourceDefinition : <code>Array.<p>&amp;lt;</p>
-Object<p>&amp;gt;</p>
-</code> | <code>false</code><a class="headerlink" href="#table-searchsourcedefinition-code-array-lt-object-gt-code-code-false-code" title="Permalink to this headline">¶</a></h3>
-<p>Returns an array of SourceObjectWrapper objects.</p>
+<div class="section" id="table-searchsourcedefinition-code-false-code-code-object-code">
+<span id="table-searchsourcedefinition-code-false-code-code-object-code"></span><h3>table.searchSourceDefinition : <code>false</code> | <code>Object</code><a class="headerlink" href="#table-searchsourcedefinition-code-false-code-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>Returns an array of SourceObjectWrapper objects.
+The returned object will have the following properties:</p>
+<ul class="simple">
+<li>columns: the search columns</li>
+<li>allSamePathPrefix: if all using the same path prefix</li>
+<li>pathPrefixSourcekey: the path prefix that all are using</li>
+</ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+searchSourceDefinition.._getSearchSourceDefinition"></a></p>
 <div class="section" id="searchsourcedefinition-getsearchsourcedefinition">
 <span id="searchsourcedefinition-getsearchsourcedefinition"></span><h4>searchSourceDefinition~_getSearchSourceDefinition()<a class="headerlink" href="#searchsourcedefinition-getsearchsourcedefinition" title="Permalink to this headline">¶</a></h4>
@@ -4662,6 +4663,8 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+compressedDataSource">.compressedDataSource</a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+name">.name</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+simple">.simple</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyRef+isNotNull">.isNotNull</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyRef+isNotNullPerModel">.isNotNullPerModel</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+toString">.toString(reverse, isLeft)</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyRef+getDomainValues">.getDomainValues(limit)</a> ⇒ <code>Promise</code></li>
 </ul>
@@ -4773,6 +4776,23 @@ The constraint names for this foreign key</p>
 <div class="section" id="foreignkeyref-simple-code-boolean-code">
 <span id="foreignkeyref-simple-code-boolean-code"></span><h3>foreignKeyRef.simple : <code>Boolean</code><a class="headerlink" href="#foreignkeyref-simple-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Indicates if the foreign key is simple (not composite)</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a><a name="ERMrest.ForeignKeyRef+isNotNull"></a></p>
+</div>
+<div class="section" id="foreignkeyref-isnotnull-code-boolean-code">
+<span id="foreignkeyref-isnotnull-code-boolean-code"></span><h3>foreignKeyRef.isNotNull : <code>Boolean</code><a class="headerlink" href="#foreignkeyref-isnotnull-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether all the columns in the relationship are not-nullable,</p>
+<ul class="simple">
+<li>nullok: false</li>
+<li>select: true</li>
+</ul>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a><a name="ERMrest.ForeignKeyRef+isNotNullPerModel"></a></p>
+</div>
+<div class="section" id="foreignkeyref-isnotnullpermodel-code-boolean-code">
+<span id="foreignkeyref-isnotnullpermodel-code-boolean-code"></span><h3>foreignKeyRef.isNotNullPerModel : <code>Boolean</code><a class="headerlink" href="#foreignkeyref-isnotnullpermodel-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>Whether all the columns in the relationship are not-nullable per model,</p>
+<ul class="simple">
+<li>nullok: false</li>
+</ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a><a name="ERMrest.ForeignKeyRef+toString"></a></p>
 </div>
 <div class="section" id="foreignkeyref-tostring-reverse-isleft-code-string-code">
@@ -8559,7 +8579,6 @@ might not be a simple path from main to related table and it could have filters.
 <li><a class="reference external" href="#ERMrest.FacetColumn+isEntityMode">.isEntityMode</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+isOpen">.isOpen</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+preferredMode">.preferredMode</a> : <code>string</code></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+isAllOutboundNotNull">.isAllOutboundNotNull</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+barPlot">.barPlot</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
@@ -8703,16 +8722,6 @@ always return <code class="docutils literal notranslate"><span class="pre">choic
 <li>return choices if int or serial, part of key, and not null.</li>
 <li>return ranges or choices based on the type.</li>
 </ol>
-<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+isAllOutboundNotNull"></a></p>
-</div>
-<div class="section" id="facetcolumn-isalloutboundnotnull-code-boolean-code">
-<span id="facetcolumn-isalloutboundnotnull-code-boolean-code"></span><h3>facetColumn.isAllOutboundNotNull : <code>Boolean</code><a class="headerlink" href="#facetcolumn-isalloutboundnotnull-code-boolean-code" title="Permalink to this headline">¶</a></h3>
-<p>Whether the facet is defining an all outbound path that the columns used
-in the path are all not-null.
-NOTE even if the column.nullok is false, ermrest could return null value for it
-if the user rights to select that column is <code class="docutils literal notranslate"><span class="pre">null</span></code>. But we decided not to check
-for that since it’s not the desired behavior for us:
-https://github.com/informatics-isi-edu/ermrestjs/issues/888</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+barPlot"></a></p>
 </div>
 <div class="section" id="facetcolumn-barplot-code-boolean-code">
@@ -8737,24 +8746,23 @@ the histogram should be shown unless specified otherwise</p>
 <span id="facetcolumn-sourcereference-code-reference-code"></span><h3>facetColumn.sourceReference : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a><a class="headerlink" href="#facetcolumn-sourcereference-code-reference-code" title="Permalink to this headline">¶</a></h3>
 <p>uncontextualized <a class="reference external" href="#ERMrest.Reference">Reference</a> that has all the joins specified
 in the source with all the filters of other FacetColumns in the reference.</p>
-<p>NOTE needs refactoring,
-This should return a reference that referes to the current column’s table
-having filters from other facetcolumns.
-We should not use the absolute path for the table and it must be a path
-from main to this table. Because if we use the absolute path we’re completely
-ignoring the constraints that the main table will add to this reference.
-(For example if maximum possible value for this column is 100 but there’s
-no data from the main that will leads to this maximum.)</p>
+<p>The returned reference will be in the following format:
+&lt;main-table&gt;/<facets of main table except current facet>/<path to current facet></p>
 <p>Consider the following scenario:
 Table T has two foreignkeys to R1 (fk1), R2 (fk2), and R3 (fk3).
 R1 has a fitler for term=1, and R2 has a filter for term=2
 Then the source reference for R3 will be the following:
 T:=S:T/(fk1)/term=1/$T/(fk2)/term2/$T/M:=(fk3)
 As you can see it has all the filters of the main table + join to current table.</p>
-<p>NOTE: assumptions:</p>
+<p>Notes:</p>
 <ul class="simple">
-<li>The main reference has no join.</li>
-<li>The returned reference has problem with faceting (cannot show faceting).</li>
+<li>This function used to reverse the path from the current facet to each of the
+other facets in the main reference. Since this was very inefficient, we decided
+to rewrite it to start from the main table instead.</li>
+<li>The path from the main table to facet is based on the given column directive and
+therefore might have filters or reused table instances (shared path). That’s why
+we’re ensuring to pass the whole facetObjectWrapper to parser, so it can properly
+parse it.</li>
 </ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+displayname"></a></p>
 </div>

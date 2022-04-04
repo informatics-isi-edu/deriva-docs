@@ -1103,7 +1103,6 @@
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#navbar-configuration">Navbar Configuration:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#login-configuration">Login Configuration:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#display-configuration">Display Configuration:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="chaise-config.html#viewer-configuration">Viewer Configuration:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#export-configuration">Export Configuration:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#share-and-cite-configuration">Share and Cite Configuration:</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chaise-config.html#system-columns-configuration">System Columns Configuration:</a></li>
@@ -1363,6 +1362,11 @@
 <li><a class="reference external" href="hidesearchtextfacet">hideSearchTextFacet</a></li>
 </ul>
 </li>
+<li><a class="reference external" href="#viewer-configuration">Viewer Configuration:</a><ul>
+<li><a class="reference external" href="#defaultannotationcolor">defaultAnnotationColor</a></li>
+<li><a class="reference external" href="#usergroups">userGroups</a></li>
+</ul>
+</li>
 </ul>
 <div class="section" id="login-configuration">
 <span id="login-configuration"></span><h2>Login Configuration:<a class="headerlink" href="#login-configuration" title="Permalink to this headline">¶</a></h2>
@@ -1424,6 +1428,43 @@
 </li>
 <li><p class="first">Sample syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hideSearchTextFacet</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="viewer-configuration">
+<span id="viewer-configuration"></span><h2>Viewer Configuration:<a class="headerlink" href="#viewer-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="defaultannotationcolor">
+<span id="defaultannotationcolor"></span><h3>defaultAnnotationColor<a class="headerlink" href="#defaultannotationcolor" title="Permalink to this headline">¶</a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">/chaise/viewer</span></code>, annotations’ borders and colors will default to this value.</p>
+<ul>
+<li><p class="first">Type: String - red|orange|gold|green|blue|purple</p>
+</li>
+<li><p class="first">Default behavior: red will be used</p>
+</li>
+<li><p class="first">Sample syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaultAnnotationColor</span><span class="p">:</span> <span class="n">purple</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="usergroups">
+<span id="usergroups"></span><h3>userGroups<a class="headerlink" href="#usergroups" title="Permalink to this headline">¶</a></h3>
+<p>For Viewer app only. The Viewer app assigns an authenticated user one of three permission levels depending on the user’s Globus memberships. The permission levels, from highest to lowest, are <code class="docutils literal notranslate"><span class="pre">curator</span></code>, <code class="docutils literal notranslate"><span class="pre">annotator</span></code>, then <code class="docutils literal notranslate"><span class="pre">user</span></code>. The default Globus group IDs that determine who’s a <code class="docutils literal notranslate"><span class="pre">curator</span></code>, <code class="docutils literal notranslate"><span class="pre">annotator</span></code>, or <code class="docutils literal notranslate"><span class="pre">user</span></code> are set by <a class="reference external" href="https://github.com/informatics-isi-edu/rbk-project">RBK</a>. To override these default group IDs for each permission level, you may specify your own via this <code class="docutils literal notranslate"><span class="pre">userGroups</span></code> setting.</p>
+<ul>
+<li><p class="first">Type: Object</p>
+</li>
+<li><p class="first">Default behavior: The default Globus group IDs are set by RBK</p>
+</li>
+<li><p class="first">Sample syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">userGroups</span><span class="p">:</span> <span class="p">{</span>
+  <span class="n">curators</span><span class="p">:</span> <span class="s2">&quot;https://auth.globus.org/962d5add-ff9a-11eb-8932-d71f8cc57c67&quot;</span><span class="p">,</span>
+  <span class="n">annotators</span><span class="p">:</span> <span class="s2">&quot;https://auth.globus.org/962d5add-ff9a-11eb-8932-d71f8cc57c67&quot;</span><span class="p">,</span>
+  <span class="n">user</span><span class="p">:</span> <span class="s2">&quot;https://auth.globus.org/962d5add-ff9a-11eb-8932-d71f8cc57c67&quot;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </li>

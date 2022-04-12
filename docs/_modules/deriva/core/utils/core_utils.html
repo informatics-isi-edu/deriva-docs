@@ -1342,14 +1342,25 @@
 <span class="n">IS_PY2</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">IS_PY3</span> <span class="o">=</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
 
+
+<div class="viewcode-block" id="force_unicode_py2"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.force_unicode_py2">[docs]</a><span class="k">def</span> <span class="nf">force_unicode_py2</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reliably return a Unicode string given a possible unicode or byte string&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">unicode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+
+
 <span class="k">if</span> <span class="n">IS_PY3</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span> <span class="k">as</span> <span class="n">_urlquote</span><span class="p">,</span> <span class="n">unquote</span> <span class="k">as</span> <span class="n">urlunquote</span>
     <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">urljoin</span>
     <span class="kn">from</span> <span class="nn">http.cookiejar</span> <span class="k">import</span> <span class="n">MozillaCookieJar</span>
+    <span class="n">force_unicode</span> <span class="o">=</span> <span class="nb">str</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">quote</span> <span class="k">as</span> <span class="n">_urlquote</span><span class="p">,</span> <span class="n">unquote</span> <span class="k">as</span> <span class="n">urlunquote</span>
     <span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">urljoin</span>
     <span class="kn">from</span> <span class="nn">cookielib</span> <span class="k">import</span> <span class="n">MozillaCookieJar</span>
+    <span class="n">force_unicode</span> <span class="o">=</span> <span class="n">force_unicode_py2</span>
 
 <span class="n">Kilobyte</span> <span class="o">=</span> <span class="mi">1024</span>
 <span class="n">Megabyte</span> <span class="o">=</span> <span class="n">Kilobyte</span> <span class="o">**</span> <span class="mi">2</span>
@@ -1740,6 +1751,26 @@
     <span class="k">if</span> <span class="n">remainder</span><span class="p">:</span>
         <span class="n">chunk_count</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">chosen_chunk_size</span><span class="p">,</span> <span class="n">chunk_count</span><span class="p">,</span> <span class="n">remainder</span></div>
+
+
+<div class="viewcode-block" id="json_item_handler"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.json_item_handler">[docs]</a><span class="k">def</span> <span class="nf">json_item_handler</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">infile</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">infile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+        <span class="n">infile</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">is_json_stream</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">input_json</span> <span class="o">=</span> <span class="n">infile</span>
+            <span class="n">is_json_stream</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">input_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">input_json</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_json_stream</span><span class="p">:</span>
+                    <span class="n">item</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
+                    <span class="n">callback</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="topo_sorted"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.topo_sorted">[docs]</a><span class="k">def</span> <span class="nf">topo_sorted</span><span class="p">(</span><span class="n">depmap</span><span class="p">):</span>

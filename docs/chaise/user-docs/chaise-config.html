@@ -1401,6 +1401,7 @@
 <li><a class="reference external" href="#hidetableofcontents">hideTableOfContents</a></li>
 <li><a class="reference external" href="#disableexternallinkmodal">disableExternalLinkModal</a></li>
 <li><a class="reference external" href="#hidegotorid">hideGoToRID</a></li>
+<li><a class="reference external" href="#facetpaneldisplay">facetPanelDisplay</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#export-configuration">Export Configuration:</a><ul>
@@ -2024,6 +2025,38 @@
 </li>
 <li><p class="first">Sample syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hideGoToRID</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="facetpaneldisplay">
+<span id="facetpaneldisplay"></span><h4>facetPanelDisplay<a class="headerlink" href="#facetpaneldisplay" title="Permalink to this headline">¶</a></h4>
+<p>Use this property to change the visibility of the facet panel on load. Currently the supported properties are <code class="docutils literal notranslate"><span class="pre">open</span></code> and <code class="docutils literal notranslate"><span class="pre">closed</span></code>. Both properties expect an array of
+contexts and subcontexts associated with <code class="docutils literal notranslate"><span class="pre">compact</span></code> displays. <code class="docutils literal notranslate"><span class="pre">*</span></code> may be used but will be treated the same as <code class="docutils literal notranslate"><span class="pre">compact</span></code>. If a context is present in both open and closed, open will take priority. If the current context is not mentioned in either <code class="docutils literal notranslate"><span class="pre">open</span></code> or <code class="docutils literal notranslate"><span class="pre">closed</span></code>, it will try to inherit its value from a parent context. Defining only one array, <code class="docutils literal notranslate"><span class="pre">open</span></code> or <code class="docutils literal notranslate"><span class="pre">closed</span></code>, will assume the other property is equal to <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
+<ul>
+<li><p class="first">Type: Object</p>
+</li>
+<li><p class="first">Default behavior: The facet panel will be open in the <code class="docutils literal notranslate"><span class="pre">compact</span></code> display and closed in all others.</p>
+</li>
+<li><p class="first">General syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">facetPanelDisplay</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nb">open</span><span class="p">:</span> <span class="p">[</span><span class="n">_context_</span><span class="p">],</span>
+    <span class="n">closed</span><span class="p">:</span> <span class="p">[</span><span class="n">_context_</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">facetPanelDisplay</span></code> attributes:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">open</span></code>: An array of contexts that the facet panel should be open for on page load.</li>
+<li><code class="docutils literal notranslate"><span class="pre">closed</span></code>: An array of contexts that the facet panel should be closed for on page load.</li>
+</ul>
+</li>
+<li><p class="first">Sample syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">facetPanelDisplay</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nb">open</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;compact/select/association&quot;</span><span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </li>

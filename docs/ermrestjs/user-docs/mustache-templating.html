@@ -1625,14 +1625,15 @@ Research on date {{{date}}} : {{^title}}[This is some title](https://dev.isrd.is
 </div>
 <div class="section" id="session-usage">
 <span id="session-usage"></span><h4>$session Usage<a class="headerlink" href="#session-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$session</span></code> is an object that gives you access to information about the current logged in user’s session. The properties are mostly the same properties returned from webauthn from the <code class="docutils literal notranslate"><span class="pre">client</span></code> object in the response. The following properties are included:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<p><code class="docutils literal notranslate"><span class="pre">$session</span></code> is an object that gives you access to information about the current logged in user’s session. The properties are the same properties returned from the webauthn response. The following are some of the properties included (subject to change as properties are added and removed from webauthn):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
+<span class="n">client</span><span class="p">:</span> <span class="p">{</span>
     <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;the `display_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
     <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;the `email` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="n">extensions</span><span class="p">:</span> <span class="s2">&quot;an object containing more permissions the user might have. Used in the CFDE project for communicating ras permissions.&quot;</span><span class="p">,</span>
     <span class="n">full_name</span><span class="p">:</span> <span class="s2">&quot;the `full_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
     <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;the `id` of the user from webauthn client object&quot;</span><span class="p">,</span>
     <span class="n">identities</span><span class="p">:</span> <span class="s2">&quot;the `identities` array of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">attributes</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1643,7 +1644,7 @@ Research on date {{{date}}} : {{^title}}[This is some title](https://dev.isrd.is
 <li><code class="docutils literal notranslate"><span class="pre">full_name</span></code>: the full_name of the identity (if present)</li>
 <li><code class="docutils literal notranslate"><span class="pre">id</span></code>: the id of the group or identity</li>
 <li><code class="docutils literal notranslate"><span class="pre">identities</span></code>: the identities array of the current identity (if present)</li>
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: the type of the entry (<code class="docutils literal notranslate"><span class="pre">identity</span></code> or <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>). The type is set as a <code class="docutils literal notranslate"><span class="pre">globus_group</span></code> if the display_name is defined and the id is not in the list of identities associated with the logged in user. Otherwise it’s set as an <code class="docutils literal notranslate"><span class="pre">identity</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: the type of the entry (<code class="docutils literal notranslate"><span class="pre">identity</span></code> or <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>). The type is set as a <code class="docutils literal notranslate"><span class="pre">globus_group</span></code> if the display_name is defined and the id is NOT in the list of identities associated with the logged in user. The type is set as an <code class="docutils literal notranslate"><span class="pre">identity</span></code> if the id is in the list of identities associated with the logged in user (<code class="docutils literal notranslate"><span class="pre">client.identities</span></code>). Otherwise, no type will be set.</li>
 <li><code class="docutils literal notranslate"><span class="pre">webpage</span></code>: If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is set to <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>, the webpage is then set to the globus group page. If the globus group id is “https://auth.globus.org/ff766864-a03f-11e5-b097-22000aef184d”, then the webpage will be created by extracting the id value and setting it like “https://app.globus.org/groups/ff766864-a03f-11e5-b097-22000aef184d/about”.</li>
 </ul>
 </div>

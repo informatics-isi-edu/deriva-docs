@@ -2245,6 +2245,11 @@ Invalid attributes provided to the attribute list will be simple ignored.</li>
 <div class="section" id="span-attach-attributes-to-text">
 <span id="span-attach-attributes-to-text"></span><h3>13. Span (Attach Attributes To Text)<a class="headerlink" href="#span-attach-attributes-to-text" title="Permalink to this headline">¶</a></h3>
 <p>This is not part of commonMark specification and it will result in an <a class="reference external" href="#inline-vs-block">inline</a> element.  Opening tag is <code class="docutils literal notranslate"><span class="pre">:span:</span></code> and closing is <code class="docutils literal notranslate"><span class="pre">:/span:</span></code>.</p>
+<p>This tag is only designed for attaching attributes to text. In any other scenarios, you don’t need this tag. It’s also very limited and has the following side effects/limitations:</p>
+<ul class="simple">
+<li>Doesn’t allow usage of span inside another span.</li>
+<li>Escapes the markdown content of span and shows the content as is (without rendering markdown). As a result you cannot mix span with other markdown tags.</li>
+</ul>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>This :span:text:/span:{.cl-name style=&quot;color:red&quot;} has new color.
 
 # OUTPUT:

@@ -1357,13 +1357,12 @@ The following is the assumed model of a fully-configured viewer app:</p>
 <p>(All the table and column names are configurable)</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">Image</span></code> table is the entry point of the viewer app.</li>
-<li><code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> table is the actual table that stores the data for each image channels
-in each z-plane. For example if an image has two stored z-indices and each one has
+<li><code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> table is the actual table that stores the data for each image channel
+in each z-plane. For example, if an image has two stored z-indices and each one has
 two channels, there will be 4 records of <code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> table.</li>
 <li><code class="docutils literal notranslate"><span class="pre">Image_Channel</span></code> table stores the channel information (whether it’s greyscale,
 the pseudo color, channel name, and default <a class="reference external" href="#channel-configuration">channel configuration</a>)</li>
-<li><code class="docutils literal notranslate"><span class="pre">Image_Annotation</span></code> table stores the annotations. It MUST have an asset column that
-will be used for storing the annotation files.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Image_Annotation</span></code> table stores the annotations. It MUST have an asset column used to store the annotation files.</li>
 <li><code class="docutils literal notranslate"><span class="pre">Annotated_Term</span></code> is the term that each annotation will be associated with.
 For each image in each z-index, there can only be one annotation per term.</li>
 </ul>
@@ -1371,8 +1370,8 @@ For each image in each z-index, there can only be one annotation per term.</li>
 <div class="section" id="configuration">
 <span id="configuration"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>To allow flexibility, the configuration file can have multiple configurations.
-Each configuration is specified by a given key name. When users navigate to
-the viewer app, we will use the <code class="docutils literal notranslate"><span class="pre">config</span></code> query parameter to figure out which
+Each configuration is specified by a given key name. When users go to
+the viewer app, we will use the <code class="docutils literal notranslate"><span class="pre">config</span></code> query parameter to determine which
 configuration we should use.</p>
 <p>The configuration file must be defined under <code class="docutils literal notranslate"><span class="pre">viewer/viewer-config.js</span></code> and the following is the structure of this config file:</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">viewerConfigs</span> <span class="o">=</span> <span class="p">{</span>
@@ -1381,7 +1380,7 @@ configuration we should use.</p>
 </pre></div>
 </div>
 <blockquote>
-<div>The variable MUST be defined exactly this way. Viewer app uses this <code class="docutils literal notranslate"><span class="pre">viewerConfigs</span></code> global variable.</div></blockquote>
+<div>The variable MUST be defined exactly this way. The viewer app uses this <code class="docutils literal notranslate"><span class="pre">viewerConfigs</span></code> global variable.</div></blockquote>
 <p>Where</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">&lt;config-name&gt;</span></code> is a string that will be matched with the given <code class="docutils literal notranslate"><span class="pre">config</span></code> query parameter.<ul>
@@ -1390,7 +1389,7 @@ configuration we should use.</p>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">&lt;configuration&gt;</span></code> can be one of the following:<ul>
 <li>Another <code class="docutils literal notranslate"><span class="pre">&lt;config-name&gt;</span></code> to indicate that chaise should use the configuration defined under the other <code class="docutils literal notranslate"><span class="pre">&lt;config-name&gt;</span></code>.</li>
-<li>An object. The expected structure of object is explained in the <a class="reference external" href="#parameters">parameters</a> section.</li>
+<li>An object. The expected structure of the object is explained in the <a class="reference external" href="#parameters">parameters</a> section.</li>
 </ul>
 </li>
 </ul>
@@ -1406,8 +1405,8 @@ configuration we should use.</p>
 <ol class="simple">
 <li>Navigating to a page with <code class="docutils literal notranslate"><span class="pre">?config=img1</span></code> query parameter will use <code class="docutils literal notranslate"><span class="pre">&lt;config2&gt;</span></code>.</li>
 <li>Navigating to a page with <code class="docutils literal notranslate"><span class="pre">?config=img2</span></code> query parameter will also use <code class="docutils literal notranslate"><span class="pre">&lt;config2&gt;</span></code>.</li>
-<li>Navigating to a page without any <code class="docutils literal notranslate"><span class="pre">config</span></code> query parameters, or with <code class="docutils literal notranslate"><span class="pre">config</span></code>
-query parameters other than “img1” and “img2”, will ues <code class="docutils literal notranslate"><span class="pre">&lt;config1&gt;</span></code>.</li>
+<li>Navigating to a page without any <code class="docutils literal notranslate"><span class="pre">config</span></code> query parameters or with <code class="docutils literal notranslate"><span class="pre">config</span></code>
+query parameters other than “img1” and “img2”, will use <code class="docutils literal notranslate"><span class="pre">&lt;config1&gt;</span></code>.</li>
 </ol>
 <div class="section" id="parameters">
 <span id="parameters"></span><h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
@@ -1416,8 +1415,8 @@ query parameters other than “img1” and “img2”, will ues <code class="doc
 </div>
 <div class="section" id="channel-configuration">
 <span id="channel-configuration"></span><h2>Channel Configuration<a class="headerlink" href="#channel-configuration" title="Permalink to this headline">¶</a></h2>
-<p>As it was mentioned in the model section, one of the specified columns in the
-<code class="docutils literal notranslate"><span class="pre">Image_Channel</span></code> table is <code class="docutils literal notranslate"><span class="pre">Config</span></code>. This will allow preserving the values that
+<p>As was mentioned in the model section, one of the specified columns in the
+<code class="docutils literal notranslate"><span class="pre">Image_Channel</span></code> table is <code class="docutils literal notranslate"><span class="pre">Config</span></code>. This will preserve the values that
 will manipulate the displayed colors for each channel. This column is defined as
 <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> type with the following expected structure:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1430,8 +1429,8 @@ will manipulate the displayed colors for each channel. This column is defined as
 </pre></div>
 </div>
 <blockquote>
-<div>If Config column is not defined, or the value is not in the expected format, OSD viewer will use the default values.</div></blockquote>
-<p>Currently, in viewer app, we’re using <code class="docutils literal notranslate"><span class="pre">&quot;channel-parameters&quot;</span></code> as the format name and <code class="docutils literal notranslate"><span class="pre">&quot;1.0&quot;</span></code>
+<div>If the Config column is not defined, or the value is not in the expected format, the OSD viewer will use the default values.</div></blockquote>
+<p>Currently, in the viewer app, we’re using <code class="docutils literal notranslate"><span class="pre">&quot;channel-parameters&quot;</span></code> as the format name and <code class="docutils literal notranslate"><span class="pre">&quot;1.0&quot;</span></code>
 as the version number. And the config attributes are as follows:</p>
 <table>
     <tbody>

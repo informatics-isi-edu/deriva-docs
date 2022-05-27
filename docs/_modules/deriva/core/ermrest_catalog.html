@@ -1537,7 +1537,6 @@
                                 <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                                 <span class="k">return</span>
                 <span class="n">destfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">fsync</span><span class="p">(</span><span class="n">destfile</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">first_page</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">first_line</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1618,7 +1617,6 @@
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">last_line</span><span class="p">:</span>
                             <span class="k">break</span>
                         <span class="n">destfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-                        <span class="n">os</span><span class="o">.</span><span class="n">fsync</span><span class="p">(</span><span class="n">destfile</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
                         <span class="n">last_record</span> <span class="o">=</span> <span class="p">[</span><span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">last_line</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">page_sort_columns</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
                             <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloading: </span><span class="si">%.2f</span><span class="s2"> MB transferred&quot;</span> <span class="o">%</span>

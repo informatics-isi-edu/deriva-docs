@@ -1386,7 +1386,7 @@ $ npm update
 |   |   |-- tests                       # All the possible test cases for a spec should be in this folder
 |   |   |   |-- 01.TEST_NAME1.js
 |   |   |   `-- 02.TEST_NAME2.js
-|   |   `-- spec.js                     # include configuration and tests to be run here                 
+|   |   `-- spec.js                     # include configuration and tests to be run here
 |-- support
 |   `-- jasmine.json                    # change spec_files to include your spec
 |-- utils
@@ -1561,13 +1561,15 @@ expect([&quot;Value&quot;]).toBeyAnyOf([[&quot;Value&quot;], [&quot;Not the Valu
 <li><code class="docutils literal notranslate"><span class="pre">RESTRICTED_AUTH_COOKIE</span></code>: a secondary user cookie valid to the (possibly, remote) host running the ERMrest service.</li>
 </ul>
 <p>The build needs to be generated for the tests to work, which means running the following commands to execute the test cases.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install
-$ make <span class="nb">test</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make dist
+make deploy
+make <span class="nb">test</span>
 </pre></div>
 </div>
 <p>or</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install
-$ node test/jasmine-runner.js
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make dist
+make deploy
+node test/jasmine-runner.js
 </pre></div>
 </div>
 <div class="section" id="how-to-get-your-auth-cookie">

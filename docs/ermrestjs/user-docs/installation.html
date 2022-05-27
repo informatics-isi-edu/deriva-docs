@@ -1369,26 +1369,36 @@ dependencies into the <code class="docutils literal notranslate"><span class="pr
 <span id="deploying"></span><h2>Deploying<a class="headerlink" href="#deploying" title="Permalink to this headline">¶</a></h2>
 <ol>
 <li><p class="first">First you need to setup some environment variables to tell ERMRestJS where it should install the package. The following are the variables and their default values:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WEB_URL_ROOT</span><span class="o">=/</span>
-<span class="n">WEB_INSTALL_ROOT</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span>
-<span class="n">ERMRESTJS_REL_PATH</span><span class="o">=</span><span class="n">ermrestjs</span><span class="o">/</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nv">WEB_URL_ROOT</span><span class="o">=</span>/
+<span class="nv">WEB_INSTALL_ROOT</span><span class="o">=</span>/var/www/html/
+<span class="nv">ERMRESTJS_REL_PATH</span><span class="o">=</span>ermrestjs/
 </pre></div>
 </div>
 <p>Which means EMRrestJS build folder will be copied to <code class="docutils literal notranslate"><span class="pre">/var/www/html/ermrestjs/</span></code> location by default. And ERMrestJS will be access by <code class="docutils literal notranslate"><span class="pre">/ermrestjs/</span></code> URL path when deployed. If that is not the case in your deployment, you should modify the variables accordingly.</p>
 <p>Notes:</p>
 <ul class="simple">
 <li>All the variables MUST have a trailing <code class="docutils literal notranslate"><span class="pre">/</span></code>.</li>
-<li>If you’re installing remotely, since we’re using the <code class="docutils literal notranslate"><span class="pre">WEB_INSTALL_ROOT</span></code> in <code class="docutils literal notranslate"><span class="pre">rsync</span></code> command, you can use a remote location <code class="docutils literal notranslate"><span class="pre">username&#64;host:public_html/</span></code> for this variable.</li>
-<li>A very silly thing to do would be to set your deployment directory to root <code class="docutils literal notranslate"><span class="pre">/</span></code> and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>. This would be very silly indeed, and would probably result in some corruption of your operating system. Surely, no one would ever do this. But, in the off chance that one might attempt such silliness, the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> rule specifies a <code class="docutils literal notranslate"><span class="pre">dont_install_in_root</span></code> prerequisite that attempts to put a stop to any such silliness before it goes too far.</li>
+<li>If you’re deploying remotely, since we’re using the <code class="docutils literal notranslate"><span class="pre">WEB_INSTALL_ROOT</span></code> in <code class="docutils literal notranslate"><span class="pre">rsync</span></code> command, you can use a remote location <code class="docutils literal notranslate"><span class="pre">username&#64;host:public_html/</span></code> for this variable.</li>
+<li>A very silly thing to do would be to set your deployment directory to root <code class="docutils literal notranslate"><span class="pre">/</span></code> and run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>. This would be very silly indeed, and would probably result in some corruption of your operating system. Surely, no one would ever do this. But, in the off chance that one might attempt such silliness, the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> rule specifies a <code class="docutils literal notranslate"><span class="pre">dont_deploy_in_root</span></code> prerequisite that attempts to put a stop to any such silliness before it goes too far.</li>
 </ul>
 </li>
-<li><p class="first">After making sure the variables are properly set, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make install
+<li><p class="first">Build the ERMrestJS bundles by running the following command:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make dist
 </pre></div>
 </div>
-<blockquote>
-<div><p>If the given directory does not exist, it will first create it. So you may need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> with <em>super user</em> privileges depending on the installation directory you choose.</p>
-</div></blockquote>
+<p>Notes:</p>
+<ul class="simple">
+<li>Make sure to run this command with the owner of the current folder. If you attempt to run this with a different user, it will complain.</li>
+</ul>
+</li>
+<li><p class="first">To deploy the package, run the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make deploy
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li>If the given directory does not exist, it will first create it. So you may need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> with <em>super user</em> privileges depending on the deployment directory you choose (by default it’s <code class="docutils literal notranslate"><span class="pre">/var/www/html/</span></code>).</li>
+</ul>
 </li>
 </ol>
 </div>

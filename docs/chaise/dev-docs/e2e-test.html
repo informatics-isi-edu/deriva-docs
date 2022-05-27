@@ -1400,7 +1400,7 @@
 <li><p class="first">After setting up the environment variables, make sure that the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> directory has the public access(if not, give the folder the following permissions <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">&lt;your-user-directory&gt;</span></code>).</p>
 </li>
 <li><p class="first">Make sure all the dependencies are installed by running the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make deps-test
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make deps-test
 </pre></div>
 </div>
 <p>This will install all the npm dependencies that are needed and will also make sure the Selenium’s WebDriver that protractor uses is updated.</p>
@@ -1409,18 +1409,17 @@
 <li>If the version of Chrome that is installed on your machine is different from the ChromeDriver that Selenium uses, it will throw an error. So make sure both versions are always updated and compatible.</li>
 </ul>
 </li>
-<li><p class="first">Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository. (This will upload your local code to the remote server)</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make install-wo-deps
+<li><p class="first">Build Chaise without installing the dependencies again:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make dist-wo-deps
 </pre></div>
 </div>
-<ul class="simple">
-<li>As the name suggests this will not install dependencies. That’s why you need to install all the dependencies in step 2. The following are other available targets related to install:<ul>
-<li><code class="docutils literal notranslate"><span class="pre">install</span></code>: Will install production dependencies before installing (not advised for testing purposes and should be used for production)</li>
-<li><code class="docutils literal notranslate"><span class="pre">install-w-config</span></code>: The same as <code class="docutils literal notranslate"><span class="pre">install</span></code> and will also copy the <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file to the remote location.</li>
-<li><code class="docutils literal notranslate"><span class="pre">install-wo-deps-w-config</span></code>: The same as <code class="docutils literal notranslate"><span class="pre">install-w-deps</span></code> and will also copy the <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file to the remote location.</li>
-</ul>
+<p>As the name suggests this will not install dependencies. That’s why you need to install all the dependencies in step 2.</p>
 </li>
-</ul>
+<li><p class="first">Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository (This will upload your local code to the remote server):</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make deploy
+</pre></div>
+</div>
+<p>If you want to also deploy the existing config files in your local machine, you can use the <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy-w-config</span></code> command instead.</p>
 </li>
 </ol>
 </div>

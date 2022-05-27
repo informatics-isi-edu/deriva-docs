@@ -1396,7 +1396,11 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="HatracStore.get_obj"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.hatrac_store.HatracStore.get_obj">[docs]</a>    <span class="k">def</span> <span class="nf">get_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">destfilename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HatracStore.get_obj"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.hatrac_store.HatracStore.get_obj">[docs]</a>    <span class="k">def</span> <span class="nf">get_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="n">DEFAULT_HEADERS</span><span class="p">,</span>
+                <span class="n">destfilename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">chunk_size</span><span class="o">=</span><span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Retrieve resource optionally streamed to destination file.</span>
 
 <span class="sd">           If destfilename is provided, download content to file with</span>
@@ -1430,13 +1434,16 @@
 
             <span class="k">if</span> <span class="n">destfilename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">current_chunk</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Transferring file </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">))</span>
-                <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">):</span>
                     <span class="n">destfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
                     <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                    <span class="n">current_chunk</span> <span class="o">+=</span> <span class="mi">1</span>
                     <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloading: </span><span class="si">%.2f</span><span class="s2"> MB transferred&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="n">Megabyte</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">callback</span><span class="p">(</span><span class="n">progress</span><span class="o">=</span><span class="s2">&quot;Downloading: </span><span class="si">%.2f</span><span class="s2"> MB transferred&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">total</span> <span class="o">/</span> <span class="n">Megabyte</span><span class="p">),</span>
+                                        <span class="n">total_bytes</span><span class="o">=</span><span class="n">total</span><span class="p">,</span> <span class="n">current_chunk</span><span class="o">=</span><span class="n">current_chunk</span><span class="p">):</span>
                             <span class="n">destfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                             <span class="n">r</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">destfilename</span><span class="p">)</span>
@@ -1444,7 +1451,6 @@
                 <span class="n">elapsed</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
                 <span class="n">summary</span> <span class="o">=</span> <span class="n">get_transfer_summary</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">elapsed</span><span class="p">)</span>
                 <span class="n">destfile</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">fsync</span><span class="p">(</span><span class="n">destfile</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
                 <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;File [</span><span class="si">%s</span><span class="s2">] transfer successful. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">destfilename</span><span class="p">,</span> <span class="n">summary</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
                     <span class="n">callback</span><span class="p">(</span><span class="n">summary</span><span class="o">=</span><span class="n">summary</span><span class="p">,</span> <span class="n">file_path</span><span class="o">=</span><span class="n">destfilename</span><span class="p">)</span>
@@ -1463,7 +1469,7 @@
                     <span class="n">rmd5</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content-md5&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
                     <span class="k">if</span> <span class="n">fmd5</span> <span class="o">!=</span> <span class="n">rmd5</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="n">HatracHashMismatch</span><span class="p">(</span><span class="s1">&#39;Content-MD5 </span><span class="si">%s</span><span class="s1"> != computed MD5 </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">rmd5</span><span class="p">,</span> <span class="n">fmd5</span><span class="p">))</span>
-
+                <span class="n">r</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">r</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">destfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

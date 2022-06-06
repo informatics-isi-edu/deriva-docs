@@ -570,7 +570,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../rest-catalog.html">Catalog Operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#service-ad-retrieval">Service Ad Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#service-ad-retrieval">Service Ad Retrieval</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../rest-catalog.html#indexing-preferences-feature-flag">Indexing Preferences Feature Flag</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-deletion">Catalog Deletion</a></li>
@@ -614,6 +617,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#table-deletion">Table Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-list-retrieval">Column List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-creation">Column Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#column-indexing-preferences">Column Indexing Preferences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-retrieval">Column Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-alteration">Column Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-deletion">Column Deletion</a></li>
@@ -734,6 +738,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../data/naming.html#filter-language">Filter Language</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../data/naming.html#unary-filter-predicate">Unary Filter Predicate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../data/naming.html#binary-filter-predicate">Binary Filter Predicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../data/naming.html#literal-values">Literal Values</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../data/naming.html#negated-filter">Negated Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../data/naming.html#parenthetic-filter">Parenthetic Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../data/naming.html#conjunctive-filter">Conjunctive Filter</a></li>
@@ -1847,6 +1852,58 @@ a model-level resource name of the form:</p>
 <li>403 Forbidden</li>
 <li>401 Unauthorized</li>
 </ul>
+</div>
+<div class="section" id="column-indexing-preferences">
+<span id="column-indexing-preferences"></span><h2>Column Indexing Preferences<a class="headerlink" href="#column-indexing-preferences" title="Permalink to this headline">¶</a></h2>
+<p>During column creation, whether as modification to an existing table or as part of new table creation, a special annotation <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2018:indexing-preferences</span></code> MAY be used to supply hints which override implicit service behavior for constructing column indexes in the underlying database.  *These hints are only effective if available during column creation; they have no effect if applied to a column after it already exists in the catalog.</p>
+<p>The indexing-preferences annotation can be applied at multiple levels of the catalog’s model resource hierarchy, but only has an effect when interpreted with respect to a specific column. The purpose of annotations at other levels are to override default hints to apply in the absence of an indexing-preferences annotation on a specific column:</p>
+<ol class="simple">
+<li>Catalog-level annotation to set default hints for columns created in all tables in that catalog;</li>
+<li>Schema-level annotation to set default hints for columns created in tables in that schema;</li>
+<li>Table-level annotation to set default hints for columns created in that table;</li>
+<li>Column-level annotation to set hints for that column.</li>
+</ol>
+<p>Furthermore, the default hints are searched from most specific to least specific model level on a key-by-key basis. Thus, the effective hints for a given column can be a blend of hints supplied at various levels if those hints are sparsely populated rather than fully specifying every sub-field within the annotation.</p>
+<p>Example annotation payload to suppress <em>unnecessary</em> btree indexes and GIN tri-gram indexes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;tag:isrd.isi.edu,2018:indexing-preferences&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;btree&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;trgm&quot;</span><span class="p">:</span> <span class="n">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This could be applied to minimize index maintenance and storage costs on a catalog where search is limited or insensitive to query performance. The service will still create indexes necessary for correct function, such as btree indexes used to enforce key uniqueness and foreign key referential integrity constraints.</p>
+<p>Example annotation payload to suppress <em>unnecessary</em> btree indexes but enable built-in GIN tri-gram indexes which are used to accelerate regular-expression matching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;tag:isrd.isi.edu,2018:indexing-preferences&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;btree&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;trgm&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example annotation payload to enable a custom btree index and to disable the built-in GIN tri-gram index for a specific column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;tag:isrd.isi.edu,2018:indexing-preferences&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;btree&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;column1&quot;</span><span class="p">,</span> <span class="s2">&quot;column2&quot;</span> <span class="p">],</span>
+    <span class="s2">&quot;trgm&quot;</span><span class="p">:</span> <span class="n">false</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In practice, this would only be sensible as a column-level annotation on the column named <code class="docutils literal notranslate"><span class="pre">column1</span></code> where it is desired to accelerate search, sort, or joins not just by <code class="docutils literal notranslate"><span class="pre">column1</span></code> but by the ordered pair (<code class="docutils literal notranslate"><span class="pre">column1</span></code>, <code class="docutils literal notranslate"><span class="pre">column2</span></code>).</p>
+<p>Example annotation payload to suppress the btree index and enable GIN tri-gram and GIN array indexing for an array-typed column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;tag:isrd.isi.edu,2018:indexing-preferences&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;btree&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;trgm&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+    <span class="s2">&quot;gin_array&quot;</span><span class="p">:</span> <span class="n">true</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In practice, this would be sensible as a column-level annotation where you want to accelerate <code class="docutils literal notranslate"><span class="pre">=</span></code> equality filter predicates as well as <code class="docutils literal notranslate"><span class="pre">::regexp::</span></code>/<code class="docutils literal notranslate"><span class="pre">::ciregexp::</span></code> regular-expression predicates on a column storing arrays of values.</p>
 </div>
 <div class="section" id="column-retrieval">
 <span id="column-retrieval"></span><h2>Column Retrieval<a class="headerlink" href="#column-retrieval" title="Permalink to this headline">¶</a></h2>

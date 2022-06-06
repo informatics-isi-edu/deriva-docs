@@ -570,7 +570,10 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Catalog Operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#service-ad-retrieval">Service Ad Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service-ad-retrieval">Service Ad Retrieval</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#indexing-preferences-feature-flag">Indexing Preferences Feature Flag</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#catalog-deletion">Catalog Deletion</a></li>
@@ -614,6 +617,7 @@
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#table-deletion">Table Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-list-retrieval">Column List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-creation">Column Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-indexing-preferences">Column Indexing Preferences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-retrieval">Column Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-alteration">Column Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="model/rest.html#column-deletion">Column Deletion</a></li>
@@ -734,6 +738,7 @@
 <li class="toctree-l3"><a class="reference internal" href="data/naming.html#filter-language">Filter Language</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="data/naming.html#unary-filter-predicate">Unary Filter Predicate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data/naming.html#binary-filter-predicate">Binary Filter Predicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data/naming.html#literal-values">Literal Values</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data/naming.html#negated-filter">Negated Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data/naming.html#parenthetic-filter">Parenthetic Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="data/naming.html#conjunctive-filter">Conjunctive Filter</a></li>
@@ -1391,13 +1396,26 @@ if accessing older catalogs.</p>
 <li><code class="docutils literal notranslate"><span class="pre">implicit_fkey_index</span></code>: Service will produce indexes for compound foreign keys to allow index-based joins on these reference patterns.</li>
 <li><code class="docutils literal notranslate"><span class="pre">catalog_post_input</span></code>: The POST <code class="docutils literal notranslate"><span class="pre">/ermrest/catalog</span></code> method accepts JSON input to customize the catalog ID or initial owner ACL.</li>
 <li><code class="docutils literal notranslate"><span class="pre">catalog_alias</span></code>: The <code class="docutils literal notranslate"><span class="pre">/ermrest/alias</span></code> resource space and related catalog aliasing features are available.</li>
+<li><code class="docutils literal notranslate"><span class="pre">indexing_preferences</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu:2018,indexing-preferences</span></code> annotations to influence index construction during table or model provisioning requests.</li>
+<li><code class="docutils literal notranslate"><span class="pre">quantified_value_lists</span></code>: Service supports <code class="docutils literal notranslate"><span class="pre">all(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">any(...)</span></code> URL syntax for lists of values as query predicate right-hand side values.</li>
 </ul>
 <p>Generally, absence of a feature flag means the service is running
 older software which predates the release of the feature. A flag will
 be present with boolean value <code class="docutils literal notranslate"><span class="pre">true</span></code> to advertise presence of a
 feature. Specific flags may be documented with other advertisement
-values in the future, i.e. to indicate runtime status of a feature
-which can be disabled selectively by the administrator.</p>
+values.</p>
+<div class="section" id="indexing-preferences-feature-flag">
+<span id="indexing-preferences-feature-flag"></span><h3>Indexing Preferences Feature Flag<a class="headerlink" href="#indexing-preferences-feature-flag" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">indexing_preferences</span></code> feature is reported as an object rather
+than a simple boolean.  These individual boolean flags advertise which
+index configuration hints are supported when using the :</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">btree</span></code>: Service interprets the indexing-preferences <code class="docutils literal notranslate"><span class="pre">btree</span></code> field holding a boolean flag to enable or disable built-in btree index construction where this is not required for service function. (A key constraint implies a type of btree index which cannot be disabled.)</li>
+<li><code class="docutils literal notranslate"><span class="pre">btree_column_list</span></code>: Service interprets the indexing-preferences <code class="docutils literal notranslate"><span class="pre">btree</span></code> field holding a list of strings as an ordered list of named columns to include in a custom btree index. When possible, this overrides a default built-in btree index which the service would otherwise build for the annotated column.</li>
+<li><code class="docutils literal notranslate"><span class="pre">trgm</span></code>: Service interpets the indexing-preferences <code class="docutils literal notranslate"><span class="pre">trgm</span></code> field holding a boolean flag to enable or disable built-in GIN tri-gram ops index construction for the annotated column, in support of the <code class="docutils literal notranslate"><span class="pre">::regexp::</span></code> and <code class="docutils literal notranslate"><span class="pre">::ciregexp::</span></code> predicates.</li>
+<li><code class="docutils literal notranslate"><span class="pre">gin_array</span></code>: Service interpets the indexing-preferences <code class="docutils literal notranslate"><span class="pre">gin_array</span></code> field holding a boolean flag to enable built-in GIN array ops index construction for the annotated column, in support of <code class="docutils literal notranslate"><span class="pre">=</span></code> (equality) query predicates using quantified value lists <code class="docutils literal notranslate"><span class="pre">any(...)</span></code> or <code class="docutils literal notranslate"><span class="pre">or(...)</span></code>.</li>
+</ul>
+</div>
 </div>
 <div class="section" id="catalog-creation">
 <span id="catalog-creation"></span><h2>Catalog Creation<a class="headerlink" href="#catalog-creation" title="Permalink to this headline">¶</a></h2>

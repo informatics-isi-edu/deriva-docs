@@ -570,7 +570,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../rest-catalog.html">Catalog Operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#service-ad-retrieval">Service Ad Retrieval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#service-ad-retrieval">Service Ad Retrieval</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../rest-catalog.html#indexing-preferences-feature-flag">Indexing Preferences Feature Flag</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-creation">Catalog Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-retrieval">Catalog Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../rest-catalog.html#catalog-deletion">Catalog Deletion</a></li>
@@ -614,6 +617,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#table-deletion">Table Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-list-retrieval">Column List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-creation">Column Creation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-indexing-preferences">Column Indexing Preferences</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-retrieval">Column Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-alteration">Column Alteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/rest.html#column-deletion">Column Deletion</a></li>
@@ -734,6 +738,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#filter-language">Filter Language</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#unary-filter-predicate">Unary Filter Predicate</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#binary-filter-predicate">Binary Filter Predicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#literal-values">Literal Values</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#negated-filter">Negated Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#parenthetic-filter">Parenthetic Filter</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#conjunctive-filter">Conjunctive Filter</a></li>
@@ -1630,6 +1635,7 @@
 <p>The <a class="reference external" href="#path-filters">filter element</a> of data paths uses a general filter language described here. There are unary and binary filter predicates, logical combinations, negation, and parenthetic grouping. Together, these language elements allow arbitrarily complex boolean logic functions to be expressed directly, in <a class="reference external" href="#conjunctive-normal-form">conjunctive normal form</a>, or in <a class="reference external" href="#disjunctive-normal-form">disjunctive normal form</a>.</p>
 <p>The operator precedence is as follows:</p>
 <ol class="simple">
+<li>A predicate with a quantified value list as the right-hand side is a single expression with respect to these precedence rules.</li>
 <li>Parenthetic grouping overrides precedence, causing the expression inside the parenthetic group to be evaluated and its result used as the value of the parenthetic group.</li>
 <li>Negation has the highest precedence, negating the immediately following predicate or parenthetic group.</li>
 <li>Conjunction using the <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> operator has the next highest precedence, combining adjacent parenthetic groups, negated predicates, predicates, and conjunctions.</li>
@@ -1646,9 +1652,10 @@
 </div>
 <div class="section" id="binary-filter-predicate">
 <span id="binary-filter-predicate"></span><h3>Binary Filter Predicate<a class="headerlink" href="#binary-filter-predicate" title="Permalink to this headline">¶</a></h3>
-<p>A binary predicate as the form:</p>
+<p>A binary predicate has one of the two forms:</p>
 <ul class="simple">
 <li><em>column reference</em> <em>operator</em> <em>literal value</em></li>
+<li><em>column reference</em> <em>operator</em> <em>quantified value list</em></li>
 </ul>
 <table border="1" class="docutils">
 <thead>
@@ -1701,6 +1708,83 @@
 </tr>
 </tbody>
 </table></div>
+<div class="section" id="literal-values">
+<span id="literal-values"></span><h3>Literal Values<a class="headerlink" href="#literal-values" title="Permalink to this headline">¶</a></h3>
+<p>A literal value is a single string fragment in the URL with URL-encoding to escape any characters (or UTF-8 octets) which are not basic non-reserved characters. The string is URL-decoded and then further deserialized as an appropriate primitive type depending on the column type:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>column type</th>
+<th>deserialization method</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>string is decoded as boolean</td>
+<td>e.g. <code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td>int2, int4, int8</td>
+<td>decimal string is decoded as a signed integer</td>
+<td></td>
+</tr>
+<tr>
+<td>serial4, serial8</td>
+<td>decimal string is decoded as a signed integer</td>
+<td></td>
+</tr>
+<tr>
+<td>float4, float8</td>
+<td>decimal string is decoded as a floating point number optionally with decimal exponent</td>
+<td>e.g. <code>-1.2</code>, <code>1.2e-3</code></td>
+</tr>
+<tr>
+<td>date</td>
+<td>string is decoded as ISO date string YYYY-MM-DD</td>
+<td>e.g. <code>2022-05-31</code></td>
+</tr>
+<tr>
+<td>timestamptz</td>
+<td>string is decoded as ISO timestamp YYYY-MM-DDTmm:hh:SS.SSS-HH</td>
+<td>e.g. <code>2022-05-31T15:33:55.123-07</code> or <code>2022-05-31 15:33:55.123-07</code> with space instead of <code>T</code> separator</td>
+</tr>
+<tr>
+<td>text</td>
+<td>UTF8 string is used verbatim as text value</td>
+<td></td>
+</tr>
+<tr>
+<td>json, jsonb</td>
+<td>UTF8 string is deserialized by JSON rules</td>
+<td></td>
+</tr>
+<tr>
+<td>domain types</td>
+<td>decoded according to underlying type of domain</td>
+<td></td>
+</tr>
+<tr>
+<td>array types</td>
+<td>literals decoded as individual array elements</td>
+<td>e.g. <code>int8[]</code> decodes literal as <code>int8</code></td>
+</tr>
+</tbody>
+</table><div class="section" id="quantified-value-lists">
+<span id="quantified-value-lists"></span><h4>Quantified Value Lists<a class="headerlink" href="#quantified-value-lists" title="Permalink to this headline">¶</a></h4>
+<p>A quantified value list has the form:</p>
+<ul class="simple">
+<li><em>quantifier</em> <code class="docutils literal notranslate"><span class="pre">(</span></code> <em>literal value</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">)</span></code></li>
+</ul>
+<p>In other words, they carry a comma-separated list of literal values wrapped in parentheses and preceded by a quantification keyword. The supported quantifiers are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">any</span></code>: existential quantifier, i.e. “any value may satisfy the predicate test”</li>
+<li><code class="docutils literal notranslate"><span class="pre">all</span></code>: universal quantifier, i.e. “all values must satisfy the predicate test”</li>
+</ul>
+<p>These any/all value lists are effectively syntactic sugar for a longer compound predicate using disjunctive/conjunctive combining logic, respectively. In addition to allowing a more compact notation for comparing a column to many values, quantified lists may allow the service to choose better query plans in the presence of certain column types, indexes, and predicate operators.</p>
+</div>
+</div>
 <div class="section" id="negated-filter">
 <span id="negated-filter"></span><h3>Negated Filter<a class="headerlink" href="#negated-filter" title="Permalink to this headline">¶</a></h3>
 <p>Any predicate or parenthetic filter may be prefixed with the <code class="docutils literal notranslate"><span class="pre">!</span></code> negation operator to invert its logical value:</p>

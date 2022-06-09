@@ -1405,6 +1405,7 @@
 <li><a class="reference external" href="#unless-helper">Unless</a></li>
 <li><a class="reference external" href="#each-helper">Each</a></li>
 <li><a class="reference external" href="#with-helper">With</a></li>
+<li><a class="reference external" href="#lookup-helper">Lookup</a></li>
 <li><a class="reference external" href="#encode-helper">Encode</a></li>
 <li><a class="reference external" href="#escape-helper">Escape</a></li>
 <li><a class="reference external" href="#encodefacet-helper">EncodeFacet</a></li>
@@ -1758,6 +1759,21 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="lookup-helper">
+<span id="lookup-helper"></span><h3>Lookup helper<a class="headerlink" href="#lookup-helper" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">lookup</span></code> helper to do dynamic parameter resolution with Handlebars variables.</p>
+<p>One example assumes you have a map similar to what is defined below and use an <code class="docutils literal notranslate"><span class="pre">id</span></code> to resolve the value of one of the keys in the map.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="nb">map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id1&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="s2">&quot;id2&quot;</span><span class="p">:</span> <span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="s2">&quot;id3&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}</span>
+
+<span class="p">{{</span><span class="n">lookup</span> <span class="nb">map</span> <span class="nb">id</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>The example that will be used in CFDE uses a map attached to the <code class="docutils literal notranslate"><span class="pre">$session</span></code> template variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{{lookup $session.client.extensions.ras_dbgap_phs_ids dbgap_study_id}}
+</pre></div>
+</div>
+<p>NOTE: When looking up a key to get its value, <code class="docutils literal notranslate"><span class="pre">null</span></code> (if value is <code class="docutils literal notranslate"><span class="pre">null</span></code>) or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> (if key is not present) will be returned so make sure to guard against those negative cases in templating.</p>
 </div>
 <div class="section" id="encode-helper">
 <span id="encode-helper"></span><h3>Encode helper<a class="headerlink" href="#encode-helper" title="Permalink to this headline">¶</a></h3>

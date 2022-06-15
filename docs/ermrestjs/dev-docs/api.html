@@ -2047,7 +2047,12 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameColumn">.filenameColumn</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+md5">.md5</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+sha256">.sha256</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
-<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtRegexp">.filenameExtRegexp</a> : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
@@ -2079,7 +2084,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+sourceReference">.sourceReference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+displayname">.displayname</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+comment">.comment</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hideNullChoice">.hideNullChoice</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hideNotNullChoice">.hideNotNullChoice</a> : <code>Boolean</code></li>
@@ -2146,7 +2151,7 @@ ERMREst.RangeFacetFilter<p>&amp;gt;</p>
 </li>
 <li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn">.ColumnGroupAggregateFn</a><ul>
 <li><a class="reference external" href="#new_ERMrest.ColumnGroupAggregateFn_new">new ColumnGroupAggregateFn(column)</a></li>
-<li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+entityCounts">.entityCounts()</a> ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></li>
+<li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+entityCounts">.entityCounts([columnDisplayname], [sortColumns], [hideNumOccurrences], [dontAllowNull])</a> ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></li>
 <li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+histogram">.histogram(bucketCount, min, max)</a> ⇒ <a class="reference external" href="#ERMrest.BucketAttributeGroupReference"><code>BucketAttributeGroupReference</code></a></li>
 </ul>
 </li>
@@ -8309,7 +8314,12 @@ It usually is a self-link to the given row of data.</p>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameColumn">.filenameColumn</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+md5">.md5</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+sha256">.sha256</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
-<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtFilter">.filenameExtFilter</a> : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code></li>
+<li><a class="reference external" href="#ERMrest.AssetPseudoColumn+filenameExtRegexp">.filenameExtRegexp</a> : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+_determineInputDisabled">._determineInputDisabled(context)</a> ⇒ <code>boolean</code> | <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+getMetadata">.getMetadata(data, context, options)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.AssetPseudoColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
@@ -8384,9 +8394,18 @@ This class extends the <a class="reference external" href="#ERMrest.ReferenceCol
 <p>The column object that sha256 hash is stored in.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><a name="ERMrest.AssetPseudoColumn+filenameExtFilter"></a></p>
 </div>
-<div class="section" id="assetpseudocolumn-filenameextfilter-code-column-code">
-<span id="assetpseudocolumn-filenameextfilter-code-column-code"></span><h3>assetPseudoColumn.filenameExtFilter : <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a class="headerlink" href="#assetpseudocolumn-filenameextfilter-code-column-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="assetpseudocolumn-filenameextfilter-code-array-lt-string-gt-code">
+<span id="assetpseudocolumn-filenameextfilter-code-array-lt-string-gt-code"></span><h3>assetPseudoColumn.filenameExtFilter : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code><a class="headerlink" href="#assetpseudocolumn-filenameextfilter-code-array-lt-string-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>The column object that file extension is stored in.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><a name="ERMrest.AssetPseudoColumn+filenameExtRegexp"></a></p>
+</div>
+<div class="section" id="assetpseudocolumn-filenameextregexp-code-array-lt-string-gt-code">
+<span id="assetpseudocolumn-filenameextregexp-code-array-lt-string-gt-code"></span><h3>assetPseudoColumn.filenameExtRegexp : <code>Array.<p>&amp;lt;</p>
+string<p>&amp;gt;</p>
+</code><a class="headerlink" href="#assetpseudocolumn-filenameextregexp-code-array-lt-string-gt-code" title="Permalink to this headline">¶</a></h3>
+<p>The regular expressions that will be used for extracting the extension</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AssetPseudoColumn"><code>AssetPseudoColumn</code></a><a name="ERMrest.AssetPseudoColumn+_determineInputDisabled"></a></p>
 </div>
 <div class="section" id="assetpseudocolumn-determineinputdisabled-context-code-boolean-code-code-object-code">
@@ -8597,7 +8616,7 @@ might not be a simple path from main to related table and it could have filters.
 <li><a class="reference external" href="#ERMrest.FacetColumn+histogramBucketCount">.histogramBucketCount</a> : <code>Integer</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+column">.column</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+sourceReference">.sourceReference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
-<li><a class="reference external" href="#ERMrest.FacetColumn+displayname">.displayname</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.FacetColumn+displayname">.displayname</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+comment">.comment</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hideNullChoice">.hideNullChoice</a> : <code>Boolean</code></li>
 <li><a class="reference external" href="#ERMrest.FacetColumn+hideNotNullChoice">.hideNotNullChoice</a> : <code>Boolean</code></li>
@@ -8781,7 +8800,7 @@ parse it.</li>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+displayname"></a></p>
 </div>
 <div class="section" id="facetcolumn-displayname-code-object-code">
-<span id="facetcolumn-displayname-code-object-code"></span><h3>facetColumn.displayname : <code>object</code><a class="headerlink" href="#facetcolumn-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
+<span id="facetcolumn-displayname-code-object-code"></span><h3>facetColumn.displayname : <code>Object</code><a class="headerlink" href="#facetcolumn-displayname-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>Returns the displayname object that should be used for this facetColumn.
 TODO the heuristics should be changed to be aligned with PseudoColumn
 Heuristics are as follows (first applicable rule):</p>
@@ -8795,6 +8814,7 @@ Heuristics are as follows (first applicable rule):</p>
 <ul class="simple">
 <li>If it’s in <code class="docutils literal notranslate"><span class="pre">scalar</span></code> mode, append the column name. <code class="docutils literal notranslate"><span class="pre">table_name</span> <span class="pre">(column_name)</span></code>.</li>
 </ul>
+<p>Returned object has <code class="docutils literal notranslate"><span class="pre">value</span></code>, <code class="docutils literal notranslate"><span class="pre">unformatted</span></code>, and <code class="docutils literal notranslate"><span class="pre">isHTML</span></code> properties.</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+comment"></a></p>
 </div>
 <div class="section" id="facetcolumn-comment-code-string-code">
@@ -9410,7 +9430,7 @@ for a specific column</p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn">.ColumnGroupAggregateFn</a><ul>
 <li><a class="reference external" href="#new_ERMrest.ColumnGroupAggregateFn_new">new ColumnGroupAggregateFn(column)</a></li>
-<li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+entityCounts">.entityCounts()</a> ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></li>
+<li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+entityCounts">.entityCounts([columnDisplayname], [sortColumns], [hideNumOccurrences], [dontAllowNull])</a> ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a></li>
 <li><a class="reference external" href="#ERMrest.ColumnGroupAggregateFn+histogram">.histogram(bucketCount, min, max)</a> ⇒ <a class="reference external" href="#ERMrest.BucketAttributeGroupReference"><code>BucketAttributeGroupReference</code></a></li>
 </ul>
 </li>
@@ -9440,13 +9460,44 @@ for a specific column</p>
 </tbody>
 </table><p><a name="ERMrest.ColumnGroupAggregateFn+entityCounts"></a></p>
 </div>
-<div class="section" id="columngroupaggregatefn-entitycounts-code-attributegroupreference-code">
-<span id="columngroupaggregatefn-entitycounts-code-attributegroupreference-code"></span><h3>columnGroupAggregateFn.entityCounts() ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a class="headerlink" href="#columngroupaggregatefn-entitycounts-code-attributegroupreference-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="columngroupaggregatefn-entitycounts-columndisplayname-sortcolumns-hidenumoccurrences-dontallownull-code-attributegroupreference-code">
+<span id="columngroupaggregatefn-entitycounts-columndisplayname-sortcolumns-hidenumoccurrences-dontallownull-code-attributegroupreference-code"></span><h3>columnGroupAggregateFn.entityCounts([columnDisplayname], [sortColumns], [hideNumOccurrences], [dontAllowNull]) ⇒ <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a><a class="headerlink" href="#columngroupaggregatefn-entitycounts-columndisplayname-sortcolumns-hidenumoccurrences-dontallownull-code-attributegroupreference-code" title="Permalink to this headline">¶</a></h3>
 <p>Will return a compact/select attribute group reference which can be used to show distinct values and their counts
 The result is based on shortest key of the parent table. If we have join
 in the path, we are counting the shortest key of the parent table (not the end table).
 NOTE: Will create a new reference by each call.</p>
-<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ColumnGroupAggregateFn"><code>ColumnGroupAggregateFn</code></a><a name="ERMrest.ColumnGroupAggregateFn+histogram"></a></p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ColumnGroupAggregateFn"><code>ColumnGroupAggregateFn</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[columnDisplayname]</td>
+<td><code>Object</code></td>
+<td>the displayname of main column.</td>
+</tr>
+<tr>
+<td>[sortColumns]</td>
+<td><code>Object</code></td>
+<td>the sort column object that you want to pass</td>
+</tr>
+<tr>
+<td>[hideNumOccurrences]</td>
+<td><code>Boolean</code></td>
+<td>whether we should add number of Occurrences or not.</td>
+</tr>
+<tr>
+<td>[dontAllowNull]</td>
+<td><code>Boolean</code></td>
+<td>whether the null value should be returned for the facet or not.</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.ColumnGroupAggregateFn+histogram"></a></p>
 </div>
 <div class="section" id="columngroupaggregatefn-histogram-bucketcount-min-max-code-bucketattributegroupreference-code">
 <span id="columngroupaggregatefn-histogram-bucketcount-min-max-code-bucketattributegroupreference-code"></span><h3>columnGroupAggregateFn.histogram(bucketCount, min, max) ⇒ <a class="reference external" href="#ERMrest.BucketAttributeGroupReference"><code>BucketAttributeGroupReference</code></a><a class="headerlink" href="#columngroupaggregatefn-histogram-bucketcount-min-max-code-bucketattributegroupreference-code" title="Permalink to this headline">¶</a></h3>

@@ -2188,6 +2188,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">.tuples</a> : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
 AttributeGroupTuple<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupPage+length">.length</a> : <code>integer</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+next">.next</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+previous">.previous</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 </ul>
@@ -2406,6 +2407,7 @@ ERMrest.AttributeGroupColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">.tuples</a> : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
 AttributeGroupTuple<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupPage+length">.length</a> : <code>integer</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+next">.next</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+previous">.previous</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 </ul>
@@ -2422,6 +2424,11 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.BucketAttributeGroupReference">.BucketAttributeGroupReference</a> : <code>object</code></li>
 <li><a class="reference external" href="#ERMrest.configure">.configure(http, q)</a></li>
 <li><a class="reference external" href="#ERMrest.getServer">.getServer(uri, [contextHeaderParams])</a> ⇒ <a class="reference external" href="#ERMrest.Server"><code>Server</code></a></li>
+<li><a class="reference external" href="#ERMrest.encodeFacet">.encodeFacet(obj)</a> ⇒ <code>String</code></li>
+<li><a class="reference external" href="#ERMrest.decodeFacet">.decodeFacet(blob, path)</a> ⇒ <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.renderMarkdown">.renderMarkdown(value, [options])</a> ⇒ <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.renderHandlebarsTemplate">.renderHandlebarsTemplate(template, keyValues, catalog, [options])</a> ⇒ <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.processMarkdownPattern">.processMarkdownPattern(template, data, table, context, options)</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.parse">.parse(uri, catalogObject)</a> ⇒ <code>ERMrest.Location</code></li>
 <li><a class="reference external" href="#ERMrest.resolve">.resolve(uri, [contextHeaderParams])</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.getElapsedTime">.getElapsedTime()</a> ⇒ <code>integer</code></li>
@@ -9763,6 +9770,7 @@ Currently only includes the search term.</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">.tuples</a> : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
 AttributeGroupTuple<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupPage+length">.length</a> : <code>integer</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+next">.next</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+previous">.previous</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 </ul>
@@ -9843,6 +9851,11 @@ AttributeGroupTuple<p>&amp;gt;</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+length"></a></p>
+</div>
+<div class="section" id="attributegrouppage-length-code-integer-code">
+<span id="attributegrouppage-length-code-integer-code"></span><h3>attributeGroupPage.length : <code>integer</code><a class="headerlink" href="#attributegrouppage-length-code-integer-code" title="Permalink to this headline">¶</a></h3>
+<p>the page length (number of rows in the page)</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+next"></a></p>
 </div>
 <div class="section" id="attributegrouppage-next-code-attributegroupreference-code-code-null-code">
@@ -12285,6 +12298,7 @@ Currently only includes the search term.</p>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">.tuples</a> : <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>Array.<p>&amp;lt;</p>
 AttributeGroupTuple<p>&amp;gt;</p>
 </code></a></li>
+<li><a class="reference external" href="#ERMrest.AttributeGroupPage+length">.length</a> : <code>integer</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+next">.next</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 <li><a class="reference external" href="#ERMrest.AttributeGroupPage+previous">.previous</a> : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code></li>
 </ul>
@@ -12365,10 +12379,15 @@ AttributeGroupTuple<p>&amp;gt;</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+length"></a></p>
+</div>
+<div class="section" id="attributegrouppage-length-code-integer-code">
+<span id="id76"></span><h3>attributeGroupPage.length : <code>integer</code><a class="headerlink" href="#attributegrouppage-length-code-integer-code" title="Permalink to this headline">¶</a></h3>
+<p>the page length (number of rows in the page)</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+next"></a></p>
 </div>
 <div class="section" id="attributegrouppage-next-code-attributegroupreference-code-code-null-code">
-<span id="id76"></span><h3>attributeGroupPage.next : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-next-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
+<span id="id77"></span><h3>attributeGroupPage.next : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-next-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
 <p>A reference to the next set of results.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">next</span><span class="p">)</span> <span class="p">{</span>
@@ -12382,7 +12401,7 @@ AttributeGroupTuple<p>&amp;gt;</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupPage"><code>AttributeGroupPage</code></a><a name="ERMrest.AttributeGroupPage+previous"></a></p>
 </div>
 <div class="section" id="attributegrouppage-previous-code-attributegroupreference-code-code-null-code">
-<span id="id77"></span><h3>attributeGroupPage.previous : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-previous-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
+<span id="id78"></span><h3>attributeGroupPage.previous : <a class="reference external" href="#ERMrest.AttributeGroupReference"><code>AttributeGroupReference</code></a> | <code>null</code><a class="headerlink" href="#attributegrouppage-previous-code-attributegroupreference-code-code-null-code" title="Permalink to this headline">¶</a></h3>
 <p>A reference to the previous set of results.</p>
 <p>Usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">previous</span><span class="p">)</span> <span class="p">{</span>
@@ -12412,7 +12431,7 @@ boolean<p>&amp;gt;</p>
 </ul>
 <p><a name="new_ERMrest.AttributeGroupTuple_new"></a></p>
 <div class="section" id="new-attributegrouptuple-page-data">
-<span id="id78"></span><h3>new AttributeGroupTuple(page, data)<a class="headerlink" href="#new-attributegrouptuple-page-data" title="Permalink to this headline">¶</a></h3>
+<span id="id79"></span><h3>new AttributeGroupTuple(page, data)<a class="headerlink" href="#new-attributegrouptuple-page-data" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a new Tuple. In database jargon, a tuple is a row in a
 relation. This object represents a row returned by a query to ERMrest.</p>
 <p>Usage:
@@ -12441,7 +12460,7 @@ See <a class="reference external" href="#ERMrest.AttributeGroupPage+tuples">tupl
 </table><p><a name="ERMrest.AttributeGroupTuple+isHTML"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-ishtml-code-array-lt-boolean-gt-code">
-<span id="id79"></span><h3>attributeGroupTuple.isHTML : <code>Array.<p>&amp;lt;</p>
+<span id="id80"></span><h3>attributeGroupTuple.isHTML : <code>Array.<p>&amp;lt;</p>
 boolean<p>&amp;gt;</p>
 </code><a class="headerlink" href="#attributegrouptuple-ishtml-code-array-lt-boolean-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>The array of boolean values of this tuple speicifying the value is HTML or not. The ordering of the
@@ -12451,13 +12470,13 @@ TODO Eventually should be refactored (https://github.com/informatics-isi-edu/erm
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>AttributeGroupTuple</code></a><a name="ERMrest.AttributeGroupTuple+uniqueId"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-uniqueid-code-string-code">
-<span id="id80"></span><h3>attributeGroupTuple.uniqueId : <code>string</code><a class="headerlink" href="#attributegrouptuple-uniqueid-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id81"></span><h3>attributeGroupTuple.uniqueId : <code>string</code><a class="headerlink" href="#attributegrouptuple-uniqueid-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The unique identifier for this tuple composed of the values for each
 of the shortest key columns concatenated together by an ‘_’</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.AttributeGroupTuple"><code>AttributeGroupTuple</code></a><a name="ERMrest.AttributeGroupTuple+displayname"></a></p>
 </div>
 <div class="section" id="attributegrouptuple-displayname-code-string-code">
-<span id="id81"></span><h3>attributeGroupTuple.displayname : <code>string</code><a class="headerlink" href="#attributegrouptuple-displayname-code-string-code" title="Permalink to this headline">¶</a></h3>
+<span id="id82"></span><h3>attributeGroupTuple.displayname : <code>string</code><a class="headerlink" href="#attributegrouptuple-displayname-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>The <em>display name</em> of this tuple. currently it will be values of
 key columns concatenated together by <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p>
 <p>Usage:</p>
@@ -12527,6 +12546,155 @@ URI should be to the ERMrest <em>service</em>. For example,
 <td><code>Object</code></td>
 <td><code>{cid:&#x27;null&#x27;}</code></td>
 <td>An optional server header parameters for context logging appended to the end of any request to the server.</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.encodeFacet"></a></p>
+</div>
+<div class="section" id="ermrest-encodefacet-obj-code-string-code">
+<span id="ermrest-encodefacet-obj-code-string-code"></span><h2>ERMrest.encodeFacet(obj) ⇒ <code>String</code><a class="headerlink" href="#ermrest-encodefacet-obj-code-string-code" title="Permalink to this headline">¶</a></h2>
+<p>Given an object, returns the string comrpessed version of it</p>
+<p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>obj</td>
+<td><code>Object</code></td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.decodeFacet"></a></p>
+</div>
+<div class="section" id="ermrest-decodefacet-blob-path-code-object-code">
+<span id="ermrest-decodefacet-blob-path-code-object-code"></span><h2>ERMrest.decodeFacet(blob, path) ⇒ <code>Object</code><a class="headerlink" href="#ermrest-decodefacet-blob-path-code-object-code" title="Permalink to this headline">¶</a></h2>
+<p>Turn a given encoded facet blob into a facet object</p>
+<p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blob</td>
+<td><code>string</code></td>
+<td>the encoded facet blob</td>
+</tr>
+<tr>
+<td>path</td>
+<td><code>string</code></td>
+<td>(optional) used for better error message</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.renderMarkdown"></a></p>
+</div>
+<div class="section" id="ermrest-rendermarkdown-value-options-code-string-code">
+<span id="ermrest-rendermarkdown-value-options-code-string-code"></span><h2>ERMrest.renderMarkdown(value, [options]) ⇒ <code>string</code><a class="headerlink" href="#ermrest-rendermarkdown-value-options-code-string-code" title="Permalink to this headline">¶</a></h2>
+<p>render a given markdown value to HTML</p>
+<p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><strong>Returns</strong>: <code>string</code> - A string representation of value</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>value</td>
+<td><code>Object</code></td>
+<td>The Markdown to transform</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>Configuration options.</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.renderHandlebarsTemplate"></a></p>
+</div>
+<div class="section" id="ermrest-renderhandlebarstemplate-template-keyvalues-catalog-options-code-string-code">
+<span id="ermrest-renderhandlebarstemplate-template-keyvalues-catalog-options-code-string-code"></span><h2>ERMrest.renderHandlebarsTemplate(template, keyValues, catalog, [options]) ⇒ <code>string</code><a class="headerlink" href="#ermrest-renderhandlebarstemplate-template-keyvalues-catalog-options-code-string-code" title="Permalink to this headline">¶</a></h2>
+<p>Returns a string produced as a result of templating using <code class="docutils literal notranslate"><span class="pre">Handlebars</span></code>.</p>
+<p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><strong>Returns</strong>: <code>string</code> - A string produced after templating</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td><code>String</code></td>
+<td>The template string to transform</td>
+</tr>
+<tr>
+<td>keyValues</td>
+<td><code>Object</code></td>
+<td>The key-value pair of object to be used for template tags replacement.</td>
+</tr>
+<tr>
+<td>catalog</td>
+<td><code>Object</code></td>
+<td>The catalog object created by ermrestJS representing the current catalog from the url</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>Configuration options.</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.processMarkdownPattern"></a></p>
+</div>
+<div class="section" id="ermrest-processmarkdownpattern-template-data-table-context-options-code-object-code">
+<span id="ermrest-processmarkdownpattern-template-data-table-context-options-code-object-code"></span><h2>ERMrest.processMarkdownPattern(template, data, table, context, options) ⇒ <code>Object</code><a class="headerlink" href="#ermrest-processmarkdownpattern-template-data-table-context-options-code-object-code" title="Permalink to this headline">¶</a></h2>
+<p>Given a markdown_pattern template and data, will return the appropriate
+presentation value.</p>
+<p><strong>Kind</strong>: static method of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a><strong>Returns</strong>: <code>Object</code> - An object with <code class="docutils literal notranslate"><span class="pre">isHTML</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> attributes.</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>template</td>
+<td><code>String</code></td>
+<td>the handlebars/mustache template</td>
+</tr>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>the key-value pair of data</td>
+</tr>
+<tr>
+<td>table</td>
+<td><a href="#ERMrest.Table"><code>Table</code></a></td>
+<td>the table object</td>
+</tr>
+<tr>
+<td>context</td>
+<td><code>String</code></td>
+<td>context string</td>
+</tr>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td></td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.parse"></a></p>

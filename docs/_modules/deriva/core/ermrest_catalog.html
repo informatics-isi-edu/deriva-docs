@@ -1388,6 +1388,8 @@
 <span class="sd">           complete context for the request.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ErmrestCatalog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">scheme</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">credentials</span><span class="p">,</span> <span class="n">caching</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">catalog_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">catalog_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">catalog_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/ermrest/catalog/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_server_uri</span><span class="p">,</span>
             <span class="n">urlquote</span><span class="p">(</span><span class="n">catalog_id</span><span class="p">),</span>

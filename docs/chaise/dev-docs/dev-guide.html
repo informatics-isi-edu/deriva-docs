@@ -1351,106 +1351,245 @@
 </style>
 <div class="section" id="developer-guide">
 <span id="developer-guide"></span><h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this headline">¶</a></h1>
-<p>This is a guide for people who develop Chaise.  We also have our own <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/style-guide.md">Chaise style guide</a>, that explains the use of different libraries (bootstrap) and other HTML and CSS combinations.</p>
+<p>This is a guide for people who develop Chaise.</p>
 <div class="section" id="table-of-contents">
-<span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="#css-and-sass">CSS and SASS</a><ul>
-<li><a class="reference external" href="#useful-links">Useful links</a></li>
-<li><a class="reference external" href="#scss-structure">SCSS structure</a></li>
-<li><a class="reference external" href="#idioms">Idioms</a></li>
+<li><a class="reference external" href="#reading-material">Reading Material</a></li>
+<li><a class="reference external" href="#idioms">Idioms</a><ul>
+<li><a class="reference external" href="#naming-conventions">Naming conventions</a></li>
+<li><a class="reference external" href="#general-1">General</a></li>
+<li><a class="reference external" href="#reacttypescript-1">React/TypeScript</a></li>
+<li><a class="reference external" href="#lint">Lint</a></li>
+<li><a class="reference external" href="#cssscss-1">CSS/SCSS</a></li>
 <li><a class="reference external" href="#font-awesome">Font Awesome</a></li>
+<li><a class="reference external" href="#handling-time">Handling time</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#angularjs-related">AngularJS-related</a><ul>
-<li><a class="reference external" href="#angularjs-developer-guides">AngularJS Developer Guides</a></li>
-<li><a class="reference external" href="#one-time-binding">One-Time Binding</a></li>
+<li><a class="reference external" href="#folder-structure">Folder structure</a></li>
+<li><a class="reference external" href="#building-and-installation">Building and installation</a><ul>
+<li><a class="reference external" href="#make-targets">Make targets</a></li>
+<li><a class="reference external" href="#npm">NPM</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#general">General</a><ul>
-<li><a class="reference external" href="#extracting-common-code">Extracting <code class="docutils literal notranslate"><span class="pre">common</span></code> code</a></li>
-<li><a class="reference external" href="#session">Session</a></li>
-<li><a class="reference external" href="#use-variable-vs-string-in-lookup">Use variable vs string in lookup</a></li>
-<li><a class="reference external" href="#naming-conventions">Naming Conventions</a></li>
-</ul>
-</li>
-<li><a class="reference external" href="#error-handling">Error Handling</a><ul>
+<li><a class="reference external" href="#structure-of-an-app">Structure of an App</a></li>
+<li><a class="reference external" href="#error-handling">Error handling</a><ul>
+<li><a class="reference external" href="#how-it-works">How it works</a></li>
+<li><a class="reference external" href="#guidelines">Guidelines</a></li>
 <li><a class="reference external" href="#guidelines-for-promise-chains">Guidelines for promise chains</a></li>
-<li><a class="reference external" href="#promise-with-success-reject-and-catch-handlers">Promise with success, reject, and catch handlers</a></li>
-<li><a class="reference external" href="#promise-with-success-and-catch-handlers">Promise with success and catch handlers</a></li>
-<li><a class="reference external" href="#promise-chaining-with-single-catch">Promise chaining with single catch</a></li>
-<li><a class="reference external" href="#promise-chaining-with-interleaved-catches">Promise chaining with interleaved catches</a></li>
-<li><a class="reference external" href="#how-it-works">How It Works</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#config-app">Config App</a></li>
 </ul>
 </div>
-<div class="section" id="css-and-sass">
-<span id="css-and-sass"></span><h2>CSS and SASS<a class="headerlink" href="#css-and-sass" title="Permalink to this headline">¶</a></h2>
-<p>As part of your task you might need to modify some of the existing styles or add new ones.</p>
-<div class="section" id="useful-links">
-<span id="useful-links"></span><h3>Useful links<a class="headerlink" href="#useful-links" title="Permalink to this headline">¶</a></h3>
-<p>To make sure you’re familiar with both CSS and SASS. The following are some guides that you can use:</p>
+<div class="section" id="reading-material">
+<span id="reading-material"></span><h2>Reading Material<a class="headerlink" href="#reading-material" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we’ve included all the guides and tools that we think are useful
+for learning different concepts.</p>
+<div class="section" id="general">
+<span id="general"></span><h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://caniuse.com/">caniuse.com</a>: can be used to quickly figure out if a feature can be used based on our browser support or not.</li>
+<li><a class="reference external" href="https://www.keycdn.com/blog/chrome-devtools">Guide to Chrome DevTools</a>: Very useful for debugging.</li>
+</ul>
+</div>
+<div class="section" id="react-typescript">
+<span id="react-typescript"></span><h3>React/TypeScript<a class="headerlink" href="#react-typescript" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="https://blog.isquaredsoftware.com/presentations/react-redux-ts-intro-2020-12">Intro to React, Redux, and TypeScript</a></li>
+<li><a class="reference external" href="https://github.com/typescript-cheatsheets/react">Code style</a></li>
+<li><a class="reference external" href="https://blog.logrocket.com/react-component-design-patterns-2022/">React design patterns</a></li>
+</ul>
+</div>
+<div class="section" id="css-scss">
+<span id="css-scss"></span><h3>CSS/SCSS<a class="headerlink" href="#css-scss" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="https://www.w3schools.com/css/">W3schools CSS tutorial</a>: this is a good starting point for refreshing your CSS knowledge.</li>
 <li><a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS">MDN CSS reference</a>: a very thorough CSS reference that you can use to learn more about different CSS features.</li>
-<li><a class="reference external" href="https://caniuse.com/">caniuse.com</a>: can be used to quickly figure out if a feature can be used based on our browser support or not.</li>
 <li><a class="reference external" href="https://sass-lang.com/guide">Sass basics</a>: a very good starting point for learning Sass basics (we’re using SCSS syntax.)</li>
-<li><a class="reference external" href="https://www.keycdn.com/blog/chrome-devtools">Guide to Chrome DevTools</a>: Very useful for CSS debugging.</li>
-<li><a class="reference external" href="https://css-tricks.com/snippets/html/glyphs/">Glyph-icons</a> : An amazing comprehensive guide to include any glyphs in your css code</li>
 <li><a class="reference external" href="https://www.smashingmagazine.com/2018/05/print-stylesheets-in-2018/">CSS Printing Guide - 1</a> : A-Z about CSS print rules</li>
 <li><a class="reference external" href="https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/">CSS Printing Guide - 2</a> : Essentials for CSS Print rules
 (part - 2)</li>
-<li><a class="reference external" href="https://css-tricks.com/override-inline-styles-with-css/">Overriding inline styles</a> : Inline styles have the highest priority but they
-too can be overwritten when the element is accessed as shown in the document.</li>
+<li><a class="reference external" href="https://css-tricks.com/override-inline-styles-with-css/">Overriding inline styles</a> : Inline styles have the highest priority, but they
+too can be overwritten when the element is accessed, as shown in the document.</li>
 <li><a class="reference external" href="https://css-tricks.com/almanac/properties/p/position/">Important Information on CSS position</a> : Adding scrolling to a collapsible navbar can be
 tricky. This link explains how you can add scrolling without affecting any level of dropdown menus.</li>
 <li><a class="reference external" href="https://javascript.info/size-and-scroll">Calculating position of element</a> : This link gives an in-depth understanding of how we can manually
 calculate the position of any element dynamically in the DOM</li>
 </ul>
 </div>
-<div class="section" id="useful-css-rules">
-<span id="useful-css-rules"></span><h3>Useful CSS rules<a class="headerlink" href="#useful-css-rules" title="Permalink to this headline">¶</a></h3>
-<p>How each browser renders printing styles is different from the other. Mac and Windows behave differently for the same browser type (Firefox, Chrome, etc). Hence we need to keep in mind the following while writing print rules in css.</p>
+</div>
+<div class="section" id="idioms">
+<span id="idioms"></span><h2>Idioms<a class="headerlink" href="#idioms" title="Permalink to this headline">¶</a></h2>
+<p>The rules that should be followed while writing code.</p>
+<div class="section" id="naming-conventions">
+<span id="naming-conventions"></span><h3>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
+<li>Use kebab-case for filenames (all lower case with <code class="docutils literal notranslate"><span class="pre">-</span></code> for breaking words).</li>
+<li>Related to React/Typescript,<ul>
+<li>Use PascalCase for type names, class names, and enum values.</li>
+<li>Use camelCase for function names.</li>
+<li>Use camelCase for property names and local variables.</li>
+<li>Use <code class="docutils literal notranslate"><span class="pre">_</span></code> as a prefix for private properties and functions.</li>
+<li>Use whole words in names when possible.</li>
+</ul>
+</li>
+<li>Related to SASS/SCSS,<ul>
+<li>Use kebab-case (all lower case with <code class="docutils literal notranslate"><span class="pre">-</span></code> for breaking words). Avoid using camelCase or <code class="docutils literal notranslate"><span class="pre">_</span></code>.</li>
+<li>Use meaningful names that can be easily understood without knowing the whole page. Try to convey what an ID or class is about while being as brief as possible.</li>
+</ul>
+</li>
+<li>Related to annotations,<ul>
+<li>All the keys and properties are case sensitive and written in lower case.</li>
+<li>Annotation keys are using kebab-case (all lower case with <code class="docutils literal notranslate"><span class="pre">-</span></code> for breaking words).</li>
+<li>Annotation properties use snake case (all lower case with <code class="docutils literal notranslate"><span class="pre">_</span></code> for breaking words).</li>
+<li>Properties that enforce a boolean state should be defined based on the opposite default value. For example, if a button is displayed by default and we want to add a property to force its state, we have to add <code class="docutils literal notranslate"><span class="pre">hide_button</span></code>.</li>
+</ul>
+</li>
+<li>Related to markdown and templating,<ul>
+<li>The helper functions are case sensitive and use camelCase.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="general">
+<span id="id1"></span><h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Use semicolons everywhere. Even though it’s unnecessary, use a semicolon after each line for consistency.</li>
+<li>Stick with the indentation size of 2. If a file is not using size 2, just change the whole file.</li>
+</ul>
+</div>
+<div class="section" id="react-typescript">
+<span id="id2"></span><h3>React/TypeScript<a class="headerlink" href="#react-typescript" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Use functional components in most cases (class components should only be considered for special cases.)</p>
+</li>
+<li><p class="first">Avoid using <code class="docutils literal notranslate"><span class="pre">any</span></code> type as much as you can.</p>
+</li>
+<li><p class="first">Don’t use relative paths while importing. Instead, use the <code class="docutils literal notranslate"><span class="pre">&#64;isrd-isi-edu/chaise</span></code> alias, which points to the root. For example:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">ConfigService</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;@isrd-isi-edu/chaise/src/services/config&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a <code class="docutils literal notranslate"><span class="pre">type</span></code> for <code class="docutils literal notranslate"><span class="pre">props</span></code> of components.</p>
+</li>
+<li><p class="first">Regarding <a class="reference external" href="https://blog.isquaredsoftware.com/presentations/react-redux-ts-intro-2020-12/#/36">Render logic</a>,</p>
+<ul class="simple">
+<li>It must be “pure“, without any “side effects”<ul>
+<li>No AJAX calls, mutating data, random values</li>
+<li>Rendering should only be based on current props and state</li>
+</ul>
+</li>
+<li>Render any dependent items into temporary variables, such as conditional components or lists.</li>
+</ul>
+</li>
+<li><p class="first">Regarding <code class="docutils literal notranslate"><span class="pre">useState</span></code> and <code class="docutils literal notranslate"><span class="pre">setState</span></code> hooks:</p>
+<ul class="simple">
+<li>Creating callbacks “closes over” variable values at time of render<ul>
+<li>Can cause bugs due to “stale state” if not careful!</li>
+</ul>
+</li>
+<li>Be careful with multiple update calls in a row!</li>
+<li><code class="docutils literal notranslate"><span class="pre">setState</span></code> can accept an “updater” callback instead of a value.<ul>
+<li>Updater will be called with the latest value as its argument, and should return a new value. Safer to use this if multiple updates depend on each other</li>
+<li>Also can avoid having to capture value from parent scope</li>
+</ul>
+</li>
+</ul>
+<div class="highlight-typescript notranslate"><div class="highlight"><pre><span></span><span class="c1">// ❌ Two bugs here!</span>
+<span class="c1">// 1) &quot;Closed over&quot; old value of `counter`</span>
+<span class="c1">// 2) Updates will be batched together</span>
+<span class="kr">const</span> <span class="nx">onClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">setCounter</span><span class="p">(</span><span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">setCounter</span><span class="p">(</span><span class="nx">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">onClickFixed</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// ✅ Can pass an &quot;updater&quot; function to setState,</span>
+  <span class="c1">// which gets the latest value as its argument</span>
+  <span class="nx">setCounter</span><span class="p">(</span><span class="nx">prevCounter</span> <span class="o">=&gt;</span> <span class="nx">prevCounter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">setCounter</span><span class="p">(</span><span class="nx">prevCounter</span> <span class="o">=&gt;</span> <span class="nx">prevCounter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">List items must have keys, which tell React list item   identity</p>
+<ul class="simple">
+<li>Should be unique per list</li>
+<li>Ideally, use item IDs</li>
+<li>Fallback, use array indices, but only if data won’t reorder</li>
+</ul>
+</li>
+<li><p class="first">Take a look at <code class="docutils literal notranslate"><span class="pre">example.tsx</span></code> for a sample react component.</p>
+</li>
+<li><p class="first">Since we’re using <a class="reference external" href="https://reactjs.org/docs/strict-mode.html"><code class="docutils literal notranslate"><span class="pre">StrictMode</span></code></a>, React will double-invoke the functions related to rendering content to find issues. So to debug the performance and rendering issues, we should make sure that we are always using production mode.</p>
+</li>
+<li><p class="first">While importing <code class="docutils literal notranslate"><span class="pre">react-bootstrap</span></code> components, import individual components using <code class="docutils literal notranslate"><span class="pre">react-bootstrap/Button</span></code> rather than the entire library (<a class="reference external" href="https://react-bootstrap.github.io/getting-started/introduction/#importing-components">source</a>).</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// ❌ bad</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Button</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;react-bootstrap&#39;</span><span class="p">;</span>
+
+<span class="c1">// ✅ good</span>
+<span class="kr">import</span> <span class="nx">Button</span> <span class="nx">from</span> <span class="s1">&#39;react-bootstrap/Button&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="lint">
+<span id="lint"></span><h3>Lint<a class="headerlink" href="#lint" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Make sure the <code class="docutils literal notranslate"><span class="pre">ESLint</span></code> extension is installed for Visual Studio Code.</p>
+</li>
+<li><p class="first">Makefile commands related to linter:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">lint</span></code>: Run linter and only show the errors.</li>
+<li><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">lint-w-warn</span></code>: Run linter and show both warning and errors.</li>
+</ul>
+</li>
+<li><p class="first">You can ask linter to escape a file or line, but you should not use this unless
+you’re 100% sure what you’re doing is correct:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">to</span> <span class="n">ignore</span> <span class="n">the</span> <span class="n">rule</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">line</span><span class="p">:</span>
+<span class="o">//</span> <span class="n">eslint</span><span class="o">-</span><span class="n">disable</span><span class="o">-</span><span class="nb">next</span><span class="o">-</span><span class="n">line</span> <span class="n">NAME_OF_THE_RULE</span>
+
+<span class="o">//</span> <span class="n">to</span> <span class="n">ignore</span> <span class="n">the</span> <span class="n">rule</span> <span class="k">for</span> <span class="n">the</span> <span class="n">whole</span> <span class="n">file</span><span class="p">:</span>
+<span class="o">/*</span> <span class="n">eslint</span> <span class="n">NAME_OF_THE_RULE</span><span class="p">:</span> <span class="mi">0</span> <span class="o">*/</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Using the previously described method, you can also change rules locally, but we generally recommend against it .</p>
+</li>
+</ul>
+</div>
+<div class="section" id="css-scss">
+<span id="id3"></span><h3>CSS/SCSS<a class="headerlink" href="#css-scss" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>General-purpose styles should be part of the <code class="docutils literal notranslate"><span class="pre">app.scss</span></code> (or included as part of <code class="docutils literal notranslate"><span class="pre">app.scss</span></code>.)</li>
+<li>Styles specific to a component should be included in a separate file and imported into the component TSX file.</li>
+<li>It’s better if you use classes instead of ids for writing CSS rules.</li>
+<li>Avoid adding duplicated rules. If there’s a rule in a file that is applied to the element that you’re trying to add a new style to, add it there.</li>
+<li>Avoid using <code class="docutils literal notranslate"><span class="pre">!important</span></code> as much as you can (Unless there’s a bootstrap rule that you’re trying to override.)</li>
+<li>Comment your rule to make it easier for others to figure out why a rule was added.</li>
+<li>If you’re doing some calculations, don’t just use the end result. Right the calculations so later we can easily figure out why you chose that value.</li>
+<li>Use variables if you’re using the same value more than once, and these values should be the same all the time (Just because you’re using the value <code class="docutils literal notranslate"><span class="pre">10</span></code> in two different rules doesn’t mean they should share the same variable. Use a variable if these two rules MUST be using the same value. So if later you changed one to <code class="docutils literal notranslate"><span class="pre">20</span></code>, the other one should be updated as well).</li>
+<li>How each browser renders printing styles is different from the other. Mac and Windows behave differently for the same browser type (Firefox, Chrome, etc.). Hence we need to keep in mind the following while writing print rules in CSS.<ul>
 <li>If table borders or other line elements are not visible in the print preview or the PDF, check if there exists any overriding
-bootstrap rules. These bootstrap rules could be a <code class="docutils literal notranslate"><span class="pre">background-color</span></code>, <code class="docutils literal notranslate"><span class="pre">background-border</span></code>, etc. and they always take precedence over the custom css rules that are defined in the &#64;media-print section of the css file.</li>
-<li>If yes, then we must override those rules with <code class="docutils literal notranslate"><span class="pre">!important</span></code> to get the desired effect.</li>
-<li>A new class has been defined to apply custom styling to the case of Firefox browser in combination with MacOs which can be found here
-: (https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/custom-css.md)</li>
-<li>Use the print mode in the rendering tab to see how the document looks when printed in Chrome browser. On Firefox, this can be achieved
+bootstrap rules. These bootstrap rules could be a <code class="docutils literal notranslate"><span class="pre">background-color</span></code>, <code class="docutils literal notranslate"><span class="pre">background-border</span></code>, etc., and they always take precedence over the custom CSS rules that are defined in the &#64;media-print section of the CSS file.</li>
+<li>If yes, we must override those rules with <code class="docutils literal notranslate"><span class="pre">!important</span></code> to get the desired effect.</li>
+<li>A new class has been defined to apply custom styling to the case of Firefox browser in combination with MacOs, which can be found <a class="reference internal" href="../user-docs/custom-css.html"><span class="doc">here</span></a>.</li>
+<li>Use the print mode in the rendering tab to see how the document looks when printed in the Chrome browser. On Firefox, this can be achieved
 by clicking on a small page icon in the “Inspect Element mode”.</li>
 <li>The print preview that is seen when doing a <code class="docutils literal notranslate"><span class="pre">Ctrl-P</span></code> on Windows or a <code class="docutils literal notranslate"><span class="pre">Cmd-P</span></code> on Mac doesn’t necessarily give you the right picture of
 the document to be printed. To view what will be printed, either save to PDF file or chose to switch to the ‘Print mode’ as described above.</li>
 <li>Scrolling can be persisted by using the <code class="docutils literal notranslate"><span class="pre">scrolling</span> <span class="pre">:</span> <span class="pre">scroll</span></code> option.</li>
 </ul>
-</div>
-<div class="section" id="scss-structure">
-<span id="scss-structure"></span><h3>SCSS structure<a class="headerlink" href="#scss-structure" title="Permalink to this headline">¶</a></h3>
-<p>Since we’re using Sass3+, we’re using the SCSS syntax. On of the advantages of Sass in general is the fact that you can easily break your stylesheets into different sections and then merge them together. In Chaise, the <code class="docutils literal notranslate"><span class="pre">*.scss</span></code> files that start with <code class="docutils literal notranslate"><span class="pre">_</span></code> are not meant to be on their own and are only meant to be included (imported) in other files. These files are generally supposed to cover a well-contained feature of UI element. For example <code class="docutils literal notranslate"><span class="pre">_buttons.scss</span></code> contains all the styles related to buttons. The main file that will be compiled in the end is <code class="docutils literal notranslate"><span class="pre">app.scss</span></code> which will be compiled into <code class="docutils literal notranslate"><span class="pre">app.css</span></code> and used in Chaise. You don’t need to compile the file manually yourself as make commands will do that automatically for you.</p>
-</div>
-<div class="section" id="idioms">
-<span id="idioms"></span><h3>Idioms<a class="headerlink" href="#idioms" title="Permalink to this headline">¶</a></h3>
-<p>If you want to add a new style, make sure you’re following these rules:</p>
-<ul class="simple">
-<li>It’s better if you use classes instead of ids for writing css rules.</li>
-<li>Use <code class="docutils literal notranslate"><span class="pre">-</span></code> to break the words in your name. Avoid using camelCase or <code class="docutils literal notranslate"><span class="pre">_</span></code>.</li>
-<li>Follow the indentation that the file has. Don’t mix different indentations together.</li>
-<li>Use names that are meaningful and can be easily understood without knowing the whole page. Try to convey what an ID or class is about while being as brief as possible.</li>
-<li>Avoid adding duplicated rules. If there’s a rule in a file that is applied to the element that you’re trying to add a new style to, add it there.</li>
-<li>Avoid using <code class="docutils literal notranslate"><span class="pre">!important</span></code> as much as you can (Unless there’s a bootstrap rule that you’re trying to override.)</li>
-<li>Comment your rule to make it easier for others to figure out why a rule was added.</li>
-<li>If you’re doing some calculations don’t just use the end result. Right the calculations so later we can easily figure out why you chose that value.</li>
-<li>Use variables if you’re using the same value more than once and these values should be the same all the times (Just because you’re using value <code class="docutils literal notranslate"><span class="pre">10</span></code> in two different rules doesn’t mean they should share the same variable. Use a variable if these two rules MUST be using the same value. So if later you changed one to <code class="docutils literal notranslate"><span class="pre">20</span></code>, the other one should be updated as well).</li>
+</li>
 </ul>
 </div>
 <div class="section" id="font-awesome">
 <span id="font-awesome"></span><h3>Font Awesome<a class="headerlink" href="#font-awesome" title="Permalink to this headline">¶</a></h3>
 <p>In font-awesome, each font/icon can either be solid, regular, or light. In some cases
-only one version is available in the free open-source version that we’re using.</p>
-<p>While using these types of fonts the font-awesome website directs us to use <code class="docutils literal notranslate"><span class="pre">fas</span></code> for sold,
-<code class="docutils literal notranslate"><span class="pre">far</span></code> for regular, and <code class="docutils literal notranslate"><span class="pre">fal</span></code> for light. <code class="docutils literal notranslate"><span class="pre">fal</span></code> is not available in the free version so
+only one version is available in the free, open-source version that we’re using.</p>
+<p>While using these types of fonts, the font-awesome website directs us to use <code class="docutils literal notranslate"><span class="pre">fas</span></code> for sold,
+<code class="docutils literal notranslate"><span class="pre">far</span></code> for regular, and <code class="docutils literal notranslate"><span class="pre">fal</span></code> for light. <code class="docutils literal notranslate"><span class="pre">fal</span></code> is not available in the free version, so
 we should not use it at all. From the font-awesome source, the only difference between <code class="docutils literal notranslate"><span class="pre">far</span></code> and <code class="docutils literal notranslate"><span class="pre">fas</span></code> is font-weight:</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">far</span><span class="o">,</span> <span class="p">.</span><span class="nc">fas</span> <span class="p">{</span>
     <span class="k">font-family</span><span class="p">:</span> <span class="s2">&quot;Font Awesome 5 Free&quot;</span><span class="p">;</span>
@@ -1465,8 +1604,8 @@ we should not use it at all. From the font-awesome source, the only difference b
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This can cause some inconsistencies where <code class="docutils literal notranslate"><span class="pre">far</span></code>/<code class="docutils literal notranslate"><span class="pre">fas</span></code> are used in places that we’re
-manually changing the <code class="docutils literal notranslate"><span class="pre">font-weight</span></code>. For example assume the following icon is used</p>
+<p>This can cause some inconsistencies where <code class="docutils literal notranslate"><span class="pre">far</span></code>/<code class="docutils literal notranslate"><span class="pre">fas</span></code> are used in places where we’re
+manually changing the <code class="docutils literal notranslate"><span class="pre">font-weight</span></code>. For example, assume the following icon is used.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;fas fa-ellipsis-v some-icon&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -1476,113 +1615,328 @@ manually changing the <code class="docutils literal notranslate"><span class="pr
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Eventhough by using <code class="docutils literal notranslate"><span class="pre">fas</span></code> we were meant to use the solid version of the font,
+<p>Even though by using <code class="docutils literal notranslate"><span class="pre">fas</span></code> we were meant to use the solid version of the font,
 the CSS rule will make sure we’re using the regular version instead. And in this
-case, the regular version of <code class="docutils literal notranslate"><span class="pre">fa-ellipsis-v</span></code> is not available in free version of font-awesome that we’re using. So,</p>
+case, the regular version of <code class="docutils literal notranslate"><span class="pre">fa-ellipsis-v</span></code> is not available in the free version of font-awesome that we’re using. So,</p>
 <ul class="simple">
 <li>We have to be careful where we’re using font-awesome and avoid any manual changing
 of <code class="docutils literal notranslate"><span class="pre">font-family</span></code> or <code class="docutils literal notranslate"><span class="pre">font-weight</span></code> and let font-awesome handle it for us.</li>
-<li>While changing font-awesome versions we have to make sure the fonts that we’re using
-are available. In some cases we might want to change the font-weight group by
+<li>While changing font-awesome versions, we have to make sure the fonts that we’re using
+are available. In some cases, we might want to change the font-weight group by
 updating the font-awesome classes that are used.</li>
 </ul>
 </div>
-</div>
-<div class="section" id="angularjs-related">
-<span id="angularjs-related"></span><h2>AngularJS-related<a class="headerlink" href="#angularjs-related" title="Permalink to this headline">¶</a></h2>
-<p>Because this is not an exhaustive guide, consider looking through &#64;johnpapa’s <a class="reference external" href="https://github.com/johnpapa/angular-styleguide/tree/master/a1">AngularJS style guide</a> to understand the spirit and conventions of AngularJS development. The following are a few notable points that should be followed:</p>
+<div class="section" id="handling-time">
+<span id="handling-time"></span><h3>Handling time<a class="headerlink" href="#handling-time" title="Permalink to this headline">¶</a></h3>
+<p>Regarding <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> column types:</p>
 <ul class="simple">
-<li>Use <code class="docutils literal notranslate"><span class="pre">controllerAs</span></code> syntax instead of <code class="docutils literal notranslate"><span class="pre">$scope</span></code> whenever possible and refrain from using <code class="docutils literal notranslate"><span class="pre">$rootscope</span></code></li>
-<li>AngularJS allows for users to define a module and later extend that module with new <strong>services</strong>, <strong>controllers</strong>, <strong>factories</strong>, <strong>providers</strong>, and so on. These other components should be defined in separate files to avoid having one single <code class="docutils literal notranslate"><span class="pre">*.app.js</span></code> file.</li>
-</ul>
-<div class="section" id="angularjs-developer-guides">
-<span id="angularjs-developer-guides"></span><h3>AngularJS Developer Guides<a class="headerlink" href="#angularjs-developer-guides" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/templates">View Templating</a></li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/databinding">Data Binding with Templates</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_databinding.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/module">Modules</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_modules.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/directive">Directives</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_directives.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/di">Dependency Injection</a></li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/services">Services and Factories</a> (<a class="reference external" href="https://www.w3schools.com/angular/angular_services.asp">tutorial</a>)</li>
-<li><a class="reference external" href="https://code.angularjs.org/1.6.9/docs/guide/bootstrap">App Bootstrapping</a></li>
-</ul>
-</div>
-<div class="section" id="one-time-binding">
-<span id="one-time-binding"></span><h3>One-Time Binding<a class="headerlink" href="#one-time-binding" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Use one-time binding for improved performance.</li>
-<li>If you know an AngularJS expression won’t change its value after the first digest (e.g. displaying an ERMrest table name), prepend the binding with <code class="docutils literal notranslate"><span class="pre">::</span></code> to benefit from one-time binding. For more details about this, see the One-Time Binding section of the <a class="reference external" href="https://docs.angularjs.org/guide/expression">doc on AngularJS expressions</a>.</li>
+<li>A <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value is stored as a single point in time in Postgres. When the value is retrieved, the value is in whatever time zone the database is in.</li>
+<li>A <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> value is stored as a string with the date and time; time zone info will be dropped in Postgres.</li>
+<li>When submitting values for <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> columns, the app should just submit the values as browser’s local time. (The app currently converts to UTC before submitting, which is unnecessary.)</li>
+<li>When displaying <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> value, display whatever is in the database (the date and time, no need to convert to local time because there’s no time zone info attached anyway)</li>
+<li>When displaying <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value, convert that value to browser’s local time.</li>
 </ul>
 </div>
 </div>
-<div class="section" id="general">
-<span id="general"></span><h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="extracting-common-code">
-<span id="extracting-common-code"></span><h3>Extracting <code class="docutils literal notranslate"><span class="pre">common</span></code> code<a class="headerlink" href="#extracting-common-code" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="folder-structure">
+<span id="folder-structure"></span><h2>Folder structure<a class="headerlink" href="#folder-structure" title="Permalink to this headline">¶</a></h2>
+<p>The following is the overall structure of the project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>.
+├── src
+│   ├── assets
+│   │   └── scss
+│   │       ├── app.scss
+│   │       └── _&lt;comp&gt;.scss
+│   ├── components
+│   │   └── &lt;comp&gt;.tsx
+│   ├── hooks
+│   │   └── &lt;feature&gt;.ts
+│   ├── libs
+│   │   └── &lt;library&gt;.tsx
+│   ├── models
+│   │   └── &lt;feature&gt;.ts
+│   ├── pages
+│   │   ├── &lt;app&gt;.tsx
+│   │   └── main.html
+│   ├── providers
+│   │   └── &lt;feeature&gt;.tsx
+│   ├── services
+│   │   └── &lt;feature&gt;.ts
+│   ├── utils
+│   │   └── &lt;function&gt;.ts
+│   └── vendor
+├── webpack
+│   ├── app.config.js
+│   ├── lib.config.js
+│   └── main.configjs
+├── Makefile
+└── package.json
+</pre></div>
+</div>
 <ul class="simple">
-<li>When writing functionality that can already be found in another part of Chaise, that’s usually a good candidate for pulling this functionality out and into the <code class="docutils literal notranslate"><span class="pre">chaise/common</span></code> folder. Instead of refactoring the common functionality out of an app, a good practice is to simply copy the existing functionality into the <code class="docutils literal notranslate"><span class="pre">common</span></code> folder and then have the existing functionality call the code in <code class="docutils literal notranslate"><span class="pre">chaise/common</span></code>. Actual refactoring will occur in a later cycle. This minimizes disruptions to existing apps and encourages code reuse.</li>
-<li>An example: I’m working on a Feature X for the RecordEdit app, and this function has been already been written into the Search app. Instead of duplicating the function in both apps, I copy the code for Feature X from Search into <code class="docutils literal notranslate"><span class="pre">chaise/common</span></code> and genericize the function as necessary. In Data Entry, I simply call the code in <code class="docutils literal notranslate"><span class="pre">chaise/common</span></code> to get Feature X. In Search, the function’s body is replaced with a call to the Feature X function in <code class="docutils literal notranslate"><span class="pre">chaise/common</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">assets</span></code>: This folder is used to house all the fonts, images, and SCSS files. The component-specific SCSS files should have the same name as their component file.</li>
+<li><code class="docutils literal notranslate"><span class="pre">components</span></code>: Each app will rely on similar components for functionality and display purposes. If there is a need to reuse code, even if that’s in only 2 places, a common component should be extracted and placed in the components folder.</li>
+<li><code class="docutils literal notranslate"><span class="pre">libs</span></code>: Independent applications that may be used in non-React environments outside of Chaise.</li>
+<li><code class="docutils literal notranslate"><span class="pre">models</span></code>: The models or types that are</li>
+<li><code class="docutils literal notranslate"><span class="pre">providers</span></code>: Providers are a way to have a consistent state that can be accessed by any component at any level of the parent/child component hierarchy. Providers make use of React hooks to manage the app state.</li>
+<li><code class="docutils literal notranslate"><span class="pre">services</span></code>: Services are used for common functionality like interacting with the server, configuring the application, managing the user session, and more. These functional services provide a scope that is shared throughout the service that each function can interact with.</li>
+<li><code class="docutils literal notranslate"><span class="pre">utils</span></code>: Utilities are intended to be collections of functions exported individually that are then imported as needed in other places.</li>
 </ul>
 </div>
-<div class="section" id="session">
-<span id="session"></span><h3>Session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h3>
-<p>The Navbar fetches the session object for information to display in the Navbar. Each app needs to also individually fetch the session so that we can make sure the session is available before trying to do anything with the reference.
-NOTE: This was causing a race condition before when we were relying on the session being fetched in the navbar and attaching it to $rootScope.</p>
-</div>
-<div class="section" id="use-variable-vs-string-in-lookup">
-<span id="use-variable-vs-string-in-lookup"></span><h3>Use variable vs string in lookup<a class="headerlink" href="#use-variable-vs-string-in-lookup" title="Permalink to this headline">¶</a></h3>
-<p>The purpose of using variables or enumeration is to avoid rewriting (or copy-and-pasting) the same string in multiple places.</p>
+<div class="section" id="building-and-installation">
+<span id="building-and-installation"></span><h2>Building and installation<a class="headerlink" href="#building-and-installation" title="Permalink to this headline">¶</a></h2>
+<p>This section will focus on more advanced details related to installation. Please refer to the installation guide in the <code class="docutils literal notranslate"><span class="pre">user-docs</span></code> folder for general information. The build process uses Makefile to simplify what needs to be called from the command line to get started. <code class="docutils literal notranslate"><span class="pre">Make</span></code> will manage dependency installation (through <code class="docutils literal notranslate"><span class="pre">npm</span></code>) and the react build process (using <code class="docutils literal notranslate"><span class="pre">webpack</span></code>).</p>
+<div class="section" id="make-targets">
+<span id="make-targets"></span><h3>Make targets<a class="headerlink" href="#make-targets" title="Permalink to this headline">¶</a></h3>
+<p>The following are all the Makefile targets related to installation:</p>
 <ul class="simple">
-<li>if you have more than one call site in more than one script, then define the variable in the utilities.js script and add it to the module (e.g., module._tag_default = “tag:…default”) and it may then be used by code in different ERMrestJS scripts (e.g., referencing module._tag_default somewhere). Note that this is not being added to the public interface. Code outside of the various ERMrestJS scripts are not intended to use these variables. Hence we follow the underscore prefix convention (_<em>variableName</em>), which by convention indicates that the variable should be considered private to the module and clients are at least warned not to use it.</li>
-<li>Example: The <code class="docutils literal notranslate"><span class="pre">messageMap</span></code> constant can be used to store and display user-facing messages in Chaise. <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/issues/68">ERMrestJS#68</a> contains detail discussion related to this topic.</li>
+<li><code class="docutils literal notranslate"><span class="pre">dist</span></code>: This target is designed for deployment environments, where we want to make sure we can install from scratch without any hiccups and errors. That’s why we’re always doing a clean installation (<code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">ci</span></code>) as part of this command, which will ensure that the dependencies are installed based on what’s encoded in the <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> (without fetching new versions from the upstream). While developing features in Chaise, you should only run this command during the first installation or when <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> has been modified.</li>
+<li><code class="docutils literal notranslate"><span class="pre">dist-wo-deps</span></code>: Designed for development purposes, will only build and install Chaise.</li>
+<li><code class="docutils literal notranslate"><span class="pre">deploy</span></code>: Deployed the built folders into the given location.</li>
+<li><code class="docutils literal notranslate"><span class="pre">deploy-w-config</span></code>:  The same as <code class="docutils literal notranslate"><span class="pre">deploy</span></code>, but will also <code class="docutils literal notranslate"><span class="pre">rsync</span></code> the configuration files.</li>
 </ul>
 </div>
-<div class="section" id="naming-conventions">
-<span id="naming-conventions"></span><h3>Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="chaise">
-<span id="chaise"></span><h4>Chaise<a class="headerlink" href="#chaise" title="Permalink to this headline">¶</a></h4>
-<p>There are a few naming conventions that are being used across the apps. This pertains to variables, module names, and file names.</p>
+<div class="section" id="npm">
+<span id="npm"></span><h3>NPM<a class="headerlink" href="#npm" title="Permalink to this headline">¶</a></h3>
+<p>This section will go over how we think the NPM modules should be managed.</p>
 <ul class="simple">
-<li>File names should be written in camel case (camelCase) with identifying information separated by <code class="docutils literal notranslate"><span class="pre">.</span></code> (<code class="docutils literal notranslate"><span class="pre">*.controller.js</span></code>, <code class="docutils literal notranslate"><span class="pre">*.app.js</span></code>, <code class="docutils literal notranslate"><span class="pre">*.html</span></code>).</li>
-<li>AngularJS modules need to be defined like the following <code class="docutils literal notranslate"><span class="pre">chaise.*</span></code>. Chaise identifies the set of apps it applies to and the <code class="docutils literal notranslate"><span class="pre">*</span></code> is that modules purpose in Chaise.</li>
-<li>Service, Factory, Provider, Controller, and other angular classes should be defined with camel case text leading with a capital letter. For example: <code class="docutils literal notranslate"><span class="pre">ErrorDialogController</span></code> is the convention for naming controllers. Don’t shorten the text to <code class="docutils literal notranslate"><span class="pre">ctrl</span></code> because we should be using controller as syntax and want to have a more readable structure to our code.</li>
-<li>Variables should follow a similar naming convention using camel case text. Variables and functions that are prefixed with an underscore, should be treated as private variables and used with caution.</li>
-<li>Folder names should be different from file names. Of course folders don’t have an extension so it’s more apparent that they are folders, but developers should use <code class="docutils literal notranslate"><span class="pre">-</span></code> separated names for folders, i.e. <code class="docutils literal notranslate"><span class="pre">common\templates\data-link</span></code>.</li>
-<li>Chaise config properties are technically case-insensitive, but to make the documents easier to read we are writing them as camel case in code and documentation.</li>
-</ul>
-</div>
-<div class="section" id="ermrestjs">
-<span id="ermrestjs"></span><h4>ERMrestJS<a class="headerlink" href="#ermrestjs" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Related to annotations,<ul>
-<li>All the keys and properties are case sensitive and written in lower case.</li>
-<li>Annotation keys are using kebab case (dash case).</li>
-<li>Annotation properties are using snake case.</li>
-<li>Properties that are enforcing a boolean state should be defined based on the oposite default value. For example if a button is displayed by default and we want to add a property to force its state, we have to add <code class="docutils literal notranslate"><span class="pre">hide_button</span></code>.</li>
+<li>Ensure the latest stable node and npm versions are used.</li>
+<li>Only use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> when the <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> has been changed (or when doing a clean install).</li>
+<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-wo-deps</span></code> while developing.</li>
+<li>Avoid using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> should not be changed. If you noticed a change in your branch, consult with the main contributors.</li>
+<li>Only for main contributors: If we want to upgrade the dependencies or install a new package, we should,<ul>
+<li>Ensure the used node and npm versions are updated and the latest stable.</li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code></li>
+<li>Double-check the changes to <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code></li>
 </ul>
 </li>
-<li>Related to markdown and templating:<ul>
-<li>The helper functions are case sensitive and using came case.</li>
-</ul>
-</li>
 </ul>
 </div>
+</div>
+<div class="section" id="structure-of-an-app">
+<span id="structure-of-an-app"></span><h2>Structure of an App<a class="headerlink" href="#structure-of-an-app" title="Permalink to this headline">¶</a></h2>
+<p>Since Chaise is a collection of multiple single-page apps (<code class="docutils literal notranslate"><span class="pre">recordset</span></code>, <code class="docutils literal notranslate"><span class="pre">record</span></code>, <code class="docutils literal notranslate"><span class="pre">recordedit</span></code>, etc.), the app setup will be very similar. This similar structure allowed us to factor out a lot of that common setup code into different bits described below.</p>
+<div class="section" id="main-html">
+<span id="main-html"></span><h3>Main HTML<a class="headerlink" href="#main-html" title="Permalink to this headline">¶</a></h3>
+<p>The instantiation and bundle of dependencies should be almost the same for each app. The build process using webpack will generate the outer HTML based on <code class="docutils literal notranslate"><span class="pre">pages/main.html</span></code>. Each app attaches to the element with <code class="docutils literal notranslate"><span class="pre">id</span></code> equal to <code class="docutils literal notranslate"><span class="pre">chaise-app-root</span></code> defined in <code class="docutils literal notranslate"><span class="pre">main.html</span></code>.</p>
+</div>
+<div class="section" id="app-wrapper">
+<span id="app-wrapper"></span><h3>App Wrapper<a class="headerlink" href="#app-wrapper" title="Permalink to this headline">¶</a></h3>
+<p>Each app in Chaise is instantiated and configured the same way as far as creating the outer HTML and <head> tag, wrapping the app in the proper providers, configuring Chaise and ermrestJS, and fetching the session. To help manage parts of this, we created a component called <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code> to wrap each app for setup and configuration.</p>
+</div>
+<div class="section" id="context">
+<span id="context"></span><h3>Context<a class="headerlink" href="#context" title="Permalink to this headline">¶</a></h3>
+<p>For state sharing between components, Chaise is using the built-in <code class="docutils literal notranslate"><span class="pre">useContext</span></code> hook. Each application has its top-level context, with each component defining its own context as needed (like alerts and errors).</p>
+</div>
+<div class="section" id="error-provider">
+<span id="error-provider"></span><h3>Error Provider<a class="headerlink" href="#error-provider" title="Permalink to this headline">¶</a></h3>
+<p>To handle global errors, the app wrapper adds an <code class="docutils literal notranslate"><span class="pre">ErrorProvider</span></code> to handle the error state and an <code class="docutils literal notranslate"><span class="pre">ErrorBoundary</span></code> to catch the errors. Each app only needs to throw errors to let the global handler decide what to do with them.</p>
+</div>
+<div class="section" id="alerts-provider">
+<span id="alerts-provider"></span><h3>Alerts Provider<a class="headerlink" href="#alerts-provider" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Alerts</span></code> also has its own provider created to have a consistent state at the app level when trying to show alerts from sub-components of the app. The provider here acts like a service that handles the functionality surrounding alerts. This provider also allows for showing alerts in multiple places without having duplicate alerts show in the wrong contexts.</p>
+</div>
+<div class="section" id="chaise-navbar">
+<span id="chaise-navbar"></span><h3>Chaise Navbar<a class="headerlink" href="#chaise-navbar" title="Permalink to this headline">¶</a></h3>
+<p>The navbar for each Chaise app is the same style. It is loaded as part of the configuration phase in the app wrapper. All apps in Chaise can decide to show or hide the navbar as part of defining the <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code> component.</p>
 </div>
 </div>
 <div class="section" id="error-handling">
-<span id="error-handling"></span><h2>Error Handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="guidelines-for-promise-chains">
-<span id="guidelines-for-promise-chains"></span><h3>Guidelines for promise chains<a class="headerlink" href="#guidelines-for-promise-chains" title="Permalink to this headline">¶</a></h3>
-<p>The general guidelines for handling errors in promises are that:</p>
+<span id="error-handling"></span><h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>This section focuses on error handling practices that we should follow while migrating from AngularJS to React.</p>
+<p>In the AngularJS implementation of Chaise, we rely on <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> and <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> to catch any asynchronous or synchronous errors that might happen while processing the page.</p>
+<p>Both of the mentioned methods are working as a “catch-all” where we’re calling the <code class="docutils literal notranslate"><span class="pre">handleException</span></code> function in <code class="docutils literal notranslate"><span class="pre">ErrorService</span></code>. This function can handle both expected/known errors (e.g. 403 from a read request), or unexpected/unknown errors (e.g. JavaScript errors because of programmatic mistakes).</p>
+<p>Therefore the general guideline, regardless of the asynchronous or synchronous nature of the error, was:</p>
 <ul class="simple">
-<li>do not let your handlers “silence” any unhandled errors, <em>always</em> throw an unhandled error so that later catch blocks may handle it;</li>
-<li>even when you do not have any (or any <em>more</em>) catch blocks, throw an unhandled error so that the general exception handler service can handle it.</li>
-<li>reject is a callback function that gets carried out after the promise is rejected, whereas throw cannot be used asynchronously. If you chose to use reject, your code will continue to run normally in asynchronous fashion whereas throw will prioritize completing the resolver function (this function will run immediately).</li>
+<li>If you want a local treatment of errors, catch the errors locally.</li>
+<li>Otherwise, throw the error (which means the “catch-all” logic would handle it properly).</li>
+</ul>
+<p>This is not fully the case anymore. In React, any synchronous error that happens during the rendering of a component will break the whole app, and to avoid that we need to make some modifications to our error handling logic.</p>
+<div class="section" id="how-it-works">
+<span id="how-it-works"></span><h3>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
+<p>The following is how error handling should work in Chaise using React:</p>
+<div class="section" id="error-provider">
+<span id="id4"></span><h4>Error provider<a class="headerlink" href="#error-provider" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>To make sure we can call the error handler from anywhere in the page structure, we’ve created an <code class="docutils literal notranslate"><span class="pre">ErrorProvider</span></code> that uses <code class="docutils literal notranslate"><span class="pre">ErorrContext</span></code>. This will allow us to store the state of errors. This way,<ul>
+<li>We can use the <code class="docutils literal notranslate"><span class="pre">useError</span></code> costom hook which gives use a <code class="docutils literal notranslate"><span class="pre">dispatchError</span></code> that can be used for “throwing” the error.</li>
+<li>The logic to show a proper error message or UX behavior based on the error object will be part of the error provider.</li>
+<li>The error modal component can use the <code class="docutils literal notranslate"><span class="pre">error</span></code> returned from <code class="docutils literal notranslate"><span class="pre">useError</span></code> to determine whether it should show any errors or not.</li>
+</ul>
+</li>
 </ul>
 </div>
+<div class="section" id="global-handler-catch-all">
+<span id="global-handler-catch-all"></span><h4>Global handler (catch-all)<a class="headerlink" href="#global-handler-catch-all" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>The whole app should be wrapped in an error boundary. This will ensure that even if there’s an unexpected error, we can show the error modal to users (and also log the error).</li>
+<li><code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">unhandledrejection</span></code> event listeners must be defined in the app component, so we can <code class="docutils literal notranslate"><span class="pre">dispatchError</span></code> the unhandled errors.</li>
+</ul>
+<p>Based on this, the following is how each app should roughly look like:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>const RecordSetApp = () : JSX.Element =&gt; {
+  const { dispatchError } = useError();
+  ...
+
+  useEffect(() =&gt; {
+    /**
+     * global error handler for uncaught errors
+    */
+    window.addEventListener(&quot;error&quot;, (event) =&gt; {
+      dispatchError(...);
+    });
+    window.addEventListener(&quot;unhandledrejection&quot;, (event: PromiseRejectionEvent) =&gt; {
+      dispatchError(...);
+    });
+
+    ...
+  });
+
+  ...
+
+  const errorFallback = ({error}: FallbackProps) =&gt; {
+    // log the error
+    ...
+
+    // dispatchError the error
+    dispatchError(...);
+
+    // the error modal will be displayed so there&#39;s no need for the fallback
+    return null;
+  }
+
+  return (
+    &lt;ErrorBoundary FallbackComponent={errorFallback}&gt;
+      ...
+    &lt;/ErrorBoundary&gt;
+  )
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-handler">
+<span id="local-handler"></span><h4>Local handler<a class="headerlink" href="#local-handler" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">We should not let any error be unhandled. All errors should be caught.</p>
+<ul>
+<li><p class="first">If we don’t want to do anything specific for the error, we should dispatchError the caught error.</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// async errors:
+reference.read(pageSize, logObject).then(function (page) {
+  ...
+}).catch(function (err) {
+  // do the local handling if we have to
+  ...
+
+  // dispatchError the error
+  dispatchError(...);
+});
+
+// sync errors:
+try {
+  // some function call that is error prone
+  ...
+} catch (exp) {
+  // do the local handling if we have to
+  ...
+
+  // dispatchError the error
+  dispatchError(...);
+}
+</pre></div>
+</div>
+</li>
+<li><p class="first">If we want a local treatment for errors, we can wrap the component in an error boundary like the example in <a class="reference external" href="#error-boundary">here</a>. This will allow us to offer an alternative UI.</p>
+</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="multiple-errors-on-the-page">
+<span id="multiple-errors-on-the-page"></span><h5>Multiple errors on the page<a class="headerlink" href="#multiple-errors-on-the-page" title="Permalink to this headline">¶</a></h5>
+<p>Since our apps are complicated and can have multiple components that behave somewhat independently (and in an asynchronous fashion), there might be a case that the page throws multiple errors. As soon as an error is thrown, we’re dispatchErroring it to the error service and the error service will display it right away. If in this state (while we’re showing the error) another error is dispatchErrored, the error handler is going to act differently depending on the type of the error. In general, we can categorize errors in the following categories:</p>
+<ol class="simple">
+<li>Blocking errors: When we encounter such errors, we cannot simply recover the app state. In this case, the error popup is supposed to block the user from interacting with the page and offer a way to get out of the broken state. The actions in this type of error are usually redirecting the user to a completely different location, or the same page with different settings.</li>
+<li>Non-blocking errors: These errors don’t affect the overall state of the app, and users can simply dismiss them. For example, a 409 error while trying to delete a row.</li>
+</ol>
+<p>Therefore,</p>
+<ol class="simple">
+<li>If the displayed error is a blocking error, we should just swallow the newer error. All of our blocking errors offer a way to get out of the error state, either by removing part of the URL or completely redirecting to another location. Therefore even if we mask all the errors except one, users can still get out of the error state.</li>
+<li>If the displayed error is non-blocking, we cannot simply swallow the other errors. If users dismiss the error modal, then the page will be in an error state without users realizing it. Therefore we should keep track of all the errors. This way after dismissing the first error we can display the other one. The same two rules should apply depending on whether the error can be dismissed or not.</li>
+</ol>
+<blockquote>
+<div>If any of these errors is a 401, since we have special handling for it, it should just show on top of everything else. 401 errors will trigger the login modal which can completely change the state of the app and most probably fix all the other issues on the page.</div></blockquote>
+<p>While discussing this, we also talked about the possibility of combining all the errors into one. To make this work, we have to make sure the error message and actions that we offer are well-designed for any combination of errors. This seems unnecessarily complex given that we have a lot of different error types in ERMrestJS and Chaise, that’s why we are not going to pursue this.</p>
+</div>
+</div>
+</div>
+<div class="section" id="guidelines">
+<span id="guidelines"></span><h3>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="development-vs-production">
+<span id="development-vs-production"></span><h4>Development vs. Production<a class="headerlink" href="#development-vs-production" title="Permalink to this headline">¶</a></h4>
+<p>React will behave differently in case of errors in development and production modes. As it is <a class="reference external" href="https://github.com/facebook/react/issues/10384#issuecomment-334142138">described here</a>, React is rethrowing an error and doesn’t allow you to swallow an error in development mode. Since our whole error handling logic rely on this, make sure you’re using production mode while testing error handling.</p>
+</div>
+<div class="section" id="error-boundary">
+<span id="error-boundary"></span><h4>Error boundary<a class="headerlink" href="#error-boundary" title="Permalink to this headline">¶</a></h4>
+<p>As we mentioned JavaScript errors in any part of the UI will break the whole app. To solve this problem, React 16 introduces a new concept of <a class="reference external" href="https://reactjs.org/docs/error-boundaries.html">error boundaries</a>.</p>
+<p>Error boundaries are React components that catch JavaScript errors anywhere in their child component tree, log those errors, and display a fallback UI instead of the component tree that crashed. Error boundaries catch errors during rendering, in lifecycle methods, and in constructors of the whole tree below them.</p>
+<p>Error boundaries do not catch errors for:</p>
+<ul class="simple">
+<li>Event handlers</li>
+<li>Asynchronous code (e.g. setTimeout or requestAnimationFrame callbacks)</li>
+<li>Server-side rendering</li>
+<li>Errors thrown in the error boundary itself (rather than its children)</li>
+</ul>
+<p>That being said, instead of just using the built-in error boundary class component, we’re using <a class="reference external" href="https://github.com/bvaughn/react-error-boundary">react-error-boundary</a> instead. With this component,</p>
+<ul class="simple">
+<li>We can use error boundaries in functional components.</li>
+<li>We can use the <code class="docutils literal notranslate"><span class="pre">useError</span></code> hook to manually call the error boundary in order to offer a uniform error handling for a component (we can catch the errors in async calls that the error boundary doesn’t support and manually call the error boundary logic).</li>
+</ul>
+<p>Therefore, if we want uniform error handling for a component, we should use <code class="docutils literal notranslate"><span class="pre">react-error-boundary</span></code>.</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>const ParentComponent = () : JSX.Element =&gt; {
+
+  const fallbackComp = ({error}: FallbackProps) =&gt; {
+    // dispatchError the error message
+    // return a fallback component
+  }
+
+  return (
+    &lt;ErrorBoundary
+      FallbackComponent={fallbackComp}
+    &gt;
+      &lt;ChildComponent/&gt;
+    &lt;/ErrorBoundary&gt;
+  )
+}
+
+// a component that might throw some errors
+function ChildComponent = (): JSX.Element =&gt; {
+  const handleError = useErrorHandler();
+  ...
+
+  // somewhere in a async call
+  somePromise.then({
+    ...
+  }).catch(function (err) {
+    // call the closest error boundary
+    handleError(err);
+  })
+
+  ...
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="guidelines-for-promise-chains">
+<span id="guidelines-for-promise-chains"></span><h3>Guidelines for promise chains<a class="headerlink" href="#guidelines-for-promise-chains" title="Permalink to this headline">¶</a></h3>
+<p>The general guidelines for handling errors in promises are:</p>
+<ul class="simple">
+<li>do not let your handlers “silence” any unhandled errors, <em>always</em> throw an unhandled error so that later catch blocks may handle it;</li>
+<li>when you do not have any (or any <em>more</em>) catch blocks, dispatchError the unhandled error so that the general exception handler service can handle it.</li>
+<li>reject is a callback function that gets carried out after the promise is rejected, whereas throw cannot be used asynchronously. If you chose to use reject, your code will continue to run normally in an asynchronous fashion whereas throw will prioritize completing the resolver function (this function will run immediately).</li>
+</ul>
 <div class="section" id="promise-with-success-reject-and-catch-handlers">
-<span id="promise-with-success-reject-and-catch-handlers"></span><h3>Promise with success, reject, and catch handlers<a class="headerlink" href="#promise-with-success-reject-and-catch-handlers" title="Permalink to this headline">¶</a></h3>
-<p>One style when working with a single promise is to use success, reject, and “catch” handlers. The <code class="docutils literal notranslate"><span class="pre">catch</span></code> function is just a syntactic sugar for <code class="docutils literal notranslate"><span class="pre">then(null,</span> <span class="pre">function)</span></code> where the success handler is not given.</p>
+<span id="promise-with-success-reject-and-catch-handlers"></span><h4>Promise with success, reject, and catch handlers<a class="headerlink" href="#promise-with-success-reject-and-catch-handlers" title="Permalink to this headline">¶</a></h4>
+<p>One style when working with a single promise is to use success, reject, and “catch” handlers. The <code class="docutils literal notranslate"><span class="pre">catch</span></code> function is just syntactic sugar for <code class="docutils literal notranslate"><span class="pre">then(null,</span> <span class="pre">function)</span></code> where the success handler is not given.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
   <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// this handler will get called if the promise was resolved</span>
@@ -1602,9 +1956,8 @@ NOTE: This was causing a race condition before when we were relying on the sessi
     <span class="c1">// this can be useful for adding some common error handling logic</span>
     <span class="c1">// for errors that could be raised by either of the previous handlers</span>
     <span class="p">...</span>
-    <span class="c1">// again as a general practice, conclude by throwing unhandled error</span>
-    <span class="c1">// this will be caught and handled by app-wide exceptionHandler function</span>
-    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="c1">// again as a general practice, conclude by dispatchErroring unhandled error</span>
+    <span class="nx">dispatchError</span><span class="p">(...);</span>
   <span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
@@ -1622,7 +1975,7 @@ NOTE: This was causing a race condition before when we were relying on the sessi
 </div>
 </div>
 <div class="section" id="promise-with-success-and-catch-handlers">
-<span id="promise-with-success-and-catch-handlers"></span><h3>Promise with success and catch handlers<a class="headerlink" href="#promise-with-success-and-catch-handlers" title="Permalink to this headline">¶</a></h3>
+<span id="promise-with-success-and-catch-handlers"></span><h4>Promise with success and catch handlers<a class="headerlink" href="#promise-with-success-and-catch-handlers" title="Permalink to this headline">¶</a></h4>
 <p>An alternate style for working with a single promise is to use only success and catch handlers. One advantage of this style is that a single reject handler defined in the <code class="docutils literal notranslate"><span class="pre">catch</span></code> block will handle <em>both</em> a rejected promise or any exceptions thrown by the success block.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
   <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
@@ -1635,15 +1988,15 @@ NOTE: This was causing a race condition before when we were relying on the sessi
     <span class="c1">//  - the original promise was rejected, OR...</span>
     <span class="c1">//  - the success handler threw an exception</span>
     <span class="p">...</span>
-    <span class="c1">// as a general practice, conclude by throwing any unhandled error</span>
-    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="c1">// as a general practice, conclude by dispatchErroring unhandled error</span>
+    <span class="nx">dispatchError</span><span class="p">(...);</span>
   <span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="promise-chaining-with-single-catch">
-<span id="promise-chaining-with-single-catch"></span><h3>Promise chaining with single catch<a class="headerlink" href="#promise-chaining-with-single-catch" title="Permalink to this headline">¶</a></h3>
+<span id="promise-chaining-with-single-catch"></span><h4>Promise chaining with single catch<a class="headerlink" href="#promise-chaining-with-single-catch" title="Permalink to this headline">¶</a></h4>
 <p>One style for handling errors in a promise chain is to first chain all of your success blocks and then conclude with a catch for your particular errors. The advantage of this style is that it is relatively easy to read and is logically similar to a try/catch block that has (depending on the language, one or more) type-specific catch block(s) at the end.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
   <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
@@ -1679,15 +2032,15 @@ NOTE: This was causing a race condition before when we were relying on the sessi
       <span class="k">return</span><span class="p">;</span> <span class="c1">// if you resolved the error, return</span>
     <span class="p">}</span>
     <span class="c1">// if none of the above error handling blocks resolved the error.</span>
-    <span class="c1">// then make sure to throw the error again, as usual.</span>
-    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="c1">// then make sure to dispatchError the error again, as usual.</span>
+    <span class="nx">dispatchError</span><span class="p">(...);</span>
   <span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="promise-chaining-with-interleaved-catches">
-<span id="promise-chaining-with-interleaved-catches"></span><h3>Promise chaining with interleaved catches<a class="headerlink" href="#promise-chaining-with-interleaved-catches" title="Permalink to this headline">¶</a></h3>
+<span id="promise-chaining-with-interleaved-catches"></span><h4>Promise chaining with interleaved catches<a class="headerlink" href="#promise-chaining-with-interleaved-catches" title="Permalink to this headline">¶</a></h4>
 <p>When it is possible to recover from an error, you may want to interleave catch blocks so that subsequent success blocks may execute.</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
   <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
@@ -1699,13 +2052,13 @@ NOTE: This was causing a race condition before when we were relying on the sessi
     <span class="c1">// handle a recoverable error</span>
     <span class="p">...</span>
 
-    <span class="c1">// if the error could not be recovered from, then you will need to</span>
+    <span class="c1">// if the error could not be recovered, then you will need to</span>
     <span class="c1">// throw the error again so that the next reject/catch handler will</span>
     <span class="c1">// process it, and so that it will skip any success handlers.</span>
     <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
 
-    <span class="c1">// if the error was recovered from, you may need to return something</span>
-    <span class="c1">// based on what the next success handler expects. Otherwise you can</span>
+    <span class="c1">// if the error was recovered, you may need to return something</span>
+    <span class="c1">// based on what the next success handler expects. Otherwise, you can</span>
     <span class="c1">// return without a return parameter or technically the function could</span>
     <span class="c1">// terminate without any return statement (again, so long as the next</span>
     <span class="c1">// success handler is expecting no required parameters). In this example,</span>
@@ -1727,47 +2080,14 @@ NOTE: This was causing a race condition before when we were relying on the sessi
     <span class="c1">// handle any upstream errors that were not previously recovered from.</span>
     <span class="p">...</span>
 
-    <span class="c1">// as usual, if the error could not be handled in this block, throw it again.</span>
-    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="c1">// as usual, if the error could not be handled in this block, dispatchError it</span>
+    <span class="nx">dispatchError</span><span class="p">(...);</span>
   <span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="how-it-works">
-<span id="how-it-works"></span><h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
-<p>This section will provide more information on how the error handling has been implemented in Chaise.</p>
-<div class="section" id="exceptionhandler">
-<span id="exceptionhandler"></span><h4>$exceptionHandler<a class="headerlink" href="#exceptionhandler" title="Permalink to this headline">¶</a></h4>
-<p>AngularJS has a common exception handler service, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>. For reference:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://docs.angularjs.org/api/ng/service/$exceptionHandler">Official guide</a></li>
-<li><a class="reference external" href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#exception-handling">Unofficial style guide</a></li>
-</ul>
-<p>The AngularJS global exception handler, <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>, is used as the final catch for exceptions in the Chaise applications. Any exceptions that need to be handled in a common way should throw the exception and leave it to the AngularJS service to catch them. A function is registered with <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> to manage how we want general cases to be handled.</p>
 </div>
-<div class="section" id="special-case-uibmodal">
-<span id="special-case-uibmodal"></span><h4>Special Case: $uibModal<a class="headerlink" href="#special-case-uibmodal" title="Permalink to this headline">¶</a></h4>
-<p>The promise used to create an instance of $uibModal is rejected if the user dismisses the modal. Unless you have logic for when the modal is dismissed, there’s no need to attach an error callback to this promise. There’s also no need to add a <code class="docutils literal notranslate"><span class="pre">.catch()</span></code> because <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code> will handle any errors in the success callback.</p>
-</div>
-<div class="section" id="synchronous-try-catch-blocks">
-<span id="synchronous-try-catch-blocks"></span><h4>Synchronous try/catch blocks<a class="headerlink" href="#synchronous-try-catch-blocks" title="Permalink to this headline">¶</a></h4>
-<p>Any unhandled exception will be handled by the <code class="docutils literal notranslate"><span class="pre">$exceptionHandler</span></code>. So we should always be specific about what error conditions that we are catching; and make sure that you throw unhandled exceptions.</p>
-</div>
-<div class="section" id="non-angularjs-asynchronous-event-handling-functions">
-<span id="non-angularjs-asynchronous-event-handling-functions"></span><h4>non-AngularJS asynchronous event-handling functions<a class="headerlink" href="#non-angularjs-asynchronous-event-handling-functions" title="Permalink to this headline">¶</a></h4>
-<p>In general, we should only implement event-handling functions within the AngularJS framework. However, in the event that we must implement an event-handler outside of AngularJS, <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> will handle this.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code> handler may be called by the browser for many error conditions outside of the scope of our applications. There are also known browser compatibility issues at the time of writing this guideline. The following are some references related to <code class="docutils literal notranslate"><span class="pre">window.onerror</span></code>:</p>
-<ul class="simple">
-<li>This old article discussed issues with window.onerror. https://danlimerick.wordpress.com/2014/01/18/how-to-catch-javascript-errors-with-window-onerror-even-on-chrome-and-firefox/</li>
-<li>This article summarizes window.onerror support for each browser and provide an example to wrap a function so the exception can be logged. Maybe we can use the same method? https://blog.sentry.io/2016/01/04/client-javascript-reporting-window-onerror.html</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="section" id="config-app">
-<span id="config-app"></span><h2>Config App<a class="headerlink" href="#config-app" title="Permalink to this headline">¶</a></h2>
-<p>We have a configuration app that is loaded into the DOM before each of our angular apps to do some setup before attaching the app instance. More info can be found in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/dev-docs/config-app.md">Config app guide</a>.</p>
 </div>
 </div>
 

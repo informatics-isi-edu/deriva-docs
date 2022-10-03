@@ -1,72 +1,36 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Unit Testing &mdash; DERIVA Docs current documentation</title>
-  
-
-  
-  
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit Testing &mdash; DERIVA Docs current documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" /><link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="http://docs.derivacloud.org/ermrestjs/dev-docs/unit-test.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html">
-          
-
-          
-            
-            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../../index.html"><img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About DERIVA</a><ul>
@@ -360,6 +314,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#features">Features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#limitations">Limitations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-schema-to-catalog">Add Schema to Catalog</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
@@ -1263,80 +1218,42 @@
 </li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">DERIVA Docs</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Unit Testing</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../_sources/ermrestjs/dev-docs/unit-test.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -1405,23 +1322,23 @@ $ npm update
 <div class="section" id="configuration">
 <span id="configuration"></span><h3>1. Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
 <p>You need to create a schema and data that will be used in your test cases. Use <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/test/specs/sample/conf/product.conf.json">this</a> sample to setup your schema and data. Use the <a class="reference external" href="#file-structure">File Structure</a> to create the appropriate conf folder. <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/tree/master/test/specs/sample/conf">Here</a> is a sample conf folder and here is list of available options in <code class="docutils literal notranslate"><span class="pre">SCHEMA_NAME.conf.js</span></code>:</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;catalog&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="c1">//&quot;id&quot;: 1  //existing id of a catalog</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;schema&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;product&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// change this to false to avoid creating new schema</span>
-    <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;schema/product.json&quot;</span> <span class="c1">// path of the schema json file in the current working directory folder</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;tables&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Mention this to be true to allow creating new tables</span>
-  <span class="p">},</span>
-  <span class="s2">&quot;entities&quot;</span><span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;createNew&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="c1">// Mention this to be true to allow creating new entities</span>
-    <span class="s2">&quot;path&quot;</span><span class="o">:</span> <span class="s2">&quot;data/product&quot;</span><span class="p">,</span> <span class="c1">// This is the path from where the json for the entities will be picked for import</span>
-  <span class="p">},</span>
-<span class="p">}</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;catalog&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">//&quot;id&quot;: 1  //existing id of a catalog</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;schema&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;product&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;createNew&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// change this to false to avoid creating new schema</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;schema/product.json&quot;</span><span class="w"> </span><span class="c1">// path of the schema json file in the current working directory folder</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;tables&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;createNew&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Mention this to be true to allow creating new tables</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;entities&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;createNew&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="c1">// Mention this to be true to allow creating new entities</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;data/product&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// This is the path from where the json for the entities will be picked for import</span><span class="w"></span>
+<span class="w">  </span><span class="p">},</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Things to consider while creating schema:</p>
@@ -1440,68 +1357,68 @@ $ npm update
 <div class="section" id="test-spec">
 <span id="test-spec"></span><h3>2. Test Spec<a class="headerlink" href="#test-spec" title="Permalink to this headline">¶</a></h3>
 <p>Now that you have your sample data, you can go ahead and create your unit tests. Create a <code class="docutils literal notranslate"><span class="pre">spec.js</span></code> file in the spec folder that you created using the following template. Take a look at <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/test/specs/sample/spec.js">this</a> example.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./../../utils/starter.spec.js&#39;</span><span class="p">).</span><span class="nx">runTests</span><span class="p">({</span>
-    <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;In SPEC_NAME spec, &#39;</span><span class="p">,</span>
-    <span class="nx">testCases</span><span class="o">:</span> <span class="p">[</span>
-        <span class="s2">&quot;/SPEC_NAME/tests/01.TEST_NAME1.js&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;/SPEC_NAME/tests/02.TEST_NAME2.js&quot;</span>
-    <span class="p">],</span>
-    <span class="nx">schemaConfigurations</span><span class="o">:</span> <span class="p">[</span>
-        <span class="s2">&quot;/SPEC_NAME/conf/SCHEMA_NAME.conf.json&quot;</span> <span class="c1">// Pass this as an empty array if you don&#39;t have any conf</span>
-    <span class="p">]</span>
-<span class="p">});</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./../../utils/starter.spec.js&#39;</span><span class="p">).</span><span class="nx">runTests</span><span class="p">({</span><span class="w"></span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;In SPEC_NAME spec, &#39;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nx">testCases</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;/SPEC_NAME/tests/01.TEST_NAME1.js&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;/SPEC_NAME/tests/02.TEST_NAME2.js&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nx">schemaConfigurations</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;/SPEC_NAME/conf/SCHEMA_NAME.conf.json&quot;</span><span class="w"> </span><span class="c1">// Pass this as an empty array if you don&#39;t have any conf</span><span class="w"></span>
+<span class="w">    </span><span class="p">]</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Once you’re done creating <code class="docutils literal notranslate"><span class="pre">spec.js</span></code> file, you can start adding your test files to the <strong>tests</strong> folder. These files will contain the actual <code class="docutils literal notranslate"><span class="pre">it's</span></code> and <code class="docutils literal notranslate"><span class="pre">describe's</span></code>. For reference you can take a look at <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/test/specs/sample/tests/01.sample.js">this</a></p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">exports</span><span class="p">.</span><span class="nx">execute</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">exports</span><span class="p">.</span><span class="nx">execute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">options</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-    <span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;For determining server, &#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="kd">var</span> <span class="nx">server</span><span class="p">,</span> <span class="nx">ermRest</span><span class="p">,</span> <span class="nx">catalogId</span><span class="p">,</span> <span class="nx">schemaName</span> <span class="o">=</span> <span class="s2">&quot;product&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;For determining server, &#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">server</span><span class="p">,</span><span class="w"> </span><span class="nx">ermRest</span><span class="p">,</span><span class="w"> </span><span class="nx">catalogId</span><span class="p">,</span><span class="w"> </span><span class="nx">schemaName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;product&quot;</span><span class="p">;</span><span class="w"></span>
 
-        <span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">server</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">server</span><span class="p">;</span>
-            <span class="nx">catalogId</span> <span class="o">=</span> <span class="nx">options</span><span class="p">.</span><span class="nx">catalogId</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">server</span><span class="p">;</span><span class="w"></span>
+<span class="w">            </span><span class="nx">catalogId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">options</span><span class="p">.</span><span class="nx">catalogId</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
 
-        <span class="c1">// Test Cases:</span>
-        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should introspect catalog&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalogs undefined&quot;</span><span class="p">);</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">.</span><span class="nx">get</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalogs.get undefined&quot;</span><span class="p">);</span>
-            <span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">catalogId</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">catalog</span> <span class="o">=</span> <span class="nx">response</span><span class="p">;</span>
-                <span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalog undefined&quot;</span><span class="p">);</span>
-                <span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schemas undefined&quot;</span><span class="p">);</span>
-                <span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">.</span><span class="nx">get</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schemas.get undefined&quot;</span><span class="p">);</span>
-                <span class="nx">schema</span> <span class="o">=</span> <span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">schemaName</span><span class="p">);</span>
-                <span class="nx">done</span><span class="p">();</span>
-            <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nx">done</span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-            <span class="p">});</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="c1">// Test Cases:</span><span class="w"></span>
+<span class="w">        </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should introspect catalog&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">expect</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalogs undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="nx">expect</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">.</span><span class="nx">get</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalogs.get undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="nx">server</span><span class="p">.</span><span class="nx">catalogs</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">catalogId</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nx">catalog</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;catalog undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schemas undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">.</span><span class="nx">get</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schemas.get undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="nx">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">catalog</span><span class="p">.</span><span class="nx">schemas</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">schemaName</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="nx">done</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="nx">done</span><span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">});</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
 
-        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Should have schema name&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">schema</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schema undefined&quot;</span><span class="p">);</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">schema</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">schemaName</span><span class="p">,</span> <span class="s2">&quot;schema name missmatch&quot;</span><span class="p">);</span>
-        <span class="p">});</span>
+<span class="w">        </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;Should have schema name&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">expect</span><span class="p">(</span><span class="nx">schema</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">(</span><span class="s2">&quot;schema undefined&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="nx">expect</span><span class="p">(</span><span class="nx">schema</span><span class="p">.</span><span class="nx">name</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">schemaName</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;schema name missmatch&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
 
-        <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should have catalog id&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">id</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">catalogId</span><span class="p">);</span>
-        <span class="p">});</span>
-    <span class="p">});</span>
-<span class="p">};</span>
+<span class="w">        </span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;should have catalog id&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nx">expect</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">id</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">catalogId</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Once your suite creates the catalog, you will find its <strong>id</strong> in <code class="docutils literal notranslate"><span class="pre">process.env.DEFAULT_CATALOG</span></code>. This can be accessed across any file and you should avoid changing it.</p>
 <p><code class="docutils literal notranslate"><span class="pre">options</span></code> is another object, in which you will find all useful variables and objects sent by the <code class="docutils literal notranslate"><span class="pre">spec.js</span></code>. But it will be only populated once your tests start running, i.e. the values will be accessible in <code class="docutils literal notranslate"><span class="pre">it's</span></code>, <code class="docutils literal notranslate"><span class="pre">beforeAll</span></code> and <code class="docutils literal notranslate"><span class="pre">afterAll</span></code> blocks only.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
-   <span class="nx">server</span><span class="o">:</span>      <span class="c1">// ERMrest server,</span>
-   <span class="nx">importUtils</span><span class="o">:</span> <span class="c1">// ermrest-import reference,</span>
-   <span class="nx">description</span><span class="o">:</span> <span class="c1">// description of this spec,</span>
-   <span class="nx">schemaConfs</span><span class="o">:</span> <span class="c1">// all filepaths of schema configurations used in this spec,</span>
-   <span class="nx">ermRest</span><span class="o">:</span>     <span class="c1">// reference to ERMrest object,</span>
-   <span class="nx">url</span><span class="o">:</span>         <span class="c1">// ermRest url,</span>
-   <span class="nx">authCookie</span><span class="o">:</span>  <span class="c1">// authn includes.authCookie</span>
-<span class="p">}</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">server</span><span class="o">:</span><span class="w">      </span><span class="c1">// ERMrest server,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">importUtils</span><span class="o">:</span><span class="w"> </span><span class="c1">// ermrest-import reference,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="c1">// description of this spec,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">schemaConfs</span><span class="o">:</span><span class="w"> </span><span class="c1">// all filepaths of schema configurations used in this spec,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">ermRest</span><span class="o">:</span><span class="w">     </span><span class="c1">// reference to ERMrest object,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">url</span><span class="o">:</span><span class="w">         </span><span class="c1">// ermRest url,</span><span class="w"></span>
+<span class="w">   </span><span class="nx">authCookie</span><span class="o">:</span><span class="w">  </span><span class="c1">// authn includes.authCookie</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p><strong>Don’t forget to add your spec to <code class="docutils literal notranslate"><span class="pre">spec_files</span></code> in <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/test/support/jasmine.json"><code class="docutils literal notranslate"><span class="pre">support/jasmin.json</span></code></a>.</strong></p>
@@ -1512,9 +1429,9 @@ $ npm update
 <li><p class="first">If you have multiple <code class="docutils literal notranslate"><span class="pre">expect</span></code> in your <code class="docutils literal notranslate"><span class="pre">it</span></code>, make sure they have their own error message.</p>
 </li>
 <li><p class="first">Avoid using too generic or too specific descriptions for test cases.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;schema should use heuristics&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){});</span> <span class="c1">//too generic</span>
-<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;`schema_with_underline` displayname should be `schema with underline` because it has only `underline_space` in its `tag:misd.isi.edu,2015:display` annotation.&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){});</span> <span class="c1">//too specific</span>
-<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;schema should use name styles (`underline_space`, `title_case`) that are defined in its display annotations.&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){});</span> <span class="c1">//✓</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;schema should use heuristics&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){});</span><span class="w"> </span><span class="c1">//too generic</span><span class="w"></span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;`schema_with_underline` displayname should be `schema with underline` because it has only `underline_space` in its `tag:misd.isi.edu,2015:display` annotation.&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){});</span><span class="w"> </span><span class="c1">//too specific</span><span class="w"></span>
+<span class="nx">it</span><span class="p">(</span><span class="s1">&#39;schema should use name styles (`underline_space`, `title_case`) that are defined in its display annotations.&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(){});</span><span class="w"> </span><span class="c1">//✓</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -1531,7 +1448,7 @@ $ npm update
 </ul>
 </li>
 <li><p class="first">You can use <code class="docutils literal notranslate"><span class="pre">toHaveSameItems</span></code> matcher to compare arrays.</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">expect</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]).</span><span class="nx">toHaveSameItems</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="kc">true</span><span class="p">);</span>   <span class="c1">// match arrays without ordering</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">expect</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="mf">3</span><span class="p">]).</span><span class="nx">toHaveSameItems</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span><span class="mf">3</span><span class="p">,</span><span class="mf">2</span><span class="p">],</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w">   </span><span class="c1">// match arrays without ordering</span><span class="w"></span>
 </pre></div>
 </div>
 </li>
@@ -1613,13 +1530,13 @@ node test/jasmine-runner.js
 <ol class="simple">
 <li>You might come across some test cases that are specific to CI environment or local. To enforce some test cases to just run in a specific environment, you can do the following:</li>
 </ol>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// anything that is specific to CI</span>
-<span class="p">}</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// anything that is specific to CI</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 
-<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// these test cases will only run locally and not on CI.</span>
-<span class="p">}</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// these test cases will only run locally and not on CI.</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1627,42 +1544,30 @@ node test/jasmine-runner.js
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019, USC Information Sciences Institute, Informatics Systems Research Division
-
-    </p>
+    <p>&#169; Copyright 2019, USC Information Sciences Institute, Informatics Systems Research Division.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

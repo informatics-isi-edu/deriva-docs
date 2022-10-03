@@ -1,72 +1,36 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Writing End to End Test Cases &mdash; DERIVA Docs current documentation</title>
-  
-
-  
-  
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing End to End Test Cases &mdash; DERIVA Docs current documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" /><link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="canonical" href="http://docs.derivacloud.org/chaise/dev-docs/e2e-test-writing.html" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "tex2jax_ignore|mathjax_ignore|document", "processClass": "tex2jax_process|mathjax_process|math|output_area"}})</script>
+    <script src="../../_static/js/theme.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../index.html">
-          
-
-          
-            
-            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../../index.html"><img src="../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +38,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Getting to know DERIVA</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About DERIVA</a><ul>
@@ -360,6 +314,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#features">Features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#limitations">Limitations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../deriva-py/README.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-schema-to-catalog">Add Schema to Catalog</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
@@ -1263,80 +1218,42 @@
 </li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">DERIVA Docs</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Writing End to End Test Cases</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
             <a href="../../_sources/chaise/dev-docs/e2e-test-writing.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -1376,11 +1293,11 @@
 <span id="clicking-elements"></span><h2>Clicking Elements<a class="headerlink" href="#clicking-elements" title="Permalink to this headline">¶</a></h2>
 <p>Whenever you want to click an element, make sure that you don’t trigger the click function on the element directly. This is because, if the element is not in the sight of browser, it will err out saying unable to find the element and will never get clicked.</p>
 <p>A workaround for this situation is to scroll the page to the element position and then click. <code class="docutils literal notranslate"><span class="pre">chaise.page.js</span></code> has a function to do this. It accepts a WebElement</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">chaisePage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;chaise.page.js&#39;</span><span class="p">);</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">chaisePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;chaise.page.js&#39;</span><span class="p">);</span><span class="w"></span>
 
-<span class="kd">var</span> <span class="nx">elem</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;.add-button&#39;</span><span class="p">)).</span><span class="nx">first</span><span class="p">();</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">elem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">element</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;.add-button&#39;</span><span class="p">)).</span><span class="nx">first</span><span class="p">();</span><span class="w"></span>
 
-<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">clickButton</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span>
+<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">clickButton</span><span class="p">(</span><span class="nx">elem</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1394,10 +1311,10 @@
 <p>changes to</p>
 <p><code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/chaise/record/#/1/legacy:dataset/id=1580</span></code></p>
 <p>Thus, the parser is unable to parse it. To avoid this we simply disable synchronization in the start of testcases.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="nx">browser</span><span class="p">.</span><span class="nx">ignoreSynchronization</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
-    <span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span>
-<span class="p">});</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">browser</span><span class="p">.</span><span class="nx">ignoreSynchronization</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">browser</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">browser</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">url</span><span class="p">);</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1408,33 +1325,33 @@
 <p>You shouldn’t be using <code class="docutils literal notranslate"><span class="pre">browser.sleep</span></code> functions as they are brittle. Sleeps put your tests at the mercy of changes in your test environments (network speed, machine performance etc). They make your tests slower. From a maintainability point of view they are ambiguous to someone else reading your code. Why were the put there? Is the sleep long enough? They are an acceptance that you don’t really know what is going on with your code and in my opinion should be banned (or at least you should try your best to resist the quick win they give you!).</p>
 <p>A simple workaround is to use <a class="reference external" href="http://www.protractortest.org/#/api?view=webdriver.WebDriver.prototype.wait">browser.wait</a> in conjunction with other parameters such as a timeout/element/variable/functions.</p>
 <p>To wait for elements to be visible/rendered we can simply use following syntax</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForElement</span><span class="p">(</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="s2">&quot;some-id&quot;</span><span class="p">),</span> <span class="mi">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element found&quot;</span><span class="p">);</span>
-<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element not found&quot;</span><span class="p">);</span>
-<span class="p">});</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForElement</span><span class="p">(</span><span class="nx">element</span><span class="p">(</span><span class="nx">by</span><span class="p">.</span><span class="nx">id</span><span class="p">(</span><span class="s2">&quot;some-id&quot;</span><span class="p">),</span><span class="w"> </span><span class="mf">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element found&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Element not found&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="waiting-for-url-to-change">
 <span id="waiting-for-url-to-change"></span><h2>Waiting For Url To Change<a class="headerlink" href="#waiting-for-url-to-change" title="Permalink to this headline">¶</a></h2>
 <p>This can be useful when you want to wait for the URL to change in case of form submissions or link clicks.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://dev.isrd.isi.edu/chaise/search&quot;</span><span class="p">;</span>
-<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="mi">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Redirected to url&quot;</span><span class="p">);</span>
-<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Unable to redirect to url&quot;</span><span class="p">);</span>
-<span class="p">});</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://dev.isrd.isi.edu/chaise/search&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="mf">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Redirected to url&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Unable to redirect to url&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="section" id="detecting-ci-environment">
 <span id="detecting-ci-environment"></span><h3>Detecting CI Environment<a class="headerlink" href="#detecting-ci-environment" title="Permalink to this headline">¶</a></h3>
 <p>There’re scenarios where you might need to determine which environment are your tests running; CI or locally. To determine that you can simply refer the variable <code class="docutils literal notranslate"><span class="pre">process.env.CI</span></code>. If it is true then the environment is CI else it is something else.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span> <span class="p">{</span>
-   <span class="c1">// DO something CI specific</span>
-<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-  <span class="c1">// DO something specific to local environment</span>
-<span class="p">}</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">CI</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="c1">// DO something CI specific</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// DO something specific to local environment</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -1442,20 +1359,20 @@
 <span id="setting-webauthn-cookies-in-test-cases"></span><h3>Setting Webauthn Cookies in Test Cases<a class="headerlink" href="#setting-webauthn-cookies-in-test-cases" title="Permalink to this headline">¶</a></h3>
 <p>You can always change the user authentication cookie in your tests. To do so, first you need to have the <strong>webauthn</strong> cookie.</p>
 <p>Now you need to put this code in your test to set the cookie and then redirect the user to specific page on success. The <code class="docutils literal notranslate"><span class="pre">performLogin(cookie)</span></code> function accepts a cookie and returns a promise. On successful completion of login the promise is resolved.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">chaisePage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;YOU_PATH/chaise.page.js&#39;</span><span class="p">);</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">chaisePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;YOU_PATH/chaise.page.js&#39;</span><span class="p">);</span><span class="w"></span>
 
-<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Setting Login cookie&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">chaisePage</span><span class="p">.</span><span class="nx">performLogin</span><span class="p">(</span><span class="nx">COOKIE</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-         <span class="c1">// Successfully set the user cookie</span>
-         <span class="c1">// Add your code to redirect the user to another page on beforeAll</span>
-      <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-         <span class="c1">// Unable to set the cookie</span>
-      <span class="p">});</span>
-   <span class="p">});</span>
-<span class="p">});</span>
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Setting Login cookie&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">chaisePage</span><span class="p">.</span><span class="nx">performLogin</span><span class="p">(</span><span class="nx">COOKIE</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Successfully set the user cookie</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Add your code to redirect the user to another page on beforeAll</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="c1">// Unable to set the cookie</span><span class="w"></span>
+<span class="w">      </span><span class="p">});</span><span class="w"></span>
+<span class="w">   </span><span class="p">});</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
 
-<span class="p">});</span>
+<span class="p">});</span><span class="w"></span>
 </pre></div>
 </div>
 <p>You should try to put the performLogin function inside an <code class="docutils literal notranslate"><span class="pre">it</span></code> statement or <code class="docutils literal notranslate"><span class="pre">beforeAll</span></code>/<code class="docutils literal notranslate"><span class="pre">beforeEach</span></code> statement, so that it is executed in the flow of test.</p>
@@ -1477,42 +1394,30 @@ The alternate approach to this can be the use of <code class="docutils literal n
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019, USC Information Sciences Institute, Informatics Systems Research Division
-
-    </p>
+    <p>&#169; Copyright 2019, USC Information Sciences Institute, Informatics Systems Research Division.</p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

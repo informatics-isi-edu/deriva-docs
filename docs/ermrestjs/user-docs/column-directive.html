@@ -1410,15 +1410,19 @@
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
-<li>A logical conjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.</li>
+<li>A logical conjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.<ul>
 <li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
 <li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
+<li>This syntax cannot be used with all-outbound paths or local columns in a non-<code class="docutils literal notranslate"><span class="pre">filter</span></code> context.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>filter</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">],</span> <span class="pre">&quot;negate&quot;:</span></code> <em>negate</em> <code class="docutils literal notranslate"><span class="pre">}</span></code><ul>
 <li>A logical disjunction of multiple <em>filter</em> clauses is applied to the query to constrain matching rows.<ul>
 <li>The logical result is negated only if <em>negate</em> is <code class="docutils literal notranslate"><span class="pre">true</span></code>.</li>
 <li>Each <em>filter</em> clause may be a terminal filter element, conjunction, or disjunction.</li>
+<li>This syntax cannot be used with all-outbound paths or local columns in a non-<code class="docutils literal notranslate"><span class="pre">filter</span></code> context.</li>
 </ul>
 </li>
 </ul>
@@ -1448,6 +1452,7 @@
 - The _value_ specifies the constant operand for a binary constraint operator and must be computed to a non-empty value. [Pattern expansion](annotation.md#pattern-expansion) MAY be used to access [the pre-defined values in templating envorinment](mustache-templating.md#using-pre-defined-attributes). Like other pattern expansions the default `template_engine` will be applied and if you want to change it, you can define `template_engine` alongside the `operand_pattern`.
 
 - The logical result of the constraint is negated only if _negate_ is `true`.
+- This syntax cannot be used with all-outbound paths or local columns in a non-`filter` context.
 </pre></div>
 </div>
 <p>The following are some examples of defining source path:</p>

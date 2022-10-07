@@ -2765,7 +2765,6 @@
 
             <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
                 <span class="c1"># Columns may have already been deleted, so do not validate.</span>
-                <span class="c1"># Columns may have already been deleted, so do not validate.</span>
                 <span class="n">col_spec</span> <span class="o">=</span> <span class="n">DerivaSourceSpec</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;checking </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">col_spec</span><span class="p">,</span> <span class="n">vc_list</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">col_spec</span><span class="o">.</span><span class="n">spec</span> <span class="ow">in</span> <span class="n">vc_list</span><span class="p">:</span>
@@ -2789,7 +2788,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_foreign_keys</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">DerivaSourceSpec</span><span class="p">(</span><span class="n">DerivaLogging</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">DerivaSourceSpec</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">src_tag</span><span class="o">=</span><span class="n">chaise_tags</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;table: </span><span class="si">%s</span><span class="s1"> spec: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>

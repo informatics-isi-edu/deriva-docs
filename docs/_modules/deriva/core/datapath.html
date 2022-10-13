@@ -1254,7 +1254,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">requests</span> <span class="kn">import</span> <span class="n">HTTPError</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">DEFAULT_HEADERS</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">ermrest_model</span> <span class="k">as</span> <span class="n">_erm</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DataPathException&#39;</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Sum&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg&#39;</span><span class="p">,</span> <span class="s1">&#39;Cnt&#39;</span><span class="p">,</span> <span class="s1">&#39;CntD&#39;</span><span class="p">,</span> <span class="s1">&#39;Array&#39;</span><span class="p">,</span> <span class="s1">&#39;ArrayD&#39;</span><span class="p">,</span> <span class="s1">&#39;Bin&#39;</span><span class="p">]</span>
 
@@ -1630,20 +1630,31 @@
 <span class="sd">        path = A.link(B, on=((A.c1 == B.c1) &amp; (A.c2 == B.c2)))</span>
 <span class="sd">        ```</span>
 
+<span class="sd">        Alternatively, use an `ermrest_model.ForeignKey` object to link the table to the path. Both &quot;inbound&quot; and</span>
+<span class="sd">        &quot;outbound&quot; foreign keys are supported by the `link` method.</span>
+
+<span class="sd">        ```</span>
+<span class="sd">        # let fk be a foreign key object from table A to table B (or from table B to table A)</span>
+<span class="sd">        path = A.link(B, on=fk)</span>
+<span class="sd">        ```</span>
+
 <span class="sd">        By default links use inner join semantics on the foreign key / key equality comparison. The `join_type`</span>
 <span class="sd">        parameter can be used to specify `left`, `right`, or `full` outer join semantics.</span>
 
 <span class="sd">        :param right: the right hand table of the link expression</span>
-<span class="sd">        :param on: an equality comparison between key and foreign key columns or a conjunction of such comparisons</span>
+<span class="sd">        :param on: an equality comparison between key and foreign key columns, a conjunction of such comparisons, or a foreign key object</span>
 <span class="sd">        :param join_type: the join type of this link which may be &#39;left&#39;, &#39;right&#39;, &#39;full&#39; outer joins or &#39;&#39; for inner</span>
 <span class="sd">        join link by default.</span>
 <span class="sd">        :return: self</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right</span><span class="p">,</span> <span class="n">_TableWrapper</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;right&#39; must be a &#39;_TableWrapper&#39; instance&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">on</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span>
-                                                                <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;on&#39; must be a comparison or conjuction of comparisons&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">on</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_ComparisonPredicate</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_ConjunctionPredicate</span><span class="p">)</span> <span class="ow">and</span> <span class="n">on</span><span class="o">.</span><span class="n">is_valid_join_condition</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_erm</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;on&#39; must be a comparison, conjuction of comparisons, or foreign key object&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">join_type</span> <span class="ow">and</span> <span class="n">on</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;on&#39; must be specified for outer joins&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">right</span><span class="o">.</span><span class="n">_schema</span><span class="o">.</span><span class="n">_catalog</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">_schema</span><span class="o">.</span><span class="n">_catalog</span><span class="p">:</span>
@@ -1661,7 +1672,29 @@
             <span class="n">right</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="n">alias_name</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">on</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if &#39;on&#39; not given, default to the &#39;right&#39; table</span>
             <span class="n">on</span> <span class="o">=</span> <span class="n">right</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">_erm</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">):</span>
+            <span class="n">catalog</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="o">.</span><span class="n">_schema</span><span class="o">.</span><span class="n">_catalog</span>
+            <span class="n">fk</span> <span class="o">=</span> <span class="n">on</span>
+            <span class="c1"># determine &#39;direction&#39; -- inbound or outbound</span>
+            <span class="n">path_context_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">_base_table</span><span class="o">.</span><span class="n">_wrapped_table</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">path_context_table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">path_context_table</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">fk</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="n">fkcols</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fk</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">path_context_table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">path_context_table</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">fk</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+                <span class="n">fkcols</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fk</span><span class="o">.</span><span class="n">referenced_columns</span><span class="p">,</span> <span class="n">fk</span><span class="o">.</span><span class="n">foreign_key_columns</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; is not an inbound or outbound foreign key for the path</span><span class="se">\&#39;</span><span class="s1">s context, table &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fk</span><span class="o">.</span><span class="n">constraint_name</span><span class="p">,</span> <span class="n">path_context_table</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+            <span class="c1"># compose join condition</span>
+            <span class="n">on</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">lcol</span><span class="p">,</span> <span class="n">rcol</span> <span class="ow">in</span> <span class="n">fkcols</span><span class="p">:</span>
+                <span class="n">lcol</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">lcol</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">lcol</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">lcol</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="n">rcol</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">rcol</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">rcol</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">rcol</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">on</span><span class="p">:</span>
+                    <span class="n">on</span> <span class="o">=</span> <span class="n">on</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">lcol</span> <span class="o">==</span> <span class="n">rcol</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">on</span> <span class="o">=</span> <span class="n">lcol</span> <span class="o">==</span> <span class="n">rcol</span>
 
         <span class="c1"># Extend path expression</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span> <span class="o">=</span> <span class="n">_Link</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path_expression</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">join_type</span><span class="p">)</span>

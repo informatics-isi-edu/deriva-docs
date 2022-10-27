@@ -951,6 +951,7 @@
 <li class="toctree-l3"><a class="reference internal" href="facet.html#logical-operators">Logical operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet.html#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet.html#source-key">Source key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#fast-filter-source">Fast filter source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet.html#constraints">Constraints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="facet.html#extra-properties">Extra properties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="facet.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
@@ -1838,6 +1839,8 @@ columns in a table, overriding the defined table structure.</p>
 <ul>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">entity</span></code>: If the facet can be treated as entity (the column that is being used for facet is key of the table), setting this attribute to <code class="docutils literal notranslate"><span class="pre">false</span></code> will force the facet to show scalar mode.</p>
 </li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code>: An alternative source that will be used for filtering values. You MUST make sure the projected column of <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> is compatiple with the main source of this facet. Please refer to <a class="reference internal" href="facet.html#fast-filter-source"><span class="std std-ref">this document</span></a> for more information.</p>
+</li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The markdown to use in place of the default heuristics for facet title.</p>
 </li>
 <li><p class="first"><code class="docutils literal notranslate"><span class="pre">comment</span></code>: The tooltip to be used in place of the default heuristics for the facet. Set this to <code class="docutils literal notranslate"><span class="pre">false</span></code> if you don’t want any tooltip.</p>
@@ -2551,6 +2554,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 </li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Define a list of not-null columns that should be used as “stable key”.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: An alternative syntax to <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;</span></code> that allows you to refer to an existing key instead of defining your own list of columns.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;aggressive_facet_lookup&quot;:</span></code> <em>boolean</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Whether we should lookup the facets in the URL or not. By default this feature is turned off. This flag is currently EXPERIMENTAL and used to enable <a class="reference internal" href="facet.html#fast-filter-source"><span class="std std-ref">the fast filter feature in facets</span></a>.</li>
 </ul>
 <p>Note:</p>
 <ul class="simple">

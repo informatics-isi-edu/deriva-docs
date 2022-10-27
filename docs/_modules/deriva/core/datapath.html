@@ -949,6 +949,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#logical-operators">Logical operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#source-key">Source key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#fast-filter-source">Fast filter source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#constraints">Constraints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#extra-properties">Extra properties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
@@ -2043,13 +2044,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_AttributeGroup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">,</span> <span class="n">keys</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entities</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">nondefaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">add_system_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entities</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">nondefaults</span><span class="o">=</span><span class="nb">set</span><span class="p">(),</span> <span class="n">add_system_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">on_conflict_skip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Inserts entities into the table.</span>
 
 <span class="sd">        :param entities: an iterable collection of entities (i.e., rows) to be inserted into the table.</span>
 <span class="sd">        :param defaults: optional, set of column names to be assigned the default expression value.</span>
 <span class="sd">        :param nondefaults: optional, set of columns names to override implicit system defaults</span>
 <span class="sd">        :param add_system_defaults: flag to add system columns to the set of default columns.</span>
+<span class="sd">        :param on_conflict_skip: flag to skip entities that violate uniqueness constraints.</span>
 <span class="sd">        :return a collection of newly created entities.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># empty entities will be accepted but results are therefore an empty entity set</span>
@@ -2057,6 +2059,9 @@
             <span class="k">return</span> <span class="n">_ResultSet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">ignore1</span><span class="p">,</span> <span class="n">ignore2</span><span class="p">,</span> <span class="n">ignore3</span><span class="p">:</span> <span class="p">[])</span>
 
         <span class="n">options</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="n">on_conflict_skip</span><span class="p">:</span>
+            <span class="n">options</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;onconflict=skip&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">defaults</span> <span class="ow">or</span> <span class="n">add_system_defaults</span><span class="p">:</span>
             <span class="n">defaults_enc</span> <span class="o">=</span> <span class="p">{</span><span class="n">urlquote</span><span class="p">(</span><span class="n">cname</span><span class="p">)</span> <span class="k">for</span> <span class="n">cname</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">}</span>

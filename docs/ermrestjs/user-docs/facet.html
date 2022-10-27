@@ -951,6 +951,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#logical-operators">Logical operators</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#source-key">Source key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fast-filter-source">Fast filter source</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#constraints">Constraints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#extra-properties">Extra properties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
@@ -1315,6 +1316,35 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">&quot;sourcekey&quot;</span><span class="p">:</span> <span class="s2">&quot;path_to_table_1&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="fast-filter-source">
+<span id="fast-filter-source"></span><h2>Fast filter source<a class="headerlink" href="#fast-filter-source" title="Permalink to this headline">¶</a></h2>
+<p>While defining the <code class="docutils literal notranslate"><span class="pre">source</span></code> of a column directive, you must be mindful of the structure of the path and the projected table. This can cause performance issues as ERMrestJS would introduce joins for filtering matching results. If you would like to improve the performance of your queries, you could define an alternative <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> that will only be used for filtering. With this alternative source, you can denormalize the tables and create data warehouses that are more optimized for filtering.</p>
+<ul class="simple">
+<li>The defined <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> attribute supports the same syntax as <a class="reference external" href="#source-path">source path</a>.</li>
+<li>As the name suggests, the new source will only be used for filtering requests and won’t be used for defining a projection. That’s why we’ll only use this property while parsing the <code class="docutils literal notranslate"><span class="pre">facets</span></code>.</li>
+<li>ERMrestJS only ensures that the given path exists and won’t do any further checks. It’s your responsibility to ensure the projected columns of both <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> have compatible values.</li>
+<li>To make sure ERMrestJS is enabling this feature, you need to set <code class="docutils literal notranslate"><span class="pre">&quot;aggressive_facet_lookup&quot;:</span> <span class="pre">true</span></code> in <code class="docutils literal notranslate"><span class="pre">table-config</span></code> annotation as well.</li>
+</ul>
+<p>In the following you can see an example of this feature:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S_core_fact&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;inbound&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;CFDE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;core_fact_assay_type_core_fact_fkey&quot;</span><span class="p">]},</span><span class="w"></span>
+<span class="w">     </span><span class="p">{</span><span class="nt">&quot;outbound&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;CFDE&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;core_fact_assay_type_assay_type_fkey&quot;</span><span class="p">]},</span><span class="w"></span>
+<span class="w">     </span><span class="s2">&quot;nid&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;fast_filter_source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">     </span><span class="s2">&quot;assay_types&quot;</span><span class="w"></span>
+<span class="w">   </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li>When we want to show the facet panel, we use the <code class="docutils literal notranslate"><span class="pre">source</span></code> for fetching the options. This path is important as it will dictate the entity mode as well as the displayed table, etc.</li>
+<li>After users select any of the displayed options in this facet, instead of sending a request will multiple join, we’re going to filter based on the local <code class="docutils literal notranslate"><span class="pre">assay_types</span></code> column. The <code class="docutils literal notranslate"><span class="pre">assay_types</span></code> column has been specifically populated for each row to work with this given path.</li>
+</ul>
 </div>
 <div class="section" id="constraints">
 <span id="constraints"></span><h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>

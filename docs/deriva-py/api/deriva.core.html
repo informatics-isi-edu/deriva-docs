@@ -2591,6 +2591,63 @@ client does not strip useful documentation from existing models.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="deriva.core.ermrest_model.Model.configure_baseline_catalog">
+<code class="descname">configure_baseline_catalog</code><span class="sig-paren">(</span><em>apply=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.configure_baseline_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.configure_baseline_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>A baseline catalog configuration.</p>
+<p>Update catalog to a baseline configuration:
+1. Set default display mode to turn underscores to spaces in model element names.
+2. Configure <cite>ERMrest_Client</cite> and <cite>ERMrest_Group</cite> to have readable names.
+3. Create a schema <cite>WWW</cite> with <cite>Page</cite> and <cite>File</cite> tables in that schema configured to display web-page like</p>
+<blockquote>
+<div>content.</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Configure a basic navbar with links to all tables.</li>
+</ol>
+<p>Afterwards, an ACL configuration should be applied to the catalog. See the <cite>deriva.config.examples</cite> package
+data for configuration templates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>apply</strong> – if true, apply configuration changes before returning.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.configure_baseline_ermrest_client">
+<code class="descname">configure_baseline_ermrest_client</code><span class="sig-paren">(</span><em>apply=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.configure_baseline_ermrest_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.configure_baseline_ermrest_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Baseline configuration of <cite>ERMrest_Client</cite> table.</p>
+<p>Set up <cite>ERMrest_Client</cite> table so that it has readable names and uses the display name of the user as the row
+name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>apply</strong> – if true, apply configuration changes before returning.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="deriva.core.ermrest_model.Model.configure_baseline_ermrest_group">
+<code class="descname">configure_baseline_ermrest_group</code><span class="sig-paren">(</span><em>apply=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.configure_baseline_ermrest_group"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.configure_baseline_ermrest_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Baseline configuration of <cite>ERMrest_Group</cite> table.</p>
+<p>Set up <cite>ERMrest_Group</cite> table so that it has readable names and uses the display name of the group as the row
+name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>apply</strong> – if true, apply configuration changes before returning.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="deriva.core.ermrest_model.Model.create_schema">
 <code class="descname">create_schema</code><span class="sig-paren">(</span><em>schema_def</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.create_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.create_schema" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a new schema to this model in the remote database based on schema_def.</p>
@@ -2732,6 +2789,28 @@ representation of the newly created table.</p>
 <dt id="deriva.core.ermrest_model.Schema.define">
 <em class="property">classmethod </em><code class="descname">define</code><span class="sig-paren">(</span><em>sname</em>, <em>comment=None</em>, <em>acls={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.define"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.define" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a schema definition.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Schema.define_www">
+<em class="property">classmethod </em><code class="descname">define_www</code><span class="sig-paren">(</span><em>sname</em>, <em>comment=None</em>, <em>acls={}</em>, <em>annotations={}</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.define_www"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.define_www" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a schema definition for wiki-like web content.</p>
+<p>Defines a schema with a “Page” wiki-like page table definition and a
+“File” asset table definition for attachments to the wiki pages.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sname</strong> – schema name</li>
+<li><strong>comment</strong> – a comment string for the table</li>
+<li><strong>acls</strong> – a dictionary of ACLs for specific access modes</li>
+<li><strong>annotations</strong> – a dictionary of annotations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -2933,6 +3012,37 @@ absent from the input column_defs.</p>
 <p>However, caller-supplied definitions override the default.</p>
 <p>In addition to creating the columns, this function also creates an asset annotation on the URL column to
 facilitate use of the table by Chaise.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="deriva.core.ermrest_model.Table.define_page">
+<em class="property">classmethod </em><code class="descname">define_page</code><span class="sig-paren">(</span><em>tname</em>, <em>column_defs=[]</em>, <em>key_defs=[]</em>, <em>fkey_defs=[]</em>, <em>comment=None</em>, <em>acls={}</em>, <em>acl_bindings={}</em>, <em>annotations={}</em>, <em>provide_system=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.define_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.define_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a wiki-like “page” table definition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>tname</strong> – the name of the newly defined table</li>
+<li><strong>column_defs</strong> – a list of Column.define() results for extra or overridden column definitions</li>
+<li><strong>key_defs</strong> – a list of Key.define() results for extra or overridden key constraint definitions</li>
+<li><strong>fkey_defs</strong> – a list of ForeignKey.define() results for foreign key definitions</li>
+<li><strong>comment</strong> – a comment string for the table</li>
+<li><strong>acls</strong> – a dictionary of ACLs for specific access modes</li>
+<li><strong>acl_bindings</strong> – a dictionary of dynamic ACL bindings</li>
+<li><strong>annotations</strong> – a dictionary of annotations</li>
+<li><strong>provide_system</strong> – whether to inject standard system column definitions when missing from column_defs</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>These core page columns are generated automatically if absent from the input column_defs.</p>
+<ul class="simple">
+<li>Title: text, unique not null</li>
+<li>Content: markdown</li>
+</ul>
+<p>However, caller-supplied definitions override the default.</p>
 </dd></dl>
 
 <dl class="classmethod">

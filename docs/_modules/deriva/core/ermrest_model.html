@@ -1532,7 +1532,122 @@
     <span class="k">def</span> <span class="nf">bulk_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
 
     <span class="nd">@object_annotation</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span></div>
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+
+<div class="viewcode-block" id="Model.configure_baseline_ermrest_client"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Model.configure_baseline_ermrest_client">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_ermrest_client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Baseline configuration of `ERMrest_Client` table.</span>
+
+<span class="sd">        Set up `ERMrest_Client` table so that it has readable names and uses the display name of the user as the row</span>
+<span class="sd">        name.</span>
+
+<span class="sd">        :param apply: if true, apply configuration changes before returning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ermrest_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="s1">&#39;public&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;ERMrest_Client&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Set table and row name.</span>
+        <span class="n">ermrest_client</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;User&#39;</span><span class="p">},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;compact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Full_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Display_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="s1">&#39;ID&#39;</span><span class="p">]},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Full_Name}</span><span class="s1">}}&#39;</span><span class="p">}}</span>
+        <span class="p">})</span>
+
+        <span class="n">column_annotations</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;RCT&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creation Time&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RMT&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified Time&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RCB&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Created By&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RMB&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified By&#39;</span><span class="p">}}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_annotations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ermrest_client</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">apply</span><span class="p">:</span>
+            <span class="c1"># Apply model changes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Model.configure_baseline_ermrest_group"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Model.configure_baseline_ermrest_group">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_ermrest_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Baseline configuration of `ERMrest_Group` table.</span>
+
+<span class="sd">        Set up `ERMrest_Group` table so that it has readable names and uses the display name of the group as the row</span>
+<span class="sd">        name.</span>
+
+<span class="sd">        :param apply: if true, apply configuration changes before returning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ermrest_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="s1">&#39;public&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="s1">&#39;ERMrest_Group&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Set table and row name.</span>
+        <span class="n">ermrest_group</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;User Group&#39;</span><span class="p">},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;compact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;ID&#39;</span><span class="p">]},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Display_Name}</span><span class="s1">}}&#39;</span><span class="p">}}</span>
+        <span class="p">})</span>
+
+        <span class="n">column_annotations</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;RCT&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creation Time&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RMT&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified Time&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RCB&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Created By&#39;</span><span class="p">}},</span>
+            <span class="s1">&#39;RMB&#39;</span><span class="p">:</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified By&#39;</span><span class="p">}}</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">column_annotations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ermrest_group</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">apply</span><span class="p">:</span>
+            <span class="c1"># Apply model changes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Model.configure_baseline_catalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Model.configure_baseline_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A baseline catalog configuration.</span>
+
+<span class="sd">        Update catalog to a baseline configuration:</span>
+<span class="sd">        1. Set default display mode to turn underscores to spaces in model element names.</span>
+<span class="sd">        2. Configure `ERMrest_Client` and `ERMrest_Group` to have readable names.</span>
+<span class="sd">        3. Create a schema `WWW` with `Page` and `File` tables in that schema configured to display web-page like</span>
+<span class="sd">           content.</span>
+<span class="sd">        4. Configure a basic navbar with links to all tables.</span>
+
+<span class="sd">        Afterwards, an ACL configuration should be applied to the catalog. See the `deriva.config.examples` package</span>
+<span class="sd">        data for configuration templates.</span>
+
+<span class="sd">        :param apply: if true, apply configuration changes before returning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Configure baseline public schema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_client</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_group</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Create WWW schema</span>
+        <span class="k">if</span> <span class="s2">&quot;WWW&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">Schema</span><span class="o">.</span><span class="n">define_www</span><span class="p">(</span><span class="s2">&quot;WWW&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Configure baseline annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="c1"># Set up catalog-wide name style</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name_style&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;underline_space&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+            <span class="c1"># Set up default chaise config</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">chaise_config</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;headTitle&quot;</span><span class="p">:</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;navbarBrandText&quot;</span><span class="p">:</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;navbarMenu&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;newTab&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)),</span>
+                            <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)),</span>
+                                    <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;/chaise/recordset/#</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">catalog_id</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">urlquote</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">urlquote</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                                <span class="p">}</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">t</span><span class="o">.</span><span class="n">is_association</span><span class="p">()</span>
+                            <span class="p">]</span>
+                        <span class="p">}</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                    <span class="p">]</span>
+
+                <span class="p">},</span>
+                <span class="s2">&quot;systemColumnsDisplayCompact&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;systemColumnsDisplayEntry&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;RID&quot;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+
+        <span class="k">if</span> <span class="n">apply</span><span class="p">:</span>
+            <span class="c1"># Apply model changes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div></div>
 
 <div class="viewcode-block" id="strip_nochange"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.strip_nochange">[docs]</a><span class="k">def</span> <span class="nf">strip_nochange</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -1575,6 +1690,39 @@
             <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="n">annotations</span><span class="p">,</span>
             <span class="s2">&quot;comment&quot;</span><span class="p">:</span> <span class="n">comment</span><span class="p">,</span>
         <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Schema.define_www"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Schema.define_www">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">define_www</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sname</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">acls</span><span class="o">=</span><span class="p">{},</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">&quot;&quot;&quot;Build a schema definition for wiki-like web content.</span>
+
+<span class="sd">        Defines a schema with a &quot;Page&quot; wiki-like page table definition and a</span>
+<span class="sd">        &quot;File&quot; asset table definition for attachments to the wiki pages.</span>
+
+<span class="sd">        :param sname: schema name</span>
+<span class="sd">        :param comment: a comment string for the table</span>
+<span class="sd">        :param acls: a dictionary of ACLs for specific access modes</span>
+<span class="sd">        :param annotations: a dictionary of annotations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">www_schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+            <span class="n">sname</span><span class="p">,</span>
+            <span class="n">comment</span><span class="o">=</span><span class="n">comment</span> <span class="k">if</span> <span class="n">comment</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;Schema for tables that will be displayed as web content&quot;</span><span class="p">,</span>
+            <span class="n">acls</span><span class="o">=</span><span class="n">acls</span><span class="p">,</span>
+            <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span>
+        <span class="p">)</span>
+        <span class="n">www_schema</span><span class="p">[</span><span class="s2">&quot;tables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Page&quot;</span><span class="p">:</span> <span class="n">Table</span><span class="o">.</span><span class="n">define_page</span><span class="p">(</span><span class="s2">&quot;Page&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;File&quot;</span><span class="p">:</span> <span class="n">Table</span><span class="o">.</span><span class="n">define_asset</span><span class="p">(</span>
+                <span class="n">sname</span><span class="p">,</span>
+                <span class="s2">&quot;File&quot;</span><span class="p">,</span>
+                <span class="n">column_defs</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="s2">&quot;Page&quot;</span><span class="p">,</span> <span class="n">builtin_types</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">nullok</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s2">&quot;Parent page of this asset&quot;</span><span class="p">)</span>
+                <span class="p">],</span>
+                <span class="n">fkey_defs</span><span class="o">=</span><span class="p">[</span>
+                    <span class="n">ForeignKey</span><span class="o">.</span><span class="n">define</span><span class="p">([</span><span class="s2">&quot;Page&quot;</span><span class="p">],</span> <span class="n">sname</span><span class="p">,</span> <span class="s2">&quot;Page&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;RID&quot;</span><span class="p">])</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">www_schema</span></div>
 
 <div class="viewcode-block" id="Schema.prejson"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Schema.prejson">[docs]</a>    <span class="k">def</span> <span class="nf">prejson</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Produce native Python representation of schema, suitable for JSON serialization.&quot;&quot;&quot;</span>
@@ -1784,13 +1932,13 @@
     <span class="k">def</span> <span class="nf">system_column_defs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">custom</span><span class="o">=</span><span class="p">[]):</span>
         <span class="sd">&quot;&quot;&quot;Build standard system column definitions, merging optional custom definitions.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span>
-            <span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">builtin_types</span><span class="p">[</span><span class="n">ctype</span><span class="p">],</span> <span class="n">nullok</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">cname</span><span class="p">,</span> <span class="n">ctype</span><span class="p">,</span> <span class="n">nullok</span> <span class="ow">in</span> <span class="p">[</span>
-                    <span class="p">(</span><span class="s1">&#39;RID&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rid&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;RCT&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rct&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;RMT&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rmt&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;RCB&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rcb&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
-                    <span class="p">(</span><span class="s1">&#39;RMB&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rmb&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+            <span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">builtin_types</span><span class="p">[</span><span class="n">ctype</span><span class="p">],</span> <span class="n">nullok</span><span class="p">,</span> <span class="n">annotations</span><span class="o">=</span><span class="n">annotations</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">cname</span><span class="p">,</span> <span class="n">ctype</span><span class="p">,</span> <span class="n">nullok</span><span class="p">,</span> <span class="n">annotations</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="p">(</span><span class="s1">&#39;RID&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rid&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Record ID&#39;</span><span class="p">}}),</span>
+                    <span class="p">(</span><span class="s1">&#39;RCT&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rct&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Creation Time&#39;</span><span class="p">}}),</span>
+                    <span class="p">(</span><span class="s1">&#39;RMT&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rmt&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified Time&#39;</span><span class="p">}}),</span>
+                    <span class="p">(</span><span class="s1">&#39;RCB&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rcb&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Created By&#39;</span><span class="p">}}),</span>
+                    <span class="p">(</span><span class="s1">&#39;RMB&#39;</span><span class="p">,</span> <span class="s1">&#39;ermrest_rmb&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Modified By&#39;</span><span class="p">}}),</span>
             <span class="p">]</span>
             <span class="k">if</span> <span class="n">cname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">custom</span> <span class="p">}</span>
         <span class="p">]</span> <span class="o">+</span> <span class="n">custom</span></div>
@@ -1982,11 +2130,7 @@
 <span class="sd">          &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">hatrac_template</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">hatrac_template</span> <span class="o">=</span> <span class="s1">&#39;/hatrac/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/{{</span><span class="si">{MD5}</span><span class="s1">}}.{{#encode}}{{</span><span class="si">{Filename}</span><span class="s1">}}{{/encode}}&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">add_asset_annotations</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
-            <span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">annotations</span>
+            <span class="n">hatrac_template</span> <span class="o">=</span> <span class="s1">&#39;/hatrac/{{$catalog.id}}/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/{{</span><span class="si">{MD5}</span><span class="s1">}}.{{#encode}}{{</span><span class="si">{Filename}</span><span class="s1">}}{{/encode}}&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">add_asset_columns</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
             <span class="n">asset_annotation</span> <span class="o">=</span> <span class="p">{</span>
@@ -2027,6 +2171,17 @@
                 <span class="k">if</span> <span class="n">ktup</span><span class="p">(</span><span class="n">key_def</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="n">ktup</span><span class="p">(</span><span class="n">kdef</span><span class="p">):</span> <span class="n">kdef</span> <span class="k">for</span> <span class="n">kdef</span> <span class="ow">in</span> <span class="n">custom</span><span class="p">}</span>
             <span class="p">]</span> <span class="o">+</span> <span class="n">custom</span>
 
+        <span class="k">def</span> <span class="nf">add_asset_annotations</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
+            <span class="n">asset_annotations</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Filename}</span><span class="s1">}}&#39;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">asset_annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">asset_annotations</span>
+
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
             <span class="n">tname</span><span class="p">,</span>
             <span class="n">add_asset_columns</span><span class="p">(</span><span class="n">column_defs</span><span class="p">),</span>
@@ -2036,6 +2191,92 @@
             <span class="n">acls</span><span class="p">,</span>
             <span class="n">acl_bindings</span><span class="p">,</span>
             <span class="n">add_asset_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">),</span>
+            <span class="n">provide_system</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Table.define_page"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Table.define_page">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">define_page</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="n">column_defs</span><span class="o">=</span><span class="p">[],</span> <span class="n">key_defs</span><span class="o">=</span><span class="p">[],</span> <span class="n">fkey_defs</span><span class="o">=</span><span class="p">[],</span> <span class="n">comment</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">acls</span><span class="o">=</span><span class="p">{},</span> <span class="n">acl_bindings</span><span class="o">=</span><span class="p">{},</span> <span class="n">annotations</span><span class="o">=</span><span class="p">{},</span> <span class="n">provide_system</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build a wiki-like &quot;page&quot; table definition.</span>
+
+<span class="sd">        :param tname: the name of the newly defined table</span>
+<span class="sd">        :param column_defs: a list of Column.define() results for extra or overridden column definitions</span>
+<span class="sd">        :param key_defs: a list of Key.define() results for extra or overridden key constraint definitions</span>
+<span class="sd">        :param fkey_defs: a list of ForeignKey.define() results for foreign key definitions</span>
+<span class="sd">        :param comment: a comment string for the table</span>
+<span class="sd">        :param acls: a dictionary of ACLs for specific access modes</span>
+<span class="sd">        :param acl_bindings: a dictionary of dynamic ACL bindings</span>
+<span class="sd">        :param annotations: a dictionary of annotations</span>
+<span class="sd">        :param provide_system: whether to inject standard system column definitions when missing from column_defs</span>
+
+<span class="sd">        These core page columns are generated automatically if absent from the input column_defs.</span>
+
+<span class="sd">        - Title: text, unique not null</span>
+<span class="sd">        - Content: markdown</span>
+
+<span class="sd">        However, caller-supplied definitions override the default.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">add_page_columns</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">col_def</span>
+                <span class="k">for</span> <span class="n">col_def</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                            <span class="s1">&#39;Title&#39;</span><span class="p">,</span>
+                            <span class="n">builtin_types</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">],</span>
+                            <span class="n">nullok</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Unique title for the page.&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">Column</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+                            <span class="s1">&#39;Content&#39;</span><span class="p">,</span>
+                            <span class="n">builtin_types</span><span class="p">[</span><span class="s1">&#39;markdown&#39;</span><span class="p">],</span>
+                            <span class="n">nullok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;Content of the page in markdown.&#39;</span>
+                        <span class="p">),</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">col_def</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">custom</span> <span class="p">}</span>
+            <span class="p">]</span> <span class="o">+</span> <span class="n">custom</span>
+
+        <span class="k">def</span> <span class="nf">add_page_keys</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">ktup</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="s1">&#39;unique_columns&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">key_def</span>
+                <span class="k">for</span> <span class="n">key_def</span> <span class="ow">in</span> <span class="p">[</span>
+                        <span class="n">Key</span><span class="o">.</span><span class="n">define</span><span class="p">([</span><span class="s1">&#39;Title&#39;</span><span class="p">])</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">ktup</span><span class="p">(</span><span class="n">key_def</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span> <span class="n">ktup</span><span class="p">(</span><span class="n">kdef</span><span class="p">):</span> <span class="n">kdef</span> <span class="k">for</span> <span class="n">kdef</span> <span class="ow">in</span> <span class="n">custom</span> <span class="p">}</span>
+            <span class="p">]</span> <span class="o">+</span> <span class="n">custom</span>
+
+        <span class="k">def</span> <span class="nf">add_page_annotations</span><span class="p">(</span><span class="n">custom</span><span class="p">):</span>
+            <span class="n">page_annotations</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Title}</span><span class="s1">}}&#39;</span>
+                    <span class="p">},</span>
+                    <span class="s1">&#39;detailed&#39;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s1">&#39;hide_column_headers&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                        <span class="s1">&#39;collapse_toc_panel&#39;</span><span class="p">:</span> <span class="kc">True</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s1">&#39;compact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;detailed&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Content&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;entry&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Title&#39;</span><span class="p">,</span> <span class="s1">&#39;Content&#39;</span><span class="p">],</span>
+                    <span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;and&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">page_annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">page_annotations</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">define</span><span class="p">(</span>
+            <span class="n">tname</span><span class="p">,</span>
+            <span class="n">add_page_columns</span><span class="p">(</span><span class="n">column_defs</span><span class="p">),</span>
+            <span class="n">add_page_keys</span><span class="p">(</span><span class="n">key_defs</span><span class="p">),</span>
+            <span class="n">fkey_defs</span><span class="p">,</span>
+            <span class="n">comment</span><span class="p">,</span>
+            <span class="n">acls</span><span class="p">,</span>
+            <span class="n">acl_bindings</span><span class="p">,</span>
+            <span class="n">add_page_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">),</span>
             <span class="n">provide_system</span>
         <span class="p">)</span></div>
 

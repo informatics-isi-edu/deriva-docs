@@ -1343,18 +1343,15 @@
 </div>
 <div class="section" id="getting-an-authentication-token">
 <span id="getting-an-authentication-token"></span><h3>2. Getting an authentication token<a class="headerlink" href="#getting-an-authentication-token" title="Permalink to this headline">¶</a></h3>
-<p>The uploader requires an authentication token to communicate with the server. Running the DERIVA-Auth tool on your desktop (through the applications menu on Windows or Mac, or with <code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code> on Linux) will bring up an authentication window similar to the one used in the data browser. The first time you log in, you’ll see a mostly-empty window:
-<img alt="Initial DERIVA-Auth run" src="../_images/deriva-auth-empty.png" /></p>
-<p>In the “Server:” area, type in the server provided by the DERIVA administrator. You should now see something that looks similar to the data browser login screen
-<img alt="Login window" src="https://github.com/informatics-isi-edu/gudmap-rbk/blob/master/wiki_images/submitting-data/sequencing_uploader/deriva-auth-globus.png" /></p>
-<p>Note: in subsequent runs, DERIVA-Auth might take you directly to this window (skipping the blank screen at the beginning). It’s always a good idea to look at the hostname before you log in.</p>
-<p>After logging in, you’ll see an “Authentication Successful” message. Click the “Show Token” button; this will bring up another dialog box to verify that you really want to view the token. Click on “Show Details” to display the token.
-<img alt="&quot;Show Details&quot; window" src="../_images/show-details.png" /></p>
+<p>Upload requests are authorized using OAuth2; to obtain an OAuth token, run the <code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-util</span></code> utility:</p>
+<p><code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-utils</span> <span class="pre">login</span> <span class="pre">--host</span></code> <em>host</em></p>
+<p>You can add the <code class="docutils literal notranslate"><span class="pre">--refresh</span></code> option if you want the token to last beyond the default timeout. To end the session, you can allow the token to expire or run:</p>
+<p><code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-utils</span> <span class="pre">logout</span></code></p>
 </div>
 <div class="section" id="uploading-files">
 <span id="id2"></span><h3>3. Uploading files<a class="headerlink" href="#uploading-files" title="Permalink to this headline">¶</a></h3>
 <p>On the server, run the command:</p>
-<p><code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code> –catalog <em>n</em> –token <em>token</em> –catalog <em>n</em> <em>host</em> <em>/path/to/</em>/deriva</p>
+<p><code class="docutils literal notranslate"><span class="pre">deriva-upload-cli</span></code> –catalog <em>n</em> –catalog <em>n</em> <em>host</em> <em>/path/to/</em>/deriva</p>
 <p>where:</p>
 <ul class="simple">
 <li><em>n</em> is the catalog number specified by your DERIVA administrator,</li>
@@ -1363,7 +1360,7 @@
 <li><em>/path/to/</em>/deriva is the path to the <code class="docutils literal notranslate"><span class="pre">deriva</span></code> directory you created above.</li>
 </ul>
 <p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>deriva-upload-cli --catalog 2 --token xXXxxxxXXxxxxXxXXXxXxxxX www.gudmap.org $HOME/deriva
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>deriva-upload-cli --catalog 2 www.atlas-d2k.org $HOME/deriva
 </pre></div>
 </div>
 </div>

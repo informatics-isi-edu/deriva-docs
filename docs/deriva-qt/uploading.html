@@ -1343,9 +1343,23 @@
 </div>
 <div class="section" id="getting-an-authentication-token">
 <span id="getting-an-authentication-token"></span><h3>2. Getting an authentication token<a class="headerlink" href="#getting-an-authentication-token" title="Permalink to this headline">¶</a></h3>
-<p>Upload requests are authorized using OAuth2; to obtain an OAuth token, run the <code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-util</span></code> utility:</p>
+<p>Upload requests are authorized using OAuth2; to obtain an OAuth token, run the <code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-util</span></code> utility on the host from which you’ll be uploading files:</p>
 <p><code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-utils</span> <span class="pre">login</span> <span class="pre">--host</span></code> <em>host</em></p>
-<p>You can add the <code class="docutils literal notranslate"><span class="pre">--refresh</span></code> option if you want the token to last beyond the default timeout. To end the session, you can allow the token to expire or run:</p>
+<p>You can add the <code class="docutils literal notranslate"><span class="pre">--refresh</span></code> option if you want the token to last beyond the default timeout. This will generate a URL for a OAuth consent page and ask you to paste the resulting authorization code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Please paste the following URL in a browser:
+https://auth.globus.org/v2/oauth2/authorize?client_id=[long url redacted]
+Please Paste your Auth Code Below:
+</pre></div>
+</div>
+<p>Paste the URL into a browser, follow the directions there, and then paste the authorization code back into the <code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-utils</span></code> session. This will create and store your OAuth token.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Please paste the following URL in a browser:
+https://auth.globus.org/v2/oauth2/authorize?client_id=[long url redacted]
+Please Paste your Auth Code Below: 
+[code redacted]
+Login Successful
+</pre></div>
+</div>
+<p>To end the session, you can allow the token to expire or run:</p>
 <p><code class="docutils literal notranslate"><span class="pre">deriva-globus-auth-utils</span> <span class="pre">logout</span></code></p>
 </div>
 <div class="section" id="uploading-files">

@@ -1508,6 +1508,8 @@ You are not authorized to perform this action. <a class="reference external" hre
 <div class="section" id="testing-workflow">
 <span id="testing-workflow"></span><h2>Testing workflow<a class="headerlink" href="#testing-workflow" title="Permalink to this headline">¶</a></h2>
 <p>For each of the pages listed below, the following should be done to verify that the appropriate errors occur and dialogs are shown:</p>
+<div class="section" id="cases-with-a-different-user-after-logging-in">
+<span id="cases-with-a-different-user-after-logging-in"></span><h3>Cases with a different user after logging in<a class="headerlink" href="#cases-with-a-different-user-after-logging-in" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Navigate to a creation form that requires a user to be logged in (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordedit/#2/RNASeq:Study">Example</a>)<ul>
 <li>fill in the required fields</li>
@@ -1523,7 +1525,7 @@ You are not authorized to perform this action. <a class="reference external" hre
 <li>the data should submit properly after that</li>
 </ul>
 </li>
-<li>Navigate to a record page that requires a user to be logged in to mutate one of the related entities (<a class="reference external" href="https://dev.rebuildingakidney.org/~jchudy/chaise/record/#2/Gene_Expression:Specimen/RID=N-GXA4">Example</a>)<ul>
+<li>Navigate to a record page that requires a user to be logged in to mutate one of the related entities (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/record/#2/Gene_Expression:Specimen/RID=N-GXA4">Example</a>)<ul>
 <li>click “add record” for a related entity that is pure and binary. The “Anatomical Source” related entity should be pure and binary</li>
 <li>select 1 or more rows to link to the specimen</li>
 <li>open another tab and log out of the application</li>
@@ -1535,7 +1537,7 @@ You are not authorized to perform this action. <a class="reference external" hre
 <li>the rows should be properly added after clicking continue</li>
 </ul>
 </li>
-<li>Navigate to a page with rows that can be deleted (<a class="reference external" href="https://dev.rebuildingakidney.org/~jchudy/chaise/recordset/#2/Gene_Expression:Specimen/">Example</a>)<ul>
+<li>Navigate to a page with rows that can be deleted (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordset/#2/Gene_Expression:Specimen/">Example</a>)<ul>
 <li>open another tab and log out of the application</li>
 <li>go back to the original tab and delete one of the rows</li>
 <li>a login dialog should be shown instead of an error</li>
@@ -1550,6 +1552,77 @@ You are not authorized to perform this action. <a class="reference external" hre
 </ul>
 </li>
 </ul>
+</div>
+<div class="section" id="cases-with-a-no-user-when-going-to-the-application-app-requires-a-logged-in-user">
+<span id="cases-with-a-no-user-when-going-to-the-application-app-requires-a-logged-in-user"></span><h3>Cases with a no user when going to the application (app requires a logged in user)<a class="headerlink" href="#cases-with-a-no-user-when-going-to-the-application-app-requires-a-logged-in-user" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Navigate to a recordset page that requires a logged in user to use the application (<a class="reference external" href="https://smite-dev.eitm.org/chaise/recordset/#1/Study:Study">Example</a>)<ul>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to a user</li>
+<li>the app should refresh and the user should be able to interact with it normally</li>
+</ul>
+</li>
+<li>Navigate to a record page that requires a logged in user to use the application (<a class="reference external" href="https://smite-dev.eitm.org/chaise/record/#1/Study:Study/RID=94C">Example</a>)<ul>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to a user</li>
+<li>the app should refresh and the user should be able to interact with it normally</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="cases-with-the-same-user-after-logging-in-from-a-stale-session-app-requires-a-logged-in-user">
+<span id="cases-with-the-same-user-after-logging-in-from-a-stale-session-app-requires-a-logged-in-user"></span><h3>Cases with the same user after logging in from a stale session (app requires a logged in user)<a class="headerlink" href="#cases-with-the-same-user-after-logging-in-from-a-stale-session-app-requires-a-logged-in-user" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Navigate to a recordset page that requires a logged in user to use the application. The user should be logged in to begin this task (<a class="reference external" href="https://smite-dev.eitm.org/chaise/recordset/#1/Study:Study">Example</a>)<ul>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and initiate a sort request by clicking on a column header</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to the <strong>same</strong> user</li>
+<li>the login modal should dissappear and the sort request should return and update the page</li>
+</ul>
+</li>
+<li>Navigate to a recordset page that requires a logged in user to use the application. The user should be logged in to begin this task (<a class="reference external" href="https://smite-dev.eitm.org/chaise/recordset/#1/Study:Study">Example</a>)<ul>
+<li>click “show details” or “show more” for one of the facets</li>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and initiate a sort request in the modal by clicking on a column header</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to the <strong>same</strong> user</li>
+<li>the login modal should dissappear and the sort request should return and update the contents of the modal</li>
+</ul>
+</li>
+<li>Navigate to a record page that requires a logged in user to use the application. The user should be logged in to begin this task (<a class="reference external" href="https://smite-dev.eitm.org/chaise/record/#1/Study:Study/RID=94C">Example</a>)<ul>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and try to delete one of the related rows</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to the <strong>same</strong> user</li>
+<li>the login modal should dissappear and the delete request should continue</li>
+</ul>
+</li>
+<li>Navigate to a record page that requires a logged in user to use the application. The user should be logged in to begin this task (<a class="reference external" href="https://smite-dev.eitm.org/chaise/record/#1/Study:Protocol/RID=95Y">Example</a>)<ul>
+<li>click “link records” for one of the related entities</li>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and try to link one of the rows shown</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to the <strong>same</strong> user</li>
+<li>the login modal should dissappear and the link request should continue</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="cases-with-the-same-user-after-logging-in-from-a-stale-session-no-user-required-to-use-the-app">
+<span id="cases-with-the-same-user-after-logging-in-from-a-stale-session-no-user-required-to-use-the-app"></span><h3>Cases with the same user after logging in from a stale session (no user required to use the app)<a class="headerlink" href="#cases-with-the-same-user-after-logging-in-from-a-stale-session-no-user-required-to-use-the-app" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Navigate to a record page. The user should be logged in to begin this task (<a class="reference external" href="https://dev.rebuildingakidney.org/chaise/record/#2/Antibody:Antibodies/RID=Q-BH9Y">Example</a>)<ul>
+<li>click “link records” for one of the related entities</li>
+<li>open another tab and log out of the application</li>
+<li>go back to the original tab and try to link one of the rows shown</li>
+<li>a login dialog should be shown instead of an error</li>
+<li>login to the <strong>same</strong> user</li>
+<li>the login modal should dissappear and the link request should continue</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="testing-row-level-security">

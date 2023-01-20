@@ -1317,12 +1317,14 @@
 </ul>
 </li>
 <li><a class="reference external" href="#structure-of-an-app">Structure of an App</a></li>
+<li><a class="reference external" href="#using-chaise-through-npm">Using Chaise through npm</a></li>
 <li><a class="reference external" href="#error-handling">Error handling</a><ul>
 <li><a class="reference external" href="#how-it-works">How it works</a></li>
 <li><a class="reference external" href="#guidelines">Guidelines</a></li>
 <li><a class="reference external" href="#guidelines-for-promise-chains">Guidelines for promise chains</a></li>
 </ul>
 </li>
+<li><a class="reference external" href="#context-and-provider-pattern">Context and provider pattern</a></li>
 </ul>
 </div>
 <div class="section" id="reading-material">
@@ -1685,6 +1687,93 @@ updating the font-awesome classes that are used.</li>
 <p>The navbar for each Chaise app is the same style. It is loaded as part of the configuration phase in the app wrapper. All apps in Chaise can decide to show or hide the navbar as part of defining the <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code> component.</p>
 </div>
 </div>
+<div class="section" id="using-chaise-through-npm">
+<span id="using-chaise-through-npm"></span><h2>Using Chaise through npm<a class="headerlink" href="#using-chaise-through-npm" title="Permalink to this headline">¶</a></h2>
+<p>Using npm, we can implement Chaise-like applications and use Chaise’s existing code. This is how we’re using Chaise to develop <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-webapps"><code class="docutils literal notranslate"><span class="pre">deriva-webapps</span></code></a> React applications.</p>
+<div class="section" id="install-chaise-and-dev-dependencies">
+<span id="install-chaise-and-dev-dependencies"></span><h3>1. Install Chaise and dev dependencies<a class="headerlink" href="#install-chaise-and-dev-dependencies" title="Permalink to this headline">¶</a></h3>
+<p>Just like any other npm packages, we first need to include the latest version of <code class="docutils literal notranslate"><span class="pre">&#64;isrd-isi-edu/chaise</span></code> in <code class="docutils literal notranslate"><span class="pre">package.json</span></code>, or do</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>npm install --save @isrd-isi-edu/chaise
+</pre></div>
+</div>
+<p>By doing so, npm will also install all the <code class="docutils literal notranslate"><span class="pre">dependencies</span></code> of Chaise, so you don’t need to include <code class="docutils literal notranslate"><span class="pre">react</span></code>, react-boostrap`, and <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/package.json">other packages listed here</a>.</p>
+<p>We recommend installing similar <code class="docutils literal notranslate"><span class="pre">devDependencies</span></code> as Chaise (e.g., <code class="docutils literal notranslate"><span class="pre">eslint</span></code>) to facilitate the development process.</p>
+</div>
+<div class="section" id="use-appwrapper-for-your-app">
+<span id="use-appwrapper-for-your-app"></span><h3>2. Use AppWrapper for your app<a class="headerlink" href="#use-appwrapper-for-your-app" title="Permalink to this headline">¶</a></h3>
+<p>To make the process of developing applications easier, we’ve implemented <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/src/components/app-wrapper.tsx">the <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code> component</a>. This component,</p>
+<ul class="simple">
+<li>Includes bootstrap and font-awesome styles, so you can use them freely in your components.</li>
+<li>Fetches the catalog and configures Chaise/ERMrestJS.</li>
+<li>Fetches the session and makes sure it’s available throughout the app.</li>
+<li>Displays navbar and/or alerts based on the given parameters.</li>
+<li>Can override the behavior of download (to check before navigating) or external links (to open a modal before redirecting).</li>
+</ul>
+<p>The following is a simple example of using it:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>import { createRoot } from &#39;react-dom/client&#39;;
+import AppWrapper from &#39;@isrd-isi-edu/chaise/src/components/app-wrapper&#39;;
+import { ID_NAMES } from &#39;@isrd-isi-edu/chaise/src/utils/constants&#39;;
+
+const myappSettings = {
+  appName: &#39;app/sample&#39;,
+  appTitle: &#39;Sample App&#39;,
+  overrideHeadTitle: false,
+  overrideDownloadClickBehavior: false,
+  overrideExternalLinkBehavior: false
+};
+
+const MyApp = (): JSX.Element =&gt; {
+  return (
+    &lt;div&gt;Hello world!&lt;/div&gt;
+  )
+};
+
+const root = createRoot(document.getElementById(ID_NAMES.APP_ROOT) as HTMLElement);
+root.render(
+  &lt;AppWrapper appSettings={matrixSettings} includeNavbar displaySpinner ignoreHashChange&gt;
+    &lt;MyApp /&gt;
+  &lt;/AppWrapper&gt;
+);
+</pre></div>
+</div>
+<blockquote>
+<div>:warning: CAUTION :warning: In the following step we will go over how to use the existing webpack config. This config will use Chaise’s HTML template. So you MUST use the <code class="docutils literal notranslate"><span class="pre">ID_NAMES.APP_ROOT</span></code> like above to refer to the proper container in the template.</div></blockquote>
+</div>
+<div class="section" id="configure-webpack-and-build">
+<span id="configure-webpack-and-build"></span><h3>3. Configure webpack and build<a class="headerlink" href="#configure-webpack-and-build" title="Permalink to this headline">¶</a></h3>
+<p>Chaise includes webpack configuration helper functions that should be used for building bundles. The function can be found under the <code class="docutils literal notranslate"><span class="pre">&#64;isrd-isi-edu/chaise/webpack/app.config</span></code> location. The following is an example of doing this:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>const { getWebPackConfig } = require(&#39;@isrd-isi-edu/chaise/webpack/app.config&#39;);
+const path = require(&#39;path&#39;);
+
+// if NODE_DEV is defined properly, use it. Otherwise set it to production.
+const nodeDevs = [&#39;production&#39;, &#39;development&#39;];
+let mode = process.env.NODE_ENV;
+if (nodeDevs.indexOf(mode) === -1) {
+  mode = nodeDevs[0];
+}
+
+const rootFolderLocation = path.resolve(__dirname, &#39;..&#39;);
+const resolveAliases = { &#39;@isrd-isi-edu/deriva-webapps&#39;: rootFolderLocation };
+
+module.exports = (env) =&gt; {
+  const WEBAPPS_BASE_PATH = env.BUILD_VARIABLES.WEBAPPS_BASE_PATH;
+  return getWebPackConfig(
+    [
+      {
+        appName: &#39;myapp&#39;,
+        appTitle: &#39;MyApp&#39;,
+        appConfigLocation: `${WEBAPPS_BASE_PATH}config/my-app-config.js`
+      }
+    ],
+    mode,
+    env,
+    { rootFolderLocation, resolveAliases, urlBasePath: WEBAPPS_BASE_PATH }
+  );
+};
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="error-handling">
 <span id="error-handling"></span><h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
 <p>This section focuses on error handling practices that we should follow while migrating from AngularJS to React.</p>
@@ -2029,6 +2118,128 @@ function ChildComponent = (): JSX.Element =&gt; {
 <span class="w">    </span><span class="nx">dispatchError</span><span class="p">(...);</span><span class="w"></span>
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="context-and-provider-pattern">
+<span id="context-and-provider-pattern"></span><h2>Context and provider pattern<a class="headerlink" href="#context-and-provider-pattern" title="Permalink to this headline">¶</a></h2>
+<p>Our apps heavily rely on <a class="reference external" href="https://reactjs.org/docs/context.html"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a> to facilitate how components communicate. This helps us to avoid passing props on each level and instead use the <a class="reference external" href="https://reactjs.org/docs/hooks-reference.html#usecontext"><code class="docutils literal notranslate"><span class="pre">useContext</span></code></a> hook to access the context.</p>
+<div class="section" id="how-to-implement">
+<span id="how-to-implement"></span><h3>How to implement<a class="headerlink" href="#how-to-implement" title="Permalink to this headline">¶</a></h3>
+<p>Before going through the providers that we’ve implemented for Chaise apps, let’s go over the skeleton of how we’re using <code class="docutils literal notranslate"><span class="pre">Context</span></code>. This example is just to demonstrate the concept. In a small example like the following, it’s more efficient to just pass the props without using context/provider.</p>
+<div class="section" id="create-context-and-provider-component">
+<span id="create-context-and-provider-component"></span><h4>1. Create context and Provider component<a class="headerlink" href="#create-context-and-provider-component" title="Permalink to this headline">¶</a></h4>
+<p>First we need to define the context and a provider to use it. The following is a simple example of this:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// src/providers/counter.tsx
+
+const CounterContext = React.createContext&lt;{
+  counter: number;
+} | null&gt;(null);
+
+type CounterProviderProps = {
+  children: React.ReactNode,
+  initialCounter: number
+};
+
+export default function CounterProvider({
+  children,
+  initialCounter
+}: CounterProviderProps): JSX.Element {
+
+  const [counter, setCounter] = useState(initialCounter);
+
+  const [lastModified, setLastModified] = useState&lt;Date | null&gt;(null);
+
+  const addOneToCounter = () =&gt; {
+    setLastModified(new Date());
+    setCounter((counter) =&gt; counter + 1);
+  }
+
+  const providerValue = useMemo({
+    counter,
+    addOneToCounter,
+    lastModified,
+  }, [counter, lastModified])
+
+  return &lt;CounterContext.Provider value={providerValue}&gt;{children}&lt;/CounterContext.Provider&gt;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-custom-hook">
+<span id="add-custom-hook"></span><h4>2. Add custom hook<a class="headerlink" href="#add-custom-hook" title="Permalink to this headline">¶</a></h4>
+<p>Now that we have the context, we need a way to access it. To do so, we create a custom hook:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// src/hooks/counter.ts</span><span class="w"></span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">useCounter</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useContext</span><span class="p">(</span><span class="nx">CounterContext</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;No CounterProvider found when calling CounterContext&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">context</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">useCounter</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-provider-in-the-parent">
+<span id="use-provider-in-the-parent"></span><h4>3. Use provider in the parent<a class="headerlink" href="#use-provider-in-the-parent" title="Permalink to this headline">¶</a></h4>
+<p>We cannot use the context and provider in the same component. The provider must be wrapping the parent component that will use the context. If there’s a logical parent for your component, add the provider. In the example below, <code class="docutils literal notranslate"><span class="pre">Example</span></code> component will use the context, and <code class="docutils literal notranslate"><span class="pre">Container</span></code> is wrapping it.</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// src/components/container.tsx
+
+const Container = () =&gt; {
+  ...
+  return (
+    &lt;CounterProvider&gt;
+       &lt;CounterDisplay /&gt;
+    &lt;/CounterProvider&gt;
+  )
+};
+
+export default Counter;
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-custom-hook-to-acces-the-context">
+<span id="use-custom-hook-to-acces-the-context"></span><h4>4. Use custom hook to acces the context<a class="headerlink" href="#use-custom-hook-to-acces-the-context" title="Permalink to this headline">¶</a></h4>
+<p>To follow the previous example, the following is how <code class="docutils literal notranslate"><span class="pre">CounterDisplay</span></code> component would look like:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// src/components/counter-display.tsx
+
+const CounterDisplay = () =&gt; {
+  const { counter } = useCounter();
+
+  return (
+    &lt;span&gt;{counter}&lt;/span&gt;
+  )
+};
+
+export default CounterDisplay;
+</pre></div>
+</div>
+<p>As we mentioned in the previous step, the provider and <code class="docutils literal notranslate"><span class="pre">useContext</span></code> must be on two different levels. In some cases, there isn’t a logical parent-child relationship. So instead, we define both in the same file and use the “Inner” suffix. For instance, assume that we didn’t want the <code class="docutils literal notranslate"><span class="pre">Container</span></code>, then the following is how <code class="docutils literal notranslate"><span class="pre">counter-display.tsx</span></code> would look like:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// src/components/counter-display.tsx
+
+const CounterDisplay = () =&gt; {
+
+  return (
+    &lt;CounterProvider&gt;
+       &lt;CounterDisplayInner /&gt;
+    &lt;/CounterProvider&gt;
+  )
+};
+
+const CounterDisplayInner = () =&gt; {
+  const { counter } = useCounter();
+
+  return (
+    &lt;span&gt;{counter}&lt;/span&gt;
+  )
+};
+
+export default CounterDisplay;
 </pre></div>
 </div>
 </div>

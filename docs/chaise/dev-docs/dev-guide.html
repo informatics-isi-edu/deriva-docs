@@ -1645,11 +1645,17 @@ updating the font-awesome classes that are used.</li>
 <span id="npm"></span><h3>NPM<a class="headerlink" href="#npm" title="Permalink to this headline">¶</a></h3>
 <p>This section will go over how we think the NPM modules should be managed.</p>
 <ul class="simple">
-<li>Ensure the latest stable node and npm versions are used.</li>
-<li>Only use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code> when the <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> has been changed (or when doing a clean install).</li>
-<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install-wo-deps</span></code> while developing.</li>
-<li>Avoid using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code>.</li>
+<li>Ensure the latest stable Node.js and NPM versions are used.</li>
+<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">npm-install-all-modules</span></code> to install all the NPM modules regardless of <code class="docutils literal notranslate"><span class="pre">NODE_ENV</span></code> value.<ul>
+<li>Useful when you first clone the repository, or want to download dependencies from scratch.</li>
+<li>Use it yo update the installed dependencies based on the changes in <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> file.</li>
+</ul>
+</li>
+<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist-wo-deps</span></code> while developing so you don’t have to install depenendencies for each build.</li>
+<li>Avoid using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> (it can have unwanted side effects like updating <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>).<ul>
 <li><code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> should not be changed. If you noticed a change in your branch, consult with the main contributors.</li>
+</ul>
+</li>
 <li>Only for main contributors: If we want to upgrade the dependencies or install a new package, we should,<ul>
 <li>Ensure the used node and npm versions are updated and the latest stable.</li>
 <li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code></li>

@@ -1108,11 +1108,16 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Custom CSS Styling Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#changing-chaise-styles">Changing chaise styles</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#character-replacement">Character replacement</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#general-html-structure">General HTML structure:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#examples">Examples:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen):</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#body">Body</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#navbar">Navbar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#page-sepecific">Page-sepecific</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#character-replacement">Character replacement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#custom-markdown-styles">Custom Markdown Styles</a></li>
@@ -1306,122 +1311,139 @@
 </pre></div>
 </div>
 <p>Custom style classes with modified styling attributes can be added in <code class="docutils literal notranslate"><span class="pre">chaise.css</span></code>. Make sure to use same class names and hierarchy as described below to avoid any discrepancy.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#changing-chaise-styles">Changing chaise styles</a><ul>
+<li><a class="reference external" href="#body">Body</a></li>
+<li><a class="reference external" href="#navbar">Navbar</a></li>
+<li><a class="reference external" href="#app-sepecific">App-sepecific</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#character-replacement">Character replacement</a></li>
+<li><a class="reference external" href="#examples">Examples</a></li>
+<li><a class="reference external" href="#custom-markdown-styles">Custom Markdown Styles</a></li>
+<li><a class="reference external" href="#bootstrap-styles">Bootstrap styles</a></li>
+</ul>
+</div>
 <div class="section" id="changing-chaise-styles">
 <span id="changing-chaise-styles"></span><h2>Changing chaise styles<a class="headerlink" href="#changing-chaise-styles" title="Permalink to this headline">¶</a></h2>
-<p>With the current HTML structure, it is possible to apply different styles to different parts of chaise and to further style the chaise tables based on model information :</p>
+<p>The following is how the HTML of main Chaise apps look like:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;&lt;appname&gt;&quot;</span><span class="p">&gt;</span>
+  ...
+  <span class="p">&lt;</span><span class="nt">body</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chaise-body&quot;</span><span class="p">&gt;</span>
+    ...
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;app-container &lt;app-abbr&gt;_s_&lt;schema.name&gt; &lt;app-abbr&gt;_t_&lt;table.name&gt;&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">navbar</span><span class="p">&gt;&lt;/</span><span class="nt">navbar</span><span class="p">&gt;</span>
+      ...
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;s_&lt;schema.name&gt; t_&lt;table.name&gt;&quot;</span><span class="p">&gt;</span>
+          <span class="p">&lt;</span><span class="nt">table</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+              <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;c_&lt;column.name&gt;&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+                ...
+              <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+            <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+          <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span> <span class="cm">&lt;!-- end schema name, table name div --&gt;</span>
+      ...
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span> <span class="cm">&lt;!-- end of app-container --&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>In the following we will go over the identifiers that can be used to target different parts of the page in order to customize their styles.</p>
+<div class="section" id="body">
+<span id="body"></span><h3>Body<a class="headerlink" href="#body" title="Permalink to this headline">¶</a></h3>
+<p>The following are classes added to the <code class="docutils literal notranslate"><span class="pre">body</span></code> element:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">.chaise-mac</span></code><ul>
-<li>Added a class to deal with table column spacing on Mac OS. This class can be used to apply any custom styling specific to the Mac OS
-irrespective of the browser type.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.chaise-body</span></code>: added to all Chaise apps.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.chaise-mac</span></code>: This class can be used to apply any custom styling specific to the Mac OS irrespective of the browser type e.g., change table column spacing on Mac OS.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.chaise-firefox</span></code>: This class can be used to apply any custom styling specific to the Firefox browser irrespective of the operating system. e.g., change table column spacing in Firefox browser.</li>
+</ul>
+</div>
+<div class="section" id="navbar">
+<span id="navbar"></span><h3>Navbar<a class="headerlink" href="#navbar" title="Permalink to this headline">¶</a></h3>
+<p>Navbar related classes:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code>:  identifies the navbar that is displayed on top of every app.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.chaise-navbar-banner-container</span></code>: identifies the navbar banners.</li>
+<li>Please refer to <a class="reference internal" href="navbar-app.html#how-to-customize-navbar-ui"><span class="std std-ref">navbar app documentation</span></a> for more information.</li>
+</ul>
+</div>
+<div class="section" id="page-sepecific">
+<span id="page-sepecific"></span><h3>Page-sepecific<a class="headerlink" href="#page-sepecific" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">#recordset</span></code>: identifies (scopes) the HTML used ONLY for the Recordset page.</li>
+<li><code class="docutils literal notranslate"><span class="pre">#record</span></code>: identifies (scopes) the HTML used ONLY for the Record page.</li>
+<li><code class="docutils literal notranslate"><span class="pre">#recordedit</span></code>: identifies (scopes) the HTML used ONLY for the Recordedit page.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.recordset-container</span></code>: identifies the Recordset component container<ul>
+<li>This would be applied to all popups in Record and Recordedit pages as well.</li>
+<li>Doesn’t apply to the tables displayed for related entities in Record page.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">.chaise-firefox</span></code><ul>
-<li>Added a class to deal with table column spacing in Firefox browser. This class can be used to apply any custom styling specific to
-the Firefox browser irrespective of the operating system.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.record-main-section-table</span></code>: identifies the main section of the Record page.<ul>
+<li>Should be specified when CSS rules are to be applied to only the main section of the Record page (and not related section).</li>
+<li>Can be used to scope CSS rules to the inline related tables</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">navbar</span></code><ul>
-<li>identifies the navbar that is displayed on top of every app.</li>
+<li><code class="docutils literal notranslate"><span class="pre">.related-section-container</span></code>: identifies the related tables container<ul>
+<li>Should be specified when CSS rules are to be applied to only the related tables portion of  the Record page.</li>
+<li>Can be used to scope CSS rules to the related tables not in the main body.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">recordset</span></code> identifier (<code class="docutils literal notranslate"><span class="pre">#recordset</span></code>)<ul>
-<li>identifies (scopes) the HTML used only for the <code class="docutils literal notranslate"><span class="pre">recordset</span></code> application</li>
-<li>should be specified when CSS rules are to be applied ONLY to <code class="docutils literal notranslate"><span class="pre">recordset</span></code> app</li>
-<li>also have <code class="docutils literal notranslate"><span class="pre">#recordedit</span></code> and <code class="docutils literal notranslate"><span class="pre">#record</span></code> to scope rules to those apps as well</li>
+<li><code class="docutils literal notranslate"><span class="pre">.r_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">.r_t_&lt;table.name&gt;</span></code>:<ul>
+<li>Identifies the Record page for the particular table or schema.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">recordset-container</span></code> class (<code class="docutils literal notranslate"><span class="pre">.recordset-container</span></code>)<ul>
-<li>identifies the recordset directive container</li>
-<li>should be specified when CSS rules are to be applied anywhere the recordset directive is used</li>
-<li>this would be applied to all popups in <code class="docutils literal notranslate"><span class="pre">record</span></code> and <code class="docutils literal notranslate"><span class="pre">recordedit</span></code> as well</li>
-<li>leaves out the related tables in <code class="docutils literal notranslate"><span class="pre">record</span></code> app</li>
+<li><code class="docutils literal notranslate"><span class="pre">.rs_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">.rs_t_&lt;table.name&gt;</span></code>:<ul>
+<li>Identifies the Recordset page for the particular table or schema.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">.record-main-section-table</span></code><ul>
-<li>identifies the main section of the <code class="docutils literal notranslate"><span class="pre">record</span></code> app.</li>
-<li>should be specified when CSS rules are to be applied to only the main section of <code class="docutils literal notranslate"><span class="pre">record</span></code> app (and not related section).</li>
-<li>can be used to scope CSS rules to the inline related tables</li>
+<li><code class="docutils literal notranslate"><span class="pre">.re_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">.re_t_&lt;table.name&gt;</span></code>:<ul>
+<li>Identifies the Recordedit page for the particular table or schema.</li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">related</span> <span class="pre">tables</span> <span class="pre">container</span></code> identifier (<code class="docutils literal notranslate"><span class="pre">.related-section-container</span></code>)<ul>
-<li>identifies the related tables container</li>
-<li>should be specified when CSS rules are to be applied to only the related tables portion of <code class="docutils literal notranslate"><span class="pre">record</span></code> app</li>
-<li>can be used to scope CSS rules to the related tables not in the main body</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">r_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">r_t_&lt;table.name&gt;</span></code> classes<ul>
-<li>identifies the record page for the particular table or schema.</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">rs_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">rs_t_&lt;table.name&gt;</span></code> classes<ul>
-<li>identifies the recordset page for the particular table or schema.</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">re_s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">re_t_&lt;table.name&gt;</span></code> classes<ul>
-<li>identifies the recordedit page for the particular table or schema.</li>
-</ul>
-</li>
-<li><code class="docutils literal notranslate"><span class="pre">s_&lt;schema.name&gt;</span></code> class (<code class="docutils literal notranslate"><span class="pre">.s_&lt;schema.name&gt;</span></code>) and <code class="docutils literal notranslate"><span class="pre">t_&lt;table.name&gt;</span></code> class (<code class="docutils literal notranslate"><span class="pre">.t_&lt;table.name&gt;</span></code>)<ul>
-<li>identifies the record table directive, for applying styling to the whole table (<code class="docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code>) DOM element</li>
-<li>schema class should be specified when scoping CSS rules to all tables in that schema<ul>
-<li>use in conjunction with table class to identify a unique table to apply styling to</li>
-</ul>
-</li>
-<li>table class should be specified when scoping CSS rules to all tables with that name<ul>
+<li><code class="docutils literal notranslate"><span class="pre">.s_&lt;schema.name&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">.t_&lt;table.name&gt;</span></code>:<ul>
+<li>Identifies the Record table component, for applying styling to the whole table (<code class="docutils literal notranslate"><span class="pre">&lt;table&gt;</span></code>) DOM element.</li>
+<li>Schema class should be specified when scoping CSS rules to all tables in that schema.</li>
+<li>Use schema in conjunction with table class to identify a unique table to apply styling to.</li>
+<li>Table class should be specified when scoping CSS rules to all tables with that name<ul>
 <li>NOTE: currently will apply cross schemas if multiple tables with the same name exist in different schemas</li>
 </ul>
 </li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">c_&lt;column.name&gt;</span></code> class (<code class="docutils literal notranslate"><span class="pre">.c_&lt;column.name&gt;</span></code>)<ul>
+<li><code class="docutils literal notranslate"><span class="pre">.c_&lt;column.name&gt;</span></code>:<ul>
 <li>identifies the table heading, for applying styling to an individual table heading (<code class="docutils literal notranslate"><span class="pre">&lt;th&gt;</span></code>) DOM element</li>
 <li>column class should be specified when scoping CSS rules to all columns with that name</li>
 <li>use in conjunction with schema class and table class to be more specific as to what table headings to apply styling to</li>
+<li>More often than not, you will want to apply styling for each of the columns rather than at the table level, so the <code class="docutils literal notranslate"><span class="pre">.c_&lt;column.name&gt;</span></code> identifier should almost always be included in the selector.</li>
 </ul>
 </li>
 </ul>
-<p>More often than not, you will want to apply styling for each of the columns rather than at the table level, so the <code class="docutils literal notranslate"><span class="pre">c_&lt;column.name&gt;</span></code> identifier should almost always be included in the selector.</p>
+</div>
+</div>
 <div class="section" id="character-replacement">
-<span id="character-replacement"></span><h3>Character replacement<a class="headerlink" href="#character-replacement" title="Permalink to this headline">¶</a></h3>
-<p>For both class names and id attributes:</p>
+<span id="character-replacement"></span><h2>Character replacement<a class="headerlink" href="#character-replacement" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section, we showed that in some cases we’re using schema, table, or column names in the identifiers. In HTML, both class names and id attributes:</p>
 <ul class="simple">
 <li>Must begin with a letter A-Z or a-z</li>
 <li>Can be followed by: letters (A-Za-z), digits (0-9), hyphens (“-“), and underscores (“_”)</li>
 </ul>
-<p>This means that if the schema, table, or column name contains any other characters, they will be replaced with a “-“.
-If the name contains multiple unsafe characters in a row, all will be replaced by 1 single “-“.
-For example, if your column name is <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">(name)</span></code>, chaise will rewrite this as <code class="docutils literal notranslate"><span class="pre">text-name-</span></code> and then will use <code class="docutils literal notranslate"><span class="pre">c_text-name-</span></code> as the class name.</p>
-</div>
-<div class="section" id="general-html-structure">
-<span id="general-html-structure"></span><h3>General HTML structure:<a class="headerlink" href="#general-html-structure" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>&lt;html id=&quot;&lt;appname&gt;&quot;
-  &lt;head&gt;...&lt;/head&gt;
-  &lt;body&gt;
-    &lt;div class=&quot;app-container &lt;app-abbr&gt;_s_&lt;schema.name&gt; &lt;app-abbr&gt;_t_&lt;table.name&gt;&quot;&gt;
-      &lt;navbar&gt;&lt;/navbar&gt;
-      ...
-        &lt;div class=&quot;s_&lt;schema.name&gt; t_&lt;table.name&gt;&quot;&gt;
-          &lt;table&gt;
-            &lt;thead&gt;
-              &lt;tr&gt;
-                &lt;th class=&quot;c_&lt;column.name&gt;&quot;&gt;...&lt;/th&gt;
-              &lt;/tr&gt;
-            &lt;thead&gt;
-            &lt;tbody&gt;...&lt;/tbody&gt;
-          &lt;/table&gt;
-        &lt;/div&gt; &lt;!-- end schema name, table name div --&gt;
-      ...
-    &lt;/div&gt; &lt;!-- end of app-container --&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre></div>
-</div>
+<p>That’s why we’re going to transform the schema, table, or column names before using them in the identifiers. THe following is how the transformation works:</p>
+<ul class="simple">
+<li>Any unsafe characters will be replaced with a “-“.</li>
+<li>If the name contains multiple unsafe characters in a row, all will be replaced by 1 single “-“.</li>
+</ul>
+<p>For example, if your column name is <code class="docutils literal notranslate"><span class="pre">text</span> <span class="pre">(name)</span></code>, chaise will rewrite this as <code class="docutils literal notranslate"><span class="pre">text-name-</span></code> and then will use <code class="docutils literal notranslate"><span class="pre">c_text-name-</span></code> as the class name.</p>
 </div>
 <div class="section" id="examples">
-<span id="examples"></span><h3>Examples:<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
+<span id="examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
 <li>Hide everything except the result table in recordset:</li>
-</ul>
+</ol>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span><span class="w"> </span><span class="p">.</span><span class="nc">top-left-panel</span><span class="o">,</span><span class="w"></span>
 <span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span><span class="w"> </span><span class="p">.</span><span class="nc">side-panel-resizable</span><span class="o">,</span><span class="w"></span>
 <span class="p">.</span><span class="nc">rs_s_schema</span><span class="p">.</span><span class="nc">rs_t_table</span><span class="w"> </span><span class="p">.</span><span class="nc">recordset-controls-container</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -1434,17 +1456,17 @@ For example, if your column name is <code class="docutils literal notranslate"><
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ul class="simple">
+<ol class="simple">
 <li>Hide navbar in recordedit:</li>
-</ul>
+</ol>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">re_s_schema</span><span class="p">.</span><span class="nc">re_t_table</span><span class="w"> </span><span class="nt">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<ul class="simple">
+<ol class="simple">
 <li>Increase the width of a column in tabular displays:</li>
-</ul>
+</ol>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">s_schema</span><span class="p">.</span><span class="nc">t_table</span><span class="w"> </span><span class="p">.</span><span class="nc">c_column</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="kt">px</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -1452,9 +1474,8 @@ For example, if your column name is <code class="docutils literal notranslate"><
 </div>
 <p>NOTE: The <code class="docutils literal notranslate"><span class="pre">min-width</span></code> property will almost always be honored. If content is shorter than the <code class="docutils literal notranslate"><span class="pre">min-width</span></code>, there will be whitespace after the content. If the content is longer than the <code class="docutils literal notranslate"><span class="pre">min-width</span></code>, the width will be at minimum the value set for <code class="docutils literal notranslate"><span class="pre">min-width</span></code> and get wider to accomodate the content. This may be affected by having many columns with each having a <code class="docutils literal notranslate"><span class="pre">min-width</span></code> property set.</p>
 <p>NOTE: The <code class="docutils literal notranslate"><span class="pre">max-width</span></code> property will also almost always be honored. If the content is shorter than the <code class="docutils literal notranslate"><span class="pre">max-width</span></code> value, then it will shrink down to fit the content. If the content itself has to show on one line and is longer than the <code class="docutils literal notranslate"><span class="pre">max-width</span></code> value, the <code class="docutils literal notranslate"><span class="pre">max-width</span></code> will be ignored.</p>
-</div>
 <div class="section" id="more-specific-examples-using-rbk-2-gene-expression-specimen">
-<span id="more-specific-examples-using-rbk-2-gene-expression-specimen"></span><h3>More specific examples (using RBK <a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordset/#2/Gene_Expression:Specimen">…/#2/Gene_Expression:Specimen</a>):<a class="headerlink" href="#more-specific-examples-using-rbk-2-gene-expression-specimen" title="Permalink to this headline">¶</a></h3>
+<span id="more-specific-examples-using-rbk-2-gene-expression-specimen"></span><h3>More specific examples (using RBK <a class="reference external" href="https://dev.rebuildingakidney.org/chaise/recordset/#2/Gene_Expression:Specimen">…/#2/Gene_Expression:Specimen</a>)<a class="headerlink" href="#more-specific-examples-using-rbk-2-gene-expression-specimen" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">#</span><span class="nn">recordset</span><span class="w"> </span><span class="p">.</span><span class="nc">s_Gene_Expression</span><span class="p">.</span><span class="nc">t_Specimen</span><span class="w"> </span><span class="p">.</span><span class="nc">c_Images</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">min-width</span><span class="p">:</span><span class="w"> </span><span class="mi">210</span><span class="kt">px</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>

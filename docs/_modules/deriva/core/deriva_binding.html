@@ -1106,11 +1106,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html">Custom CSS Styling Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#changing-chaise-styles">Changing chaise styles</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#character-replacement">Character replacement</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#general-html-structure">General HTML structure:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#examples">Examples:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen):</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#body">Body</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#navbar">Navbar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#page-sepecific">Page-sepecific</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#character-replacement">Character replacement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../chaise/user-docs/custom-css.html#custom-markdown-styles">Custom Markdown Styles</a></li>
@@ -1491,11 +1496,11 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">credentials</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="s1">&#39;cookie&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;bearer-token&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer </span><span class="si">{token}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;bearer-token&#39;</span><span class="p">])})</span>
+        <span class="k">elif</span> <span class="s1">&#39;cookie&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
             <span class="n">cname</span><span class="p">,</span> <span class="n">cval</span> <span class="o">=</span> <span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;cookie&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">cval</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">server</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="s1">&#39;bearer-token&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="s1">&#39;Bearer </span><span class="si">{token}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">credentials</span><span class="p">[</span><span class="s1">&#39;bearer-token&#39;</span><span class="p">])})</span>
         <span class="k">elif</span> <span class="s1">&#39;username&#39;</span> <span class="ow">in</span> <span class="n">credentials</span> <span class="ow">and</span> <span class="s1">&#39;password&#39;</span> <span class="ow">in</span> <span class="n">credentials</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">post_authn_session</span><span class="p">(</span><span class="n">credentials</span><span class="p">)</span></div>
 

@@ -1304,7 +1304,8 @@
 <div class="section" id="use-the-navbar-app-on-external-html-pages">
 <span id="use-the-navbar-app-on-external-html-pages"></span><h1>Use the navbar app on external HTML pages<a class="headerlink" href="#use-the-navbar-app-on-external-html-pages" title="Permalink to this headline">¶</a></h1>
 <p>This documentation focuses on the navbar and how it can be used in external HTML pages.</p>
-<p>This document will focus on the new implementation of the navbar using React. You can find the document for deprecated AngularJS implementation <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/navbar-app-deprecated.md">here</a>. You can also jump to <a class="reference external" href="#migrate-from-angularjs">Migrate from AngularJS</a> section for information about moving from AngularJS to React implementation.</p>
+<blockquote>
+<div>This document will focus on the new implementation of the navbar using React. You can find the document for deprecated AngularJS implementation <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/docs/user-docs/navbar-app-deprecated.md">here</a>. You can also jump to <a class="reference external" href="#migrate-from-angularjs">Migrate from AngularJS</a> section for information about moving from AngularJS to React implementation.</div></blockquote>
 <div class="section" id="table-of-contents">
 <span id="table-of-contents"></span><h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -1344,9 +1345,9 @@
 <p>To summarize, after Chaise installation in your build scripts, you need to copy the contents of <code class="docutils literal notranslate"><span class="pre">lib/navbar/navbar-dependencies.html</span></code> into the HTML page that displays the navbar.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
     <span class="cm">&lt;!-- other assets on the page --&gt;</span>
-    
+
     <span class="cm">&lt;!-- TODO add the contents of lib/navbar/navbar-dependencies.html here --&gt;</span>
-    
+
     <span class="cm">&lt;!-- other assets on the page --&gt;</span>
 <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
 </pre></div>
@@ -1405,8 +1406,8 @@
 <p>If you define the <code class="docutils literal notranslate"><span class="pre">customCSS</span></code> property in your <a class="reference internal" href="chaise-config.html"><span class="doc">chaise-config</span></a>, Chaise will fetch it during the runtime. To increase the performance, you can prefetch this file by including it in your HTML file (this only needs to be done once and can be done manually). So</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
     <span class="cm">&lt;!-- TODO include your customCSS file here --&gt;</span>
-    <span class="cm">&lt;!-- TODO </span>
-<span class="cm">      AUTOMATICALLY add the contents of lib/navbar/navbar-dependencies.html here </span>
+    <span class="cm">&lt;!-- TODO</span>
+<span class="cm">      AUTOMATICALLY add the contents of lib/navbar/navbar-dependencies.html here</span>
 <span class="cm">      OR</span>
 <span class="cm">      &lt;script src=&quot;/chaise/lib/navbar/navbar.dependencies.js&quot;&gt;&lt;/script&gt;</span>
 <span class="cm">    --&gt;</span>
@@ -1442,58 +1443,96 @@
 </div>
 <div class="section" id="how-to-customize-navbar-ui">
 <span id="how-to-customize-navbar-ui"></span><h2>How to customize navbar UI<a class="headerlink" href="#how-to-customize-navbar-ui" title="Permalink to this headline">¶</a></h2>
-<p>With the current HTML structure, it is possible to apply different styles to customize the appearance. Overriding these selectors can help -</p>
+<p>With the current HTML structure, it is possible to apply different styles to customize the appearance. The following are common rules that can be used to customize the UI and behavior of navbar:</p>
+<ol>
+<li><p class="first">Preserve space for navbar while its loading (to reduce the page shift):</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Change the navbar background color:</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the navbar background color */</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar-inverse</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Change the brand text color:</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the brand text color */</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar-inverse</span><span class="w"> </span><span class="p">.</span><span class="nc">navbar-brand</span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Change color of text on right side of navbar (login/signup links)</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change color of text on right side of navbar (login/signup links) */</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar-inverse</span><span class="w"> </span><span class="p">.</span><span class="nc">navbar-nav</span><span class="p">.</span><span class="nc">navbar-right</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">div</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nt">a</span><span class="p">.</span><span class="nc">nav-link</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Change the color of first level navbar menu options</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the color of first level navbar menu options */</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">.</span><span class="nc">navbar-menu-options</span><span class="w"> </span><span class="nt">a</span><span class="p">.</span><span class="nc">nav-link</span><span class="w"> </span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;}</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">.</span><span class="nc">navbar-menu-options</span><span class="w"> </span><span class="nt">a</span><span class="p">.</span><span class="nc">nav-link</span><span class="p">:</span><span class="nd">hover</span><span class="w"> </span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;}</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">.</span><span class="nc">navbar-menu-options</span><span class="w"> </span><span class="nt">a</span><span class="p">.</span><span class="nc">nav-link</span><span class="p">:</span><span class="nd">visited</span><span class="w"> </span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;}</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Change the minimum height of navbar</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the minimum height of navbar */</span><span class="w"></span>
 <span class="p">.</span><span class="nc">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* we get a vertical navbar when the width is lesser than the content, you can change the max-height of that navbar after which we will see a scrollbar to ensure it doesn’t take over the entire page (default if not customized is 340px) */</span><span class="w"></span>
-<span class="p">.</span><span class="nc">navbar-collapse</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+</li>
+<li><p class="first">We get a vertical navbar when the width is lesser than the content, you can change the max-height of that navbar after which we will see a scrollbar to ensure it doesn’t take over the entire page (default if not customized is 340px)</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">navbar-collapse</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+</ol>
 </div>
 <div class="section" id="migrate-from-angularjs">
 <span id="migrate-from-angularjs"></span><h2>Migrate from AngularJS<a class="headerlink" href="#migrate-from-angularjs" title="Permalink to this headline">¶</a></h2>
 <p>The following are the major things that have changed from AngularJS to React:</p>
+<ol>
+<li><p class="first">If you’re prefetching the dependencies:</p>
 <ol class="simple">
-<li>If you’re prefetching the dependencies:<ol>
-<li>The include statements for prefetching dependencies are now under <code class="docutils literal notranslate"><span class="pre">lib/navbar/navbar-dependencies.html</span></code>.</li>
-<li>While in AngularJS, you need to include a <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code> regardless of prefetching dependencies, in React implementation, you don’t need to include anything else if you’re prefetching the dependencies.</li>
+<li>The include statements for prefetching dependencies are now under <code class="docutils literal notranslate"><span class="pre">lib/navbar/navbar-dependencies.html</span></code>. So in build recipes change the location like the following:</li>
 </ol>
-</li>
-<li>If you don’t want to change the build process to prefetch the dependencies:<ol>
-<li>You need to include the <code class="docutils literal notranslate"><span class="pre">navbar.dependencies.js</span></code> file (notice that its name has been changed from <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code>).</li>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- /dist/chaise-dependencies.html</span><span class="w"></span>
+<span class="gi">+ /lib/navbar/navbar-dependencies.html</span><span class="w"></span>
+</pre></div>
+</div>
+<ol class="simple">
+<li>While in AngularJS, you need to include a <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code> regardless of prefetching dependencies, in React implementation, you don’t need to include anything else if you’re prefetching the dependencies. So in your HTML file:</li>
 </ol>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- &lt;script src=&quot;/chaise/lib/navbar/navbar.app.js&quot;&gt;&lt;/script&gt;</span><span class="w"></span>
+</pre></div>
+</div>
 </li>
-<li>AngularJS implementation uses the Boostrap 3 version, while in React implementation, we use Bootstrap 5. As a result, you will notice changes on the page. The following are some of the most noticeable changes:<ul>
+<li><p class="first">If you don’t want to change the build process to prefetch the dependencies:</p>
+<ol class="simple">
+<li>You need to include the <code class="docutils literal notranslate"><span class="pre">navbar.dependencies.js</span></code> file (notice that its name has been changed from <code class="docutils literal notranslate"><span class="pre">navbar.app.js</span></code>). In your HTML file:</li>
+</ol>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- &lt;script src=&quot;/chaise/lib/navbar/navbar.app.js&quot;&gt;&lt;/script&gt;</span><span class="w"></span>
+<span class="gi">+ &lt;script src=&quot;/chaise/lib/navbar/navbar.dependencies.js&quot;&gt;&lt;/script&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">AngularJS implementation uses the Boostrap 3 version, while in React implementation, we use Bootstrap 5. As a result, you will notice changes on the page. The following are some of the most noticeable changes:</p>
+<ul class="simple">
 <li>The navbar implementation has been changed, and we’re no longer using <code class="docutils literal notranslate"><span class="pre">ul</span></code> or <code class="docutils literal notranslate"><span class="pre">li</span></code> for the menu options. Please refer to the previous section for more information.</li>
 <li>The default color of links and buttons has been changed (Bootstrap 5 uses a less saturated blue color. Links also show the underline in the new version).</li>
 <li>Bootstrap rules for <code class="docutils literal notranslate"><span class="pre">container</span></code> width and margin have changed.</li>

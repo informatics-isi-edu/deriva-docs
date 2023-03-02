@@ -202,6 +202,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2021-google-dataset">Tag: 2021 Google Dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2021-table-config">Tag: 2021 Table Config</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2021-export-fragment-definitions">Tag: 2021 Export Fragment Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#tag-2023-column-defaults">Tag: 2023 Column Defaults</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../users-guide/annotations/annotation.html#context-names">Context Names</a></li>
@@ -910,6 +911,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2021-google-dataset">Tag: 2021 Google Dataset</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2021-table-config">Tag: 2021 Table Config</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2021-export-fragment-definitions">Tag: 2021 Export Fragment Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#tag-2023-column-defaults">Tag: 2023 Column Defaults</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/annotation.html#context-names">Context Names</a></li>
@@ -1602,7 +1604,7 @@
             <span class="c1"># Apply model changes</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Model.configure_baseline_catalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Model.configure_baseline_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Model.configure_baseline_catalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Model.configure_baseline_catalog">[docs]</a>    <span class="k">def</span> <span class="nf">configure_baseline_catalog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apply</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A baseline catalog configuration.</span>
 
 <span class="sd">        Update catalog to a baseline configuration:</span>
@@ -1616,14 +1618,16 @@
 <span class="sd">        data for configuration templates.</span>
 
 <span class="sd">        :param apply: if true, apply configuration changes before returning.</span>
+<span class="sd">        :param kwargs: a set of name-value pairs used to override default settings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Configure baseline public schema</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_client</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_group</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Create WWW schema</span>
-        <span class="k">if</span> <span class="s2">&quot;WWW&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">Schema</span><span class="o">.</span><span class="n">define_www</span><span class="p">(</span><span class="s2">&quot;WWW&quot;</span><span class="p">))</span>
+        <span class="n">www_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wwwSchemaName&quot;</span><span class="p">,</span> <span class="s2">&quot;WWW&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">www_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">Schema</span><span class="o">.</span><span class="n">define_www</span><span class="p">(</span><span class="n">www_name</span><span class="p">))</span>
 
         <span class="c1"># Configure baseline annotations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
@@ -1631,8 +1635,8 @@
             <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name_style&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;underline_space&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
             <span class="c1"># Set up default chaise config</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">chaise_config</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;headTitle&quot;</span><span class="p">:</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;navbarBrandText&quot;</span><span class="p">:</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;headTitle&quot;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;headTitle&quot;</span><span class="p">,</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;navbarBrandText&quot;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;navbarBrandText&quot;</span><span class="p">,</span> <span class="s2">&quot;DERIVA&quot;</span><span class="p">),</span>
                 <span class="s2">&quot;navbarMenu&quot;</span><span class="p">:</span> <span class="p">{</span>
                     <span class="s2">&quot;newTab&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                     <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>

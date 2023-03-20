@@ -1461,20 +1461,47 @@
 <div class="section" id="special-classes">
 <span id="special-classes"></span><h4>Special Classes<a class="headerlink" href="#special-classes" title="Permalink to this headline">¶</a></h4>
 <p>The following is the list of special class names that you can use:</p>
+<ul>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.chaise-btn</span></code>: This class is used to represent buttons. You should use it in conjunction with any of the following classes:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">.chaise-btn</span></code>: This class is used to represent buttons. You should use it in conjunction with any of the following classes:<ul>
 <li><code class="docutils literal notranslate"><span class="pre">.chaise-btn-primary</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">.chaise-btn-secondary</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">.chaise-btn-tertiary</span></code></li>
 </ul>
 </li>
-<li><code class="docutils literal notranslate"><span class="pre">.download-alt</span></code>: Used to represent a download button. <code class="docutils literal notranslate"><span class="pre">.download</span></code> is the old and alternative class for it.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.asset-permission</span></code>: If used on a link element, chaise will validate whether the user can download the asset before a download is attempted.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.external-link</span></code>: By adding this to links, chaise shows a notification to the user when they are being navigated away from chaise for external links and assets hosted elsewhere.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.external-link-no-icon</span></code>: By default we’re going to add a icon to any external links. If you don’t want it in a particular link, you can use this class.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.vocab</span></code>: Used to represent a vocabulary.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.chaise-autofill</span></code>: Used to set the height and width to fill the parent container based on the user’s browser.</li>
-<li><code class="docutils literal notranslate"><span class="pre">.fullscreen-off</span></code>: When applied in iframe template, this class hides the full screen button that appears at the top right corner.</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.download-alt</span></code>: Used to represent a download button. <code class="docutils literal notranslate"><span class="pre">.download</span></code> is the old and alternative class for it.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.asset-permission</span></code>: If used on a link element, chaise will validate whether the user can download the asset before a download is attempted.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.external-link</span></code>: By adding this to links, chaise shows a notification to the user when they are being navigated away from chaise for external links and assets hosted elsewhere.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.external-link-no-icon</span></code>: By default we’re going to add a icon to any external links. If you don’t want it in a particular link, you can use this class.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.vocab</span></code>: Used to represent a vocabulary.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.chaise-autofill</span></code>: Used to set the height and width to fill the parent container based on the user’s browser.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.fullscreen-off</span></code>: When applied in iframe template, this class hides the full screen button that appears at the top right corner.</p>
+</li>
+<li><p class="first"><code class="docutils literal notranslate"><span class="pre">.chaise-image-preview</span></code>: When applied to an image, Chaise will properly display a scaled down version of the image to the users. Clicking on the image would allow users to see the fully scaled version of the image. You can find an example <a class="reference external" href="#6-image-with-zoom-capabilties">here</a>. While the behavior looks like a zoom, by clicking on images with this class, we’re switching between these two modes:</p>
+<ul>
+<li><p class="first">The scaled-down version,</p>
+<ul class="simple">
+<li>The height of the image is limited to 50vh. Therefore small images will be displayed fully, while the bigger images will be scaled down to fit the limited size.</li>
+<li>The width is limited to the available width space on the page.</li>
+<li>The browser will fit the image in the limited height/width while keeping the image’s aspect ratio. Hence, in an image with a larger height than width, you will see extra white space to the left and right of the image.</li>
+</ul>
+</li>
+<li><p class="first">The zoomed-in version,</p>
+<ul class="simple">
+<li>The height and width of the image are not limited; instead, the limits mentioned above are moved to the image’s container. That’s why we will see scrollbars in larger images, and in smaller images, nothing will change.</li>
+</ul>
+<blockquote>
+<div><p>The max height mentioned above can be changed by defining the <code class="docutils literal notranslate"><span class="pre">image-preview-max-height</span></code> property. Please refer to the example for more information.</p>
+</div></blockquote>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -1572,7 +1599,7 @@
 <div class="section" id="thumbnail-image-with-aspect-ratio-and-height">
 <span id="thumbnail-image-with-aspect-ratio-and-height"></span><h3>4. Thumbnail Image With Aspect Ratio and Height<a class="headerlink" href="#thumbnail-image-with-aspect-ratio-and-height" title="Permalink to this headline">¶</a></h3>
 <p>With attributes height=400 and target=_blank is to open it in new tab</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span># [![alt text](thumbnail-URL){height=400}](destination-URL){target=_blank}
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[![alt text](thumbnail-URL){height=400}](destination-URL){target=_blank}
 
 [![Image](http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg){height=400}](https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg){target=_blank}
 
@@ -1589,7 +1616,7 @@
 <div class="section" id="multiple-adjacent-images">
 <span id="multiple-adjacent-images"></span><h4>Multiple Adjacent Images<a class="headerlink" href="#multiple-adjacent-images" title="Permalink to this headline">¶</a></h4>
 <p>With attributes height=200 and target=_blank is to open it in new tab</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span># [![alt text](thumbnail-URL){height=200}](destination-URL){target=_blank}
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[![alt text](thumbnail-URL){height=200}](destination-URL){target=_blank}
 
 [![Image](http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg){height=200}](https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg){target=_blank} [![Image](https://c.fastcompany.net/multisite_files/fastcompany/imagecache/1280/poster/2015/06/3046722-poster-p-1-the-psychology-of-living-in-skyscrapers.jpg){height=200}](https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg){target=_blank}
 
@@ -1612,7 +1639,7 @@
 <span id="thumbnail-with-link-to-original-image-and-a-caption"></span><h3>5. Thumbnail With Link To Original Image And A caption<a class="headerlink" href="#thumbnail-with-link-to-original-image-and-a-caption" title="Permalink to this headline">¶</a></h3>
 <p>This is not part of commonMark specification and it will result in a <a class="reference external" href="#inline-vs-block">block</a>. You have to follow the syntax completely (notice the newline in the closing tag).</p>
 <p>With attributes width=500, height=400 and a linkable caption to open it in new tab(All of them are optional)</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span># :::image [caption](thumbnail-URL){width=500 height=400 link=&quot;destination-URL&quot;} \n:::
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:::image [caption](thumbnail-URL){width=500 height=400 link=&quot;destination-URL&quot;} \n:::
 
 :::image [Skyscrapers](http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg){width=500 height=400 link=&quot;https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg&quot;} \n:::
 
@@ -1627,6 +1654,20 @@
 </div>
 <blockquote>
 <div><figure class="embed-block" style="display:inline-block;"><a href="https://static.pexels.com/photos/2324/skyline-buildings-new-york-skyscrapers.jpg" target="\_blank"><figcaption class="embed-caption">Skyscrapers</figcaption><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" height="200"  /></a></figure></div></blockquote>
+</div>
+<div class="section" id="image-with-zoom-capabilties">
+<span id="image-with-zoom-capabilties"></span><h3>6. Image with zoom capabilties<a class="headerlink" href="#image-with-zoom-capabilties" title="Permalink to this headline">¶</a></h3>
+<p>This is not part of commonMark specification and it will result in a <a class="reference external" href="#inline-vs-block">block</a>. You have to follow the syntax completely (notice the newline in the closing tag).</p>
+<p>To add zoom capabilities, you just need to add the <code class="docutils literal notranslate"><span class="pre">figure-class=chaise-image-preview</span></code> attribute:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:::image [](Image-URL){figure-class=chaise-image-preview} \n:::&#39;
+
+:::image [](https://example.com/path/to/image.png){figure-class=chaise-image-preview} \n:::&#39;
+</pre></div>
+</div>
+<p>You could customize the maximum height that we should use by defining the <code class="docutils literal notranslate"><span class="pre">image-preview-max-height</span></code> property like the following:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:::image [](https://example.com/path/to/image.png){figure-class=chaise-image-preview image-preview-max-height=&quot;300px&quot;} \n:::&#39;
+</pre></div>
+</div>
 </div>
 <div class="section" id="iframe">
 <span id="iframe"></span><h3>6. Iframe<a class="headerlink" href="#iframe" title="Permalink to this headline">¶</a></h3>

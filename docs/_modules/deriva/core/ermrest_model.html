@@ -1283,7 +1283,7 @@
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">urlquote</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">stob</span>
 
 <div class="viewcode-block" id="NoChange"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.NoChange">[docs]</a><span class="k">class</span> <span class="nc">NoChange</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Special class used to distinguish no-change default arguments to methods.</span>
@@ -1556,7 +1556,7 @@
 
         <span class="c1"># Set table and row name.</span>
         <span class="n">ermrest_client</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;User&#39;</span><span class="p">},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Users&#39;</span><span class="p">},</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;compact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Full_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Display_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="s1">&#39;ID&#39;</span><span class="p">]},</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Full_Name}</span><span class="s1">}}&#39;</span><span class="p">}}</span>
         <span class="p">})</span>
@@ -1586,7 +1586,7 @@
 
         <span class="c1"># Set table and row name.</span>
         <span class="n">ermrest_group</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;User Group&#39;</span><span class="p">},</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Groups&#39;</span><span class="p">},</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">visible_columns</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;compact&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Display_Name&#39;</span><span class="p">,</span> <span class="s1">&#39;ID&#39;</span><span class="p">]},</span>
             <span class="n">tag</span><span class="o">.</span><span class="n">table_display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;row_markdown_pattern&#39;</span><span class="p">:</span> <span class="s1">&#39;{{</span><span class="si">{Display_Name}</span><span class="s1">}}&#39;</span><span class="p">}}</span>
         <span class="p">})</span>
@@ -1621,13 +1621,19 @@
 <span class="sd">        :param kwargs: a set of name-value pairs used to override default settings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Configure baseline public schema</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;publicSchemaDisplayName&quot;</span><span class="p">):</span>
+            <span class="n">public_schema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="s1">&#39;public&#39;</span><span class="p">]</span>
+            <span class="n">public_schema</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">display</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;User Info&#39;</span><span class="p">}</span>
+            <span class="p">})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_client</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configure_baseline_ermrest_group</span><span class="p">(</span><span class="n">apply</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Create WWW schema</span>
-        <span class="n">www_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wwwSchemaName&quot;</span><span class="p">,</span> <span class="s2">&quot;WWW&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">www_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">Schema</span><span class="o">.</span><span class="n">define_www</span><span class="p">(</span><span class="n">www_name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">stob</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;includeWWWSchema&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)):</span>
+            <span class="n">www_name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wwwSchemaName&quot;</span><span class="p">,</span> <span class="s2">&quot;WWW&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">www_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">Schema</span><span class="o">.</span><span class="n">define_www</span><span class="p">(</span><span class="n">www_name</span><span class="p">))</span>
 
         <span class="c1"># Configure baseline annotations</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>

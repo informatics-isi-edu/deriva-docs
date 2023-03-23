@@ -1323,7 +1323,12 @@
 <li><a class="reference external" href="#examples">Examples</a><ul>
 <li><a class="reference external" href="#1-link-anchor">1. Link (Anchor)</a></li>
 <li><a class="reference external" href="#2-download-button">2. Download Button</a></li>
-<li><a class="reference external" href="#3-image">3. Image</a></li>
+<li><a class="reference external" href="#3-image">3. Image</a><ul>
+<li><a class="reference external" href="#31-image-with-static-width-and-height">3.1. Image with static width and height</a></li>
+<li><a class="reference external" href="#32-image-with-maximum-width-and-maximum-height">3.2. Image with maximum width and maximum height</a></li>
+<li><a class="reference external" href="#33-preserving-the-aspect-ratio-of-image">3.3. Preserving the aspect ratio of image</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#4-thumbnail-with-link-to-original-image-and-a-caption">4. Thumbnail With Link To Original Image And A caption</a></li>
 <li><a class="reference external" href="#5-image-with-zoom-capabilties">5. Image with zoom capabilties</a></li>
 <li><a class="reference external" href="#6-iframe">6. Iframe</a><ul>
@@ -1569,6 +1574,18 @@
 </div>
 <blockquote>
 <div><p><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" alt="Image"></p></div></blockquote>
+<p>Just like any other elements, you can define attributes for the Images by defining them in a block after the tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>![alt text](IMAGE_URL){ &lt;attribute&gt;=&lt;value&gt; }
+</pre></div>
+</div>
+<p>The following are the most common attributes that you could use:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code>: Useful when you know the width and height of the image, or want to limit the image to certain size.</li>
+<li><code class="docutils literal notranslate"><span class="pre">style</span></code>: Can be used for specifying any styles on the image.</li>
+</ul>
+<p>The following are some common examples of styling Images:</p>
+<div class="section" id="image-with-static-width-and-height">
+<span id="image-with-static-width-and-height"></span><h4>3.1. Image with static width and height<a class="headerlink" href="#image-with-static-width-and-height" title="Permalink to this headline">¶</a></h4>
 <p>You can define the <code class="docutils literal notranslate"><span class="pre">width</span></code> and <code class="docutils literal notranslate"><span class="pre">height</span></code> attributes for an image.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>![ImageWithSize](http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg){width=800 height=300}
 
@@ -1580,7 +1597,10 @@
 </div>
 <blockquote>
 <div><p><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" alt="ImageWithSize" width="800" height="300"></p></div></blockquote>
-<p>You can also add extra styles to the image to ensure it is displayed correctly.</p>
+</div>
+<div class="section" id="image-with-maximum-width-and-maximum-height">
+<span id="image-with-maximum-width-and-maximum-height"></span><h4>3.2. Image with maximum width and maximum height<a class="headerlink" href="#image-with-maximum-width-and-maximum-height" title="Permalink to this headline">¶</a></h4>
+<p>Instead of defining static with and height, you can also define maximum allowed values:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>![ImageWithSize](http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg){width=500 style=&quot;max-height:300px;max-width:800px;&quot;}
 
 # OUTPUT:
@@ -1591,7 +1611,20 @@
 </div>
 <blockquote>
 <div><p><img src="http://assets.barcroftmedia.com.s3-website-eu-west-1.amazonaws.com/assets/images/recent-images-11.jpg" alt="ImageWithSize" width="500" style="max-height:300px;max-width:800px;"></p></div></blockquote>
-<p><strong>NOTE</strong>: You can add any style content to your markdown. For more info on styling you can refer this <a class="reference external" href="http://www.w3schools.com/html/html_css.asp">tutorial</a></p>
+</div>
+<div class="section" id="preserving-the-aspect-ratio-of-image">
+<span id="preserving-the-aspect-ratio-of-image"></span><h4>3.3. Preserving the aspect ratio of image<a class="headerlink" href="#preserving-the-aspect-ratio-of-image" title="Permalink to this headline">¶</a></h4>
+<p>To preserve the image’s aspect ratio, you need to add the <code class="docutils literal notranslate"><span class="pre">object-fit:contain</span></code> style. This is style is helpful in combination with static <code class="docutils literal notranslate"><span class="pre">width</span></code> or <code class="docutils literal notranslate"><span class="pre">height</span></code>. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>![](https://example.com/path/to/image.png){style=height:500px;object-fit:contain}
+</pre></div>
+</div>
+<p>With this, the image’s height would be 500px, and <code class="docutils literal notranslate"><span class="pre">object-fit:contain</span></code> will signal the browser to choose a proper width based on the available space and the image’s aspect ratio.</p>
+<p>You can also use this style with both width and height:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>![](https://example.com/path/to/image.png){style=height:500px;width:500px;object-fit:contain}
+</pre></div>
+</div>
+<p>This example specifies the width and height of the image’s container. And depending on the aspect ratio of the image, you will see white space around the scaled-down image (instead of stretching the image to the container’s width/height).</p>
+</div>
 </div>
 <div class="section" id="thumbnail-with-link-to-original-image-and-a-caption">
 <span id="thumbnail-with-link-to-original-image-and-a-caption"></span><h3>4. Thumbnail With Link To Original Image And A caption<a class="headerlink" href="#thumbnail-with-link-to-original-image-and-a-caption" title="Permalink to this headline">¶</a></h3>
@@ -1624,6 +1657,10 @@
 </div>
 <p>You could customize the maximum height that we should use by defining the <code class="docutils literal notranslate"><span class="pre">image-preview-max-height</span></code> property like the following:</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:::image [](https://example.com/path/to/image.png){figure-class=chaise-image-preview image-preview-max-height=&quot;300px&quot;} \n:::
+</pre></div>
+</div>
+<p>If you’re using this feature in a tabular view, you need to specify the width of the container. Otherwise clicking on the image will expand the image beyond the table’s allowed width. For example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:::image [](https://example.com/path/to/image.png){figure-class=chaise-image-preview image-preview-max-height=&quot;300px&quot; figure-style=width:300px } \n:::
 </pre></div>
 </div>
 </div>

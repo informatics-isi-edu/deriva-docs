@@ -1514,15 +1514,89 @@ you’re 100% sure what you’re doing is correct:</p>
 </div>
 <div class="section" id="css-scss">
 <span id="id3"></span><h3>CSS/SCSS<a class="headerlink" href="#css-scss" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">General-purpose styles should be part of the <code class="docutils literal notranslate"><span class="pre">app.scss</span></code> (or included as part of <code class="docutils literal notranslate"><span class="pre">app.scss</span></code>.)</p>
+</li>
+<li><p class="first">Styles specific to a component should be included in a separate file and imported into the component TSX file.</p>
+</li>
+<li><p class="first">It’s better if you use classes instead of ids for writing CSS rules.</p>
+</li>
+<li><p class="first">Avoid adding duplicated rules. If there’s a rule in a file that is applied to the element that you’re trying to add a new style to, add it there.</p>
+</li>
+<li><p class="first">Avoid using <code class="docutils literal notranslate"><span class="pre">!important</span></code> as much as you can (Unless there’s a bootstrap rule that you’re trying to override.)</p>
+</li>
+<li><p class="first">Comment your rule to make it easier for others to figure out why a rule was added.</p>
+</li>
+<li><p class="first">If you’re doing some calculations, don’t just use the end result. Right the calculations so later we can easily figure out why you chose that value.</p>
+</li>
+<li><p class="first">Use variables if you’re using the same value more than once, and these values should be the same all the time (Just because you’re using the value <code class="docutils literal notranslate"><span class="pre">10</span></code> in two different rules doesn’t mean they should share the same variable. Use a variable if these two rules MUST be using the same value. So if later you changed one to <code class="docutils literal notranslate"><span class="pre">20</span></code>, the other one should be updated as well). The following is an example of using variables:</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span>$border-width: 2px;
+.chaise-btn {
+  border: $border-width solid;
+}
+
+.chaise-btn-btn-group &gt; &gt; .chaise-btn:not(:first-child):not([disabled]) {
+  margin-left: $border-width * -1;
+}
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the variables you want to define are used in multiple places, add them to <code class="docutils literal notranslate"><span class="pre">variables.scss</span></code>. And make sure to use <code class="docutils literal notranslate"><span class="pre">&#64;use</span></code> for using this variable in other places. For example:</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span>// _variables.scss
+$my-variable: 5px;
+
+// _file1.scss
+@use &#39;variables&#39;;
+
+.sample-element {
+  margin-right: variables.$my-variable;
+}
+
+// _file2.scss
+@use &#39;variables&#39;;
+
+.another-element {
+  margin-right: variables.$my-variable * -1;
+}
+</pre></div>
+</div>
+</li>
+<li><p class="first">You can also opt to define a map instead of simple variables. To do so,</p>
+<ul>
+<li><p class="first">Add a new file under <code class="docutils literal notranslate"><span class="pre">src/assets/scss/maps</span></code>, and define your map in there.</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span><span class="c1">// _my-new-map.scss</span>
+<span class="nv">$my-map</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;value1&#39;</span><span class="o">:</span><span class="w"> </span><span class="mh">#333</span><span class="o">,</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;value2&#39;</span><span class="o">:</span><span class="w"> </span><span class="mh">#ccc</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Import your file at the end of <code class="docutils literal notranslate"><span class="pre">src/assets/scss/_variables.scss</span></code>.</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span><span class="c1">// _variables.scss</span>
+<span class="c1">// ...</span>
+
+<span class="k">@import</span><span class="w"> </span><span class="s1">&#39;maps/my-new-map&#39;</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use <code class="docutils literal notranslate"><span class="pre">map-get</span></code> for accessing the map values:</p>
+<div class="highlight-scss notranslate"><div class="highlight"><pre><span></span>// _file.scss
+
+@use &#39;sass:map&#39;;
+@use &#39;variables&#39;;
+
+// ...
+.my-element {
+  color: map-get(variables.$my-new-map, &#39;value1&#39;);
+}
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
 <ul class="simple">
-<li>General-purpose styles should be part of the <code class="docutils literal notranslate"><span class="pre">app.scss</span></code> (or included as part of <code class="docutils literal notranslate"><span class="pre">app.scss</span></code>.)</li>
-<li>Styles specific to a component should be included in a separate file and imported into the component TSX file.</li>
-<li>It’s better if you use classes instead of ids for writing CSS rules.</li>
-<li>Avoid adding duplicated rules. If there’s a rule in a file that is applied to the element that you’re trying to add a new style to, add it there.</li>
-<li>Avoid using <code class="docutils literal notranslate"><span class="pre">!important</span></code> as much as you can (Unless there’s a bootstrap rule that you’re trying to override.)</li>
-<li>Comment your rule to make it easier for others to figure out why a rule was added.</li>
-<li>If you’re doing some calculations, don’t just use the end result. Right the calculations so later we can easily figure out why you chose that value.</li>
-<li>Use variables if you’re using the same value more than once, and these values should be the same all the time (Just because you’re using the value <code class="docutils literal notranslate"><span class="pre">10</span></code> in two different rules doesn’t mean they should share the same variable. Use a variable if these two rules MUST be using the same value. So if later you changed one to <code class="docutils literal notranslate"><span class="pre">20</span></code>, the other one should be updated as well).</li>
 <li>How each browser renders printing styles is different from the other. Mac and Windows behave differently for the same browser type (Firefox, Chrome, etc.). Hence we need to keep in mind the following while writing print rules in CSS.<ul>
 <li>If table borders or other line elements are not visible in the print preview or the PDF, check if there exists any overriding
 bootstrap rules. These bootstrap rules could be a <code class="docutils literal notranslate"><span class="pre">background-color</span></code>, <code class="docutils literal notranslate"><span class="pre">background-border</span></code>, etc., and they always take precedence over the custom CSS rules that are defined in the &#64;media-print section of the CSS file.</li>
@@ -1585,7 +1659,7 @@ updating the font-awesome classes that are used.</li>
 <ul class="simple">
 <li>A <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value is stored as a single point in time in Postgres. When the value is retrieved, the value is in whatever time zone the database is in.</li>
 <li>A <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> value is stored as a string with the date and time; time zone info will be dropped in Postgres.</li>
-<li>When submitting values for <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> columns, the app should just submit the values as browser’s local time. (The app currently converts to UTC before submitting, which is unnecessary.)</li>
+<li>When submitting values for <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> and <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> columns, the app should just submit the values as browser’s local time.</li>
 <li>When displaying <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> value, display whatever is in the database (the date and time, no need to convert to local time because there’s no time zone info attached anyway)</li>
 <li>When displaying <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value, convert that value to browser’s local time.</li>
 </ul>

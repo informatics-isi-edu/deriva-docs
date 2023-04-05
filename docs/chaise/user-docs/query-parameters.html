@@ -1326,26 +1326,21 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li>Below is the HTML representation of a Related Table from the visible-foreignkeys section of record app. The <code class="docutils literal notranslate"><span class="pre">id</span></code> on the <code class="docutils literal notranslate"><span class="pre">uib-accordion-group</span></code> element is the one that chaise uses to scroll to that specific related table. <code class="docutils literal notranslate"><span class="pre">rt-heading-</span></code> is the static part of the identifier. The value after that is the <code class="docutils literal notranslate"><span class="pre">displayname.value</span></code> that was generated using a markdown_pattern. If no markdown_pattern was defined (no extra styling, just plain text), you can simply use the plaintext as it is displayed in the browser. In the following, that value is <code class="docutils literal notranslate"><span class="pre">Images</span></code>. If you aren’t sure of what value to use, you can always look at the HTML structure and look for the element with the class <code class="docutils literal notranslate"><span class="pre">rt-section-header</span></code>. There should be a <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> as a child of the <code class="docutils literal notranslate"><span class="pre">rt-section-header</span></code> element. The contents of that element will be the <code class="docutils literal notranslate"><span class="pre">displayname.value</span></code>, which is what should be used in the query parameter.</li>
+<li>Below is the HTML representation of a Related Table from the visible-foreignkeys section of record app. The <code class="docutils literal notranslate"><span class="pre">id</span></code> on the <code class="docutils literal notranslate"><span class="pre">.chaise-accodrion</span></code> element is the one that chaise uses to scroll to that specific related table. <code class="docutils literal notranslate"><span class="pre">rt-heading-</span></code> is the static part of the identifier. The value after that is the <code class="docutils literal notranslate"><span class="pre">displayname.value</span></code> that was generated using a markdown_pattern. If no markdown_pattern was defined (no extra styling, just plain text), you can simply use the plaintext as it is displayed in the browser. In the following, that value is <code class="docutils literal notranslate"><span class="pre">Images</span></code>. If you aren’t sure of what value to use, you can always look at the HTML structure and look for the element with the class <code class="docutils literal notranslate"><span class="pre">chaise-accordion-displayname</span></code>. There should be a <code class="docutils literal notranslate"><span class="pre">&lt;span&gt;</span></code> as a child of the <code class="docutils literal notranslate"><span class="pre">chaise-accordion-displayname</span></code> element. The contents of that element will be the <code class="docutils literal notranslate"><span class="pre">displayname.value</span></code>, which is what should be used in the query parameter.</li>
 </ul>
-<div class="highlight-HTML notranslate"><div class="highlight"><pre><span></span>&lt;div uib-accordion-group class=&quot;related-table-accordion&quot; id=&quot;rt-heading-Images&quot; ...&gt;
-  &lt;div role=&quot;tab&quot; id=&quot;accordiongroup-560-1386-tab&quot; class=&quot;panel-heading&quot; ...&gt;
-    &lt;h4 class=&quot;panel-title&quot;&gt;
-      &lt;a role=&quot;button&quot; ... class=&quot;accordion-toggle&quot; ng-click=&quot;toggleOpen()&quot; ...&gt;
-        &lt;span uib-accordion-header ...&gt;
-          &lt;div class=&quot;rt-section-header&quot;&gt;
-            &lt;i class=&quot;toggle-icon fas fa-chevron-down&quot; ...&gt;&lt;/i&gt;
-            &lt;span ... class=&quot;ng-binding ng-scope&quot;&gt;
-              Images
-            &lt;/span&gt;
-          &lt;/div&gt;
-          &lt;record-action-bar ...&gt;&lt;/record-action-bar&gt;
-        &lt;/span&gt;
-      &lt;/a&gt;
-    &lt;/h4&gt;
-  &lt;/div&gt;
-  &lt;div id=&quot;accordiongroup-560-1386-panel&quot; aria-labelledby=&quot;accordiongroup-560-1386-tab&quot; class=&quot;panel-collapse collapse in&quot; ...&gt;...&lt;/div&gt;
-&lt;/div&gt;
+<div class="highlight-HTML notranslate"><div class="highlight"><pre><span></span> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;rt-heading-Images&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chaise-accordion panel accordion-item&quot;</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;panel-heading accordion-button&quot;</span><span class="p">&gt;</span>
+     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chaise-accordion-header&quot;</span><span class="p">&gt;</span>
+       <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chaise-accordion-displayname&quot;</span><span class="p">&gt;</span>
+         <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>Images<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+         ....
+       <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;chaise-accordion-header-buttons&quot;</span><span class="p">&gt;</span>
+         ...
+       <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+   <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;accordion-collapse collapse show&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </li>

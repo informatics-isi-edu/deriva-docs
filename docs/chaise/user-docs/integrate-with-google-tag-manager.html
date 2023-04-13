@@ -1302,44 +1302,69 @@
 </style>
 <div class="section" id="integrating-google-tag-manager-for-deployment-analytics">
 <span id="integrating-google-tag-manager-for-deployment-analytics"></span><h1>Integrating Google Tag Manager for deployment analytics<a class="headerlink" href="#integrating-google-tag-manager-for-deployment-analytics" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="adding-google-tag-manager-to-chaise-pages">
-<span id="adding-google-tag-manager-to-chaise-pages"></span><h2>Adding Google Tag Manager to Chaise pages<a class="headerlink" href="#adding-google-tag-manager-to-chaise-pages" title="Permalink to this headline">¶</a></h2>
+<p>In this document, we will go over the recommended way of collecting user analytics in Chaise or static pages using Google Tag Manager and Google Analytics.</p>
+<div class="section" id="create-a-google-analytics-ga-account">
+<span id="create-a-google-analytics-ga-account"></span><h2>1. Create a Google Analytics (GA) account<a class="headerlink" href="#create-a-google-analytics-ga-account" title="Permalink to this headline">¶</a></h2>
+<p>The first thing that you need to do is create a Google Analytics account and add a “data stream”. You will see the aggregated data of user interaction with your website in Google Analytics. Please refer to <a class="reference external" href="https://support.google.com/analytics/answer/9304153?sjid=17908509460315618267-NA">this tutorial</a> on how to create the account.</p>
+<blockquote>
+<div>:warning: After creating a GA4 account, it might prompt a “Install your Google tag” step. Please ignore this as we will go over it in the following steps.</div></blockquote>
+</div>
+<div class="section" id="create-a-google-tag-manager-gtm-account">
+<span id="create-a-google-tag-manager-gtm-account"></span><h2>2. Create a Google Tag Manager (GTM) account<a class="headerlink" href="#create-a-google-tag-manager-gtm-account" title="Permalink to this headline">¶</a></h2>
+<p>You also need to set up a Google Tag Manager account. Google Tag Manager allows us to collect data from our website and send it wherever we want. You can find more information on how to do this <a class="reference external" href="https://support.google.com/tagmanager/answer/6103696?sjid=17908509460315618267-NA">here</a>.</p>
+</div>
+<div class="section" id="install-the-gtm-container-on-the-server">
+<span id="install-the-gtm-container-on-the-server"></span><h2>3. Install the GTM container on the server<a class="headerlink" href="#install-the-gtm-container-on-the-server" title="Permalink to this headline">¶</a></h2>
+<p>We now need to connect our website to Google Tag Manager. To do so,</p>
 <ol class="simple">
-<li>Copy and paste the following code into a file called <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code>.</li>
-<li>Add your GTM ID on the first uncommented line, <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">gtmId</span> <span class="pre">=</span> <span class="pre">[YOUR</span> <span class="pre">CONTAINER</span> <span class="pre">ID</span> <span class="pre">HERE]</span></code>.</li>
-<li>Add gtm-id.js file to deployment server at the same level as Chaise folder (e.g. /gtm-id.js).</li>
+<li>Find your container ID formatted as <em>“GTM-XXXXXX”</em> which is visible in the Google Tag Manager workspace or <a class="reference external" href="https://tagmanager.google.com/">here</a>.</li>
+<li>Copy and paste the following code into a file called <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// When this file is loaded, it will run the 2 Google Tag Manager tags.
-// To use: Supply your Google Tag Manager container ID on the next line.
-var gtmId = null; // Change null to be your GTM ID (e.g. &quot;GTM-XXXXXX&quot;)
+<ol class="simple">
+<li>Add your GTM container ID on the first uncommented line, <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">gtmId</span> <span class="pre">=</span> <span class="pre">[YOUR</span> <span class="pre">CONTAINER</span> <span class="pre">ID</span> <span class="pre">HERE]</span></code>.</li>
+<li>Add the <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code> file to the deployment server at the same level as the Chaise folder (e.g.,<code class="docutils literal notranslate"><span class="pre">/var/www/html/gtm-id.js</span></code>).</li>
+</ol>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="c1">// When this file is loaded, it will run the 2 Google Tag Manager tags.</span><span class="w"></span>
+<span class="c1">// To use: Supply your Google Tag Manager container ID on the next line.</span><span class="w"></span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">gtmId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// Change null to be your GTM ID (e.g. &quot;GTM-XXXXXX&quot;)</span><span class="w"></span>
 
-(function(gtmId) {
-    if (!gtmId) {
-        return;
-    }
-    // Run &lt;head&gt; tag.
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({&#39;gtm.start&#39;:
-    new Date().getTime(),event:&#39;gtm.js&#39;});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!=&#39;dataLayer&#39;?&#39;&amp;l=&#39;+l:&#39;&#39;;j.async=true;j.src=
-    &#39;https://www.googletagmanager.com/gtm.js?id=&#39;+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,&#39;script&#39;,&#39;dataLayer&#39;, gtmId);
-    
-    // Insert &lt;body&gt; tag
-    var bodyScript = document.createElement(&#39;noscript&#39;);
-    bodyScript.innerHTML = &#39;&lt;iframe src=&quot;https://www.googletagmanager.com/ns.html?id=&#39; + gtmId + &#39;&quot; height=&quot;0&quot; width=&quot;0&quot; style=&quot;display:none;visibility:hidden&quot;&gt;&lt;/iframe&gt;&#39;;
-    document.addEventListener(&quot;DOMContentLoaded&quot;, function(event) {
-        document.body.appendChild(bodyScript);
-    });
-})(gtmId);
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">gtmId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">gtmId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Run &lt;head&gt; tag.</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span><span class="nx">d</span><span class="p">,</span><span class="nx">s</span><span class="p">,</span><span class="nx">l</span><span class="p">,</span><span class="nx">i</span><span class="p">){</span><span class="nx">w</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span><span class="o">=</span><span class="nx">w</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span><span class="o">||</span><span class="p">[];</span><span class="nx">w</span><span class="p">[</span><span class="nx">l</span><span class="p">].</span><span class="nx">push</span><span class="p">({</span><span class="s1">&#39;gtm.start&#39;</span><span class="o">:</span><span class="w"></span>
+<span class="w">    </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">getTime</span><span class="p">(),</span><span class="nx">event</span><span class="o">:</span><span class="s1">&#39;gtm.js&#39;</span><span class="p">});</span><span class="kd">var</span><span class="w"> </span><span class="nx">f</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="nx">s</span><span class="p">)[</span><span class="mf">0</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nx">j</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span><span class="nx">dl</span><span class="o">=</span><span class="nx">l</span><span class="o">!=</span><span class="s1">&#39;dataLayer&#39;</span><span class="o">?</span><span class="s1">&#39;&amp;l=&#39;</span><span class="o">+</span><span class="nx">l</span><span class="o">:</span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="nx">j</span><span class="p">.</span><span class="k">async</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span><span class="nx">j</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="w"></span>
+<span class="w">    </span><span class="s1">&#39;https://www.googletagmanager.com/gtm.js?id=&#39;</span><span class="o">+</span><span class="nx">i</span><span class="o">+</span><span class="nx">dl</span><span class="p">;</span><span class="nx">f</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="nx">f</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="nb">document</span><span class="p">,</span><span class="s1">&#39;script&#39;</span><span class="p">,</span><span class="s1">&#39;dataLayer&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">gtmId</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c1">// Insert &lt;body&gt; tag</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">bodyScript</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;noscript&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">bodyScript</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;iframe src=&quot;https://www.googletagmanager.com/ns.html?id=&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">gtmId</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;&quot; height=&quot;0&quot; width=&quot;0&quot; style=&quot;display:none;visibility:hidden&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">bodyScript</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="p">})(</span><span class="nx">gtmId</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
+<p>By doing this, Chaise is now connected to the GTM container and will collect user data for you.</p>
 </div>
-<div class="section" id="adding-google-tag-manager-to-static-pages">
-<span id="adding-google-tag-manager-to-static-pages"></span><h2>Adding Google Tag Manager to static pages<a class="headerlink" href="#adding-google-tag-manager-to-static-pages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="add-gtm-container-to-static-pages">
+<span id="add-gtm-container-to-static-pages"></span><h2>4. Add GTM container to static pages<a class="headerlink" href="#add-gtm-container-to-static-pages" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have the <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code> file, we need to ensure the static sites include the same file. The following is how we recommend doing this for Jekyll pages:</p>
 <ol class="simple">
-<li>If your deployment has Jekyll pages, add <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;/gtm-id.js&quot;&gt;&lt;/script&gt;</span></code> to the <code class="docutils literal notranslate"><span class="pre">www/_includes/header.html</span></code> file in your Jekyll files (example).</li>
+<li>Add <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;/gtm-id.js&quot;&gt;&lt;/script&gt;</span></code> to the <code class="docutils literal notranslate"><span class="pre">www/_includes/header.html</span></code> file in your Jekyll files.</li>
 <li>Regenerate your Jekyll pages.</li>
-<li>Make sure all pages have <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;/gtm-id.js&quot;&gt;&lt;/script&gt;</span></code> in the <head> of their templates.</li>
+<li>Make sure all pages have <code class="docutils literal notranslate"><span class="pre">&lt;script</span> <span class="pre">src=&quot;/gtm-id.js&quot;&gt;&lt;/script&gt;</span></code> in the <code class="docutils literal notranslate"><span class="pre">&lt;head&gt;</span></code> tag of their templates.</li>
+</ol>
+</div>
+<div class="section" id="connect-google-tag-manager-to-google-analytics">
+<span id="connect-google-tag-manager-to-google-analytics"></span><h2>5. Connect Google Tag Manager to Google Analytics<a class="headerlink" href="#connect-google-tag-manager-to-google-analytics" title="Permalink to this headline">¶</a></h2>
+<p>The last step is connecting the GTM and GA together. To do so, please follow <a class="reference external" href="https://support.google.com/tagmanager/answer/9442095?hl=en">the official guide</a>. In summary,</p>
+<ol class="simple">
+<li>We need first to grab the measurement ID associated with our GA account. The ID will start with <em>“G-“</em> and on new accounts is visible on the home page of the GA account. If you cannot find it, navigate to the “Admin” page. Click on “Data Streams” on this page. You should see a data stream, click on it, and it will show you the Measeuerment ID.</li>
+<li>Now that we have the measurement ID, we can navigate to the GTM home page and create a “tag” with it. This will ensure GTM data is sent to our GA account.</li>
 </ol>
 </div>
 </div>

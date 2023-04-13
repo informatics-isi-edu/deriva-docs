@@ -1282,6 +1282,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">errno</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -1313,7 +1314,8 @@
 <span class="n">UploadState</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">([</span><span class="s2">&quot;Success&quot;</span><span class="p">,</span> <span class="s2">&quot;Failed&quot;</span><span class="p">,</span> <span class="s2">&quot;Pending&quot;</span><span class="p">,</span> <span class="s2">&quot;Running&quot;</span><span class="p">,</span> <span class="s2">&quot;Paused&quot;</span><span class="p">,</span> <span class="s2">&quot;Aborted&quot;</span><span class="p">,</span> <span class="s2">&quot;Cancelled&quot;</span><span class="p">,</span> <span class="s2">&quot;Timeout&quot;</span><span class="p">])</span>
 <span class="n">FileUploadState</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;FileUploadState&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;State&quot;</span><span class="p">,</span> <span class="s2">&quot;Status&quot;</span><span class="p">])</span>
 <span class="n">UploadMetadataReservedKeyNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;URI&quot;</span><span class="p">,</span> <span class="s2">&quot;file_name&quot;</span><span class="p">,</span> <span class="s2">&quot;file_ext&quot;</span><span class="p">,</span> <span class="s2">&quot;file_size&quot;</span><span class="p">,</span> <span class="s2">&quot;content-disposition&quot;</span><span class="p">,</span> <span class="s2">&quot;md5&quot;</span><span class="p">,</span> <span class="s2">&quot;sha256&quot;</span><span class="p">,</span>
-                                  <span class="s2">&quot;md5_base64&quot;</span><span class="p">,</span> <span class="s2">&quot;sha256_base64&quot;</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;target_table&quot;</span><span class="p">]</span>
+                                  <span class="s2">&quot;md5_base64&quot;</span><span class="p">,</span> <span class="s2">&quot;sha256_base64&quot;</span><span class="p">,</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;target_table&quot;</span><span class="p">,</span> <span class="s2">&quot;_upload_year_&quot;</span><span class="p">,</span>
+                                  <span class="s2">&quot;_upload_month_&quot;</span><span class="p">,</span> <span class="s2">&quot;_upload_day_&quot;</span><span class="p">,</span> <span class="s2">&quot;_upload_time_&quot;</span><span class="p">]</span>
 
 <span class="n">DefaultConfig</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">&quot;version_compatibility&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&gt;=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">VERSION</span><span class="p">],</span>
@@ -1482,9 +1484,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_internal_config</span><span class="p">(</span><span class="n">read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isVersionCompatible</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">DerivaRestoreError</span><span class="p">(</span><span class="s2">&quot;Upload version incompatibility detected&quot;</span><span class="p">,</span>
-                                     <span class="s2">&quot;Current version: [</span><span class="si">%s</span><span class="s2">], required version(s): </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
-                                     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getVersion</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVersionCompatibility</span><span class="p">()))</span></div>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Upload version incompatibility detected&quot;</span><span class="p">,</span>
+                               <span class="s2">&quot;Current version: [</span><span class="si">%s</span><span class="s2">], required version(s): </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span>
+                               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getVersion</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVersionCompatibility</span><span class="p">()))</span></div>
 <div class="viewcode-block" id="DerivaUpload.getDefaultServer"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload.DerivaUpload.getDefaultServer">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">getDefaultServer</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="n">servers</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">getServers</span><span class="p">()</span>
@@ -1538,7 +1540,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">src</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dst</span><span class="p">)):</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1"># This comparison wont work with PyInstaller single-file bundles because the bundle is extracted to a temp dir</span>
+        <span class="c1"># This comparison won&#39;t work with PyInstaller single-file bundles because the bundle is extracted to a temp dir</span>
         <span class="c1"># and every timestamp for every file in the bundle is reset to the bundle extraction/creation time.</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="n">prefix</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="s2">&quot;_MEI&quot;</span>
@@ -1858,7 +1860,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_queryFileMetadata</span><span class="p">(</span><span class="n">asset_mapping</span><span class="p">)</span>
 
         <span class="c1"># 5. If &quot;create_record_before_upload&quot; specified in asset_mapping, check for an existing record, creating a new</span>
-        <span class="c1">#    one if necessary. Otherwise delay this logic until after the file upload.</span>
+        <span class="c1">#    one if necessary. Otherwise, delay this logic until after the file upload.</span>
         <span class="n">record</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">stob</span><span class="p">(</span><span class="n">asset_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;create_record_before_upload&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)):</span>
             <span class="n">record</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getFileRecord</span><span class="p">(</span><span class="n">asset_mapping</span><span class="p">)</span>
@@ -1879,7 +1881,12 @@
                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_versioning&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
                                <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Hatrac upload successful. Result object URI: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">versioned_uri</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;versioned_uris&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)):</span>
+        <span class="n">versioned_uris</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="s2">&quot;versioned_uris&quot;</span> <span class="ow">in</span> <span class="n">hatrac_options</span><span class="p">:</span>
+            <span class="n">versioned_uris</span> <span class="o">=</span> <span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;versioned_uris&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;versioned_urls&quot;</span> <span class="ow">in</span> <span class="n">hatrac_options</span><span class="p">:</span>
+            <span class="n">versioned_uris</span> <span class="o">=</span> <span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;versioned_urls&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">versioned_uris</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;URI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">versioned_uri</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;URI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">versioned_uri</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1974,6 +1981,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;file_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFileDisplayName</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;file_size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFileSize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
 
+        <span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;_upload_year_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">year</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;_upload_month_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">month</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;_upload_day_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">day</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;_upload_time_&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_urlEncodeMetadata</span><span class="p">(</span><span class="n">asset_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;url_encoding_safe_overrides&quot;</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_updateFileMetadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">no_overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1987,7 +2000,7 @@
                                    <span class="s2">&quot;ignoring value: </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">src</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
                     <span class="k">del</span> <span class="n">dst</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
                     <span class="k">continue</span>
-            <span class="c1"># dont overwrite any existing metadata field</span>
+            <span class="c1"># don&#39;t overwrite any existing metadata field</span>
             <span class="k">if</span> <span class="n">no_overwrite</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
                     <span class="k">del</span> <span class="n">dst</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
@@ -2301,8 +2314,8 @@
         <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">walk</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">followlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
                 <span class="c1"># found a file</span>
-                <span class="n">found_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-                <span class="n">file_paths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">found_path</span><span class="p">))</span>
+                <span class="n">found_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+                <span class="n">file_paths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">found_path</span><span class="p">)))</span>
                 <span class="k">continue</span>
 
         <span class="c1"># Next, ascend from the base path looking for the same filename in all parent dirs</span>
@@ -2313,7 +2326,7 @@
                 <span class="k">break</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">scandir</span><span class="p">(</span><span class="n">parent</span><span class="p">):</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">filename</span><span class="p">)</span> <span class="ow">and</span> <span class="n">entry</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-                    <span class="n">file_paths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+                    <span class="n">file_paths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">))))</span>
             <span class="n">current</span> <span class="o">=</span> <span class="n">parent</span>
 
         <span class="k">return</span> <span class="n">file_paths</span></div>

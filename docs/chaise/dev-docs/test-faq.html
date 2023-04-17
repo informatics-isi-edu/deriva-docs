@@ -1325,14 +1325,6 @@
 </ul>
 <hr class="docutils" />
 <ul>
-<li><p class="first"><strong>There are errors with the import module ‘ermrest-data-utils’ importing schemas in the test</strong></p>
-<blockquote>
-<div><p>This is mostly because of some changes in the <code class="docutils literal notranslate"><span class="pre">ermrest-data-utils</span></code> module. Just update it ~~using command <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">update</span> <span class="pre">ermrest-data-utils</span></code>~~ by pulling from master.</p>
-</div></blockquote>
-</li>
-</ul>
-<hr class="docutils" />
-<ul>
 <li><p class="first"><strong>Test Failed: “defer.fulfill” is not a function</strong></p>
 <blockquote>
 <div><p>This is mostyl because of a newer version of the promise library <a class="reference external" href="https://www.npmjs.com/package/q">Q</a>. We have fixed the version to <code class="docutils literal notranslate"><span class="pre">^1.4.1</span></code>. If you face issues with any other modules, just try to fix their version numbers in the <code class="docutils literal notranslate"><span class="pre">package.json</span></code> to the last stable version.</p>
@@ -1343,13 +1335,7 @@
 <ul>
 <li><p class="first"><strong>Installation issues: saying selenium not found or unable to run tests because of selenium issue or some other module issue</strong></p>
 <blockquote>
-<div><p>The best way to tackle this is deleting your <code class="docutils literal notranslate"><span class="pre">node_modules</span></code> folder and reinstall all dependencies. Once you’re done deleting the folder, run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">make</span> <span class="pre">deps</span></code>. This command will install all possible dependencies defined in the <code class="docutils literal notranslate"><span class="pre">package.json</span></code> and update your selenium-driver.</p>
-</div></blockquote>
-<blockquote>
-<div><p>An alternative is to run this command: <code class="docutils literal notranslate"><span class="pre">node_modules/.bin/webdriver-manager</span> <span class="pre">update</span> <span class="pre">--standalone</span></code></p>
-</div></blockquote>
-<blockquote>
-<div><p><strong>Error: No selenium server jar found at the specified location</strong> can be handled by running this command: <code class="docutils literal notranslate"><span class="pre">node_modules/protractor/bin/webdriver-manager</span> <span class="pre">update</span></code></p>
+<div><p>Run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">update-webdriver</span></code> and make sure the webdriver has been successfuly installed (it might fail on the first attempt if you’re connected to VPN).</p>
 </div></blockquote>
 </li>
 </ul>

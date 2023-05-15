@@ -1494,6 +1494,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">envars</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_urlencode_envars</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{}</span></div></div>
+
+
+<div class="viewcode-block" id="CreateDirProcessor"><a class="viewcode-back" href="../../../../../../deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.base_query_processor.CreateDirProcessor">[docs]</a><span class="k">class</span> <span class="nc">CreateDirProcessor</span><span class="p">(</span><span class="n">JSONEnvUpdateProcessor</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CreateDirProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">envars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="CreateDirProcessor.process"><a class="viewcode-back" href="../../../../../../deriva-py/api/deriva.transfer.download.processors.query.html#deriva.transfer.download.processors.query.base_query_processor.CreateDirProcessor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CreateDirProcessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_default_paths</span><span class="p">()</span>
+        <span class="n">make_dirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_abspath</span><span class="p">)</span></div></div>
+
 </pre></div>
 
            </div>

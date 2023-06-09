@@ -1313,6 +1313,7 @@
 <li><a class="reference external" href="#3-install-the-gtm-container-on-the-server">3. Install the GTM container on the server</a></li>
 <li><a class="reference external" href="#4-add-gtm-container-to-static-pages">4. Add GTM container to static pages</a></li>
 <li><a class="reference external" href="#5-connect-google-tag-manager-to-google-analytics">5. Connect Google Tag Manager to Google Analytics</a></li>
+<li><a class="reference external" href="#6-make-sure-google-analytics-can-support-deriva-urls">6. Make sure Google Analytics can support Deriva URLs</a></li>
 </ul>
 </div>
 <div class="section" id="create-a-google-analytics-ga-account">
@@ -1332,10 +1333,10 @@
 <li>Find your container ID formatted as <em>“GTM-XXXXXX”</em> which is visible in the Google Tag Manager workspace or <a class="reference external" href="https://tagmanager.google.com/">here</a>.</li>
 <li>Copy and paste the following code into a file called <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code></li>
 </ol>
-<ol class="simple">
-<li>Add your GTM container ID on the first uncommented line, <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">gtmId</span> <span class="pre">=</span> <span class="pre">[YOUR</span> <span class="pre">CONTAINER</span> <span class="pre">ID</span> <span class="pre">HERE]</span></code>.</li>
-<li>Add the <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code> file to the deployment server at the same level as the Chaise folder (e.g.,<code class="docutils literal notranslate"><span class="pre">/var/www/html/gtm-id.js</span></code>).</li>
-</ol>
+<ol>
+<li><p class="first">Add your GTM container ID on the first uncommented line, <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">gtmId</span> <span class="pre">=</span> <span class="pre">[YOUR</span> <span class="pre">CONTAINER</span> <span class="pre">ID</span> <span class="pre">HERE]</span></code>.</p>
+</li>
+<li><p class="first">Add the <code class="docutils literal notranslate"><span class="pre">gtm-id.js</span></code> file to the deployment server at the same level as the Chaise folder (e.g.,<code class="docutils literal notranslate"><span class="pre">/var/www/html/gtm-id.js</span></code>).</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="c1">// When this file is loaded, it will run the 2 Google Tag Manager tags.</span><span class="w"></span>
 <span class="c1">// To use: Supply your Google Tag Manager container ID on the next line.</span><span class="w"></span>
 <span class="kd">var</span><span class="w"> </span><span class="nx">gtmId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w"> </span><span class="c1">// Change null to be your GTM ID (e.g. &quot;GTM-XXXXXX&quot;)</span><span class="w"></span>
@@ -1350,7 +1351,7 @@
 <span class="w">    </span><span class="nx">j</span><span class="o">=</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span><span class="nx">dl</span><span class="o">=</span><span class="nx">l</span><span class="o">!=</span><span class="s1">&#39;dataLayer&#39;</span><span class="o">?</span><span class="s1">&#39;&amp;l=&#39;</span><span class="o">+</span><span class="nx">l</span><span class="o">:</span><span class="s1">&#39;&#39;</span><span class="p">;</span><span class="nx">j</span><span class="p">.</span><span class="k">async</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span><span class="nx">j</span><span class="p">.</span><span class="nx">src</span><span class="o">=</span><span class="w"></span>
 <span class="w">    </span><span class="s1">&#39;https://www.googletagmanager.com/gtm.js?id=&#39;</span><span class="o">+</span><span class="nx">i</span><span class="o">+</span><span class="nx">dl</span><span class="p">;</span><span class="nx">f</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="nx">f</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="nb">document</span><span class="p">,</span><span class="s1">&#39;script&#39;</span><span class="p">,</span><span class="s1">&#39;dataLayer&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">gtmId</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span>
+
 <span class="w">    </span><span class="c1">// Insert &lt;body&gt; tag</span><span class="w"></span>
 <span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">bodyScript</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;noscript&#39;</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="nx">bodyScript</span><span class="p">.</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&lt;iframe src=&quot;https://www.googletagmanager.com/ns.html?id=&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">gtmId</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;&quot; height=&quot;0&quot; width=&quot;0&quot; style=&quot;display:none;visibility:hidden&quot;&gt;&lt;/iframe&gt;&#39;</span><span class="p">;</span><span class="w"></span>
@@ -1360,6 +1361,8 @@
 <span class="p">})(</span><span class="nx">gtmId</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
+</li>
+</ol>
 <p>By doing this, Chaise is now connected to the GTM container and will collect user data for you.</p>
 </div>
 <div class="section" id="add-gtm-container-to-static-pages">
@@ -1377,6 +1380,176 @@
 <ol class="simple">
 <li>We need first to grab the measurement ID associated with our GA account. The ID will start with <em>“G-“</em> and on new accounts is visible on the home page of the GA account. If you cannot find it, navigate to the “Admin” page. Click on “Data Streams” on this page. You should see a data stream, click on it, and it will show you the Measeuerment ID.</li>
 <li>Now that we have the measurement ID, we can navigate to the GTM home page and create a “tag” with it. This will ensure GTM data is sent to our GA account.</li>
+</ol>
+</div>
+<div class="section" id="make-sure-google-analytics-can-support-deriva-urls">
+<span id="make-sure-google-analytics-can-support-deriva-urls"></span><h2>6. Make sure Google Analytics can support Deriva URLs<a class="headerlink" href="#make-sure-google-analytics-can-support-deriva-urls" title="Permalink to this headline">¶</a></h2>
+<p>Google Analytics, by default, doesn’t report the URL fragment or query parameters. But Chaise and deriva-webapps rely on these parts of the URL, and we would like to have them as part of our reports.</p>
+<p>The following is how you can achieve this:</p>
+<ol>
+<li><p class="first">We first need to create a custom variable in GTM that captures the value we want. So navigate to the GTM page for the deployment.</p>
+</li>
+<li><p class="first">Navigate to the “Variables” page in the sidebar menu.</p>
+</li>
+<li><p class="first">Change the name of the variable to whatever you would like. In this tutorial, we will use “Customized Deriva Page Path”.</p>
+</li>
+<li><p class="first">Click on “New” of the “User-Defined Variables”.</p>
+</li>
+<li><p class="first">Choose the “Custom JavaScript” variable type.</p>
+</li>
+<li><p class="first">Copy the following code in the code block and save it. As we mentioned in the code, you should add your own rules for special pages that you might. For any pages that is not chaise or deriva-webapps, we’re reporting the query parameter. If you don’t want this behavior, feel free to change it.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * TODO feel free to customize it by adding special rules for your own pages.</span>
+<span class="cm"> *</span>
+<span class="cm"> * make sure path includes the information that we care about.</span>
+<span class="cm"> * - for chaise pages:</span>
+<span class="cm"> *    - help and login: pathname with appropriate query parameters</span>
+<span class="cm"> *    - other apps:</span>
+<span class="cm"> *      - handle urls that are using query parameter instead of fragment</span>
+<span class="cm"> *      - include the fragment</span>
+<span class="cm"> *      - remove query parameters, facets, cfacets, sort, and page modifiers</span>
+<span class="cm"> * - for deriva-webapps:</span>
+<span class="cm"> *    - heatmap: pathname and the fragment</span>
+<span class="cm"> *    - other apps: pathname with appropriate query parameters</span>
+<span class="cm"> * - other pages: pathname and query parameters</span>
+<span class="cm"> */</span><span class="w"></span>
+<span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">pathname</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">pathStartsWith</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">getParameterByName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">RegExp</span><span class="p">(</span><span class="s1">&#39;[?&amp;]&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;=([^&amp;]*)&#39;</span><span class="p">).</span><span class="nx">exec</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">match</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">match</span><span class="p">[</span><span class="mf">1</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\+/g</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">getAllowedSearch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">allowedKeys</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">allowedQueryParams</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">allowedKeys</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">k</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">var</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getParameterByName</span><span class="p">(</span><span class="nx">k</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">q</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">          </span><span class="nx">allowedQueryParams</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">k</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;=&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">q</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">      </span><span class="p">})</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="nx">allowedQueryParams</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">allowedQueryParams</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// for chaise pages, remove query parameter, facet, and sort/page modifiers.</span><span class="w"></span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/chaise/&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// help url is different and allows `page` query parameter</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/chaise/help&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">getAllowedSearch</span><span class="p">([</span><span class="s1">&#39;page&#39;</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// login url is different from other apps</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/chaise/login&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// chaise can be initiated with query parameters instead of hash, so we should change it back to hash</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">hash</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="c1">// chaise urls have the query as part of fragment, so we should just remove it.</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// remove the facets</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;*::facets::&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;*::facets::&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// remove the custom facets</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;*::cfacets::&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;*::cfacets::&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// remove the sort modifiers</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;@sort(&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;@sort(&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">      </span><span class="c1">// remove the page modifiers</span><span class="w"></span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;@page(&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;@page(&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">hash</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// heatmap can have hash and we should keep it</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/deriva-webapps/heatmap&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// query parameters could be part of the hash, so remove it</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="o">-</span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">hash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">hash</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;?&#39;</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">hash</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// for deriva-webapps keep some part of the query parameters</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/deriva-webapps/&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">allowedKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/deriva-webapps/plot&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">allowedKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;NCBI_GeneID&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Study&#39;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/deriva-webapps/treeview&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">allowedKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;Specimen_RID&#39;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pathStartsWith</span><span class="p">(</span><span class="s1">&#39;/deriva-webapps/matrix&#39;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nx">allowedKeys</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">getAllowedSearch</span><span class="p">(</span><span class="nx">allowedKeys</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// TODO add any other rules for any other special page that your deployment might have.</span><span class="w"></span>
+
+<span class="w">  </span><span class="c1">// for any page: remove the url fragment and keep the query parameter</span><span class="w"></span>
+<span class="w">  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">pathname</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Navigate to the “Tags” page in the sidebar menu and click on your tag.</p>
+</li>
+<li><p class="first">Modify your tag Configuration by adding a new “Fields to Set”.</p>
+</li>
+<li><p class="first">In this tutorial, we will use “customized_deriva_page_path” for “Field Name”. And for “Value”, click the plus button beside the field and choose the user-defined variable you created previously.</p>
+</li>
+<li><p class="first">Save the changes to your tag.</p>
+</li>
+<li><p class="first">Click on “Submit” on the top right to publish your changes.</p>
+</li>
+<li><p class="first">With this, GTM will report this new variable to Google Analytics. Now, we need to ensure this variable is part of our Google Analytics reports. To do so, navigate to your Google Analytics page.</p>
+</li>
+<li><p class="first">Go to the “Admin” page (the wheel icon on the bottom left of the page).</p>
+</li>
+<li><p class="first">Click on “Custom definitions” and then “Create custom dimensions”.</p>
+</li>
+<li><p class="first">The “Dimension name” is the name that shows up in Google Analytics. It can be any value that you would like. In this tutorial, we will use the same name we chose in GTM, “Customized Deriva Page Path”.</p>
+</li>
+<li><p class="first">The “Event parameter” must be the same name that you choose for “Field Name” in GTM (step 9). So, “customized_deriva_page_path”.</p>
+</li>
+<li><p class="first">You can now use this new dimension in your Google Analytics reports. Please refer to the official guides for creating or customizing Google Analytics reports. But to give you an example, the following is how you can add this custom dimension to the default “Page and Screens” report.
+a. You can find the “Page and Screens” report under “Reports” &gt; “Engagement”. It’s also included as part of the default homepage of Reports.
+b. Click on the Customize report on the top right (pencil icon).
+c. It will show some options on the right side of the page. You should see “Dimensions” under the “Report Data” section. Click on it.
+d. Click “Add dimension” to find the custom dimension you’ve added.
+e. Apply and save your changes.</p>
+</li>
 </ol>
 </div>
 </div>

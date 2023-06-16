@@ -1139,6 +1139,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#include-navbar-dependencies">2. Include navbar dependencies</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#prefetch-custom-styles-optional">3. Prefetch custom styles (optional)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#use-navbar">4. Use navbar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#avoid-manually-including-bootstrap">5. Avoid manually including bootstrap</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-configure-navbar">How to configure navbar</a></li>
@@ -1323,6 +1324,7 @@
 </li>
 <li><a class="reference external" href="#3-prefetch-custom-styles-optional">3. Prefetch custom styles (optional)</a></li>
 <li><a class="reference external" href="#4-use-navbar">4. Use navbar</a></li>
+<li><a class="reference external" href="#5-avoid-manually-including-bootstrap">5. Avoid manually injecting bootstrap</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#how-to-configure-navbar">How to configure navbar</a></li>
@@ -1427,6 +1429,10 @@
 <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="avoid-manually-including-bootstrap">
+<span id="avoid-manually-including-bootstrap"></span><h3>5. Avoid manually including bootstrap<a class="headerlink" href="#avoid-manually-including-bootstrap" title="Permalink to this headline">¶</a></h3>
+<p>Chaise uses <a class="reference external" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/">Bootstrap version 5.1.9</a>, so it will be included in pages using Navbar. Therefore there’s no reason to include Bootstrap manually. Apart from an extra file that has to be fetched to render the page, the Bootstrap version you have included might be different from the one that Chaises uses, which might have some side effects.</p>
 </div>
 </div>
 <div class="section" id="how-to-configure-navbar">
@@ -1542,6 +1548,8 @@
 <li>The default color of links and buttons has been changed (Bootstrap 5 uses a less saturated blue color. Links also show the underline in the new version).</li>
 <li>Bootstrap rules for <code class="docutils literal notranslate"><span class="pre">container</span></code> width and margin have changed.</li>
 </ul>
+</li>
+<li><p class="first">As mentioned in <a class="reference external" href="#5-avoid-manually-including-bootstrap">here</a>, you should not include bootstrap in your static site and rely on the one that navbar dependencies will include. So if you have <code class="docutils literal notranslate"><span class="pre">bootstrap.min.css</span></code> or <code class="docutils literal notranslate"><span class="pre">bootstrap.css</span></code> on your pages, you should remove them. Otherwise, the clashing rules might have some unwanted consequences.</p>
 </li>
 </ol>
 </div>

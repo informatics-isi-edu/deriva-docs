@@ -1346,7 +1346,8 @@
 <li><a class="reference external" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li><a class="reference external" href="#subexpressions">Subexpressions</a></li>
 <li><a class="reference external" href="#helpers">Helpers</a><ul>
-<li><a class="reference external" href="#formatdate-helper">FormatDate</a></li>
+<li><a class="reference external" href="#formatdate-helper">formatDate</a></li>
+<li><a class="reference external" href="#humanizebytes-helper">humanizeBytes</a></li>
 <li><a class="reference external" href="#math-helpers">Math Helpers</a></li>
 </ul>
 </li>
@@ -1542,7 +1543,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <div class="section" id="formatdate-helper">
-<span id="formatdate-helper"></span><h3>FormatDate helper<a class="headerlink" href="#formatdate-helper" title="Permalink to this headline">¶</a></h3>
+<span id="formatdate-helper"></span><h3>formatDate helper<a class="headerlink" href="#formatdate-helper" title="Permalink to this headline">¶</a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">formatDate</span></code> helper to take any <code class="docutils literal notranslate"><span class="pre">date</span></code> or <code class="docutils literal notranslate"><span class="pre">timestamp[tz]</span></code> value and format it according to the <a class="reference internal" href="pre-format.html#syntax-for-dates-and-timestamps"><span class="std std-ref">Pre Format Guide</span></a>.</p>
 <p>Syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDate</span> <span class="n">value</span> <span class="nb">format</span><span class="p">}}</span>
@@ -1550,6 +1551,39 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDate</span> <span class="s1">&#39;30-08-2018&#39;</span> <span class="s1">&#39;YYYY&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;2018&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="humanizebytes-helper">
+<span id="humanizebytes-helper"></span><h3>humanizeBytes helper<a class="headerlink" href="#humanizebytes-helper" title="Permalink to this headline">¶</a></h3>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">humanizeBytes</span></code> helper to convert byte count to human readable format.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span> <span class="nb">format</span> <span class="n">precision</span><span class="p">}}</span>
+
+<span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span><span class="p">}}</span>
+
+<span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span> <span class="nb">format</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>The parameters are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">value</span></code>: The value (or the column name that has the value).</li>
+<li><code class="docutils literal notranslate"><span class="pre">format</span></code>: Can either be <code class="docutils literal notranslate"><span class="pre">&quot;binary&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;si&quot;</span></code> depending on the output format that you would like. If missing or invalid, <code class="docutils literal notranslate"><span class="pre">&quot;si&quot;</span></code> will be used.</li>
+<li><code class="docutils literal notranslate"><span class="pre">precision</span></code>: An optional integer specifying the number of digits.<ul>
+<li>If we cannot show all the fractional digits of a number due to the defined precision, we will truncate the number (we will not round up or down). So for example <code class="docutils literal notranslate"><span class="pre">999999</span></code> with precision=3 will result in <code class="docutils literal notranslate"><span class="pre">999</span> <span class="pre">kB</span></code>, and with precision=4 will be <code class="docutils literal notranslate"><span class="pre">999.9</span> <span class="pre">kB</span></code>.</li>
+<li>In ‘si’ mode, you cannot define precision of less than 3 since it would mean that we have to potentially truncate the integer part of the <code class="docutils literal notranslate"><span class="pre">value</span></code>. Similarly, precision of less than 4 are not allowed in <code class="docutils literal notranslate"><span class="pre">binary</span></code>.</li>
+<li>Any invalid precision will be ignored and the minimum number allowed will be used (3 in <code class="docutils literal notranslate"><span class="pre">si</span></code> and 4 in <code class="docutils literal notranslate"><span class="pre">binary</span></code>).</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="mi">41235532</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;41.2 MB&#39;</span>
+
+<span class="p">{{</span><span class="n">humanizeBytes</span> <span class="mi">41235532</span> <span class="s1">&#39;si&#39;</span> <span class="mi">4</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;41.23 MB&#39;</span>
+
+<span class="p">{{</span><span class="n">humanizeBytes</span> <span class="mi">41235532</span> <span class="s1">&#39;binary&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;39.32 MiB&#39;</span>
+
+<span class="p">{{</span><span class="n">humanizeBytes</span> <span class="mi">41235532</span> <span class="s1">&#39;binary&#39;</span> <span class="mi">5</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;39.325 MiB&#39;</span>
 </pre></div>
 </div>
 </div>

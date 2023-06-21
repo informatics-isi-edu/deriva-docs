@@ -305,32 +305,27 @@
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../deriva-py/index.html">Python Command-line Clients and API (deriva-py)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html">DataPath</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#tutorials">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html">Deriva Python APIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-query-and-data-manipulation">ERMrest Query and Data Manipulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#tutorials">Tutorials</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-model-management">ERMrest Model Management</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#examples">Examples</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-schema-to-catalog">Add Schema to Catalog</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-table-to-schema">Add Table to Schema</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#add-column-to-table">Add Column to Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#alter-a-table">Alter a Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#limitations">Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#ermrest-catalog">ERMrest Catalog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#client-credentials">Client Credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deriva-py/README.html#http-caching">HTTP Caching</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/README.html#ermrestcatalog">ErmrestCatalog</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#catalog-binding">Catalog Binding</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#client-credentials">Client Credentials</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#high-level-api-factories">High-Level API Factories</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#low-level-http-methods">Low-Level HTTP Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../deriva-py/README.html#http-caching">HTTP Caching</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../deriva-py/api/deriva.html">Source Code and Module Documentation (deriva package)</a><ul>
@@ -1359,11 +1354,31 @@
 
 <div class="viewcode-block" id="equivalent"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.equivalent">[docs]</a><span class="k">def</span> <span class="nf">equivalent</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="n">doc2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Determine whether two dict/array/literal documents are structurally equivalent.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;acl_binding&#39;</span><span class="p">:</span>
-        <span class="c1"># fill in defaults to avoid some false negatives on acl binding comparison</span>
+    <span class="c1"># method is used to fill in defaults to avoid some false negatives</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;acls&#39;</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">def</span> <span class="nf">canonicalize</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">canon_acls</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="n">canon_acls</span><span class="p">(</span><span class="n">doc1</span><span class="p">),</span> <span class="n">canon_acls</span><span class="p">(</span><span class="n">doc2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;catalog_acls&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">def</span> <span class="nf">canon_cat_acls</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">k</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">[])</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;owner&#39;</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="s1">&#39;write&#39;</span><span class="p">,</span> <span class="s1">&#39;insert&#39;</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="n">canon_cat_acls</span><span class="p">(</span><span class="n">doc1</span><span class="p">),</span> <span class="n">canon_cat_acls</span><span class="p">(</span><span class="n">doc2</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acls&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;foreign_key_acls&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="n">doc2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acls&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;acl_bindings&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">def</span> <span class="nf">canon_acl_bindings</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">d</span>
             <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
@@ -1379,7 +1394,7 @@
                 <span class="n">binding_name</span><span class="p">:</span> <span class="n">helper</span><span class="p">(</span><span class="n">binding</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">binding_name</span><span class="p">,</span> <span class="n">binding</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">}</span>
-        <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="n">canonicalize</span><span class="p">(</span><span class="n">doc1</span><span class="p">),</span> <span class="n">canonicalize</span><span class="p">(</span><span class="n">doc2</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="n">canon_acl_bindings</span><span class="p">(</span><span class="n">doc1</span><span class="p">),</span> <span class="n">canon_acl_bindings</span><span class="p">(</span><span class="n">doc2</span><span class="p">))</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc2</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">equivalent</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">doc1</span><span class="o">.</span><span class="n">items</span><span class="p">()),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">doc2</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">doc2</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
@@ -1481,7 +1496,7 @@
             <span class="n">existing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fromcatalog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;/annotation&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;catalog_acls&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s1">&#39;/acl&#39;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">sname</span><span class="p">,</span> <span class="n">schema</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">schema</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">existing</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">])</span></div>
@@ -1786,7 +1801,7 @@
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acls&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acls</span>
         <span class="k">if</span> <span class="n">changes</span><span class="p">:</span>
             <span class="c1"># use alter method to reduce number of web requests</span>
@@ -2358,9 +2373,9 @@
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acls&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acls</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span>
         <span class="k">if</span> <span class="n">changes</span><span class="p">:</span>
             <span class="c1"># use alter method to reduce number of web requests</span>
@@ -2803,9 +2818,9 @@
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acls&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acls</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span>
         <span class="k">if</span> <span class="n">changes</span><span class="p">:</span>
             <span class="c1"># use alter method to reduce number of web requests</span>
@@ -3017,7 +3032,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Key.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.Key.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding table in catalog unless existing already matches.</span>
+        <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding key in catalog unless existing already matches.</span>
 
 <span class="sd">        :param existing: An instance comparable to self, or None to apply configuration unconditionally.</span>
 
@@ -3231,6 +3246,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">clear_acls</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;insert&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span> <span class="s2">&quot;update&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]})</span>
         <span class="k">if</span> <span class="n">clear_acl_bindings</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">clear_annotations</span><span class="p">:</span>
@@ -3239,7 +3255,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="ForeignKey.apply"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.ForeignKey.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">existing</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding table in catalog unless existing already matches.</span>
+        <span class="sd">&quot;&quot;&quot;Apply configuration to corresponding foreign key in catalog unless existing already matches.</span>
 
 <span class="sd">        :param existing: An instance comparable to self, or None to apply configuration unconditionally.</span>
 
@@ -3252,9 +3268,9 @@
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;comment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
         <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">annotations</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acls</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;foreign_key_acls&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acls</span>
-        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">existing</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">equivalent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">existing</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">):</span>
             <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acl_bindings</span>
         <span class="k">if</span> <span class="n">changes</span><span class="p">:</span>
             <span class="c1"># use alter method to reduce number of web requests</span>

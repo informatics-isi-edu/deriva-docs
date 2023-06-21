@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DataPath &mdash; DERIVA Docs current documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Deriva Python APIs &mdash; DERIVA Docs current documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" /><link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="canonical" href="http://docs.derivacloud.org/deriva-py/README.html" />
@@ -307,32 +307,27 @@
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Command-line Clients and API (deriva-py)</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">DataPath</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tutorials">Tutorials</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Deriva Python APIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ermrest-query-and-data-manipulation">ERMrest Query and Data Manipulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tutorials">Tutorials</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#ermrest-model-management">ERMrest Model Management</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#add-schema-to-catalog">Add Schema to Catalog</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#add-table-to-schema">Add Table to Schema</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#add-a-vocabulary-term-table">Add a Vocabulary Term Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#add-column-to-table">Add Column to Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#remove-a-column-from-a-table">Remove a Column from a Table</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#alter-a-table">Alter a Table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ermrest-model-management">ERMrest Model Management</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limitations">Limitations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#ermrest-catalog">ERMrest Catalog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#catalog-binding">Catalog Binding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#client-credentials">Client Credentials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#high-level-api-factories">High-Level API Factories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#low-level-http-methods">Low-Level HTTP Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#http-caching">HTTP Caching</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#ermrestcatalog">ErmrestCatalog</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#catalog-binding">Catalog Binding</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#client-credentials">Client Credentials</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#high-level-api-factories">High-Level API Factories</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#low-level-http-methods">Low-Level HTTP Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#http-caching">HTTP Caching</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="api/deriva.html">Source Code and Module Documentation (deriva package)</a><ul>
@@ -1270,7 +1265,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Python Command-line Clients and API (deriva-py)</a> &raquo;</li>
-      <li>DataPath</li>
+      <li>Deriva Python APIs</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/deriva-py/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -1304,24 +1299,31 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="datapath">
-<span id="datapath"></span><h1>DataPath<a class="headerlink" href="#datapath" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="deriva-python-apis">
+<span id="deriva-python-apis"></span><h1>Deriva Python APIs<a class="headerlink" href="#deriva-python-apis" title="Permalink to this headline">¶</a></h1>
+<p>This page describes 3 separate but related interfaces for DERIVA.</p>
+<ol class="simple">
+<li><a class="reference external" href="#ermrest-query-and-data-manipulation">ERMrest Query and Data Manipulation</a>: interfaces for building simple to complex expressions that query or manipulate data in ERMrest, such as selects, joins, aggregates, inserts, updates, etc.</li>
+<li><a class="reference external" href="#ermrest-model-management">ERMrest Model Management</a>: essential model management for ERMrest catalogs, such as creating or dropping tables, columns, etc. Also, see <a class="reference external" href="https://github.com/informatics-isi-edu/chisel">CHiSEL</a> for ERMrest schema evolution interfaces that build on ERMrest Model Management with operations that combine model management and annotation updates in one.</li>
+<li><a class="reference external" href="#ermrest-catalog">ERMrest Catalog</a>: primary interface to an ERMrest catalog and the starting point for accessing the above interfaces.</li>
+</ol>
+<div class="section" id="ermrest-query-and-data-manipulation">
+<span id="ermrest-query-and-data-manipulation"></span><h2>ERMrest Query and Data Manipulation<a class="headerlink" href="#ermrest-query-and-data-manipulation" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">datapath</span></code> module is an interface for building ERMrest “data paths” and retrieving data from ERMrest catalogs. It also supports data manipulation (insert, update, delete). In its present form, the module provides a limited
 programmatic interface to ERMrest.</p>
 <div class="section" id="features">
-<span id="features"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<span id="features"></span><h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Build ERMrest “data path” URLs with a Pythonic interface</li>
 <li>Covers the essentials for data retrieval: link tables, filter on attributes, select attributes, alias tables</li>
 <li>Retrieve entity sets; all or limited numbers of entities</li>
 <li>Fetch computed aggregates or grouped aggregates</li>
-<li>Convert entity sets to Pandas DataFrames</li>
 <li>Insert and update entities of a table</li>
 <li>Delete entities identified by a (potentially, complex) data path</li>
 </ul>
 </div>
 <div class="section" id="limitations">
-<span id="limitations"></span><h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<span id="limitations"></span><h3>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Only supports <code class="docutils literal notranslate"><span class="pre">application/json</span></code> CONTENT-TYPE (i.e., protocol could be made more efficient).</li>
 <li>The <code class="docutils literal notranslate"><span class="pre">ResultSet</span></code> interface is a thin wrapper over a dictionary of a list of results.</li>
@@ -1330,7 +1332,7 @@ custom <code class="docutils literal notranslate"><span class="pre">Exception</s
 </ul>
 </div>
 <div class="section" id="tutorials">
-<span id="tutorials"></span><h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h2>
+<span id="tutorials"></span><h3>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h3>
 <p>See the Jupyter Notebook tutorials in the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder.</p>
 <ul class="simple">
 <li><a class="reference internal" href="derivapy-datapath-example-1.html"><span class="doc">Example 1</span></a>: basic schema inspection</li>
@@ -1343,7 +1345,7 @@ custom <code class="docutils literal notranslate"><span class="pre">Exception</s
 </div>
 </div>
 <div class="section" id="ermrest-model-management">
-<span id="ermrest-model-management"></span><h1>ERMrest Model Management<a class="headerlink" href="#ermrest-model-management" title="Permalink to this headline">¶</a></h1>
+<span id="ermrest-model-management"></span><h2>ERMrest Model Management<a class="headerlink" href="#ermrest-model-management" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">core.ermrest_model</span></code> module provides an interface for managing the
 model (schema definitions) of an ERMrest catalog.  This library
 provides an (incomplete) set of helper routines for common model
@@ -1353,7 +1355,7 @@ supported in this library, a client may need to resort to direct usage
 of the low-level <code class="docutils literal notranslate"><span class="pre">deriva.core.ermrest_catalog.ErmrestCatalog</span></code> HTTP
 access layer.</p>
 <div class="section" id="features">
-<span id="id1"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h3>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Obtain an object hierarchy mirroring the model of a catalog or catalog snapshot.</li>
 <li>Discover names of schemas, tables, and columns as well as definitions where applicable.</li>
@@ -1394,7 +1396,7 @@ access layer.</p>
 </ul>
 </div>
 <div class="section" id="limitations">
-<span id="id2"></span><h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h3>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h3>
 <p>Because the model management interface mirrors a complex remote
 catalog model with a hierarchy of local objects, it is possible for
 the local objects to get out of synchronization with the remote
@@ -1409,7 +1411,7 @@ its model representation, reconstruct it to match the latest server
 state, and retry whatever changes are intended.</p>
 </div>
 <div class="section" id="examples">
-<span id="examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<span id="examples"></span><h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
 <p>For the following examples, we assume this common setup:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">deriva.core</span> <span class="kn">import</span> <span class="n">ErmrestCatalog</span>
 <span class="kn">import</span> <span class="nn">deriva.core.ermrest_model</span> <span class="k">as</span> <span class="nn">em</span>
@@ -1426,14 +1428,14 @@ the model definition are immutable once set, but in general <code class="docutil
 <code class="docutils literal notranslate"><span class="pre">acl</span></code>, <code class="docutils literal notranslate"><span class="pre">acl_binding</span></code>, and <code class="docutils literal notranslate"><span class="pre">annotation</span></code> attributes can be modified after
 the fact through configuration management APIs.</p>
 <div class="section" id="add-schema-to-catalog">
-<span id="add-schema-to-catalog"></span><h3>Add Schema to Catalog<a class="headerlink" href="#add-schema-to-catalog" title="Permalink to this headline">¶</a></h3>
+<span id="add-schema-to-catalog"></span><h4>Add Schema to Catalog<a class="headerlink" href="#add-schema-to-catalog" title="Permalink to this headline">¶</a></h4>
 <p>To create a new schema, call the model’s schema-creation method.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">schema</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">create_schema</span><span class="p">({</span><span class="s2">&quot;schema_name&quot;</span><span class="p">:</span> <span class="s2">&quot;My new schema&quot;</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="add-table-to-schema">
-<span id="add-table-to-schema"></span><h3>Add Table to Schema<a class="headerlink" href="#add-table-to-schema" title="Permalink to this headline">¶</a></h3>
+<span id="add-table-to-schema"></span><h4>Add Table to Schema<a class="headerlink" href="#add-table-to-schema" title="Permalink to this headline">¶</a></h4>
 <p>To create a new table, you build a table definition document and pass
 it to the table-creation method on the object representing an existing
 schema. The various classes involved include class-methods
@@ -1486,7 +1488,7 @@ definition, so the caller does not need to reconstruct these standard elements
 of the column definitions nor the <code class="docutils literal notranslate"><span class="pre">RID</span></code> key definition.</p>
 </div>
 <div class="section" id="add-a-vocabulary-term-table">
-<span id="add-a-vocabulary-term-table"></span><h3>Add a Vocabulary Term Table<a class="headerlink" href="#add-a-vocabulary-term-table" title="Permalink to this headline">¶</a></h3>
+<span id="add-a-vocabulary-term-table"></span><h4>Add a Vocabulary Term Table<a class="headerlink" href="#add-a-vocabulary-term-table" title="Permalink to this headline">¶</a></h4>
 <p>A vocabulary term table is often useful to track a controlled
 vocabulary used as a domain table for foreign key values used in
 science data columns.  A simple vocabulary term table can be
@@ -1508,7 +1510,7 @@ sophisticated caller can use to override or extend these core
 structures.</p>
 </div>
 <div class="section" id="add-column-to-table">
-<span id="add-column-to-table"></span><h3>Add Column to Table<a class="headerlink" href="#add-column-to-table" title="Permalink to this headline">¶</a></h3>
+<span id="add-column-to-table"></span><h4>Add Column to Table<a class="headerlink" href="#add-column-to-table" title="Permalink to this headline">¶</a></h4>
 <p>To create a new column, you build a column definition document and
 pass it to the column-creation method on the object representing an
 existing table.</p>
@@ -1531,7 +1533,7 @@ existing table via <code class="docutils literal notranslate"><span class="pre">
 be added to a model with <code class="docutils literal notranslate"><span class="pre">model.create_schema(schema_def)</span></code>.</p>
 </div>
 <div class="section" id="remove-a-column-from-a-table">
-<span id="remove-a-column-from-a-table"></span><h3>Remove a Column from a Table<a class="headerlink" href="#remove-a-column-from-a-table" title="Permalink to this headline">¶</a></h3>
+<span id="remove-a-column-from-a-table"></span><h4>Remove a Column from a Table<a class="headerlink" href="#remove-a-column-from-a-table" title="Permalink to this headline">¶</a></h4>
 <p>To remove or “drop” a column, you invoke the <code class="docutils literal notranslate"><span class="pre">drop()</span></code> method on the
 column object itself:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">model_root</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
@@ -1545,7 +1547,7 @@ respectively. Similarly, a schema or table can be removed with
 <code class="docutils literal notranslate"><span class="pre">schema.drop()</span></code> or <code class="docutils literal notranslate"><span class="pre">table.drop()</span></code>, respectively.</p>
 </div>
 <div class="section" id="alter-a-table">
-<span id="alter-a-table"></span><h3>Alter a Table<a class="headerlink" href="#alter-a-table" title="Permalink to this headline">¶</a></h3>
+<span id="alter-a-table"></span><h4>Alter a Table<a class="headerlink" href="#alter-a-table" title="Permalink to this headline">¶</a></h4>
 <p>To alter certain aspects of an existing table, you invoke the
 <code class="docutils literal notranslate"><span class="pre">alter()</span></code> method with optional keyword arguments for the aspects you
 wish to change. The default for omitted keyword arguments is a special
@@ -1602,8 +1604,8 @@ atomically with respect to the other indicated alterations.</p>
 </div>
 </div>
 </div>
-<div class="section" id="ermrestcatalog">
-<span id="ermrestcatalog"></span><h1>ErmrestCatalog<a class="headerlink" href="#ermrestcatalog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ermrest-catalog">
+<span id="ermrest-catalog"></span><h2>ERMrest Catalog<a class="headerlink" href="#ermrest-catalog" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">deriva.core.ermrest_catalog.ErmrestCatalog</span></code> class provides HTTP
 bindings to an ERMrest catalog as a thin wrapper around the Python
 Requests library.  Likewise, the
@@ -1621,7 +1623,7 @@ requests in terms of URL paths and resource representations.</p>
 class and exposed via factory-like methods integrated into each catalog
 instance.</p>
 <div class="section" id="catalog-binding">
-<span id="catalog-binding"></span><h2>Catalog Binding<a class="headerlink" href="#catalog-binding" title="Permalink to this headline">¶</a></h2>
+<span id="catalog-binding"></span><h3>Catalog Binding<a class="headerlink" href="#catalog-binding" title="Permalink to this headline">¶</a></h3>
 <p>A catalog is bound using the class constructor, given parameters
 necessary for binding:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">deriva.core.ermrest_catalog</span> <span class="kn">import</span> <span class="n">ErmrestCatalog</span>
@@ -1637,7 +1639,7 @@ necessary for binding:</p>
 </div>
 </div>
 <div class="section" id="client-credentials">
-<span id="client-credentials"></span><h2>Client Credentials<a class="headerlink" href="#client-credentials" title="Permalink to this headline">¶</a></h2>
+<span id="client-credentials"></span><h3>Client Credentials<a class="headerlink" href="#client-credentials" title="Permalink to this headline">¶</a></h3>
 <p>In the preceding example, a credential is obtained from the filesystem
 assuming that the user has activated the <code class="docutils literal notranslate"><span class="pre">deriva-auth</span></code> authentication
 agent prior to executing this code. For catalogs allowing anonymous
@@ -1651,7 +1653,7 @@ catalog objects and choose the appropriate object for each request
 scenario.</p>
 </div>
 <div class="section" id="high-level-api-factories">
-<span id="high-level-api-factories"></span><h2>High-Level API Factories<a class="headerlink" href="#high-level-api-factories" title="Permalink to this headline">¶</a></h2>
+<span id="high-level-api-factories"></span><h3>High-Level API Factories<a class="headerlink" href="#high-level-api-factories" title="Permalink to this headline">¶</a></h3>
 <p>Several optional access APIs are layered on top of <code class="docutils literal notranslate"><span class="pre">ErmrestCatalog</span></code>
 and/or <code class="docutils literal notranslate"><span class="pre">ErmrestSnapshot</span></code> and may be accessed by invoking convenient
 factory methods on a catalog or snapshot object:</p>
@@ -1678,7 +1680,7 @@ factory methods on a catalog or snapshot object:</p>
 </ul>
 </div>
 <div class="section" id="low-level-http-methods">
-<span id="low-level-http-methods"></span><h2>Low-Level HTTP Methods<a class="headerlink" href="#low-level-http-methods" title="Permalink to this headline">¶</a></h2>
+<span id="low-level-http-methods"></span><h3>Low-Level HTTP Methods<a class="headerlink" href="#low-level-http-methods" title="Permalink to this headline">¶</a></h3>
 <p>When the client understands the URL structuring conventions of
 ERMrest, they can use basic Python Requests idioms on a catalog
 instance:</p>
@@ -1717,7 +1719,7 @@ field or use the <code class="docutils literal notranslate"><span class="pre">ra
 request was successful.</p>
 </div>
 <div class="section" id="http-caching">
-<span id="http-caching"></span><h2>HTTP Caching<a class="headerlink" href="#http-caching" title="Permalink to this headline">¶</a></h2>
+<span id="http-caching"></span><h3>HTTP Caching<a class="headerlink" href="#http-caching" title="Permalink to this headline">¶</a></h3>
 <p>By default, the catalog binding uses HTTP caching for the
 <code class="docutils literal notranslate"><span class="pre">catalog.get</span></code> method: it will store previous responses, include
 appropriate <code class="docutils literal notranslate"><span class="pre">If-None-Match</span></code> headers in the new HTTP GET request,
@@ -1725,6 +1727,7 @@ detect <code class="docutils literal notranslate"><span class="pre">304</span> <
 valid, and return the cached content to the caller. This mechanism can
 be disabled by specifying <code class="docutils literal notranslate"><span class="pre">caching=False</span></code> in the ErmrestCatalog
 constructor call.</p>
+</div>
 </div>
 </div>
 

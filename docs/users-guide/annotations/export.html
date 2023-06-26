@@ -1345,7 +1345,7 @@
 <span class="w">          </span><span class="p">{</span><span class="w"></span>
 <span class="w">            </span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">              </span><span class="s2">&quot;api&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">query</span><span class="o">-</span><span class="nx">type</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// entity, attribute, attribute-group</span><span class="w"></span>
-<span class="w">              </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">optional</span><span class="o">-</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">predicate</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// used to represent more complex queries</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">optional</span><span class="o">-</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">path</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// used to represent more complex queries</span><span class="w"></span>
 <span class="w">              </span><span class="s2">&quot;skip_root_path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="kr">boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">// used to skip adding the root path and starting the path from scratch</span><span class="w"></span>
 <span class="w">            </span><span class="p">},</span><span class="w"></span>
 <span class="w">            </span><span class="nx">destination</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -1403,6 +1403,8 @@ we removed this from documentation because we didn't want to confuse users.
 <!---
 | `skip_limit` | boolean | optional | If the ERMrest API that is used is any of [`entity`,`attribute`, `attributegroup`, `aggregate`], we're adding a `limit=none` query parameter. Set this to `true` to skip this.
 --><ul>
+<li><p class="first">The leading and trailing slash that you might have defined in your <code class="docutils literal notranslate"><span class="pre">path</span></code> will be stripped off and ignored.</p>
+</li>
 <li><p class="first">The table entity that the template is bound to is considered the <em>root</em> of the query for join purposes. Therefore this is how a query is going to be constructed based on the given attributes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">api</span><span class="o">&gt;/&lt;</span><span class="n">current</span> <span class="n">root</span> <span class="n">path</span><span class="o">&gt;/&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">path</span><span class="o">&gt;</span>
 </pre></div>
@@ -1412,9 +1414,9 @@ we removed this from documentation because we didn't want to confuse users.
 </pre></div>
 </div>
 </li>
-<li><p class="first">We are reserving the <code class="docutils literal notranslate"><span class="pre">M</span></code> alias for referring to the table entity that the template is bound to. So if you need to refer to that table in your path, you can use the reserved alias name.</p>
+<li><p class="first">Chaise will also apply <code class="docutils literal notranslate"><span class="pre">limit=none</span></code> query parameter if it is not detected in the defined <code class="docutils literal notranslate"><span class="pre">&lt;source.path&gt;</span></code>.</p>
 </li>
-<li><p class="first">The leading and trailing slash that you might have defined in your <code class="docutils literal notranslate"><span class="pre">path</span></code> will be stripped off and ignored.</p>
+<li><p class="first">We are reserving the <code class="docutils literal notranslate"><span class="pre">M</span></code> alias for referring to the table entity that the template is bound to. So if you need to refer to that table in your path, you can use the reserved alias name.</p>
 </li>
 </ul>
 <p>The following are some examples to better understand the output syntax. These are written for the table <code class="docutils literal notranslate"><span class="pre">pnc:metrics_v</span></code>,</p>

@@ -1345,7 +1345,8 @@
 <span class="w">          </span><span class="p">{</span><span class="w"></span>
 <span class="w">            </span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">              </span><span class="s2">&quot;api&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">query</span><span class="o">-</span><span class="nx">type</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// entity, attribute, attribute-group</span><span class="w"></span>
-<span class="w">              </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">optional</span><span class="o">-</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">predicate</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">// used to represent more complex queries</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">optional</span><span class="o">-</span><span class="nx">ermrest</span><span class="o">-</span><span class="nx">predicate</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="c1">// used to represent more complex queries</span><span class="w"></span>
+<span class="w">              </span><span class="s2">&quot;skip_root_path&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="kr">boolean</span><span class="o">&gt;</span><span class="w"> </span><span class="c1">// used to skip adding the root path and starting the path from scratch</span><span class="w"></span>
 <span class="w">            </span><span class="p">},</span><span class="w"></span>
 <span class="w">            </span><span class="nx">destination</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">              </span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">output</span><span class="o">-</span><span class="nx">file</span><span class="o">-</span><span class="nx">base</span><span class="o">-</span><span class="nx">name</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
@@ -1388,9 +1389,26 @@
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">source</span></code> | <code class="docutils literal notranslate"><span class="pre">source</span></code> | required | An object that contains parameters used to generate source data by querying ERMrest.
 | <code class="docutils literal notranslate"><span class="pre">destination</span></code> | <code class="docutils literal notranslate"><span class="pre">destination</span></code> | required | An object that contains parameters used to render the results of the source query into a specified destination format.</p>
-<ul>
+</div>
+<div class="section" id="source-object">
+<span id="source-object"></span><h4><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)<a class="headerlink" href="#source-object" title="Permalink to this headline">¶</a></h4>
+<p>| Variable | Type | Inclusion| Description |
+| — | — | — | — |
+| <code class="docutils literal notranslate"><span class="pre">api</span></code> | string, enum [<code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>, <code class="docutils literal notranslate"><span class="pre">aggregate</span></code>] | required | The type of ERMrest query projection to perform.  Valid values are <code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, and <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>.
+| <code class="docutils literal notranslate"><span class="pre">path</span></code> | string | optional | An optional ERMrest path predicate. The string MUST be escaped according to <a class="reference external" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a> if it contains user-generated identifiers that use the reserved character set. See the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrest/blob/master/docs/api-doc/index.md#url-conventions">ERMRest URL conventions</a> for additional information.
+| <code class="docutils literal notranslate"><span class="pre">skip_root_path</span></code> | boolean | optional | An optional flag that if it’s set to true, we will not prepend the defined <code class="docutils literal notranslate"><span class="pre">path</span></code> with <code class="docutils literal notranslate"><span class="pre">current</span> <span class="pre">root</span> <span class="pre">path</span></code>. In this case, <code class="docutils literal notranslate"><span class="pre">api</span></code> can also be any other APIs that ERMrest supports.</p>
+<!---
+we removed this from documentation because we didn't want to confuse users.
+-->
+<!---
+| `skip_limit` | boolean | optional | If the ERMrest API that is used is any of [`entity`,`attribute`, `attributegroup`, `aggregate`], we're adding a `limit=none` query parameter. Set this to `true` to skip this.
+--><ul>
 <li><p class="first">The table entity that the template is bound to is considered the <em>root</em> of the query for join purposes. Therefore this is how a query is going to be constructed based on the given attributes:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="o">&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">api</span><span class="o">&gt;/&lt;</span><span class="n">current</span> <span class="n">root</span> <span class="n">path</span><span class="o">&gt;/&lt;</span><span class="n">output</span><span class="o">.</span><span class="n">path</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">api</span><span class="o">&gt;/&lt;</span><span class="n">current</span> <span class="n">root</span> <span class="n">path</span><span class="o">&gt;/&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>And if <code class="docutils literal notranslate"><span class="pre">current_root_path</span></code> is set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, the query would look like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">api</span><span class="o">&gt;/&lt;</span><span class="n">source</span><span class="o">.</span><span class="n">path</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1425,26 +1443,59 @@
 </div>
 <p>In this example we are using the reserved alias <code class="docutils literal notranslate"><span class="pre">M</span></code> to refer to the table <code class="docutils literal notranslate"><span class="pre">pnc:metrics_v</span></code>.</p>
 </li>
-</ul>
+<li><p class="first">To export all the terms of your vocabulary table, your output would be</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;api&quot;</span><span class="p">:</span> <span class="s2">&quot;entity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;vocab:protocol_type&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;skip_root_path&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<div class="section" id="source-object">
-<span id="source-object"></span><h4><code class="docutils literal notranslate"><span class="pre">source</span></code> (object)<a class="headerlink" href="#source-object" title="Permalink to this headline">¶</a></h4>
-<p>| Variable | Type | Inclusion| Description |
-| — | — | — | — |
-| <code class="docutils literal notranslate"><span class="pre">api</span></code> | string, enum [<code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>] | required | The type of ERMrest query projection to perform.  Valid values are <code class="docutils literal notranslate"><span class="pre">entity</span></code>,<code class="docutils literal notranslate"><span class="pre">attribute</span></code>, and <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code>.
-| <code class="docutils literal notranslate"><span class="pre">path</span></code> | string | optional | An optional ERMrest path predicate. The string MUST be escaped according to <a class="reference external" href="https://tools.ietf.org/html/rfc3986">RFC 3986</a> if it contains user-generated identifiers that use the reserved character set. See the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrest/blob/master/docs/api-doc/index.md#url-conventions">ERMRest URL conventions</a> for additional information.</p>
+</li>
+<li><p class="first">With <code class="docutils literal notranslate"><span class="pre">&quot;skip_root_path&quot;:</span> <span class="pre">true</span></code>, you could also create outputs to other APIs of ermrest that are not necessarily for fetching data. The following are few examples:</p>
+<ol class="simple">
+<li>Getting the catalog document:</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;api&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s2">&quot;skip_root_path&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li>Getting the schema document:</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;api&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;skip_root_path&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or you could even define an output that will save the catalog document:</p>
+<ol class="simple">
+<li>Getting the annotation for a table:</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;api&quot;</span><span class="p">:</span> <span class="s2">&quot;schema&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/myschema/table/mytable/annotation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;skip_root_path&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <div class="section" id="destination-object">
 <span id="destination-object"></span><h4><code class="docutils literal notranslate"><span class="pre">destination</span></code> (object)<a class="headerlink" href="#destination-object" title="Permalink to this headline">¶</a></h4>
 <p>| Variable | Type | Inclusion| Description |
 | — | — | — | — |
 | <code class="docutils literal notranslate"><span class="pre">name</span></code> | string | required | The base name to use for the output file.
-| <code class="docutils literal notranslate"><span class="pre">type</span></code> | string | required | A type keyword that determines the output format. Supported values are dependent on the <code class="docutils literal notranslate"><span class="pre">template</span></code>.<code class="docutils literal notranslate"><span class="pre">type</span></code> selected. For the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, are currently supported. For the <code class="docutils literal notranslate"><span class="pre">BAG</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">fetch</span></code> and <code class="docutils literal notranslate"><span class="pre">download</span></code> are currently supported. See additional notes on destination format types.
+| <code class="docutils literal notranslate"><span class="pre">type</span></code> | string | required | A type keyword that determines the <em>output format</em>. Supported values are dependent on the <code class="docutils literal notranslate"><span class="pre">template</span></code>.<code class="docutils literal notranslate"><span class="pre">type</span></code> selected. For the <code class="docutils literal notranslate"><span class="pre">FILE</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, are currently supported. For the <code class="docutils literal notranslate"><span class="pre">BAG</span></code> type, the values <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">fetch</span></code> and <code class="docutils literal notranslate"><span class="pre">download</span></code> are currently supported. See additional notes on destination format types.
 | <code class="docutils literal notranslate"><span class="pre">params</span></code> | object | conditionally required | An object containing destination format-specific parameters.  Some destination formats (particularly those that require some kind of post-processing or data transformation), may require additional parameters  to be specified.</p>
 </div>
 <div class="section" id="type">
 <span id="type"></span><h4><code class="docutils literal notranslate"><span class="pre">type</span></code><a class="headerlink" href="#type" title="Permalink to this headline">¶</a></h4>
-<p>The following output format types are supported by default:</p>
+<p>The following <em>output format</em> types are supported by default:</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
@@ -1475,10 +1526,12 @@
 <td><code>Bag</code>-based. File assets referenced by URL are assigned as remote file references via <code>fetch.txt</code>.</td>
 </tr>
 </tbody>
-</table><p>Each <em>output format processor</em> is designed for a specific task, and the task types may vary for a given data export task.
-Some <em>output formats</em> are designed to handle the export of tabular data from the catalog, while others are meant to handle the export of file assets that are referenced by tables in the catalog.
-Other <em>output formats</em> may be implemented that could perform a combination of these tasks, implement a new format, or perform some kind of data transformation.
-<a name="csv"></a></p>
+</table><ul class="simple">
+<li>Each <em>output format processor</em> is designed for a specific task, and the task types may vary for a given data export task.</li>
+<li>Some <em>output formats</em> are designed to handle the export of tabular data from the catalog, while others are meant to handle the export of file assets that are referenced by tables in the catalog.</li>
+<li>Other <em>output formats</em> may be implemented that could perform a combination of these tasks, implement a new format, or perform some kind of data transformation.
+<a name="csv"></a></li>
+</ul>
 <div class="section" id="csv">
 <span id="csv"></span><h5><code class="docutils literal notranslate"><span class="pre">csv</span></code><a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h5>
 <p>This format processor generates a standard Comma Separated Values formatted text file. The first row is a comma-delimited list of column names, and all subsequent rows are comma-delimted values.  Fields are not enclosed in quotation marks.</p>

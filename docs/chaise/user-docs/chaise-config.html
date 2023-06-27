@@ -1319,7 +1319,7 @@
 <li><a class="reference external" href="#general-configuration">General Configuration:</a><ul>
 <li><a class="reference external" href="#ermrestlocation">ermrestLocation</a></li>
 <li><a class="reference external" href="#defaultcatalog">defaultCatalog</a></li>
-<li><a class="reference external" href="#defaulttables">defaultTables</a></li>
+<li><a class="reference external" href="#defaulttable">defaultTable</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#navbar-configuration">Navbar Configuration:</a><ul>
@@ -1391,6 +1391,8 @@
 <div class="section" id="ermrestlocation">
 <span id="ermrestlocation"></span><h4>ermrestLocation<a class="headerlink" href="#ermrestlocation" title="Permalink to this headline">¶</a></h4>
 <p>The location of the ERMrest service.</p>
+<blockquote>
+<div>:warning: This property is only allowed in <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file. Defining this on the catalog annotation has no effect.</div></blockquote>
 <ul>
 <li><p class="first">Type: String - URL</p>
 </li>
@@ -1405,7 +1407,11 @@
 </div>
 <div class="section" id="defaultcatalog">
 <span id="defaultcatalog"></span><h4>defaultCatalog<a class="headerlink" href="#defaultcatalog" title="Permalink to this headline">¶</a></h4>
-<p>Use this parameter to specify which catalog Chaise shows by default. When a user navigates to “/chaise/recordset” and omits the rest of the path, the <code class="docutils literal notranslate"><span class="pre">defaultCatalog</span></code> paired with <code class="docutils literal notranslate"><span class="pre">defaultTables</span></code> are used to generate a valid recordset link for the user. It is strongly recommended defining this in your <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file. This property is used to fetch the catalog annotation information for pages that rely on <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> but don’t have a catalog id in the path. For example, the navbar on static pages uses this property to try to fetch a catalog annotation for configuring the navbar.</p>
+<p>Use this parameter to specify which catalog Chaise shows by default.</p>
+<blockquote>
+<div>:warning: This property is only allowed in <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file. Defining this on the catalog annotation has no effect.</div></blockquote>
+<p>It is strongly recommended defining this in your <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> file. This property is used to fetch the catalog annotation information for pages that rely on <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> but don’t have a catalog id in the path. For example, the navbar on static pages uses this property to try to fetch a catalog annotation for configuring the navbar.</p>
+<p>When a user navigates to “/chaise/recordset” and omits the rest of the path, the <code class="docutils literal notranslate"><span class="pre">defaultCatalog</span></code> paired with <code class="docutils literal notranslate"><span class="pre">defaultTable</span></code> are used to generate a valid recordset link for the user.</p>
 <ul>
 <li><p class="first">Type: String - Catalog ID</p>
 </li>
@@ -1416,28 +1422,24 @@
 </li>
 </ul>
 </div>
-<div class="section" id="defaulttables">
-<span id="defaulttables"></span><h4>defaultTables<a class="headerlink" href="#defaulttables" title="Permalink to this headline">¶</a></h4>
-<p>Use this parameter to specify for each catalog <code class="docutils literal notranslate"><span class="pre">N</span></code>, which table Chaise shows by default.</p>
+<div class="section" id="defaulttable">
+<span id="defaulttable"></span><h4>defaultTable<a class="headerlink" href="#defaulttable" title="Permalink to this headline">¶</a></h4>
+<p>Use this parameter to specify which table Chaise shows by default for the current catalog.</p>
 <ul>
 <li><p class="first">Type: Object</p>
 </li>
 <li><p class="first">General syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaultTables</span><span class="p">:</span> <span class="p">{</span>
-  <span class="n">N</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">schema</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">schema</span> <span class="n">name</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="n">table</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">table</span> <span class="n">name</span><span class="o">&gt;</span>
-  <span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaultTable</span><span class="p">:</span> <span class="p">{</span>
+   <span class="n">schema</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">schema</span> <span class="n">name</span><span class="o">&gt;</span><span class="p">,</span>
+   <span class="n">table</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">table</span> <span class="n">name</span><span class="o">&gt;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">Sample syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaultTables</span><span class="p">:</span> <span class="p">{</span>
-  <span class="mi">1</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">schema</span><span class="p">:</span> <span class="s2">&quot;isa&quot;</span><span class="p">,</span>
-    <span class="n">table</span><span class="p">:</span> <span class="s2">&quot;dataset&quot;</span>
-  <span class="p">},</span> <span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">defaultTable</span><span class="p">:</span> <span class="p">{</span>
+   <span class="n">schema</span><span class="p">:</span> <span class="s2">&quot;isa&quot;</span><span class="p">,</span>
+   <span class="n">table</span><span class="p">:</span> <span class="s2">&quot;dataset&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>

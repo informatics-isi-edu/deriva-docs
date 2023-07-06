@@ -1847,18 +1847,28 @@ columns in a table, overriding the defined table structure.</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <em>context</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>columnlist</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: A separate <em>columnlist</em> can be specified for any number of <em>context</em> names.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <em>context1</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>context2</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Configure <em>context1</em> to use the same <em>columnlist</em> configured for <em>context2</em>.</li>
-<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;filter&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[</span></code> <em>facetlist</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code> : Configure list of facets to be displayed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;filter&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;and&quot;:</span></code> <em>facetlist</em> <code class="docutils literal notranslate"><span class="pre">}</span> <span class="pre">}</span></code> : Configure list of facets to be displayed.</li>
 <li><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;filter&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;and&quot;:</span> <span class="pre">[]}</span> <span class="pre">}</span></code> : By defining an empty facet list, we will collapse the facet panel by default.</li>
 </ul>
 <p>For presentation contexts which are not listed in the annotation, or when the annotation is entirely absent, all available columns SHOULD be presented in their defined order unless the application has guidance from other sources.</p>
 <p>See <a class="reference external" href="#context-names">Context Names</a> section for the list of supported <em>context</em> names.</p>
 <p>Supported <em>columnlist</em> patterns:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>columndirective</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content corresponding to each <em>columndirective</em>, in the order specified in the list. Ignore listed <em>columndirective</em> values that do not correspond to content from the table. Do not present table columns that are not specified in the list. Please refer to <a class="reference external" href="#column-directive">column directive</a> section for more information.</li>
+<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>columndirective</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content corresponding to each <em>columndirective</em>, in the order specified in the list.<ul>
+<li>Ignore listed <em>columndirective</em> values that do not correspond to content from the table.</li>
+<li>Do not present table columns that are not specified in the list. Please refer to <a class="reference external" href="#column-directive">column directive</a> section for more information.</li>
+<li>A list without any valid <em>columndirective</em> will be treated the same as empty array <code class="docutils literal notranslate"><span class="pre">[]</span></code>. Client will not show any columns in this case.</li>
+</ul>
+</li>
 </ul>
 <p>Supported <em>facetlist</em> pattern:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>facetentry</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content corresponding to each <em>facetentry</em>, in the order specified in the list. Ignore invalid listed <em>facetentry</em>. Do not present other facets that are not specified in the list.</li>
+<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>facetentry</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content corresponding to each <em>facetentry</em>, in the order specified in the list.<ul>
+<li>Ignore invalid listed <em>facetentry</em>.</li>
+<li>Do not present other facets that are not specified in the list.</li>
+<li>A list without any valid <em>facetentry</em> will be treated the same as <code class="docutils literal notranslate"><span class="pre">[]</span></code>. Client will not show any facets in this case and will collapse the facet panel by default.</li>
+</ul>
+</li>
 </ul>
 <p><em>facetentry</em> must be a JSON payload with the following attributes:</p>
 <p>Required attributes:</p>
@@ -2189,7 +2199,13 @@ foreign keys referencing a table, useful when presenting “related entities”.
 <p>For presentation contexts which are not listed in the annotation, or when the annotation is entirely absent, all available foreign keys SHOULD be presented unless the application has guidance from other sources. See <a class="reference external" href="#context-names">Context Names</a> section for the list of supported <em>context</em> names.</p>
 <p>Supported <em>fkeylist</em> patterns:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>columndirective</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content correspondign to each <em>columndirective</em>, in the order specified in the list. Ignore <em>columndirective</em> that do not correspond to a valid path from the table. Do not present foreign keys that are not mentioned in the list. Please refer to <a class="reference external" href="#column-directive">column directive</a> section for more information. The defined column directive MUST be in entity mode and have at least an <code class="docutils literal notranslate"><span class="pre">inbound</span></code> node in its relationship to the current table.</li>
+<li><code class="docutils literal notranslate"><span class="pre">[</span></code> … <em>columndirective</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code>: Present content correspondign to each <em>columndirective</em>, in the order specified in the list.<ul>
+<li>Ignore <em>columndirective</em> that do not correspond to a valid path from the table.</li>
+<li>Do not present foreign keys that are not mentioned in the list. Please refer to <a class="reference external" href="#column-directive">column directive</a> section for more information. The defined column directive MUST be in entity mode and have at least an <code class="docutils literal notranslate"><span class="pre">inbound</span></code> node in its relationship to the current table.</li>
+<li>A list without any valid <em>columndirective</em> will be treated the same as empty array <code class="docutils literal notranslate"><span class="pre">[]</span></code>. Client will not display any related entities.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">[]</span></code>: Client will not display any related entities.</li>
 </ul>
 </div>
 <div class="section" id="tag-2016-table-alternatives">

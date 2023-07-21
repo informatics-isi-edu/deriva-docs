@@ -1449,13 +1449,25 @@
 <p>With the current HTML structure, it is possible to apply different styles to customize the appearance. The following are common rules that can be used to customize the UI and behavior of navbar:</p>
 <ol>
 <li><p class="first">Preserve space for navbar while its loading (to reduce the page shift):</p>
-<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">background-color</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* set a static height for navbar */</span><span class="w"></span>
+<span class="nt">navbar</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="p">;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
+<p>If we detect that you’ve assigned a height to the <code class="docutils literal notranslate"><span class="pre">navbar</span></code>, we will show a spinner while navbar data is loading. The size of this spinner is calcuated based on the available space. You can modify it by doing the following:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the spinner displayed on the navbar during load */</span><span class="w"></span>
+<span class="p">.</span><span class="nc">chaise-app-wrapper-sm-spinner</span><span class="w"> </span><span class="p">.</span><span class="nc">spinner-border</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">border-width</span><span class="p">:</span><span class="w"> </span><span class="n">YOUR_VALUE</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Adding <code class="docutils literal notranslate"><span class="pre">!important</span></code> is necessary to ensure overriding the rules that Chaise is going to add with JavaScript.</p>
+</div></blockquote>
 </li>
 <li><p class="first">Change the navbar background color:</p>
 <div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="c">/* change the navbar background color */</span><span class="w"></span>

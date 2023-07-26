@@ -220,19 +220,16 @@
 <li class="toctree-l2 current"><a class="reference internal" href="template-markdown.html">Template and Markdown Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mustache-templating.html">Mustache Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mustache-templating.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mustache-templating.html#variables">Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mustache-templating.html#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#html-escaping">HTML-escaping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#accessing-current-context">Accessing current context</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#using-arrays">Using Arrays</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#handlebars-vs-mustache">Handlebars vs. Mustache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#boolean-helpers">Boolean Helpers</a></li>
@@ -924,19 +921,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../ermrestjs/user-docs/template-markdown.html">Template and Markdown Guide</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/mustache-templating.html">Mustache Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/mustache-templating.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/mustache-templating.html#variables">Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/mustache-templating.html#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#table-of-contents">Table of contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#html-escaping">HTML-escaping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-current-context">Accessing current context</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-arrays">Using Arrays</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#handlebars-vs-mustache">Handlebars vs. Mustache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
@@ -1302,99 +1296,139 @@
 </style>
 <div class="section" id="handlebars-templating">
 <span id="handlebars-templating"></span><h1>Handlebars Templating<a class="headerlink" href="#handlebars-templating" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="http://handlebarsjs.com/">Handlebars</a> is almost similar to Mustache with some additional benefits. There are some things that you can’t do in Mustache (e.g if-else statement) that Handlebars allows us to do easily using <code class="docutils literal notranslate"><span class="pre">helpers</span></code>.</p>
-<p>Handlebars supports most of the Mustache syntax. However, there are a few features that are not supported by Handlebars. For example:</p>
-<ul class="simple">
-<li>Block syntax <code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>: This is primarily used in Deriva annotations to perform boolean (or null) checks. With handlebars you need to pass the variables to an <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to do the check e.g. <code class="docutils literal notranslate"><span class="pre">{{#if</span> <span class="pre">name}}...{{/if}}</span></code>.</li>
-</ul>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span>// Mustache
-
-{{#name}}Hello {{{name}}}{{/name}}{{^name}}No name available{{/name}}
-
-// name=&quot;John&quot; (or any object that evaluates to true in javascript)                 =&gt; Hello John
-// name=null (or any object that evaluate to false such as &#39;&#39;, 0, false, [], etc)   =&gt; No name available
-
-// handlebards
-
-{{#if name}}Hello {{{name}}}{{else}}No name available{{/if}}
-</pre></div>
-</div>
-<ul class="simple">
-<li>encode/decode <code class="docutils literal notranslate"><span class="pre">{{#encode}}...{{/encode}}</span></code>/<code class="docutils literal notranslate"><span class="pre">{{#decode}}...{{/decode}}</span></code>: With handlebars the value to be encoded is passed to the <code class="docutils literal notranslate"><span class="pre">encode</span></code>/<code class="docutils literal notranslate"><span class="pre">decode</span></code> helper e.g. <code class="docutils literal notranslate"><span class="pre">{{#encode</span> <span class="pre">...}}{{/encode}}</span></code> or <code class="docutils literal notranslate"><span class="pre">{{#decode</span> <span class="pre">...}}{{/decode}}</span></code>.</li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Mustache</span>
-<span class="p">{{</span><span class="c1">#encode}}My URL{{/encode}}</span>
-
-<span class="o">//</span> <span class="n">handlebards</span>
-<span class="p">{{</span><span class="c1">#encode &#39;My URL&#39;}}{{/encode}}</span>
-</pre></div>
-</div>
-<p>Handlebars supports more complicated expression syntax and allow the comparison to be done at the finer level e.g. null v.s. false comparison. This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
+<p>This document summarizes the key concepts of Handlebars that are relevant to Deriva.</p>
 <div class="section" id="table-of-contents">
 <span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="#handlebars-paths">Handlebar Paths</a></li>
-<li><a class="reference external" href="#html-escaping">HTML-escaping</a></li>
+<li><a class="reference external" href="#handlebars-vs-mustache">Handlebars vs. Mustache</a><ul>
+<li><a class="reference external" href="#null-checking">Null checking</a></li>
+<li><a class="reference external" href="#encode-syntax">Encode syntax</a></li>
+<li><a class="reference external" href="#restriction-in-the-adjacency-of-opening-and-closing-tags">Restriction in the adjacency of opening and closing tags</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#usage">Usage</a><ul>
+<li><a class="reference external" href="#handlebars-paths">Handlebars Paths</a></li>
+<li><a class="reference external" href="#automatic-null-detection">Automatic null detection</a></li>
 <li><a class="reference external" href="#accessing-current-context">Accessing current context</a></li>
+<li><a class="reference external" href="#html-escaping">HTML-escaping</a></li>
 <li><a class="reference external" href="#using-arrays">Using Arrays</a></li>
 <li><a class="reference external" href="#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
 <li><a class="reference external" href="#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
 <li><a class="reference external" href="#subexpressions">Subexpressions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#using-pre-defined-attributes">Using Pre-defined Attributes</a><ul>
+<li><a class="reference external" href="#moment">$moment</a></li>
+<li><a class="reference external" href="#catalog">$catalog</a></li>
+<li><a class="reference external" href="#dcctx">$dcctx</a></li>
+<li><a class="reference external" href="#location">$location</a></li>
+<li><a class="reference external" href="#session">$session</a></li>
+</ul>
+</li>
 <li><a class="reference external" href="#helpers">Helpers</a><ul>
-<li><a class="reference external" href="#formatdate-helper">formatDate</a></li>
-<li><a class="reference external" href="#humanizebytes-helper">humanizeBytes</a></li>
-<li><a class="reference external" href="#math-helpers">Math Helpers</a></li>
+<li><a class="reference external" href="#formatdate-helper">formatDate helper</a></li>
+<li><a class="reference external" href="#humanizebytes-helper">humanizeBytes helper</a></li>
+<li><a class="reference external" href="#math-helpers">Math Helpers</a><ul>
+<li><a class="reference external" href="#add">add</a></li>
+<li><a class="reference external" href="#subtract">subtract</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference external" href="#block-helpers">Block Helpers</a><ul>
-<li><a class="reference external" href="#if-helper">If</a></li>
-<li><a class="reference external" href="#unless-helper">Unless</a></li>
-<li><a class="reference external" href="#each-helper">Each</a></li>
-<li><a class="reference external" href="#with-helper">With</a></li>
-<li><a class="reference external" href="#lookup-helper">Lookup</a></li>
-<li><a class="reference external" href="#encode-helper">Encode</a></li>
-<li><a class="reference external" href="#escape-helper">Escape</a></li>
-<li><a class="reference external" href="#encodefacet-helper">EncodeFacet</a></li>
-<li><a class="reference external" href="#jsonstringify-helper">JsonStringify</a></li>
-<li><a class="reference external" href="#findfirst-helper">FindFirst</a></li>
-<li><a class="reference external" href="#findall-helper">FindAll</a></li>
-<li><a class="reference external" href="#replace-helper">Replace</a></li>
-<li><a class="reference external" href="#totitlecase-helper">ToTitleCase</a></li>
+<li><a class="reference external" href="#if-helper">If helper</a></li>
+<li><a class="reference external" href="#unless-helper">Unless helper</a></li>
+<li><a class="reference external" href="#each-helper">Each helper</a></li>
+<li><a class="reference external" href="#with-helper">With helper</a></li>
+<li><a class="reference external" href="#lookup-helper">Lookup helper</a></li>
+<li><a class="reference external" href="#encode-helper">Encode helper</a></li>
+<li><a class="reference external" href="#escape-helper">Escape helper</a></li>
+<li><a class="reference external" href="#encodefacet-helper">Encodefacet helper</a></li>
+<li><a class="reference external" href="#jsonstringify-helper">JsonStringify helper</a></li>
+<li><a class="reference external" href="#findfirst-helper">Findfirst helper</a></li>
+<li><a class="reference external" href="#findall-helper">Findall helper</a></li>
+<li><a class="reference external" href="#replace-helper">Replace helper</a></li>
+<li><a class="reference external" href="#totitlecase-helper">ToTitleCase helper</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#boolean-helpers">Boolean Helpers</a><ul>
 <li><a class="reference external" href="#comparison-helpers">Comparison Helpers</a></li>
-<li><a class="reference external" href="#Logical-helpers">Logical Helpers</a></li>
 <li><a class="reference external" href="#regular-expression-match">Regular Expression Match</a></li>
+<li><a class="reference external" href="#logical-helpers">Logical Helpers</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section" id="html-escaping">
-<span id="html-escaping"></span><h2>HTML-escaping<a class="headerlink" href="#html-escaping" title="Permalink to this headline">¶</a></h2>
-<p>In Handlebars, the values returned by the <code class="docutils literal notranslate"><span class="pre">{{expression}}</span></code> are HTML-escaped. Say, if the expression contains <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, then the returned HTML-escaped output is generated as <code class="docutils literal notranslate"><span class="pre">&amp;amp;</span></code>. If you don’t want Handlebars to escape a value, use the “triple-stash”, <code class="docutils literal notranslate"><span class="pre">{{{</span></code>:</p>
-<p>In the below template, you can learn how to produce the HTML escaped and raw output.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="p">{{{</span><span class="n">specialChars</span><span class="p">}}}</span>
-<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="p">{{</span><span class="n">specialChars</span><span class="p">}}</span>
+<div class="section" id="handlebars-vs-mustache">
+<span id="handlebars-vs-mustache"></span><h2>Handlebars vs. Mustache<a class="headerlink" href="#handlebars-vs-mustache" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://handlebarsjs.com/">Handlebars</a> is almost similar to Mustache with additional benefits. There are some things you can’t do in Mustache (e.g., if-else statement) that Handlebars allows us to do easily using <code class="docutils literal notranslate"><span class="pre">helpers</span></code>.</p>
+<p>The following are the most notable things to consider while migrating from Mustache to handlebars:</p>
+<div class="section" id="null-checking">
+<span id="null-checking"></span><h3>Null checking<a class="headerlink" href="#null-checking" title="Permalink to this headline">¶</a></h3>
+<p>Mustache doesn’t have a dedicated boolean operator or null-checking mechanism. Instead, you have to use the block syntax (<code class="docutils literal notranslate"><span class="pre">{{#name}}...{{/name}}</span></code>), which does a “falsy” check and doesn’t distinguish between <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+<p>Handlebars offer a proper <a class="reference external" href="#if-helper"><code class="docutils literal notranslate"><span class="pre">if</span></code> helper</a>, which can be used for null or boolean checking. With this operator, you can use more complicated expressions and more accurate comparisons (e.g., null v.s. false).</p>
+<p>Mustache:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#name}}Hello {{{name}}}{{/name}}{{^name}}No name available{{/name}}</span>
 </pre></div>
 </div>
-<p>Pass the special characters to the template</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">specialChars</span><span class="p">:</span> <span class="s2">&quot;&amp; &lt; &gt; </span><span class="se">\&quot;</span><span class="s2"> &#39; ` =&quot;</span> <span class="p">}</span>
+<p>Handlebars:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if name}}Hello {{{name}}}{{else}}No name available{{/if}}</span>
 </pre></div>
 </div>
-<p>Expressions enclosed by “triple-stash” (<code class="docutils literal notranslate"><span class="pre">{{{</span></code>) produce the raw output. Otherwise, HTML-escaped output is generated as below.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="o">&amp;</span> <span class="o">&lt;</span> <span class="o">&gt;</span> <span class="s2">&quot; &#39; ` =</span>
-<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span> <span class="o">&amp;</span><span class="c1">#x27; &amp;#x60; &amp;#x3D;</span>
+<p>Depending on the value of the key, the mustache block syntax will also change the context. That’s why it can be used to <a class="reference internal" href="mustache-templating.html#array"><span class="std std-ref">iterate over array values</span></a> or <a class="reference internal" href="mustache-templating.html#json"><span class="std std-ref">access JSON properties</span></a>. That’s why you could do something like the following:</p>
+<p>Mustache:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#name}}Hello {{{.}}}{{/name}}</span>
+
+<span class="p">{{</span><span class="c1">#$fkey_schema_constraint}}{{{values.RID}}}{{/fkey_schema_constraint}}</span>
+</pre></div>
+</div>
+<p>But the handlebars <code class="docutils literal notranslate"><span class="pre">if</span></code> block doesn’t change the context. So if you’re looking for an equivalent syntax for mustache block that also changes context, you should use the <a class="reference external" href="#with-helper">with helper</a>.</p>
+<p>The equivalent handlebars template would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with name}}Hello {{{.}}}{{/with}}</span>
+
+<span class="p">{{</span><span class="c1">#with $fkey_schema_constraint}}{{{values.RID}}}{{/with}}</span>
 </pre></div>
 </div>
 </div>
+<div class="section" id="encode-syntax">
+<span id="encode-syntax"></span><h3>Encode syntax<a class="headerlink" href="#encode-syntax" title="Permalink to this headline">¶</a></h3>
+<p>Mustache blocks don’t allow additional parameters. That’s why you must wrap the value you want to encode while using’ encode’ in the block itself. With handlebars, you can just pass the value as a second parameter.</p>
+<p>Mustache:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode}}My URL{{/encode}}</span>
+
+<span class="p">{{</span><span class="c1">#encode}}{{{col}}}{{/encode}}</span>
+</pre></div>
+</div>
+<p>Handlebars:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode &#39;My URL&#39;}}{{/encode}}</span>
+
+<span class="p">{{</span><span class="c1">#encode col}}{{/encode}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="restriction-in-the-adjacency-of-opening-and-closing-tags">
+<span id="restriction-in-the-adjacency-of-opening-and-closing-tags"></span><h3>Restriction in the adjacency of opening and closing tags<a class="headerlink" href="#restriction-in-the-adjacency-of-opening-and-closing-tags" title="Permalink to this headline">¶</a></h3>
+<p>As we described <a class="reference internal" href="markdown-formatting.html#attributes"><span class="std std-ref">in the markdown document</span></a>, you can add attributes to markdown elements using the <code class="docutils literal notranslate"><span class="pre">{}</span></code> syntax. Now imagine you want to create a link, and the attribute value comes from one of the columns. In Mustache, you could do the following (assume <code class="docutils literal notranslate"><span class="pre">btn_class</span></code> is the name of the column):</p>
+<p>Mustache:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">click</span> <span class="n">here</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){{{{</span><span class="n">btn_class</span><span class="p">}}}}</span>
+</pre></div>
+</div>
+<p>But this syntax in handlebars returns an error as it doesn’t recognize <code class="docutils literal notranslate"><span class="pre">{{{{}}}}</span></code>, and you have to add an extra space to distinguish between the attribute block and template variables.</p>
+<p>Handlebars:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">click</span> <span class="n">here</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){</span> <span class="p">{{{</span><span class="n">btn</span><span class="o">-</span><span class="n">class</span><span class="p">}}}</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="usage">
+<span id="usage"></span><h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="handlebars-paths">
-<span id="handlebars-paths"></span><h2>Handlebars Paths<a class="headerlink" href="#handlebars-paths" title="Permalink to this headline">¶</a></h2>
-<p>Handlebars supports simple paths, just like Mustache.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{{</span><span class="n">name</span><span class="p">}}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span id="handlebars-paths"></span><h3>Handlebars Paths<a class="headerlink" href="#handlebars-paths" title="Permalink to this headline">¶</a></h3>
+<p>The most basic tag type is a simple variable. A `{{{name}}}`` tag renders the value of the name key in the current context. The triple curly braces will replace the column value as is.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">COLUMN_NAME</span><span class="p">}}}</span>
 </pre></div>
 </div>
-<p>Handlebars also supports nested paths, making it possible to lookup properties nested below the current context.</p>
+<p>Handlebars also supports nested paths, making it possible to look up properties nested below the current context.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">body</span> <span class="k">for</span> <span class="n">book</span> <span class="k">with</span> <span class="p">{{</span><span class="n">title</span><span class="p">}}</span> <span class="n">authored</span> <span class="n">by</span> <span class="p">{{</span><span class="n">author</span><span class="o">.</span><span class="n">name</span><span class="p">}}</span> <span class="ow">is</span> <span class="p">{{</span><span class="n">body</span><span class="p">}}</span>
 </pre></div>
 </div>
@@ -1436,9 +1470,21 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>Any of the above would cause the name field in the current context to be used rather than a helper of the same name.</p>
 </div>
+<div class="section" id="automatic-null-detection">
+<span id="automatic-null-detection"></span><h3>Automatic null detection<a class="headerlink" href="#automatic-null-detection" title="Permalink to this headline">¶</a></h3>
+<p>To avoid the need for adding individual checks for each <code class="docutils literal notranslate"><span class="pre">{{{column_name}}}</span></code> usage, we apply an automatic null detection. If the value of any of the columns which are being used in the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> are either null or empty, then the pattern will fall back on the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> display annotation to return the respective value. For example, if the title property in the JSON object is not defined or null, then the following template <code class="docutils literal notranslate"><span class="pre">[{{{title}}}]({{{url}}})</span></code> will resolve as null and use the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> annotation to determine what should be done.</p>
+<p>That being said, our current implementation has the following limitations/flaws:</p>
+<ol class="simple">
+<li>If you use the block syntax (<code class="docutils literal notranslate"><span class="pre">{{#</span></code>) in any part of the template, we will not apply this null detection logic.</li>
+<li>As we described in <a class="reference external" href="#accessing-keys-with-spaces-and-special-characters">here</a>, you can use the <code class="docutils literal notranslate"><span class="pre">[]</span></code> syntax to access columns with special characeters. The null detection will not work properly if your column name has <code class="docutils literal notranslate"><span class="pre">#</span></code> in it. For instance, assume you have a column named <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">Released</span></code> and want to show its value. Doing <code class="docutils literal notranslate"><span class="pre">{{{[#</span> <span class="pre">Released]}}}</span></code> will not work as it’s breaking our null detection. To get around this, you could use the <a class="reference external" href="#with-helper">with helper</a>, which will turn off the null detection:</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with [# Released]}}{{{.}}}{{/with}}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="accessing-current-context">
-<span id="accessing-current-context"></span><h2>Accessing current context<a class="headerlink" href="#accessing-current-context" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword can be used for accessing the current context. It’s mainly useful when dealing with arrays or JSON objects where it will allow you to access the values of an array of objects. For example, if you have the following JSON column:</p>
+<span id="accessing-current-context"></span><h3>Accessing current context<a class="headerlink" href="#accessing-current-context" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword can be used for accessing the current context. It’s mainly useful when dealing with arrays or JSON objects, allowing you to access the values of an array of objects. For example, if you have the following JSON column:</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nx">person</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nx">firstname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
@@ -1477,9 +1523,27 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>In this case, <code class="docutils literal notranslate"><span class="pre">this</span></code> refers to each element of the array that is an object and can use the <code class="docutils literal notranslate"><span class="pre">.</span></code> notation to access their attributes.</p>
 </div>
+<div class="section" id="html-escaping">
+<span id="html-escaping"></span><h3>HTML-escaping<a class="headerlink" href="#html-escaping" title="Permalink to this headline">¶</a></h3>
+<p>In Handlebars, the values returned by the <code class="docutils literal notranslate"><span class="pre">{{expression}}</span></code> are HTML-escaped. Say, if the expression contains <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>, then the returned HTML-escaped output is generated as <code class="docutils literal notranslate"><span class="pre">&amp;amp;</span></code>. If you don’t want Handlebars to escape a value, use the “triple-stash”, <code class="docutils literal notranslate"><span class="pre">{{{</span></code>:</p>
+<p>You can learn how to produce the HTML escaped and raw output in the template below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="p">{{{</span><span class="n">specialChars</span><span class="p">}}}</span>
+<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="p">{{</span><span class="n">specialChars</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>Pass the special characters to the template</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">specialChars</span><span class="p">:</span> <span class="s2">&quot;&amp; &lt; &gt; </span><span class="se">\&quot;</span><span class="s2"> &#39; ` =&quot;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Expressions enclosed by “triple-stash” (<code class="docutils literal notranslate"><span class="pre">{{{</span></code>) produce the raw output. Otherwise, HTML-escaped output is generated as below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw</span><span class="p">:</span> <span class="o">&amp;</span> <span class="o">&lt;</span> <span class="o">&gt;</span> <span class="s2">&quot; &#39; ` =</span>
+<span class="n">html</span><span class="o">-</span><span class="n">escaped</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span> <span class="o">&amp;</span><span class="c1">#x27; &amp;#x60; &amp;#x3D;</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="using-arrays">
-<span id="using-arrays"></span><h2>Using Arrays<a class="headerlink" href="#using-arrays" title="Permalink to this headline">¶</a></h2>
-<p>You can use the <a class="reference external" href="#each-helper">Each Helper</a> to iterate over its data. You can also use the <code class="docutils literal notranslate"><span class="pre">{{array.INDEX}}</span></code> pattern if you want to access array data by index; where the index starts from zero and it is the position of the element that you want to access.</p>
+<span id="using-arrays"></span><h3>Using Arrays<a class="headerlink" href="#using-arrays" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <a class="reference external" href="#each-helper">Each Helper</a> to iterate over its data. You can also use the <code class="docutils literal notranslate"><span class="pre">{{array.INDEX}}</span></code> pattern if you want to access array data by index, where the index starts from zero and it is the position of the element that you want to access.</p>
 <p>Template:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">arr</span><span class="mf">.0</span><span class="o">.</span><span class="n">value</span><span class="p">}}}</span>
 </pre></div>
@@ -1500,7 +1564,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 <div class="section" id="escaping-handlebars-expressions">
-<span id="escaping-handlebars-expressions"></span><h2>Escaping Handlebars expressions<a class="headerlink" href="#escaping-handlebars-expressions" title="Permalink to this headline">¶</a></h2>
+<span id="escaping-handlebars-expressions"></span><h3>Escaping Handlebars expressions<a class="headerlink" href="#escaping-handlebars-expressions" title="Permalink to this headline">¶</a></h3>
 <p>Handlebars content may be escaped using inline escapes. Inline escapes are created by prefixing a mustache block with <code class="docutils literal notranslate"><span class="pre">\\</span></code></p>
 <p>For example,</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="p">{{{</span><span class="n">escaped</span><span class="p">}}}</span>
@@ -1512,7 +1576,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 <div class="section" id="accessing-keys-with-spaces-and-special-characters">
-<span id="accessing-keys-with-spaces-and-special-characters"></span><h2>Accessing keys with spaces and special characters<a class="headerlink" href="#accessing-keys-with-spaces-and-special-characters" title="Permalink to this headline">¶</a></h2>
+<span id="accessing-keys-with-spaces-and-special-characters"></span><h3>Accessing keys with spaces and special characters<a class="headerlink" href="#accessing-keys-with-spaces-and-special-characters" title="Permalink to this headline">¶</a></h3>
 <p>Handlebars allows you to access keys/variables which have spaces <code class="docutils literal notranslate"></code> or special characters like <code class="docutils literal notranslate"><span class="pre">{}</span></code> in their names. You need to enclose those variables in square brackets.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{[</span><span class="nb">str</span> <span class="k">with</span> <span class="n">a</span> <span class="n">space</span><span class="p">]}}</span>
 </pre></div>
@@ -1524,12 +1588,129 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 </div>
 <div class="section" id="subexpressions">
-<span id="subexpressions"></span><h2>Subexpressions<a class="headerlink" href="#subexpressions" title="Permalink to this headline">¶</a></h2>
+<span id="subexpressions"></span><h3>Subexpressions<a class="headerlink" href="#subexpressions" title="Permalink to this headline">¶</a></h3>
 <p>Handlebars offers support for <code class="docutils literal notranslate"><span class="pre">subexpressions</span></code>, which allows you to invoke multiple helpers within a single mustache <code class="docutils literal notranslate"><span class="pre">{{}}</span></code>, and pass in the results of inner helper invocations as arguments to outer helpers. Subexpressions are delimited by parentheses.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape (encode arg1) arg2}}{{/escape}}</span>
 </pre></div>
 </div>
 <p>In this case, <code class="docutils literal notranslate"><span class="pre">encode</span></code> will get invoked with the string argument <code class="docutils literal notranslate"><span class="pre">arg1</span></code>, and whatever the encode function returns will get passed in as the first argument to escape (and <code class="docutils literal notranslate"><span class="pre">arg2</span></code> will get passed in as the second argument to escape).</p>
+</div>
+</div>
+<div class="section" id="using-pre-defined-attributes">
+<span id="using-pre-defined-attributes"></span><h2>Using Pre-defined Attributes<a class="headerlink" href="#using-pre-defined-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Ermrestjs allows users to access some pre-defined variables in the template environment. You must ensure you don’t use these variables as column names in your tables to avoid overriding them in the environment. These pre-defined attributes are available in both Mustache and Handlebars templating environments. The following are the attributes:</p>
+<div class="section" id="moment">
+<span id="moment"></span><h3>$moment<a class="headerlink" href="#moment" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$moment</span></code> is a datetime object which will give you access to date and time when the app was loaded. For instance if the app was loaded at Thu Oct 19 2017 16:04:46 GMT-0700 (PDT), it will contain following properties</p>
+<ul class="simple">
+<li>date: 19</li>
+<li>day: 4</li>
+<li>month: 10</li>
+<li>year: 2017</li>
+<li>dateString: Thu Oct 19 2017</li>
+<li>hours: 16</li>
+<li>minutes: 4</li>
+<li>seconds: 14</li>
+<li>milliseconds: 873</li>
+<li>timeString: 16:04:46 GMT-0700 (PDT)</li>
+<li>ISOString: 2017-10-19T23:04:46.873Z</li>
+<li>GTMString: Thu, 19 Oct 2017 23:04:46 GMT</li>
+<li>UTCString: Thu, 19 Oct 2017 23:04:46 GMT</li>
+<li>LocaleDateString: 10/19/2017</li>
+<li>LocaleTimeString: 4:04:46 PM</li>
+<li>LocalString: 10/19/2017, 4:04:46 PM</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment</p>
+<p><strong>Examples</strong></p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Todays</span><span class="w"> </span><span class="nx">date</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">month</span><span class="p">}}}</span><span class="o">/</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">date</span><span class="p">}}}</span><span class="o">/</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">year</span><span class="p">}}}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Current</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">hours</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">minutes</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">seconds</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">milliseconds</span><span class="p">}}}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">UTC</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">UTCString</span><span class="p">}}}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Locale</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">LocaleString</span><span class="p">}}}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">ISO</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">ISOString</span><span class="p">}}}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="catalog">
+<span id="catalog"></span><h3>$catalog<a class="headerlink" href="#catalog" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$catalog</span></code> is an object that gives you access to the catalog information including version if it is present. The following properties are currently included:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="n">snapshot</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;@&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nb">id</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+  <span class="n">version</span><span class="p">:</span> <span class="n">version</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dcctx">
+<span id="dcctx"></span><h3>$dcctx<a class="headerlink" href="#dcctx" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$dcctx</span></code> is an object that gives you access to the current <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">cid</span></code> of the app. You may use this attribute to generate links with <code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code> as query parameters.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">pid</span><span class="p">:</span> <span class="s2">&quot;the page id&quot;</span><span class="p">,</span>
+    <span class="n">cid</span><span class="p">:</span> <span class="s2">&quot;the context id(name of the app)&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="location">
+<span id="location"></span><h3>$location<a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$location</span></code> is an object that gives you access to information about the current location of the document based on the URL. The following properties are included:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;the origin of the URL&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;the host of the URL, which is the hostname, and then, if the port of the URL is nonempty, a &#39;:&#39;, and the port&quot;</span><span class="p">,</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;the hostname of the URL&quot;</span><span class="p">,</span>
+    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;the path after the origin pointing to the install location of chaise. By default, this will be &#39;/chaise/&#39;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For example, if the web url is <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu:8080/chaise/recordset/#1/isa:dataset</span></code>, the above object would look something like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;https://dev.isrd.isi.edu&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu:8080&quot;</span><span class="p">,</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
+    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;/chaise/&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="session">
+<span id="session"></span><h3>$session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">$session</span></code> is an object that gives you access to information about the current logged in user’s session. The properties are the same properties returned from the webauthn response. The following are some of the properties included (subject to change as properties are added and removed from webauthn):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
+<span class="n">client</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;the `display_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;the `email` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="n">extensions</span><span class="p">:</span> <span class="s2">&quot;an object containing more permissions the user might have. Used in the CFDE project for communicating ras permissions.&quot;</span><span class="p">,</span>
+    <span class="n">full_name</span><span class="p">:</span> <span class="s2">&quot;the `full_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;the `id` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="n">identities</span><span class="p">:</span> <span class="s2">&quot;the `identities` array of the user from webauthn client object&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Each object in the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array has the same values as the objects returned from the webauthn attributes array, with 2 added values, <code class="docutils literal notranslate"><span class="pre">webpage</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>. The returned array is composed of globus groups and different globus identities associated with the user. It has any objects with duplicate <code class="docutils literal notranslate"><span class="pre">id</span></code> values merged together. The following values can be found in each object of <code class="docutils literal notranslate"><span class="pre">attributes</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">display_name</span></code>: the display name of the group or identity</li>
+<li><code class="docutils literal notranslate"><span class="pre">email</span></code>: the email of the identity (if present)</li>
+<li><code class="docutils literal notranslate"><span class="pre">full_name</span></code>: the full_name of the identity (if present)</li>
+<li><code class="docutils literal notranslate"><span class="pre">id</span></code>: the id of the group or identity</li>
+<li><code class="docutils literal notranslate"><span class="pre">identities</span></code>: the identities array of the current identity (if present)</li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: the type of the entry (<code class="docutils literal notranslate"><span class="pre">identity</span></code> or <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>). The type is set as a <code class="docutils literal notranslate"><span class="pre">globus_group</span></code> if the display_name is defined and the id is NOT in the list of identities associated with the logged in user. The type is set as an <code class="docutils literal notranslate"><span class="pre">identity</span></code> if the id is in the list of identities associated with the logged in user (<code class="docutils literal notranslate"><span class="pre">client.identities</span></code>). Otherwise, no type will be set.</li>
+<li><code class="docutils literal notranslate"><span class="pre">webpage</span></code>: If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is set to <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>, the webpage is then set to the globus group page. If the globus group id is “https://auth.globus.org/ff766864-a03f-11e5-b097-22000aef184d”, then the webpage will be created by extracting the id value and setting it like “https://app.globus.org/groups/ff766864-a03f-11e5-b097-22000aef184d/about”.</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">extensions</span></code> object currently contains 3 properties with permissions for dbgap studies. These properties are:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">has_ras_permissions</span></code>: boolean value if ras dbgap permissions are present</li>
+<li><code class="docutils literal notranslate"><span class="pre">ras_dbgap_permissions</span></code>: array of objects with information about which dbgap studies the user has permissions for</li>
+<li><code class="docutils literal notranslate"><span class="pre">ras_dbgap_phs_ids</span></code>: map of <code class="docutils literal notranslate"><span class="pre">phs_id</span></code> values as the keys with <code class="docutils literal notranslate"><span class="pre">true</span></code> as the value</li>
+</ul>
+</div>
 </div>
 <div class="section" id="helpers">
 <span id="helpers"></span><h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
@@ -1603,7 +1784,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="block-helpers">
 <span id="block-helpers"></span><h2>Block Helpers<a class="headerlink" href="#block-helpers" title="Permalink to this headline">¶</a></h2>
-<p>Block helpers make it possible to define custom iterators and other functionality that can invoke the passed block with a new context. These helpers are very similar to functions that we have in mustache.</p>
+<p>Block helpers make it possible to define custom iterators and other functionality that can invoke the passed block with a new context. These helpers are very similar to functions that we have in Mustache.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#HELPER_NAME}}</span>
  <span class="n">CONTENT</span>
 <span class="p">{{</span><span class="o">/</span><span class="n">HELPER_NAME</span><span class="p">}}</span>

@@ -220,19 +220,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../../users-guide/annotations/template-markdown.html">Template and Markdown Guide</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/mustache-templating.html">Mustache Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/mustache-templating.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/mustache-templating.html#variables">Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/mustache-templating.html#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../users-guide/annotations/handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#table-of-contents">Table of contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#html-escaping">HTML-escaping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#accessing-current-context">Accessing current context</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#using-arrays">Using Arrays</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#handlebars-vs-mustache">Handlebars vs. Mustache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
@@ -924,19 +921,16 @@
 <li class="toctree-l2 current"><a class="reference internal" href="template-markdown.html">Template and Markdown Guide</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Mustache Templating</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#variables">Variables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="handlebars.html">Handlebars Templating</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#table-of-contents">Table of contents</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#html-escaping">HTML-escaping</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#handlebars-paths">Handlebars Paths</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#accessing-current-context">Accessing current context</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#using-arrays">Using Arrays</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#escaping-handlebars-expressions">Escaping Handlebars expressions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#accessing-keys-with-spaces-and-special-characters">Accessing keys with spaces and special characters</a></li>
-<li class="toctree-l4"><a class="reference internal" href="handlebars.html#subexpressions">Subexpressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#handlebars-vs-mustache">Handlebars vs. Mustache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#usage">Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="handlebars.html#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#helpers">Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="handlebars.html#boolean-helpers">Boolean Helpers</a></li>
@@ -1302,7 +1296,38 @@
 </style>
 <div class="section" id="mustache-templating">
 <span id="mustache-templating"></span><h1>Mustache Templating<a class="headerlink" href="#mustache-templating" title="Permalink to this headline">¶</a></h1>
-<p>The <strong>Mustache</strong> template format can be understood <a class="reference external" href="https://github.com/janl/mustache.js#templates">here</a>. Once templating is done, the returned string is passed to the Markdown renderer. To learn about the Markdown syntax please refer to the <a class="reference internal" href="markdown-formatting.html"><span class="doc">markdown Formatting</span></a> page.</p>
+<p>The Mustache template format can be understood <a class="reference external" href="https://github.com/janl/mustache.js#templates">here</a>. Once templating is done, the returned string is passed to the Markdown renderer. Templates are usually used in combiniation with markdown, to learn about the Markdown syntax please refer to the <a class="reference internal" href="markdown-formatting.html"><span class="doc">markdown Formatting</span></a> page.</p>
+<p><strong>While we still support mustache, we highly recommend using <a class="reference internal" href="handlebars.html"><span class="doc">handlebars</span></a> instead. In the near future we are planning to deprecate mustache support</strong>.</p>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#variables">Variables</a><ul>
+<li><a class="reference external" href="#usage">Usage</a></li>
+<li><a class="reference external" href="#raw-values">Raw Values</a></li>
+<li><a class="reference external" href="#foreign-key-values">Foreign Key Values</a><ul>
+<li><a class="reference external" href="#json">JSON</a></li>
+<li><a class="reference external" href="#array">Array</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#encoding-variables-for-url-manipulation">Encoding variables for URL manipulation</a></li>
+<li><a class="reference external" href="#escaping-content">Escaping Content</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#examples">Examples</a><ul>
+<li><a class="reference external" href="#1-normal-replacement---name">1. Normal replacement - “{{{name}}}”</a></li>
+<li><a class="reference external" href="#2-replacement-with-url-encoding---encodenameencode">2. Replacement with URL encoding - “{{#encode}}{{{name}}}{{/encode}}”</a></li>
+<li><a class="reference external" href="#3-replacement-with-html-escaping---name">3. Replacement with HTML escaping - “{{name}}”</a></li>
+<li><a class="reference external" href="#4-replacement-with-null-check-disabled-escaping-and-url-encoding---namename">4. Replacement with null check, disabled escaping and url encoding - “{{#name}}…{{/name}}”</a></li>
+<li><a class="reference external" href="#5-replacement-with-negated-null-check---namename">5. Replacement with negated-null check - “{{^name}}…{{/name}}”</a></li>
+<li><a class="reference external" href="#6-null-handling">6. Null Handling</a><ul>
+<li><a class="reference external" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="variables">
 <span id="variables"></span><h2>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h2>
 <p>The most basic tag type is a simple variable. A {{{name}}} tag renders the value of the name key in the current context.</p>
@@ -1499,123 +1524,7 @@ Research on date {{{date}}} : {{^title}}[This is some title](https://dev.isrd.is
 </div>
 <div class="section" id="using-pre-defined-attributes">
 <span id="using-pre-defined-attributes"></span><h3>Using Pre-defined Attributes<a class="headerlink" href="#using-pre-defined-attributes" title="Permalink to this headline">¶</a></h3>
-<p>Ermrestjs now allows users to access some pre-defined variables in the template environment for ease. You need to make sure that you don’t use these variables as column-names in your tables to avoid them being overridden in the environment.</p>
-<p>One of those variable is <code class="docutils literal notranslate"><span class="pre">$moment</span></code>.</p>
-<div class="section" id="moment-usage">
-<span id="moment-usage"></span><h4>$moment Usage<a class="headerlink" href="#moment-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$moment</span></code> is a datetime object which will give you access to date and time when the app was loaded. For instance if the app was loaded at Thu Oct 19 2017 16:04:46 GMT-0700 (PDT), it will contain following properties</p>
-<ul class="simple">
-<li>date: 19</li>
-<li>day: 4</li>
-<li>month: 10</li>
-<li>year: 2017</li>
-<li>dateString: Thu Oct 19 2017</li>
-<li>hours: 16</li>
-<li>minutes: 4</li>
-<li>seconds: 14</li>
-<li>milliseconds: 873</li>
-<li>timeString: 16:04:46 GMT-0700 (PDT)</li>
-<li>ISOString: 2017-10-19T23:04:46.873Z</li>
-<li>GTMString: Thu, 19 Oct 2017 23:04:46 GMT</li>
-<li>UTCString: Thu, 19 Oct 2017 23:04:46 GMT</li>
-<li>LocaleDateString: 10/19/2017</li>
-<li>LocaleTimeString: 4:04:46 PM</li>
-<li>LocalString: 10/19/2017, 4:04:46 PM</li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment</p>
-<p><strong>Examples</strong></p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Todays</span><span class="w"> </span><span class="nx">date</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">month</span><span class="p">}}}</span><span class="o">/</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">date</span><span class="p">}}}</span><span class="o">/</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">year</span><span class="p">}}}</span><span class="w"></span>
-</pre></div>
-</div>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Current</span><span class="w"> </span><span class="nx">time</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">hours</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">minutes</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">seconds</span><span class="p">}}}</span><span class="o">:</span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">milliseconds</span><span class="p">}}}</span><span class="w"></span>
-</pre></div>
-</div>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">UTC</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">UTCString</span><span class="p">}}}</span><span class="w"></span>
-</pre></div>
-</div>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Locale</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">LocaleString</span><span class="p">}}}</span><span class="w"></span>
-</pre></div>
-</div>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">ISO</span><span class="w"> </span><span class="nx">datetime</span><span class="w"> </span><span class="nx">is</span><span class="w"> </span><span class="p">{{{</span><span class="nx">$moment</span><span class="p">.</span><span class="nx">ISOString</span><span class="p">}}}</span><span class="w"></span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="catalog-usage">
-<span id="catalog-usage"></span><h4>$catalog Usage<a class="headerlink" href="#catalog-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$catalog</span></code> is an object that gives you access to the catalog information including version if it is present. The following properties are currently included:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="n">snapshot</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;@&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">,</span>
-  <span class="nb">id</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
-  <span class="n">version</span><span class="p">:</span> <span class="n">version</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="dcctx-usage">
-<span id="dcctx-usage"></span><h4>$dcctx Usage<a class="headerlink" href="#dcctx-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$dcctx</span></code> is an object that gives you access to the current <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">cid</span></code> of the app. You may use this attribute to generate links with <code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code> as query parameters.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">pid</span><span class="p">:</span> <span class="s2">&quot;the page id&quot;</span><span class="p">,</span>
-    <span class="n">cid</span><span class="p">:</span> <span class="s2">&quot;the context id(name of the app)&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="location-usage">
-<span id="location-usage"></span><h4>$location Usage<a class="headerlink" href="#location-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$location</span></code> is an object that gives you access to information about the current location of the document based on the URL. The following properties are included:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;the origin of the URL&quot;</span><span class="p">,</span>
-    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;the host of the URL, which is the hostname, and then, if the port of the URL is nonempty, a &#39;:&#39;, and the port&quot;</span><span class="p">,</span>
-    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;the hostname of the URL&quot;</span><span class="p">,</span>
-    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;the path after the origin pointing to the install location of chaise. By default, this will be &#39;/chaise/&#39;&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="section" id="example">
-<span id="example"></span><h5>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h5>
-<p>If the web url is <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu:8080/chaise/recordset/#1/isa:dataset</span></code>, the above object would look something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;https://dev.isrd.isi.edu&quot;</span><span class="p">,</span>
-    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu:8080&quot;</span><span class="p">,</span>
-    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
-    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;/chaise/&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="session-usage">
-<span id="session-usage"></span><h4>$session Usage<a class="headerlink" href="#session-usage" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">$session</span></code> is an object that gives you access to information about the current logged in user’s session. The properties are the same properties returned from the webauthn response. The following are some of the properties included (subject to change as properties are added and removed from webauthn):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
-<span class="n">client</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;the `display_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;the `email` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="p">:</span> <span class="s2">&quot;an object containing more permissions the user might have. Used in the CFDE project for communicating ras permissions.&quot;</span><span class="p">,</span>
-    <span class="n">full_name</span><span class="p">:</span> <span class="s2">&quot;the `full_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;the `id` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">identities</span><span class="p">:</span> <span class="s2">&quot;the `identities` array of the user from webauthn client object&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>Each object in the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> array has the same values as the objects returned from the webauthn attributes array, with 2 added values, <code class="docutils literal notranslate"><span class="pre">webpage</span></code> and <code class="docutils literal notranslate"><span class="pre">type</span></code>. The returned array is composed of globus groups and different globus identities associated with the user. It has any objects with duplicate <code class="docutils literal notranslate"><span class="pre">id</span></code> values merged together. The following values can be found in each object of <code class="docutils literal notranslate"><span class="pre">attributes</span></code>:</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">display_name</span></code>: the display name of the group or identity</li>
-<li><code class="docutils literal notranslate"><span class="pre">email</span></code>: the email of the identity (if present)</li>
-<li><code class="docutils literal notranslate"><span class="pre">full_name</span></code>: the full_name of the identity (if present)</li>
-<li><code class="docutils literal notranslate"><span class="pre">id</span></code>: the id of the group or identity</li>
-<li><code class="docutils literal notranslate"><span class="pre">identities</span></code>: the identities array of the current identity (if present)</li>
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: the type of the entry (<code class="docutils literal notranslate"><span class="pre">identity</span></code> or <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>). The type is set as a <code class="docutils literal notranslate"><span class="pre">globus_group</span></code> if the display_name is defined and the id is NOT in the list of identities associated with the logged in user. The type is set as an <code class="docutils literal notranslate"><span class="pre">identity</span></code> if the id is in the list of identities associated with the logged in user (<code class="docutils literal notranslate"><span class="pre">client.identities</span></code>). Otherwise, no type will be set.</li>
-<li><code class="docutils literal notranslate"><span class="pre">webpage</span></code>: If the <code class="docutils literal notranslate"><span class="pre">type</span></code> is set to <code class="docutils literal notranslate"><span class="pre">globus_group</span></code>, the webpage is then set to the globus group page. If the globus group id is “https://auth.globus.org/ff766864-a03f-11e5-b097-22000aef184d”, then the webpage will be created by extracting the id value and setting it like “https://app.globus.org/groups/ff766864-a03f-11e5-b097-22000aef184d/about”.</li>
-</ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">extensions</span></code> object currently contains 3 properties with permissions for dbgap studies. These properties are:</p>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">has_ras_permissions</span></code>: boolean value if ras dbgap permissions are present</li>
-<li><code class="docutils literal notranslate"><span class="pre">ras_dbgap_permissions</span></code>: array of objects with information about which dbgap studies the user has permissions for</li>
-<li><code class="docutils literal notranslate"><span class="pre">ras_dbgap_phs_ids</span></code>: map of <code class="docutils literal notranslate"><span class="pre">phs_id</span></code> values as the keys with <code class="docutils literal notranslate"><span class="pre">true</span></code> as the value</li>
-</ul>
-</div>
+<p>Ermrestjs now allows users to access some pre-defined variables in the template environment for ease. You need to make sure that you don’t use these variables as column-names in your tables to avoid them being overridden in the environment. These pre-defined attributes are available in both Mustache and Handlebars templating environments. Please refer to <a class="reference internal" href="handlebars.html#using-pre-defined-attributes"><span class="std std-ref">here</span></a> for more information.</p>
 </div>
 </div>
 </div>

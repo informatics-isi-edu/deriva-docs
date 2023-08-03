@@ -1433,18 +1433,18 @@
 </pre></div>
 </div>
 <p>That template works with this context</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My First Blog Post!&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">id</span><span class="o">:</span><span class="w"> </span><span class="mf">47</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Yehuda Katz&quot;</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My First Blog Post!&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">47</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yehuda Katz&quot;</span><span class="w"></span>
 <span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My first post. Wheeeee!&quot;</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My first post. Wheeeee!&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>This makes it possible to use Handlebars templates with more raw JSON objects.</p>
-<p>Nested handlebars paths can also include ../ segments, which evaluate their paths against a parent context.</p>
+<p>Nested handlebars paths can also include <code class="docutils literal notranslate"><span class="pre">../</span></code> segments, which evaluate their paths against a parent context.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each comments}}</span>
   <span class="p">[{{</span><span class="n">title</span><span class="p">}}](</span><span class="o">/</span><span class="n">posts</span><span class="o">/</span><span class="p">{{</span><span class="o">../</span><span class="n">permalink</span><span class="p">}}</span><span class="c1">#{{id}})</span>
   <span class="p">{{</span><span class="n">body</span><span class="p">}}</span>
@@ -1485,12 +1485,12 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="accessing-current-context">
 <span id="accessing-current-context"></span><h3>Accessing current context<a class="headerlink" href="#accessing-current-context" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword can be used for accessing the current context. It’s mainly useful when dealing with arrays or JSON objects, allowing you to access the values of an array of objects. For example, if you have the following JSON column:</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">person</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">firstname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">lastname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;smith&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight-jsson notranslate"><div class="highlight"><pre><span></span>{
+  &quot;person&quot;: {
+    &quot;firstname&quot;: &quot;John&quot;,
+    &quot;lastname&quot;: &quot;smith&quot;
+  }
+}
 </pre></div>
 </div>
 <p>While you can use <code class="docutils literal notranslate"><span class="pre">{{{person.firstname}}}</span></code> to access the values inside the object, you can use a block like the following and utilize the <code class="docutils literal notranslate"><span class="pre">this</span></code> keyword:</p>
@@ -1500,15 +1500,15 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>As we mentioned <code class="docutils literal notranslate"><span class="pre">this</span></code> is also useful for arrays, for more information please refer to the <a class="reference external" href="#each-helper">Each Helper</a> section. To expand on this, you can also use <code class="docutils literal notranslate"><span class="pre">this</span></code> in the case that you have an array of objects. For example:</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">authors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;authors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nx">firstname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nx">lastname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;smith&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;smith&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="p">},</span><span class="w"></span>
 <span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nx">firstname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Joe&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nx">lastname</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Doe&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;firstname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Joe&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;lastname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Doe&quot;</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="w">  </span><span class="p">]</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -1549,11 +1549,11 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>When used in this context:</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">arr</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;first element&quot;</span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;second element&quot;</span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="p">{</span><span class="nx">value</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;third element&quot;</span><span class="p">}</span><span class="w"></span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;arr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;first element&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;second element&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;third element&quot;</span><span class="p">}</span><span class="w"></span>
 <span class="w">  </span><span class="p">]</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
@@ -1642,9 +1642,9 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span id="catalog"></span><h3>$catalog<a class="headerlink" href="#catalog" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">$catalog</span></code> is an object that gives you access to the catalog information including version if it is present. The following properties are currently included:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="n">snapshot</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;@&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">,</span>
-  <span class="nb">id</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
-  <span class="n">version</span><span class="p">:</span> <span class="n">version</span>
+  <span class="s2">&quot;snapshot&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">id</span><span class="o">&gt;@&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="n">version</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1653,8 +1653,8 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span id="dcctx"></span><h3>$dcctx<a class="headerlink" href="#dcctx" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">$dcctx</span></code> is an object that gives you access to the current <code class="docutils literal notranslate"><span class="pre">pid</span></code> and <code class="docutils literal notranslate"><span class="pre">cid</span></code> of the app. You may use this attribute to generate links with <code class="docutils literal notranslate"><span class="pre">ppid</span></code> and <code class="docutils literal notranslate"><span class="pre">pcid</span></code> as query parameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">pid</span><span class="p">:</span> <span class="s2">&quot;the page id&quot;</span><span class="p">,</span>
-    <span class="n">cid</span><span class="p">:</span> <span class="s2">&quot;the context id(name of the app)&quot;</span>
+    <span class="s2">&quot;pid&quot;</span><span class="p">:</span> <span class="s2">&quot;the page id&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cid&quot;</span><span class="p">:</span> <span class="s2">&quot;the context id(name of the app)&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1663,34 +1663,36 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span id="location"></span><h3>$location<a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">$location</span></code> is an object that gives you access to information about the current location of the document based on the URL. The following properties are included:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;the origin of the URL&quot;</span><span class="p">,</span>
-    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;the host of the URL, which is the hostname, and then, if the port of the URL is nonempty, a &#39;:&#39;, and the port&quot;</span><span class="p">,</span>
-    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;the hostname of the URL&quot;</span><span class="p">,</span>
-    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;the path after the origin pointing to the install location of chaise. By default, this will be &#39;/chaise/&#39;&quot;</span>
+    <span class="s2">&quot;origin&quot;</span><span class="p">:</span> <span class="s2">&quot;the origin of the URL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;the host of the URL, which is the hostname, and then, if the port of the URL is nonempty, a &#39;:&#39;, and the port&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hostname&quot;</span><span class="p">:</span> <span class="s2">&quot;the hostname of the URL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;chaise_path&quot;</span><span class="p">:</span> <span class="s2">&quot;the path after the origin pointing to the install location of chaise. By default, this will be &#39;/chaise/&#39;&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>For example, if the web url is <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu:8080/chaise/recordset/#1/isa:dataset</span></code>, the above object would look something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">origin</span><span class="p">:</span> <span class="s2">&quot;https://dev.isrd.isi.edu&quot;</span><span class="p">,</span>
-    <span class="n">host</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu:8080&quot;</span><span class="p">,</span>
-    <span class="n">hostname</span><span class="p">:</span> <span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span>
-    <span class="n">chaise_path</span><span class="p">:</span> <span class="s2">&quot;/chaise/&quot;</span>
-<span class="p">}</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://dev.isrd.isi.edu&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev.isrd.isi.edu:8080&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;hostname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dev.isrd.isi.edu&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;chaise_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/chaise/&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="session">
 <span id="session"></span><h3>$session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">$session</span></code> is an object that gives you access to information about the current logged in user’s session. The properties are the same properties returned from the webauthn response. The following are some of the properties included (subject to change as properties are added and removed from webauthn):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">attributes</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
-<span class="n">client</span><span class="p">:</span> <span class="p">{</span>
-    <span class="n">display_name</span><span class="p">:</span> <span class="s2">&quot;the `display_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">email</span><span class="p">:</span> <span class="s2">&quot;the `email` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">extensions</span><span class="p">:</span> <span class="s2">&quot;an object containing more permissions the user might have. Used in the CFDE project for communicating ras permissions.&quot;</span><span class="p">,</span>
-    <span class="n">full_name</span><span class="p">:</span> <span class="s2">&quot;the `full_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="s2">&quot;the `id` of the user from webauthn client object&quot;</span><span class="p">,</span>
-    <span class="n">identities</span><span class="p">:</span> <span class="s2">&quot;the `identities` array of the user from webauthn client object&quot;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="s2">&quot;the `attributes` array from the webauthn response. More info below about the objects in the `attributes` array&quot;</span>
+  <span class="s2">&quot;client&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;the `display_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;the `email` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;extensions&quot;</span><span class="p">:</span> <span class="s2">&quot;an object containing more permissions the user might have. Used in the CFDE project for communicating ras permissions.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;full_name&quot;</span><span class="p">:</span> <span class="s2">&quot;the `full_name` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;the `id` of the user from webauthn client object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;identities&quot;</span><span class="p">:</span> <span class="s2">&quot;the `identities` array of the user from webauthn client object&quot;</span><span class="p">,</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1820,7 +1822,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>when used with context</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">people</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">  </span><span class="s2">&quot;people&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
 <span class="w">    </span><span class="s2">&quot;Yehuda Katz&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="s2">&quot;Alan Johnson&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="s2">&quot;Charles Jolley&quot;</span><span class="w"></span>
@@ -1874,13 +1876,13 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="section" id="with-helper">
 <span id="with-helper"></span><h3>With helper<a class="headerlink" href="#with-helper" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">With</span></code> helper can be used to shift the context. For example with the following context:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-  title: &quot;My first post!&quot;,
-  author: {
-    firstName: &quot;Charles&quot;,
-    lastName: &quot;Jolley&quot;
-  }
-}
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My first post!&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;firstName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Charles&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;lastName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Jolley&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <p>You can do:</p>
@@ -2177,14 +2179,14 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="section" id="regular-expression-match">
 <span id="regular-expression-match"></span><h3>Regular Expression Match<a class="headerlink" href="#regular-expression-match" title="Permalink to this headline">¶</a></h3>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">regexMatch</span></code> function you can check whether a given value matches the given regular expression. The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (regexMatch value &quot;jpg|png&quot; )}}</span>
-<span class="o">..</span> <span class="n">content</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="logical-helpers">
 <span id="logical-helpers"></span><h3>Logical Helpers<a class="headerlink" href="#logical-helpers" title="Permalink to this headline">¶</a></h3>
+<p>{{#if (regexMatch value “jpg|png” )}}</p>
 <ul class="simple">
 <li>And (<code class="docutils literal notranslate"><span class="pre">and</span></code>)</li>
 </ul>

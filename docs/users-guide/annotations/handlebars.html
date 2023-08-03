@@ -1873,44 +1873,61 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="with-helper">
 <span id="with-helper"></span><h3>With helper<a class="headerlink" href="#with-helper" title="Permalink to this headline">¶</a></h3>
-<p>Normally, Handlebars templates are evaluated against the context of the template.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">template</span> <span class="o">=&gt;</span> <span class="p">{{</span><span class="n">lastName</span><span class="p">}},</span> <span class="p">{{</span><span class="n">firstName</span><span class="p">}}</span>
-<span class="n">contenxt</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="n">firstName</span><span class="p">:</span> <span class="s2">&quot;Alan&quot;</span><span class="p">,</span> <span class="n">lastName</span><span class="p">:</span> <span class="s2">&quot;Johnson&quot;</span><span class="p">}</span>
+<p><code class="docutils literal notranslate"><span class="pre">With</span></code> helper can be used to shift the context. For example with the following context:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  title: &quot;My first post!&quot;,
+  author: {
+    firstName: &quot;Charles&quot;,
+    lastName: &quot;Jolley&quot;
+  }
+}
 </pre></div>
 </div>
-<p>results in</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Johnson</span><span class="p">,</span> <span class="n">Alan</span>
-</pre></div>
-</div>
-<p>You can shift the context for a section of a template by using the built-in <code class="docutils literal notranslate"><span class="pre">with</span></code> block helper.</p>
+<p>You can do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">title</span><span class="p">}}</span>
 <span class="p">{{</span><span class="c1">#with author}}</span>
-  <span class="n">By</span> <span class="p">{{</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">lastName</span><span class="p">}}</span>
+  <span class="n">By</span> <span class="p">{{{</span><span class="n">firstName</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">lastName</span><span class="p">}}}</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>when used in this context:</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nx">title</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;My first post!&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nx">author</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nx">firstName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Charles&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nx">lastName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Jolley&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
-<p>results in</p>
+<p>Which results in</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>My first post! By Charles Jolley
 </pre></div>
 </div>
+</div>
+<div class="section" id="accessing-outer-context">
+<span id="accessing-outer-context"></span><h3>Accessing outer context<a class="headerlink" href="#accessing-outer-context" title="Permalink to this headline">¶</a></h3>
+<p>If inside the <code class="docutils literal notranslate"><span class="pre">with</span></code> block you want to access the outer context, you need to prepend the column names with <code class="docutils literal notranslate"><span class="pre">../</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author}}</span>
+  <span class="p">{{{</span><span class="n">firstName</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">lastName</span><span class="p">}}}</span> <span class="n">wrote</span> <span class="p">{{{</span><span class="o">../</span><span class="n">title</span><span class="p">}}}</span><span class="o">.</span>
+<span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accessing-current-value">
+<span id="accessing-current-value"></span><h3>Accessing current value<a class="headerlink" href="#accessing-current-value" title="Permalink to this headline">¶</a></h3>
+<p>As we described in <a class="reference external" href="#null-checking">here</a>, <code class="docutils literal notranslate"><span class="pre">with</span></code> can also be used for doing a “truthy” check. You can use <code class="docutils literal notranslate"><span class="pre">.</span></code> to access
+the value of the <code class="docutils literal notranslate"><span class="pre">with</span></code> block. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with column}}{{{.}}}{{{/with}}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>With <code class="docutils literal notranslate"><span class="pre">{&quot;column&quot;:</span> <span class="pre">null}</span></code> doesn’t return anything.</li>
+<li>WIth <code class="docutils literal notranslate"><span class="pre">{&quot;column&quot;:</span> <span class="pre">&quot;some</span> <span class="pre">value&quot;}</span></code> returns <code class="docutils literal notranslate"><span class="pre">&quot;some</span> <span class="pre">value&quot;</span></code>.</li>
+</ul>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">else</span></code> as we decribed <a class="reference external" href="#using-else-with-with-block">here</a>. That being said, we recommend using <a class="reference external" href="#if-helper"><code class="docutils literal notranslate"><span class="pre">if</span></code> helper</a> instead of <code class="docutils literal notranslate"><span class="pre">with</span></code> for boolean operations as its more flexible and doesn’t change the context.</p>
+<div class="section" id="define-known-reference">
+<span id="define-known-reference"></span><h4>Define known reference<a class="headerlink" href="#define-known-reference" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">with</span></code> can also be used with block parameters to define known references in the current block. The example above can be converted to</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">title</span><span class="p">}}</span>
-<span class="p">{{</span><span class="c1">#with author as |myAuthor|}}</span>
-  <span class="n">By</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">firstName</span><span class="p">}}</span> <span class="p">{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">lastName</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author as |myAuthor|}}</span>
+  <span class="p">{{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">firstName</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">lastName</span><span class="p">}}}</span> <span class="n">wrote</span> <span class="p">{{{</span><span class="n">title</span><span class="p">}}}</span><span class="o">.</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
 </div>
 <p>This allows for complex templates to potentially provide clearer code than <code class="docutils literal notranslate"><span class="pre">../</span></code> depthed references allow for.</p>
+</div>
+<div class="section" id="using-else-with-with-block">
+<span id="using-else-with-with-block"></span><h4>Using <code class="docutils literal notranslate"><span class="pre">else</span></code> with <code class="docutils literal notranslate"><span class="pre">with</span></code> block<a class="headerlink" href="#using-else-with-with-block" title="Permalink to this headline">¶</a></h4>
 <p>You can optionally provide an <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> section which will display only when the passed value is empty.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author}}</span>
   <span class="p">{{</span><span class="n">name</span><span class="p">}}</span>
@@ -1918,6 +1935,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
   <span class="n">No</span> <span class="n">content</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">with</span><span class="p">}}</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="lookup-helper">
@@ -1963,7 +1981,10 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="encodefacet-helper">
 <span id="encodefacet-helper"></span><h3>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this headline">¶</a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. This helper can be used for encoding both JSON objects and string representation of a JSON object.</p>
+<div class="section" id="passing-the-string-representation-of-a-facet-blob">
+<span id="passing-the-string-representation-of-a-facet-blob"></span><h4>1. Passing the string representation of a facet blob<a class="headerlink" href="#passing-the-string-representation-of-a-facet-blob" title="Permalink to this headline">¶</a></h4>
+<p>The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
 <p>Template (newline and indentation added for readability and should be removed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
 <span class="p">{</span>
@@ -1981,17 +2002,49 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>As you can see in this example I am escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
+<p>As you can see in this example we are escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
+<p>You can also pass the string representation of the JSON object like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">encodeFacet</span> <span class="n">json_str</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encodeFacet json_str}}{{/encodeFacet}}</span>
+</pre></div>
+</div>
+<p>With the following context:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;json_str&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;and\&quot;: [{\&quot;source\&quot;: [{\&quot;inbound\&quot;: [\&quot;schema\&quot;, \&quot;fk_1\&quot;]}]}, \&quot;RID\&quot;], \&quot;choices\&quot;: [\&quot;{{{RID}}}\&quot;]}]}&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="passing-the-json-object-representing-a-facet">
+<span id="passing-the-json-object-representing-a-facet"></span><h4>2. Passing the JSON object representing a facet<a class="headerlink" href="#passing-the-json-object-representing-a-facet" title="Permalink to this headline">¶</a></h4>
+<p>For instance, assuming <code class="docutils literal notranslate"><span class="pre">obj</span></code> is the name of the <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> column that stores the facet object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet obj}})</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet obj}}{{/encodeFacet}})</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="jsonstringify-helper">
 <span id="jsonstringify-helper"></span><h3>JsonStringify helper<a class="headerlink" href="#jsonstringify-helper" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript. This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet URL strings.</p>
-<p>Template (newline and indentation added for readability and should be removed):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
-    <span class="p">{{</span><span class="c1">#jsonStringify}}</span>
-      <span class="p">{{{</span><span class="n">col</span><span class="p">}}}</span>
-    <span class="p">{{</span><span class="o">/</span><span class="n">jsonStringify</span><span class="p">}}</span>
-<span class="p">{{</span><span class="o">/</span><span class="n">encodeFacet</span><span class="p">}}</span>
+<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript.</p>
+<p>The following are different ways of using this helper (assume <code class="docutils literal notranslate"><span class="pre">column</span></code> stores a JSON object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#jsonStringify}}{{{column}}}{{/jsonStringify}}</span>
+
+<span class="p">{{</span><span class="c1">#jsonStringify column}}{{/jsonStringify}}</span>
+</pre></div>
+</div>
+<p>This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet URL strings. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet (jsonStringify col)}})</span>
 </pre></div>
 </div>
 <p>Wher <code class="docutils literal notranslate"><span class="pre">col</span></code> is:</p>

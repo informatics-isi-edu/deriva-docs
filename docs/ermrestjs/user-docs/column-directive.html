@@ -992,6 +992,7 @@
 </ul>
 </li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Column Directive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#overall-structure">Overall structure</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#column-directive-with-source">1. Column directive with <code class="docutils literal notranslate"><span class="pre">source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#column-directive-with-sourcekey">2. Column directive with <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></a></li>
@@ -1029,6 +1030,17 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="input-iframe.html">Input iframe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#iframe-communication">Iframe communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#annotation">Annotation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#url-pattern">url_pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#field-mapping">field_mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#optional-fields">optional_fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#limitations">Limitations</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="table-alternatives.html">Table Alternatives</a><ul>
@@ -1302,6 +1314,55 @@
 <li>Using <a class="reference external" href="#properties">Properties</a> section you can find all the available properties in column directive.</li>
 <li>Please Find the examples in <a class="reference external" href="#examples">this section</a>.</li>
 </ul>
+<div class="section" id="table-of-contents">
+<span id="table-of-contents"></span><h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="#overall-structure">Overall structure</a><ul>
+<li><a class="reference external" href="#1-column-directive-with-source">1. Column directive with <code class="docutils literal notranslate"><span class="pre">source</span></code></a></li>
+<li><a class="reference external" href="#2-column-directive-with-sourcekey">2. Column directive with <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></a></li>
+<li><a class="reference external" href="#3-column-directive-without-any-source">3. Column directive without any source</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#properties">Properties</a><ul>
+<li><a class="reference external" href="#1-data-source-properties">1. Data source properties</a><ul>
+<li><a class="reference external" href="#source">source</a><ul>
+<li><a class="reference external" href="#source-path-with-reusable-prefix">Source path with reusable prefix</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#sourcekey">sourcekey</a></li>
+<li><a class="reference external" href="#entity">entity</a></li>
+<li><a class="reference external" href="#aggregate">aggregate</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#2-presentation-properties">2. Presentation properties</a><ul>
+<li><a class="reference external" href="#markdown_name">markdown_name</a></li>
+<li><a class="reference external" href="#comment">comment</a></li>
+<li><a class="reference external" href="#comment_display">comment_display</a></li>
+<li><a class="reference external" href="#hide_column_header">hide_column_header</a></li>
+<li><a class="reference external" href="#self-link">self-link</a></li>
+<li><a class="reference external" href="#display">display</a><ul>
+<li><a class="reference external" href="#markdown_pattern">markdown_pattern</a></li>
+<li><a class="reference external" href="#wait_for">wait_for</a></li>
+<li><a class="reference external" href="#show_foreign_key_link">show_foreign_key_link</a></li>
+<li><a class="reference external" href="#show_key_link">show_key_link</a></li>
+<li><a class="reference external" href="#array_ux_mode">array_ux_mode</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#array_options">array_options</a></li>
+<li><a class="reference external" href="#input_iframe">input_iframe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="#shorthand-syntax">Shorthand syntax</a></li>
+<li><a class="reference external" href="#examples">Examples</a><ul>
+<li><a class="reference external" href="#visible-column-list">Visible Column List</a></li>
+<li><a class="reference external" href="#visible-foreignkey-list">Visible ForeignKey List</a></li>
+<li><a class="reference external" href="#alternative-syntax">Alternative syntax</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="section" id="overall-structure">
 <span id="overall-structure"></span><h2>Overall structure<a class="headerlink" href="#overall-structure" title="Permalink to this headline">¶</a></h2>
 <p>As it was described, column directives are meant to intruct the data source and its presentation. Based on how the data source is defined, we can categorize them into the following:</p>
@@ -1328,6 +1389,11 @@
   <span class="s2">&quot;array_options&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">change</span> <span class="n">the</span> <span class="n">default</span> <span class="n">order</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;max_lengh&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span> <span class="n">length</span><span class="o">&gt;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;input_iframe&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;url_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;field_mapping&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;optional_fields&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">array</span> <span class="n">of</span> <span class="n">field</span> <span class="n">names</span><span class="o">&gt;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1764,6 +1830,11 @@ RID;M:=array_d(M:*),F3:=array_d(F3:*),F2:=array_d(M_P1:*),F1:=array_d(M_P2:*)@so
 <li>In scalar mode, use the constituent column’s logic for sorting.</li>
 </ol>
 <p>–&gt;</p>
+</div>
+<div class="section" id="input-iframe">
+<span id="input-iframe"></span><h4>input_iframe<a class="headerlink" href="#input-iframe" title="Permalink to this headline">¶</a></h4>
+<p>This property can be used for integrating Chaise’s recordedit app with any third-party tools. When this property is added to a visible column in entry contexts, Chaise will display a special input for them. Clicking on this input will open a modal to show the third-party tool in an iframe.</p>
+<p>For more information about this property, please refer to <a class="reference internal" href="input-iframe.html"><span class="doc">this document</span></a>.</p>
 </div>
 </div>
 </div>

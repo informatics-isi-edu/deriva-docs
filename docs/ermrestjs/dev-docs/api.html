@@ -990,6 +990,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../user-docs/column-directive.html">Column Directive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/column-directive.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/column-directive.html#overall-structure">Overall structure</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/column-directive.html#column-directive-with-source">1. Column directive with <code class="docutils literal notranslate"><span class="pre">source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../user-docs/column-directive.html#column-directive-with-sourcekey">2. Column directive with <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></a></li>
@@ -1027,6 +1028,17 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../user-docs/column-directive-template.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user-docs/input-iframe.html">Input iframe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/input-iframe.html#iframe-communication">Iframe communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/input-iframe.html#annotation">Annotation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/input-iframe.html#url-pattern">url_pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/input-iframe.html#field-mapping">field_mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-docs/input-iframe.html#optional-fields">optional_fields</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../user-docs/input-iframe.html#limitations">Limitations</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../user-docs/table-alternatives.html">Table Alternatives</a><ul>
@@ -1313,6 +1325,16 @@ to use for ERMrest JavaScript agents.</p>
 <dd><p>{{#encodeFacet}}
  str
 {{/encodeFacet}}</p>
+<p>or</p>
+<p>{{encodeFacet obj}}</p>
+<p>or</p>
+<p>{{encodeFacet str}}</p>
+<p>This is order of checking syntax (first applicaple rule):</p>
+<ul>
+<li>first see if the block syntax with str inside it is used or not</li>
+<li>if the input is an object we will encode it</li>
+<li>try encoding as string (will return empty string if it wasn&#39;t a string)</li>
+</ul>
 </dd>
 <dt><a href="#formatDate">formatDate()</a> ⇒</dt>
 <dd><p>{{formatDate value format}}</p>
@@ -1321,6 +1343,8 @@ to use for ERMrest JavaScript agents.</p>
 <dd><p>{{#jsonStringify}}
  JSON Object
 {{/jsonStringify}}</p>
+<p>or</p>
+<p>{{#jsonStringify obj}}{{/jsonStringify}}</p>
 </dd>
 <dt><a href="#replace">replace()</a> ⇒</dt>
 <dd><p>{{#replace substr newSubstr}}
@@ -1923,6 +1947,8 @@ boolean<p>&amp;gt;</p>
 <li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+filterProps">.filterProps</a> : <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+isInputIframe">.isInputIframe</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+inputIframeProps">.inputIframeProps</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+name">.name</a> : <code>string</code></li>
@@ -1946,6 +1972,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+renderInputIframeUrl">.renderInputIframeUrl(data, linkedData)</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.VirtualColumn">.VirtualColumn</a><ul>
@@ -7402,6 +7429,8 @@ access this constructor for purposes of fetching aggregate data about the table.
 <li><a class="reference external" href="#new_ERMrest.ReferenceColumn_new">new ReferenceColumn(reference, baseCols, sourceObjectWrapper, name, mainTuple)</a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isFiltered">.isFiltered</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+filterProps">.filterProps</a> : <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+isInputIframe">.isInputIframe</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+inputIframeProps">.inputIframeProps</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+isPseudo">.isPseudo</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+name">.name</a> : <code>string</code></li>
@@ -7425,6 +7454,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+formatPresentation">.formatPresentation(data, [context], [templateVariables], [options])</a> ⇒ <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+_getShowForeignKeyLink">._getShowForeignKeyLink(context)</a> ⇒ <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ReferenceColumn+sourceFormatPresentation">.sourceFormatPresentation(templateVariables, columnValue, mainTuple)</a> ⇒ <code>Object</code></li>
+<li><a class="reference external" href="#ERMrest.ReferenceColumn+renderInputIframeUrl">.renderInputIframeUrl(data, linkedData)</a></li>
 </ul>
 </li>
 </ul>
@@ -7477,6 +7507,16 @@ ReferenceColumn<p>&amp;gt;</p>
 <div class="section" id="referencecolumn-filterprops-code-object-code">
 <span id="referencecolumn-filterprops-code-object-code"></span><h3>referenceColumn.filterProps : <code>Object</code><a class="headerlink" href="#referencecolumn-filterprops-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>The properties related to filter in source</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+isInputIframe"></a></p>
+</div>
+<div class="section" id="referencecolumn-isinputiframe-code-boolean-code">
+<span id="referencecolumn-isinputiframe-code-boolean-code"></span><h3>referenceColumn.isInputIframe : <code>boolean</code><a class="headerlink" href="#referencecolumn-isinputiframe-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>whether we should show an iframe input in recordedit</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+inputIframeProps"></a></p>
+</div>
+<div class="section" id="referencecolumn-inputiframeprops-code-object-code">
+<span id="referencecolumn-inputiframeprops-code-object-code"></span><h3>referenceColumn.inputIframeProps : <code>Object</code><a class="headerlink" href="#referencecolumn-inputiframeprops-code-object-code" title="Permalink to this headline">¶</a></h3>
+<p>the props for inputIframe</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+isPseudo"></a></p>
 </div>
 <div class="section" id="referencecolumn-ispseudo-code-boolean-code">
@@ -7541,7 +7581,7 @@ ReferenceColumn<p>&amp;gt;</p>
 <p>Indicates if the input should be disabled
 true: input must be disabled
 false:  input can be enabled
-object: input msut be disabled (show .message to user)</p>
+object: input must be disabled (show .message to user)</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a><a name="ERMrest.ReferenceColumn+sortable"></a></p>
 </div>
 <div class="section" id="referencecolumn-sortable-code-boolean-code">
@@ -7705,6 +7745,32 @@ Should be called once every value is retrieved</p>
 <td>mainTuple</td>
 <td><a href="#ERMrest.Tuple"><code>Tuple</code></a></td>
 <td>[description]</td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.ReferenceColumn+renderInputIframeUrl"></a></p>
+</div>
+<div class="section" id="referencecolumn-renderinputiframeurl-data-linkeddata">
+<span id="referencecolumn-renderinputiframeurl-data-linkeddata"></span><h3>referenceColumn.renderInputIframeUrl(data, linkedData)<a class="headerlink" href="#referencecolumn-renderinputiframeurl-data-linkeddata" title="Permalink to this headline">¶</a></h3>
+<p>render the location of iframe. will return empty string if invalid or missing.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td><code>Object</code></td>
+<td>raw data of the columns</td>
+</tr>
+<tr>
+<td>linkedData</td>
+<td><code>Object</code></td>
+<td>raw data of the foreign key columns</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.VirtualColumn"></a></p>
@@ -12782,6 +12848,16 @@ since the ermrestJS has been available (milliseconds).<a name="escape"></a></p>
 <p>{{#encodeFacet}}
 str
 {{/encodeFacet}}</p>
+<p>or</p>
+<p>{{encodeFacet obj}}</p>
+<p>or</p>
+<p>{{encodeFacet str}}</p>
+<p>This is order of checking syntax (first applicaple rule):</p>
+<ul class="simple">
+<li>first see if the block syntax with str inside it is used or not</li>
+<li>if the input is an object we will encode it</li>
+<li>try encoding as string (will return empty string if it wasn’t a string)</li>
+</ul>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: encoded facet string that can be used in url<a name="formatDate"></a></p>
 </div>
 <div class="section" id="formatdate">
@@ -12794,6 +12870,8 @@ str
 <p>{{#jsonStringify}}
 JSON Object
 {{/jsonStringify}}</p>
+<p>or</p>
+<p>{{#jsonStringify obj}}{{/jsonStringify}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: string representation of the given JSON object<a name="replace"></a></p>
 </div>
 <div class="section" id="replace">

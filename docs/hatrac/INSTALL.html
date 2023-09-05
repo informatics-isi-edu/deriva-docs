@@ -1439,6 +1439,25 @@ database already created. It simply initializes the database schema.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>This configuration block enables an optional static firewall to require clients
+to have certain attributes in order to perform certain operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="o">...</span>
+    <span class="s2">&quot;firewall_acls&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;create&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;object-or-ns-uploader-group&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;delete&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;object-or-ns-deletion-group&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;manage_acls&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;acl-admin-group&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;manage_metadata&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;metadata-curator-group&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For backwards compatibility, <code class="docutils literal notranslate"><span class="pre">firewall_acls</span></code> uses a default ACL of
+<code class="docutils literal notranslate"><span class="pre">[&quot;*&quot;]</span></code> when an ACL is not configured. This permissive mode then
+allows the normal fine-grained authorization checks to proceed for
+each request.  A more restrictive firewall ACL can block a request
+that would normally be allowed due to the fine-grained ACL state in
+the hatrac namespace hierarchy.</p>
 </div>
 <div class="section" id="rest-api-testing">
 <span id="rest-api-testing"></span><h2>REST API testing<a class="headerlink" href="#rest-api-testing" title="Permalink to this headline">¶</a></h2>

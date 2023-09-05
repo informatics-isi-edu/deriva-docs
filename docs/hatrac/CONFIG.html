@@ -1314,8 +1314,10 @@ whole:</p>
   <span class="s2">&quot;service_prefix&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">URL</span> <span class="n">path</span> <span class="n">prefix</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;database_dsn&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">database</span> <span class="n">connection</span> <span class="n">DSN</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;max_request_payload_size&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">integer</span> <span class="p">(</span><span class="n">default</span> <span class="mi">134217728</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
-  <span class="s2">&quot;error_templates&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">&lt;</span><span class="n">error</span> <span class="n">response</span> <span class="n">template</span> <span class="nb">map</span><span class="o">...&gt;</span> <span class="p">},</span>
+  <span class="s2">&quot;firewall_acls&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">&lt;</span><span class="n">aclname</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">acl</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span> <span class="p">},</span>
+  <span class="s2">&quot;read_only&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;storage_backend&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">backend</span> <span class="n">name</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s2">&quot;error_templates&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">&lt;</span><span class="n">error</span> <span class="n">response</span> <span class="n">template</span> <span class="nb">map</span><span class="o">...&gt;</span> <span class="p">},</span>
   <span class="o">...</span>
 <span class="p">}</span>
 </pre></div>
@@ -1334,6 +1336,34 @@ whole:</p>
 <span id="max-request-payload-size"></span><h3><code class="docutils literal notranslate"><span class="pre">max_request_payload_size</span></code><a class="headerlink" href="#max-request-payload-size" title="Permalink to this headline">¶</a></h3>
 <p>An integer byte count. The default is 134217728, i.e. 128 MiB.</p>
 <p>This policy setting limits the size of object payload that a client may send to the service in one request. Requests exceeding this size will be rejected with an HTTP <code class="docutils literal notranslate"><span class="pre">413</span></code> error code. To create larger objects, a client must use the chunked upload job feature to send the large object content as a sequence of smaller chunk requests.</p>
+</div>
+<div class="section" id="firewall-acls">
+<span id="firewall-acls"></span><h3><code class="docutils literal notranslate"><span class="pre">firewall_acls</span></code><a class="headerlink" href="#firewall-acls" title="Permalink to this headline">¶</a></h3>
+<p>A mapping of predefined ACL names to access control lists. Default configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;firewall_acls&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;create&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;delete&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;manage_acls&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;manage_metadata&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These predefined ACL names affect the following kinds of request:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">create</span></code>: PUT of namespaces, PUT of objects or new object versions, POST of chunked upload jobs</li>
+<li><code class="docutils literal notranslate"><span class="pre">delete</span></code>: DELETE of namespaces, objects, and object-versions</li>
+<li><code class="docutils literal notranslate"><span class="pre">manage_acls</span></code>: PUT or DELETE of ACL sub-resources</li>
+<li><code class="docutils literal notranslate"><span class="pre">manage_metadata</span></code>: PUT or DELETE of metadata sub-resources</li>
+</ul>
+<p>The firewall ACLs are an additional, service-wide authorization step that requests must pass in addition to the fine-grained ACLs configured within the hierarchical namespace. This gives the service operator an option to withdraw some of the self-service privileges that would otherwise be granted to clients who upload content. So, even though a client might be an “owner” of an object or namespace sub-tree, the firewall ACLs might require that they also belong to a special curator group in order to further modify state.</p>
+<p>The default is used incrementally to supply any missing firewall ACL in the case that the service configuration sparsely populates the set of ACL names.</p>
+</div>
+<div class="section" id="read-only">
+<span id="read-only"></span><h3><code class="docutils literal notranslate"><span class="pre">read_only</span></code><a class="headerlink" href="#read-only" title="Permalink to this headline">¶</a></h3>
+<p>When <code class="docutils literal notranslate"><span class="pre">true</span></code>, changes the default <code class="docutils literal notranslate"><span class="pre">firewall_acls</span></code> ACL content from <code class="docutils literal notranslate"><span class="pre">[&quot;*&quot;]</span></code> to <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
+<p>This backwards-compatibility feature translates the legacy <code class="docutils literal notranslate"><span class="pre">read_only</span></code> configuration field as a short-hand to supply all firewall ACLs with empty lists, approximating the old feature which blocked all mutation requests with one boolean setting. However, this translation only affects the default ACL value supplied for unconfigured firewall ACL names. In a mixed configuration, the <code class="docutils literal notranslate"><span class="pre">read_only</span></code> option will have no effect on firewall ACLs that are populated in the configuration file.</p>
 </div>
 <div class="section" id="storage-backend">
 <span id="storage-backend"></span><h3><code class="docutils literal notranslate"><span class="pre">storage_backend</span></code><a class="headerlink" href="#storage-backend" title="Permalink to this headline">¶</a></h3>

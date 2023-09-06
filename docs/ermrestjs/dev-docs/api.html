@@ -1371,10 +1371,11 @@ to use for ERMrest JavaScript agents.</p>
  string
 {{/toTitleCase}}</p>
 </dd>
-<dt><a href="#humanizeBytes">humanizeBytes(value, mode, precision)</a> ⇒</dt>
+<dt><a href="#humanizeBytes">humanizeBytes()</a> ⇒</dt>
 <dd><p>{{humanizeBytes value }}
-{{humanizeBytes value mode }}
-{{humanizeBytes value mode precision}}</p>
+{{humanizeBytes value mode=&#39;si&#39; }}
+{{humanizeBytes value precision=4}}
+{{humanizeBytes value tooltip=true }}</p>
 </dd>
 </dl></div>
 <div class="section" id="typedefs">
@@ -1511,6 +1512,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getRowDisplayKey">._getRowDisplayKey(context)</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getNullValue">._getNullValue()</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.Table+_assignAssetCategories">._assignAssetCategories()</a></li>
 </ul>
 </li>
 <li><em>static</em><ul>
@@ -1569,6 +1571,12 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Column+RID">.RID</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Column+type">.type</a> : <a class="reference external" href="#ERMrest.Type"><code>Type</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ignore">.ignore</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+assetCategory">.assetCategory</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetURL">.isAssetURL</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetFilename">.isAssetFilename</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetByteCount">.isAssetByteCount</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetMd5">.isAssetMd5</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetSha256">.isAssetSha256</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+annotations">.annotations</a> : <a class="reference external" href="#ERMrest.Annotations"><code>Annotations</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+comment">.comment</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Column+nullok">.nullok</a> : <code>Boolean</code></li>
@@ -3030,6 +3038,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getRowDisplayKey">._getRowDisplayKey(context)</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getNullValue">._getNullValue()</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.Table+_assignAssetCategories">._assignAssetCategories()</a></li>
 </ul>
 </li>
 <li><em>static</em><ul>
@@ -3255,6 +3264,16 @@ It’s the same as displaykey but with extra restrictions. It might return undef
 <span id="table-getnullvalue-code-object-code"></span><h3>table._getNullValue() : <code>object</code><a class="headerlink" href="#table-getnullvalue-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>return the null value that should be shown for the columns under
 this table for the given context.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+_assignAssetCategories"></a></p>
+</div>
+<div class="section" id="table-assignassetcategories">
+<span id="table-assignassetcategories"></span><h3>table._assignAssetCategories()<a class="headerlink" href="#table-assignassetcategories" title="Permalink to this headline">¶</a></h3>
+<p>returns an object that captures the asset category of columns.</p>
+<ul class="simple">
+<li>the key of the returned object is the column name and value is the assigned category.</li>
+<li>if a column is used in multiple asset annotations, only the first usage is used and other asset annotations
+are discarded.</li>
+</ul>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table.Entity"></a></p>
 </div>
 <div class="section" id="table-entity">
@@ -3795,6 +3814,12 @@ the Rows.</p>
 <li><a class="reference external" href="#ERMrest.Column+RID">.RID</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Column+type">.type</a> : <a class="reference external" href="#ERMrest.Type"><code>Type</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ignore">.ignore</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+assetCategory">.assetCategory</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetURL">.isAssetURL</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetFilename">.isAssetFilename</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetByteCount">.isAssetByteCount</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetMd5">.isAssetMd5</a> : <code>boolean</code></li>
+<li><a class="reference external" href="#ERMrest.Column+isAssetSha256">.isAssetSha256</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+annotations">.annotations</a> : <a class="reference external" href="#ERMrest.Annotations"><code>Annotations</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+comment">.comment</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.Column+nullok">.nullok</a> : <code>Boolean</code></li>
@@ -3904,6 +3929,37 @@ or if column is system generated then return true so that it is disabled.</p>
 </div>
 <div class="section" id="column-ignore-code-boolean-code">
 <span id="column-ignore-code-boolean-code"></span><h3>column.ignore : <code>boolean</code><a class="headerlink" href="#column-ignore-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+assetCategory"></a></p>
+</div>
+<div class="section" id="column-assetcategory-code-string-code">
+<span id="column-assetcategory-code-string-code"></span><h3>column.assetCategory : <code>string</code><a class="headerlink" href="#column-assetcategory-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>if it’s used in an asset annotation, will return its category. available values:
+‘filename’, ‘byte_count’, ‘md5’, ‘sha256’</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetURL"></a></p>
+</div>
+<div class="section" id="column-isasseturl-code-boolean-code">
+<span id="column-isasseturl-code-boolean-code"></span><h3>column.isAssetURL : <code>boolean</code><a class="headerlink" href="#column-isasseturl-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>if this column is has a valid asset annotation</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetFilename"></a></p>
+</div>
+<div class="section" id="column-isassetfilename-code-boolean-code">
+<span id="column-isassetfilename-code-boolean-code"></span><h3>column.isAssetFilename : <code>boolean</code><a class="headerlink" href="#column-isassetfilename-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>if this column is a filename for an asset column</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetByteCount"></a></p>
+</div>
+<div class="section" id="column-isassetbytecount-code-boolean-code">
+<span id="column-isassetbytecount-code-boolean-code"></span><h3>column.isAssetByteCount : <code>boolean</code><a class="headerlink" href="#column-isassetbytecount-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>if this column is a byte count for an asset column</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetMd5"></a></p>
+</div>
+<div class="section" id="column-isassetmd5-code-boolean-code">
+<span id="column-isassetmd5-code-boolean-code"></span><h3>column.isAssetMd5 : <code>boolean</code><a class="headerlink" href="#column-isassetmd5-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>if this column is a md5 for an asset column</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetSha256"></a></p>
+</div>
+<div class="section" id="column-isassetsha256-code-boolean-code">
+<span id="column-isassetsha256-code-boolean-code"></span><h3>column.isAssetSha256 : <code>boolean</code><a class="headerlink" href="#column-isassetsha256-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>if this column is a sha256 for an asset column</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+annotations"></a></p>
 </div>
 <div class="section" id="column-annotations-code-annotations-code">
@@ -12909,38 +12965,13 @@ string
 {{/toTitleCase}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: string representation of the given JSON object<a name="humanizeBytes"></a></p>
 </div>
-<div class="section" id="humanizebytes-value-mode-precision">
-<span id="humanizebytes-value-mode-precision"></span><h1>humanizeBytes(value, mode, precision) ⇒<a class="headerlink" href="#humanizebytes-value-mode-precision" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="humanizebytes">
+<span id="humanizebytes"></span><h1>humanizeBytes() ⇒<a class="headerlink" href="#humanizebytes" title="Permalink to this headline">¶</a></h1>
 <p>{{humanizeBytes value }}
-{{humanizeBytes value mode }}
-{{humanizeBytes value mode precision}}</p>
-<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">mode</span></code></p>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th>Param</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>value</td>
-<td><code>*</code></td>
-<td>the value</td>
-</tr>
-<tr>
-<td>mode</td>
-<td><code>string</code></td>
-<td>mode can be <code>si</code>, <code>binary</code>, or <code>raw</code>.</td>
-</tr>
-<tr>
-<td>precision</td>
-<td><code>number</code></td>
-<td>An integer specifying the number of significant digits.</td>
-</tr>
-</tbody>
-</table><p><a name="appLinkFn"></a></p>
+{{humanizeBytes value mode=’si’ }}
+{{humanizeBytes value precision=4}}
+{{humanizeBytes value tooltip=true }}</p>
+<p><strong>Kind</strong>: global function<strong>Returns</strong>: formatted string of <code class="docutils literal notranslate"><span class="pre">value</span></code> with corresponding <code class="docutils literal notranslate"><span class="pre">mode</span></code><a name="appLinkFn"></a></p>
 </div>
 <div class="section" id="applinkfn-code-function-code">
 <span id="applinkfn-code-function-code"></span><h1>appLinkFn : <code>function</code><a class="headerlink" href="#applinkfn-code-function-code" title="Permalink to this headline">¶</a></h1>

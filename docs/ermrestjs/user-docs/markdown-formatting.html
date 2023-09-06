@@ -1438,16 +1438,23 @@
 <p>Depending on the markdown element type, different attrbiutes will be acceptable and throughout this document we will mention them. The following are some of the general attributes:</p>
 <div class="section" id="tooltip">
 <span id="tooltip"></span><h3>Tooltip<a class="headerlink" href="#tooltip" title="Permalink to this headline">¶</a></h3>
-<p>Using <code class="docutils literal notranslate"><span class="pre">title</span></code> attribute you can add a tooltip to any HTML element.</p>
-<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>[tooltip example](http://example.com){title=&quot;tooltip for this link&quot;}
-#OUTPUT
-<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
-  <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;http://example.com&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;tooltip for this link&quot;</span><span class="p">&gt;</span>tooltip example<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<p>Using <code class="docutils literal notranslate"><span class="pre">data-chaise-tooltip</span></code> attribute you can add a tooltip to any HTML element.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">tooltip</span> <span class="n">example</span><span class="p">](</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){</span><span class="n">data</span><span class="o">-</span><span class="n">chaise</span><span class="o">-</span><span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;tooltip for this link&quot;</span><span class="p">}</span>
 </pre></div>
 </div>
-<blockquote>
-<div><p> <a href="http://example.com" title="tooltip for this link">tooltip example</a></p></div></blockquote>
+<p>By default the tooltip will be displayed at the bottom of the element. We’re also showing the tooltip icon beside the element. If you don’t want this behavior the following is ways to customize this:</p>
+<ol class="simple">
+<li>You can use the <code class="docutils literal notranslate"><span class="pre">data-chaise-tooltip-placement</span></code> to change this placement. Accepted values are <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>. For example,</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">span</span><span class="p">:</span><span class="n">Caption</span><span class="p">:</span><span class="o">/</span><span class="n">span</span><span class="p">:{</span><span class="n">data</span><span class="o">-</span><span class="n">chaise</span><span class="o">-</span><span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;tooltip for this link&quot;</span> <span class="n">data</span><span class="o">-</span><span class="n">chaise</span><span class="o">-</span><span class="n">tooltip</span><span class="o">-</span><span class="n">placement</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li>By adding <code class="docutils literal notranslate"><span class="pre">data-chaise-tooltip-no-icon</span></code> to your definition we’re not going to add the tooltip icon.</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">span</span><span class="p">:</span><span class="n">Caption</span><span class="p">:</span><span class="o">/</span><span class="n">span</span><span class="p">:{</span><span class="n">data</span><span class="o">-</span><span class="n">chaise</span><span class="o">-</span><span class="n">tooltip</span><span class="o">=</span><span class="s2">&quot;tooltip for this link&quot;</span> <span class="n">data</span><span class="o">-</span><span class="n">chaise</span><span class="o">-</span><span class="n">tooltip</span><span class="o">-</span><span class="n">no</span><span class="o">-</span><span class="n">icon</span><span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="classes">
 <span id="classes"></span><h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
@@ -1543,7 +1550,7 @@
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">download</span></code> will trigger the browser’s default download behavior and displays the links like the following:
 <img alt="download default UI" src="https://raw.githubusercontent.com/informatics-isi-edu/ermrestjs/master/docs/resources/download-alt-btn.png" /></li>
-<li><code class="docutils literal notranslate"><span class="pre">.download</span></code> will change the link to look like the following:
+<li><code class="docutils literal notranslate"><span class="pre">.download-alt</span></code> will change the link to look like the following:
 <img alt="alternative download UI" src="https://raw.githubusercontent.com/informatics-isi-edu/ermrestjs/master/docs/resources/download-btn.png" /></li>
 <li>If you would like to create your own download button, we suggest adding a class attribute here and using this class for definining your own CSS rules.<ul>
 <li>Chaise is defining rules based on <code class="docutils literal notranslate"><span class="pre">a[download]</span></code> selector. You need to ensure that the default CSS rules are overriden and the new ones are added.</li>

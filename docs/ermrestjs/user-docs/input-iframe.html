@@ -1038,9 +1038,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#url-pattern">url_pattern</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#field-mapping">field_mapping</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#optional-fields">optional_fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#empty-field-confirm-message-markdown">empty_field_confirm_message_markdown</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="table-alternatives.html">Table Alternatives</a><ul>
@@ -1334,7 +1334,8 @@
   <span class="s2">&quot;input_iframe&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;url_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;field_mapping&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span><span class="p">,</span>
-    <span class="s2">&quot;optional_fields&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">array</span> <span class="n">of</span> <span class="n">field</span> <span class="n">names</span><span class="o">&gt;</span>
+    <span class="s2">&quot;optional_fields&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">array</span> <span class="n">of</span> <span class="n">field</span> <span class="n">names</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;empty_field_confirm_message_markdown&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">markdown</span><span class="o">&gt;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -1407,14 +1408,34 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="empty-field-confirm-message-markdown">
+<span id="empty-field-confirm-message-markdown"></span><h3>empty_field_confirm_message_markdown<a class="headerlink" href="#empty-field-confirm-message-markdown" title="Permalink to this headline">¶</a></h3>
+<p>This optional field can be used to customize the message that we show to users when they attempt to close the iframe without submitting. This message is only displayed when users start with an empty field, that’s why the property is named this way.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+  &quot;source&quot;: &quot;ID&quot;,
+  &quot;input_iframe&quot;: {
+    &quot;url_pattern&quot;: &quot;/apps/myapp/index.html&quot;,
+    &quot;field_mapping&quot;: {
+       &quot;hra_id&quot;: &quot;ID&quot;,
+       &quot;hra_file&quot;: &quot;URI&quot;,
+        &quot;hra_creator&quot;: &quot;Principal_Investigator&quot;,
+        &quot;hra_notes&quot;: &quot;Notes&quot;
+    },
+    &quot;empty_field_confirm_message_markdown&quot;: &quot;You are closing the registration UI without submitting your changes. Are you sure you want to proceed? \n\n If you would like to submit your registry, please close this popup and click on `REVIEW AND REGISTER` button on bottom right of the Registration UI.&quot;
+  }
+}
+
+
+## Limitations
+
+Given that this is an experimental feature for now, there are some limitations/assumptions in the implementation of it we&#39;ve listed below:
+
+- When users select a value for this input, we will show the raw value of the column that this property is defined on. So, it&#39;s important to use a `source` that will be populated by the iframe. That&#39;s why in the examples in this document, we&#39;re using `&quot;source&quot;: &quot;ID&quot;` which is populated by the iframe and identifies the chosen value.
+
+- In recordedit, the required inputs are marked with a `*`. These inputs must have a value, and if users attempt to submit the form without a value for them, we will complain. This check for column directives with `input_iframe` is done only based on the column itself. We will not do additional checks to see whether the columns used in the `field_mapping` are required. If the column is not required, but additional columns are, you should consider adding the [required annotation](https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/annotation.md#tag-2018-required) to the column.
+</pre></div>
 </div>
-<div class="section" id="limitations">
-<span id="limitations"></span><h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
-<p>Given that this is an experimental feature for now, there are some limitations/assumptions in the implementation of it we’ve listed below:</p>
-<ul class="simple">
-<li>When users select a value for this input, we will show the raw value of the column that this property is defined on. So, it’s important to use a <code class="docutils literal notranslate"><span class="pre">source</span></code> that will be populated by the iframe. That’s why in the examples in this document, we’re using <code class="docutils literal notranslate"><span class="pre">&quot;source&quot;:</span> <span class="pre">&quot;ID&quot;</span></code> which is populated by the iframe and identifies the chosen value.</li>
-<li>In recordedit, the required inputs are marked with a <code class="docutils literal notranslate"><span class="pre">*</span></code>. These inputs must have a value, and if users attempt to submit the form without a value for them, we will complain. This check for column directives with <code class="docutils literal notranslate"><span class="pre">input_iframe</span></code> is done only based on the column itself. We will not do additional checks to see whether the columns used in the <code class="docutils literal notranslate"><span class="pre">field_mapping</span></code> are required. If the column is not required, but additional columns are, you should consider adding the <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/annotation.md#tag-2018-required">required annotation</a> to the column.</li>
-</ul>
+</div>
 </div>
 </div>
 

@@ -1739,10 +1739,18 @@ updating the font-awesome classes that are used.</li>
 <p>This section will focus on more advanced details related to installation. Please refer to the installation guide in the <code class="docutils literal notranslate"><span class="pre">user-docs</span></code> folder for general information. The build process uses Makefile to simplify what needs to be called from the command line to get started. <code class="docutils literal notranslate"><span class="pre">Make</span></code> will manage dependency installation (through <code class="docutils literal notranslate"><span class="pre">npm</span></code>) and the react build process (using <code class="docutils literal notranslate"><span class="pre">webpack</span></code>).</p>
 <div class="section" id="make-targets">
 <span id="make-targets"></span><h3>Make targets<a class="headerlink" href="#make-targets" title="Permalink to this headline">¶</a></h3>
-<p>The following are all the Makefile targets related to installation:</p>
+<p>The following targers can be used for installing dependencies. Try to avoid directly calling <code class="docutils literal notranslate"><span class="pre">npm</span></code> and use these commands unless you want to add a new module or update the existing ones.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">npm-install-modules</span></code>: Installs the dependencies needed for building the app in production mode.</li>
+<li><code class="docutils literal notranslate"><span class="pre">npm-install-all-modules</span></code>: Install all the dependencies including the ones needed during development and testing. Since we had to patch webdriver-manager, this command will also call <code class="docutils literal notranslate"><span class="pre">patch-package</span></code> to apply the patch.</li>
+</ul>
+<p>The following targets are designed for building chaise apps:</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">dist</span></code>: This target is designed for deployment environments, where we want to make sure we can install from scratch without any hiccups and errors. That’s why we’re always doing a clean installation (<code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">ci</span></code>) as part of this command, which will ensure that the dependencies are installed based on what’s encoded in the <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> (without fetching new versions from the upstream). While developing features in Chaise, you should only run this command during the first installation or when <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> has been modified.</li>
 <li><code class="docutils literal notranslate"><span class="pre">dist-wo-deps</span></code>: Designed for development purposes, will only build and install Chaise.</li>
+</ul>
+<p>The following are deploy targets:</p>
+<ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">deploy</span></code>: Deployed the built folders into the given location.</li>
 <li><code class="docutils literal notranslate"><span class="pre">deploy-w-config</span></code>:  The same as <code class="docutils literal notranslate"><span class="pre">deploy</span></code>, but will also <code class="docutils literal notranslate"><span class="pre">rsync</span></code> the configuration files.</li>
 </ul>
@@ -1755,6 +1763,7 @@ updating the font-awesome classes that are used.</li>
 <li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">npm-install-all-modules</span></code> to install all the NPM modules regardless of <code class="docutils literal notranslate"><span class="pre">NODE_ENV</span></code> value.<ul>
 <li>Useful when you first clone the repository, or want to download dependencies from scratch.</li>
 <li>Use it yo update the installed dependencies based on the changes in <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> file.</li>
+<li>his command will also call <code class="docutils literal notranslate"><span class="pre">patch-package</span></code> to apply the patches to dependencies. Refer to <a class="reference external" href="../../patches/README.md">patches folder</a> for more information.</li>
 </ul>
 </li>
 <li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist-wo-deps</span></code> while developing so you don’t have to install depenendencies for each build.</li>
@@ -1764,8 +1773,8 @@ updating the font-awesome classes that are used.</li>
 </li>
 <li>Only for main contributors: If we want to upgrade the dependencies or install a new package, we should,<ul>
 <li>Ensure the used node and npm versions are updated and the latest stable.</li>
-<li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code></li>
-<li>Double-check the changes to <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code></li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</li>
+<li>Double-check the changes to <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code>.</li>
 </ul>
 </li>
 </ul>

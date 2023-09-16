@@ -1394,7 +1394,7 @@
 <span class="p">{{</span><span class="c1">#$fkey_schema_constraint}}{{{values.RID}}}{{/fkey_schema_constraint}}</span>
 </pre></div>
 </div>
-<p>But the handlebars <code class="docutils literal notranslate"><span class="pre">if</span></code> block doesn’t change the context. So if you’re looking for an equivalent syntax for mustache block that also changes context, you should use the <a class="reference external" href="#with-helper">with helper</a>.</p>
+<p>But the handlebars <code class="docutils literal notranslate"><span class="pre">if</span></code> block doesn’t change the context. So if you’re looking for an equivalent syntax for mustache block that also changes context, you should use the <a class="reference external" href="#with-helper"><code class="docutils literal notranslate"><span class="pre">with</span></code> helper</a>.</p>
 <p>The equivalent handlebars template would be:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with name}}Hello {{{.}}}{{/with}}</span>
 
@@ -1420,7 +1420,7 @@
 </div>
 <div class="section" id="restriction-in-the-adjacency-of-opening-and-closing-tags">
 <span id="restriction-in-the-adjacency-of-opening-and-closing-tags"></span><h3>Restriction in the adjacency of opening and closing tags<a class="headerlink" href="#restriction-in-the-adjacency-of-opening-and-closing-tags" title="Permalink to this headline">¶</a></h3>
-<p>As we described <a class="reference internal" href="markdown-formatting.html#attributes"><span class="std std-ref">in the markdown document</span></a>, you can add attributes to markdown elements using the <code class="docutils literal notranslate"><span class="pre">{}</span></code> syntax. Now imagine you want to create a link, and the attribute value comes from one of the columns. In Mustache, you could do the following (assume <code class="docutils literal notranslate"><span class="pre">btn_class</span></code> is the name of the column):</p>
+<p>As we described <a class="reference internal" href="markdown-formatting.html#attributes"><span class="std std-ref">in the markdown document</span></a>, you can add attributes to markdown elements using the <code class="docutils literal notranslate"><span class="pre">{}</span></code> syntax. Now imagine you want to create a link and the attribute value comes from one of the columns. In Mustache, you could do the following (assume <code class="docutils literal notranslate"><span class="pre">btn_class</span></code> is the name of the column):</p>
 <p>Mustache:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">click</span> <span class="n">here</span><span class="p">](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){{{{</span><span class="n">btn_class</span><span class="p">}}}}</span>
 </pre></div>
@@ -1475,7 +1475,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span class="p">{{</span><span class="o">/</span><span class="n">each</span><span class="p">}}</span>
 </pre></div>
 </div>
-<p>In this example all of the above reference the same <code class="docutils literal notranslate"><span class="pre">permalink</span></code> value even though they are located within different blocks.</p>
+<p>In this example, all of the above reference the same <code class="docutils literal notranslate"><span class="pre">permalink</span></code> value even though they are located within different blocks.</p>
 <p><strong>NOTE</strong>: Handlebars also allows for name conflict resolution between helpers and data fields via a <code class="docutils literal notranslate"><span class="pre">this</span></code> reference:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{{</span><span class="o">./</span><span class="n">name</span><span class="p">}}</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">/</span><span class="n">name</span><span class="p">}}</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">}}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span> <span class="ow">or</span> <span class="p">{{</span><span class="n">this</span><span class="o">.</span><span class="p">[</span><span class="n">name</span> <span class="k">with</span> <span class="n">a</span> <span class="n">space</span><span class="p">]}}</span>
 </pre></div>
@@ -1484,7 +1484,7 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="automatic-null-detection">
 <span id="automatic-null-detection"></span><h3>Automatic null detection<a class="headerlink" href="#automatic-null-detection" title="Permalink to this headline">¶</a></h3>
-<p>To avoid the need for adding individual checks for each <code class="docutils literal notranslate"><span class="pre">{{{column_name}}}</span></code> usage, we apply an automatic null detection. If the value of any of the columns which are being used in the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> are either null or empty, then the pattern will fall back on the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> display annotation to return the respective value. For example, if the title property in the JSON object is not defined or null, then the following template <code class="docutils literal notranslate"><span class="pre">[{{{title}}}]({{{url}}})</span></code> will resolve as null and use the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> annotation to determine what should be done.</p>
+<p>To avoid the need for adding individual checks for each <code class="docutils literal notranslate"><span class="pre">{{{column_name}}}</span></code> usage, we apply an automatic null detection. If the value of any of the columns that are being used in the <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code> are either null or empty, then the pattern will fall back on the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> display annotation to return the respective value. For example, if the title property in the JSON object is not defined or null, then the following template <code class="docutils literal notranslate"><span class="pre">[{{{title}}}]({{{url}}})</span></code> will resolve as null and use the <code class="docutils literal notranslate"><span class="pre">show_null</span></code> annotation to determine what should be done.</p>
 <p>That being said, our current implementation has the following limitations/flaws:</p>
 <ol>
 <li><p class="first">If you use the block syntax (<code class="docutils literal notranslate"><span class="pre">{{#</span></code>) in any part of the template, we will not apply this null detection logic.</p>
@@ -1832,16 +1832,23 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 </div>
 <div class="section" id="if-helper">
 <span id="if-helper"></span><h3>If helper<a class="headerlink" href="#if-helper" title="Permalink to this headline">¶</a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to conditionally render a block. If its argument returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, or <code class="docutils literal notranslate"><span class="pre">[]</span></code>, Handlebars will not render the block. You can use this helper in combination with any of the <a class="reference external" href="#boolean-helpers">Boolean Helpers</a> to do more complicated logical operations.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if author}} {{firstName}} {{lastName}}&lt;/h1&gt;{{/if}}</span>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to conditionally render a block. If its argument returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, or <code class="docutils literal notranslate"><span class="pre">[]</span></code>, Handlebars will not render the block. You can use this helper with any of the <a class="reference external" href="#boolean-helpers">Boolean Helpers</a> to do more complicated logical operations.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{/if}}</span>
 </pre></div>
 </div>
-<p>when used with an empty (<code class="docutils literal notranslate"><span class="pre">{}</span></code>) context, <code class="docutils literal notranslate"><span class="pre">author</span></code> will be <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, resulting in an empty string:</p>
+<blockquote>
+<div>If you’re using <code class="docutils literal notranslate"><span class="pre">if</span></code> block only to check for a JSON object and then using it, consider using <a class="reference external" href="#with-helper"><code class="docutils literal notranslate"><span class="pre">with</span></code> helper</a> which will do the truthy check and changes context at the same time similar to <a class="reference external" href="#null-checking">how Mustache null checking works</a>.</div></blockquote>
 <p>When using a block expression, you can specify a template section to run if the expression returns a falsy value. The section, marked by <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> is called an “else section”.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if author}} {{firstName}} {{lastName}}{{else}} Unknown Author {{/if}}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{else}}Hidden Author{{/if}}</span>
 </pre></div>
 </div>
-<p>The above method will return <code class="docutils literal notranslate"><span class="pre">Unknown</span> <span class="pre">Author</span></code>.</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{else}} Hidden and Unknown Author{{/if}}</span>
+</pre></div>
+</div>
+<p>Plesae refer to <a class="reference external" href="#boolean-helpers">Boolean Helpers</a> section to learn how you can achieve more complicated comparisons inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> block.</p>
 </div>
 <div class="section" id="unless-helper">
 <span id="unless-helper"></span><h3>Unless helper<a class="headerlink" href="#unless-helper" title="Permalink to this headline">¶</a></h3>
@@ -2162,7 +2169,7 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 </div>
 <div class="section" id="boolean-helpers">
 <span id="boolean-helpers"></span><h2>Boolean Helpers<a class="headerlink" href="#boolean-helpers" title="Permalink to this headline">¶</a></h2>
-<p>You can use the following helper to check for specific equality checks using the default <code class="docutils literal notranslate"><span class="pre">if</span></code> helper</p>
+<p>In this section we go over the helpers that can be used to do boolean operations. These helpers are commonly used with <code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">unless</span></code>.</p>
 <div class="section" id="comparison-helpers">
 <span id="comparison-helpers"></span><h3>Comparison Helpers<a class="headerlink" href="#comparison-helpers" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">

@@ -1313,6 +1313,7 @@ whole:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s2">&quot;service_prefix&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">URL</span> <span class="n">path</span> <span class="n">prefix</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;database_dsn&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">database</span> <span class="n">connection</span> <span class="n">DSN</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="s2">&quot;allowed_url_char_class&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">regular</span> <span class="n">expression</span> <span class="n">string</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;max_request_payload_size&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">integer</span> <span class="p">(</span><span class="n">default</span> <span class="mi">134217728</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
   <span class="s2">&quot;firewall_acls&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="o">&lt;</span><span class="n">aclname</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">acl</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">...</span> <span class="p">},</span>
   <span class="s2">&quot;read_only&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">,</span>
@@ -1331,6 +1332,22 @@ whole:</p>
 <span id="database-dsn"></span><h3><code class="docutils literal notranslate"><span class="pre">database_dsn</span></code><a class="headerlink" href="#database-dsn" title="Permalink to this headline">¶</a></h3>
 <p>The connection string used when opening the service database via the <code class="docutils literal notranslate"><span class="pre">psycopg2</span></code> database API.</p>
 <p>A typical value for a single-host deployment would be <code class="docutils literal notranslate"><span class="pre">&quot;dbname=hatrac&quot;</span></code>. In a more complex deployment, this might include remote database server addresses or other connection options.</p>
+</div>
+<div class="section" id="allowed-url-char-class">
+<span id="allowed-url-char-class"></span><h3><code class="docutils literal notranslate"><span class="pre">allowed_url_char_class</span></code><a class="headerlink" href="#allowed-url-char-class" title="Permalink to this headline">¶</a></h3>
+<p>A Python RE representing the class of single characters allowed in the
+pathname component of a Hatrac URL. The default is a strict
+definition: <code class="docutils literal notranslate"><span class="pre">[-._~A-Za-z0-9/]</span></code>. This default combines RFC 3986 and
+Hatrac URL parsing rules:</p>
+<ul class="simple">
+<li>Non-reserved characters are ASCII alpha-numeric A-Z, a-z, 0-9, and the limited punctuation <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code>, and <code class="docutils literal notranslate"><span class="pre">~</span></code>.</li>
+<li>Hatrac pathnames can be formed with the non-reserved characters and the <code class="docutils literal notranslate"><span class="pre">/</span></code> path separator, or with percent-encoded UTF-8 sequences.</li>
+</ul>
+<p>The purpose of this configuration field is to allow an administrator
+to slightly relax the strict rules and allow for additional bare ASCII
+characters to be used outside of this specification. It is recommended
+that this feature not be used, and instead deployments be updated to
+follow the strict quoting rules described above.</p>
 </div>
 <div class="section" id="max-request-payload-size">
 <span id="max-request-payload-size"></span><h3><code class="docutils literal notranslate"><span class="pre">max_request_payload_size</span></code><a class="headerlink" href="#max-request-payload-size" title="Permalink to this headline">¶</a></h3>

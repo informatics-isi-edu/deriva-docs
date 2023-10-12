@@ -1334,11 +1334,11 @@
 </pre></div>
 </div>
 <p>These variables are used in our test framework to communicate with <code class="docutils literal notranslate"><span class="pre">ERMrest</span></code>. The following is how these variables most probably should look like:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;chaise <span class="c1"># No trailing `/`</span>
-<span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>https://dev.isrd.isi.edu/ermrest <span class="c1"># No trailing `/`</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">CHAISE_BASE_URL</span><span class="o">=</span>https://dev.derivacloud.org/~&lt;your-user-directory&gt;chaise <span class="c1"># No trailing `/`</span>
+<span class="nb">export</span> <span class="nv">ERMREST_URL</span><span class="o">=</span>https://dev.derivacloud.org/ermrest <span class="c1"># No trailing `/`</span>
 <span class="nb">export</span> <span class="nv">AUTH_COOKIE</span><span class="o">=</span><span class="s2">&quot;webauthn=PutYourCookieHere;&quot;</span> <span class="c1"># You have to put `webauthn=` at the beginging and `;` at the end.</span>
 <span class="nb">export</span> <span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span><span class="s2">&quot;webauthn=PutAnotherCookieHere;&quot;</span> <span class="c1"># You have to put `webauthn=` at the beginging and `;` at the end.</span>
-<span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise <span class="c1"># No trailing `/`</span>
+<span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>some_user_name@dev.derivacloud.org:public_html/chaise <span class="c1"># No trailing `/`</span>
 <span class="nb">export</span> <span class="nv">SHARDING</span><span class="o">=</span><span class="nb">false</span>
 </pre></div>
 </div>
@@ -1355,7 +1355,7 @@
 <div class="section" id="prerequistes">
 <span id="prerequistes"></span><h3>Prerequistes<a class="headerlink" href="#prerequistes" title="Permalink to this headline">¶</a></h3>
 <ol>
-<li><p class="first">After setting up the environment variables, make sure that the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> directory has the public access(if not, give the folder the following permissions <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">&lt;your-user-directory&gt;</span></code>).</p>
+<li><p class="first">After setting up the environment variables, make sure that the <code class="docutils literal notranslate"><span class="pre">https://dev.derivacloud.org/~&lt;your-user-directory&gt;</span></code> directory has the public access(if not, give the folder the following permissions <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">&lt;your-user-directory&gt;</span></code>).</p>
 </li>
 <li><p class="first">Make sure all the dependencies are installed by running the following command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make deps-test
@@ -1375,7 +1375,7 @@
 </div>
 <p>As the name suggests this will not install dependencies. That’s why you need to install all the dependencies in step 2.</p>
 </li>
-<li><p class="first">Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository (This will upload your local code to the remote server):</p>
+<li><p class="first">Upload your code on the <code class="docutils literal notranslate"><span class="pre">https://dev.derivacloud.org/~&lt;your-user-directory&gt;</span></code> by the running the following command in your local chaise repository (This will upload your local code to the remote server):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make deploy
 </pre></div>
 </div>
@@ -1538,7 +1538,7 @@ $ <span class="nb">eval</span> ssh-agent
 $ ssh-add PATH/TO/KEY
 
 <span class="c1"># export REMOTE_CHAISE_DIR_PATH=USERNAME@HOST:public_html/chaise</span>
-$ <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>chirag@dev.isrd.isi.edu:public_html/chaise
+$ <span class="nb">export</span> <span class="nv">REMOTE_CHAISE_DIR_PATH</span><span class="o">=</span>some_user_name@dev.derivacloud.org:public_html/chaise
 </pre></div>
 </div>
 <p><strong>CI</strong>: For CI there is no need to set <code class="docutils literal notranslate"><span class="pre">REMOTE_CHAISE_DIR_PATH</span></code> as it copies the actual file to the <strong>chaise-config.js</strong> in its local directory where it is running the test-suite.</p>

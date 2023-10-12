@@ -1343,9 +1343,9 @@
 <p>Setting it to <code class="docutils literal notranslate"><span class="pre">true</span></code> means that subsequent additions/injections to the the control flow don’t also add browser.waitForAngular.</p>
 <p>Synchronization makes protractor wait for Angular promises to resolve and causes the url’s to be scrambled. Chaise uses the <code class="docutils literal notranslate"><span class="pre">#</span></code> delimiter to determine url parameters to be sent to Ermrest. Thus, enabling synchronization, changes the url, appending an extra / after the <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol.</p>
 <p>Thus a correct url like this
-<code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/chaise/record/#1/legacy:dataset/id=1580</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">https://exampel.com/chaise/record/#1/legacy:dataset/id=1580</span></code></p>
 <p>changes to</p>
-<p><code class="docutils literal notranslate"><span class="pre">https://dev.isrd.isi.edu/chaise/record/#/1/legacy:dataset/id=1580</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">https://exampel.com/chaise/record/#/1/legacy:dataset/id=1580</span></code></p>
 <p>Thus, the parser is unable to parse it. To avoid this we simply disable synchronization in the start of testcases.</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">beforeAll</span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nx">browser</span><span class="p">.</span><span class="nx">ignoreSynchronization</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span><span class="w"></span>
@@ -1372,7 +1372,7 @@
 <div class="section" id="waiting-for-url-to-change">
 <span id="waiting-for-url-to-change"></span><h2>Waiting For Url To Change<a class="headerlink" href="#waiting-for-url-to-change" title="Permalink to this headline">¶</a></h2>
 <p>This can be useful when you want to wait for the URL to change in case of form submissions or link clicks.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://dev.isrd.isi.edu/chaise/search&quot;</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;http://example.com/chaise/search&quot;</span><span class="p">;</span><span class="w"></span>
 <span class="nx">chaisePage</span><span class="p">.</span><span class="nx">waitForUrl</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="mf">5000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">   </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Redirected to url&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">},</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>

@@ -1381,7 +1381,7 @@
 <p>The current implementation of <code class="docutils literal notranslate"><span class="pre">$fkeys</span></code> has the following limitations:</p>
 <ul>
 <li><p class="first">Using $fkeys you can only access data from tables that are one level away from the current table. This can cause problem when you are using $fkeys in your <code class="docutils literal notranslate"><span class="pre">row_markdown_pattern</span></code> annotation. Let’s say the following is the ERD of your database.</p>
-<p><img alt="$fkey example" src="https://dev.isrd.isi.edu/~ashafaei/wiki-images/fkeys_1.png" /></p>
+<p>![$fkey example]((https://github.com/informatics-isi-edu/ermrestjs/raw/master/docs/resources/fkeys-example-erd.png)</p>
 <p>And you have defined the <code class="docutils literal notranslate"><span class="pre">row_markdown_pattern</span></code> of table A as <code class="docutils literal notranslate"><span class="pre">{{{$fkey_schema_fk1.values.term}}}</span></code>. If you navigate to record app for any records of A, the rowname will be displayed as you expect it. But if you go to the table C, the rowname of A won’t be as you expected since we don’t have access to the table B’s data.
 Therefore it’s advised to use <code class="docutils literal notranslate"><span class="pre">$fkey</span></code> only for the <code class="docutils literal notranslate"><span class="pre">column-display</span></code> annotation (or any other annotation that is controlling data for the same table).</p>
 </li>
@@ -1433,7 +1433,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <p><strong>NOTE</strong>: we will be using following object for values</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nx">date</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;08/25/2016&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;https://dev.isrd.isi.edu/chaise/recordset/#1/legacy:dataset/title=&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="nx">url</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;https://example.com/chaise/recordset/#1/legacy:dataset/title=&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;BiomassProdBatch for Virus=7782 Target=5HT1B site=USC&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
@@ -1453,14 +1453,14 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <div class="section" id="replacement-with-url-encoding-encode-name-encode">
 <span id="replacement-with-url-encoding-encode-name-encode"></span><h3>2. Replacement with URL encoding - “{{#encode}}{{{name}}}{{/encode}}”<a class="headerlink" href="#replacement-with-url-encoding-encode-name-encode" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-[{{name}}](https://dev.isrd.isi.edu/chaise/search?name={{#encode}}{{{name}}}{{/encode}})
+[{{name}}](https://example.com/chaise/search?name={{#encode}}{{{name}}}{{/encode}})
 
-# MUSTACHE OUTPUT: &quot;[BiomassProdBatch for Virus&amp;#x3D;7782 Target&amp;#x3D;5HT1B site&amp;#x3D;USC](https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;
-# MARKDOWN OUTPUT: &quot;&lt;p&gt;&lt;a href=&quot;https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC&quot;&gt;BiomassProdBatch for Virus=7782 Target=5HT1B site=USC&lt;/a&gt;&lt;/p&gt;&quot;
+# MUSTACHE OUTPUT: &quot;[BiomassProdBatch for Virus&amp;#x3D;7782 Target&amp;#x3D;5HT1B site&amp;#x3D;USC](https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;
+# MARKDOWN OUTPUT: &quot;&lt;p&gt;&lt;a href=&quot;https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC&quot;&gt;BiomassProdBatch for Virus=7782 Target=5HT1B site=USC&lt;/a&gt;&lt;/p&gt;&quot;
 </pre></div>
 </div>
 <blockquote>
-<div><a class="reference external" href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus<p>=</p>
+<div><a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus<p>=</p>
 7782 Target<p>=</p>
 5HT1B site<p>=</p>
 USC</a></div></blockquote>
@@ -1485,7 +1485,7 @@ USC</strong> was conducted on 08/25/2016</div></blockquote>
 <p>With null value for title</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># title = null</span>
 
-<span class="n">Research</span> <span class="n">on</span> <span class="n">date</span> <span class="p">{{{</span><span class="n">date</span><span class="p">}}}</span> <span class="p">:</span> <span class="p">{{</span><span class="c1">#title}}[{{{title}}}](https://dev.isrd.isi.edu/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}</span>
+<span class="n">Research</span> <span class="n">on</span> <span class="n">date</span> <span class="p">{{{</span><span class="n">date</span><span class="p">}}}</span> <span class="p">:</span> <span class="p">{{</span><span class="c1">#title}}[{{{title}}}](https://example.com/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}</span>
 
 <span class="c1"># MUSTACHE OUTPUT: &quot;Research on date 08/25/2016 : &quot;</span>
 <span class="c1"># MARKDOWN OUTPUT: &quot;&lt;p&gt;Research on date 08/25/2016 :&lt;/p&gt;\n&quot;</span>
@@ -1496,28 +1496,28 @@ USC</strong> was conducted on 08/25/2016</div></blockquote>
 <p>With non-null value for title and null value for name</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># title = &quot;BiomassProdBatch for Virus=7782 Target=5HT1B site=USC&quot;</span>
 
-<span class="n">Research</span> <span class="n">on</span> <span class="n">date</span> <span class="p">{{{</span><span class="n">date</span><span class="p">}}}</span> <span class="p">:</span> <span class="p">{{</span><span class="c1">#title}}[{{{title}}}](https://dev.isrd.isi.edu/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}</span>
+<span class="n">Research</span> <span class="n">on</span> <span class="n">date</span> <span class="p">{{{</span><span class="n">date</span><span class="p">}}}</span> <span class="p">:</span> <span class="p">{{</span><span class="c1">#title}}[{{{title}}}](https://example.com/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}</span>
 
-<span class="c1"># MUSTACHE OUTPUT: &quot;Research on date 08/25/2016 : [BiomassProdBatch for Virus=7782 Target=5HT1B site=USC](https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;</span>
-<span class="c1"># MARKDOWN OUTPUT: &quot;&lt;p&gt;Research on date 08/25/2016 : &lt;a href=&quot;https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSCBiomassProdBatch for Virus=7782 Target=5HT1B site=USC&lt;/a&gt;&lt;/p&gt;&quot;</span>
+<span class="c1"># MUSTACHE OUTPUT: &quot;Research on date 08/25/2016 : [BiomassProdBatch for Virus=7782 Target=5HT1B site=USC](https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;</span>
+<span class="c1"># MARKDOWN OUTPUT: &quot;&lt;p&gt;Research on date 08/25/2016 : &lt;a href=&quot;https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSCBiomassProdBatch for Virus=7782 Target=5HT1B site=USC&lt;/a&gt;&lt;/p&gt;&quot;</span>
 </pre></div>
 </div>
 <blockquote>
-<div>Research on date 08/25/2016 : <a class="reference external" href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></div></blockquote>
+<div>Research on date 08/25/2016 : <a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></div></blockquote>
 </div>
 <div class="section" id="replacement-with-negated-null-check-name-name">
 <span id="replacement-with-negated-null-check-name-name"></span><h3>5. Replacement with negated-null check - “{{^name}}…{{/name}}”<a class="headerlink" href="#replacement-with-negated-null-check-name-name" title="Permalink to this headline">¶</a></h3>
 <p>In cases where you need to check whether a value is null, then use this string, you can use this syntax.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#title = null;
 
-Research on date {{{date}}} : {{^title}}[This is some title](https://dev.isrd.isi.edu/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}
+Research on date {{{date}}} : {{^title}}[This is some title](https://example.com/chaise/search?name={{#encode}}{{{name}}}{{/encode}}){{/title}}
 
-# MUSTACHE OUTPUT: &quot;Research on date 08/25/2016 : [This is some title](https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;
-# MARKDOWN OUTPUT: &quot;&lt;p&gt;Research on date 08/25/2016 : &lt;a href=&quot;https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC&quot;&gt;This is some title&lt;/a&gt;&lt;/p&gt;&quot;
+# MUSTACHE OUTPUT: &quot;Research on date 08/25/2016 : [This is some title](https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC)&quot;
+# MARKDOWN OUTPUT: &quot;&lt;p&gt;Research on date 08/25/2016 : &lt;a href=&quot;https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC&quot;&gt;This is some title&lt;/a&gt;&lt;/p&gt;&quot;
 </pre></div>
 </div>
 <blockquote>
-<div>Research on date 08/25/2016 : <a class="reference external" href="https://dev.isrd.isi.edu/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">This is some title</a></div></blockquote>
+<div>Research on date 08/25/2016 : <a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">This is some title</a></div></blockquote>
 </div>
 <div class="section" id="null-handling">
 <span id="null-handling"></span><h3>6. Null Handling<a class="headerlink" href="#null-handling" title="Permalink to this headline">¶</a></h3>

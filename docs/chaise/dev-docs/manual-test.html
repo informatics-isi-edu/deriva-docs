@@ -1347,12 +1347,8 @@ You are not authorized to perform this action. <a class="reference external" hre
 <span id="auto-placement-of-tooltips"></span><h3>Auto placement of tooltips<a class="headerlink" href="#auto-placement-of-tooltips" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>By default, the tooltips on column headers should appear on top-center</li>
-<li>For the rightmost column if the tooltip text(comment) is too long then the tooltip should be placed on top-right
-<a class="reference external" href="https://dev.isrd.isi.edu/~dsingh/wiki-images/right-most-column-tooltip.png">(Right-most-column-tooltip)</a></li>
-<li>Similarly, for other columns too if the tooltip text is long and they appear on the left or right edge of the window then their tooltip should be placed on top-left or top-right respectively
-(<a class="reference external" href="https://dev.isrd.isi.edu/~dsingh/wiki-images/top-center-arrow.png">Default tooltip</a>,
-<a class="reference external" href="https://dev.isrd.isi.edu/~dsingh/wiki-images/top-left-arrow.png">Long text on the leftmost column</a>,
-<a class="reference external" href="https://dev.isrd.isi.edu/~dsingh/wiki-images/top-right-arrow.png">Long text on the rightmost column</a>)</li>
+<li>For the rightmost column if the tooltip text(comment) is too long then the tooltip should be placed on top-right</li>
+<li>Similarly, for other columns too if the tooltip text is long and they appear on the left or right edge of the window then their tooltip should be placed on top-left or top-right respectively</li>
 <li>Make sure the tooltip does not flicker or overlap the header text if the text is too long.</li>
 </ul>
 </div>
@@ -1451,7 +1447,7 @@ You are not authorized to perform this action. <a class="reference external" hre
 <span id="before-testing"></span><h4>Before Testing<a class="headerlink" href="#before-testing" title="Permalink to this headline">¶</a></h4>
 <ol class="simple">
 <li>For testing this feature, make sure that you have <code class="docutils literal notranslate"><span class="pre">debug:true</span></code> in your <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> to be able to look at the logs that we generate (You can also use the <code class="docutils literal notranslate"><span class="pre">network</span></code> tab in browsers to look at the actual ermrest requests).<ul>
-<li>If you’re using chrome make sure that it’s showing <a class="reference external" href="https://dev.isrd.isi.edu/~ashafaei/wiki-images/verbose.png">verbose</a> logs.</li>
+<li>If you’re using chrome make sure that it’s showing all the logs, including the “verbose” ones. More information <a class="reference external" href="https://developer.chrome.com/docs/devtools/console/log/#browser">here</a>.</li>
 </ul>
 </li>
 <li>It’s better if you throttle your network speed (<a class="reference external" href="https://developers.google.com/web/tools/chrome-devtools/network-performance/network-conditions">chrome</a>/<a class="reference external" href="https://blog.nightly.mozilla.org/2016/11/07/simulate-slow-connections-with-the-network-throttling-tool/">firefox</a>) to simulate slower networks and make the flow-control more visible.</li>
@@ -1486,7 +1482,7 @@ You are not authorized to perform this action. <a class="reference external" hre
 <ul class="simple">
 <li>Verify that files uploaded by another user that you don’t have permission to read, will properly create a new version of that file in hatrac.<ol>
 <li>Need to have 2 user accounts. One cannot be a part of any of the globus groups that we rely on to set blanket permissions (<code class="docutils literal notranslate"><span class="pre">isrd-staff</span></code>, <code class="docutils literal notranslate"><span class="pre">isrd-testers</span></code>).<ul>
-<li><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-H</span> <span class="pre">'cookie:</span> <span class="pre">webauthn=&lt;admin-cookie-here&gt;'</span> <span class="pre">-X</span> <span class="pre">PUT</span> <span class="pre">-H</span> <span class="pre">&quot;Content-Type:</span> <span class="pre">application/json&quot;</span> <span class="pre">-d</span> <span class="pre">'[&lt;user-2-globus-id&gt;]'</span> <span class="pre">-i</span> <span class="pre">&quot;https://dev.isrd.isi.edu/hatrac/js;acl/subtree-create&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-H</span> <span class="pre">'cookie:</span> <span class="pre">webauthn=&lt;admin-cookie-here&gt;'</span> <span class="pre">-X</span> <span class="pre">PUT</span> <span class="pre">-H</span> <span class="pre">&quot;Content-Type:</span> <span class="pre">application/json&quot;</span> <span class="pre">-d</span> <span class="pre">'[&lt;user-2-globus-id&gt;]'</span> <span class="pre">-i</span> <span class="pre">&quot;https://dev.derivacloud.org/hatrac/js;acl/subtree-create&quot;</span></code></li>
 </ul>
 </li>
 <li>User 1 creates file1 in hatrac</li>
@@ -1496,12 +1492,12 @@ You are not authorized to perform this action. <a class="reference external" hre
 </ul>
 </li>
 <li>change permissions on hatrac obj to include update for user 2<ul>
-<li><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-H</span> <span class="pre">'cookie:</span> <span class="pre">webauthn=&lt;admin-cookie-here&gt;'</span> <span class="pre">-X</span> <span class="pre">PUT</span> <span class="pre">-H</span> <span class="pre">&quot;Content-Type:</span> <span class="pre">application/json&quot;</span> <span class="pre">-d</span> <span class="pre">'[&lt;user-2-globus-id&gt;]'</span> <span class="pre">-i</span> <span class="pre">&quot;https://dev.isrd.isi.edu/hatrac/js/chaise/&lt;timestamp_txt-value&gt;/&lt;id-value&gt;/&lt;object-id&gt;;acl/update&quot;</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">curl</span> <span class="pre">-H</span> <span class="pre">'cookie:</span> <span class="pre">webauthn=&lt;admin-cookie-here&gt;'</span> <span class="pre">-X</span> <span class="pre">PUT</span> <span class="pre">-H</span> <span class="pre">&quot;Content-Type:</span> <span class="pre">application/json&quot;</span> <span class="pre">-d</span> <span class="pre">'[&lt;user-2-globus-id&gt;]'</span> <span class="pre">-i</span> <span class="pre">&quot;https://dev.derivacloud.org/hatrac/js/chaise/&lt;timestamp_txt-value&gt;/&lt;id-value&gt;/&lt;object-id&gt;;acl/update&quot;</span></code></li>
 </ul>
 </li>
 <li>user 2 tries to upload same exact file to the same namespace again</li>
 <li>navigate to hatrac folder and verify a new version was created<ul>
-<li>ssh to <code class="docutils literal notranslate"><span class="pre">dev.isrd.isi.edu</span></code></li>
+<li>ssh to <code class="docutils literal notranslate"><span class="pre">dev.derivacloud.org</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">/var/www/hatrac/js/chaise/&lt;timestamp_txt-value&gt;/&lt;id-value&gt;/</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-al</span></code> to list all contents and file sizes</li>
 </ul>

@@ -1558,7 +1558,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 </ul>
 </li>
 <li><a class="reference external" href="#ERMrest.Column">.Column</a><ul>
-<li><a class="reference external" href="#new_ERMrest.Column_new">new Column(table, jsonColumn)</a></li>
+<li><a class="reference external" href="#new_ERMrest.Column_new">new Column(table, jsonColumn, assetCategoryInfo)</a></li>
 <li><em>instance</em><ul>
 <li><a class="reference external" href="#ERMrest.Column+position">.position</a> : <code>number</code></li>
 <li><a class="reference external" href="#ERMrest.Column+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
@@ -1572,6 +1572,7 @@ ForeignKeyRef<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Column+type">.type</a> : <a class="reference external" href="#ERMrest.Type"><code>Type</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ignore">.ignore</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+assetCategory">.assetCategory</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+assetURLColumnName">.assetURLColumnName</a></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetURL">.isAssetURL</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetFilename">.isAssetFilename</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetByteCount">.isAssetByteCount</a> : <code>boolean</code></li>
@@ -1653,6 +1654,8 @@ ColSet<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ColSet">.ColSet</a><ul>
 <li><a class="reference external" href="#new_ERMrest.ColSet_new">new ColSet(columns)</a></li>
 <li><a class="reference external" href="#ERMrest.ColSet+columns">.columns</a> : <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.ColSet+textColumnsCount">.textColumnsCount</a> : <code>number</code></li>
+<li><a class="reference external" href="#ERMrest.ColSet+allSerialOrInt">.allSerialOrInt</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ColSet+toString">.toString()</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ColSet+length">.length()</a> ⇒ <code>Number</code></li>
 </ul>
@@ -3187,7 +3190,15 @@ this.displayname.value has the value</p>
 <span id="table-displaykey-code-array-lt-column-gt-code"></span><h3>table.displayKey : <a class="reference external" href="#ERMrest.Column"><code>Array.<p>&amp;lt;</p>
 Column<p>&amp;gt;</p>
 </code></a><a class="headerlink" href="#table-displaykey-code-array-lt-column-gt-code" title="Permalink to this headline">¶</a></h3>
-<p>The columns that create the shortest key that can be used for display purposes.</p>
+<p>The columns that create the shortest key that can be used for display purposes (rowname).</p>
+<p>sort the not-null keys based on the following and return the first one:</p>
+<ol class="simple">
+<li>not simple fk to somewhere</li>
+<li>not simple and made of any asset metadata (url, filename, bytecount, md5, sha256)</li>
+<li>is shorter</li>
+<li>has more text</li>
+<li>made of columns defined earlier (column position)</li>
+</ol>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+stableKey"></a></p>
 </div>
 <div class="section" id="table-stablekey-code-array-lt-column-gt-code">
@@ -3243,6 +3254,13 @@ ForeignKeyRef<p>&amp;gt;</p>
 <span id="table-getrowdisplaykey-context"></span><h3>table._getRowDisplayKey(context)<a class="headerlink" href="#table-getrowdisplaykey-context" title="Permalink to this headline">¶</a></h3>
 <p>This key will be used for referring to a row of data. Therefore it shouldn’t be foreignkey and markdown type.
 It’s the same as displaykey but with extra restrictions. It might return undefined.</p>
+<p>sort the “well formed” keys that are not simple fk based on the following and return the first one:</p>
+<ol class="simple">
+<li>not simple and made of hash asset metadata (md5, sha256)</li>
+<li>is shorter</li>
+<li>has more text</li>
+<li>made of columns defined earlier (column position)</li>
+</ol>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><strong>Returns{column[]|undefined}</strong>: list of columns. If couldn’t find a suitable columns will return undefined.</p>
 <table border="1" class="docutils">
 <thead>
@@ -3271,7 +3289,9 @@ this table for the given context.</p>
 <span id="table-assignassetcategories"></span><h3>table._assignAssetCategories()<a class="headerlink" href="#table-assignassetcategories" title="Permalink to this headline">¶</a></h3>
 <p>returns an object that captures the asset category of columns.</p>
 <ul class="simple">
-<li>the key of the returned object is the column name and value is the assigned category.</li>
+<li>the key of the returned object is the column name and value and the value is an object. The object has the following:</li>
+<li>category: the assigned category name</li>
+<li>URLColumn: the url column.</li>
 <li>if a column is used in multiple asset annotations, only the first usage is used and other asset annotations
 are discarded.</li>
 </ul>
@@ -3802,7 +3822,7 @@ the Rows.</p>
 <p><strong>Kind</strong>: static class of <a class="reference external" href="#ERMrest"><code>ERMrest</code></a></p>
 <ul class="simple">
 <li><a class="reference external" href="#ERMrest.Column">.Column</a><ul>
-<li><a class="reference external" href="#new_ERMrest.Column_new">new Column(table, jsonColumn)</a></li>
+<li><a class="reference external" href="#new_ERMrest.Column_new">new Column(table, jsonColumn, assetCategoryInfo)</a></li>
 <li><em>instance</em><ul>
 <li><a class="reference external" href="#ERMrest.Column+position">.position</a> : <code>number</code></li>
 <li><a class="reference external" href="#ERMrest.Column+table">.table</a> : <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></li>
@@ -3816,6 +3836,7 @@ the Rows.</p>
 <li><a class="reference external" href="#ERMrest.Column+type">.type</a> : <a class="reference external" href="#ERMrest.Type"><code>Type</code></a></li>
 <li><a class="reference external" href="#ERMrest.Column+ignore">.ignore</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+assetCategory">.assetCategory</a> : <code>string</code></li>
+<li><a class="reference external" href="#ERMrest.Column+assetURLColumnName">.assetURLColumnName</a></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetURL">.isAssetURL</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetFilename">.isAssetFilename</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.Column+isAssetByteCount">.isAssetByteCount</a> : <code>boolean</code></li>
@@ -3854,8 +3875,8 @@ string<p>&amp;gt;</p>
 </li>
 </ul>
 <p><a name="new_ERMrest.Column_new"></a></p>
-<div class="section" id="new-column-table-jsoncolumn">
-<span id="new-column-table-jsoncolumn"></span><h3>new Column(table, jsonColumn)<a class="headerlink" href="#new-column-table-jsoncolumn" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="new-column-table-jsoncolumn-assetcategoryinfo">
+<span id="new-column-table-jsoncolumn-assetcategoryinfo"></span><h3>new Column(table, jsonColumn, assetCategoryInfo)<a class="headerlink" href="#new-column-table-jsoncolumn-assetcategoryinfo" title="Permalink to this headline">¶</a></h3>
 <p>Constructs a Column.</p>
 <table border="1" class="docutils">
 <thead>
@@ -3875,6 +3896,11 @@ string<p>&amp;gt;</p>
 <td>jsonColumn</td>
 <td><code>string</code></td>
 <td>the json column.</td>
+</tr>
+<tr>
+<td>assetCategoryInfo</td>
+<td><code>Object</code></td>
+<td>if the column is an asset, this must be an object with categroy and URLColumn properties</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Column+position"></a></p>
@@ -3936,7 +3962,12 @@ or if column is system generated then return true so that it is disabled.</p>
 <div class="section" id="column-assetcategory-code-string-code">
 <span id="column-assetcategory-code-string-code"></span><h3>column.assetCategory : <code>string</code><a class="headerlink" href="#column-assetcategory-code-string-code" title="Permalink to this headline">¶</a></h3>
 <p>if it’s used in an asset annotation, will return its category. available values:
-‘filename’, ‘byte_count’, ‘md5’, ‘sha256’</p>
+‘url’, ‘filename’, ‘byte_count’, ‘md5’, ‘sha256’</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+assetURLColumnName"></a></p>
+</div>
+<div class="section" id="column-asseturlcolumnname">
+<span id="column-asseturlcolumnname"></span><h3>column.assetURLColumnName<a class="headerlink" href="#column-asseturlcolumnname" title="Permalink to this headline">¶</a></h3>
+<p>if the column is storing of the extra asset metadata, this will return the actual url column</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.Column"><code>Column</code></a><a name="ERMrest.Column+isAssetURL"></a></p>
 </div>
 <div class="section" id="column-isasseturl-code-boolean-code">
@@ -4478,6 +4509,8 @@ ColSet<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ColSet">.ColSet</a><ul>
 <li><a class="reference external" href="#new_ERMrest.ColSet_new">new ColSet(columns)</a></li>
 <li><a class="reference external" href="#ERMrest.ColSet+columns">.columns</a> : <code>Array</code></li>
+<li><a class="reference external" href="#ERMrest.ColSet+textColumnsCount">.textColumnsCount</a> : <code>number</code></li>
+<li><a class="reference external" href="#ERMrest.ColSet+allSerialOrInt">.allSerialOrInt</a> : <code>boolean</code></li>
 <li><a class="reference external" href="#ERMrest.ColSet+toString">.toString()</a> ⇒ <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ColSet+length">.length()</a> ⇒ <code>Number</code></li>
 </ul>
@@ -4508,6 +4541,16 @@ ColSet<p>&amp;gt;</p>
 <span id="colset-columns-code-array-code"></span><h3>colSet.columns : <code>Array</code><a class="headerlink" href="#colset-columns-code-array-code" title="Permalink to this headline">¶</a></h3>
 <p>It won’t preserve the order of given columns.
 Returns set of columns sorted by their names.</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ColSet"><code>ColSet</code></a><a name="ERMrest.ColSet+textColumnsCount"></a></p>
+</div>
+<div class="section" id="colset-textcolumnscount-code-number-code">
+<span id="colset-textcolumnscount-code-number-code"></span><h3>colSet.textColumnsCount : <code>number</code><a class="headerlink" href="#colset-textcolumnscount-code-number-code" title="Permalink to this headline">¶</a></h3>
+<p>how many text columns are in this colset</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ColSet"><code>ColSet</code></a><a name="ERMrest.ColSet+allSerialOrInt"></a></p>
+</div>
+<div class="section" id="colset-allserialorint-code-boolean-code">
+<span id="colset-allserialorint-code-boolean-code"></span><h3>colSet.allSerialOrInt : <code>boolean</code><a class="headerlink" href="#colset-allserialorint-code-boolean-code" title="Permalink to this headline">¶</a></h3>
+<p>whether all the columns are integer or serial</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ColSet"><code>ColSet</code></a><a name="ERMrest.ColSet+toString"></a></p>
 </div>
 <div class="section" id="colset-tostring-code-string-code">

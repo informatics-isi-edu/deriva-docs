@@ -1938,11 +1938,16 @@ assuming content MAY be partially cloned already using the
 same parameters. This routine uses a table-level annotation
 “<a class="reference external" href="tag:isrd.isi.edu,2018:clone-state">tag:isrd.isi.edu,2018:clone-state</a>” to save progress markers
 which help it restart efficiently if interrupted.</p>
-<p>Cloning preserves source row RID values so that any RID-based
-foreign keys are still valid. It is not generally advisable to
-try to merge more than one source into the same clone, nor to
-clone on top of rows generated locally in the destination,
-since this could cause duplicate RID conflicts.</p>
+<p>Cloning preserves source row RID values for application tables
+so that any RID-based foreign keys are still valid. It is not
+generally advisable to try to merge more than one source into
+the same clone, nor to clone on top of rows generated locally
+in the destination, since this could cause duplicate RID
+conflicts.</p>
+<p>Cloning does not preserve all RID values for special ERMrest
+tables in the public schema (e.g. ERMrest_Client,
+ERMrest_Group) but normal applications should only consider
+the ID key of these tables.</p>
 <p>Truncation after cloning avoids retaining incremental
 snapshots which contain partial clones.</p>
 </dd></dl>
@@ -2276,6 +2281,12 @@ client does not strip useful documentation from existing models.</p>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="deriva.core.ermrest_model.Column.required">
+<code class="descname">required</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.required" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2018:required">tag:isrd.isi.edu,2018:required</a></p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="deriva.core.ermrest_model.Column.uri_path">
 <code class="descname">uri_path</code><a class="headerlink" href="#deriva.core.ermrest_model.Column.uri_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>URI to this model resource.</p>
@@ -2605,6 +2616,12 @@ client does not strip useful documentation from existing models.</p>
 <dd><p>Return column configuration for column with given name.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.column_defaults">
+<code class="descname">column_defaults</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.column_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2023:column-defaults">tag:isrd.isi.edu,2023:column-defaults</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Model.configure_baseline_catalog">
 <code class="descname">configure_baseline_catalog</code><span class="sig-paren">(</span><em>apply=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.configure_baseline_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.configure_baseline_catalog" title="Permalink to this definition">¶</a></dt>
@@ -2687,6 +2704,18 @@ representation of the newly created schema.</p>
 <dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:misd.isi.edu,2015:display">tag:misd.isi.edu,2015:display</a></p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.export_2019">
+<code class="descname">export_2019</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.export_2019" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2019:export">tag:isrd.isi.edu,2019:export</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.export_fragment_definitions">
+<code class="descname">export_fragment_definitions</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.export_fragment_definitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2021:export-fragment-definitions">tag:isrd.isi.edu,2021:export-fragment-definitions</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Model.fkey">
 <code class="descname">fkey</code><span class="sig-paren">(</span><em>constraint_name_pair</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.fkey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.fkey" title="Permalink to this definition">¶</a></dt>
@@ -2706,6 +2735,24 @@ as found in fkey.name fields.</p>
 <dt id="deriva.core.ermrest_model.Model.fromfile">
 <em class="property">classmethod </em><code class="descname">fromfile</code><span class="sig-paren">(</span><em>catalog</em>, <em>schema_file</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Model.fromfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Model.fromfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deserialize a JSON schema file as a Model management object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.generated">
+<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.generated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:generated">tag:isrd.isi.edu,2016:generated</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.immutable">
+<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.immutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:immutable">tag:isrd.isi.edu,2016:immutable</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Model.non_deletable">
+<code class="descname">non_deletable</code><a class="headerlink" href="#deriva.core.ermrest_model.Model.non_deletable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:non-deletable">tag:isrd.isi.edu,2016:non-deletable</a></p>
 </dd></dl>
 
 <dl class="method">
@@ -2795,6 +2842,12 @@ retained by default so that a typical configuration-management
 client does not strip useful documentation from existing models.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.column_defaults">
+<code class="descname">column_defaults</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.column_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2023:column-defaults">tag:isrd.isi.edu,2023:column-defaults</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Schema.create_table">
 <code class="descname">create_table</code><span class="sig-paren">(</span><em>table_def</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.create_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.create_table" title="Permalink to this definition">¶</a></dt>
@@ -2842,6 +2895,36 @@ representation of the newly created table.</p>
 <dt id="deriva.core.ermrest_model.Schema.drop">
 <code class="descname">drop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Schema.drop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Schema.drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove this schema from the remote database.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.export_2019">
+<code class="descname">export_2019</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.export_2019" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2019:export">tag:isrd.isi.edu,2019:export</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.export_fragment_definitions">
+<code class="descname">export_fragment_definitions</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.export_fragment_definitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2021:export-fragment-definitions">tag:isrd.isi.edu,2021:export-fragment-definitions</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.generated">
+<code class="descname">generated</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.generated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:generated">tag:isrd.isi.edu,2016:generated</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.immutable">
+<code class="descname">immutable</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.immutable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:immutable">tag:isrd.isi.edu,2016:immutable</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Schema.non_deletable">
+<code class="descname">non_deletable</code><a class="headerlink" href="#deriva.core.ermrest_model.Schema.non_deletable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:non-deletable">tag:isrd.isi.edu,2016:non-deletable</a></p>
 </dd></dl>
 
 <dl class="method">
@@ -2930,6 +3013,12 @@ match their corresponding state in existing.</p>
 <p>NOTE: as a backwards-compatible heuristic, comments are
 retained by default so that a typical configuration-management
 client does not strip useful documentation from existing models.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.column_defaults">
+<code class="descname">column_defaults</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.column_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2023:column-defaults">tag:isrd.isi.edu,2023:column-defaults</a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -3216,6 +3305,12 @@ corresponding constraints.</p>
 raise_nomatch: for True, raise KeyError on non-match, else return None</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.non_deletable">
+<code class="descname">non_deletable</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.non_deletable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing presence of annotation <a class="reference external" href="tag:isrd.isi.edu,2016:non-deletable">tag:isrd.isi.edu,2016:non-deletable</a></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="deriva.core.ermrest_model.Table.prejson">
 <code class="descname">prejson</code><span class="sig-paren">(</span><em>prune=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_model.html#Table.prejson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_model.Table.prejson" title="Permalink to this definition">¶</a></dt>
@@ -3261,6 +3356,12 @@ raise_nomatch: for True, raise KeyError on non-match, else return None</p>
 <dt id="deriva.core.ermrest_model.Table.visible_foreign_keys">
 <code class="descname">visible_foreign_keys</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.visible_foreign_keys" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2016:visible-foreign-keys">tag:isrd.isi.edu,2016:visible-foreign-keys</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_model.Table.viz_3d_display">
+<code class="descname">viz_3d_display</code><a class="headerlink" href="#deriva.core.ermrest_model.Table.viz_3d_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience property for managing content of object annotation <a class="reference external" href="tag:isrd.isi.edu,2021:viz-3d-display">tag:isrd.isi.edu,2021:viz-3d-display</a></p>
 </dd></dl>
 
 </dd></dl>

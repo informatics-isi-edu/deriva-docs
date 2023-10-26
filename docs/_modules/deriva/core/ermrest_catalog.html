@@ -1901,11 +1901,17 @@
 <span class="sd">        &quot;tag:isrd.isi.edu,2018:clone-state&quot; to save progress markers</span>
 <span class="sd">        which help it restart efficiently if interrupted.</span>
 
-<span class="sd">        Cloning preserves source row RID values so that any RID-based</span>
-<span class="sd">        foreign keys are still valid. It is not generally advisable to</span>
-<span class="sd">        try to merge more than one source into the same clone, nor to</span>
-<span class="sd">        clone on top of rows generated locally in the destination,</span>
-<span class="sd">        since this could cause duplicate RID conflicts.</span>
+<span class="sd">        Cloning preserves source row RID values for application tables</span>
+<span class="sd">        so that any RID-based foreign keys are still valid. It is not</span>
+<span class="sd">        generally advisable to try to merge more than one source into</span>
+<span class="sd">        the same clone, nor to clone on top of rows generated locally</span>
+<span class="sd">        in the destination, since this could cause duplicate RID</span>
+<span class="sd">        conflicts.</span>
+
+<span class="sd">        Cloning does not preserve all RID values for special ERMrest</span>
+<span class="sd">        tables in the public schema (e.g. ERMrest_Client,</span>
+<span class="sd">        ERMrest_Group) but normal applications should only consider</span>
+<span class="sd">        the ID key of these tables.</span>
 
 <span class="sd">        Truncation after cloning avoids retaining incremental</span>
 <span class="sd">        snapshots which contain partial clones.</span>
@@ -1940,33 +1946,29 @@
         <span class="n">fkeys_deferred</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">exclude_schemas</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">exclude_schemas</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">exclude_schemas</span>
 
-        <span class="k">def</span> <span class="nf">prune_parts</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">copy_annotations</span> <span class="ow">and</span> <span class="s1">&#39;annotations&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">prune_parts</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="o">*</span><span class="n">extra_victims</span><span class="p">):</span>
+            <span class="n">victims</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">extra_victims</span><span class="p">)</span>
+            <span class="c1"># we will apply config as a second pass after extending dest model</span>
+            <span class="c1"># but loading bulk first may speed that up</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                <span class="n">victims</span> <span class="o">|=</span> <span class="p">{</span><span class="s1">&#39;annotations&#39;</span><span class="p">,}</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">copy_policy</span><span class="p">:</span>
-                <span class="k">if</span> <span class="s1">&#39;acls&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;acls&#39;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s1">&#39;acl_bindings&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;acl_bindings&#39;</span><span class="p">]</span>
+                <span class="n">victims</span> <span class="o">|=</span> <span class="p">{</span><span class="s1">&#39;acls&#39;</span><span class="p">,</span> <span class="s1">&#39;acl_bindings&#39;</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">victims</span><span class="p">:</span>
+                <span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">d</span>
 
         <span class="k">def</span> <span class="nf">copy_sdef</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;Copy schema definition structure with conditional parts for cloning.&quot;&quot;&quot;</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">prejson</span><span class="p">())</span>
-            <span class="k">if</span> <span class="s1">&#39;tables&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;tables&#39;</span><span class="p">]</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">prejson</span><span class="p">(),</span> <span class="s1">&#39;tables&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">d</span>
 
         <span class="k">def</span> <span class="nf">copy_tdef_core</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;Copy table definition structure with conditional parts excluding fkeys.&quot;&quot;&quot;</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">prejson</span><span class="p">())</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">prejson</span><span class="p">(),</span> <span class="s1">&#39;foreign_keys&#39;</span><span class="p">)</span>
             <span class="n">d</span><span class="p">[</span><span class="s1">&#39;column_definitions&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;column_definitions&#39;</span><span class="p">]</span> <span class="p">]</span>
             <span class="n">d</span><span class="p">[</span><span class="s1">&#39;keys&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">prune_parts</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="p">[])</span> <span class="p">]</span>
-            <span class="k">if</span> <span class="s1">&#39;foreign_keys&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;foreign_keys&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="s1">&#39;annotations&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
-                <span class="n">d</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="n">d</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">][</span><span class="n">_clone_state_url</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">copy_data</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="p">{})[</span><span class="n">_clone_state_url</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">copy_data</span> <span class="k">else</span> <span class="kc">None</span>
             <span class="k">return</span> <span class="n">d</span>
 
         <span class="k">def</span> <span class="nf">copy_tdef_fkeys</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
@@ -1974,7 +1976,7 @@
             <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">fkdef</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">fkc</span> <span class="ow">in</span> <span class="n">fkdef</span><span class="p">[</span><span class="s1">&#39;referenced_columns&#39;</span><span class="p">]:</span>
                     <span class="k">if</span> <span class="n">fkc</span><span class="p">[</span><span class="s1">&#39;schema_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;public&#39;</span> \
-                       <span class="ow">and</span> <span class="n">fkc</span><span class="p">[</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;ERMrest_Client&#39;</span><span class="p">,</span> <span class="s1">&#39;ERMrest_Group&#39;</span><span class="p">}</span> \
+                       <span class="ow">and</span> <span class="n">fkc</span><span class="p">[</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;ERMrest_Client&#39;</span><span class="p">,</span> <span class="s1">&#39;ERMrest_Group&#39;</span><span class="p">,</span> <span class="s1">&#39;ERMrest_RID_Lease&#39;</span><span class="p">}</span> \
                        <span class="ow">and</span> <span class="n">fkc</span><span class="p">[</span><span class="s1">&#39;column_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;RID&#39;</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot clone catalog with foreign key reference to </span><span class="si">%(schema_name)s</span><span class="s2">:</span><span class="si">%(table_name)s</span><span class="s2">:</span><span class="si">%(column_name)s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">fkc</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">fkdef</span>
@@ -2021,6 +2023,12 @@
                     <span class="n">clone_states</span><span class="p">[(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">copy_data</span> <span class="k">else</span> <span class="kc">None</span>
                     <span class="n">fkeys_deferred</span><span class="p">[(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)]</span> <span class="o">=</span> <span class="n">copy_tdef_fkeys</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+                        <span class="c1"># assume that presence of any destination foreign keys means we already loaded deferred_fkeys</span>
+                        <span class="n">copy_data</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">fkeys_deferred</span><span class="p">[(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)]</span> <span class="o">=</span> <span class="n">copy_tdef_fkeys</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
                     <span class="n">src_columns</span> <span class="o">=</span> <span class="p">{</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">column_definitions</span> <span class="p">}</span>
                     <span class="n">dst_columns</span> <span class="o">=</span> <span class="p">{</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span><span class="o">.</span><span class="n">column_definitions</span> <span class="p">}</span>
 
@@ -2046,11 +2054,8 @@
                             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Destination key </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">) does not exist in source catalog.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">utuple</span><span class="p">)))</span>
 
                     <span class="n">clone_states</span><span class="p">[(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)]</span> <span class="o">=</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">_clone_state_url</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
-                        <span class="c1"># assume that presence of any destination foreign keys means we already completed</span>
-                        <span class="k">return</span> <span class="n">dst_catalog</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">fkeys_deferred</span><span class="p">[(</span><span class="n">sname</span><span class="p">,</span> <span class="n">tname</span><span class="p">)]</span> <span class="o">=</span> <span class="n">copy_tdef_fkeys</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="n">clone_states</span><span class="p">[(</span><span class="s1">&#39;public&#39;</span><span class="p">,</span> <span class="s1">&#39;ERMrest_RID_Lease&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># never try to sync leases</span>
 
         <span class="c1"># apply the stage 1 model to the destination in bulk</span>
         <span class="k">if</span> <span class="n">new_model</span><span class="p">:</span>
@@ -2104,38 +2109,8 @@
                 <span class="p">}:</span>
                     <span class="c1"># special sync behavior for magic ermrest tables</span>
                     <span class="c1"># HACK: these are assumed small enough to join via local merge of arrays</span>
-                    <span class="n">want</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/entity/</span><span class="si">%s</span><span class="s2">?limit=none&quot;</span> <span class="o">%</span> <span class="n">tname_uri</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])</span>
-                    <span class="n">have</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dst_catalog</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/entity/</span><span class="si">%s</span><span class="s2">?limit=none&quot;</span> <span class="o">%</span> <span class="n">tname_uri</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">])</span>
-                    <span class="n">create</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="n">update</span> <span class="o">=</span> <span class="p">[]</span>
-
-                    <span class="n">pos_want</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="n">pos_have</span> <span class="o">=</span> <span class="mi">0</span>
-                    <span class="k">while</span> <span class="n">pos_want</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">want</span><span class="p">):</span>
-                        <span class="k">while</span> <span class="n">pos_have</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">have</span><span class="p">)</span> <span class="ow">and</span> <span class="n">have</span><span class="p">[</span><span class="n">pos_have</span><span class="p">][</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">want</span><span class="p">[</span><span class="n">pos_want</span><span class="p">][</span><span class="s1">&#39;ID&#39;</span><span class="p">]:</span>
-                            <span class="c1"># dst-only rows will be retained as is</span>
-                            <span class="n">pos_have</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="k">if</span> <span class="n">pos_have</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">have</span><span class="p">)</span> <span class="ow">or</span> <span class="n">have</span><span class="p">[</span><span class="n">pos_have</span><span class="p">][</span><span class="s1">&#39;ID&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">want</span><span class="p">[</span><span class="n">pos_want</span><span class="p">][</span><span class="s1">&#39;ID&#39;</span><span class="p">]:</span>
-                            <span class="c1"># src-only rows will be inserted</span>
-                            <span class="n">create</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">want</span><span class="p">[</span><span class="n">pos_want</span><span class="p">])</span>
-                            <span class="n">pos_want</span> <span class="o">+=</span> <span class="mi">1</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="c1"># overlapping rows will be updated</span>
-                            <span class="n">update</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">want</span><span class="p">[</span><span class="n">pos_want</span><span class="p">])</span>
-                            <span class="n">pos_want</span> <span class="o">+=</span> <span class="mi">1</span>
-
-                    <span class="n">dst_catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/entity/</span><span class="si">%s</span><span class="s2">?nondefaults=RCT,RCB&quot;</span> <span class="o">%</span> <span class="n">tname_uri</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">create</span><span class="p">)</span>
-                    <span class="n">dst_catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
-                        <span class="s2">&quot;/attributegroup/</span><span class="si">%s</span><span class="s2">/ID;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                            <span class="n">tname_uri</span><span class="p">,</span>
-                            <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
-                                <span class="n">urlquote</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span><span class="o">.</span><span class="n">column_definitions</span>
-                                <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;RID&#39;</span><span class="p">,</span> <span class="s1">&#39;RMT&#39;</span><span class="p">,</span> <span class="s1">&#39;RMB&#39;</span><span class="p">,</span> <span class="s1">&#39;RCB&#39;</span><span class="p">,</span> <span class="s1">&#39;RCT&#39;</span><span class="p">,</span> <span class="s1">&#39;ID&#39;</span><span class="p">}</span>
-                            <span class="p">])</span>
-                        <span class="p">),</span>
-                        <span class="n">json</span><span class="o">=</span><span class="n">update</span>
-                    <span class="p">)</span>
+                    <span class="n">page</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/entity/</span><span class="si">%s</span><span class="s2">?limit=none&quot;</span> <span class="o">%</span> <span class="n">tname_uri</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                    <span class="n">dst_catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/entity/</span><span class="si">%s</span><span class="s2">?onconflict=skip&quot;</span> <span class="o">%</span> <span class="n">tname_uri</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">page</span><span class="p">)</span>
 
                     <span class="c1"># record our progress on catalog in case we fail part way through</span>
                     <span class="n">dst_catalog</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
@@ -2154,6 +2129,84 @@
 
         <span class="k">if</span> <span class="n">new_fkeys</span><span class="p">:</span>
             <span class="n">dst_catalog</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;/schema&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">new_fkeys</span><span class="p">)</span>
+
+        <span class="c1"># copy over configuration in stage 3</span>
+        <span class="c1"># we need to do this after deferred_fkeys to handle acl_bindings projections with joins</span>
+        <span class="n">dst_model</span> <span class="o">=</span> <span class="n">dst_catalog</span><span class="o">.</span><span class="n">getCatalogModel</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">sname</span><span class="p">,</span> <span class="n">src_schema</span> <span class="ow">in</span> <span class="n">src_model</span><span class="o">.</span><span class="n">schemas</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">sname</span> <span class="ow">in</span> <span class="n">exclude_schemas</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">dst_schema</span> <span class="o">=</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                <span class="n">dst_schema</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="n">dst_schema</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_schema</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">copy_policy</span><span class="p">:</span>
+                <span class="n">dst_schema</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                <span class="n">dst_schema</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_schema</span><span class="o">.</span><span class="n">acls</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">tname</span><span class="p">,</span> <span class="n">src_table</span> <span class="ow">in</span> <span class="n">src_schema</span><span class="o">.</span><span class="n">tables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">dst_table</span> <span class="o">=</span> <span class="n">dst_schema</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                    <span class="n">merged</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">src_table</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">_clone_state_url</span> <span class="ow">in</span> <span class="n">dst_table</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+                        <span class="n">merged</span><span class="p">[</span><span class="n">_clone_state_url</span><span class="p">]</span> <span class="o">=</span> <span class="n">dst_table</span><span class="o">.</span><span class="n">annotations</span><span class="p">[</span><span class="n">_clone_state_url</span><span class="p">]</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">merged</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">copy_policy</span><span class="p">:</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_table</span><span class="o">.</span><span class="n">acls</span><span class="p">)</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                    <span class="n">dst_table</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_table</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">cname</span><span class="p">,</span> <span class="n">src_col</span> <span class="ow">in</span> <span class="n">src_table</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">dst_col</span> <span class="o">=</span> <span class="n">dst_table</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">cname</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_col</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">copy_policy</span><span class="p">:</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_col</span><span class="o">.</span><span class="n">acls</span><span class="p">)</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_col</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_col</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">src_key</span> <span class="ow">in</span> <span class="n">src_table</span><span class="o">.</span><span class="n">keys</span><span class="p">:</span>
+                    <span class="n">dst_key</span> <span class="o">=</span> <span class="n">dst_table</span><span class="o">.</span><span class="n">key_by_columns</span><span class="p">([</span> <span class="n">col</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">src_key</span><span class="o">.</span><span class="n">unique_columns</span> <span class="p">])</span>
+
+                    <span class="k">if</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                        <span class="n">dst_key</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_key</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_key</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+
+                <span class="k">def</span> <span class="nf">xlate_column_map</span><span class="p">(</span><span class="n">fkey</span><span class="p">):</span>
+                    <span class="n">dst_from_table</span> <span class="o">=</span> <span class="n">dst_table</span>
+                    <span class="n">dst_to_schema</span> <span class="o">=</span> <span class="n">dst_model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">fkey</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">schema</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="n">dst_to_table</span> <span class="o">=</span> <span class="n">dst_to_schema</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">fkey</span><span class="o">.</span><span class="n">pk_table</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="p">{</span>
+                        <span class="n">dst_from_table</span><span class="o">.</span><span class="n">_own_column</span><span class="p">(</span><span class="n">from_col</span><span class="o">.</span><span class="n">name</span><span class="p">):</span> <span class="n">dst_to_table</span><span class="o">.</span><span class="n">_own_column</span><span class="p">(</span><span class="n">to_col</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">from_col</span><span class="p">,</span> <span class="n">to_col</span> <span class="ow">in</span> <span class="n">fkey</span><span class="o">.</span><span class="n">column_map</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="p">}</span>
+
+                <span class="k">for</span> <span class="n">src_fkey</span> <span class="ow">in</span> <span class="n">src_table</span><span class="o">.</span><span class="n">foreign_keys</span><span class="p">:</span>
+                    <span class="n">dst_fkey</span> <span class="o">=</span> <span class="n">dst_table</span><span class="o">.</span><span class="n">fkey_by_column_map</span><span class="p">(</span><span class="n">xlate_column_map</span><span class="p">(</span><span class="n">src_fkey</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">copy_annotations</span><span class="p">:</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">annotations</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_fkey</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">copy_policy</span><span class="p">:</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">acls</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_fkey</span><span class="o">.</span><span class="n">acls</span><span class="p">)</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+                        <span class="n">dst_fkey</span><span class="o">.</span><span class="n">acl_bindings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">src_fkey</span><span class="o">.</span><span class="n">acl_bindings</span><span class="p">)</span>
+
+        <span class="c1"># send all the config changes to the server</span>
+        <span class="n">dst_model</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
 
         <span class="c1"># truncate cloning history</span>
         <span class="k">if</span> <span class="n">truncate_after</span><span class="p">:</span>

@@ -1601,6 +1601,23 @@ The exact value that <code class="docutils literal notranslate"><span class="pre
 <span class="p">{{</span><span class="c1">#escape [str with a space]}}{{/escape}}</span>
 </pre></div>
 </div>
+<p>This syntax can also be used for accessing properties of an object. For example with this context,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;resonant scan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;power (uW)&quot;</span><span class="p">:</span> <span class="mf">123.4</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can do</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">values</span><span class="o">.</span><span class="n">name</span><span class="p">}}}</span> <span class="n">power</span><span class="p">:</span> <span class="p">{{{</span><span class="n">values</span><span class="o">.</span><span class="p">[</span><span class="n">power</span> <span class="p">(</span><span class="n">uW</span><span class="p">)]}}}</span>
+</pre></div>
+</div>
+<p>Which returns</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">resonant</span> <span class="n">scan</span> <span class="n">power</span><span class="p">:</span> <span class="mf">123.4</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="subexpressions">
 <span id="subexpressions"></span><h3>Subexpressions<a class="headerlink" href="#subexpressions" title="Permalink to this headline">¶</a></h3>

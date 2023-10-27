@@ -1334,6 +1334,11 @@
 </ul>
 </li>
 <li><a class="reference external" href="#context-and-provider-pattern">Context and provider pattern</a></li>
+<li><a class="reference external" href="#performance">Performance</a><ul>
+<li><a class="reference external" href="#debugging">Debugging</a></li>
+<li><a class="reference external" href="#memorization">Memorization</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="reading-material">
@@ -2369,6 +2374,31 @@ export default CounterDisplay;
 </pre></div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="performance">
+<span id="performance"></span><h2>Performance<a class="headerlink" href="#performance" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we should summarize everything related to performance. This includes how to debug performance issues and common practices to fix issues.</p>
+<div class="section" id="debugging">
+<span id="debugging"></span><h3>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h3>
+<p>Before jumping into solutions, consider debugging and finding the root of the problem.</p>
+<ul class="simple">
+<li>You should install official <a class="reference external" href="https://react.dev/learn/react-developer-tools">React developer tools</a>. With this, you can look at components and see when/why each rerenders.<ul>
+<li>By default, the “Profiler” tab only works in development mode. To use this tab in the production mode, you need to uncomment the <code class="docutils literal notranslate"><span class="pre">'react-dom$':</span> <span class="pre">'react-dom/profiling',</span></code> alias in the <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/blob/master/webpack/app.config.js">app.config.js</a> file.</li>
+</ul>
+</li>
+<li>Installing in the <code class="docutils literal notranslate"><span class="pre">development</span></code> mode allows you to add break points in the code. You should also be mindful of the browser console, as React and other dependencies usually print warning/errors only in this mode. That being said, as we mentioned in <a class="reference external" href="#development-vs-production">here</a>, <code class="docutils literal notranslate"><span class="pre">development</span></code> has its downsides.</li>
+</ul>
+</div>
+<div class="section" id="memorization">
+<span id="memorization"></span><h3>Memorization<a class="headerlink" href="#memorization" title="Permalink to this headline">¶</a></h3>
+<p>React always re-renders children when a parent component has to be re-rendered. But since we’re using the provider pattern, the immediate relationship is unimportant. So, if we find any performance issues, it is probably related to redundant components rendering because of this. <code class="docutils literal notranslate"><span class="pre">memo</span></code>  lets us skip re-rendering a component when its props are unchanged. You can see how we’ve used it <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2341/commits/29720eb277faaa6fc768a912ffcf8a8ec4776980">here</a>, which significantly improved the performance of record page.</p>
+<p>That being said, performance-related changes applied incorrectly can even harm performance. Use <code class="docutils literal notranslate"><span class="pre">React.memo()</span></code> wisely. Don’t use memoization if you can’t quantify the performance gains.</p>
+<p>Useful links:</p>
+<ul class="simple">
+<li>https://react.dev/reference/react/memo</li>
+<li>https://dmitripavlutin.com/use-react-memo-wisely/</li>
+</ul>
 </div>
 </div>
 </div>

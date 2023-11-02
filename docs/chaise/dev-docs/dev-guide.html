@@ -1791,24 +1791,42 @@ updating the font-awesome classes that are used.</li>
 <div class="section" id="npm">
 <span id="npm"></span><h3>NPM<a class="headerlink" href="#npm" title="Permalink to this headline">¶</a></h3>
 <p>This section will go over how we think the NPM modules should be managed.</p>
+<ul>
+<li><p class="first">Ensure the latest stable Node.js and NPM versions are used.</p>
+</li>
+<li><p class="first">Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">npm-install-all-modules</span></code> to install all the NPM modules regardless of <code class="docutils literal notranslate"><span class="pre">NODE_ENV</span></code> value.</p>
 <ul class="simple">
-<li>Ensure the latest stable Node.js and NPM versions are used.</li>
-<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">npm-install-all-modules</span></code> to install all the NPM modules regardless of <code class="docutils literal notranslate"><span class="pre">NODE_ENV</span></code> value.<ul>
 <li>Useful when you first clone the repository, or want to download dependencies from scratch.</li>
 <li>Use it yo update the installed dependencies based on the changes in <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> file.</li>
 <li>his command will also call <code class="docutils literal notranslate"><span class="pre">patch-package</span></code> to apply the patches to dependencies. Refer to <a class="reference external" href="../../patches/README.md">patches folder</a> for more information.</li>
 </ul>
 </li>
-<li>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist-wo-deps</span></code> while developing so you don’t have to install depenendencies for each build.</li>
-<li>Avoid using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> (it can have unwanted side effects like updating <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>).<ul>
+<li><p class="first">Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist-wo-deps</span></code> while developing so you don’t have to install depenendencies for each build.</p>
+</li>
+<li><p class="first">Avoid using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> (it can have unwanted side effects like updating <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>).</p>
+<ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code> should not be changed. If you noticed a change in your branch, consult with the main contributors.</li>
 </ul>
 </li>
-<li>Only for main contributors: If we want to upgrade the dependencies or install a new package, we should,<ul>
+<li><p class="first">Only for main contributors: If we want to upgrade the dependencies or install a new package, we should,</p>
+<ul class="simple">
 <li>Ensure the used node and npm versions are updated and the latest stable.</li>
-<li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</li>
-<li>Double-check the changes to <code class="docutils literal notranslate"><span class="pre">pacakge-lock.json</span></code>.</li>
+<li>Run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">--include=dev</span></code> to sync <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code> with <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</li>
+<li>Double-check the changes to <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>.</li>
 </ul>
+</li>
+<li><p class="first">Only for main contributors: to publish a new version of chaise to npm, we should,</p>
+<ol class="simple">
+<li>Update the <code class="docutils literal notranslate"><span class="pre">version</span></code> property in <code class="docutils literal notranslate"><span class="pre">package.json</span></code>.</li>
+<li>Update the <code class="docutils literal notranslate"><span class="pre">version</span></code> and <code class="docutils literal notranslate"><span class="pre">packages.version</span></code> properties in <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>. Or run <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">--include=dev</span></code>.</li>
+</ol>
+<ul class="simple">
+<li>If you used <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span></code> double-check the changes to <code class="docutils literal notranslate"><span class="pre">package-lock.json</span></code>.</li>
+</ul>
+<ol class="simple">
+<li>Push the changes to the main branch.</li>
+<li>After pushing the changes, <code class="docutils literal notranslate"><span class="pre">npm-publish.yml</span></code> GitHub workflow will detect the version change and properly publish the new version to npm.</li>
+</ol>
 </li>
 </ul>
 </div>

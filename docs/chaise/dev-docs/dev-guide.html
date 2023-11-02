@@ -1473,6 +1473,34 @@ calculate the position of any element dynamically in the DOM</li>
 </pre></div>
 </div>
 </li>
+<li><p class="first">When to use different React hooks, <code class="docutils literal notranslate"><span class="pre">useState</span></code>, <code class="docutils literal notranslate"><span class="pre">useRef</span></code>, and <code class="docutils literal notranslate"><span class="pre">useStateRef</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">useState</span></code>:<ul>
+<li>common to both <code class="docutils literal notranslate"><span class="pre">useState</span></code> and <code class="docutils literal notranslate"><span class="pre">useRef</span></code>, remembers it’s value after a rerender of the component</li>
+<li>used to bind component state with rendering the component</li>
+<li>state update is asynchronous, the new state value won’t be updated until after rerender</li>
+<li>modifying the state will queue a rerender of the component which will have the new state value that was set before rerender</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">useRef</span></code>:<ul>
+<li>common to both <code class="docutils literal notranslate"><span class="pre">useState</span></code> and <code class="docutils literal notranslate"><span class="pre">useRef</span></code>, remembers it’s value after a rerender of the component</li>
+<li>does not trigger rerenders of the component or <code class="docutils literal notranslate"><span class="pre">useEffect</span></code> of component</li>
+<li>ref update is synchronous, meaning the new value is immediately available in other functions</li>
+<li>better for accessing mutable values that are independent of the React component state</li>
+<li>useful when mutating a value that is used in another function later in the stack before a rerender would occur<ul>
+<li>for instance, in a function used as a callback for a promise</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;ref&gt;.current</span></code> is a mutable value</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">useStateRef</span></code>:<ul>
+<li>when a value is needed in functions and is used for triggering component rerenders, use this custom hook</li>
+<li>intended to be synchronous</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p class="first">List items must have keys, which tell React list item   identity</p>
 <ul class="simple">
 <li>Should be unique per list</li>

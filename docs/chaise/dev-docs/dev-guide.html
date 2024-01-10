@@ -1501,6 +1501,13 @@ calculate the position of any element dynamically in the DOM</li>
 </li>
 </ul>
 </li>
+<li><p class="first">Calling functions after <code class="docutils literal notranslate"><span class="pre">useState</span></code> update and browser repaint</p>
+<ul class="simple">
+<li>When the set function of a <code class="docutils literal notranslate"><span class="pre">useState</span></code> hook is called, a browser repaint is triggered followed by each <code class="docutils literal notranslate"><span class="pre">useEffect</span></code> and <code class="docutils literal notranslate"><span class="pre">useLayoutEffect</span></code> being checked for changes</li>
+<li>If a change occurred that triggers a <code class="docutils literal notranslate"><span class="pre">useEffect</span></code> or <code class="docutils literal notranslate"><span class="pre">useLayoutEffect</span></code> hook, the defined function for that hook will run after the browser repaint with the updated values for the <code class="docutils literal notranslate"><span class="pre">useState</span></code> hook.</li>
+<li>This is useful for displaying feedback to the user before triggering some functionality that might take some time to process (cloning forms in recordedit or submitting many at once)</li>
+</ul>
+</li>
 <li><p class="first">List items must have keys, which tell React list item   identity</p>
 <ul class="simple">
 <li>Should be unique per list</li>

@@ -2130,6 +2130,8 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="section" id="findfirst-helper">
 <span id="findfirst-helper"></span><h3>Findfirst helper<a class="headerlink" href="#findfirst-helper" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">regexFindFirst</span></code> helper will take the input regular expression and return the first matching substring from the supplied string. Will return <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> otherwise.</p>
+<blockquote>
+<div>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</div></blockquote>
 <p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;jpg|png&quot;}}{{this}}{{/regexFindFirst}}</span>
 </pre></div>
@@ -2146,10 +2148,18 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;index.html&quot;</span>
 </pre></div>
 </div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;human&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<blockquote>
+<div>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</div></blockquote>
 </div>
 <div class="section" id="findall-helper">
 <span id="findall-helper"></span><h3>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array. Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
+<blockquote>
+<div>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</div></blockquote>
 <p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (regexFindAll testString &quot;jpg|png&quot;)}}{{this}}\n{{/each}}</span>
 </pre></div>
@@ -2158,10 +2168,19 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png</span><span class="se">\n</span><span class="s2">jpg</span><span class="se">\n</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindAll testString &quot;ACO1&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<blockquote>
+<div>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</div></blockquote>
 </div>
 <div class="section" id="replace-helper">
 <span id="replace-helper"></span><h3>Replace helper<a class="headerlink" href="#replace-helper" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">replace</span></code> helper will take the input regular expression (first argument) and replace all matches in the supplied string with the supplied substring (second argument). This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">replace</span></code> function for Strings in javascript. One example would be to replace all underscores with whitespace characters for table name display.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">replace</span></code> helper will take the input regular expression (first argument) and replace all matches in the supplied string with the supplied substring (second argument). This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">replace</span></code> function for Strings in javascript.</p>
+<blockquote>
+<div>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</div></blockquote>
+<p>One example would be to replace all underscores with whitespace characters for table name display.</p>
 <p>Template:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot;}}table_name_with_underscores{{/replace}}</span>
 </pre></div>
@@ -2170,6 +2189,37 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name</span> <span class="k">with</span> <span class="n">underscores</span>
 </pre></div>
 </div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. By default we’re using the <code class="docutils literal notranslate"><span class="pre">g</span></code> flag, that’s why the example above is replacing all the matches. Examples of using the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named argument:</p>
+<ul>
+<li><p class="first">If you only want to replace the first match, you can pass empty string for flags:</p>
+<ul class="simple">
+<li>Template:</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot; flags=&quot;&quot;}}table_name_with_underscores{{/replace}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Result:</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name_with_underscores</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching (in this example we’re also using <code class="docutils literal notranslate"><span class="pre">g</span></code> flag to make sure we’re still replacing all the matches):</p>
+<ul class="simple">
+<li>Template:</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;aco1&quot; &quot;ACO1&quot; flags=&quot;ig&quot;}}{{{Gene_Names}}}{{/replace}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Result (assuming <code class="docutils literal notranslate"><span class="pre">Gene_Names</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;Aco1,</span> <span class="pre">ACO1&quot;</span></code>):</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACO1</span><span class="p">,</span> <span class="n">ACO1</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <div class="section" id="totitlecase-helper">
 <span id="totitlecase-helper"></span><h3>ToTitleCase helper<a class="headerlink" href="#totitlecase-helper" title="Permalink to this headline">¶</a></h3>
@@ -2246,6 +2296,14 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
 </pre></div>
 </div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive matching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (regexMatch value &quot;film analysis&quot; flags=&quot;i&quot; )}}</span>
+<span class="o">..</span> <span class="n">content</span>
+<span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
+</pre></div>
+</div>
+<blockquote>
+<div>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</div></blockquote>
 </div>
 <div class="section" id="logical-helpers">
 <span id="logical-helpers"></span><h3>Logical Helpers<a class="headerlink" href="#logical-helpers" title="Permalink to this headline">¶</a></h3>

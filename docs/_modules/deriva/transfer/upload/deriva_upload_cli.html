@@ -1282,6 +1282,7 @@
   <h1>Source code for deriva.transfer.upload.deriva_upload_cli</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">from</span> <span class="nn">deriva.transfer</span> <span class="kn">import</span> <span class="n">DerivaUpload</span><span class="p">,</span> <span class="n">DerivaUploadError</span><span class="p">,</span> <span class="n">DerivaUploadConfigurationError</span><span class="p">,</span> \
     <span class="n">DerivaUploadCatalogCreateError</span><span class="p">,</span> <span class="n">DerivaUploadCatalogUpdateError</span>
@@ -1302,6 +1303,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--dry-run&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
                                  <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Scan the input directory for matching files to upload, &quot;</span>
                                       <span class="s2">&quot;but do not transfer any files.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--output-file&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;&lt;file&gt;&#39;</span><span class="p">,</span>
+                                 <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Optional path where a JSON-formatted output file will be written, &quot;</span>
+                                      <span class="s2">&quot;containing file upload status and associated metadata.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--catalog&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;1&gt;&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Catalog number. Default: 1&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;path&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;input dir&gt;&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to an input directory.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uploader</span> <span class="o">=</span> <span class="n">uploader</span>
@@ -1316,7 +1320,8 @@
                <span class="n">credential_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">no_update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                <span class="n">purge</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-               <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+               <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">output_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">uploader</span><span class="p">,</span> <span class="n">DerivaUpload</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;DerivaUpload subclass required&quot;</span><span class="p">)</span>
@@ -1344,7 +1349,10 @@
                 <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">getVersion</span><span class="p">(),</span> <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">getVersionCompatibility</span><span class="p">()))</span>
         <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">scanDirectory</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="n">abort_on_invalid_input</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">purge_state</span><span class="o">=</span><span class="n">purge</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">dry_run</span><span class="p">:</span>
-            <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">uploadFiles</span><span class="p">(</span><span class="n">file_callback</span><span class="o">=</span><span class="n">deriva_uploader</span><span class="o">.</span><span class="n">defaultFileCallback</span><span class="p">)</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">uploadFiles</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">output_file</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
         <span class="n">deriva_uploader</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="DerivaUploadCLI.main"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.transfer.upload.html#deriva.transfer.upload.deriva_upload_cli.DerivaUploadCLI.main">[docs]</a>    <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1366,7 +1374,8 @@
                                    <span class="n">args</span><span class="o">.</span><span class="n">credential_file</span><span class="p">,</span>
                                    <span class="n">args</span><span class="o">.</span><span class="n">no_config_update</span><span class="p">,</span>
                                    <span class="n">args</span><span class="o">.</span><span class="n">purge_state</span><span class="p">,</span>
-                                   <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">)</span>
+                                   <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">,</span>
+                                   <span class="n">args</span><span class="o">.</span><span class="n">output_file</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">DerivaUploadError</span><span class="p">,</span> <span class="n">DerivaUploadConfigurationError</span><span class="p">,</span>
                 <span class="n">DerivaUploadCatalogCreateError</span><span class="p">,</span> <span class="n">DerivaUploadCatalogUpdateError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">((</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">quiet</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>

@@ -1350,21 +1350,25 @@ to use for ERMrest JavaScript agents.</p>
 <dd><p>{{#replace substr newSubstr}}
  string
 {{/replace}}</p>
+<p>{{replace value regexp flags=&quot;ig&quot;}}</p>
 </dd>
 <dt><a href="#regexMatch">regexMatch()</a> ⇒</dt>
 <dd><p>{{#if (regexMatch value regexp)}}
   .. content
 {{/if}}</p>
+<p>{{regexMatch value regexp flags=&quot;i&quot;}}</p>
 </dd>
 <dt><a href="#regexFindFirst">regexFindFirst()</a> ⇒</dt>
 <dd><p>{{#each (regexFindFirst value regexp)}}
   {{this}}
 {{/each}}</p>
+<p>{{regexFindFirst value regexp flags=&quot;i&quot;}}</p>
 </dd>
 <dt><a href="#regexFindAll">regexFindAll()</a> ⇒</dt>
 <dd><p>{{#each (regexFindAll value regexp)}}
   {{this}}
 {{/each}}</p>
+<p>{{regexFindFirst value regexp flags=&quot;ig&quot;}}</p>
 </dd>
 <dt><a href="#toTitleCase">toTitleCase()</a> ⇒</dt>
 <dd><p>{{#toTitleCase}}
@@ -8861,6 +8865,10 @@ always return <code class="docutils literal notranslate"><span class="pre">choic
 <li>return choices if int or serial, part of key, and not null.</li>
 <li>return ranges or choices based on the type.</li>
 </ol>
+<p>Note:</p>
+<ul class="simple">
+<li>null and not-null are applicaple in all types, so we’re ignoring those while figuring out the preferred mode.</li>
+</ul>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.FacetColumn"><code>FacetColumn</code></a><a name="ERMrest.FacetColumn+barPlot"></a></p>
 </div>
 <div class="section" id="facetcolumn-barplot-code-boolean-code">
@@ -12924,6 +12932,7 @@ JSON Object
 <p>{{#replace substr newSubstr}}
 string
 {{/replace}}</p>
+<p>{{replace value regexp flags=”ig”}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: replaces each match of the regexp with newSubstr<a name="regexMatch"></a></p>
 </div>
 <div class="section" id="regexmatch">
@@ -12931,6 +12940,7 @@ string
 <p>{{#if (regexMatch value regexp)}}
 .. content
 {{/if}}</p>
+<p>{{regexMatch value regexp flags=”i”}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: boolean if the value matches the regexp<a name="regexFindFirst"></a></p>
 </div>
 <div class="section" id="regexfindfirst">
@@ -12938,6 +12948,7 @@ string
 <p>{{#each (regexFindFirst value regexp)}}
 {{this}}
 {{/each}}</p>
+<p>{{regexFindFirst value regexp flags=”i”}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: first string from value that matches the regular expression or empty string<a name="regexFindAll"></a></p>
 </div>
 <div class="section" id="regexfindall">
@@ -12945,6 +12956,7 @@ string
 <p>{{#each (regexFindAll value regexp)}}
 {{this}}
 {{/each}}</p>
+<p>{{regexFindFirst value regexp flags=”ig”}}</p>
 <p><strong>Kind</strong>: global function<strong>Returns</strong>: array of strings from value that match the regular expression or<a name="toTitleCase"></a></p>
 </div>
 <div class="section" id="totitlecase">

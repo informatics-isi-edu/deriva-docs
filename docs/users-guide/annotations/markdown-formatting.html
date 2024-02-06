@@ -1370,8 +1370,9 @@
 <li><a class="reference external" href="#11-subscript">11. Subscript</a></li>
 <li><a class="reference external" href="#12-superscript">12. Superscript</a></li>
 <li><a class="reference external" href="#13-span-attach-attributes-to-text">13. Span (Attach Attributes To Text)</a></li>
-<li><a class="reference external" href="#14-rid-link">14. RID link</a></li>
-<li><a class="reference external" href="#15-table">15. Table</a></li>
+<li><a class="reference external" href="#14-escape-markdown-content">14. Escape markdown content</a></li>
+<li><a class="reference external" href="#15-rid-link">15. RID link</a></li>
+<li><a class="reference external" href="#15-table">16. Table</a></li>
 </ul>
 </li>
 </ul>
@@ -2274,8 +2275,33 @@ Invalid attributes provided to the attribute list will be simple ignored.</li>
 <blockquote>
 <div><p><span class="fa-solid fa-download"></span></p></div></blockquote>
 </div>
+<div class="section" id="escape-markdown-content">
+<span id="escape-markdown-content"></span><h3>14. Escape markdown content<a class="headerlink" href="#escape-markdown-content" title="Permalink to this headline">¶</a></h3>
+<p>This is not part of commonMark specification and it will result in an <a class="reference external" href="#inline-vs-block">inline</a> element. Opening tag is <code class="docutils literal notranslate"><span class="pre">:mdEscape:</span></code> and closing is <code class="docutils literal notranslate"><span class="pre">:/mdEscape:</span></code>.</p>
+<p>This tag can be used to print the content as is and escape the markdown rendering. For example, if you want to show a JSON column value, by default, the <code class="docutils literal notranslate"><span class="pre">{}</span></code> will be treated as attributes of markdown, so you would need to escape the content.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>:mdEscape:{&quot;first_name&quot;: &quot;John&quot;, &quot;last_name&quot;: &quot;Smith&quot;}:/mdEscape: should be superscript.
+
+# OUTPUT:
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>{&quot;first_name&quot;: &quot;John&quot;, &quot;last_name&quot;: &quot;Smith&quot;}<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>{"first_name": "John", "last_name": "Smith"}</p></div></blockquote>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>The following is how you can add links: :mdEscape:[caption](link):/mdEscape:
+
+# OUTPUT:
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+    The following is how you can add links: <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>[caption](link)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<blockquote>
+<div>The following is how you can add links: <span>[caption](link)</span></div></blockquote>
+</div>
 <div class="section" id="rid-link">
-<span id="rid-link"></span><h3>14. RID link<a class="headerlink" href="#rid-link" title="Permalink to this headline">¶</a></h3>
+<span id="rid-link"></span><h3>15. RID link<a class="headerlink" href="#rid-link" title="Permalink to this headline">¶</a></h3>
 <p>Takes an RID of an existing record and generates a resolvable link for that record. This is not part of commonMark specification. It will result in an <a class="reference external" href="#inline-vs-block">inline</a> element. You have to follow the syntax completely.</p>
 <div class="highlight-md notranslate"><div class="highlight"><pre><span></span>[[&lt;RID&gt;]]
 </pre></div>
@@ -2294,7 +2320,7 @@ Invalid attributes provided to the attribute list will be simple ignored.</li>
 <div><a href="/id/1-3X0H">1-3X0H</a></div></blockquote>
 </div>
 <div class="section" id="table">
-<span id="table"></span><h3>15. Table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h3>
+<span id="table"></span><h3>16. Table<a class="headerlink" href="#table" title="Permalink to this headline">¶</a></h3>
 <p>Tables are not part of the commonMark specifications, but the parser that we use follows the <a class="reference external" href="https://github.github.com/gfm/#tables-extension-">GitHub Flavored Markdown specification for tables</a>.</p>
 <p>A table is an arrangement of data with rows and columns, consisting of a single header row, a delimiter row separating the header from the data, and zero or more data rows.</p>
 <p>Each row consists of cells containing arbitrary text, in which inlines are parsed, separated by pipes (<code class="docutils literal notranslate"><span class="pre">|</span></code>). A leading and trailing pipe is also recommended for clarity of reading, and if there’s otherwise parsing ambiguity. Spaces between pipes and cell content are trimmed. Block-level elements cannot be inserted in a table.</p>

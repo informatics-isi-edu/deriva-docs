@@ -1895,7 +1895,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+getColumnByName">.getColumnByName(name)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateActiveList">.generateActiveList([tuple])</a> ⇒ <code>Object</code></li>
@@ -2012,6 +2012,10 @@ ReferenceColumn<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+hasDomainFilter">.hasDomainFilter</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+domainFilterUsedColumns">.domainFilterUsedColumns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+ReferenceColumn<p>&amp;gt;</p>
+</code></a></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+domainFilterRawString">.domainFilterRawString</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultValues">.defaultValues</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultReference">.defaultReference</a> : <code>ERMrest.Refernece</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
@@ -2351,7 +2355,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+getColumnByName">.getColumnByName(name)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateActiveList">.generateActiveList([tuple])</a> ⇒ <code>Object</code></li>
@@ -5892,7 +5896,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+getColumnByName">.getColumnByName(name)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateActiveList">.generateActiveList([tuple])</a> ⇒ <code>Object</code></li>
@@ -6837,10 +6841,10 @@ Will throw an error if</li>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateColumnsList"></a></p>
 </div>
-<div class="section" id="reference-generatecolumnslist-tuple-code-array-lt-referencecolumn-gt-code">
-<span id="reference-generatecolumnslist-tuple-code-array-lt-referencecolumn-gt-code"></span><h3>reference.generateColumnsList(tuple) ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<div class="section" id="reference-generatecolumnslist-tuple-columnslist-dontchangereference-skiplog-code-array-lt-referencecolumn-gt-code">
+<span id="reference-generatecolumnslist-tuple-columnslist-dontchangereference-skiplog-code-array-lt-referencecolumn-gt-code"></span><h3>reference.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog) ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
-</code></a><a class="headerlink" href="#reference-generatecolumnslist-tuple-code-array-lt-referencecolumn-gt-code" title="Permalink to this headline">¶</a></h3>
+</code></a><a class="headerlink" href="#reference-generatecolumnslist-tuple-columnslist-dontchangereference-skiplog-code-array-lt-referencecolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Generates the list of visible columns
 The logic is as follows:</p>
 <ol class="simple">
@@ -6908,6 +6912,21 @@ ReferenceColumn<p>&amp;gt;</p>
 <td>tuple</td>
 <td><a href="#ERMrest.Tuple"><code>Tuple</code></a></td>
 <td>the data for the current refe</td>
+</tr>
+<tr>
+<td>columnsList</td>
+<td><code>Array.&lt;Object&gt;</code></td>
+<td>if passed, we will skip the annotation and heuristics and use this list instead.</td>
+</tr>
+<tr>
+<td>dontChangeReference</td>
+<td><code>boolean</code></td>
+<td>whether we should mutate the reference or just return the generated list.</td>
+</tr>
+<tr>
+<td>skipLog</td>
+<td><code>boolean</code></td>
+<td>whether we should skip logging the warning messages</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateActiveList"></a></p>
@@ -8150,6 +8169,10 @@ We are going to show the special value for them.
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+reference">.reference</a> : <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+foreignKey">.foreignKey</a> : <a class="reference external" href="#ERMrest.ForeignKeyRef"><code>ForeignKeyRef</code></a></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+hasDomainFilter">.hasDomainFilter</a> : <code>Boolean</code></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+domainFilterUsedColumns">.domainFilterUsedColumns</a> : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+ReferenceColumn<p>&amp;gt;</p>
+</code></a></li>
+<li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+domainFilterRawString">.domainFilterRawString</a> : <code>string</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultValues">.defaultValues</a> : <code>Object</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+defaultReference">.defaultReference</a> : <code>ERMrest.Refernece</code></li>
 <li><a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn+displayname">.displayname</a> : <code>Object</code></li>
@@ -8207,6 +8230,18 @@ This class extends the <a class="reference external" href="#ERMrest.ReferenceCol
 <div class="section" id="foreignkeypseudocolumn-hasdomainfilter-code-boolean-code">
 <span id="foreignkeypseudocolumn-hasdomainfilter-code-boolean-code"></span><h3>foreignKeyPseudoColumn.hasDomainFilter : <code>Boolean</code><a class="headerlink" href="#foreignkeypseudocolumn-hasdomainfilter-code-boolean-code" title="Permalink to this headline">¶</a></h3>
 <p>Whether this column has domain-filter annotation</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn"><code>ForeignKeyPseudoColumn</code></a><a name="ERMrest.ForeignKeyPseudoColumn+domainFilterUsedColumns"></a></p>
+</div>
+<div class="section" id="foreignkeypseudocolumn-domainfilterusedcolumns-code-array-lt-referencecolumn-gt-code">
+<span id="foreignkeypseudocolumn-domainfilterusedcolumns-code-array-lt-referencecolumn-gt-code"></span><h3>foreignKeyPseudoColumn.domainFilterUsedColumns : <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+ReferenceColumn<p>&amp;gt;</p>
+</code></a><a class="headerlink" href="#foreignkeypseudocolumn-domainfilterusedcolumns-code-array-lt-referencecolumn-gt-code" title="Permalink to this headline">¶</a></h3>
+<p>The visible columns that are used as part of the domain-filter</p>
+<p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn"><code>ForeignKeyPseudoColumn</code></a><a name="ERMrest.ForeignKeyPseudoColumn+domainFilterRawString"></a></p>
+</div>
+<div class="section" id="foreignkeypseudocolumn-domainfilterrawstring-code-string-code">
+<span id="foreignkeypseudocolumn-domainfilterrawstring-code-string-code"></span><h3>foreignKeyPseudoColumn.domainFilterRawString : <code>string</code><a class="headerlink" href="#foreignkeypseudocolumn-domainfilterrawstring-code-string-code" title="Permalink to this headline">¶</a></h3>
+<p>The raw string value of the ermerst_path_pattern used in domain filter</p>
 <p><strong>Kind</strong>: instance property of <a class="reference external" href="#ERMrest.ForeignKeyPseudoColumn"><code>ForeignKeyPseudoColumn</code></a><a name="ERMrest.ForeignKeyPseudoColumn+defaultValues"></a></p>
 </div>
 <div class="section" id="foreignkeypseudocolumn-defaultvalues-code-object-code">
@@ -11043,7 +11078,7 @@ Reference<p>&amp;gt;</p>
 <li><a class="reference external" href="#ERMrest.Reference+getAggregates">.getAggregates(aggregateList)</a> ⇒ <code>Promise</code></li>
 <li><a class="reference external" href="#ERMrest.Reference+setSamePaging">.setSamePaging(page)</a> ⇒ <a class="reference external" href="#ERMrest.Reference"><code>Reference</code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+getColumnByName">.getColumnByName(name)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>ReferenceColumn</code></a></li>
-<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<li><a class="reference external" href="#ERMrest.Reference+generateColumnsList">.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog)</a> ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Reference+generateActiveList">.generateActiveList([tuple])</a> ⇒ <code>Object</code></li>
@@ -11988,10 +12023,10 @@ Will throw an error if</li>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateColumnsList"></a></p>
 </div>
-<div class="section" id="reference-generatecolumnslist-tuple-code-array-lt-referencecolumn-gt-code">
-<span id="id51"></span><h3>reference.generateColumnsList(tuple) ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
+<div class="section" id="reference-generatecolumnslist-tuple-columnslist-dontchangereference-skiplog-code-array-lt-referencecolumn-gt-code">
+<span id="id51"></span><h3>reference.generateColumnsList(tuple, columnsList, dontChangeReference, skipLog) ⇒ <a class="reference external" href="#ERMrest.ReferenceColumn"><code>Array.<p>&amp;lt;</p>
 ReferenceColumn<p>&amp;gt;</p>
-</code></a><a class="headerlink" href="#reference-generatecolumnslist-tuple-code-array-lt-referencecolumn-gt-code" title="Permalink to this headline">¶</a></h3>
+</code></a><a class="headerlink" href="#reference-generatecolumnslist-tuple-columnslist-dontchangereference-skiplog-code-array-lt-referencecolumn-gt-code" title="Permalink to this headline">¶</a></h3>
 <p>Generates the list of visible columns
 The logic is as follows:</p>
 <ol class="simple">
@@ -12059,6 +12094,21 @@ ReferenceColumn<p>&amp;gt;</p>
 <td>tuple</td>
 <td><a href="#ERMrest.Tuple"><code>Tuple</code></a></td>
 <td>the data for the current refe</td>
+</tr>
+<tr>
+<td>columnsList</td>
+<td><code>Array.&lt;Object&gt;</code></td>
+<td>if passed, we will skip the annotation and heuristics and use this list instead.</td>
+</tr>
+<tr>
+<td>dontChangeReference</td>
+<td><code>boolean</code></td>
+<td>whether we should mutate the reference or just return the generated list.</td>
+</tr>
+<tr>
+<td>skipLog</td>
+<td><code>boolean</code></td>
+<td>whether we should skip logging the warning messages</td>
 </tr>
 </tbody>
 </table><p><a name="ERMrest.Reference+generateActiveList"></a></p>

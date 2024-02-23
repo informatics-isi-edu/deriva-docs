@@ -1337,7 +1337,7 @@
 <li><a class="reference external" href="#context-and-provider-pattern">Context and provider pattern</a></li>
 <li><a class="reference external" href="#performance">Performance</a><ul>
 <li><a class="reference external" href="#debugging">Debugging</a></li>
-<li><a class="reference external" href="#memorization">Memorization</a></li>
+<li><a class="reference external" href="#memoization">Memoization</a></li>
 </ul>
 </li>
 </ul>
@@ -1869,6 +1869,10 @@ updating the font-awesome classes that are used.</li>
 <div class="section" id="chaise-navbar">
 <span id="chaise-navbar"></span><h3>Chaise Navbar<a class="headerlink" href="#chaise-navbar" title="Permalink to this headline">¶</a></h3>
 <p>The navbar for each Chaise app is the same style. It is loaded as part of the configuration phase in the app wrapper. All apps in Chaise can decide to show or hide the navbar as part of defining the <code class="docutils literal notranslate"><span class="pre">AppWrapper</span></code> component.</p>
+</div>
+<div class="section" id="buttons-vs-links">
+<span id="buttons-vs-links"></span><h3>Buttons vs Links<a class="headerlink" href="#buttons-vs-links" title="Permalink to this headline">¶</a></h3>
+<p>We want to be aware of why we are using <code class="docutils literal notranslate"><span class="pre">&lt;button&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> tags. Generally we should use <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> for navigation when possible since this allows for other operating system and browser features. More details about which buttons and links are used for actions or navigation can be found in <a class="reference external" href="https://docs.google.com/spreadsheets/d/1p7fI8Uput9nUuG1oc7m8ZfNwS0pu-HU70PmMDhcNmHM/edit#gid=0">this spreadsheet</a>.</p>
 </div>
 </div>
 <div class="section" id="using-chaise-through-npm">
@@ -2444,8 +2448,8 @@ export default CounterDisplay;
 <li>Installing in the <code class="docutils literal notranslate"><span class="pre">development</span></code> mode allows you to add break points in the code. You should also be mindful of the browser console, as React and other dependencies usually print warning/errors only in this mode. That being said, as we mentioned in <a class="reference external" href="#development-vs-production">here</a>, <code class="docutils literal notranslate"><span class="pre">development</span></code> has its downsides.</li>
 </ul>
 </div>
-<div class="section" id="memorization">
-<span id="memorization"></span><h3>Memorization<a class="headerlink" href="#memorization" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="memoization">
+<span id="memoization"></span><h3>Memoization<a class="headerlink" href="#memoization" title="Permalink to this headline">¶</a></h3>
 <p>React always re-renders children when a parent component has to be re-rendered. But since we’re using the provider pattern, the immediate relationship is unimportant. So, if we find any performance issues, it is probably related to redundant components rendering because of this. <code class="docutils literal notranslate"><span class="pre">memo</span></code>  lets us skip re-rendering a component when its props are unchanged. You can see how we’ve used it <a class="reference external" href="https://github.com/informatics-isi-edu/chaise/pull/2341/commits/29720eb277faaa6fc768a912ffcf8a8ec4776980">here</a>, which significantly improved the performance of record page.</p>
 <p>That being said, performance-related changes applied incorrectly can even harm performance. Use <code class="docutils literal notranslate"><span class="pre">React.memo()</span></code> wisely. Don’t use memoization if you can’t quantify the performance gains.</p>
 <p>Useful links:</p>

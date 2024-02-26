@@ -1517,6 +1517,11 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getRowDisplayKey">._getRowDisplayKey(context)</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getNullValue">._getNullValue()</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.Table+_findForeignKeyByRemoteColumns">._findForeignKeyByRemoteColumns(remoteTable, remoteColumnNames, nameMapping)</a><ul>
+<li><a class="reference external" href="#ERMrest.Table+_findForeignKeyByRemoteColumns..matchFk">~matchFk()</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#ERMrest.Table+findForeignKey">.findForeignKey()</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_assignAssetCategories">._assignAssetCategories()</a></li>
 </ul>
 </li>
@@ -3049,6 +3054,11 @@ ForeignKeyRef<p>&amp;gt;</p>
 </code></a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getRowDisplayKey">._getRowDisplayKey(context)</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_getNullValue">._getNullValue()</a> : <code>object</code></li>
+<li><a class="reference external" href="#ERMrest.Table+_findForeignKeyByRemoteColumns">._findForeignKeyByRemoteColumns(remoteTable, remoteColumnNames, nameMapping)</a><ul>
+<li><a class="reference external" href="#ERMrest.Table+_findForeignKeyByRemoteColumns..matchFk">~matchFk()</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#ERMrest.Table+findForeignKey">.findForeignKey()</a></li>
 <li><a class="reference external" href="#ERMrest.Table+_assignAssetCategories">._assignAssetCategories()</a></li>
 </ul>
 </li>
@@ -3291,6 +3301,47 @@ It’s the same as displaykey but with extra restrictions. It might return undef
 <span id="table-getnullvalue-code-object-code"></span><h3>table._getNullValue() : <code>object</code><a class="headerlink" href="#table-getnullvalue-code-object-code" title="Permalink to this headline">¶</a></h3>
 <p>return the null value that should be shown for the columns under
 this table for the given context.</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+_findForeignKeyByRemoteColumns"></a></p>
+</div>
+<div class="section" id="table-findforeignkeybyremotecolumns-remotetable-remotecolumnnames-namemapping">
+<span id="table-findforeignkeybyremotecolumns-remotetable-remotecolumnnames-namemapping"></span><h3>table._findForeignKeyByRemoteColumns(remoteTable, remoteColumnNames, nameMapping)<a class="headerlink" href="#table-findforeignkeybyremotecolumns-remotetable-remotecolumnnames-namemapping" title="Permalink to this headline">¶</a></h3>
+<p>return the fk that is related to the remote table and column names (it could be inbound or outbound)</p>
+<p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Param</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>remoteTable</td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td>remoteColumnNames</td>
+<td><code>Array.&lt;string&gt;</code></td>
+</tr>
+<tr>
+<td>nameMapping</td>
+<td><code>Object</code></td>
+</tr>
+</tbody>
+</table><p><a name="ERMrest.Table+_findForeignKeyByRemoteColumns..matchFk"></a></p>
+<div class="section" id="findforeignkeybyremotecolumns-matchfk">
+<span id="findforeignkeybyremotecolumns-matchfk"></span><h4>_findForeignKeyByRemoteColumns~matchFk()<a class="headerlink" href="#findforeignkeybyremotecolumns-matchfk" title="Permalink to this headline">¶</a></h4>
+<p>inbound: from = remote, to = local
+outbound: from = local, to = remote</p>
+<p><strong>Kind</strong>: inner method of <a class="reference external" href="#ERMrest.Table+_findForeignKeyByRemoteColumns"><code>_findForeignKeyByRemoteColumns</code></a><a name="ERMrest.Table+findForeignKey"></a></p>
+</div>
+</div>
+<div class="section" id="table-findforeignkey">
+<span id="table-findforeignkey"></span><h3>table.findForeignKey()<a class="headerlink" href="#table-findforeignkey" title="Permalink to this headline">¶</a></h3>
+<p>find the foreignkey that is part of this table, or has a path to it.</p>
+<p>{ “remote_schema”: “s2”, “remote_table”: “t2”, “local_to_remote_columns”: { “x”: “a”, “y”: “b”, … }
+{ “remote_schema”: “s2”, “remote_table”: “t2”, “remote_columns”: [ “a”, “b” ]}</p>
+<p>{“local_columns”: [“x”, “y”, …]}</p>
 <p><strong>Kind</strong>: instance method of <a class="reference external" href="#ERMrest.Table"><code>Table</code></a><a name="ERMrest.Table+_assignAssetCategories"></a></p>
 </div>
 <div class="section" id="table-assignassetcategories">

@@ -2107,20 +2107,26 @@ contexts and subcontexts associated with <code class="docutils literal notransla
 </div>
 <div class="section" id="shareciteacls">
 <span id="shareciteacls"></span><h4>shareCiteAcls<a class="headerlink" href="#shareciteacls" title="Permalink to this headline">¶</a></h4>
-<p>Use this property to show/hide or enable/disable the button used to open the share and cite dialog on Record app. The accepted values for the array for both show and enable are <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code> or any valid globus group key. If either key/value pair is undefined in the object, it will default to <code class="docutils literal notranslate"><span class="pre">[&quot;*&quot;]</span></code>. Consult the chaise-config-sample.js file for more details.
-system columns:</p>
+<p>Use this property to show/hide or enable/disable the button used to open the share and cite dialog on Record app. The accepted values for the array for both show and enable are <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code> or any valid globus group key.</p>
 <ul>
 <li><p class="first">Type: Object</p>
 </li>
 <li><p class="first">Default behavior: the share cite button is viewable and enabled for everyone</p>
 </li>
 <li><p class="first">Sample syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shareCiteAcls</span><span class="p">:</span> <span class="p">{</span>
-  <span class="n">show</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
-  <span class="n">enable</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;shareCiteAcls&quot;</span><span class="p">:</span> <span class="p">{</span>
+  <span class="s2">&quot;show&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">],</span>
+  <span class="s2">&quot;enable&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</li>
+<li><p class="first">Notes:</p>
+<ul class="simple">
+<li>You can use <code class="docutils literal notranslate"><span class="pre">&quot;shareCiteAcls&quot;:</span> <span class="pre">true</span></code> as a shorthand syntax for <code class="docutils literal notranslate"><span class="pre">&quot;shareCiteAcls&quot;:</span> <span class="pre">{&quot;show&quot;:</span> <span class="pre">[&quot;*&quot;],</span> <span class="pre">&quot;enable&quot;:</span> <span class="pre">[&quot;*&quot;]}</span></code> which means showing and enabling for all users (the default behavior).</li>
+<li>You can use <code class="docutils literal notranslate"><span class="pre">&quot;shareCiteAcls&quot;:</span> <span class="pre">false</span></code> as a shorthand syntax for <code class="docutils literal notranslate"><span class="pre">&quot;shareCiteAcls&quot;:</span> <span class="pre">{&quot;show&quot;:</span> <span class="pre">[],</span> <span class="pre">&quot;enable&quot;:</span> <span class="pre">[]}</span></code> which means hiding for all users.</li>
+<li>If either key/value pair is undefined in the object, it will default to <code class="docutils literal notranslate"><span class="pre">[&quot;*&quot;]</span></code>. For instance if you just want to enable this feature for specific users, you could just do <code class="docutils literal notranslate"><span class="pre">{&quot;enable&quot;:</span> <span class="pre">[&quot;more-privilidged-users&quot;]}</span></code> and chaise will add the <code class="docutils literal notranslate"><span class="pre">&quot;show&quot;:</span> <span class="pre">[&quot;*&quot;]</span></code> for you.</li>
+</ul>
 </li>
 </ul>
 </div>

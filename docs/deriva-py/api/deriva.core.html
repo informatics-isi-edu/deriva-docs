@@ -2110,6 +2110,38 @@ data is present.</p>
 <dd><p>Gets a handle to this catalog’s latest snapshot.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="deriva.core.ermrest_catalog.ErmrestCatalog.resolve_rid">
+<code class="descname">resolve_rid</code><span class="sig-paren">(</span><em>rid: str</em>, <em>model: deriva.core.ermrest_model.Model = None</em>, <em>builder: deriva.core.datapath._CatalogWrapper = None</em><span class="sig-paren">)</span> &#x2192; deriva.core.ermrest_catalog.ResolveRidResult<a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.resolve_rid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.resolve_rid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve a RID value to return a ResolveRidResult (a named tuple).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rid</strong> – The RID (str) to resolve</li>
+<li><strong>model</strong> – A result from self.getCatalogModel() to reuse</li>
+<li><strong>builder</strong> – A result from self.getPathBuilder() to reuse</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Raises KeyError if RID is not found in the catalog.</p>
+<p>The elements of the ResolveRidResult namedtuple provide more
+information about the entity identified by the supplied RID in
+this catalog:</p>
+<ul class="simple">
+<li>datapath: datapath instance for querying the resolved entity</li>
+<li>table: ermrest_model.Table instance containing the entity</li>
+<li>rid: normalized version of the input RID value</li>
+</ul>
+<p>Example to simply retrieve entity content:</p>
+<blockquote>
+<div>path, _, _ = catalog.resolve_rid(‘1-0000’)
+data = path.entities().fetch()[0]</div></blockquote>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="deriva.core.ermrest_catalog.ErmrestCatalog.splitQualifiedCatalogName">
 <em class="property">static </em><code class="descname">splitQualifiedCatalogName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.splitQualifiedCatalogName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.splitQualifiedCatalogName" title="Permalink to this definition">¶</a></dt>
@@ -2145,6 +2177,30 @@ of the catalog.</p>
 <dt id="deriva.core.ermrest_catalog.ErmrestSnapshot.snaptime">
 <code class="descname">snaptime</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestSnapshot.snaptime" title="Permalink to this definition">¶</a></dt>
 <dd><p>The snaptime for this catalog snapshot instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="deriva.core.ermrest_catalog.ResolveRidResult">
+<em class="property">class </em><code class="descclassname">deriva.core.ermrest_catalog.</code><code class="descname">ResolveRidResult</code><span class="sig-paren">(</span><em>datapath</em>, <em>table</em>, <em>rid</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ResolveRidResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ResolveRidResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dl class="attribute">
+<dt id="deriva.core.ermrest_catalog.ResolveRidResult.datapath">
+<code class="descname">datapath</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ResolveRidResult.datapath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_catalog.ResolveRidResult.rid">
+<code class="descname">rid</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ResolveRidResult.rid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="deriva.core.ermrest_catalog.ResolveRidResult.table">
+<code class="descname">table</code><a class="headerlink" href="#deriva.core.ermrest_catalog.ResolveRidResult.table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
 </dd></dl>
 
 </dd></dl>

@@ -1676,6 +1676,21 @@ the document to be printed. To view what will be printed, either save to PDF fil
 </ul>
 </li>
 </ul>
+<div class="section" id="supporting-styles-and-classes-in-configuration">
+<span id="supporting-styles-and-classes-in-configuration"></span><h4>Supporting styles and classes in configuration<a class="headerlink" href="#supporting-styles-and-classes-in-configuration" title="Permalink to this headline">¶</a></h4>
+<p>There are multiple places in chaise and deriva-webapps that we want to allow for users to be able to customize the look and feel of different apps and features. Below are some of the guidelines for when to expose a style property in configuration, attach ids and classes to elements that are made available for custom.css, and define other special classes for use in configs and annotations.</p>
+<ul class="simple">
+<li>style properties that are directly exposed in configuration documents are usually quantifiable values or boolean values.<ul>
+<li>For instance width, max-width, font-size are all quatifiable properties that expect a specific numeric value (usually a number, decimal, or percentage)</li>
+</ul>
+</li>
+<li>there is a defined set of <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/docs/user-docs/markdown-formatting.md#special-classes">special classes</a> that can be attached to elements using markdown in annotations or certain configurations that allow for a list of classes to be defined<ul>
+<li>we want to include these classes when a style property might have multiple values (like an enum) instead of an integer. Think about the <code class="docutils literal notranslate"><span class="pre">align-items</span></code> or <code class="docutils literal notranslate"><span class="pre">overflow</span></code> CSS properties that could have multiple values</li>
+</ul>
+</li>
+<li>At a minimum, chaise and deriva-webapps should be attaching unique classes to elements to communicate different parts of the page or components to help data modelers write their own custom CSS by targeting these unique classes</li>
+</ul>
+</div>
 </div>
 <div class="section" id="font-awesome">
 <span id="font-awesome"></span><h3>Font Awesome<a class="headerlink" href="#font-awesome" title="Permalink to this headline">¶</a></h3>

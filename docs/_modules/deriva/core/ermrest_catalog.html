@@ -1290,6 +1290,7 @@
 <span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NamedTuple</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span> <span class="n">DEFAULT_SESSION_CONFIG</span><span class="p">,</span> \
     <span class="n">Megabyte</span><span class="p">,</span> <span class="n">Kilobyte</span><span class="p">,</span> <span class="n">get_transfer_summary</span><span class="p">,</span> <span class="n">IS_PY2</span>
@@ -1410,6 +1411,11 @@
 <span class="n">_clone_state_url</span> <span class="o">=</span> <span class="s2">&quot;tag:isrd.isi.edu,2018:clone-status&quot;</span>
 
 <span class="n">DEFAULT_PAGE_SIZE</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<div class="viewcode-block" id="ResolveRidResult"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ResolveRidResult">[docs]</a><span class="k">class</span> <span class="nc">ResolveRidResult</span> <span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
+    <span class="n">datapath</span><span class="p">:</span> <span class="n">datapath</span><span class="o">.</span><span class="n">DataPath</span>
+    <span class="n">table</span><span class="p">:</span> <span class="n">ermrest_model</span><span class="o">.</span><span class="n">Table</span>
+    <span class="n">rid</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
 <div class="viewcode-block" id="ErmrestCatalog"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog">[docs]</a><span class="k">class</span> <span class="nc">ErmrestCatalog</span><span class="p">(</span><span class="n">DerivaBinding</span><span class="p">):</span>
@@ -1668,6 +1674,52 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unable to tokenize </span><span class="si">%s</span><span class="s2"> into a fully qualified &lt;schema:table&gt; name.&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">entity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">entity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="ErmrestCatalog.resolve_rid"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.resolve_rid">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_rid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rid</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">ermrest_model</span><span class="o">.</span><span class="n">Model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">builder</span><span class="p">:</span> <span class="n">datapath</span><span class="o">.</span><span class="n">_CatalogWrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ResolveRidResult</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Resolve a RID value to return a ResolveRidResult (a named tuple).</span>
+
+<span class="sd">        :param rid: The RID (str) to resolve</span>
+<span class="sd">        :param model: A result from self.getCatalogModel() to reuse</span>
+<span class="sd">        :param builder: A result from self.getPathBuilder() to reuse</span>
+
+<span class="sd">        Raises KeyError if RID is not found in the catalog.</span>
+
+<span class="sd">        The elements of the ResolveRidResult namedtuple provide more</span>
+<span class="sd">        information about the entity identified by the supplied RID in</span>
+<span class="sd">        this catalog:</span>
+
+<span class="sd">        - datapath: datapath instance for querying the resolved entity</span>
+<span class="sd">        - table: ermrest_model.Table instance containing the entity</span>
+<span class="sd">        - rid: normalized version of the input RID value</span>
+
+<span class="sd">        Example to simply retrieve entity content:</span>
+
+<span class="sd">           path, _, _ = catalog.resolve_rid(&#39;1-0000&#39;)</span>
+<span class="sd">           data = path.entities().fetch()[0]</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getCatalogModel</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">builder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPathBuilder</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;/entity_rid/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">urlquote</span><span class="p">(</span><span class="n">rid</span><span class="p">))</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+            <span class="n">sname</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;schema_name&#39;</span><span class="p">]</span>
+            <span class="n">tname</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;table_name&#39;</span><span class="p">]</span>
+            <span class="n">rid</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;RID&#39;</span><span class="p">]</span>
+
+            <span class="n">ptable</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">ResolveRidResult</span><span class="p">(</span>
+                <span class="n">ptable</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">ptable</span><span class="o">.</span><span class="n">RID</span> <span class="o">==</span> <span class="n">rid</span><span class="p">),</span>
+                <span class="n">model</span><span class="o">.</span><span class="n">schemas</span><span class="p">[</span><span class="n">sname</span><span class="p">]</span><span class="o">.</span><span class="n">tables</span><span class="p">[</span><span class="n">tname</span><span class="p">],</span>
+                <span class="n">rid</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">not_found</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">rid</span><span class="p">)</span>
+            <span class="k">raise</span></div>
 
 <div class="viewcode-block" id="ErmrestCatalog.getAsFile"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_catalog.ErmrestCatalog.getAsFile">[docs]</a>    <span class="k">def</span> <span class="nf">getAsFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                   <span class="n">path</span><span class="p">,</span>

@@ -50,6 +50,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx_markdown_tables',
     'nbsphinx',
+    'myst_parser'
 ]
 
 nbsphinx_allow_errors = True
@@ -63,12 +64,6 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-
-from recommonmark.parser import CommonMarkParser
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
 
 source_suffix = ['.rst', '.md']
 
@@ -122,7 +117,7 @@ html_favicon = "_static/favicon.ico"
 html_static_path = ['_static']
 
 def setup(app):
-        app.add_stylesheet("css/custom.css")
+    app.add_css_file('css/custom.css')
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.

@@ -63,7 +63,7 @@ here is a quick matrix to locate them.
 | [2016 Visible Foreign Keys](#tag-2016-visible-foreign-keys)              | -       | -      | X     | -      | -   | -   | Foreign key visibility and presentation order                  |
 | [2017 Asset](#tag-2017-asset)                                            | -       | -      | -     | X      | -   | -   | Describes assets                                               |
 | [2018 Citation](#tag-2018-citation)                                      | -       | -      | X     | -      | -   | -   | Describes citation                                             |
-| [2018 Required](#tag-2018-required)                                      | -       | -      | -     | X      | -   | -   | Required model column                                          |
+| [2018 Required](#tag-2018-required)                                      | -       | -      | -     | X      | -   | X   | Required model element                                         |
 | [2018 Indexing Preferences](#tag-2018-indexing-preferences)              | -       | -      | X     | X      | -   | -   | Specify database indexing preferences                          |
 | [2019 Export](#tag-2019-export)                                          | X       | X      | X     | -      | -   | -   | Describes export templates                                     |
 | [2021 Export Fragment Definitions](#tag-2021-export-fragment-definitions)| X       | X      | X     | -      | -   | -   | Describe export fragments that may be used in export anotation |
@@ -99,7 +99,9 @@ Supported JSON payload patterns:
 - `{`... `"show_key_link":` `{` _context_ `:` _keylink_ `,` ... `}`: Whether default display of keys (sel link) should include link to the row.
 - `{`... `"show_foreign_key_link":` `{` _context_ `:` _fklink_ `,` ... `}`: Whether default display of foreign keys should include link to the row.
 - `{`... `"hide_row_count":` `{` _context_ `:` _rowcount_ `,` ... `}`: Whether we should display the total row count. Since the request to fetch total row count is expensive, you can use this to signal to client to skip the request (and therefore do not display it to users.)
+- `{`... `"max_facet_depth":` `{` _context_ `:` _maxfacetdepth_ `,`  ...`}`: How many levels of facet popups we should allow.
 - `{`... `"show_saved_query":` _savedquery_ ...`}`: Whether we want to display the saved query UI features or not. By default, this feature is turned off (set to false).
+- `{`... `"bulk_create_foreign_key"`: _bulkfk_ ... `}`: Use this property to control the bulk selection of foreign key values in `entry/create` context when there is a prefill query parameter. By default, the heuristics will be used to determine if this feature will be used. This can be defined on each of the catalog, schema, and table model elements.
 
 Supported JSON _ccomment_ patterns:
 
@@ -157,6 +159,18 @@ Supported JSON _savedquery_ patterns:
 - `true`: Display the saved query UI features.
 - `false`: Don't display the saved query UI features.
 
+Supported JSON _bulkfk_ patterns:
+
+- `false`: Turns off the heuristics that trigger this feature.
+- `null`: Overrides inheritance for this property and use the default heuristics.
+
+Supported JSON _maxfacetdepth_ patterns:
+
+- `0`: Disable the faceting feature.
+- `1`: Facet panel is only displayed for one level. The facet panel is not displayed as part of the facet popups.
+- `2`: Facet panel is displayed for two levels. Both once the main table is opened and when the facet popup is opened for any of the facets.
+- Any number bigger than 2 will be treated the same as defining `2`.
+
 Supported JSON _context_ patterns:
 - See [Context Names](#context-names) section for the list of supported JSON _context_ patterns.
 
@@ -165,8 +179,10 @@ Supported JSON _context_ patterns:
 - Comment related settings:
   - The `"comment"` setting applies *only* to the model element which is annotated.
   - The `"comment_render_markdown": false` should be used if you don't want us to treat the comment as a markdown value. By default we're assuming all comments are markdown.
-  - `"table_comment_display"` is only supported for `compact` context for the title and the tables in `detailed` context when they are part of a foreign key relationship in `visible-columns` or `visible-foreign-keys`.
-  - `"column_comment_display"` is only used in `entry` context.
+  - Using the `"inline"` value for `"table_comment_display"` is currently only supported in the following scenarios:
+    - The recordset page title (`compact` context).
+    - The inline entities and related entities displayed on the record page (`detailed` context is used in both cases).
+  - Using the `"inline"` value for `"column_comment_display"` is currently only supported in the `entry` context (recordedit app).
 - The `"name"` and `"markdown_name"` setting applies *only* to the model element which is annotated. They bypass the `name_style` controls which only apply to actual model names.
   - The `"markdown_name"` setting takes precedence if both are specified.
 - The `"name_style"` setting applies to the annotated model element and is also the default for any nested element.
@@ -453,6 +469,7 @@ Supported display _option_ syntax:
 - `"show_foreign_key_link": true`: Override the inherited behavior of foreign key display and add a link to the referred row.
 - `"show_foreign_key_link": false`: Override the inherited behavior of foreign key display by not adding any the extra.
 - `"selector_ux_mode"`: The display mode for the recordedit input field when this foreign key relationship is part of the visible columns. Supported values are `"facet-search-popup"` and `"simple-search-dropdown"`, with `"facet-search-popup"` being the default. Currently only supported in `entry` contexts.
+- `"bulk_create_foreign_key"`:  Use this property to control the bulk selection of foreign key values in `entry/create` context when there is a prefill query parameter. Supported values are a foreign key `name` in the format of `['schema_name', 'foreign_key_name']` from the schema document, `false`, or `null`. Using a foreign key name will use that foreign key as the one being bulk selected if that foreign key is in the visible columns list.  `false` turns off the heuristics that trigger this feature. `null` will override inheritance for this property and use the default heuristics. This will override the `bulk_create_foreign_key_candidates` property defined in the table-display annotation. Currently only supported in `entry/create` context.
 
 Supported _columnorder_key_ syntax:
 
@@ -463,7 +480,7 @@ Supported _columnorder_key_ syntax:
 
 Supported _domainfilter_ syntax:
 - `{ "ermrest_path_pattern":` _pathpattern_ `}`: The _pathpattern_ yields a _filter_ via [Pattern Expansion](#pattern-expansion). With this syntax, the applied filter will be hidden from the user.
-- `{ "ermrest_path_pattern":` _pathpattern_ `, "pattern_sources":` _columnlist_ `}`: The added `pattern_sources` allows the client to proceed more meaningful errors to users.
+- `{ "ermrest_path_pattern":` _pathpattern_ `, "pattern_sources":` _columnlist_ `}`: The added `pattern_sources` allows the client to display more meaningful errors to users.
 - `{ "ermrest_path_pattern":` _pathpattern_ `, "display_markdown_pattern":` _displaypattern_ `}`: The _pathpattern_ yields a _filter_ via [Pattern Expansion](#pattern-expansion). _displaypattern_ will provide the visual presentation of the filter which will be computed by performing [Pattern Expansion](#pattern-expansion) to obtain a markdown-formatted text value which MAY be rendered using a markdown-aware renderer.
   - If the computed _filter_ is an empty string, the _domain_filter_ will be ignored, and the client behaves as if this annotation is not even defined. Therefore, while rendering the list of allowed foreign key rows in recordedit, users will see the whole list.
 - `{ "ermrest_path_pattern":` _pathpattern_ `, "display_markdown_pattern":` _displaypattern_ `, "pattern_sources":` _columnlist_ `}`:  The added `pattern_sources` allows the client to proceed more meaningful errors to users.
@@ -605,6 +622,7 @@ Supported JSON _option_ payload patterns:
 	- The _pathsuffix_ MAY join additional tables to the path and MAY project from these tables as well as the table bound to the `S` table alias.
 	- The _pathsuffix_ SHOULD reset the path context to `$S` if it has joined other tables.
 - `"selector_ux_mode"`: The display mode for the recordedit input field when this table is part of a foreignkey relationship as the `outbound` table. Supported values are `"facet-search-popup"` and `"simple-search-dropdown"`, with `"facet-search-popup"` being the default. Currently only supported in `entry` contexts.
+- `"bulk_create_foreign_key_candidates"`: Use this property to control the bulk selection of foreign key values in `entry/create` context when there is a prefill query parameter. Supported value is an array of foreign key `names` in the format of `[['schema_name', 'foreign_key_name'], ...]`. This will override the `bulk_create_foreign_key` property defined in the display annotation. Currently only supported in `entry/create` context.
 
 It is not meaningful to use `page_markdown_pattern`, `row_markdown_pattern`, and `module` in for the same _context_. If they co-exist, the application will prefer `module` over `page_markdown_pattern` and `page_markdown_pattern` over `row_markdown_pattern`.
 
@@ -614,12 +632,6 @@ Supported JSON _sortkey_ patterns:
 - `{ "column":` _columnname_ `, "descending": false }`: Sort according to the values in the _columnname_ column in ascending order. This is equivalent to the ERMrest sort specifier `@sort(` _columnname_ `)`.
 - `{ "column":` _columnname_ `}`: If omitted, the `"descending"` field defaults to `false` as per above.
 - _columnname_: A bare _columnname_ is a short-hand for `{ "column":` _columnname_ `}`.
-
-#### Table Display Settings Hierarchy
-
-The table display settings apply only to tables, but MAY be annotated at the schema level to set a schema-wide default, if appropriate in a particular model. Any table-level specification of these settings will override the behavior for that table. These settings on other model elements are meaningless and ignored.
-
-For hierarchically inheritable settings, an explicit setting of `null` will turn *off* inheritance and restore default behavior for that model element and any of its nested elements.
 
 ### Tag: 2016 Visible Foreign Keys
 
@@ -716,6 +728,7 @@ A new asset location may be specified via a pattern to induce a prospective asse
 Supported JSON payload patterns:
 
 - `{`... `"url_pattern": ` _pattern_ ...`}`: A desired upload location can be derived by [Pattern Expansion](#pattern-expansion) on _pattern_. This attribute is required for browser upload and if it is not specified the client will not provide the browser upload feature. See implementation notes below.
+- `{`... `"wait_for":` _waitForList_ ... `}`: List of column directive [`sourcekey`](#tag-2019-source-definitions)s that are used in `url_pattern`. Currently only paths that start with an outbound foreign-key are supported.
 - `{`... `"browser_upload": ` `false` ... `}`: If `url_pattern` is available and valid browser upload feature will be enabled. If you want to force disabling this feature set it to `false`.
 - `{`... `"filename_column": ` _column_ ...`}`: The _column_ stores the filename of the asset.
 - `{`... `"byte_count_column": ` _column_ ...`}`: The _column_ stores the file size in bytes of the asset. It SHOULD be an integer typed column.
@@ -723,7 +736,12 @@ Supported JSON payload patterns:
 - `{`... `"sha256": ` _column_ | `true` ...`}`: If _column_, then the _column_ stores the checksum generated by the 'sha256' cryptographic hash function. It MUST be ASCII/UTF-8 hexadecimal encoded. If `true`, then the client SHOULD generate a 'sha256' checksum and communicate it to the asset storage service according to its protocol. See implementation notes below.
 - `{`... `"filename_ext_filter": [` { _filename extension_ [`,` _filename extension_ ]\* } `]` ...`}`: This property specifies a set of _filename extension_ filters for use by upload agents to indicate to the user the acceptable filename patterns (`.jpg`, `.png`, `.pdf`, ...). For example, `.jpg` would indicate that only JPEG files should be selected by the user.
 - `{`... `"filename_ext_regexp": [` { _filename extension regexp_ [`,` _filename extension regexp_ ]\* } `]` ...`}`: This property specifies a set of _filename extension regexp_ for use by upload while populating the value of `filename_ext` property that will be available under the annotationed column object while writing the `url_pattern` value.
+- `{`... `"stored_filename_pattern": ` _pattern_ ...`}`: A preferred filename can be derived by [Pattern Expansion](#pattern-expansion) on _pattern_. This attribute allows for changing the `content-disposition` of the file uploaded to hatrac and the value stored in the filename column. See implementation notes below.
 - `{` ... `"display": {` _context_`:` _displayoption_ ...`}` ... `}`: Apply each _displayoption_ to the asset for any number of _context_ names. See [Context Names](#context-names) section for the list of supported _context_ names.
+
+Supported _waitForList_ pattern:
+
+- `[` ... _sourcekey_ `,` ... `]`: _sourcekey_ is the string literal that refers to the sources defined in the [`source-definitions` annotation](#tag-2019-source-definitions) of the table. Currently only paths that start with an outbound foreign-key are supported.
 
 Supported display _displayoption_ JSON payload patterns:
 
@@ -733,14 +751,16 @@ Default heuristics:
 - The `2017 Asset` annotation explicitly indicates that the associated column is the asset location.
 - `url_pattern` MUST be specified for browser upload. If it is not specified or if it produces a null value, the browser upload will be disabled.
 - Column MUST be `text` typed. Otherwise the asset annotation will be ignored.
-- In addition to native columns, the following properties are also available under the annotated column object and can be referred in the _pattern_ defined in `url_pattern` e.g. `{{{_URI.md5_hex}}}` where `URI` is the annotated column (notice the [underscore before the column name](mustache-templating.md#raw-values)).
+- In addition to native columns and single-hop outbound foreign keys, the following properties are also available under the annotated column object and can be referred in the _pattern_ defined in `url_pattern` e.g. `{{{_URI.md5_hex}}}` where `URI` is the annotated column (notice the [underscore before the column name](mustache-templating.md#raw-values)).
   - `md5_hex` for hex
   - `md5_base64` for base64
   - `size` for size in bytes
   - `mimetype` for mimetype of the selected file.
-  - `filename` for filename
+  - `filename` for filename. NOTE: this is the filename of the uploaded file before `stored_filename_pattern` is generated
+  - `filename_basename` for the filename without the extension. Note: the following will be true `filename_basename + filename_ext = filename`
   - `filename_ext` for the file extension based on the filename. This value is derived based on the optionally defined `filename_ext_filter` and `filename_ext_regexp`. If these annotations are missing, the last part of the filename after the last dot will be returned (also includes the `.` e.g. `.png`).
     - If we cannot find matches, this property will return `null`. So make sure you're doing null checking while using this property (otherwise, the whole `url_pattern` might result in an empty string).
+- You may use `wait_for` to have access to data from other tables. Currently only paths that start with an outbound foreign-key are supported. For more information on how to access the `wait_for` values while writing the `url_pattern`, please refer to [this document](column-directive-template.md#column-directive-templating-variable-data-structure). For example if you define an all-outbound path called `all_outbound_fk_path`, you maye use `{{{all_outbound_fk_path.values.RID}}}` to access the RID value.
 - Nothing may be inferred without additional payload patterns present.
 
 Protocol-specific metadata retrieval MAY be applied once an asset location is known. How to present or reconcile contradictions in metadata found in multiple sources is beyond the scope of this specification.
@@ -789,7 +809,7 @@ At present, the Chaise implementation of the citation annotation has the followi
 `tag:isrd.isi.edu,2018:required`
 
 This key indicates that the values for a given model element will be required by
-the system. This key is allowed on any number of columns. There is no content for this key.
+the system. This key is allowed on any number of columns or foreign keys. There is no content for this key.
 
 ### Tag: 2018 Indexing Preferences
 
@@ -1153,6 +1173,7 @@ List of _context_ names that are used in ERMrest:
       - `"compact/select/association/link"`: A sub-context of `compact/select/association` used for selecting entities to link to the main record.
       - `"compact/select/association/unlink"`: A sub-context of `compact/select/association` used for selecting entities to unlink from the main record.
     - `"compact/select/foreign_key"`: A sub-context of `compact/select` used for selecting entities for a foreign key value in an `entry` context.
+    - `"compact/select/foreign_key/bulk"`: a sub-context of `compact/select` used for selecting multiple entities to fill in foreign key values in multiple forms in `entry/create` context.
     - `"compact/select/saved_queries"`: A sub-context of `compact/select` used for selecting a saved query to apply in `compact` context.
     - `"compact/select/show_more"`: A sub-context of `compact/select` used for selecting entities as a facet value.
 - `"detailed"`: Any detailed read-only, entity-level presentation context.
@@ -1330,6 +1351,8 @@ The following attributes can be used to manipulate the presentation settings of 
       - `csv` for comma-seperated values.
       - `raw` for space-seperated values.
   - `"selector_ux_mode"`: The display mode for the recordedit input field when this column directive is a foreign key relationship. Supported values are `"facet-search-popup"` and `"simple-search-dropdown"`, with `"facet-search-popup"` being the default. Currently only supported in `entry` contexts.
+  - `"required"`: Use this property to force the required (nullok) check for this visible column. This property is only used in the `entry` contexts. If set to `true`, users cannot leave the input empty. And if set to `false`, the input becomes optional.
+  - `"bulk_create_foreign_key"`: Use this property to control the bulk selection of foreign key values in `entry/create` context when there is a prefill query parameter. Supported values are a foreign key `name` in the format of `['schema_name', 'foreign_key_name']` from the schema document, `false`, or `null`. Using a foreign key name will use that foreign key as the one being bulk selected if that foreign key is in the visible columns list. `false` turns off the heuristics that trigger this feature. `null` will override inheritance for this property and use the default heuristics. This will override the `bulk_create_foreign_key` property defined in the display property of the foreign-key annotation. Currently only supported in `entry/create` context.
 - `array_display`: This property is _deprecated_. It is the same as `array_ux_mode` that is defined above under `display` property.
 - `array_options`: Applicaple only to read-only non-filter context of `visible-columns` annotation. This property is meant to be an object of properties that control the display of `array` or `array_d` aggregate column. These options will only affect the display (and templating environment) and have no effect on the generated ERMrest query. The available options are:
     - `order`: An alternative sort method to apply when a client wants to semantically sort by key values. It follows the same syntax as `column_order`. In scalar array aggregate, you cannot sort based on other columns values, you can only sort based on the scalar value of the column.

@@ -10,6 +10,8 @@ This document summarizes the key concepts of Handlebars that are relevant to Der
   - [Restriction in the adjacency of opening and closing tags](#restriction-in-the-adjacency-of-opening-and-closing-tags)
 - [Usage](#usage)
   - [Handlebars Paths](#handlebars-paths)
+  - [Raw values](#raw-values)
+  - [Foreign Key Values](#foreign-key-values)
   - [Automatic null detection](#automatic-null-detection)
   - [Accessing current context](#accessing-current-context)
   - [HTML-escaping](#html-escaping)
@@ -24,8 +26,10 @@ This document summarizes the key concepts of Handlebars that are relevant to Der
   - [$location](#location)
   - [$session](#session)
 - [Helpers](#helpers)
+  - [printf helper](#printf-helper)
   - [formatDate helper](#formatdate-helper)
   - [humanizeBytes helper](#humanizebytes-helper)
+  - [stringLength helper](#stringLength-helper)
   - [Math Helpers](#math-helpers)
     - [add](#add)
     - [subtract](#subtract)
@@ -46,6 +50,7 @@ This document summarizes the key concepts of Handlebars that are relevant to Der
 - [Boolean Helpers](#boolean-helpers)
   - [Comparison Helpers](#comparison-helpers)
   - [Regular Expression Match](#regular-expression-match)
+  - [Access Control (ACL) check](#access-control-acl-check)
   - [Logical Helpers](#logical-helpers)
 
 
@@ -156,12 +161,33 @@ This makes it possible to use Handlebars templates with more raw JSON objects.
 
 Nested handlebars paths can also include `../` segments, which evaluate their paths against a parent context.
 
+For example, with the following context:
+```json
+{
+  "permalink": "https://example.com/post/1",
+  "comments": [
+    {
+      "id": "c1",
+      "title": "comment 1",
+      "body": "I liked it."
+    },
+    {
+      "id": "c2",
+      "title": "comment 2",
+      "body": "Meh."
+    }
+  ]
+}
+```
+
+You could do:
 ```
 {{#each comments}}
   [{{title}}](/posts/{{../permalink}}#{{id}})
   {{body}}
 {{/each}}
 ```
+
 
 Even though the link is printed while in the context of a comment, it can still go back to the main context (the post) to retrieve its permalink.
 The exact value that `../` will resolve to varies based on the helper that is calling the block. Using `../` is only necessary when context changes, so children of helpers such as `each` would require the use of `../` while children of helpers such as `if` do not.
@@ -184,6 +210,47 @@ In this example, all of the above reference the same `permalink` value even thou
 <p>{{./name}} or {{this/name}} or {{this.name}}</p> or {{this.[name with a space]}}
 ```
 Any of the above would cause the name field in the current context to be used rather than a helper of the same name.
+
+### Raw values
+
+By default ERMrestJS returns formatted values for a column by using `{{{COLUMN_NAME}}}`. If you need to access the raw values returned by ERMrest you should prepend the column name with an underscore **"_"** in the template.
+
+```sh
+# {{{_COUMN_NAME}}}
+
+{{{_user}}}
+```
+
+In case of `jsonb` columns, `{{{col}}}` will return the string representation of the value, while `{{{_col}}}` can be used to access the raw value of the column. This will allow you to access the fields in the jsonb value. For instance if the jsonb value is `{"name": 1234}`, then you can use `{{{_col.name}}}` to access the `name` field. While accessing the raw jsonb column, we don't allow you to access the "formatted" values and the returned value is the raw field value. In the example above, `{{{_col.name}}}` will return "1234" and not "1,234".
+
+### Foreign Key Values
+
+You can access table's outbound foreign key data using `$fkeys` variable. To do so, you can use the constraint name of the foreign key. For instance having `["schema", "constraint"]` as schema-constraint pair for the foreign key, you can use `$fkey_schema_constraint` (`$fkeys.schema.constraint` syntax is still supported but it's deprecated) to access its attributes. The following are available attributes for foreign keys:
+
+1. `values`: An object containing values of the table that the foreign key refers to. Both formatted and unformatted column values will be available here. For instance `$fkey_schema_const.values.col1` will give you the formatted value for the `col1` and `$fkey_schema_const.values._col1` the unformatted.
+2. `rowName`: Row-name of the foreign key.
+3. `uri.detailed`: a uri to the foreign key in `detailed` context (record app).
+
+```
+# Create a link to Foreign key:
+
+{{#with $fkey_schema_constraint}}
+  [{{rowName}}]({{{uri.detailed}}})
+{{/with}}
+
+# Access column values of a foreign key:
+
+{{{$fkey_schema_constraint.values.col1}}} - {{{$fkey_schema_constraint.values.col2}}}
+```
+The current implementation of `$fkeys` has the following limitations:
+
+- Using $fkeys you can only access data from tables that are one level away from the current table. This can cause problem when you are using $fkeys in your `row_markdown_pattern` annotation. Let's say the following is the ERD of your database.
+
+  ![fkey example](https://github.com/informatics-isi-edu/ermrestjs/raw/master/docs/resources/fkeys-example-erd.png)
+
+  And you have defined the `row_markdown_pattern` of table A as `{{{$fkey_schema_fk1.values.term}}}`. If you navigate to record app for any records of A, the rowname will be displayed as you expect it. But if you go to the table C, the rowname of A won't be as you expected since we don't have access to the table B's data.
+   Therefore it's advised to use `$fkey` only for the `column-display` annotation (or any other annotation that is controlling data for the same table).
+
 
 ### Automatic null detection
 
@@ -369,29 +436,35 @@ Ermrestjs allows users to access some pre-defined variables in the template envi
 
 `$moment` is a datetime object which will give you access to date and time when the app was loaded. For instance if the app was loaded at Thu Oct 19 2017 16:04:46 GMT-0700 (PDT), it will contain following properties
 
-* date: 19
-* day: 4
-* month: 10
-* year: 2017
-* dateString: Thu Oct 19 2017
-* hours: 16
-* minutes: 4
-* seconds: 14
-* milliseconds: 873
-* timeString: 16:04:46 GMT-0700 (PDT)
-* ISOString: 2017-10-19T23:04:46.873Z
-* GTMString: Thu, 19 Oct 2017 23:04:46 GMT
-* UTCString: Thu, 19 Oct 2017 23:04:46 GMT
-* LocaleDateString: 10/19/2017
-* LocaleTimeString: 4:04:46 PM
-* LocalString: 10/19/2017, 4:04:46 PM
+* `date`: Day of the month: 19
+* `day`: Day of the week: 4
+* `month`: 10
+* `year`: 2017
+* `dateString`: Thu Oct 19 2017
+* `hours`: 16
+* `minutes`: 4
+* `seconds`: 14
+* `milliseconds`: 873
+* `timeString`: 16:04:46 GMT-0700 (PDT)
+* `ISOString`: 2017-10-19T23:04:46.873Z
+* `GTMString`: Thu, 19 Oct 2017 23:04:46 GMT
+* `UTCString`: Thu, 19 Oct 2017 23:04:46 GMT
+* `LocaleDateString`: 10/19/2017
+* `LocaleTimeString`: 4:04:46 PM
+* `LocalString`: 10/19/2017, 4:04:46 PM
 
-The `$moment` object can be referred directly in the Mustache environment
+The `$moment` object can be referred directly in the Mustache environment. If you would like to display the current date and time in a different format, you can use `$moment.ISOString` with [`formatDate`](#formatDate) helper.
 
 **Examples**
+
 ```js
-Todays date is {{{$moment.month}}}/{{{$moment.date}}}/{{{$moment.year}}}
+Today's date is {{formatDate $moment.ISOString "YYYY/M/D"}}.
 ```
+
+```js
+Today's is date {{{$moment.month}}}/{{{$moment.date}}}/{{{$moment.year}}}
+``
+
 ```js
 Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:{{{$moment.milliseconds}}}
 ```
@@ -404,6 +477,7 @@ Locale datetime is {{{$moment.LocaleString}}}
 ```js
 ISO datetime is {{{$moment.ISOString}}}
 ```
+
 
 ### $catalog
 `$catalog` is an object that gives you access to the catalog information including version if it is present. The following properties are currently included:
@@ -485,9 +559,27 @@ A Handlebars helper call is a simple identifier, followed by zero or more parame
 {{HELPER_NAME PARAM1 PARAM2 }}
 ```
 
+### printf helper
+
+You can use the `printf` helper to format a value. The expected format follows the same syntax as [PreFormat](pre-format.md#syntax).
+
+Syntax:
+```
+{{printf value format }}
+```
+
+Example:
+```
+{{printf 3.1415 "%.1f" }} ==> "3.1"
+
+{{printf 43 "%4d" }} ==> "  43"
+```
+
+Keep in mind that `printf` doesn't check the validity of the given values. So for example if the value might not be a number, you cannot blindly use the `d` type and should guard against it.
+
 ### formatDate helper
 
-You can use the `formatDate` helper to take any `date` or `timestamp[tz]` value and format it according to the [Pre Format Guide](pre-format.md#syntax-for-dates-and-timestamps).
+You can use the `formatDate` helper to take any `date`, `timestamp`, or `timestamptz` value and format it according to the [Pre Format Guide](pre-format.md#syntax-for-dates-and-timestamps).
 
 Syntax:
 ```
@@ -496,7 +588,9 @@ Syntax:
 
 Example:
 ```
-{{formatDate '30-08-2018' 'YYYY'}} ==> '2018'
+{{formatDate "30-08-2018' 'YYYY'}} ==> '2018'
+
+{{formatDate '30-08-2018' 'YYYY/M/D'}} ==> '2018/8/30'
 ```
 
 ### humanizeBytes helper
@@ -559,6 +653,27 @@ A boolean value specifying whether you want the output to include a tooltip or n
 ```
 {{humanizeBytes value tooltip=true}}
 ```
+
+### stringLength helper
+
+You can use `stringLength` helper to get the length of a given string.
+
+Syntax:
+```
+{{stringLength value }}
+```
+
+Example:
+```
+{{stringLength "123123" }} ==> 6
+
+{{stringLength value }} ==> assuming value is "sometext" returns 8.
+
+
+[{{{caption}}}](https://example.com){ {{#if (gt (stringLength caption) 100)}}.lengthy-caption{{else}}.short-caption{{/if}} }
+```
+
+
 
 ### Math Helpers
 
@@ -1109,6 +1224,29 @@ You can also use the `flags` named optional argument to pass [regular expression
 ```
 
 > If `flags` argument is not used, by default we are using the `g` (global search) flag for the regular expression search.
+
+### Access Control (ACL) check
+
+Using the `isUserInAcl` function you can check whether the current user is in a given ACL group or not. You may pass one or multiple groups, or a variable that represents an array. As long as the user is in one of the group ACL groups, this function will return true.
+
+```
+{{isUserInAcl "https:/group-id" }}
+{{isUserInAcl "https:/group-id1" "https://group-id2" }}
+{{isUserInAcl groupArray }}
+
+{{#if (isUserInAcl "https:/group-id")}}
+  has access
+{{/if}}
+
+{{#if (isUserInAcl "https:/group-id1" "https://group-id2")}}
+  has access
+{{/if}}
+
+{{#if (isUserInAcl groupArray)}}
+  has access
+{{/if}}
+```
+
 
 ### Logical Helpers
 

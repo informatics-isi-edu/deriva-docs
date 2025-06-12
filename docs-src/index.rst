@@ -26,7 +26,6 @@ DERIVA Documentation
   deriva-py/index
   deriva-qt/index
   deriva-workbench/index
-  deriva-catalog-manage/index
   ermrest/index
   hatrac/index
   ermrestjs/index

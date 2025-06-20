@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How to update documentations &mdash; DERIVA Docs current documentation</title>
+  <title>How to update documentation materials &mdash; DERIVA Docs current documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
@@ -1331,7 +1331,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">How to update documentations</li>
+      <li class="breadcrumb-item active">How to update documentation materials</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/ermrestjs/dev-docs/update-docs.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -1341,71 +1341,73 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="how-to-update-documentations">
-<h1>How to update documentations<a class="headerlink" href="#how-to-update-documentations" title="Permalink to this heading"></a></h1>
-<p>This page will focus on what you need to consider when you’ve added some changes to
-figure out whether you need to update any of the documents.</p>
+  <section id="how-to-update-documentation-materials">
+<h1>How to update documentation materials<a class="headerlink" href="#how-to-update-documentation-materials" title="Permalink to this heading"></a></h1>
+<p>This page explains what documentation you may need to update after making code changes.</p>
 <blockquote>
 <div><p>The following sections were added to make sure you didn’t miss any relevant piece of documentation and they are not necessarily applicable to your changes.</p>
 </div></blockquote>
-<section id="update-annotation-docs">
-<h2>Update annotation docs<a class="headerlink" href="#update-annotation-docs" title="Permalink to this heading"></a></h2>
-<p>If you changed any annotation-based feature, you need to make sure the <a class="reference internal" href="../user-docs/annotation.html"><span class="std std-doc">annotation doc</span></a> is updated and contains the latest information.</p>
+<section id="update-annotation-document">
+<h2>Update annotation document<a class="headerlink" href="#update-annotation-document" title="Permalink to this heading"></a></h2>
+<p>If you changed any annotation-based feature, you need to make sure the <a class="reference internal" href="../user-docs/annotation.html"><span class="std std-doc">annotation document</span></a> is updated and contains the latest information.</p>
 <p>While updating this document make sure,</p>
 <ul class="simple">
 <li><p>You’re following the same pattern in the document.</p></li>
-<li><p>Remove any internally deprecated feature, but leave any high-level deprecated annotation as is and just mark them as <em>deprecated</em>.</p></li>
-<li><p>Provide examples in a separate document if the annotation itself is complicated and requires more explanation.</p></li>
+<li><p>Remove any internally deprecated feature, but leave any high-level deprecated annotation as is and just mark them as <em>deprecated</em>. Update <a class="reference internal" href="../user-docs/annotation-deprecated.html"><span class="std std-doc">deprecated annotations document</span></a> as necessary.</p></li>
+<li><p>Provide examples in a separate document if the annotation itself is complicated and requires more explanation. Make sure to have links from the annotation to the extra file.</p></li>
 <li><p>Try to keep the explanation in this doc short and navigate to another document for more information (if necessary.)</p></li>
 </ul>
-<p>If you needed to update annotation document, you might need to do the following as well:</p>
+</section>
 <section id="update-other-related-documents">
-<h3>Update other related documents<a class="headerlink" href="#update-other-related-documents" title="Permalink to this heading"></a></h3>
-<p>As it was suggested, there might be some documents under <a class="reference internal" href="#../user-docs"><span class="xref myst">user-docs folder</span></a> that were added to provide more information/examples to the users. If you changed a feature that has additional documents, make sure those are updated as well.</p>
+<h2>Update other related documents<a class="headerlink" href="#update-other-related-documents" title="Permalink to this heading"></a></h2>
+<p>There might be some documents under <a class="reference internal" href="#../user-docs"><span class="xref myst">user-docs folder</span></a> that were added to provide more information/examples to the users. If you changed a feature that has additional documents, make sure those are updated as well.</p>
+</section>
+<section id="update-deriva-docs-files">
+<h2>Update deriva-docs files<a class="headerlink" href="#update-deriva-docs-files" title="Permalink to this heading"></a></h2>
+<p>If you added any new files to the <code class="docutils literal notranslate"><span class="pre">user-docs</span></code>, make sure the <a class="reference internal" href="../index.html"><span class="std std-doc">index.rst</span></a> is updated to include them. This file is used by deriva-docs to pull all the docs from this repository.</p>
 </section>
 <section id="update-the-annotation-validator-in-deriva-py">
-<h3>Update the annotation validator in deriva-py<a class="headerlink" href="#update-the-annotation-validator-in-deriva-py" title="Permalink to this heading"></a></h3>
+<h2>Update the annotation validator in deriva-py<a class="headerlink" href="#update-the-annotation-validator-in-deriva-py" title="Permalink to this heading"></a></h2>
 <p>To allow data-modelers to validate their annotations, <a class="reference external" href="https://github.com/informatics-isi-edu/deriva-py/blob/master/deriva/config/annotation_validate.py">deriva-py provides an annotation validator</a>. To make sure the validator is based on the latest implementation of the code, you need to make sure deriva-py is updated as well.</p>
 <section id="how-to-install-deriva-py-for-running-the-validator">
-<h4>How to install deriva-py for running the validator<a class="headerlink" href="#how-to-install-deriva-py-for-running-the-validator" title="Permalink to this heading"></a></h4>
+<h3>How to install deriva-py for running the validator<a class="headerlink" href="#how-to-install-deriva-py-for-running-the-validator" title="Permalink to this heading"></a></h3>
 <p>If you’re already familiar with deriva-py you can skip this section. This section is mainly for developers that are not familiar with python or deriva-py.</p>
 <ol class="arabic">
 <li><p>Make sure python is installed on your machine.</p></li>
 <li><p>(optional but recommended) Create a virtual environment. There are multiple ways to do this. In here we’re going to mention two of them:</p>
 <p>2.1. Using venv (<a class="reference external" href="https://docs.python.org/3/tutorial/venv.html#creating-virtual-environments">native to python</a>):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python -m venv some-new-env
-
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>some-new-env
 </pre></div>
 </div>
 <p>2.2. Using conda (<a class="reference external" href="https://docs.conda.io/en/latest/index.html">a third-party tool for python</a>):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create -n some-new-env python=3.7
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>some-new-env<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
 </pre></div>
 </div>
 </li>
 <li><p>(optional but recommended) If you’ve created a virtual environment, activate it:</p>
 <p>3.1. Using venv:</p>
 <p>On mac/linux</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source some-new-env/bin/activate
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>some-new-env/bin/activate
 </pre></div>
 </div>
 <p>On windows</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ some-new-env\Scripts\activate.bat
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>some-new-env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate.bat
 </pre></div>
 </div>
 <p>3.2. Using conda:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda activate some-new-env
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>some-new-env
 </pre></div>
 </div>
 </li>
 <li><p>Clone and install deriva-py:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># clone the package
-$ git clone git@github.com:informatics-isi-edu/deriva-py.git
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># clone the package</span>
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:informatics-isi-edu/deriva-py.git
 
-# go to the folder
-$ cd deriva-py
+<span class="c1"># go to the folder</span>
+<span class="nb">cd</span><span class="w"> </span>deriva-py
 
-# install
-$ pip install -e .
+<span class="c1"># install</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
 <blockquote>
@@ -1415,16 +1417,15 @@ $ pip install -e .
 </ol>
 </section>
 <section id="how-to-run-the-validator">
-<h4>How to run the validator<a class="headerlink" href="#how-to-run-the-validator" title="Permalink to this heading"></a></h4>
+<h3>How to run the validator<a class="headerlink" href="#how-to-run-the-validator" title="Permalink to this heading"></a></h3>
 <p>You can find the instructions on how to run the validator <a class="reference external" href="https://docs.derivacloud.org/deriva-py/cli/deriva-annotation-validate.html">in here</a>.</p>
 </section>
 <section id="how-to-update-the-validator">
-<h4>How to update the validator<a class="headerlink" href="#how-to-update-the-validator" title="Permalink to this heading"></a></h4>
+<h3>How to update the validator<a class="headerlink" href="#how-to-update-the-validator" title="Permalink to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>JSON schemas: The annotation validator uses <a class="reference external" href="https://json-schema.org/understanding-json-schema/">JSON Schema</a>. You don’t need to know the whole syntax and you should be able to just modify the existing schemas. You can find the schemas under <code class="docutils literal notranslate"><span class="pre">deriva/core/schemas</span></code> folder.</p></li>
-<li><p>Custom validators: In some rare cases, you might need to define a custom validator. These validators will help you to check for something other than the structure. For example if you want to make sure the colum name is valid, or the given source path is valid. You can find the existing custom validators under <code class="docutils literal notranslate"><span class="pre">deriva/core/annotation.py</span></code> file.</p></li>
+<li><p>Custom validators: In some rare cases, you might need to define a custom validator. These validators will help you to check for something other than the structure. For example if you want to make sure the column name is valid, or the given source path is valid. You can find the existing custom validators under <code class="docutils literal notranslate"><span class="pre">deriva/core/annotation.py</span></code> file.</p></li>
 </ol>
-</section>
 </section>
 </section>
 </section>

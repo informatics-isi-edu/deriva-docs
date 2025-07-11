@@ -1550,7 +1550,7 @@
 </div>
 </li>
 <li><p>If you want to test element classes (<a class="reference external" href="https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-contain-class">reference</a>):</p>
-<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// one class </span>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// one class</span>
 <span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">input</span><span class="p">).</span><span class="nx">toContainClass</span><span class="p">(</span><span class="s1">&#39;input-disabled&#39;</span><span class="p">);</span>
 
 <span class="c1">// multiple classes</span>
@@ -1582,6 +1582,19 @@
 <li><p>Test <code class="docutils literal notranslate"><span class="pre">innerHTML</span></code>:</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="nx">expect</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">()).</span><span class="nx">toContain</span><span class="p">(</span><span class="nx">partialExpected</span><span class="p">);</span>
 <span class="nx">expect</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="nx">expected</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Testing page URL:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// source: https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-url</span>
+
+<span class="c1">// Check for the page URL to contain &#39;/recordset/&#39;</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">toHaveURL</span><span class="p">(</span><span class="sr">/\/recordset\//</span><span class="p">);</span>
+
+<span class="c1">// testing if the URL contains some string</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">toHaveURL</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">url</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;@sort(my_column)&#39;</span><span class="p">)</span>
+<span class="p">});</span>
 </pre></div>
 </div>
 </li>

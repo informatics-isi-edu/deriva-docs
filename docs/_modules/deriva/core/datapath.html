@@ -1355,7 +1355,8 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_HEADERS</span><span class="p">,</span> <span class="n">ermrest_model</span> <span class="k">as</span> <span class="n">_erm</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DataPathException&#39;</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Sum&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg&#39;</span><span class="p">,</span> <span class="s1">&#39;Cnt&#39;</span><span class="p">,</span> <span class="s1">&#39;CntD&#39;</span><span class="p">,</span> <span class="s1">&#39;Array&#39;</span><span class="p">,</span> <span class="s1">&#39;ArrayD&#39;</span><span class="p">,</span> <span class="s1">&#39;Bin&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DataPathException&#39;</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Sum&#39;</span><span class="p">,</span> <span class="s1">&#39;Avg&#39;</span><span class="p">,</span> <span class="s1">&#39;Cnt&#39;</span><span class="p">,</span> <span class="s1">&#39;CntD&#39;</span><span class="p">,</span> <span class="s1">&#39;Array&#39;</span><span class="p">,</span> <span class="s1">&#39;ArrayD&#39;</span><span class="p">,</span> <span class="s1">&#39;Bin&#39;</span><span class="p">,</span> <span class="s1">&#39;All&#39;</span><span class="p">,</span> <span class="s1">&#39;Any&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;simple_denormalization&#39;</span><span class="p">,</span> <span class="s1">&#39;simple_denormalization_with_whole_entities&#39;</span><span class="p">]</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;Logger for this module&quot;&quot;&quot;</span>
@@ -2609,6 +2610,19 @@
 
     <span class="fm">__eq__</span> <span class="o">=</span> <span class="n">eq</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">ne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a &#39;not equal&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: `None` or any other literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::null::&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">negate</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span><span class="o">.</span><span class="n">negate</span><span class="p">()</span>
+
+    <span class="fm">__ne__</span> <span class="o">=</span> <span class="n">ne</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">lt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a &#39;less than&#39; comparison predicate.</span>
 
@@ -2655,8 +2669,6 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;regexp&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::regexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">ciregexp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -2665,8 +2677,6 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;ciregexp&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ciregexp::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">ts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -2675,8 +2685,6 @@
 <span class="sd">        :param other: a _string_ literal value.</span>
 <span class="sd">        :return: a filter predicate object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;&#39;ts&#39; method comparison only supports string literals.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_ComparisonPredicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;::ts::&quot;</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
@@ -2738,6 +2746,16 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
 
     <span class="fm">__eq__</span> <span class="o">=</span> <span class="n">eq</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">ne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a &#39;not equal&#39; comparison predicate.</span>
+
+<span class="sd">        :param other: `None` or any other literal value.</span>
+<span class="sd">        :return: a filter predicate object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_column</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="fm">__ne__</span> <span class="o">=</span> <span class="n">ne</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">lt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a &#39;less than&#39; comparison predicate.</span>
@@ -3057,7 +3075,7 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lop</span><span class="p">,</span> <span class="n">_ColumnWrapper</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="n">_ColumnWrapper</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> \
                <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> \
-               <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span>
+               <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rop</span><span class="p">,</span> <span class="n">_Quantifier</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lop</span> <span class="o">=</span> <span class="n">lop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_op</span> <span class="o">=</span> <span class="n">op</span>
@@ -3083,6 +3101,9 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">,</span> <span class="n">_ColumnWrapper</span><span class="p">):</span>
             <span class="c1"># The only valid circumstance for a _ColumnWrapper rop is in a link &#39;on&#39; predicate for simple key/fkey joins</span>
             <span class="k">return</span> <span class="s2">&quot;(</span><span class="si">%s</span><span class="s2">)=(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="o">.</span><span class="n">_instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="o">.</span><span class="n">_fqname</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">,</span> <span class="n">_Quantifier</span><span class="p">):</span>
+            <span class="c1"># Quantifiers can be trusted to properly urlquote their literals</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="o">.</span><span class="n">_instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># All other comparisons are serialized per the usual form</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lop</span><span class="o">.</span><span class="n">_instancename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_op</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rop</span><span class="p">)))</span>
@@ -3152,6 +3173,34 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;!(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_child</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_Quantifier</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class of quantifiers.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quantifier_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the quantifier object.</span>
+
+<span class="sd">        :param quantifier_name: name of the quantifier per ERMrest specification.</span>
+<span class="sd">        :param args: arguments of the quantifier per ERMrest specification.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_Quantifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_quantifier_name</span> <span class="o">=</span> <span class="n">quantifier_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_args</span> <span class="o">=</span> <span class="n">args</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_quantifier_name</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">urlquote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_args</span><span class="p">]))</span>
+
+
+<div class="viewcode-block" id="All"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.All">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">All</span> <span class="p">(</span><span class="n">_Quantifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Universal quantifier.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">All</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Any"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.Any">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Any</span> <span class="p">(</span><span class="n">_Quantifier</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Existential quantifier.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Any</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AggregateFunction</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -3570,13 +3619,13 @@
 
     <span class="k">return</span> <span class="n">vizcols</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="simple_denormalization"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.simple_denormalization">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple heuristic denormalization.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_datapath_generate_simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_datapath_generate_simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">simple_denormalization_with_whole_entities</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="simple_denormalization_with_whole_entities"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.datapath.simple_denormalization_with_whole_entities">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">simple_denormalization_with_whole_entities</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple heuristic denormalization with related and associated entities.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_datapath_generate_simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">include_whole_entities</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_datapath_generate_simple_denormalization</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">include_whole_entities</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_datapath_denormalize</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">context_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">heuristic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">groupkey_name</span><span class="o">=</span><span class="s1">&#39;RID&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Denormalizes a path based on annotations or heuristics.</span>

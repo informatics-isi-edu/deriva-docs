@@ -1587,6 +1587,12 @@
 <ul>
 <li><p>An individual filter <em>path element</em> is applied to the query or individual <em>filter</em> clauses participate in a conjunction or disjunction.</p></li>
 <li><p>The filter constrains a named <em>column</em> in the current context table.</p></li>
+<li><p>The <em>value</em> specifies the constant operand for a binary constraint operator and must be computed to a non-empty value.</p>
+<ul>
+<li><p><a class="reference internal" href="annotation.html#pattern-expansion"><span class="std std-ref">Pattern expansion</span></a> MAY be used to access <a class="reference internal" href="handlebars.html#using-pre-defined-attributes"><span class="std std-ref">the pre-defined values in templating envorinment</span></a>. In <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context, you may also access the main table data or <a class="reference internal" href="handlebars.html#foreign-key-values"><span class="std std-ref">foreign key values</span></a>.</p></li>
+<li><p>Like other pattern expansions, the default <code class="docutils literal notranslate"><span class="pre">template_engine</span></code> will be applied and if you want to change it, you can define <code class="docutils literal notranslate"><span class="pre">template_engine</span></code> alongside the <code class="docutils literal notranslate"><span class="pre">operand_pattern</span></code>.</p></li>
+</ul>
+</li>
 <li><p>The <em>operator</em> specifies the constraint operator via one of the valid operator names in the ERMrest REST API, which are</p></li>
 </ul>
 </li>
@@ -1606,8 +1612,6 @@
     | `::ts::` | column matches text-search query value |
 </code></pre>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>  &gt; If `operator` is missing, we will use `=` by default.
-
-- The _value_ specifies the constant operand for a binary constraint operator and must be computed to a non-empty value. [Pattern expansion](annotation.md#pattern-expansion) MAY be used to access [the pre-defined values in templating envorinment](mustache-templating.md#using-pre-defined-attributes). Like other pattern expansions the default `template_engine` will be applied and if you want to change it, you can define `template_engine` alongside the `operand_pattern`.
 
 - The logical result of the constraint is negated only if _negate_ is `true`.
 - This syntax cannot be used with all-outbound paths or local columns in a non-`filter` context.

@@ -1356,8 +1356,8 @@
 <section id="building-the-package">
 <h2>Building The Package<a class="headerlink" href="#building-the-package" title="Permalink to this heading"></a></h2>
 <p>If you want to build the package, you will need to have <code class="docutils literal notranslate"><span class="pre">Node.js</span></code> installed and on your path. The build script will pull in all of the
-dependencies into the <code class="docutils literal notranslate"><span class="pre">/dist/</span></code> directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make dist
+dependencies into the <code class="docutils literal notranslate"><span class="pre">dist/</span></code> directory.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>dist
 </pre></div>
 </div>
 <p>Even though this command will not deploy the package, during build we will inject some build-related parameters into the code. So you should make sure these environment variables are properly defined. You can find more information about these variables in the next section.</p>
@@ -1399,17 +1399,6 @@ dependencies into the <code class="docutils literal notranslate"><span class="pr
 </li>
 </ol>
 </section>
-<section id="updating-api-documentation">
-<h2>Updating API Documentation<a class="headerlink" href="#updating-api-documentation" title="Permalink to this heading"></a></h2>
-<p>The API documentation is automatically generated. Source code is documented with
-<a class="reference external" href="http://usejsdoc.org/">jsdoc</a> comments. We use <code class="docutils literal notranslate"><span class="pre">jsdoc2md</span></code> to generate the
-markdown API documentation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make doc
-</pre></div>
-</div>
-<p>By doing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>, it will automatically create the API documentation for you.
-So you don’t necessarily need to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">doc</span></code>.</p>
-</section>
 <section id="unit-testing">
 <h2>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this heading"></a></h2>
 <p>Before running the test cases you need to set the environment variables.</p>
@@ -1418,27 +1407,19 @@ So you don’t necessarily need to run <code class="docutils literal notranslate
 <li><p><code class="docutils literal notranslate"><span class="pre">AUTH_COOKIE</span></code>: a primary user cookie valid to the (possibly, remote) host running the ERMrest service.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RESTRICTED_AUTH_COOKIE</span></code>: a secondary user cookie valid to the (possibly, remote) host running the ERMrest service.</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ERMREST_URL</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">hostname</span><span class="o">/</span><span class="n">ermrest</span>
-<span class="n">export</span> <span class="n">AUTH_COOKIE</span><span class="o">=</span><span class="n">YOUR_WEBAUTHN_COOKIE</span>
-<span class="n">export</span> <span class="n">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span><span class="n">YOUR_SECOND_USER_WEBAUTHN_COOKIE</span>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">ERMREST_URL</span><span class="o">=</span>https://hostname/ermrest
+<span class="nb">export</span><span class="w"> </span><span class="nv">AUTH_COOKIE</span><span class="o">=</span>YOUR_WEBAUTHN_COOKIE
+<span class="nb">export</span><span class="w"> </span><span class="nv">RESTRICTED_AUTH_COOKIE</span><span class="o">=</span>YOUR_SECOND_USER_WEBAUTHN_COOKIE
+</pre></div>
+</div>
+<p>You also need to ensure all dependencies are installed (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist</span></code> only installed modules needed for build) by running the following:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>deps-test
 </pre></div>
 </div>
 <p>To execute the tests, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make test
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span><span class="nb">test</span>
 </pre></div>
 </div>
-<p>This command internally invokes the <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">test/jasmine-runner.js</span></code> script. To find more information about unit testing see the <a class="reference internal" href="../dev-docs/unit-test.html"><span class="std std-doc">Unit Testing documentation</span></a>.</p>
-</section>
-<section id="code-quality">
-<h2>Code Quality<a class="headerlink" href="#code-quality" title="Permalink to this heading"></a></h2>
-<p>We use <a class="reference external" href="https://en.wikipedia.org/wiki/Static_program_analysis">static analysis programs</a>,
-including jshint, and Google Closure Compiler (as part of the minification
-step).</p>
-<p>To run jshint:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ make lint
-</pre></div>
-</div>
-<p>To check with Closure compiler run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">all</span></code>.</p>
 </section>
 <section id="more-help">
 <h2>More Help<a class="headerlink" href="#more-help" title="Permalink to this heading"></a></h2>

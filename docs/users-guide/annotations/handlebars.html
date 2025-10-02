@@ -1351,6 +1351,9 @@
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
 <ul class="simple">
+<li><p><a class="reference internal" href="#handlebars-templating"><span class="std std-ref">Handlebars Templating</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#table-of-contents"><span class="std std-ref">Table of contents</span></a></p></li>
 <li><p><a class="reference internal" href="#handlebars-vs-mustache"><span class="std std-ref">Handlebars vs. Mustache</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#null-checking"><span class="std std-ref">Null checking</span></a></p></li>
@@ -1384,8 +1387,16 @@
 <li><p><a class="reference internal" href="#helpers"><span class="std std-ref">Helpers</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#printf-helper"><span class="std std-ref">printf helper</span></a></p></li>
-<li><p><a class="reference internal" href="#formatdate-helper"><span class="std std-ref">formatDate helper</span></a></p></li>
-<li><p><a class="reference internal" href="#humanizebytes-helper"><span class="std std-ref">humanizeBytes helper</span></a></p></li>
+<li><p><a class="reference internal" href="#formatdatetime-helper"><span class="std std-ref">formatDatetime helper</span></a></p></li>
+<li><p><a class="reference internal" href="#datetimetosnapshot-helper"><span class="std std-ref">datetimeToSnapshot helper</span></a></p></li>
+<li><p><a class="reference internal" href="#snapshottodatetime-helper"><span class="std std-ref">snapshotToDatetime helper</span></a></p></li>
+<li><p><a class="reference internal" href="#humanizebytes-helper"><span class="std std-ref">humanizeBytes helper</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#mode"><span class="std std-ref">mode</span></a></p></li>
+<li><p><a class="reference internal" href="#precision"><span class="std std-ref">precision</span></a></p></li>
+<li><p><a class="reference internal" href="#tooltip"><span class="std std-ref">tooltip</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#stringlength-helper"><span class="std std-ref">stringLength helper</span></a></p></li>
 <li><p><a class="reference internal" href="#math-helpers"><span class="std std-ref">Math Helpers</span></a></p>
 <ul>
@@ -1400,11 +1411,23 @@
 <li><p><a class="reference internal" href="#if-helper"><span class="std std-ref">If helper</span></a></p></li>
 <li><p><a class="reference internal" href="#unless-helper"><span class="std std-ref">Unless helper</span></a></p></li>
 <li><p><a class="reference internal" href="#each-helper"><span class="std std-ref">Each helper</span></a></p></li>
-<li><p><a class="reference internal" href="#with-helper"><span class="std std-ref">With helper</span></a></p></li>
+<li><p><a class="reference internal" href="#with-helper"><span class="std std-ref">With helper</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#accessing-outer-context"><span class="std std-ref">Accessing outer context</span></a></p></li>
+<li><p><a class="reference internal" href="#accessing-current-value"><span class="std std-ref">Accessing current value</span></a></p></li>
+<li><p><a class="reference internal" href="#define-known-reference"><span class="std std-ref">Define known reference</span></a></p></li>
+<li><p><a class="reference internal" href="#using-else-with-with-block"><span class="std std-ref">Using else with with block</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#lookup-helper"><span class="std std-ref">Lookup helper</span></a></p></li>
 <li><p><a class="reference internal" href="#encode-helper"><span class="std std-ref">Encode helper</span></a></p></li>
 <li><p><a class="reference internal" href="#escape-helper"><span class="std std-ref">Escape helper</span></a></p></li>
-<li><p><a class="reference internal" href="#encodefacet-helper"><span class="std std-ref">Encodefacet helper</span></a></p></li>
+<li><p><a class="reference internal" href="#encodefacet-helper"><span class="std std-ref">Encodefacet helper</span></a></p>
+<ul>
+<li><p>1. Passing the string representation of a facet blob</p></li>
+<li><p>2. Passing the JSON object representing a facet</p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#jsonstringify-helper"><span class="std std-ref">JsonStringify helper</span></a></p></li>
 <li><p><a class="reference internal" href="#findfirst-helper"><span class="std std-ref">Findfirst helper</span></a></p></li>
 <li><p><a class="reference internal" href="#findall-helper"><span class="std std-ref">Findall helper</span></a></p></li>
@@ -1418,6 +1441,8 @@
 <li><p><a class="reference internal" href="#regular-expression-match"><span class="std std-ref">Regular Expression Match</span></a></p></li>
 <li><p><a class="reference internal" href="#access-control-acl-check"><span class="std std-ref">Access Control (ACL) check</span></a></p></li>
 <li><p><a class="reference internal" href="#logical-helpers"><span class="std std-ref">Logical Helpers</span></a></p></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1759,9 +1784,9 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <li><p><code class="docutils literal notranslate"><span class="pre">LocaleTimeString</span></code>: 4:04:46 PM</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">LocalString</span></code>: 10/19/2017, 4:04:46 PM</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment. If you would like to display the current date and time in a different format, you can use <code class="docutils literal notranslate"><span class="pre">$moment.ISOString</span></code> with formatDate helper.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment. If you would like to display the current date and time in a different format, you can use <code class="docutils literal notranslate"><span class="pre">$moment.ISOString</span></code> with formatDatetime helper.</p>
 <p><strong>Examples</strong></p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span>Today&#39;s date is {{formatDate $moment.ISOString &quot;YYYY/M/D&quot;}}.
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span>Today&#39;s date is {{formatDatetime $moment.ISOString &quot;YYYY/M/D&quot;}}.
 </pre></div>
 </div>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span>Today&#39;s is date {{{$moment.month}}}/{{{$moment.date}}}/{{{$moment.year}}}
@@ -1883,17 +1908,51 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 <p>Keep in mind that <code class="docutils literal notranslate"><span class="pre">printf</span></code> doesn’t check the validity of the given values. So for example if the value might not be a number, you cannot blindly use the <code class="docutils literal notranslate"><span class="pre">d</span></code> type and should guard against it.</p>
 </section>
-<section id="formatdate-helper">
-<h3>formatDate helper<a class="headerlink" href="#formatdate-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">formatDate</span></code> helper to take any <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, or <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value and format it according to the <a class="reference internal" href="pre-format.html#syntax-for-dates-and-timestamps"><span class="std std-ref">Pre Format Guide</span></a>.</p>
+<section id="formatdatetime-helper">
+<h3>formatDatetime helper<a class="headerlink" href="#formatdatetime-helper" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>:loudspeaker: This helped used to be called <code class="docutils literal notranslate"><span class="pre">formatDate</span></code> but was changed to the more accurate  <code class="docutils literal notranslate"><span class="pre">formatDatetime</span></code> name. While both work, you should stop using <code class="docutils literal notranslate"><span class="pre">formatDate</span></code>.</p>
+</div></blockquote>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">formatDatetime</span></code> helper to take any <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, or <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value and format it according to the <a class="reference internal" href="pre-format.html#syntax-for-dates-and-timestamps"><span class="std std-ref">Pre Format Guide</span></a>.</p>
 <p>Syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDate</span> <span class="n">value</span> <span class="nb">format</span><span class="p">}}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDatetime</span> <span class="n">value</span> <span class="nb">format</span><span class="p">}}</span>
 </pre></div>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDate</span> <span class="s2">&quot;30-08-2018&#39; &#39;YYYY&#39;}} ==&gt; &#39;2018&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">formatDatetime</span> <span class="s2">&quot;30-08-2018&#39; &#39;YYYY&#39;}} ==&gt; &#39;2018&#39;</span>
 
-<span class="p">{{</span><span class="n">formatDate</span> <span class="s1">&#39;30-08-2018&#39;</span> <span class="s1">&#39;YYYY/M/D&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;2018/8/30&#39;</span>
+<span class="p">{{</span><span class="n">formatDatetime</span> <span class="s1">&#39;30-08-2018&#39;</span> <span class="s1">&#39;YYYY-MM-DD&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;2018-08-30&#39;</span>
+
+<span class="p">{{</span><span class="n">formatDatetime</span> <span class="s1">&#39;2018-09-25T00:12:34.00-07:00&#39;</span> <span class="s1">&#39;MM/DD/YYYY HH:mm A&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;09/25/2018 03:12 AM&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="datetimetosnapshot-helper">
+<h3>datetimeToSnapshot helper<a class="headerlink" href="#datetimetosnapshot-helper" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">datetimeToSnapshot</span></code> can be used to encode a given <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">timstamp</span></code>, or <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value to a snapshot ID. The snapshot ID could be used for navigating to a specific version of the catalog.</p>
+<p>Syntax</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeToSnapshot</span> <span class="n">value</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeToSnapshot</span> <span class="s1">&#39;2025-07-26T19:20:30Z&#39;</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">33</span><span class="n">N</span><span class="o">-</span><span class="n">PFKM</span><span class="o">-</span><span class="mi">4</span><span class="n">DR0</span>
+
+<span class="p">{{</span><span class="n">datetimeToSnapshot</span> <span class="s1">&#39;2025-08-02&#39;</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">33</span><span class="n">P</span><span class="o">-</span><span class="n">PF8H</span><span class="o">-</span><span class="n">Q800</span>
+</pre></div>
+</div>
+</section>
+<section id="snapshottodatetime-helper">
+<h3>snapshotToDatetime helper<a class="headerlink" href="#snapshottodatetime-helper" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">snapshotToDatetime</span></code> can be used to decode a snapshot value to a datetime value. If no format is provided, the output will be in the ISO format.</p>
+<p>Syntax</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">snapshotToDatetime</span> <span class="n">value</span> <span class="p">}}</span>
+<span class="p">{{</span><span class="n">snapshotToDatetime</span> <span class="n">value</span> <span class="nb">format</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">snapshotToDatetime</span> <span class="s1">&#39;33N-PFKM-4DR0&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="n">T19</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mf">30.000000</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="p">{{</span><span class="n">snapshotToDatetime</span> <span class="s1">&#39;33N-PFKM-4DR0&#39;</span> <span class="s1">&#39;YYYY-MM-DD&#39;</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">2025</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span>
 </pre></div>
 </div>
 </section>

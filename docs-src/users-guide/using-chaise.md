@@ -1,67 +1,87 @@
 # Using the Chaise Data Browser
 
-Chaise, sometimes referred to as the "Data Browser", serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or administrator roles, you can learn how to manage the model and annotations in [Managing Catalogs](managing-catalogs.html).)
+The **Chaise Data Browser** is the configurable web interface of the [DERIVA platform](https://derivacloud.org) for exploring, searching, and managing structured data. It provides dynamically generated views of data based on the underlying data model and metadata annotations.
 
-The Chaise interfaces represent data via records that can be filtered with attributes in the sidebar much like you would in an online shopping site.
+This documentation introduces Chaise for both general users and those evaluating DERIVA as a data management framework. Screenshots use the [FaceBase](https://www.facebase.org) deployment as an example; however, each DERIVA deployment can configure Chaise differently — customizing visible columns, table layouts, filters, record layouts, access policies, etc. - to best represent the data model of that domain.
 
-**Note:** The Chaise Data Browser is configured for a particular deployment. We'll be using screenshots from the FaceBase (facebase.org) deployment to illustrate many common elements, but keep in mind that the actual records, columns and attributes displayed can be configured very differently according to context, domain, model, and other factors.
+For those with data submitter or administrator roles, see [Managing Catalogs](managing-catalogs.html) to learn more about managing the model and annotations.
 
-## Example of a recordset (search) page
+> **Terminology:**
+> - A *recordset page* displays a table of multiple records (similar to search results).
+> - A *record page* displays detailed information about one record, including related data and files.
 
-![screenshot of FaceBase landing page.](/images/chaise-search-example.png)
+## Recordset (Search) Page Overview
 
-Above is a typical example of a recordset (a.k.a., search) page. Common elements include:
+![screenshot of FaceBase landing page showing search results and sidebar filters.](/images/chaise-search-example.png)
 
-* Filtering sidebar
-* Search bar above the results
-* Search results based on filters.
+Above is a typical example of a **recordset** (search) page. Common elements include:
 
-## Filtering sidebar
+- Filtering sidebar
+- Search bar above the results
+- Search results based on filters
 
-![screenshot of FaceBase filtering sidebar](/images/chaise-filter-sidebar-example.png)
+> **Configurable:** Deployments can customize which tables appear, default filters, and how metadata columns are displayed through model annotations.
 
-The filtering sidebar is a configurable set of "facets". In the FaceBase example, it includes common elements of biomedical data of test specimen: experiment type, species, age stage, anatomy, etc. Within each facet are a set of attributes that are represented in the data. Deployments can choose which facets are open by default or to have all of them closed.
+## Filtering Sidebar
 
-Selecting and de-selecting attributes in any of the facets will filter the results to show data with those attributes.
+![screenshot of FaceBase filtering sidebar showing experiment type, species, age stage and other facets.](/images/chaise-filter-sidebar-example.png)
 
-For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click *Show Details* to pull up a modal window to access all of the attributes.
+The filtering sidebar is a configurable set of *facets*. In the FaceBase example, it includes common biomedical data elements such as experiment type, species, age stage, and anatomy. Within each facet are a set of attributes represented in the data. Deployments can choose which facets are open by default or have all of them closed.
 
-## Search results view
+Selecting and de-selecting attributes in any facet will filter the results to show only data with those attributes.
 
-![screenshot of FaceBase recordset view](/images/chaise-recordset-example.png)
+For filters with long lists of attributes, you can use the small search box within the filter to search across those attributes. You can also click *Show Details* to open a modal window to access the full attribute list.
 
-The search results, in the main body of the page (outlined in red above), display columns of metadata for each search result. Deployments can configure which columns are shown and in which order. Column headers are sortable.
+> **Configurable:** Administrators can control which facets appear, their order, and which are expanded by default using model annotations.
 
-Use the larger search field above the search results to enter keywords to search across text in all of the visible columns.
+## Search Results
 
-![screenshot of FaceBase recordset export](/images/chaise-recordset-export-example.png)
+![screenshot of FaceBase recordset view showing metadata columns and sortable headers.](/images/chaise-recordset-example.png)
 
-You can download a CSV file of the metadata of search results by clicking the Export button and then "Search results (CSV)".
+The main body of the page displays **search results** as columns of metadata for each record. Deployments can configure which columns are shown and in what order. Column headers are sortable.
 
-Deployments may include an option to export the entire set of files for each dataset in the search results or from a record page programmatically in BDBag format. For more information about using this option, please see [Managing Data in DERIVA with deriva-client](managing-data.html).
+Use the larger search field above the results to enter keywords and search across all visible columns.
 
-![screenshot of the View icon](/images/chaise-view-example.png)
+> **Under the hood:** Each Chaise search or filter action corresponds to a REST query to the DERIVA backend (ERMrest), ensuring consistent data access across the web interface, APIs, and programmatic tools.
 
-Clicking the View details icon takes you to the "record" page which displays the metadata and related data and files for that particular record.
+![screenshot of the View details icon on a search result.](/images/chaise-view-example.png)
 
-## Record page
+Clicking the **View details** icon opens the *record page* for that dataset, showing its metadata, related records, and files.
 
-The following screenshots show an example record page:
+## Record Details Page
 
-![screenshot of a record page](/images/chaise-record-example.png)
+![screenshot of a record page showing summary metadata and related sections.](/images/chaise-record-example.png)
 
-The record starts with a Summary section, which is a list of related metadata.
+A **record page** provides detailed information about a single record. It begins with a **Summary** section that lists key metadata fields.
 
-**Note:** The metadata "tags" are in turn filtered links - ie, if you click the tag link "Spatial Genomics" in the "Experiment Type" field, you would see a list of all relevant data with that attribute.
+> **Tip:** Metadata tags act as dynamic filters. Clicking a tag link—such as *Spatial Genomics* under *Experiment Type*—will open a new search showing all records with that attribute.
 
-To the left is a "Sections" sidebar that links to the various types of content available for the record and their count. This works much like a Table of Contents.
+To the left is a **Sections** sidebar that links to the different content types available for the record (e.g., Thumbnails, Files, Related Records), along with their counts. This functions much like a table of contents for the page.
 
-![screenshot of the Contents sidebar](/images/chaise-record-sections-sidebar-example.png)
+![screenshot of the Sections sidebar listing available record sections.](/images/chaise-record-sections-sidebar-example.png)
 
-Clicking any of those links, for example "Thumbnail (6)":
+Clicking any of those links, for example *Thumbnail (6)*:
 
-![screenshot of clicking the Images link](/images/chaise-record-sections-sidebar-select.png)
+![screenshot showing selection of the Images link in the sidebar.](/images/chaise-record-sections-sidebar-select.png)
 
-will take you directly to that section of the page.
+will take you directly to that section of the record page:
 
-![screenshot of the Images section](/images/chaise-record-sections-sidebar-thumbnail.png)
+![screenshot showing the Images section of a record page.](/images/chaise-record-sections-sidebar-thumbnail.png)
+
+> **Configurable:** The structure and order of sections, as well as the metadata displayed within each, can be controlled through model annotations.
+
+## Exporting Data (CSV, BDBag, API)
+
+![screenshot of FaceBase recordset export options.](/images/chaise-recordset-export-example.png)
+
+You can download a CSV file of the metadata for the current search results by clicking the **Export** button and selecting *Search results (CSV)*.
+
+Deployments may also offer options to export associated files for each dataset, either directly from a record page or programmatically in **BDBag** format. For more information, see [Managing Data in DERIVA with deriva-client](managing-data.html).
+
+> **Configurable:** Export options, including which formats and data scopes are available, are determined by deployment settings and access permissions.
+
+## Summary
+
+Chaise provides a powerful and flexible interface for exploring complex scientific data models without requiring custom web development. Its behavior, appearance, and available data are determined by model annotations, making it adaptable for diverse domains.
+
+While this guide uses FaceBase as an example, the same principles apply to any DERIVA-based deployment. Each instance of Chaise reflects its unique model, metadata, and community-specific vocabulary.

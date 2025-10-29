@@ -101,10 +101,12 @@
 <p class="caption" role="heading"><span class="caption-text">Using DERIVA</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using the Chaise Data Browser</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-of-a-recordset-search-page">Example of a recordset (search) page</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#filtering-sidebar">Filtering sidebar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-results-view">Search results view</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#record-page">Record page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recordset-search-page-overview">Recordset (Search) Page Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#filtering-sidebar">Filtering Sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-results">Search Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#record-details-page">Record Details Page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exporting-data-csv-bdbag-api">Exporting Data (CSV, BDBag, API)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="managing-data.html">Managing Data in DERIVA with <code class="docutils literal notranslate"><span class="pre">deriva-client</span></code></a><ul>
@@ -1345,49 +1347,80 @@
              
   <section id="using-the-chaise-data-browser">
 <h1>Using the Chaise Data Browser<a class="headerlink" href="#using-the-chaise-data-browser" title="Permalink to this heading"></a></h1>
-<p>Chaise, sometimes referred to as the “Data Browser”, serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or administrator roles, you can learn how to manage the model and annotations in <a class="reference internal" href="#managing-catalogs.html"><span class="xref myst">Managing Catalogs</span></a>.)</p>
-<p>The Chaise interfaces represent data via records that can be filtered with attributes in the sidebar much like you would in an online shopping site.</p>
-<p><strong>Note:</strong> The Chaise Data Browser is configured for a particular deployment. We’ll be using screenshots from the FaceBase (facebase.org) deployment to illustrate many common elements, but keep in mind that the actual records, columns and attributes displayed can be configured very differently according to context, domain, model, and other factors.</p>
-<section id="example-of-a-recordset-search-page">
-<h2>Example of a recordset (search) page<a class="headerlink" href="#example-of-a-recordset-search-page" title="Permalink to this heading"></a></h2>
-<p><img alt="screenshot of FaceBase landing page." src="../_images/chaise-search-example.png" /></p>
-<p>Above is a typical example of a recordset (a.k.a., search) page. Common elements include:</p>
+<p>The <strong>Chaise Data Browser</strong> is the configurable web interface of the <a class="reference external" href="https://derivacloud.org">DERIVA platform</a> for exploring, searching, and managing structured data. It provides dynamically generated views of data based on the underlying data model and metadata annotations.</p>
+<p>This documentation introduces Chaise for both general users and those evaluating DERIVA as a data management framework. Screenshots use the <a class="reference external" href="https://www.facebase.org">FaceBase</a> deployment as an example; however, each DERIVA deployment can configure Chaise differently — customizing visible columns, table layouts, filters, record layouts, access policies, etc. - to best represent the data model of that domain.</p>
+<p>For those with data submitter or administrator roles, see <a class="reference internal" href="#managing-catalogs.html"><span class="xref myst">Managing Catalogs</span></a> to learn more about managing the model and annotations.</p>
+<blockquote>
+<div><p><strong>Terminology:</strong></p>
+<ul class="simple">
+<li><p>A <em>recordset page</em> displays a table of multiple records (similar to search results).</p></li>
+<li><p>A <em>record page</em> displays detailed information about one record, including related data and files.</p></li>
+</ul>
+</div></blockquote>
+<section id="recordset-search-page-overview">
+<h2>Recordset (Search) Page Overview<a class="headerlink" href="#recordset-search-page-overview" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of FaceBase landing page showing search results and sidebar filters." src="../_images/chaise-search-example.png" /></p>
+<p>Above is a typical example of a <strong>recordset</strong> (search) page. Common elements include:</p>
 <ul class="simple">
 <li><p>Filtering sidebar</p></li>
 <li><p>Search bar above the results</p></li>
-<li><p>Search results based on filters.</p></li>
+<li><p>Search results based on filters</p></li>
 </ul>
+<blockquote>
+<div><p><strong>Configurable:</strong> Deployments can customize which tables appear, default filters, and how metadata columns are displayed through model annotations.</p>
+</div></blockquote>
 </section>
 <section id="filtering-sidebar">
-<h2>Filtering sidebar<a class="headerlink" href="#filtering-sidebar" title="Permalink to this heading"></a></h2>
-<p><img alt="screenshot of FaceBase filtering sidebar" src="../_images/chaise-filter-sidebar-example.png" /></p>
-<p>The filtering sidebar is a configurable set of “facets”. In the FaceBase example, it includes common elements of biomedical data of test specimen: experiment type, species, age stage, anatomy, etc. Within each facet are a set of attributes that are represented in the data. Deployments can choose which facets are open by default or to have all of them closed.</p>
-<p>Selecting and de-selecting attributes in any of the facets will filter the results to show data with those attributes.</p>
-<p>For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click <em>Show Details</em> to pull up a modal window to access all of the attributes.</p>
+<h2>Filtering Sidebar<a class="headerlink" href="#filtering-sidebar" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of FaceBase filtering sidebar showing experiment type, species, age stage and other facets." src="../_images/chaise-filter-sidebar-example.png" /></p>
+<p>The filtering sidebar is a configurable set of <em>facets</em>. In the FaceBase example, it includes common biomedical data elements such as experiment type, species, age stage, and anatomy. Within each facet are a set of attributes represented in the data. Deployments can choose which facets are open by default or have all of them closed.</p>
+<p>Selecting and de-selecting attributes in any facet will filter the results to show only data with those attributes.</p>
+<p>For filters with long lists of attributes, you can use the small search box within the filter to search across those attributes. You can also click <em>Show Details</em> to open a modal window to access the full attribute list.</p>
+<blockquote>
+<div><p><strong>Configurable:</strong> Administrators can control which facets appear, their order, and which are expanded by default using model annotations.</p>
+</div></blockquote>
 </section>
-<section id="search-results-view">
-<h2>Search results view<a class="headerlink" href="#search-results-view" title="Permalink to this heading"></a></h2>
-<p><img alt="screenshot of FaceBase recordset view" src="../_images/chaise-recordset-example.png" /></p>
-<p>The search results, in the main body of the page (outlined in red above), display columns of metadata for each search result. Deployments can configure which columns are shown and in which order. Column headers are sortable.</p>
-<p>Use the larger search field above the search results to enter keywords to search across text in all of the visible columns.</p>
-<p><img alt="screenshot of FaceBase recordset export" src="../_images/chaise-recordset-export-example.png" /></p>
-<p>You can download a CSV file of the metadata of search results by clicking the Export button and then “Search results (CSV)”.</p>
-<p>Deployments may include an option to export the entire set of files for each dataset in the search results or from a record page programmatically in BDBag format. For more information about using this option, please see <a class="reference internal" href="#managing-data.html"><span class="xref myst">Managing Data in DERIVA with deriva-client</span></a>.</p>
-<p><img alt="screenshot of the View icon" src="../_images/chaise-view-example.png" /></p>
-<p>Clicking the View details icon takes you to the “record” page which displays the metadata and related data and files for that particular record.</p>
+<section id="search-results">
+<h2>Search Results<a class="headerlink" href="#search-results" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of FaceBase recordset view showing metadata columns and sortable headers." src="../_images/chaise-recordset-example.png" /></p>
+<p>The main body of the page displays <strong>search results</strong> as columns of metadata for each record. Deployments can configure which columns are shown and in what order. Column headers are sortable.</p>
+<p>Use the larger search field above the results to enter keywords and search across all visible columns.</p>
+<blockquote>
+<div><p><strong>Under the hood:</strong> Each Chaise search or filter action corresponds to a REST query to the DERIVA backend (ERMrest), ensuring consistent data access across the web interface, APIs, and programmatic tools.</p>
+</div></blockquote>
+<p><img alt="screenshot of the View details icon on a search result." src="../_images/chaise-view-example.png" /></p>
+<p>Clicking the <strong>View details</strong> icon opens the <em>record page</em> for that dataset, showing its metadata, related records, and files.</p>
 </section>
-<section id="record-page">
-<h2>Record page<a class="headerlink" href="#record-page" title="Permalink to this heading"></a></h2>
-<p>The following screenshots show an example record page:</p>
-<p><img alt="screenshot of a record page" src="../_images/chaise-record-example.png" /></p>
-<p>The record starts with a Summary section, which is a list of related metadata.</p>
-<p><strong>Note:</strong> The metadata “tags” are in turn filtered links - ie, if you click the tag link “Spatial Genomics” in the “Experiment Type” field, you would see a list of all relevant data with that attribute.</p>
-<p>To the left is a “Sections” sidebar that links to the various types of content available for the record and their count. This works much like a Table of Contents.</p>
-<p><img alt="screenshot of the Contents sidebar" src="../_images/chaise-record-sections-sidebar-example.png" /></p>
-<p>Clicking any of those links, for example “Thumbnail (6)”:</p>
-<p><img alt="screenshot of clicking the Images link" src="../_images/chaise-record-sections-sidebar-select.png" /></p>
-<p>will take you directly to that section of the page.</p>
-<p><img alt="screenshot of the Images section" src="../_images/chaise-record-sections-sidebar-thumbnail.png" /></p>
+<section id="record-details-page">
+<h2>Record Details Page<a class="headerlink" href="#record-details-page" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of a record page showing summary metadata and related sections." src="../_images/chaise-record-example.png" /></p>
+<p>A <strong>record page</strong> provides detailed information about a single record. It begins with a <strong>Summary</strong> section that lists key metadata fields.</p>
+<blockquote>
+<div><p><strong>Tip:</strong> Metadata tags act as dynamic filters. Clicking a tag link—such as <em>Spatial Genomics</em> under <em>Experiment Type</em>—will open a new search showing all records with that attribute.</p>
+</div></blockquote>
+<p>To the left is a <strong>Sections</strong> sidebar that links to the different content types available for the record (e.g., Thumbnails, Files, Related Records), along with their counts. This functions much like a table of contents for the page.</p>
+<p><img alt="screenshot of the Sections sidebar listing available record sections." src="../_images/chaise-record-sections-sidebar-example.png" /></p>
+<p>Clicking any of those links, for example <em>Thumbnail (6)</em>:</p>
+<p><img alt="screenshot showing selection of the Images link in the sidebar." src="../_images/chaise-record-sections-sidebar-select.png" /></p>
+<p>will take you directly to that section of the record page:</p>
+<p><img alt="screenshot showing the Images section of a record page." src="../_images/chaise-record-sections-sidebar-thumbnail.png" /></p>
+<blockquote>
+<div><p><strong>Configurable:</strong> The structure and order of sections, as well as the metadata displayed within each, can be controlled through model annotations.</p>
+</div></blockquote>
+</section>
+<section id="exporting-data-csv-bdbag-api">
+<h2>Exporting Data (CSV, BDBag, API)<a class="headerlink" href="#exporting-data-csv-bdbag-api" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of FaceBase recordset export options." src="../_images/chaise-recordset-export-example.png" /></p>
+<p>You can download a CSV file of the metadata for the current search results by clicking the <strong>Export</strong> button and selecting <em>Search results (CSV)</em>.</p>
+<p>Deployments may also offer options to export associated files for each dataset, either directly from a record page or programmatically in <strong>BDBag</strong> format. For more information, see <a class="reference internal" href="#managing-data.html"><span class="xref myst">Managing Data in DERIVA with deriva-client</span></a>.</p>
+<blockquote>
+<div><p><strong>Configurable:</strong> Export options, including which formats and data scopes are available, are determined by deployment settings and access permissions.</p>
+</div></blockquote>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this heading"></a></h2>
+<p>Chaise provides a powerful and flexible interface for exploring complex scientific data models without requiring custom web development. Its behavior, appearance, and available data are determined by model annotations, making it adaptable for diverse domains.</p>
+<p>While this guide uses FaceBase as an example, the same principles apply to any DERIVA-based deployment. Each instance of Chaise reflects its unique model, metadata, and community-specific vocabulary.</p>
 </section>
 </section>
 

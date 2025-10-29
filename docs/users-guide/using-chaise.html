@@ -101,7 +101,7 @@
 <p class="caption" role="heading"><span class="caption-text">Using DERIVA</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using the Chaise Data Browser</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#example-of-a-landing-page">Example of a landing page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-of-a-recordset-search-page">Example of a recordset (search) page</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#filtering-sidebar">Filtering sidebar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#search-results-view">Search results view</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#record-page">Record page</a></li>
@@ -1347,11 +1347,11 @@
 <h1>Using the Chaise Data Browser<a class="headerlink" href="#using-the-chaise-data-browser" title="Permalink to this heading"></a></h1>
 <p>Chaise, sometimes referred to as the “Data Browser”, serves the user interface for the data portal and provides views of the data based on the underlying data model and annotations. (For those with data submitter or administrator roles, you can learn how to manage the model and annotations in <a class="reference internal" href="#managing-catalogs.html"><span class="xref myst">Managing Catalogs</span></a>.)</p>
 <p>The Chaise interfaces represent data via records that can be filtered with attributes in the sidebar much like you would in an online shopping site.</p>
-<p><strong>Note:</strong> The Chaise Data Browser is configured for a particular deployment. We’ll be using screenshots from some current deployments to illustrate the common elements, but the actual data, columns and attributes displayed vary per context, domain, model, etc.</p>
-<section id="example-of-a-landing-page">
-<h2>Example of a landing page<a class="headerlink" href="#example-of-a-landing-page" title="Permalink to this heading"></a></h2>
-<p><img alt="screenshot of FaceBase landing page." src="../_images/chaise-landing-page-example.jpg" /></p>
-<p>Above is a typical example using Facebase (facebase.org). Common elements are:</p>
+<p><strong>Note:</strong> The Chaise Data Browser is configured for a particular deployment. We’ll be using screenshots from the FaceBase (facebase.org) deployment to illustrate many common elements, but keep in mind that the actual records, columns and attributes displayed can be configured very differently according to context, domain, model, and other factors.</p>
+<section id="example-of-a-recordset-search-page">
+<h2>Example of a recordset (search) page<a class="headerlink" href="#example-of-a-recordset-search-page" title="Permalink to this heading"></a></h2>
+<p><img alt="screenshot of FaceBase landing page." src="../_images/chaise-search-example.png" /></p>
+<p>Above is a typical example of a recordset (a.k.a., search) page. Common elements include:</p>
 <ul class="simple">
 <li><p>Filtering sidebar</p></li>
 <li><p>Search bar above the results</p></li>
@@ -1360,36 +1360,34 @@
 </section>
 <section id="filtering-sidebar">
 <h2>Filtering sidebar<a class="headerlink" href="#filtering-sidebar" title="Permalink to this heading"></a></h2>
-<p>The filtering sidebar is a configurable set of “facets”, in this example, common elements of biomedical data of test specimen: organism, age stage, anatomy, etc. Within each facet are a set of attributes that are represented in the data.</p>
+<p><img alt="screenshot of FaceBase filtering sidebar" src="../_images/chaise-filter-sidebar-example.png" /></p>
+<p>The filtering sidebar is a configurable set of “facets”. In the FaceBase example, it includes common elements of biomedical data of test specimen: experiment type, species, age stage, anatomy, etc. Within each facet are a set of attributes that are represented in the data. Deployments can choose which facets are open by default or to have all of them closed.</p>
 <p>Selecting and de-selecting attributes in any of the facets will filter the results to show data with those attributes.</p>
-<p><img alt="screenshot of FaceBase filtering sidebar" src="../_images/chaise-filter-sidebar-example.jpg" /></p>
-<p>The above screenshot shows that when you select the “Homo Sapiens” attribute from the “Organism” filter, the number of records shown changes from 801 records to 52 records of human data sets.</p>
-<p>For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click “Show Details” to pull up a modal window to access all of the attributes.</p>
+<p>For filters with a long list of attributes, you can use the small search box within the filter to search across those attributes. You can also click <em>Show Details</em> to pull up a modal window to access all of the attributes.</p>
 </section>
 <section id="search-results-view">
 <h2>Search results view<a class="headerlink" href="#search-results-view" title="Permalink to this heading"></a></h2>
-<p><img alt="screenshot of FaceBase recordset view" src="../_images/chaise-recordset-example.jpg" /></p>
-<p>The search results, in the main body of the page (outlined in red above), can be configured for which columns are shown in which order. Column headers are sortable.</p>
-<p><img alt="screenshot of FaceBase recordset download" src="../_images/chaise-recordset-download-example.jpg" /></p>
-<p>You can download a CSV file of the results by clicking the Download link.</p>
-<p><img alt="screenshot of FaceBase recordset search" src="../_images/chaise-recordset-search-example.jpg" /></p>
-<p>Note the larger search field above the search results. Enter a keyword to search across text in all of the visible columns.</p>
-<p><img alt="screenshot of the View icon" src="../_images/chaise-view-example.jpg" /></p>
-<p>Clicking the View (eye) icon takes you to the “record” page which displays the metadata and links to the data files for that particular record.</p>
+<p><img alt="screenshot of FaceBase recordset view" src="../_images/chaise-recordset-example.png" /></p>
+<p>The search results, in the main body of the page (outlined in red above), display columns of metadata for each search result. Deployments can configure which columns are shown and in which order. Column headers are sortable.</p>
+<p>Use the larger search field above the search results to enter keywords to search across text in all of the visible columns.</p>
+<p><img alt="screenshot of FaceBase recordset export" src="../_images/chaise-recordset-export-example.png" /></p>
+<p>You can download a CSV file of the metadata of search results by clicking the Export button and then “Search results (CSV)”.</p>
+<p>Deployments may include an option to export the entire set of files for each dataset in the search results or from a record page programmatically in BDBag format. For more information about using this option, please see <a class="reference internal" href="#managing-data.html"><span class="xref myst">Managing Data in DERIVA with deriva-client</span></a>.</p>
+<p><img alt="screenshot of the View icon" src="../_images/chaise-view-example.png" /></p>
+<p>Clicking the View details icon takes you to the “record” page which displays the metadata and related data and files for that particular record.</p>
 </section>
 <section id="record-page">
 <h2>Record page<a class="headerlink" href="#record-page" title="Permalink to this heading"></a></h2>
-<p>The following screenshots show an example record page from the GUDMAP/RBK data browser:</p>
-<p><img alt="screenshot of a record page" src="../_images/chaise-record-example.jpg" /></p>
-<p>The record starts with the related metadata, configured in (where is this configured?).</p>
-<p><strong>Note:</strong> In this particular deployment, the metadata “tags” are in turn filtered links - ie, if you click the tag link “genitourinary system” in “Specimen Tissue”, you would see a list of all relevant data with that attribute.</p>
-<p>To the right is a “Contents” sidebar that links to the various types of content available for the record and their count.</p>
-<p><img alt="screenshot of the Contents sidebar" src="../_images/chaise-record-contents-sidebar-example.jpg" /></p>
-<p>In this record, we see it starts with “Main” (the metadata at the top of the page), three instances of “Images”, four of “Specimen Expression”, a “Specimen Probe” and a “Genes” record.</p>
-<p>Clicking any of those links, for example “Images (3)”…</p>
-<p><img alt="screenshot of clicking the Images link" src="../_images/chaise-record-contents-sidebar-select.jpg" /></p>
+<p>The following screenshots show an example record page:</p>
+<p><img alt="screenshot of a record page" src="../_images/chaise-record-example.png" /></p>
+<p>The record starts with a Summary section, which is a list of related metadata.</p>
+<p><strong>Note:</strong> The metadata “tags” are in turn filtered links - ie, if you click the tag link “Spatial Genomics” in the “Experiment Type” field, you would see a list of all relevant data with that attribute.</p>
+<p>To the left is a “Sections” sidebar that links to the various types of content available for the record and their count. This works much like a Table of Contents.</p>
+<p><img alt="screenshot of the Contents sidebar" src="../_images/chaise-record-sections-sidebar-example.png" /></p>
+<p>Clicking any of those links, for example “Thumbnail (6)”:</p>
+<p><img alt="screenshot of clicking the Images link" src="../_images/chaise-record-sections-sidebar-select.png" /></p>
 <p>will take you directly to that section of the page.</p>
-<p><img alt="screenshot of the Images section" src="../_images/chaise-record-contents-sidebar-images.jpg" /></p>
+<p><img alt="screenshot of the Images section" src="../_images/chaise-record-sections-sidebar-thumbnail.png" /></p>
 </section>
 </section>
 

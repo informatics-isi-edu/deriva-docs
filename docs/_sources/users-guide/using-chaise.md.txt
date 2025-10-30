@@ -14,7 +14,7 @@ For those with data submitter or administrator roles, see [Managing Catalogs](ma
 
 ![screenshot of FaceBase landing page showing search results and sidebar filters.](/images/chaise-search-example.png)
 
-Above is a typical example of a **recordset** (search) page. Common elements include:
+Common elements of a recordset (search) page include:
 
 - Filtering sidebar
 - Search bar above the results

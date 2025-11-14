@@ -1123,6 +1123,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidetableofcontents">hideTableOfContents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#disableexternallinkmodal">disableExternalLinkModal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidegotorid">hideGoToRID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidegotosnapshot">hideGoToSnapshot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#facetpaneldisplay">facetPanelDisplay</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#templating">templating</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hiderecordeditleavealert">hideRecordeditLeaveAlert</a></li>
@@ -2052,6 +2053,7 @@
                                <span class="n">chunked</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="p">(</span><span class="n">file_size</span> <span class="o">&gt;</span> <span class="n">DEFAULT_CHUNK_SIZE</span> <span class="ow">or</span> <span class="n">file_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
                                <span class="n">create_parents</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;create_parents&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_versioning&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
+                               <span class="n">force</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;force&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)),</span>
                                <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Hatrac upload successful. Result object URI: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">versioned_uri</span><span class="p">)</span>
         <span class="n">versioned_uris</span> <span class="o">=</span> <span class="kc">True</span>
@@ -2290,7 +2292,8 @@
                       <span class="n">chunked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">create_parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                      <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
         <span class="c1"># check if there is already an in-progress transfer for this file,</span>
         <span class="c1"># and if so, that the local file has not been modified since the original upload job was created</span>
@@ -2328,7 +2331,8 @@
                                       <span class="n">create_parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">,</span>
                                       <span class="n">allow_versioning</span><span class="o">=</span><span class="n">allow_versioning</span><span class="p">,</span>
                                       <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
-                                      <span class="n">cancel_job_on_error</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                                      <span class="n">cancel_job_on_error</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                      <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_catalog_table_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
         <span class="n">table_columns</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>

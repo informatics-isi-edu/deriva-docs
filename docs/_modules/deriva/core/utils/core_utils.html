@@ -1123,6 +1123,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidetableofcontents">hideTableOfContents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#disableexternallinkmodal">disableExternalLinkModal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidegotorid">hideGoToRID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hidegotosnapshot">hideGoToSnapshot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#facetpaneldisplay">facetPanelDisplay</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#templating">templating</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../chaise/user-docs/chaise-config.html#hiderecordeditleavealert">hideRecordeditLeaveAlert</a></li>
@@ -1587,7 +1588,7 @@
 <div class="viewcode-block" id="read_config"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.read_config">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_config</span><span class="p">(</span><span class="n">config_file</span><span class="o">=</span><span class="n">DEFAULT_CONFIG_FILE</span><span class="p">,</span> <span class="n">create_default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_CONFIG</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">config_file</span><span class="p">:</span>
         <span class="n">config_file</span> <span class="o">=</span> <span class="n">DEFAULT_CONFIG_FILE</span>
-    <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="ow">and</span> <span class="n">create_default</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No default configuration file found, attempting to create one at: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">config_file</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1595,13 +1596,14 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create configuration file </span><span class="si">%s</span><span class="s2">. Using internal defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                             <span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unable to locate configuration file </span><span class="si">%s</span><span class="s2">. Using internal defaults.&quot;</span> <span class="o">%</span> <span class="n">config_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="lock_file"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.lock_file">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">lock_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
@@ -1624,21 +1626,22 @@
 <div class="viewcode-block" id="read_credential"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.read_credential">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_credential</span><span class="p">(</span><span class="n">credential_file</span><span class="o">=</span><span class="n">DEFAULT_CREDENTIAL_FILE</span><span class="p">,</span> <span class="n">create_default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DEFAULT_CREDENTIAL</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">credential_file</span><span class="p">:</span>
         <span class="n">credential_file</span> <span class="o">=</span> <span class="n">DEFAULT_CREDENTIAL_FILE</span>
-    <span class="n">credential</span> <span class="o">=</span> <span class="kc">None</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">credential_file</span><span class="p">)</span> <span class="ow">and</span> <span class="n">create_default</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No default credential file found, attempting to create one at: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">credential_file</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">write_credential</span><span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create credential file </span><span class="si">%s</span><span class="s2">. Using internal defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Unable to create credential file </span><span class="si">%s</span><span class="s2">. Using internal (empty) defaults. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span>
                             <span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-            <span class="n">credential</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">credential</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">credential_file</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">lock_file</span><span class="p">(</span><span class="n">credential_file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">cf</span><span class="p">:</span>
             <span class="n">credential</span> <span class="o">=</span> <span class="n">cf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">credential</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">credential</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Unable to locate credential file </span><span class="si">%s</span><span class="s2">. Using internal (empty) defaults.&quot;</span> <span class="o">%</span> <span class="n">credential_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">default</span></div>
 
 
 <div class="viewcode-block" id="get_oauth_scopes_for_host"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.get_oauth_scopes_for_host">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_oauth_scopes_for_host</span><span class="p">(</span><span class="n">host</span><span class="p">,</span>

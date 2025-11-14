@@ -1123,6 +1123,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#hidetableofcontents">hideTableOfContents</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#disableexternallinkmodal">disableExternalLinkModal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#hidegotorid">hideGoToRID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#hidegotosnapshot">hideGoToSnapshot</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#facetpaneldisplay">facetPanelDisplay</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#templating">templating</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../chaise/user-docs/chaise-config.html#hiderecordeditleavealert">hideRecordeditLeaveAlert</a></li>
@@ -1506,7 +1507,8 @@
                 <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">content_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">content_disposition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Idempotent upload of object, returning object location URI.</span>
 
 <span class="sd">           Arguments:</span>
@@ -1519,6 +1521,7 @@
 <span class="sd">              content_type: the content-type of the object (optional)</span>
 <span class="sd">              content_disposition: the preferred content-disposition of the object (optional)</span>
 <span class="sd">              allow_versioning: reject with NotModified if content already exists (optional)</span>
+<span class="sd">              force: upload object even if it already exists and/or matches content (optional)</span>
 <span class="sd">           Automatically computes and sends Content-MD5 if no digests provided.</span>
 
 <span class="sd">           If an object-version already exists under the same name</span>
@@ -1550,22 +1553,23 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The PUT request payload size of </span><span class="si">%d</span><span class="s2"> bytes is larger than the currently allowed maximum &quot;</span>
                              <span class="s2">&quot;payload size of </span><span class="si">%d</span><span class="s2"> bytes for single request PUT operations. Use the &#39;put_loc&#39; function &quot;</span>
                              <span class="s2">&quot;to perform chunked uploads of large data objects.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">file_size</span><span class="p">,</span> <span class="n">max_request_size</span><span class="p">))</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
-                        <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
-                    <span class="c1"># object already has same content so skip upload</span>
-                    <span class="k">if</span> <span class="n">file_opened</span><span class="p">:</span>
-                        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The data cannot be uploaded because content already exists for this object &quot;</span>
-                                      <span class="s2">&quot;and multiple versions are not allowed.&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
+                            <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
+                        <span class="c1"># object already has same content so skip upload</span>
+                        <span class="k">if</span> <span class="n">file_opened</span><span class="p">:</span>
+                            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The data cannot be uploaded because content already exists for this object &quot;</span>
+                                          <span class="s2">&quot;and multiple versions are not allowed.&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">pass</span>
 
         <span class="c1"># TODO: verify incoming hashes if supplied?</span>
         <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">md5</span>
@@ -1609,7 +1613,8 @@
                 <span class="n">create_parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">cancel_job_on_error</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="n">cancel_job_on_error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param path:</span>
 <span class="sd">        :param file_path:</span>
@@ -1624,6 +1629,7 @@
 <span class="sd">        :param allow_versioning:</span>
 <span class="sd">        :param callback:</span>
 <span class="sd">        :param cancel_job_on_error:</span>
+<span class="sd">        :param force:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -1637,25 +1643,27 @@
                                 <span class="n">content_type</span><span class="o">=</span><span class="n">content_type</span><span class="p">,</span>
                                 <span class="n">content_disposition</span><span class="o">=</span><span class="n">content_disposition</span><span class="p">,</span>
                                 <span class="n">parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">,</span>
-                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">allow_versioning</span><span class="p">)</span>
+                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">allow_versioning</span><span class="p">,</span>
+                                <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">or</span> <span class="n">sha256</span><span class="p">):</span>
             <span class="n">md5</span> <span class="o">=</span> <span class="n">hu</span><span class="o">.</span><span class="n">compute_file_hashes</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">hashes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;md5&#39;</span><span class="p">])[</span><span class="s1">&#39;md5&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
-                        <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
-                    <span class="c1"># object already has same content so skip upload</span>
-                    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The file [</span><span class="si">%s</span><span class="s2">] cannot be uploaded because content already exists for this object &quot;</span>
-                                      <span class="s2">&quot;and multiple versions are not allowed.&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
-            <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">md5</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-MD5&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">md5</span> <span class="ow">or</span>
+                            <span class="n">sha256</span> <span class="ow">and</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-SHA256&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">sha256</span><span class="p">):</span>
+                        <span class="c1"># object already has same content so skip upload</span>
+                        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Location&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="ow">not</span> <span class="n">allow_versioning</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">NotModified</span><span class="p">(</span><span class="s2">&quot;The file [</span><span class="si">%s</span><span class="s2">] cannot be uploaded because content already exists for this object &quot;</span>
+                                          <span class="s2">&quot;and multiple versions are not allowed.&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">404</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;HEAD request failed: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                <span class="k">pass</span>
 
         <span class="n">job_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_upload_job</span><span class="p">(</span><span class="n">path</span><span class="p">,</span>
                                         <span class="n">file_path</span><span class="p">,</span>

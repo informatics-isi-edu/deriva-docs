@@ -964,6 +964,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#logical-operators">Logical operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grouped-facets">Grouped facets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fast-filter-source">Fast filter source</a></li>
@@ -988,6 +989,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#example-5-facet-title">Example 5 (Facet Title)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example-6-open-vs-close">Example 6 (Open Vs. Close)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#example-7-change-order-of-scalar-values">Example 7 (Change order of scalar values)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-8-grouped-facets">Example 8 (Grouped facets)</a></li>
 </ul>
 </li>
 </ul>
@@ -1348,15 +1350,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="facet-json-structure">
+  <!-- omit in toc -->
+<section id="facet-json-structure">
 <h1>Facet JSON Structure<a class="headerlink" href="#facet-json-structure" title="Permalink to this heading"></a></h1>
 <p>This document will go over the syntax that can be used for defining facets. Facets are defined as part of the <a class="reference internal" href="annotation.html#tag-2016-visible-columns"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">visible-columns</span></code></span></a> annotation.</p>
+<!-- omit in toc -->
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#table-of-contents"><span class="std std-ref">Table of contents</span></a></p></li>
 <li><p><a class="reference internal" href="#structure"><span class="std std-ref">Structure</span></a></p></li>
 <li><p><a class="reference internal" href="#logical-operators"><span class="std std-ref">Logical operators</span></a></p></li>
+<li><p><a class="reference internal" href="#grouped-facets"><span class="std std-ref">Grouped facets</span></a></p></li>
 <li><p><a class="reference internal" href="#source-path"><span class="std std-ref">Source path</span></a></p></li>
 <li><p><a class="reference internal" href="#source-key"><span class="std std-ref">Source key</span></a></p></li>
 <li><p><a class="reference internal" href="#fast-filter-source"><span class="std std-ref">Fast filter source</span></a></p></li>
@@ -1368,13 +1372,28 @@
 <li><p><a class="reference internal" href="#comment"><span class="std std-ref">comment</span></a></p></li>
 <li><p><a class="reference internal" href="#open"><span class="std std-ref">open</span></a></p></li>
 <li><p>ux_mode</p></li>
-<li><p>hide_null_choice/hide_not_null_choice</p></li>
+<li><p>hide_null_choice/hide_not_null_choice</p>
+<ul>
+<li><p><a class="reference internal" href="#default-heuristics"><span class="std std-ref">Default heuristics</span></a></p></li>
+</ul>
+</li>
 <li><p>bar_plot</p></li>
 <li><p><a class="reference internal" href="#order"><span class="std std-ref">order</span></a></p></li>
 <li><p>hide_num_occurrences</p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#examples"><span class="std std-ref">Examples</span></a></p></li>
+<li><p><a class="reference internal" href="#examples"><span class="std std-ref">Examples</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#example-1"><span class="std std-ref">Example 1</span></a></p></li>
+<li><p><a class="reference internal" href="#example-2"><span class="std std-ref">Example 2</span></a></p></li>
+<li><p><a class="reference internal" href="#example-3-entity-vs-scalar"><span class="std std-ref">Example 3 (Entity vs. Scalar)</span></a></p></li>
+<li><p><a class="reference internal" href="#example-4-choice-vs-range"><span class="std std-ref">Example 4 (Choice Vs. Range)</span></a></p></li>
+<li><p><a class="reference internal" href="#example-5-facet-title"><span class="std std-ref">Example 5 (Facet Title)</span></a></p></li>
+<li><p><a class="reference internal" href="#example-6-open-vs-close"><span class="std std-ref">Example 6 (Open Vs. Close)</span></a></p></li>
+<li><p><a class="reference internal" href="#example-7-change-order-of-scalar-values"><span class="std std-ref">Example 7 (Change order of scalar values)</span></a></p></li>
+<li><p><a class="reference internal" href="#example-8-grouped-facets"><span class="std std-ref">Example 8 (Grouped facets)</span></a></p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="structure">
@@ -1402,6 +1421,34 @@
 </pre></div>
 </div>
 <p>The current implementation of faceting in Chaise only supports <code class="docutils literal notranslate"><span class="pre">and</span></code>. The rest of logical operators are currently not supported.</p>
+</section>
+<section id="grouped-facets">
+<h2>Grouped facets<a class="headerlink" href="#grouped-facets" title="Permalink to this heading"></a></h2>
+<p>Instead of each individual <code class="docutils literal notranslate"><span class="pre">term</span></code> inside the <code class="docutils literal notranslate"><span class="pre">and</span></code>, you may also have another layer of facets:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="s2">&quot;markdown_name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Group 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// required</span>
+<span class="w">        </span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">....</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="s2">&quot;comment&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;some comment&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// optional</span>
+<span class="w">        </span><span class="s2">&quot;open&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="c1">// optional</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="p">...</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code> is required for each group. If you have multiple groups, the <code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>s used for these groups must be unique.</p></li>
+<li><p>You may use the <code class="docutils literal notranslate"><span class="pre">comment</span></code> property to add a tooltip to the group.</p></li>
+<li><p>By default all groups are opened, if you want to close the group by default you may add <code class="docutils literal notranslate"><span class="pre">&quot;open&quot;:</span> <span class="pre">false</span></code> to the definition.</p></li>
+<li><p>This doesn’t change the generated ermrest queries and is just a signal to the UI to display them in a group.</p></li>
+<li><p>Groups with no valid children will be ignored.</p></li>
+<li><p>In the facet list, you may have any combination of groups and individual facets.</p></li>
+</ul>
 </section>
 <section id="source-path">
 <h2>Source path<a class="headerlink" href="#source-path" title="Permalink to this heading"></a></h2>
@@ -1736,6 +1783,32 @@ Clicking on “show more” will open up the complete table. We’re using the s
 <span class="w">    </span><span class="s2">&quot;order&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span><span class="s2">&quot;column&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;f1_text&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;descending&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="example-8-grouped-facets">
+<h3>Example 8 (Grouped facets)<a class="headerlink" href="#example-8-grouped-facets" title="Permalink to this heading"></a></h3>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;id&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ux_mode&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;choices&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;markdown_name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Update info&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;RMB&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;RMT&quot;</span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;markdown_name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Create info&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;open&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;comment&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;All the create information&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;and&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;RCB&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;RCT&quot;</span><span class="p">}</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -961,6 +961,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#logical-operators">Logical operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#grouped-facets">Grouped facets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#fast-filter-source">Fast filter source</a></li>
@@ -985,6 +986,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#example-5-facet-title">Example 5 (Facet Title)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#example-6-open-vs-close">Example 6 (Open Vs. Close)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#example-7-change-order-of-scalar-values">Example 7 (Change order of scalar values)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../ermrestjs/user-docs/facet.html#example-8-grouped-facets">Example 8 (Grouped facets)</a></li>
 </ul>
 </li>
 </ul>
@@ -1469,6 +1471,13 @@
         <span class="n">delobj_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;resource&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;object path&quot;</span><span class="p">)</span>
         <span class="n">delobj_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">delobj</span><span class="p">)</span>
 
+        <span class="c1"># renobj parser</span>
+        <span class="n">renobj_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;rename&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;rename object&quot;</span><span class="p">)</span>
+        <span class="n">renobj_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;source_name&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;source_name&gt;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;source object path&quot;</span><span class="p">)</span>
+        <span class="n">renobj_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;resource&quot;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;&lt;path&gt;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;object path&quot;</span><span class="p">)</span>
+        <span class="n">renobj_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--copy-acls&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;copy source ACLs to new resource&quot;</span><span class="p">)</span>
+        <span class="n">renobj_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">renobj</span><span class="p">)</span>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_credential</span><span class="p">(</span><span class="n">host_name</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">oauth2_token</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">token</span> <span class="ow">or</span> <span class="n">oauth2_token</span><span class="p">:</span>
@@ -1626,6 +1635,24 @@
         <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">not_found</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ResourceException</span><span class="p">(</span><span class="s1">&#39;No such object&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="DerivaHatracCLI.renobj"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.hatrac_cli.DerivaHatracCLI.renobj">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">renobj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Implements the renobj sub-command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">rename_obj</span><span class="p">(</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">source_name</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="p">,</span>
+                <span class="n">copy_acls</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">copy_acls</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">conflict</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ResourceException</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s1">&#39;Source name &quot;</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">source_name</span><span class="si">}</span><span class="s1">&quot; must name an existing object&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="n">requests</span><span class="o">.</span><span class="n">codes</span><span class="o">.</span><span class="n">method_not_allowed</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">UsageException</span><span class="p">(</span><span class="s1">&#39;operation not support by host. To enable this feature, upgrade Hatrac service.&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">e</span></div>
 

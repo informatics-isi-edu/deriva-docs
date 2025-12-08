@@ -964,6 +964,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#table-of-contents">Table of contents</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#structure">Structure</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#logical-operators">Logical operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#grouped-facets">Grouped facets</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#source-path">Source path</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#source-key">Source key</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#fast-filter-source">Fast filter source</a></li>
@@ -988,6 +989,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#example-5-facet-title">Example 5 (Facet Title)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#example-6-open-vs-close">Example 6 (Open Vs. Close)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#example-7-change-order-of-scalar-values">Example 7 (Change order of scalar values)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/facet.html#example-8-grouped-facets">Example 8 (Grouped facets)</a></li>
 </ul>
 </li>
 </ul>
@@ -3946,6 +3948,12 @@ def generated(self): pass</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="deriva.core.hatrac_cli.DerivaHatracCLI.renobj">
+<span class="sig-name descname"><span class="pre">renobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.renobj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.renobj" title="Permalink to this definition"></a></dt>
+<dd><p>Implements the renobj sub-command.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="deriva.core.hatrac_cli.DerivaHatracCLI.rmdir">
 <span class="sig-name descname"><span class="pre">rmdir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_cli.html#DerivaHatracCLI.rmdir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.hatrac_cli.DerivaHatracCLI.rmdir" title="Permalink to this definition"></a></dt>
 <dd><p>Implements the mkdir sub-command.</p>
@@ -4153,6 +4161,26 @@ instead of creating a new one.</p>
 <dt class="sig sig-object py" id="deriva.core.hatrac_store.HatracStore.put_obj_chunked">
 <span class="sig-name descname"><span class="pre">put_obj_chunked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">26214400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cancel_job_on_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.put_obj_chunked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.put_obj_chunked" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="deriva.core.hatrac_store.HatracStore.rename_obj">
+<span class="sig-name descname"><span class="pre">rename_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">versions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copy_acls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/hatrac_store.html#HatracStore.rename_obj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.hatrac_store.HatracStore.rename_obj" title="Permalink to this definition"></a></dt>
+<dd><p>Rename object optionally specifying versions to process and whether to copy acls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_path</strong> – source object path</p></li>
+<li><p><strong>path</strong> – new path for object</p></li>
+<li><p><strong>versions</strong> – list of object versions to process, by default it processes all versions</p></li>
+<li><p><strong>copy_acls</strong> – if true, copy all source acls, else default to set basic ownership like a new object version</p></li>
+<li><p><strong>headers</strong> – headers to send to hatrac</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>resource location</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="deriva.core.hatrac_store.HatracStore.retrieve_namespace">

@@ -1347,9 +1347,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="end-to-end-testing-documentation">
+  <!-- omit from toc -->
+<section id="end-to-end-testing-documentation">
 <h1>End to End Testing Documentation<a class="headerlink" href="#end-to-end-testing-documentation" title="Permalink to this heading"></a></h1>
 <p>E2E tests are automation tests that simulate a user interacting with the app and assert or expect the app would act correctly accordingly. This document will explain how you can configure and run the e2e test cases. Please use <a class="reference internal" href="e2e-test-writing.html"><span class="std std-doc">this link</span></a> to find more information about how to write new test cases.</p>
+<!-- omit from toc -->
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
 <ul class="simple">
@@ -1361,8 +1363,16 @@
 <li><p><a class="reference internal" href="#test-cases"><span class="std std-ref">Test cases</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#file-structure"><span class="std std-ref">File structure</span></a></p></li>
-<li><p><a class="reference internal" href="#debugging"><span class="std std-ref">Debugging</span></a></p></li>
+<li><p><a class="reference internal" href="#file-structure"><span class="std std-ref">File structure</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#config-files"><span class="std std-ref">Config files</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#debugging"><span class="std std-ref">Debugging</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#github-actions-debugging"><span class="std std-ref">Github Actions debugging</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#writing-test"><span class="std std-ref">Writing test</span></a></p></li>
 <li><p><a class="reference internal" href="#screenshot-testing"><span class="std std-ref">Screenshot testing</span></a></p></li>
 </ul>
@@ -1543,6 +1553,7 @@ npx<span class="w"> </span>playwright<span class="w"> </span><span class="nb">te
 <span class="n">npx</span> <span class="n">playwright</span> <span class="n">test</span> <span class="o">--</span><span class="n">config</span> <span class="n">CONFIG_LOC</span> <span class="o">--</span><span class="n">project</span><span class="o">=</span><span class="n">NAME_OF_PROEJECT</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="nb">max</span><span class="o">-</span><span class="n">failures</span><span class="o">=</span><span class="mi">1</span>
 </pre></div>
 </div>
+<p>More info: https://playwright.dev/docs/test-cli</p>
 <section id="github-actions-debugging">
 <h3>Github Actions debugging<a class="headerlink" href="#github-actions-debugging" title="Permalink to this heading"></a></h3>
 <p>There’s a chance a test case will fail in github actions only and not locally. This makes it very difficult to reproduce/test without a browser to show what is happening. In github actions, if you download the playwright report, there will be images with the HTML report of the pages when they did fail.</p>

@@ -1914,6 +1914,25 @@ updating the font-awesome classes that are used.</p></li>
 </ol>
 </section>
 </section>
+<section id="using-a-local-version-of-ermrestjs">
+<h2>Using a local version of ermrestjs<a class="headerlink" href="#using-a-local-version-of-ermrestjs" title="Permalink to this heading"></a></h2>
+<p>By default chaise will use the ermrestjs that is released to npm during development. To use a locally cloned ermrestjs, do the following:</p>
+<ol class="arabic">
+<li><p>Go to where ermrestjs is cloned and make sure you’ve built the package at least once by running <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist</span></code> or <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist-wo-deps</span></code>. And then run</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># in ermrestjs folder</span>
+npm<span class="w"> </span>link
+</pre></div>
+</div>
+</li>
+<li><p>Go back to the chaise folder and run</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># in chaise folder</span>
+npm<span class="w"> </span>link<span class="w"> </span>@isrd-isi-edu/ermrestjs
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Chaise will now start using your local version of ermrestjs.</p>
+</section>
 <section id="structure-of-an-app">
 <h2>Structure of an App<a class="headerlink" href="#structure-of-an-app" title="Permalink to this heading"></a></h2>
 <p>Since Chaise is a collection of multiple single-page apps (<code class="docutils literal notranslate"><span class="pre">recordset</span></code>, <code class="docutils literal notranslate"><span class="pre">record</span></code>, <code class="docutils literal notranslate"><span class="pre">recordedit</span></code>, etc.), the app setup will be very similar. This similar structure allowed us to factor out a lot of that common setup code into different bits described below.</p>

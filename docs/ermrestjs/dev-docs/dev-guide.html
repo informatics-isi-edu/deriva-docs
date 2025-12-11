@@ -1351,32 +1351,41 @@
 <h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this heading"></a></h1>
 <section id="commit-message-conventions">
 <h2>Commit message conventions<a class="headerlink" href="#commit-message-conventions" title="Permalink to this heading"></a></h2>
-<p>We’re using <a class="reference external" href="https://github.com/semantic-release/semantic-release">semantic-release</a> for managing releases. So you must ensure your commit messages follow <a class="reference external" href="https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md">the Angular’s commit message format</a>:</p>
+<p>We’re using <a class="reference external" href="https://github.com/semantic-release/semantic-release">semantic-release</a> for managing releases. So you must ensure your commit messages follow <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0/#summary">the conventional commits’ message format</a>:</p>
 <ol class="arabic simple">
 <li><p>Complete form:</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">scope</span><span class="o">&gt;</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">short</span> <span class="n">summary</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">optional</span> <span class="n">scope</span><span class="o">&gt;</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">subject</span><span class="o">&gt;</span>
 
-<span class="o">&lt;</span><span class="n">description</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">optional</span> <span class="n">body</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">optional</span> <span class="n">footer</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p>Minimal:</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">short</span> <span class="n">summary</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">subject</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>The Valid <code class="docutils literal notranslate"><span class="pre">type</span></code>s are (some might not apply to this repo):</p>
+<p>The Valid <code class="docutils literal notranslate"><span class="pre">type</span></code>s are:</p>
 <ul class="simple">
+<li><p>The ones that bump the version:</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">feat</span></code>: new feature (minor version bump)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fix</span></code>: bug fix (patch version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fix</span></code>: bug fix, depedency update, or improvement to a process (patch version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">perf</span></code>: performance improvements (patch version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refactor</span></code>: code refactoring (patch version bump)</p></li>
+</ul>
+</li>
+<li><p>Other types that will not be associated with a release:</p>
+<ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: documentation changes</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">chore</span></code>: maintenance tasks</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">refactor</span></code>: code refactoring</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: adding tests</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">style</span></code>: formatting changes</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">perf</span></code>: performance improvements</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ci</span></code>: CI/CD changes</p></li>
+</ul>
+</li>
 </ul>
 <p>And for <code class="docutils literal notranslate"><span class="pre">scope</span></code> (this list is subject to change):</p>
 <ul class="simple">
@@ -1400,6 +1409,17 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fix</span><span class="p">(</span><span class="n">hatrac</span><span class="p">):</span> <span class="n">ensure</span> <span class="n">filename</span> <span class="ow">is</span> <span class="n">properly</span> <span class="n">used</span>
 
 <span class="n">Fixes</span> <span class="c1">#124</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fit</span><span class="p">(</span><span class="n">hatrac</span><span class="p">):</span> <span class="n">support</span> <span class="n">pausing</span> <span class="ow">and</span> <span class="n">resuming</span> <span class="n">upload</span>
+
+<span class="n">This</span> <span class="n">commit</span> <span class="n">will</span> <span class="n">introduce</span> <span class="n">APIs</span> <span class="n">to</span> <span class="n">pause</span> <span class="ow">and</span> <span class="n">resume</span> <span class="n">the</span> <span class="n">upload</span><span class="o">.</span>
+
+<span class="n">BREAKING</span> <span class="n">CHANGE</span><span class="p">:</span> <span class="n">Upload</span><span class="o">.</span><span class="n">start</span> <span class="n">arguments</span> <span class="n">have</span> <span class="n">been</span> <span class="n">rearranged</span><span class="o">.</span>
+<span class="n">It</span> <span class="n">used</span> <span class="n">to</span> <span class="n">be</span> 
+    <span class="n">start</span><span class="p">(</span><span class="n">startChunkIdx</span><span class="p">,</span> <span class="n">onProgress</span><span class="p">)</span>
+<span class="n">But</span> <span class="n">now</span> <span class="ow">is</span>
+    <span class="n">start</span><span class="p">(</span><span class="n">startChunkIdx</span><span class="p">,</span> <span class="n">onResume</span><span class="p">,</span> <span class="n">onProgress</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

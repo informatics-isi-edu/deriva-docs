@@ -2045,6 +2045,16 @@
         <span class="c1"># 6. Perform the Hatrac upload</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_getFileHatracMetadata</span><span class="p">(</span><span class="n">asset_mapping</span><span class="p">)</span>
         <span class="n">hatrac_options</span> <span class="o">=</span> <span class="n">asset_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hatrac_options&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;chunk_size&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chunk_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">DEFAULT_CHUNK_SIZE</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">DEFAULT_CHUNK_SIZE</span>
+        <span class="k">if</span> <span class="n">chunk_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">chunk_size</span> <span class="o">=</span> <span class="n">DEFAULT_CHUNK_SIZE</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Specified chunk_size must be a positive integer (&gt; 0) - falling back to default chunk size: </span><span class="si">%d</span><span class="s2">.&quot;</span> <span class="o">%</span>
+                <span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">)</span>
         <span class="n">file_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;file_size&quot;</span><span class="p">]</span>
         <span class="n">versioned_uri</span> <span class="o">=</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">_hatracUpload</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;URI&quot;</span><span class="p">],</span>
@@ -2054,6 +2064,7 @@
                                <span class="n">content_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">guessContentType</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span>
                                <span class="n">content_disposition</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content-disposition&quot;</span><span class="p">),</span>
                                <span class="n">chunked</span><span class="o">=</span><span class="kc">True</span> <span class="k">if</span> <span class="p">(</span><span class="n">file_size</span> <span class="o">&gt;</span> <span class="n">DEFAULT_CHUNK_SIZE</span> <span class="ow">or</span> <span class="n">file_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span><span class="p">,</span>
+                               <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
                                <span class="n">create_parents</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;create_parents&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
                                <span class="n">allow_versioning</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_versioning&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)),</span>
                                <span class="n">force</span><span class="o">=</span><span class="n">stob</span><span class="p">(</span><span class="n">hatrac_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;force&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)),</span>
@@ -2293,6 +2304,7 @@
                       <span class="n">content_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">content_disposition</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">chunked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                      <span class="n">chunk_size</span><span class="o">=</span><span class="n">DEFAULT_CHUNK_SIZE</span><span class="p">,</span>
                       <span class="n">create_parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">allow_versioning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2331,6 +2343,7 @@
                                       <span class="n">content_type</span><span class="o">=</span><span class="n">content_type</span><span class="p">,</span>
                                       <span class="n">content_disposition</span><span class="o">=</span><span class="n">content_disposition</span><span class="p">,</span>
                                       <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
+                                      <span class="n">chunk_size</span><span class="o">=</span><span class="n">chunk_size</span><span class="p">,</span>
                                       <span class="n">create_parents</span><span class="o">=</span><span class="n">create_parents</span><span class="p">,</span>
                                       <span class="n">allow_versioning</span><span class="o">=</span><span class="n">allow_versioning</span><span class="p">,</span>
                                       <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>

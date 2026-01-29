@@ -1404,8 +1404,8 @@
 
             <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Inspecting catalog model...&quot;</span><span class="p">)</span>
             <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">getCatalogModel</span><span class="p">()</span>
-            <span class="c1"># if we dont have catalog ownership rights, its a hard error for now</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">acls</span><span class="p">:</span>
+            <span class="n">ignore_acl</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ignore_acl&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">acls</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ignore_acl</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">DerivaBackupAuthorizationError</span><span class="p">(</span><span class="s2">&quot;Only catalog owners may perform full catalog dumps.&quot;</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;no_data&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>

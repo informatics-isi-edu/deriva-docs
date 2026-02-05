@@ -1356,6 +1356,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">errno</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
@@ -1366,7 +1367,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">quote</span> <span class="k">as</span> <span class="n">_urlquote</span><span class="p">,</span> <span class="n">unquote</span> <span class="k">as</span> <span class="n">urlunquote</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">urllib.parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlparse</span><span class="p">,</span> <span class="n">urlsplit</span><span class="p">,</span> <span class="n">urlunsplit</span><span class="p">,</span> <span class="n">urljoin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">http.cookiejar</span><span class="w"> </span><span class="kn">import</span> <span class="n">MozillaCookieJar</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="n">Kilobyte</span> <span class="o">=</span> <span class="mi">1024</span>
 <span class="n">Megabyte</span> <span class="o">=</span> <span class="n">Kilobyte</span> <span class="o">**</span> <span class="mi">2</span>
@@ -1793,34 +1795,297 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">infile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="topo_ranked"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.topo_ranked">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">topo_ranked</span><span class="p">(</span><span class="n">depmap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span><span class="n">Iterable</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">set</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return list-of-sets representing values in ranked tiers as a topological partial order.</span>
 
-<div class="viewcode-block" id="topo_sorted"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.topo_sorted">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">topo_sorted</span><span class="p">(</span><span class="n">depmap</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return list of items topologically sorted.</span>
+<span class="sd">    :param depmap: Dictionary mapping of values to required values.</span>
 
-<span class="sd">       depmap: { item: [required_item, ...], ... }</span>
+<span class="sd">    The entire set of values to rank must be represented as keys in</span>
+<span class="sd">    depmap, and therefore must be hashable. For each depmap key, the</span>
+<span class="sd">    corresponding value should be a set of required values, or an</span>
+<span class="sd">    iterable of required values suitable to pass to set(). An empty</span>
+<span class="sd">    set or iterable represents a lack of requirements to satisfy for</span>
+<span class="sd">    a given key value.</span>
 
-<span class="sd">    Raises ValueError if a required_item cannot be satisfied in any order.</span>
+<span class="sd">    The result list provides a partial order satisfying the</span>
+<span class="sd">    requirements from the dependency map. Each entry in the list is a</span>
+<span class="sd">    set representing a tier of values with equal rank. Values in a</span>
+<span class="sd">    given tier do not require any value from a tier at a higher index.</span>
 
-<span class="sd">    The per-item required_item iterables must allow revisiting on</span>
-<span class="sd">    multiple iterations.</span>
+<span class="sd">    Raises ValueError if a requirement cannot be satisfied in any order.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ordered</span> <span class="o">=</span> <span class="p">[</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">requires</span> <span class="ow">in</span> <span class="n">depmap</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">requires</span> <span class="p">]</span>
-    <span class="n">depmap</span> <span class="o">=</span> <span class="p">{</span> <span class="n">item</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">requires</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">requires</span> <span class="ow">in</span> <span class="n">depmap</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">requires</span> <span class="p">}</span>
-    <span class="n">satisfied</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">ordered</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">opportunistic_set</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">s</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad depmap operand to topo_ranked(), got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2"> instead of expected set or iterable&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">depmap</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad depmap operand to topo_ranked(), got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">depmap</span><span class="p">)</span><span class="si">}</span><span class="s2"> instead of expected dict&quot;</span><span class="p">)</span>
+
+    <span class="c1"># make a mutable copy that supports our incremental algorithm</span>
+    <span class="n">depmap</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">k</span><span class="p">:</span> <span class="n">opportunistic_set</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">depmap</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="n">ranked</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">satisfied</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
     <span class="k">while</span> <span class="n">depmap</span><span class="p">:</span>
-        <span class="n">additions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tier</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">ranked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">requires</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">depmap</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">requires</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">satisfied</span><span class="p">):</span>
-                <span class="n">additions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                <span class="n">satisfied</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                <span class="n">tier</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
                 <span class="k">del</span> <span class="n">depmap</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">additions</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">((</span><span class="s2">&quot;unsatisfiable&quot;</span><span class="p">,</span> <span class="n">depmap</span><span class="p">))</span>
-        <span class="n">ordered</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">additions</span><span class="p">)</span>
-        <span class="n">additions</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">return</span> <span class="n">ordered</span></div>
 
+        <span class="c1"># sanity-check for cyclic or unreachable requirements</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tier</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand depmap to topo_ranked(), unsatisfiable=</span><span class="si">{</span><span class="n">depmap</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">satisfied</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tier</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ranked</span></div>
+
+<div class="viewcode-block" id="topo_sorted"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.topo_sorted">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">topo_sorted</span><span class="p">(</span><span class="n">depmap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Union</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span><span class="n">Iterable</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return list of items topologically sorted.</span>
+
+<span class="sd">    :param depmap: Dictionary mapping of values to required values.</span>
+
+<span class="sd">    This is a simple wrapper to flatten the partially ordered output</span>
+<span class="sd">    of topo_ranked(depmap) into an arbitrary total order.</span>
+
+<span class="sd">    The entire set of values to sort must be represented as keys in</span>
+<span class="sd">    depmap, and therefore must be hashable. For each depmap key, the</span>
+<span class="sd">    corresponding value should be a set of required values, or an</span>
+<span class="sd">    iterable of required values suitable to pass to set(). An empty</span>
+<span class="sd">    set or iterable represents a lack of requirements to satisfy for</span>
+<span class="sd">    a given key value.</span>
+
+<span class="sd">    The result list provides a total order satisfying the requirements</span>
+<span class="sd">    from the dependency map. Values at lower indices do not require</span>
+<span class="sd">    values at higher indices.</span>
+
+<span class="sd">    Raises ValueError if a requirement cannot be satisfied in any order.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span> <span class="n">v</span> <span class="k">for</span> <span class="n">tier</span> <span class="ow">in</span> <span class="n">topo_ranked</span><span class="p">(</span><span class="n">depmap</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tier</span> <span class="p">]</span></div>
+
+<span class="n">_crockford_base32_codex</span> <span class="o">=</span> <span class="s1">&#39;0123456789ABCDEFGHJKMNPQRSTVWXYZ&#39;</span>
+
+<div class="viewcode-block" id="crockford_b32encode"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.crockford_b32encode">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">crockford_b32encode</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">grplen</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Encode a non-negative integer using the Crockford Base-32 representation.</span>
+
+<span class="sd">    :param v: Non-negative integer value to encode.</span>
+<span class="sd">    :param grplen: Non-negative number of output symbols in each group.</span>
+
+<span class="sd">    The input integer value is interpreted as an arbitrary-length bit</span>
+<span class="sd">    stream of length v.bit_length(). The input integer is</span>
+<span class="sd">    zero-extended to make the length a multiple of 5, i.e. effectively</span>
+<span class="sd">    prefix-padded with zero bits.</span>
+
+<span class="sd">    The result is a string uses the Crockford Base-32 representation</span>
+<span class="sd">    without any checksum suffix.</span>
+
+<span class="sd">    Output symbols are separated by a hyphen in groups of grplen</span>
+<span class="sd">    symbols. Specify grplen=0 to suppress hyphenation.</span>
+
+<span class="sd">    This function is the inverse of crockford_b32decode().</span>
+
+<span class="sd">    Those wishing to encode negative integers must use their own</span>
+<span class="sd">    convention to somehow multiplex sign information into the bit</span>
+<span class="sd">    stream represented by the non-negative integer.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32encode(): </span><span class="si">{</span><span class="n">v</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grplen</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32encode(): </span><span class="si">{</span><span class="n">grplen</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32encode(): </span><span class="si">{</span><span class="n">v</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">grplen</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32encode(): </span><span class="si">{</span><span class="n">grplen</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">encoded_rev</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># encode 5-bit chunk</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">_crockford_base32_codex</span><span class="p">[</span><span class="n">v</span> <span class="o">%</span> <span class="mi">32</span><span class="p">]</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">//</span> <span class="mi">32</span>
+        <span class="c1"># add (optional) group separator</span>
+        <span class="k">if</span> <span class="n">grplen</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">%</span> <span class="n">grplen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">encoded_rev</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">encoded_rev</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+    <span class="c1"># trim &quot;leading&quot; zeroes and separators</span>
+    <span class="k">while</span> <span class="n">encoded_rev</span> <span class="ow">and</span> <span class="n">encoded_rev</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">}:</span>
+        <span class="k">del</span> <span class="n">encoded_rev</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># but restore zero for base case</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">encoded_rev</span><span class="p">:</span>
+        <span class="n">encoded_rev</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">encoded_rev</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="crockford_b32decode"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.crockford_b32decode">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">crockford_b32decode</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Decode Crockford base-32 string representation to non-negative integer.</span>
+
+<span class="sd">    :param s: String to decode.</span>
+
+<span class="sd">    The input string is decoded as a sequence of Crockford Base-32</span>
+<span class="sd">    symbols, each encoding 5 bits, such that the first symbol</span>
+<span class="sd">    represents the most-signficant bits.</span>
+
+<span class="sd">    The result is the non-negative integer corresponding to the</span>
+<span class="sd">    decoded bit stream.</span>
+
+<span class="sd">    The Crockford decode process is case-insensitive and recognizes</span>
+<span class="sd">    several synonyms for likely typographical errors. Namely,</span>
+<span class="sd">    &#39;O&#39;-&gt;&#39;0&#39;, &#39;I&#39;-&gt;&#39;1&#39;, and &#39;L&#39;-&gt;&#39;1&#39;.</span>
+
+<span class="sd">    Optional hyphens may be present in the input string to break it</span>
+<span class="sd">    into symbol groups. These bear no information and are simply</span>
+<span class="sd">    ignored.</span>
+
+<span class="sd">    The optional checksum suffix from Crockford&#39;s proposal is</span>
+<span class="sd">    not supported.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
+    <span class="n">inverted_codex</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">_crockford_base32_codex</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1"># add normalization alternatives</span>
+    <span class="n">inverted_codex</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;O&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32decode() </span><span class="si">{</span><span class="n">s</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># make decoding case-insensitive</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="c1"># remove separators</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">symbol</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+            <span class="n">coded</span> <span class="o">=</span> <span class="n">inverted_codex</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand for crockford_b32decode(): unsupported </span><span class="si">{</span><span class="n">symbol</span><span class="si">=}</span><span class="s2"> in </span><span class="si">{</span><span class="n">s</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="p">(</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="n">coded</span>
+
+    <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="int_to_uintX"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.int_to_uintX">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">int_to_uintX</span><span class="p">(</span><span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast integer to an unsigned integer of desired width.</span>
+
+<span class="sd">    :param i: Signed integer to encode.</span>
+<span class="sd">    :param nbits: Number output bits.</span>
+
+<span class="sd">    For negative inputs, the requested nbits must be equal or greater</span>
+<span class="sd">    than i.bit_length(). For non-negative inputs, the requested nbits</span>
+<span class="sd">    must be greater than i.bit_length(). The output bits are to be</span>
+<span class="sd">    interpreted as 2&#39;s complement, so the most-significant bit is set</span>
+<span class="sd">    to represent negative inputs and kept clear to represent</span>
+<span class="sd">    non-negative inputs.</span>
+
+<span class="sd">    This function is the inverse of uintX_to_int() when both are called</span>
+<span class="sd">    using the same nbits operand.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to int_to_uintX() </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nbits</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to int_to_uintX() </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">nbits</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to int_to_uintX() </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">nbits</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to int_to_uintX() </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">i</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">nbits</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to int_to_uintX() </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">hibit_mask</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">nbits</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="n">hibit_mask</span> <span class="o">+</span> <span class="n">hibit_mask</span></div>
+
+<div class="viewcode-block" id="uintX_to_int"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.uintX_to_int">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">uintX_to_int</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">nbits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cast unsigned integer of known width into signed integer.</span>
+
+<span class="sd">    :param b: The non-negative integer holding bits to convert.</span>
+<span class="sd">    :param nbits: The number of input bits.</span>
+
+<span class="sd">    The specified input nbits must be equal or greater than</span>
+<span class="sd">    i.bit_length(). The input bits are interpreted as 2&#39;s complement,</span>
+<span class="sd">    so values with the most-significant bit set are recast as negative</span>
+<span class="sd">    numbers while inputs with the highest bit unset remain unchanged.</span>
+
+<span class="sd">    This function is the inverse of int_to_uintX() when both are called</span>
+<span class="sd">    using the same nbits operand.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to uintX_to_int() </span><span class="si">{</span><span class="n">b</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nbits</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to uintX_to_int() </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to uintX_to_int() </span><span class="si">{</span><span class="n">b</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">nbits</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to uintX_to_int() </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">bit_length</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">nbits</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;bad operand to uintX_to_int() </span><span class="si">{</span><span class="n">b</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">nbits</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">hibit_mask</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">nbits</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="n">hibit_mask</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">b</span> <span class="o">-</span> <span class="n">hibit_mask</span> <span class="o">-</span> <span class="n">hibit_mask</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">b</span></div>
+
+<div class="viewcode-block" id="datetime_to_epoch_microseconds"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.datetime_to_epoch_microseconds">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">datetime_to_epoch_microseconds</span><span class="p">(</span><span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a datatime to integer microseconds-since-epoch.</span>
+
+<span class="sd">    :param dt: A timezone-aware datetime.datetime instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># maintain exact microsecond precision in integer result</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">dt</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span>
+        <span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
+    <span class="p">)</span>
+    <span class="n">whole_seconds</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="n">days</span> <span class="o">*</span> <span class="mi">86400</span> <span class="o">+</span> <span class="n">delta</span><span class="o">.</span><span class="n">seconds</span>
+    <span class="k">return</span> <span class="n">whole_seconds</span> <span class="o">*</span> <span class="mi">1000000</span> <span class="o">+</span> <span class="n">delta</span><span class="o">.</span><span class="n">microseconds</span></div>
+
+<div class="viewcode-block" id="epoch_microseconds_to_datetime"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.epoch_microseconds_to_datetime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">epoch_microseconds_to_datetime</span><span class="p">(</span><span class="n">us</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert integer microseconds-since-epoch to timezone-aware datetime.</span>
+
+<span class="sd">    :param us: Integer microseconds-since-epoch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span>
+        <span class="mi">1970</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
+    <span class="p">)</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span>
+        <span class="n">seconds</span><span class="o">=</span><span class="n">us</span><span class="o">//</span><span class="mi">1000000</span><span class="p">,</span>
+        <span class="n">microseconds</span><span class="o">=</span><span class="n">us</span><span class="o">%</span><span class="mi">1000000</span><span class="p">,</span>
+    <span class="p">)</span></div>
 
 <div class="viewcode-block" id="AttrDict"><a class="viewcode-back" href="../../../../deriva-py/api/deriva.core.utils.html#deriva.core.AttrDict">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AttrDict</span> <span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Dictionary with optional attribute-based lookup.</span>

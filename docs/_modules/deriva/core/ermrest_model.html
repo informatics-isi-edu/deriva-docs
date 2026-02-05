@@ -1351,6 +1351,7 @@
 <span></span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
@@ -1360,7 +1361,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">AttrDict</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">urlquote</span><span class="p">,</span> <span class="n">stob</span><span class="p">,</span> <span class="n">mmo</span>
-
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> \
+    <span class="n">crockford_b32encode</span><span class="p">,</span> <span class="n">crockford_b32decode</span><span class="p">,</span> \
+    <span class="n">int_to_uintX</span><span class="p">,</span> <span class="n">uintX_to_int</span><span class="p">,</span> \
+    <span class="n">datetime_to_epoch_microseconds</span><span class="p">,</span> <span class="n">epoch_microseconds_to_datetime</span>
 
 <div class="viewcode-block" id="NoChange"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.NoChange">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NoChange</span> <span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Special class used to distinguish no-change default arguments to methods.</span>
@@ -1460,6 +1464,93 @@
     <span class="c1"># double &#39; to protect from SQL</span>
     <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">v</span>
     <span class="k">return</span> <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&#39;&#39;&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="timestamptz_to_datetime"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.timestamptz_to_datetime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">timestamptz_to_datetime</span><span class="p">(</span><span class="n">ts</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert an ERMrest (i.e. PostgreSQL) timestamptz string to native datetime.</span>
+
+<span class="sd">    :param ts: A string in ISO format as serialized by ERMrest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Workaround for fromisoformat() limitations in older Python 3.x:</span>
+    <span class="c1"># Make sure ISO sring has exactly 6 digits of fractional second</span>
+    <span class="c1"># precision. We can remove this rewrite phase once we bump our</span>
+    <span class="c1"># minimum language version requirement.</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span>
+        <span class="c1"># groups: basetimestamp fracseconds tzoffset</span>
+        <span class="s2">&quot;^([-0-9]+[T ][:0-9]+)([.][0-9]+)?([-+][:0-9]+)$&quot;</span><span class="p">,</span>
+        <span class="n">ts</span><span class="p">,)</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">frac</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%.6f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">frac</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.000000&#39;</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;bad operand to timestamptz_to_datetime() </span><span class="si">{</span><span class="n">ts</span><span class="si">=}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromisoformat</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="datetime_to_timestamptz"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.datetime_to_timestamptz">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">datetime_to_timestamptz</span><span class="p">(</span><span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a native datetime to an ERMrest timestamptz string.</span>
+
+<span class="sd">    :param dt: A timezone-aware datetime.datetime instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="epoch_microseconds_to_snaptime"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.epoch_microseconds_to_snaptime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">epoch_microseconds_to_snaptime</span><span class="p">(</span><span class="n">us</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert microseconds-since-epoch to ERMrest snaptime format.</span>
+
+<span class="sd">    :param us: Signed integer microseconds-since-epoch.</span>
+
+<span class="sd">    This function includes a bit-shift necessary to introduce the</span>
+<span class="sd">    padding that ERMrest uses to pack a 64-bit value into a 65-bit</span>
+<span class="sd">    base32 encoding scheme.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">us</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">**</span><span class="mi">63</span><span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">us</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">2</span><span class="o">**</span><span class="mi">63</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">us</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">crockford_b32encode</span><span class="p">(</span><span class="n">int_to_uintX</span><span class="p">(</span><span class="n">us</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="snaptime_to_epoch_microseconds"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.snaptime_to_epoch_microseconds">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">snaptime_to_epoch_microseconds</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert ERMrest snaptime format to integer microseconds-since-epoch.</span>
+
+<span class="sd">    :param s: The ERMrest snaptime string.</span>
+
+<span class="sd">    This function includes a bit-shift necessary to strip the</span>
+<span class="sd">    padding that ERMrest uses to pack a 64-bit value into a 65-bit</span>
+<span class="sd">    base32 encoding scheme.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">uintX_to_int</span><span class="p">(</span><span class="n">crockford_b32decode</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="datetime_to_snaptime"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.datetime_to_snaptime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">datetime_to_snaptime</span><span class="p">(</span><span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a datetime to ERMrest snaptime format.</span>
+
+<span class="sd">    :param dt: A timezone-aware datetime.datetime instance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">epoch_microseconds_to_snaptime</span><span class="p">(</span><span class="n">datetime_to_epoch_microseconds</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="snaptime_to_datetime"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.snaptime_to_datetime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">snaptime_to_datetime</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert ERMrest snatime format to datetime.</span>
+
+<span class="sd">    :param s: The ERMrest snaptime string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">epoch_microseconds_to_datetime</span><span class="p">(</span><span class="n">snaptime_to_epoch_microseconds</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="snaptime_to_timestamptz"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.snaptime_to_timestamptz">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">snaptime_to_timestamptz</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert ERMrest stamptime format to ERMrest timestamptz string.</span>
+
+<span class="sd">    :param s: The ERMrest snaptime string.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime_to_timestamptz</span><span class="p">(</span><span class="n">snaptime_to_datetime</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="timestamptz_to_snaptime"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.timestamptz_to_snaptime">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">timestamptz_to_snaptime</span><span class="p">(</span><span class="n">ts</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert ERMrest timestamptz str to ERMrest snaptime format.</span>
+
+<span class="sd">    :param ts: A string in ISO datetime format as serialized by ERMrest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime_to_snaptime</span><span class="p">(</span><span class="n">timestamptz_to_datetime</span><span class="p">(</span><span class="n">ts</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="presence_annotation"><a class="viewcode-back" href="../../../deriva-py/api/deriva.core.html#deriva.core.ermrest_model.presence_annotation">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">presence_annotation</span><span class="p">(</span><span class="n">tag_uri</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Decorator to establish property getter/setter/deleter for presence annotations.</span>

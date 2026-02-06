@@ -1189,7 +1189,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/custom-css.html#character-replacement">Character replacement</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/custom-css.html#examples">Examples</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/custom-css.html#more-specific-examples-using-rbk-2-gene-expression-specimen">More specific examples (using RBK …/#2/Gene_Expression:Specimen)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../chaise/user-docs/custom-css.html#more-specific-examples-using-atlas-d2k-gene-expression-specimen">More specific examples (using ATLAS-D2K Gene_Expression:Specimen)</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../chaise/user-docs/custom-css.html#custom-markdown-styles">Custom Markdown Styles</a></li>
@@ -1586,7 +1586,26 @@
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">.chaise-gene-sequence-compact</span></code>: When applied to a Gene Sequence block, it will ensure showing a more compact version. This is recommended for <code class="docutils literal notranslate"><span class="pre">compact</span></code> contexts.</p></li>
+<li><p><strong>Record status</strong>: The following classes can be used to display the record status. The non-compact versions add a background with an appropriate color to the text, while the compact versions display a colored circle to the left of the content:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.chaise-record-status-default</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-success</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-warning</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-danger</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.chaise-record-status-compact-default</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-compact-success</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-compact-warning</span></code>, <code class="docutils literal notranslate"><span class="pre">.chaise-record-status-compact-danger</span></code></p></li>
 </ul>
+</li>
+</ul>
+<p>You can use the span block to attach these classes to the displayed values. For instance, assuming your “Curation Status” table has a column called <code class="docutils literal notranslate"><span class="pre">name</span></code>, you could define the following <code class="docutils literal notranslate"><span class="pre">row_name</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;tag:isrd.isi.edu,2016:table-display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;row_name/detailed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;row_markdown_pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;:span:{{{name}}}:/span:{ {{#if (eq name &#39;Under review&#39;)}}.chaise-record-status-warning{{else if (eq name &#39;Reviewed&#39;)}}.chaise-record-status-success{{else}}.chaise-record-status-default{{/if}} }&quot;</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;row_name/compact&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;row_markdown_pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;:span:{{{name}}}:/span:{ {{#if (eq name &#39;Under review&#39;)}}.chaise-record-status-compact-warning{{else if (eq name &#39;Reviewed&#39;)}}.chaise-record-status-compact-success{{else}}.chaise-record-status-compact-default{{/if}} }&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>

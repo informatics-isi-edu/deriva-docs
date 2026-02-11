@@ -1347,20 +1347,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="developer-guide">
+  <!-- omit in toc -->
+<section id="developer-guide">
 <h1>Developer Guide<a class="headerlink" href="#developer-guide" title="Permalink to this heading"></a></h1>
 <p>This is a guide for people who develop Chaise.</p>
+<!-- omit in toc -->
 <section id="table-of-contents">
 <h2>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading"></a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="#reading-material"><span class="std std-ref">Reading Material</span></a></p></li>
+<li><p><a class="reference internal" href="#reading-material"><span class="std std-ref">Reading Material</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#general"><span class="std std-ref">General</span></a></p></li>
+<li><p>React/TypeScript</p></li>
+<li><p>CSS/SCSS</p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#idioms"><span class="std std-ref">Idioms</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#naming-conventions"><span class="std std-ref">Naming conventions</span></a></p></li>
 <li><p>General</p></li>
 <li><p>React/TypeScript</p></li>
 <li><p><a class="reference internal" href="#lint"><span class="std std-ref">Lint</span></a></p></li>
-<li><p>CSS/SCSS</p></li>
+<li><p>CSS/SCSS</p>
+<ul>
+<li><p><a class="reference internal" href="#supporting-styles-and-classes-in-configuration"><span class="std std-ref">Supporting styles and classes in configuration</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#font-awesome"><span class="std std-ref">Font Awesome</span></a></p></li>
 <li><p><a class="reference internal" href="#handling-time"><span class="std std-ref">Handling time</span></a></p></li>
 </ul>
@@ -1373,16 +1385,67 @@
 <li><p><a class="reference internal" href="#dependabot"><span class="std std-ref">Dependabot</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#structure-of-an-app"><span class="std std-ref">Structure of an App</span></a></p></li>
-<li><p><a class="reference internal" href="#using-chaise-through-npm"><span class="std std-ref">Using Chaise through npm</span></a></p></li>
-<li><p><a class="reference internal" href="#error-handling"><span class="std std-ref">Error handling</span></a></p>
+<li><p><a class="reference internal" href="#using-a-local-version-of-ermrestjs"><span class="std std-ref">Using a local version of ermrestjs</span></a></p></li>
+<li><p><a class="reference internal" href="#structure-of-an-app"><span class="std std-ref">Structure of an App</span></a></p>
 <ul>
-<li><p><a class="reference internal" href="#how-it-works"><span class="std std-ref">How it works</span></a></p></li>
-<li><p><a class="reference internal" href="#guidelines"><span class="std std-ref">Guidelines</span></a></p></li>
-<li><p><a class="reference internal" href="#guidelines-for-promise-chains"><span class="std std-ref">Guidelines for promise chains</span></a></p></li>
+<li><p><a class="reference internal" href="#main-html"><span class="std std-ref">Main HTML</span></a></p></li>
+<li><p><a class="reference internal" href="#app-wrapper"><span class="std std-ref">App Wrapper</span></a></p></li>
+<li><p><a class="reference internal" href="#context"><span class="std std-ref">Context</span></a></p></li>
+<li><p><a class="reference internal" href="#error-provider"><span class="std std-ref">Error Provider</span></a></p></li>
+<li><p><a class="reference internal" href="#alerts-provider"><span class="std std-ref">Alerts Provider</span></a></p></li>
+<li><p><a class="reference internal" href="#authn-provider"><span class="std std-ref">Authn Provider</span></a></p></li>
+<li><p><a class="reference internal" href="#chaise-navbar"><span class="std std-ref">Chaise Navbar</span></a></p></li>
+<li><p><a class="reference internal" href="#buttons-vs-links"><span class="std std-ref">Buttons vs Links</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#context-and-provider-pattern"><span class="std std-ref">Context and provider pattern</span></a></p></li>
+<li><p><a class="reference internal" href="#using-chaise-through-npm"><span class="std std-ref">Using Chaise through npm</span></a></p>
+<ul>
+<li><p>1. Install Chaise and dev dependencies</p></li>
+<li><p>2. Use AppWrapper for your app</p></li>
+<li><p>3. Configure webpack and build</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#error-handling"><span class="std std-ref">Error handling</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-it-works"><span class="std std-ref">How it works</span></a></p>
+<ul>
+<li><p>Error provider</p></li>
+<li><p><a class="reference internal" href="#global-handler-catch-all"><span class="std std-ref">Global handler (catch-all)</span></a></p></li>
+<li><p><a class="reference internal" href="#local-handler"><span class="std std-ref">Local handler</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#multiple-errors-on-the-page"><span class="std std-ref">Multiple errors on the page</span></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#guidelines"><span class="std std-ref">Guidelines</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#development-vs-production"><span class="std std-ref">Development vs. Production</span></a></p></li>
+<li><p><a class="reference internal" href="#error-boundary"><span class="std std-ref">Error boundary</span></a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#guidelines-for-promise-chains"><span class="std std-ref">Guidelines for promise chains</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#promise-with-success-reject-and-catch-handlers"><span class="std std-ref">Promise with success, reject, and catch handlers</span></a></p></li>
+<li><p><a class="reference internal" href="#promise-with-success-and-catch-handlers"><span class="std std-ref">Promise with success and catch handlers</span></a></p></li>
+<li><p><a class="reference internal" href="#promise-chaining-with-single-catch"><span class="std std-ref">Promise chaining with single catch</span></a></p></li>
+<li><p><a class="reference internal" href="#promise-chaining-with-interleaved-catches"><span class="std std-ref">Promise chaining with interleaved catches</span></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#context-and-provider-pattern"><span class="std std-ref">Context and provider pattern</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#how-to-implement"><span class="std std-ref">How to implement</span></a></p>
+<ul>
+<li><p>1. Create context and Provider component</p></li>
+<li><p>2. Add custom hook</p></li>
+<li><p>3. Use provider in the parent</p></li>
+<li><p>4. Use custom hook to acces the context</p></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#performance"><span class="std std-ref">Performance</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#debugging"><span class="std std-ref">Debugging</span></a></p></li>
@@ -1390,6 +1453,82 @@
 </ul>
 </li>
 </ul>
+</section>
+<section id="commit-message-conventions">
+<h2>Commit message conventions<a class="headerlink" href="#commit-message-conventions" title="Permalink to this heading"></a></h2>
+<p>We’re using <a class="reference external" href="https://github.com/semantic-release/semantic-release">semantic-release</a> for managing releases. So you must ensure your commit messages follow <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0/#summary">the conventional commits’ message format</a>:</p>
+<ol class="arabic simple">
+<li><p>Complete form:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&lt;</span><span class="n">optional</span> <span class="n">scope</span><span class="o">&gt;</span><span class="p">):</span> <span class="o">&lt;</span><span class="n">subject</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">optional</span> <span class="n">body</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">optional</span> <span class="n">footer</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Minimal:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">subject</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The Valid <code class="docutils literal notranslate"><span class="pre">type</span></code>s are:</p>
+<ul class="simple">
+<li><p>The ones that bump the version:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">feat</span></code>: new feature (minor version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fix</span></code>: bug fix, depedency update, or improvement to a process (patch version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">perf</span></code>: performance improvements (patch version bump)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refactor</span></code>: code refactoring (patch version bump)</p></li>
+</ul>
+</li>
+<li><p>Other types that will not be associated with a release:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: documentation changes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chore</span></code>: maintenance tasks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: adding tests</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ci</span></code>: CI/CD changes</p></li>
+</ul>
+</li>
+</ul>
+<p>And for <code class="docutils literal notranslate"><span class="pre">scope</span></code> (this list is subject to change):</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">deps</span></code> and <code class="docutils literal notranslate"><span class="pre">deps-dev</span></code>: dependencies</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>: Build configiration (e.g., vite, tsconfig)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">types</span></code>: Typescript definitions</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hatrac</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet</span></code></p></li>
+<li><p>Any feature name (e.g. <code class="docutils literal notranslate"><span class="pre">filepreview</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">record</span></code>, <code class="docutils literal notranslate"><span class="pre">recordset</span></code>, <code class="docutils literal notranslate"><span class="pre">recordedit</span></code>, <code class="docutils literal notranslate"><span class="pre">viewer</span></code></p></li>
+</ul>
+<p>Examples of commit messages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docs</span><span class="p">:</span> <span class="n">update</span> <span class="n">installation</span> <span class="n">guide</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span><span class="p">:</span> <span class="n">change</span> <span class="n">how</span> <span class="n">user</span> <span class="n">authentication</span> <span class="n">work</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">feat</span><span class="p">(</span><span class="n">facet</span><span class="p">):</span> <span class="n">add</span> <span class="n">support</span> <span class="k">for</span> <span class="n">grouped</span> <span class="n">facets</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fix</span><span class="p">(</span><span class="n">hatrac</span><span class="p">):</span> <span class="n">ensure</span> <span class="n">filename</span> <span class="ow">is</span> <span class="n">properly</span> <span class="n">used</span>
+
+<span class="n">Fixes</span> <span class="c1">#124</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fit</span><span class="p">(</span><span class="n">hatrac</span><span class="p">):</span> <span class="n">support</span> <span class="n">pausing</span> <span class="ow">and</span> <span class="n">resuming</span> <span class="n">upload</span>
+
+<span class="n">This</span> <span class="n">commit</span> <span class="n">will</span> <span class="n">introduce</span> <span class="n">APIs</span> <span class="n">to</span> <span class="n">pause</span> <span class="ow">and</span> <span class="n">resume</span> <span class="n">the</span> <span class="n">upload</span><span class="o">.</span>
+
+<span class="n">BREAKING</span> <span class="n">CHANGE</span><span class="p">:</span> <span class="n">Upload</span><span class="o">.</span><span class="n">start</span> <span class="n">arguments</span> <span class="n">have</span> <span class="n">been</span> <span class="n">rearranged</span><span class="o">.</span>
+<span class="n">It</span> <span class="n">used</span> <span class="n">to</span> <span class="n">be</span>
+    <span class="n">start</span><span class="p">(</span><span class="n">startChunkIdx</span><span class="p">,</span> <span class="n">onProgress</span><span class="p">)</span>
+<span class="n">But</span> <span class="n">now</span> <span class="ow">is</span>
+    <span class="n">start</span><span class="p">(</span><span class="n">startChunkIdx</span><span class="p">,</span> <span class="n">onResume</span><span class="p">,</span> <span class="n">onProgress</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="reading-material">
 <h2>Reading Material<a class="headerlink" href="#reading-material" title="Permalink to this heading"></a></h2>

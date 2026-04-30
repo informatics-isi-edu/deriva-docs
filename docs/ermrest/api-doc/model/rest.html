@@ -584,6 +584,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#table-creation">Table Creation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-retrieval">Table Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#table-alteration">Table Alteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-auditing-configuration">Table Auditing Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#table-write-logging">Table Write Logging</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#default-table-audit-configuration">Default Table Audit Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operational-considerations">Operational Considerations</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#table-deletion">Table Deletion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-list-retrieval">Column List Retrieval</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#column-creation">Column Creation</a></li>
@@ -1749,6 +1755,91 @@ table representation
 <li><p>403 Forbidden</p></li>
 <li><p>401 Unauthorized</p></li>
 </ul>
+</section>
+<section id="table-auditing-configuration">
+<h2>Table Auditing Configuration<a class="headerlink" href="#table-auditing-configuration" title="Permalink to this heading"></a></h2>
+<p>During table creation or alteration, a special annotation <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2026:auditing-configuration</span></code> MAY be used to enable optional logging.</p>
+<p>The auditing-configuration annotation can be applied at multiple levels of the catalog’s model resource hierarchy, but only has an effect when interpreted with respect to a specific table. The purpose of specifying the annotations at other levels are to set common defaults across a whole catalog or schema.</p>
+<ol class="arabic simple">
+<li><p>Catalog-level annotation to set default for all tables in the catalog;</p></li>
+<li><p>Schema-level annotation to set default hints for all tables in that schema;</p></li>
+<li><p>Table-level annotation to configure auditing for that table.</p></li>
+</ol>
+<p>The annotation value can be a document with several fields:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;annotations&quot;: {
+  &quot;tag:isrd.isi.edu,2026:auditing-configuration&quot;: {
+    &quot;log_row_writes&quot;: true,
+    &quot;insert_show_columns&quot;: [column_name, ...],
+    &quot;insert_hide_columns&quot;: [column_name, ...],
+    ...
+  }
+}
+</pre></div>
+</div>
+<p>When determining the configuration for a given table, the annotations from the model hierarchy are merged on a per-field basis. A given field configuration will be taken from the most specific model level where it is present, i.e. table-level settings are most specific and catalog-level settings are least specific.</p>
+<p>The set of supported fields is as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">log_row_writes</span></code>: When <code class="docutils literal notranslate"><span class="pre">true</span></code>, row-level details are logged for write operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">insert_show_columns</span></code>: A list of columns to include in row-level logging of insert operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">insert_hide_columns</span></code>: A list of columns to exclude in row-level logging of insert operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_show_columns</span></code>: A list of columns to include in row-level logging of update operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_hide_columns</span></code>: A list of columns to exclude in row-level logging of update operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_show_columns</span></code>: A list of columns to include in row-level logging of delete operations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delete_hide_columns</span></code>: A list of columns to exclude in row-level logging of delete operations.</p></li>
+</ul>
+<p>Each list of columns MUST be a list of (string) column names or the value <code class="docutils literal notranslate"><span class="pre">null</span></code> to disable that specific control feature.</p>
+<section id="table-write-logging">
+<h3>Table Write Logging<a class="headerlink" href="#table-write-logging" title="Permalink to this heading"></a></h3>
+<p>When <code class="docutils literal notranslate"><span class="pre">log_row_writes</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, the service produces additional log messages for each row changed by data insert, update, or delete operations. Because the service API supports bulk operations, a single web request may produce many row-level messages.</p>
+<p>The annotation can customize which column values from each row are included in the logged details. Starting with all columns of the table as candidates:</p>
+<ul class="simple">
+<li><p>A candidate is eliminated when a “show” list is configured and the candidate is not named in the explicit list. An absent or <code class="docutils literal notranslate"><span class="pre">null</span></code> “show” list does not eliminate any candidates.</p></li>
+<li><p>A candidate is eliminated when a “hide” list is configured and the candidate is named in the explicit list. An absent or <code class="docutils literal notranslate"><span class="pre">null</span></code> “hide” list does not eliminate any candidates.</p></li>
+</ul>
+<p>A candidate must survive both rounds of elimination to be included in the logged details.</p>
+<p>WARNING: the default behavior (described next) will expose catalog data content in the log stream. In a deployment where some tables store sensitive data that should not appear in logs, the operator SHOULD customize the audit configuration to limit which values are logged. There are several potential idioms:</p>
+<ol class="arabic simple">
+<li><p>Use of the “hide” column lists can suppress specific columns known to be sensitive, while passing other columns through in logs.</p></li>
+<li><p>Use of the “show” column lists can pass specific columns to the log, while suppressing all other columns. An extreme case may to only show <code class="docutils literal notranslate"><span class="pre">RID</span></code> so that you know which rows were changed and nothing else.</p></li>
+<li><p>Row-level auditing can be disabled for specific tables.</p></li>
+</ol>
+<p>However, another operating regime may be to keep all data changes in the logs and instead move to protect the log stream where it is captured and archived. This provides the most robust audit trail if there may be a need to investigate the detailed changes made to sensitive content.</p>
+</section>
+<section id="default-table-audit-configuration">
+<h3>Default Table Audit Configuration<a class="headerlink" href="#default-table-audit-configuration" title="Permalink to this heading"></a></h3>
+<p>The service uses a default configuration, which is conceptually less specific than any catalog-level annotation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;annotations&quot;: {
+  &quot;tag:isrd.isi.edu,2026:auditing-configuration&quot;: {
+    &quot;log_row_writes&quot;: true,
+    &quot;insert_hide_columns&quot;: [&quot;RMT&quot;],
+    &quot;update_hide_columns&quot;: [&quot;RMT&quot;],
+  }
+}
+</pre></div>
+</div>
+<p>In other words, the auditing feature is enabled by default for all API-managed schemas. The <code class="docutils literal notranslate"><span class="pre">RMT</span></code> column is suppressed from the message details for insert and update operations, where this value is redundant with the event timestamp encoded in the enclosing row-level audit message. A deployment may set these fields back to <code class="docutils literal notranslate"><span class="pre">null</span></code> in a catalog-level annotation if they would prefer not to hide <code class="docutils literal notranslate"><span class="pre">RMT</span></code> in these scenarios.</p>
+<p>A simple idiom to turn off row-level change auditing would be to place a catalog-level annotation:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;annotations&quot;: {
+  &quot;tag:isrd.isi.edu,2026:auditing-configuration&quot;: {
+    &quot;log_row_writes&quot;: false
+  }
+}
+</pre></div>
+</div>
+<p>which overrides the boolean to make the service only emit request-level log messages as it did in prior versions of the software.</p>
+</section>
+<section id="operational-considerations">
+<h3>Operational Considerations<a class="headerlink" href="#operational-considerations" title="Permalink to this heading"></a></h3>
+<p>The extended audit logging is implemented by means of “trigger” functions in the database. This function is only provisioned or deprovisioned on a table during a limited set of service API operations:</p>
+<ul class="simple">
+<li><p>During individual table <em>creation</em> via <code class="docutils literal notranslate"><span class="pre">POST</span></code> requests to <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code></p></li>
+<li><p>During bulk table <em>creation</em> via <code class="docutils literal notranslate"><span class="pre">POST</span></code> requests to <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code></p></li>
+<li><p>During individual table <em>alteration</em> via <code class="docutils literal notranslate"><span class="pre">PUT</span></code> requests to <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> <code class="docutils literal notranslate"><span class="pre">/schema/</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">/table/</span></code> <em>table name</em></p></li>
+</ul>
+<p>During these service operations, the trigger is provisioned when <code class="docutils literal notranslate"><span class="pre">log_row_writes</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code> and deprovisioned when it is <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>During row data writes while the trigger function is provisioned, row-level log events are produced. The function itself consults the annotation state to customize its content.</p>
+<p>NOTE: the <code class="docutils literal notranslate"><span class="pre">log_row_writes</span></code> boolean at catalog or schema level influences the default behavior of subsequent table creation in that catalog or schema, respectively. However, changes to this annotation have no effect on the trigger provisioning status of existing tables until they undergo an explit table <em>alteration</em> request.</p>
+</section>
 </section>
 <section id="table-deletion">
 <h2>Table Deletion<a class="headerlink" href="#table-deletion" title="Permalink to this heading"></a></h2>

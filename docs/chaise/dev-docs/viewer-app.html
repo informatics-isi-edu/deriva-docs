@@ -4,14 +4,14 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flow Control &mdash; DERIVA Docs current documentation</title>
+  <title>Viewer app (implementation reference) &mdash; DERIVA Docs current documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
 
   
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
-    <link rel="canonical" href="http://docs.derivacloud.org/chaise/dev-docs/flow-control.html" />
+    <link rel="canonical" href="http://docs.derivacloud.org/chaise/dev-docs/viewer-app.html" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -1345,9 +1345,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Flow Control</li>
+      <li class="breadcrumb-item active">Viewer app (implementation reference)</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/chaise/dev-docs/flow-control.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/chaise/dev-docs/viewer-app.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -1355,177 +1355,166 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="flow-control">
-<h1>Flow Control<a class="headerlink" href="#flow-control" title="Permalink to this heading"></a></h1>
-<p>In this document, we’ll explain how flow control is implemented in Chaise. Flow control has been added to different modules/apps in Chaise to handle the generation of vast amounts of requests.</p>
-<section id="recordset">
-<h2>Recordset<a class="headerlink" href="#recordset" title="Permalink to this heading"></a></h2>
-<p>For showing a recordset view (whether its recordset app or a modal-picker in record and recordedit apps), we need to generate requests for the following:</p>
-<ul class="simple">
-<li><p>Main entity rows (this includes all the all-outbound paths as well)</p></li>
-<li><p>Main entity count (total number of rows)</p></li>
-<li><p>Main entity pseudo-columns</p></li>
-<li><p>Open facets data</p></li>
-</ul>
-<section id="flow-control-logic">
-<h3>Flow-Control Logic<a class="headerlink" href="#flow-control-logic" title="Permalink to this heading"></a></h3>
-<p>Since the main entity can have multiple pseudo-columns and we might have more than one open facet, we might have to generate more than 4 requests at a time to update the page. The following is how flow control is going to control these requests:</p>
-<ul>
-<li><p>Only 4 requests will be generated at a time. If a request gets back, we will fire the next cycle of requests.</p></li>
-<li><p>We don’t have a queue of requests here. Each time that page has been updated or a response gets back; we will go through all the sections to make sure if we need to update them or not. The following is the order:</p>
+  <section id="viewer-app-implementation-reference">
+<h1>Viewer app (implementation reference)<a class="headerlink" href="#viewer-app-implementation-reference" title="Permalink to this heading"></a></h1>
+<p>This document describes how the viewer app is implemented inside Chaise — file layout, initialization order, and the message protocol with the embedded OpenSeadragon (OSD) viewer. For deployment, configuration, and end-user usage, see <a class="reference internal" href="../viewer/viewer-app.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">../viewer/viewer-app.md</span></code></span></a> and <a class="reference internal" href="../viewer/viewer-config.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">../viewer/viewer-config.md</span></code></span></a>.</p>
+<p>The viewer app (<code class="docutils literal notranslate"><span class="pre">src/pages/viewer.tsx</span></code>) embeds an OSD viewer in an iframe and coordinates with it via <code class="docutils literal notranslate"><span class="pre">postMessage</span></code>. The key files are <code class="docutils literal notranslate"><span class="pre">src/providers/viewer.tsx</span></code> (all state and message handling), <code class="docutils literal notranslate"><span class="pre">src/utils/viewer-utils.ts</span></code> (DB reads), and <code class="docutils literal notranslate"><span class="pre">src/services/viewer-config.ts</span></code> (table/column name config).</p>
+<section id="db-tables">
+<h2>DB Tables<a class="headerlink" href="#db-tables" title="Permalink to this heading"></a></h2>
+<p>The viewer reads four tables whose schema/column names are all configured in viewer-config (varies per deployment):</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Table</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Image</code></td>
+<td>One row per image. Provides <code>RID</code>, default z-index, pixel-per-meter, watermark.</td>
+</tr>
+<tr>
+<td><code>Image_Channel</code></td>
+<td>One row per channel. Provides channel name, number, pseudo-color, isRGB, channel config JSON.</td>
+</tr>
+<tr>
+<td><code>Processed_Image</code></td>
+<td>One row per channel × z-plane. Provides the actual IIIF/DZI image URL.</td>
+</tr>
+<tr>
+<td><code>Image_Annotation</code></td>
+<td>One row per annotation. Provides the SVG file URL (stored in hatrac).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="init-sequence">
+<h2>Init Sequence<a class="headerlink" href="#init-sequence" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">initializeViewerApp</span></code> (in <code class="docutils literal notranslate"><span class="pre">viewer.tsx</span></code>) runs these steps in order before OSD loads:</p>
 <ol class="arabic simple">
-<li><p>Main entity.</p></li>
+<li><p><strong>Read <code class="docutils literal notranslate"><span class="pre">Image</span></code> table</strong> (1 row) — gets RID, default z-index, watermark, pixel-per-meter.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">initializeOSDParams</span></code></strong> — merges query params and the legacy <code class="docutils literal notranslate"><span class="pre">Image.uri</span></code> column to decide if a DB fetch is needed. If image URL is already in query params, skips step 3.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">loadImageMetadata</span></code></strong> (in <code class="docutils literal notranslate"><span class="pre">viewer-utils.ts</span></code>) — three sequential reads:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Image_Channel</span></code> (up to <code class="docutils literal notranslate"><span class="pre">CHANNEL_THRESHOLD</span></code> rows + total count) → sets <code class="docutils literal notranslate"><span class="pre">channels</span></code>, <code class="docutils literal notranslate"><span class="pre">hasMore</span></code>, <code class="docutils literal notranslate"><span class="pre">totalCount</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> (filtered by imageID + z-index) → sets <code class="docutils literal notranslate"><span class="pre">mainImage.info</span></code> (the tile URLs)</p></li>
+<li><p>Aggregate query on <code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> → sets <code class="docutils literal notranslate"><span class="pre">zPlane.count/min/max</span></code></p></li>
+</ul>
+</li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">readAllAnnotations</span></code></strong> — reads <code class="docutils literal notranslate"><span class="pre">Image_Annotation</span></code> filtered by imageID + z-index, collects SVG URLs.</p></li>
+<li><p><strong>Set iframe <code class="docutils literal notranslate"><span class="pre">src</span></code></strong> to <code class="docutils literal notranslate"><span class="pre">mview.html</span></code> — triggers <code class="docutils literal notranslate"><span class="pre">osdLoaded</span></code> from OSD, which starts the postMessage handshake.</p></li>
 </ol>
-<p>1.1. Main entity pseudo-columns from left to right (ERMrestJS’s activeList API dictates this order): This is dependent on the previous request. If the main entity request is still pending, we won’t send any requests for these.</p>
-<ol class="arabic simple" start="2">
-<li><p>Main entity count.</p></li>
-<li><p>Open facet data from top to bottom.</p></li>
-</ol>
-</li>
-</ul>
-<p>For example, when you go to the recordset page (assume that there’s just one facet open and we don’t have any pseudo-columns), the request for the main entity, the open facet, and main count will be fired at the same time and sent to ERMrest. If you open three other facets without waiting for the previous one to get back, you will eventually hit the limit of having only 4 pending requests.</p>
+<p><code class="docutils literal notranslate"><span class="pre">hasMore</span></code> is true when total channel count exceeds <code class="docutils literal notranslate"><span class="pre">CHANNEL_THRESHOLD</span></code>. When true, only the first <code class="docutils literal notranslate"><span class="pre">CHANNEL_THRESHOLD</span></code> channels are loaded; OSD shows a remove button and “Add channels” button so users can swap channels in/out.</p>
 </section>
-<section id="implementation-details">
-<h3>Implementation Details<a class="headerlink" href="#implementation-details" title="Permalink to this heading"></a></h3>
-<p>The best way to handle these would be using states and state-management. But in the first implementation, we decided to go with an easier option and used booleans to indicate the state of the page. The following is the list of variables used:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">flowControlObject</span></code>: This object describes the current cycle of flow control. It has</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">maxRequests</span></code>: The maximum concurrent requests (4).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">occupiedSlots</span></code>: The number of occupied slots (pending requests).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">counter</span></code>: The current cycle number. Using this we can figure out if the returned data is outdated or not</p></li>
-</ul>
-</li>
-<li><p>Main entity attributes:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">initialized</span></code>: Whether the main data has been initialized or not.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">hasLoaded</span></code>: If the request is done and we should show the data.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dirtyResult</span></code>: Whether we should send a request to get the new results.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dirtyCount</span></code>: Whether we should send a request to get the number of matching rows.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">facetsToPreProcess</span></code>: An array that contains the index of facets that are already open when the page loads (because of annotation or pre-existing filters). This will be populated once during the initialization of recordset and will be used only on the first cycle of flow-control.</p></li>
-</ul>
-</li>
-</ul>
-<p>Aggregate (pseudo-column) attributes:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">processed</span></code>: <code class="docutils literal notranslate"><span class="pre">processed=false</span></code> means that we have to schedule a request to get the aggregate data. If its value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means either the request is pending, or the request is already done.</p></li>
-<li><p>Facet attributes:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">preProccessed</span></code>: If a facet has some pre-selected filters, we have to call the <code class="docutils literal notranslate"><span class="pre">preProcessFacet</span></code> function for them. If <code class="docutils literal notranslate"><span class="pre">preProccessed=false</span></code>, it means that we have to call the function or the request has not got back yet and we have to wait. The <code class="docutils literal notranslate"><span class="pre">preProcessFacet</span></code> function behaves differently based on different facet types.</p></li>
-<li><p>for entity choice-picker facet: It will get the row-names that we need to display for the selected facets.</p></li>
-<li><p>for other types of facets: It will create the pre-selected checkboxes without calling ERMrest.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">initialized</span></code>: <code class="docutils literal notranslate"><span class="pre">initialized=false</span></code> indicates that we have not initialized the facet yet, and we should not display the facet column data. This will be changed to <code class="docutils literal notranslate"><span class="pre">true</span></code> when we get the initial facet options. It will remain <code class="docutils literal notranslate"><span class="pre">true</span></code> as long as the facet is open. If users close the facet and change the state of the page (by changing other facets), this attribute will be changed to <code class="docutils literal notranslate"><span class="pre">false</span></code> to hide its outdated content.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">processed</span></code>: <code class="docutils literal notranslate"><span class="pre">processed=false</span></code> means that we have to schedule a request to get the facet data. If its value is <code class="docutils literal notranslate"><span class="pre">true</span></code>, it means either the request is pending or the displayed data is updated.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">isLoading</span></code>: This attribute is used to display the loader for facets. It has no effect on flow-control.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">isOpen</span></code>: Indicates whether the facet is open.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">facetError</span></code>: Indicates whether the facet had a timeout error (to show the appropriate options to recover the facet).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">noConstraints</span></code>: Indicates whether the facet is constrained by all the filters on the page or not. This is used in conjunction with the <code class="docutils literal notranslate"><span class="pre">facetError</span></code>, to provide appropriate recovery options in case of timeout error.</p></li>
-</ul>
-</li>
-</ul>
+<section id="postmessage-protocol">
+<h2>postMessage Protocol<a class="headerlink" href="#postmessage-protocol" title="Permalink to this heading"></a></h2>
+<p><strong>Chaise → OSD:</strong></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Message</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initializeViewer</code></td>
+<td>Response to <code>osdLoaded</code>; sends the full <code>osdViewerParameters</code> object</td>
+</tr>
+<tr>
+<td><code>replaceChannels</code></td>
+<td>User changed channel selection in the channel selector modal</td>
+</tr>
+<tr>
+<td><code>updateZPlaneList</code></td>
+<td>Response to <code>fetchZPlaneList</code> / <code>fetchZPlaneListByZIndex</code></td>
+</tr>
+<tr>
+<td><code>updateDefaultZIndexDone</code></td>
+<td>After saving a new default z-index to DB</td>
+</tr>
+<tr>
+<td><code>updateChannelConfigDone</code></td>
+<td>After saving channel settings to DB</td>
+</tr>
+</tbody>
+</table>
+<p><strong>OSD → Chaise:</strong></p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Message</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>osdLoaded</code></td>
+<td>OSD iframe finished loading</td>
+</tr>
+<tr>
+<td><code>mainImageLoaded</code></td>
+<td>OSD successfully rendered the main image</td>
+</tr>
+<tr>
+<td><code>mainImageLoadFailed</code></td>
+<td>OSD failed to load the main image</td>
+</tr>
+<tr>
+<td><code>updateMainImage</code></td>
+<td>User navigated to a different z-plane</td>
+</tr>
+<tr>
+<td><code>annotationsLoaded</code></td>
+<td>OSD finished loading annotation SVGs</td>
+</tr>
+<tr>
+<td><code>errorAnnotation</code></td>
+<td>OSD failed to parse an annotation</td>
+</tr>
+<tr>
+<td><code>updateAnnotationList</code></td>
+<td>OSD parsed annotation files and has group/SVG IDs</td>
+</tr>
+<tr>
+<td><code>onClickChangeSelectingAnnotation</code></td>
+<td>User clicked an annotation in OSD</td>
+</tr>
+<tr>
+<td><code>saveGroupSVGContent</code></td>
+<td>OSD returns SVG data after form submit is requested</td>
+</tr>
+<tr>
+<td><code>fetchZPlaneList</code></td>
+<td>OSD requests next/previous z-plane page</td>
+</tr>
+<tr>
+<td><code>fetchZPlaneListByZIndex</code></td>
+<td>OSD requests z-plane page containing a specific z-index</td>
+</tr>
+<tr>
+<td><code>updateDefaultZIndex</code></td>
+<td>User changed the default z-index in OSD toolbar</td>
+</tr>
+<tr>
+<td><code>updateChannelConfig</code></td>
+<td>User saved channel settings in OSD toolbar</td>
+</tr>
+<tr>
+<td><code>showChannelSelector</code></td>
+<td>User clicked "Add channels" in OSD toolbar</td>
+</tr>
+<tr>
+<td><code>showAlert</code> / <code>showPopupError</code></td>
+<td>OSD wants to surface an error or alert in Chaise</td>
+</tr>
+</tbody>
+</table>
 </section>
-</section>
-<section id="record">
-<h2>Record<a class="headerlink" href="#record" title="Permalink to this heading"></a></h2>
-<p>Record page is different from the recordset page, as in the whole page relies on the main entity request. So no matter what, we have to send the main entity request first, and then we can generate the rest of the requests. The actual flow-control of Record page relies heavily on Recordset flow-control since we’re showing the simplified view of recordset for inline and related tables.</p>
-<p>The following are the category of requests that we need to send in record page:</p>
-<ul class="simple">
-<li><p>The main entity (this includes all the all-outbound paths as well).</p></li>
-<li><p>Inline entity tables.</p></li>
-<li><p>All the pseudo-columns (entity set and aggregate) that are displayed or the displayed columns rely on (as part of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> definition).</p></li>
-<li><p>Related entity tables.</p></li>
-<li><p>All the pseudo-columns (entity set and aggregate) that the related entity tables rely on (as part of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> definition).</p></li>
-</ul>
-<section id="id1">
-<h3>Flow-Control Logic<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
-<p>The flow-control of record page uses a priority queue (<code class="docutils literal notranslate"><span class="pre">IndexedMinHeap</span></code>) of request models. When the page is updated or a response gets back, we re-enqueue the affected request models and drain the queue. The priority is derived from the order ERMrestJS’s activeList API returns the requests, so the queue ends up dispatching them in the following order:</p>
-<ol class="arabic">
-<li><p>Main entity request. If we need to send a request for the main entity (due to an update in some part of the page), flow-control will stop here and waits for the main entity request to get back.</p></li>
-<li><p>Use the ERMrestJS’s activeList API to generate the secondary requests for the page. The following is how this API works:</p>
-<ol class="arabic simple">
-<li><p>Since we want to allow users to open the citation popup as soon as possible, we’re going to first send all the requests needed for it. So all the pseudo-columns listed in the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> of citation annotation will be sent first.</p></li>
-<li><p>We want to show the main section of record app from top to bottom to avoid the jumps as much as possible. But since we can assume that the aggregates are slower than entity set and inline entity requests, we will:</p></li>
-</ol>
-<p>2.1. Traverse the list of visible columns from top to bottom and generate the requests for columns that only have entity set in their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> or inline columns without any <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>.</p>
-<p>2.2. Traverse the list of visible columns the second time from top to bottom and if the column is aggregate, or has aggregate in its <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>; generate requests for them (and their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> list definition).</p>
-<ol class="arabic simple" start="3">
-<li><p>For the related section, since we’re showing the tables from top to bottom, we don’t need to do the optimization that we did for the main section. We can send the requests from top to bottom (and left to right of their <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> list).</p></li>
-</ol>
-<p>To better understand this, let’s assume the following definition (<code class="docutils literal notranslate"><span class="pre">i</span></code> is used to indicate inline table, <code class="docutils literal notranslate"><span class="pre">es</span></code> for entity set, <code class="docutils literal notranslate"><span class="pre">agg</span></code> for aggregate, and <code class="docutils literal notranslate"><span class="pre">r</span></code> for related):</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;tag:isrd.isi.edu,2016:visible-columns&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detailed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;col_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;agg_1&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;i_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;agg_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_2&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;i_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;es_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;es_3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_3&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;col_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;es_4&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;i_3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;es_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;es_2&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;agg_4&quot;</span><span class="p">},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;i_4&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">},</span>
-<span class="nt">&quot;tag:isrd.isi.edu,2016:visible-foreign-keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;detailed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;r_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;agg_4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_5&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;r_2&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;es_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;es_5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agg_7&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;r_3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;display&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;es_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;es_6&quot;</span><span class="p">]}},</span>
-<span class="w">        </span><span class="p">{</span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;r_4&quot;</span><span class="p">},</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>The following would be the order of sending the requests (parentheses has been added for readability purposes):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">es_4</span><span class="p">),</span> <span class="p">(</span><span class="n">i_3</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_2</span><span class="p">),</span> <span class="p">(</span><span class="n">i_4</span><span class="p">),</span> <span class="p">(</span><span class="n">agg_1</span><span class="p">),</span> <span class="p">(</span><span class="n">i_1</span><span class="p">,</span> <span class="n">agg_2</span><span class="p">),</span> <span class="p">(</span><span class="n">i_2</span><span class="p">,</span> <span class="n">es_3</span><span class="p">,</span> <span class="n">agg_3</span><span class="p">),</span> <span class="p">(</span><span class="n">agg_4</span><span class="p">)</span>
-<span class="p">(</span><span class="n">r_1</span><span class="p">,</span> <span class="n">agg_4</span><span class="p">,</span> <span class="n">agg_5</span><span class="p">),</span> <span class="p">(</span><span class="n">r_2</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_5</span><span class="p">,</span> <span class="n">agg_6</span><span class="p">,</span> <span class="n">agg_7</span><span class="p">),</span> <span class="p">(</span><span class="n">r_3</span><span class="p">,</span> <span class="n">es_1</span><span class="p">,</span> <span class="n">es_6</span><span class="p">),</span> <span class="p">(</span><span class="n">r4</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>Send requests for all the aggregate columns that are used in the tabular mode of inline tables from to bottom.</p></li>
-<li><p>Send requests for all the aggregate columns that are used in the tabular mode of related tables from top to bottom.</p></li>
-</ol>
-</section>
-<section id="id2">
-<h3>Implementation Details<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
-<p>As we mentioned the logic of ordering the secondary requests is hidden from Chaise and all Chaise knows is the list of <code class="docutils literal notranslate"><span class="pre">requests</span></code> that it has to create. Each returned <code class="docutils literal notranslate"><span class="pre">Request</span></code> object from ERMrestJS is going to have different attributes depending on the type of the request. Each object has a boolean attribute to indicate its type. The following are the list of available attributes for each type:</p>
-<ul class="simple">
-<li><p>aggregates: If the <code class="docutils literal notranslate"><span class="pre">&quot;aggregate&quot;:</span> <span class="pre">true</span></code> is available in the returned object, we know that it’s pseudo-column aggregate. The other available attributes are:</p>
-<ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">column</span></code>: An <code class="docutils literal notranslate"><span class="pre">ERMrest.PseudoColumn</span></code> object that can be used for generating the requests.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">objects</span></code>: An array of objects that signal which part of the page needs this pseudo-column value.</p>
-<ul>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">&quot;citation&quot;:</span> <span class="pre">true</span></code> is available on an object, citation is waiting for this value.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">&quot;column&quot;:</span> <span class="pre">true</span></code> is available on an object, a visible column is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute can be used to find the column.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;:</span> <span class="pre">true</span></code> is available on an object, an inline table is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute can be used to find the inline entity.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">&quot;related&quot;:</span> <span class="pre">true</span></code> is available on an object, a related entity is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute can be used to find the related entity.</p></li>
-<li><p>If <code class="docutils literal notranslate"><span class="pre">&quot;condition&quot;:</span> <span class="pre">true</span></code> is available on an object, a condition evaluation is waiting for this value. <code class="docutils literal notranslate"><span class="pre">index</span></code> attribute refers to the <code class="docutils literal notranslate"><span class="pre">conditionalGroups</span></code> index.</p></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>entity sets: If the <code class="docutils literal notranslate"><span class="pre">&quot;entityset&quot;:</span> <span class="pre">true</span></code> is available in the returned object, we know that it’s pseudo-column entity set. It will have the same attributes as aggregate but we had to distinguish between them because Chaise has to use a different API call to get the value.</p></li>
-<li><p>inline entities: If <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;:</span> <span class="pre">true</span></code> is available in the returned object, the request belongs to an inline table. <code class="docutils literal notranslate"><span class="pre">index</span></code> is the other attribute that Chaise is using to generate a request for the inline entity.</p></li>
-<li><p>related entities: If <code class="docutils literal notranslate"><span class="pre">&quot;related&quot;:</span> <span class="pre">true</span></code> is available in the returned object, the request belongs to a related table. <code class="docutils literal notranslate"><span class="pre">index</span></code> is the other attribute that Chaise is using to generate a request for the related entity.</p></li>
-</ul>
-<p>Based on this, Chaise uses the returned list of requests and creates its own copy called <code class="docutils literal notranslate"><span class="pre">requestModels</span></code>. This will allow chaise to add extra attributes for book-keeping. <code class="docutils literal notranslate"><span class="pre">requestModels</span></code> is an array of object with the following attributes:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">activeListModel</span></code>: the exact object that ERMrestJS returns.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">processed</span></code>: A boolean to help track of the processed requests. If this is <code class="docutils literal notranslate"><span class="pre">false</span></code>, Chaise will attempt to send a new request for it.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">priority</span></code>: A number used by the priority queue to order requests. It comes from the order ERMrestJS’s activeList API returns them.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">reference</span></code>: Only available on entity set requests. Used for generating the request.</p></li>
-<li><p>Other extra log related attributes are only available for entity set and aggregate requests.</p></li>
-</ul>
-</section>
-<section id="conditions">
-<h3>Conditions<a class="headerlink" href="#conditions" title="Permalink to this heading"></a></h3>
-<p>A column / inline / related entity can have a <code class="docutils literal notranslate"><span class="pre">condition</span></code> (or a reusable <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>) that gates its visibility. ERMrestJS exposes these via <code class="docutils literal notranslate"><span class="pre">Reference.activeList.conditionalGroups</span></code>. Each group has:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">condition</span></code>: an <code class="docutils literal notranslate"><span class="pre">ActiveListCondition</span></code> with the source column, wait-fors, and an <code class="docutils literal notranslate"><span class="pre">evaluateCondition</span></code> method.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">conditionedItems</span></code>: identities of the columns / inline / related entities gated behind this condition.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dependentRequests</span></code>: secondary fetches that should only run after the condition resolves to “show”.</p></li>
-</ul>
-<p>For each conditional group, Chaise builds a <code class="docutils literal notranslate"><span class="pre">RecordConditionModel</span></code> and a list of <code class="docutils literal notranslate"><span class="pre">dependentRequestModels</span></code> that are tracked in <code class="docutils literal notranslate"><span class="pre">requestModels</span></code> but NOT added to the request queue. After the main entity read, <code class="docutils literal notranslate"><span class="pre">evaluateConditionModel</span></code> runs for each group. Sync conditions (no async source / wait-for) decide immediately from the main tuple. Async conditions wait until their source’s secondary fetch lands, at which point <code class="docutils literal notranslate"><span class="pre">attachPseudoColumnValue</span></code> dispatches <code class="docutils literal notranslate"><span class="pre">evaluateConditionModel</span></code> for them.</p>
-<p>When the condition resolves to “show”, the dependents are upserted into the queue with <code class="docutils literal notranslate"><span class="pre">processed</span> <span class="pre">=</span> <span class="pre">false</span></code>. When it resolves to “hide”, the dependents are marked <code class="docutils literal notranslate"><span class="pre">processed</span> <span class="pre">=</span> <span class="pre">true</span></code> so they never run.</p>
-<p>On update (page re-read), every condition is reset to <code class="docutils literal notranslate"><span class="pre">evaluated</span> <span class="pre">=</span> <span class="pre">false</span></code> and every dependent is marked <code class="docutils literal notranslate"><span class="pre">processed</span> <span class="pre">=</span> <span class="pre">true</span></code>. This is load-bearing for async conditions: the early return in <code class="docutils literal notranslate"><span class="pre">evaluateConditionModel</span></code> (when the source data hasn’t been re-fetched yet) doesn’t touch dep <code class="docutils literal notranslate"><span class="pre">processed</span></code>, so without the <code class="docutils literal notranslate"><span class="pre">true</span></code> reset a stale queue entry from the previous run would fire before re-evaluation. <code class="docutils literal notranslate"><span class="pre">evaluateConditionModel</span></code> flips dep <code class="docutils literal notranslate"><span class="pre">processed</span></code> back to <code class="docutils literal notranslate"><span class="pre">false</span></code> (and re-upserts) when the new condition resolves to show.</p>
-</section>
+<section id="annotation-coordination">
+<h2>Annotation Coordination<a class="headerlink" href="#annotation-coordination" title="Permalink to this heading"></a></h2>
+<p>Annotations require two independent async paths to both finish before OSD can load them: (1) the DB fetch (<code class="docutils literal notranslate"><span class="pre">readAllAnnotations</span></code>) and (2) OSD signaling it’s ready (<code class="docutils literal notranslate"><span class="pre">mainImageLoaded</span></code>). <code class="docutils literal notranslate"><span class="pre">ViewerAnnotationService.annotationsRecieved</span></code> and <code class="docutils literal notranslate"><span class="pre">mainImageLoadedRef</span></code> are used to coordinate — whichever finishes last calls <code class="docutils literal notranslate"><span class="pre">ViewerAnnotationService.loadAnnotations()</span></code>.</p>
 </section>
 </section>
 

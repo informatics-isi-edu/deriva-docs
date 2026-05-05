@@ -1011,6 +1011,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#data-source-properties">1. Data source properties</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#presentation-properties">2. Presentation properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#condition-properties">3. Condition properties</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#shorthand-syntax">Shorthand syntax</a></li>
@@ -1416,6 +1417,12 @@
 <li><p>input_iframe</p></li>
 </ul>
 </li>
+<li><p>3. Condition properties</p>
+<ul>
+<li><p><a class="reference internal" href="#condition"><span class="std std-ref">condition</span></a></p></li>
+<li><p>condition_key</p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#shorthand-syntax"><span class="std std-ref">Shorthand syntax</span></a></p></li>
@@ -1462,7 +1469,16 @@
     <span class="s2">&quot;url_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;field_mapping&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;optional_fields&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">array</span> <span class="n">of</span> <span class="n">field</span> <span class="n">names</span><span class="o">&gt;</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;sourcekey&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">key</span> <span class="k">for</span> <span class="n">condition</span> <span class="n">data</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">path</span> <span class="k">for</span> <span class="n">condition</span> <span class="n">data</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;on_empty&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="s2">&quot;show&quot;</span> <span class="ow">or</span> <span class="s2">&quot;hide&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;condition_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;template_engine&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">handlebars</span> <span class="ow">or</span> <span class="n">mustache</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;condition_key&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">condition</span> <span class="n">key</span><span class="o">&gt;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1493,7 +1509,16 @@
   <span class="s2">&quot;array_options&quot;</span><span class="p">:{</span>
     <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">change</span> <span class="n">the</span> <span class="n">default</span> <span class="n">order</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="s2">&quot;max_lengh&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span> <span class="n">length</span><span class="o">&gt;</span>
-  <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;sourcekey&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">key</span> <span class="k">for</span> <span class="n">condition</span> <span class="n">data</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">source</span> <span class="n">path</span> <span class="k">for</span> <span class="n">condition</span> <span class="n">data</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;on_empty&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="s2">&quot;show&quot;</span> <span class="ow">or</span> <span class="s2">&quot;hide&quot;</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;condition_pattern&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">pattern</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;template_engine&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">handlebars</span> <span class="ow">or</span> <span class="n">mustache</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="s2">&quot;wait_for&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">wait_for</span> <span class="nb">list</span><span class="o">&gt;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;condition_key&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">condition</span> <span class="n">key</span><span class="o">&gt;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -1942,6 +1967,92 @@ cnt_d -> #
 <h4>input_iframe<a class="headerlink" href="#input-iframe" title="Permalink to this heading"></a></h4>
 <p>This property can be used for integrating Chaise’s recordedit app with any third-party tools. When this property is added to a visible column in entry contexts, Chaise will display a special input for them. Clicking on this input will open a modal to show the third-party tool in an iframe.</p>
 <p>For more information about this property, please refer to <a class="reference internal" href="input-iframe.html"><span class="std std-doc">this document</span></a>.</p>
+</section>
+</section>
+<section id="condition-properties">
+<h3>3. Condition properties<a class="headerlink" href="#condition-properties" title="Permalink to this heading"></a></h3>
+<p>These properties allow you to conditionally show or hide a column or related entity on the record page (<code class="docutils literal notranslate"><span class="pre">detailed</span></code> context). The condition is based on the result of a separate data source. This is useful when you want to display a column only if related data exists (or does not exist).</p>
+<p>Conditions are only evaluated in the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. In all other contexts, these properties are ignored and the column is displayed normally.</p>
+<section id="condition">
+<h4>condition<a class="headerlink" href="#condition" title="Permalink to this heading"></a></h4>
+<p>A JSON object that defines an inline condition controlling whether this column or related entity is displayed. The object has the following properties:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>: A string referencing one of the sources defined in the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">source-definitions</span></code></span></a> annotation. The data returned by this source is used to evaluate the condition.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: An inline source path (same syntax as the column directive <a class="reference internal" href="#source"><span class="std std-ref">source</span></a> property). Use this as an alternative to <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> when you don’t need to reuse the condition source elsewhere. You must provide at least one of <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> or <code class="docutils literal notranslate"><span class="pre">source</span></code>. If both are provided, <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> takes precedence.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_empty</span></code>: <em>(optional)</em> Controls what happens when the condition source returns no data. Accepted values:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;hide&quot;</span></code> (default): Hide the column when the condition source is empty.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;show&quot;</span></code>: Show the column when the condition source is empty (and hide it when data is present).</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code>: <em>(optional)</em> A template that is evaluated using the condition source data. When provided, the condition is based on whether the rendered template produces a non-empty string, rather than whether the condition source returned data. The template has access to <code class="docutils literal notranslate"><span class="pre">$self</span></code> (the condition source value) and the same templating environment as <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>. No markdown rendering is applied to the result; only emptiness is checked.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wait_for</span></code>: <em>(optional)</em> An array of source key strings (referencing sources defined in <code class="docutils literal notranslate"><span class="pre">source-definitions</span></code>). These sources are fetched alongside the condition source, and their data is available in the templating environment when <code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> is evaluated. This allows the condition to reference data from multiple sources. The condition is not evaluated until all <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> sources have completed.</p></li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;some_column&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;has_related_items&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;on_empty&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hide&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example with <code class="docutils literal notranslate"><span class="pre">wait_for</span></code>:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;some_column&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;count_of_items&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;wait_for&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;count_of_other_items&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;condition_pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{#if (and count_of_other_items count_of_items)}}show{{/if}}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;template_engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;handlebars&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>How conditions are evaluated:</strong></p>
+<ol class="arabic simple">
+<li><p>The client sends a request to fetch the condition source data.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> is defined, the template is rendered with the condition data. The result is considered “empty” if it renders to an empty or whitespace-only string.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> is not defined, the condition is considered “empty” when the source returns no rows (for entity sets) or a null/empty value (for aggregates).</p></li>
+<li><p>Based on <code class="docutils literal notranslate"><span class="pre">on_empty</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;hide&quot;</span></code> (default): the column is shown only when the result is <strong>not</strong> empty.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;show&quot;</span></code>: the column is shown only when the result <strong>is</strong> empty.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Sync vs. async conditions:</strong></p>
+<ul class="simple">
+<li><p>If the condition source is all-outbound (no inbound foreign keys or aggregates), the condition is evaluated synchronously using data already available from the main request. No additional request is needed.</p></li>
+<li><p>If the condition source has an inbound path or uses an aggregate, it requires a secondary request. The column value is hidden until the condition is evaluated.</p></li>
+</ul>
+</section>
+<section id="condition-key">
+<h4>condition_key<a class="headerlink" href="#condition-key" title="Permalink to this heading"></a></h4>
+<p>A string that references a reusable condition defined in the <code class="docutils literal notranslate"><span class="pre">conditions</span></code> section of the <a class="reference internal" href="annotation.html#tag-2019-source-definitions"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">source-definitions</span></code></span></a> annotation. This allows you to define a condition once and apply it to multiple columns or related entities.</p>
+<p>If both <code class="docutils literal notranslate"><span class="pre">condition</span></code> and <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> are defined on the same column directive, <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> takes precedence and <code class="docutils literal notranslate"><span class="pre">condition</span></code> is ignored.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;some_column&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;condition_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;has_related_data&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">has_related_data</span></code> is defined in the source-definitions annotation:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;tag:isrd.isi.edu,2019:source-definitions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;sources&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;cnt_related&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;inbound&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fk1&quot;</span><span class="p">]},</span><span class="w"> </span><span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;aggregate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cnt&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;conditions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;has_related_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cnt_related&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>

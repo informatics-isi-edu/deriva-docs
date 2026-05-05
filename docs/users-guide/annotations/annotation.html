@@ -1011,6 +1011,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/column-directive.html#properties">Properties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/column-directive.html#data-source-properties">1. Data source properties</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/column-directive.html#presentation-properties">2. Presentation properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/column-directive.html#condition-properties">3. Condition properties</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrestjs/user-docs/column-directive.html#shorthand-syntax">Shorthand syntax</a></li>
@@ -2603,6 +2604,15 @@ The json object follows the same rules as <a class="reference external" href="ht
 <span class="w">            </span><span class="p">]</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;conditions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;has_related_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;sourcekey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;source-1&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;custom_check&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">&quot;inbound&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;fk3&quot;</span><span class="p">]},</span><span class="w"> </span><span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;condition_pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{#each $self}}{{#with this.values}}{{#if (eq _name &#39;some-value&#39;)}}true{{/if}}{{/with}}{{/each}}&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nt">&quot;search-box&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;or&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">            </span><span class="p">{</span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;column1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;markdown_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;another name&quot;</span><span class="p">},</span>
@@ -2619,9 +2629,14 @@ The json object follows the same rules as <a class="reference external" href="ht
 <p>Supported JSON payload patterns:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;sources&quot;:</span></code> <em>sourcedefinitions</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: the source definitions that will allow you to refer to them by just using the defined <em>sourcekey</em>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;conditions&quot;:</span></code> <em>conditiondefinitions</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: reusable condition definitions that can be referenced by column directives via <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>. See <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition and condition_key</span></a> for more information.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;search-box&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>searchcolumn</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code>: Configure list of search columns.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;:</span></code> <em>fkeylist</em>  <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Array of foreign key constraints that will be mapped into <code class="docutils literal notranslate"><span class="pre">$fkey_schema_contraint</span></code> key in templating environments.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;columns&quot;:</span></code> <em>columns</em>  <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Array of column names that their data will be available in templating environments.</p></li>
+</ul>
+<p>Supported <em>conditiondefinitions</em> patterns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> <em>conditionkey</em> <code class="docutils literal notranslate"><span class="pre">&quot;:</span></code> <em>conditionobject</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: where <em>conditionkey</em> is a name that will be used to refer to the defined condition. Each <em>conditionobject</em> must have either <code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> to identify the data that will be used for evaluating the condition. See the <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition documentation</span></a> for the full list of properties.</p></li>
 </ul>
 <p>Supported <em>sourcedefinitions</em> patterns:</p>
 <ul class="simple">
@@ -3360,6 +3375,8 @@ The json object follows the same rules as <a class="reference external" href="ht
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">input_iframe</span></code>: Applicaple only to entry contexts. A JSON object that describes the settings for showing “input iframe” in entry apps. Please refer to the <a class="reference internal" href="#input-iframe.md"><span class="xref myst">input iframe document</span></a> for more information about this property.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">condition</span></code>: Applicable only to <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. A JSON object that defines a condition controlling whether this column or related entity is displayed. The condition references a data source whose result determines visibility. Please refer to the <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition documentation</span></a> for more information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">condition_key</span></code>: Applicable only to <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. A string that references a reusable condition defined in the <a class="reference internal" href="#tag-2019-source-definitions"><span class="std std-ref">conditions</span></a> section of the <code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotation. If both <code class="docutils literal notranslate"><span class="pre">condition</span></code> and <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> are defined, <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> takes precedence.</p></li>
 </ul>
 </section>
 </section>

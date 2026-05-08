@@ -243,7 +243,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#boolean-helpers">Boolean Helpers</a></li>
 </ul>
 </li>
@@ -936,7 +935,6 @@
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#usage">Usage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#using-pre-defined-attributes">Using Pre-defined Attributes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#helpers">Helpers</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#block-helpers">Block Helpers</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../ermrestjs/user-docs/handlebars.html#boolean-helpers">Boolean Helpers</a></li>
 </ul>
 </li>
@@ -1401,9 +1399,15 @@
 <li><p><a class="reference internal" href="#helpers"><span class="std std-ref">Helpers</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#printf-helper"><span class="std std-ref">printf helper</span></a></p></li>
+<li><p>Dates &amp; timestamps</p>
+<ul>
 <li><p><a class="reference internal" href="#formatdatetime-helper"><span class="std std-ref">formatDatetime helper</span></a></p></li>
 <li><p><a class="reference internal" href="#datetimetosnapshot-helper"><span class="std std-ref">datetimeToSnapshot helper</span></a></p></li>
 <li><p><a class="reference internal" href="#snapshottodatetime-helper"><span class="std std-ref">snapshotToDatetime helper</span></a></p></li>
+</ul>
+</li>
+<li><p>Numbers &amp; math</p>
+<ul>
 <li><p><a class="reference internal" href="#humanizebytes-helper"><span class="std std-ref">humanizeBytes helper</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#mode"><span class="std std-ref">mode</span></a></p></li>
@@ -1411,19 +1415,35 @@
 <li><p><a class="reference internal" href="#tooltip"><span class="std std-ref">tooltip</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#stringlength-helper"><span class="std std-ref">stringLength helper</span></a></p></li>
-<li><p><a class="reference internal" href="#math-helpers"><span class="std std-ref">Math Helpers</span></a></p>
-<ul>
 <li><p><a class="reference internal" href="#add"><span class="std std-ref">add</span></a></p></li>
 <li><p><a class="reference internal" href="#subtract"><span class="std std-ref">subtract</span></a></p></li>
 </ul>
 </li>
+<li><p>Strings &amp; regex</p>
+<ul>
+<li><p><a class="reference internal" href="#stringlength-helper"><span class="std std-ref">stringLength helper</span></a></p></li>
+<li><p><a class="reference internal" href="#replace-helper"><span class="std std-ref">Replace helper</span></a></p></li>
+<li><p><a class="reference internal" href="#totitlecase-helper"><span class="std std-ref">ToTitleCase helper</span></a></p></li>
+<li><p><a class="reference internal" href="#findfirst-helper"><span class="std std-ref">Findfirst helper</span></a></p></li>
+<li><p><a class="reference internal" href="#findall-helper"><span class="std std-ref">Findall helper</span></a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#block-helpers"><span class="std std-ref">Block Helpers</span></a></p>
+<li><p>URL &amp; markdown encoding</p>
 <ul>
-<li><p><a class="reference internal" href="#if-helper"><span class="std std-ref">If helper</span></a></p></li>
-<li><p><a class="reference internal" href="#unless-helper"><span class="std std-ref">Unless helper</span></a></p></li>
+<li><p><a class="reference internal" href="#encode-helper"><span class="std std-ref">Encode helper</span></a></p></li>
+<li><p><a class="reference internal" href="#escape-helper"><span class="std std-ref">Escape helper</span></a></p></li>
+<li><p><a class="reference internal" href="#encodefacet-helper"><span class="std std-ref">Encodefacet helper</span></a></p>
+<ul>
+<li><p>1. Passing the string representation of a facet blob</p></li>
+<li><p>2. Passing the JSON object representing a facet</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#jsonstringify-helper"><span class="std std-ref">JsonStringify helper</span></a></p></li>
+</ul>
+</li>
+<li><p>Lists, iteration &amp; scope</p>
+<ul>
+<li><p><a class="reference internal" href="#pluck"><span class="std std-ref">pluck</span></a></p></li>
 <li><p><a class="reference internal" href="#each-helper"><span class="std std-ref">Each helper</span></a></p></li>
 <li><p><a class="reference internal" href="#with-helper"><span class="std std-ref">With helper</span></a></p>
 <ul>
@@ -1434,25 +1454,22 @@
 </ul>
 </li>
 <li><p><a class="reference internal" href="#lookup-helper"><span class="std std-ref">Lookup helper</span></a></p></li>
-<li><p><a class="reference internal" href="#encode-helper"><span class="std std-ref">Encode helper</span></a></p></li>
-<li><p><a class="reference internal" href="#escape-helper"><span class="std std-ref">Escape helper</span></a></p></li>
-<li><p><a class="reference internal" href="#encodefacet-helper"><span class="std std-ref">Encodefacet helper</span></a></p>
-<ul>
-<li><p>1. Passing the string representation of a facet blob</p></li>
-<li><p>2. Passing the JSON object representing a facet</p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#jsonstringify-helper"><span class="std std-ref">JsonStringify helper</span></a></p></li>
-<li><p><a class="reference internal" href="#findfirst-helper"><span class="std std-ref">Findfirst helper</span></a></p></li>
-<li><p><a class="reference internal" href="#findall-helper"><span class="std std-ref">Findall helper</span></a></p></li>
-<li><p><a class="reference internal" href="#replace-helper"><span class="std std-ref">Replace helper</span></a></p></li>
-<li><p><a class="reference internal" href="#totitlecase-helper"><span class="std std-ref">ToTitleCase helper</span></a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#boolean-helpers"><span class="std std-ref">Boolean Helpers</span></a></p>
 <ul>
+<li><p><a class="reference internal" href="#if-helper"><span class="std std-ref">If helper</span></a></p></li>
+<li><p><a class="reference internal" href="#unless-helper"><span class="std std-ref">Unless helper</span></a></p></li>
 <li><p><a class="reference internal" href="#comparison-helpers"><span class="std std-ref">Comparison Helpers</span></a></p></li>
 <li><p><a class="reference internal" href="#regular-expression-match"><span class="std std-ref">Regular Expression Match</span></a></p></li>
+<li><p><a class="reference internal" href="#list-membership"><span class="std std-ref">List Membership</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#memberof"><span class="std std-ref">memberOf</span></a></p></li>
+<li><p><a class="reference internal" href="#hasmember"><span class="std std-ref">hasMember</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#access-control-acl-check"><span class="std std-ref">Access Control (ACL) check</span></a></p></li>
 <li><p><a class="reference internal" href="#logical-helpers"><span class="std std-ref">Logical Helpers</span></a></p></li>
 </ul>
@@ -1907,6 +1924,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">HELPER_NAME</span> <span class="n">PARAM1</span> <span class="n">PARAM2</span> <span class="p">}}</span>
 </pre></div>
 </div>
+<p>Helpers below are grouped by what they produce. Most can be used inline (<code class="docutils literal notranslate"><span class="pre">{{helper</span> <span class="pre">arg}}</span></code>) or as a subexpression (<code class="docutils literal notranslate"><span class="pre">{{outer</span> <span class="pre">(helper</span> <span class="pre">arg)}}</span></code>). Some also support block syntax (<code class="docutils literal notranslate"><span class="pre">{{#helper}}…{{/helper}}</span></code>).</p>
 <section id="printf-helper">
 <h3>printf helper<a class="headerlink" href="#printf-helper" title="Permalink to this heading"></a></h3>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">printf</span></code> helper to format a value. The expected format follows the same syntax as <a class="reference internal" href="pre-format.html#syntax"><span class="std std-ref">PreFormat</span></a>.</p>
@@ -1922,8 +1940,11 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 <p>Keep in mind that <code class="docutils literal notranslate"><span class="pre">printf</span></code> doesn’t check the validity of the given values. So for example if the value might not be a number, you cannot blindly use the <code class="docutils literal notranslate"><span class="pre">d</span></code> type and should guard against it.</p>
 </section>
+<section id="dates-timestamps">
+<h3>Dates &amp; timestamps<a class="headerlink" href="#dates-timestamps" title="Permalink to this heading"></a></h3>
+<p>Format and convert between datetime values.</p>
 <section id="formatdatetime-helper">
-<h3>formatDatetime helper<a class="headerlink" href="#formatdatetime-helper" title="Permalink to this heading"></a></h3>
+<h4>formatDatetime helper<a class="headerlink" href="#formatdatetime-helper" title="Permalink to this heading"></a></h4>
 <blockquote>
 <div><p>:loudspeaker: This helper used to be called <code class="docutils literal notranslate"><span class="pre">formatDate</span></code> but was changed to the more accurate <code class="docutils literal notranslate"><span class="pre">formatDatetime</span></code> name. While both work, you should stop using <code class="docutils literal notranslate"><span class="pre">formatDate</span></code>.</p>
 </div></blockquote>
@@ -1942,7 +1963,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 <section id="datetimetosnapshot-helper">
-<h3>datetimeToSnapshot helper<a class="headerlink" href="#datetimetosnapshot-helper" title="Permalink to this heading"></a></h3>
+<h4>datetimeToSnapshot helper<a class="headerlink" href="#datetimetosnapshot-helper" title="Permalink to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">datetimeToSnapshot</span></code> can be used to encode a given <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">timstamp</span></code>, or <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> value to a snapshot ID. The snapshot ID could be used for navigating to a specific version of the catalog.</p>
 <p>Syntax</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeToSnapshot</span> <span class="n">value</span> <span class="p">}}</span>
@@ -1956,7 +1977,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 <section id="snapshottodatetime-helper">
-<h3>snapshotToDatetime helper<a class="headerlink" href="#snapshottodatetime-helper" title="Permalink to this heading"></a></h3>
+<h4>snapshotToDatetime helper<a class="headerlink" href="#snapshottodatetime-helper" title="Permalink to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">snapshotToDatetime</span></code> can be used to decode a snapshot value to a datetime value. If no format is provided, the output will be in the ISO format.</p>
 <p>Syntax</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">snapshotToDatetime</span> <span class="n">value</span> <span class="p">}}</span>
@@ -1970,8 +1991,12 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </pre></div>
 </div>
 </section>
+</section>
+<section id="numbers-math">
+<h3>Numbers &amp; math<a class="headerlink" href="#numbers-math" title="Permalink to this heading"></a></h3>
+<p>Format numbers and perform basic arithmetic.</p>
 <section id="humanizebytes-helper">
-<h3>humanizeBytes helper<a class="headerlink" href="#humanizebytes-helper" title="Permalink to this heading"></a></h3>
+<h4>humanizeBytes helper<a class="headerlink" href="#humanizebytes-helper" title="Permalink to this heading"></a></h4>
 <p>You can use <code class="docutils literal notranslate"><span class="pre">humanizeBytes</span></code> helper to convert byte count to human readable format.</p>
 <p>Syntax:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span><span class="p">}}</span>
@@ -1994,7 +2019,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 <p>The arguments are:</p>
 <section id="mode">
-<h4><code class="docutils literal notranslate"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="Permalink to this heading"></a></h4>
+<h5><code class="docutils literal notranslate"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="Permalink to this heading"></a></h5>
 <p>This argument will allow you to change the output format. It can either be a string <code class="docutils literal notranslate"><span class="pre">&quot;si&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;binary&quot;</span></code>. Any other value will be ignored.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;si&quot;</span><span class="p">}}</span>
 
@@ -2007,7 +2032,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 <section id="precision">
-<h4><code class="docutils literal notranslate"><span class="pre">precision</span></code><a class="headerlink" href="#precision" title="Permalink to this heading"></a></h4>
+<h5><code class="docutils literal notranslate"><span class="pre">precision</span></code><a class="headerlink" href="#precision" title="Permalink to this heading"></a></h5>
 <p>An integer specifying the number of digits.</p>
 <ul class="simple">
 <li><p>If we cannot show all the fractional digits of a number due to the defined precision, we will truncate the number (we will not round up or down). So for example <code class="docutils literal notranslate"><span class="pre">999999</span></code> with precision=3 will result in <code class="docutils literal notranslate"><span class="pre">999</span> <span class="pre">kB</span></code>, and with precision=4 will be <code class="docutils literal notranslate"><span class="pre">999.9</span> <span class="pre">kB</span></code>.</p></li>
@@ -2019,33 +2044,13 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 <section id="tooltip">
-<h4><code class="docutils literal notranslate"><span class="pre">tooltip</span></code><a class="headerlink" href="#tooltip" title="Permalink to this heading"></a></h4>
+<h5><code class="docutils literal notranslate"><span class="pre">tooltip</span></code><a class="headerlink" href="#tooltip" title="Permalink to this heading"></a></h5>
 <p>A boolean value specifying whether you want the output to include a tooltip or not. If this argument is missing, we will not return any tooltips.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span> <span class="n">tooltip</span><span class="o">=</span><span class="n">true</span><span class="p">}}</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="stringlength-helper">
-<h3>stringLength helper<a class="headerlink" href="#stringlength-helper" title="Permalink to this heading"></a></h3>
-<p>You can use <code class="docutils literal notranslate"><span class="pre">stringLength</span></code> helper to get the length of a given string.</p>
-<p>Syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">stringLength</span> <span class="n">value</span> <span class="p">}}</span>
-</pre></div>
-</div>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">stringLength</span> <span class="s2">&quot;123123&quot;</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">6</span>
-
-<span class="p">{{</span><span class="n">stringLength</span> <span class="n">value</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="n">assuming</span> <span class="n">value</span> <span class="ow">is</span> <span class="s2">&quot;sometext&quot;</span> <span class="n">returns</span> <span class="mf">8.</span>
-
-
-<span class="p">[{{{</span><span class="n">caption</span><span class="p">}}}](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){</span> <span class="p">{{</span><span class="c1">#if (gt (stringLength caption) 100)}}.lengthy-caption{{else}}.short-caption{{/if}} }</span>
-</pre></div>
-</div>
-</section>
-<section id="math-helpers">
-<h3>Math Helpers<a class="headerlink" href="#math-helpers" title="Permalink to this heading"></a></h3>
-<p>We have basic math functionality support available in handlebars templating. The following are the currently available math helpers.</p>
 <section id="add">
 <h4>add<a class="headerlink" href="#add" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">add</span></code> helper can be used to add 2 numbers together. It will always add the <code class="docutils literal notranslate"><span class="pre">value2</span></code> to <code class="docutils literal notranslate"><span class="pre">value1</span></code>. If the provided value is a string, we will try to convert it to a number before doing the calculation to avoid string concatenation. Note: This may behave oddly with float values.</p>
@@ -2061,48 +2066,286 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 </section>
-</section>
-<section id="block-helpers">
-<h2>Block Helpers<a class="headerlink" href="#block-helpers" title="Permalink to this heading"></a></h2>
-<p>Block helpers make it possible to define custom iterators and other functionality that can invoke the passed block with a new context. These helpers are very similar to functions that we have in Mustache.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#HELPER_NAME}}</span>
- <span class="n">CONTENT</span>
-<span class="p">{{</span><span class="o">/</span><span class="n">HELPER_NAME</span><span class="p">}}</span>
+<section id="strings-regex">
+<h3>Strings &amp; regex<a class="headerlink" href="#strings-regex" title="Permalink to this heading"></a></h3>
+<p>Operations on strings.</p>
+<section id="stringlength-helper">
+<h4>stringLength helper<a class="headerlink" href="#stringlength-helper" title="Permalink to this heading"></a></h4>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">stringLength</span></code> helper to get the length of a given string.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">stringLength</span> <span class="n">value</span> <span class="p">}}</span>
 </pre></div>
 </div>
-<section id="if-helper">
-<h3>If helper<a class="headerlink" href="#if-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to conditionally render a block. If its argument returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, or <code class="docutils literal notranslate"><span class="pre">[]</span></code>, Handlebars will not render the block. You can use this helper with any of the <a class="reference internal" href="#boolean-helpers"><span class="std std-ref">Boolean Helpers</span></a> to do more complicated logical operations.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{/if}}</span>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">stringLength</span> <span class="s2">&quot;123123&quot;</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="mi">6</span>
+
+<span class="p">{{</span><span class="n">stringLength</span> <span class="n">value</span> <span class="p">}}</span> <span class="o">==&gt;</span> <span class="n">assuming</span> <span class="n">value</span> <span class="ow">is</span> <span class="s2">&quot;sometext&quot;</span> <span class="n">returns</span> <span class="mf">8.</span>
+
+
+<span class="p">[{{{</span><span class="n">caption</span><span class="p">}}}](</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">){</span> <span class="p">{{</span><span class="c1">#if (gt (stringLength caption) 100)}}.lengthy-caption{{else}}.short-caption{{/if}} }</span>
+</pre></div>
+</div>
+</section>
+<section id="replace-helper">
+<h4>Replace helper<a class="headerlink" href="#replace-helper" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">replace</span></code> helper will take the input regular expression (first argument) and replace all matches in the supplied string with the supplied substring (second argument). This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">replace</span></code> function for Strings in javascript.</p>
+<blockquote>
+<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
+</div></blockquote>
+<p>One example would be to replace all underscores with whitespace characters for table name display.</p>
+<p>Template:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot;}}table_name_with_underscores{{/replace}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name</span> <span class="k">with</span> <span class="n">underscores</span>
+</pre></div>
+</div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. By default we’re using the <code class="docutils literal notranslate"><span class="pre">g</span></code> flag, that’s why the example above is replacing all the matches. Examples of using the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named argument:</p>
+<ul>
+<li><p>If you only want to replace the first match, you can pass empty string for flags:</p>
+<ul class="simple">
+<li><p>Template:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot; flags=&quot;&quot;}}table_name_with_underscores{{/replace}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Result:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name_with_underscores</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching (in this example we’re also using <code class="docutils literal notranslate"><span class="pre">g</span></code> flag to make sure we’re still replacing all the matches):</p>
+<ul class="simple">
+<li><p>Template:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;aco1&quot; &quot;ACO1&quot; flags=&quot;ig&quot;}}{{{Gene_Names}}}{{/replace}}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Result (assuming <code class="docutils literal notranslate"><span class="pre">Gene_Names</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;Aco1,</span> <span class="pre">ACO1&quot;</span></code>):</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACO1</span><span class="p">,</span> <span class="n">ACO1</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="totitlecase-helper">
+<h4>ToTitleCase helper<a class="headerlink" href="#totitlecase-helper" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">toTitleCase</span></code> helper will change the first character of each word (split by whitespace) in the string to a capital letter. The rest of the case of the string will remain unchanged.</p>
+<p>Template:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#toTitleCase}}this is the title of my page{{/toTitleCase}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">Is</span> <span class="n">The</span> <span class="n">Title</span> <span class="n">Of</span> <span class="n">My</span> <span class="n">Page</span>
+</pre></div>
+</div>
+</section>
+<section id="findfirst-helper">
+<h4>Findfirst helper<a class="headerlink" href="#findfirst-helper" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">regexFindFirst</span></code> helper will take the input regular expression and return the first matching substring from the supplied string. Will return <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> otherwise.</p>
+<blockquote>
+<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
+</div></blockquote>
+<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;jpg|png&quot;}}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png&quot;</span>
+</pre></div>
+</div>
+<p>An example template to extract the filename from a given path with testString = “/var/www/html/index.html”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;[^\/]+$&quot;}}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;index.html&quot;</span>
+</pre></div>
+</div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;human&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
 </pre></div>
 </div>
 <blockquote>
-<div><p>If you’re using <code class="docutils literal notranslate"><span class="pre">if</span></code> block only to check for a JSON object and then using it, consider using <a class="reference internal" href="#with-helper"><span class="std std-ref">with helper</span></a> which will do the truthy check and changes context at the same time similar to <a class="reference internal" href="#null-checking"><span class="std std-ref">how Mustache null checking works</span></a>.</p>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
 </div></blockquote>
-<p>When using a block expression, you can specify a template section to run if the expression returns a falsy value. The section, marked by <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> is called an “else section”.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{else}}Hidden Author{{/if}}</span>
-</pre></div>
-</div>
-<p>You can also use <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{/if}}</span>
-
-<span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{else}} Hidden and Unknown Author{{/if}}</span>
-</pre></div>
-</div>
-<p>Plesae refer to <a class="reference internal" href="#boolean-helpers"><span class="std std-ref">Boolean Helpers</span></a> section to learn how you can achieve more complicated comparisons inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> block.</p>
 </section>
-<section id="unless-helper">
-<h3>Unless helper<a class="headerlink" href="#unless-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">unless</span></code> helper as the inverse of the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper. Its block will be rendered if the expression returns a falsy value.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#unless license}}WARNING: This entry does not have a license!{{/unless}}</span>
+<section id="findall-helper">
+<h4>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array. Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
+<blockquote>
+<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
+</div></blockquote>
+<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (regexFindAll testString &quot;jpg|png&quot;)}}{{this}}\n{{/each}}</span>
 </pre></div>
 </div>
-<p>If looking up <code class="docutils literal notranslate"><span class="pre">license</span></code> under the current context returns a <code class="docutils literal notranslate"><span class="pre">falsy</span></code> value, Handlebars will render the warning. Otherwise, it will render nothing.</p>
-<p><strong>NOTE</strong>: You can use inverted if (<code class="docutils literal notranslate"><span class="pre">^if</span></code>) to get the same effect of <code class="docutils literal notranslate"><span class="pre">unless</span></code></p>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png</span><span class="se">\n</span><span class="s2">jpg</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindAll testString &quot;ACO1&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="url-markdown-encoding">
+<h3>URL &amp; markdown encoding<a class="headerlink" href="#url-markdown-encoding" title="Permalink to this heading"></a></h3>
+<p>Turn values into safely-encoded forms for URLs, markdown, or facet blobs.</p>
+<section id="encode-helper">
+<h4>Encode helper<a class="headerlink" href="#encode-helper" title="Permalink to this heading"></a></h4>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">encode</span></code> helper to get strings in URL encoded format. It accepts more than one string that needs to be encoded</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">=</span><span class="p">{{</span><span class="c1">#encode ageVar}}{{/encode}}</span>
+</pre></div>
+</div>
+<p>for context <code class="docutils literal notranslate"><span class="pre">ageVar=10</span></code> will result in <code class="docutils literal notranslate"><span class="pre">age%3D10</span></code></p>
+<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode key &#39;=&#39; value}}</span>
+</pre></div>
+</div>
+<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;name&quot;</span> <span class="pre">and</span> <span class="pre">value=&quot;John&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">name%3DJohn</span></code></p>
+</section>
+<section id="escape-helper">
+<h4>Escape helper<a class="headerlink" href="#escape-helper" title="Permalink to this heading"></a></h4>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">escape</span></code> helper to specifically escape values; for example, hyphens “-” etc., you can use the escape block in this way. It accepts more than one string that needs to be escaped</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="o">=</span><span class="p">{{</span><span class="c1">#escape key}}{{/escape}}</span>
+</pre></div>
+</div>
+<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;**somevalue</span> <span class="pre">]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">!</span> <span class="pre">special&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">name=\*\*somevalue</span> <span class="pre">\]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">\!</span> <span class="pre">special</span></code></p>
+<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape key &#39;-&#39; value}}{{/escape}}</span>
+</pre></div>
+</div>
+<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;**somevalue</span> <span class="pre">]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">!</span> <span class="pre">special&quot;</span> <span class="pre">and</span> <span class="pre">value=&quot;John&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">\*\*somevalue</span> <span class="pre">\]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">\!</span> <span class="pre">special\-John</span></code></p>
+</section>
+<section id="encodefacet-helper">
+<h4>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this heading"></a></h4>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. This helper can be used for encoding both JSON objects and string representation of a JSON object.</p>
+<section id="passing-the-string-representation-of-a-facet-blob">
+<h5>1. Passing the string representation of a facet blob<a class="headerlink" href="#passing-the-string-representation-of-a-facet-blob" title="Permalink to this heading"></a></h5>
+<p>The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
+<p>Template (newline and indentation added for readability and should be removed):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
+<span class="p">{</span>
+  \<span class="s2">&quot;and</span><span class="se">\&quot;</span><span class="s2">: [</span>
+    <span class="p">{</span>
+      \<span class="s2">&quot;source</span><span class="se">\&quot;</span><span class="s2">: [{</span><span class="se">\&quot;</span><span class="s2">inbound</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">schema</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">fk_1</span><span class="se">\&quot;</span><span class="s2">]}]}, </span><span class="se">\&quot;</span><span class="s2">RID</span><span class="se">\&quot;</span><span class="s2">],</span>
+      \<span class="s2">&quot;choices</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">{{</span><span class="si">{RID}</span><span class="s2">}}</span><span class="se">\&quot;</span><span class="s2">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="p">{{</span><span class="o">/</span><span class="n">encodeFacet</span><span class="p">}})</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>As you can see in this example we are escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
+<p>You can also pass the string representation of the JSON object like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">encodeFacet</span> <span class="n">json_str</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encodeFacet json_str}}{{/encodeFacet}}</span>
+</pre></div>
+</div>
+<p>With the following context:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;json_str&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;and\&quot;: [{\&quot;source\&quot;: [{\&quot;inbound\&quot;: [\&quot;schema\&quot;, \&quot;fk_1\&quot;]}]}, \&quot;RID\&quot;], \&quot;choices\&quot;: [\&quot;{{{RID}}}\&quot;]}]}&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="passing-the-json-object-representing-a-facet">
+<h5>2. Passing the JSON object representing a facet<a class="headerlink" href="#passing-the-json-object-representing-a-facet" title="Permalink to this heading"></a></h5>
+<p>For instance, assuming <code class="docutils literal notranslate"><span class="pre">obj</span></code> is the name of the <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> column that stores the facet object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet obj}})</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet obj}}{{/encodeFacet}})</span>
+</pre></div>
+</div>
+<p>Result:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="jsonstringify-helper">
+<h4>JsonStringify helper<a class="headerlink" href="#jsonstringify-helper" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript.</p>
+<p>The following are different ways of using this helper (assume <code class="docutils literal notranslate"><span class="pre">column</span></code> stores a JSON object):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#jsonStringify}}{{{column}}}{{/jsonStringify}}</span>
+
+<span class="p">{{</span><span class="c1">#jsonStringify column}}{{/jsonStringify}}</span>
+</pre></div>
+</div>
+<p>This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet URL strings. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet (jsonStringify col)}})</span>
+</pre></div>
+</div>
+<p>Wher <code class="docutils literal notranslate"><span class="pre">col</span></code> is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;fk_1&quot;</span><span class="p">]}]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
+      <span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;{{</span><span class="si">{RID}</span><span class="s2">}}&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This would result in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lists-iteration-scope">
+<h3>Lists, iteration &amp; scope<a class="headerlink" href="#lists-iteration-scope" title="Permalink to this heading"></a></h3>
+<p>Extract from arrays, iterate, and shift the rendering context.</p>
+<section id="pluck">
+<h4>pluck<a class="headerlink" href="#pluck" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">pluck</span></code> helper extracts a value at the given path from each item of an array, producing a new array of the same length and order. Missing paths and <code class="docutils literal notranslate"><span class="pre">null</span></code> intermediates resolve to <code class="docutils literal notranslate"><span class="pre">undefined</span></code>.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">pluck</span> <span class="n">array</span> <span class="s2">&quot;path&quot;</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pluck</span></code> is most useful as a subexpression. So you can pipe its output into <code class="docutils literal notranslate"><span class="pre">each</span></code>, <a class="reference internal" href="#memberof"><span class="std std-ref">memberOf</span></a>, or <a class="reference internal" href="#hasmember"><span class="std std-ref">hasMember</span></a>.</p>
+<p>Example, given <code class="docutils literal notranslate"><span class="pre">$self</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$self&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;non-polymer&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;values&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;polymer&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (pluck $self &quot;values.type&quot;)}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</span>
+<span class="p">{{</span><span class="c1">#if (hasMember (pluck $self &#39;values.type&#39;) &#39;non-polymer&#39;)}}true{{/if}}</span>
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">non</span><span class="o">-</span><span class="n">polymer</span><span class="p">,</span> <span class="n">polymer</span>
+<span class="n">true</span>
+</pre></div>
+</div>
+<p>If the given value is not actually an array, or if path is empty, <code class="docutils literal notranslate"><span class="pre">pluck</span></code> returns <code class="docutils literal notranslate"><span class="pre">[]</span></code>.</p>
 </section>
 <section id="each-helper">
-<h3>Each helper<a class="headerlink" href="#each-helper" title="Permalink to this heading"></a></h3>
-<p>You can iterate over a list using the built-in <code class="docutils literal notranslate"><span class="pre">each</span></code> helper. Inside the block, you can use <code class="docutils literal notranslate"><span class="pre">this</span></code> to reference the element being iterated over.</p>
+<h4>Each helper<a class="headerlink" href="#each-helper" title="Permalink to this heading"></a></h4>
+<p>You can iterate over a list using the <code class="docutils literal notranslate"><span class="pre">each</span></code> helper. Inside the block, you can use <code class="docutils literal notranslate"><span class="pre">this</span></code> to reference the element being iterated over.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each people}}{{this}}{{/each}}</span>
 </pre></div>
 </div>
@@ -2160,7 +2403,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <p>Will create a <code class="docutils literal notranslate"><span class="pre">key</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> variable that children may access without the need for depthed variable references. In the example above, <code class="docutils literal notranslate"><span class="pre">{{key}}</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">{{&#64;../key}}</span></code> but in many cases is more readable.</p>
 </section>
 <section id="with-helper">
-<h3>With helper<a class="headerlink" href="#with-helper" title="Permalink to this heading"></a></h3>
+<h4>With helper<a class="headerlink" href="#with-helper" title="Permalink to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">With</span></code> helper can be used to shift the context. For example with the following context:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My first post!&quot;</span><span class="p">,</span>
@@ -2183,7 +2426,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </pre></div>
 </div>
 <section id="accessing-outer-context">
-<h4>Accessing outer context<a class="headerlink" href="#accessing-outer-context" title="Permalink to this heading"></a></h4>
+<h5>Accessing outer context<a class="headerlink" href="#accessing-outer-context" title="Permalink to this heading"></a></h5>
 <p>If inside the <code class="docutils literal notranslate"><span class="pre">with</span></code> block you want to access the outer context, you need to prepend the column names with <code class="docutils literal notranslate"><span class="pre">../</span></code>. For example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author}}</span>
   <span class="p">{{{</span><span class="n">firstName</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">lastName</span><span class="p">}}}</span> <span class="n">wrote</span> <span class="p">{{{</span><span class="o">../</span><span class="n">title</span><span class="p">}}}</span><span class="o">.</span>
@@ -2192,9 +2435,10 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </div>
 </section>
 <section id="accessing-current-value">
-<h4>Accessing current value<a class="headerlink" href="#accessing-current-value" title="Permalink to this heading"></a></h4>
+<h5>Accessing current value<a class="headerlink" href="#accessing-current-value" title="Permalink to this heading"></a></h5>
 <p>As we described in <a class="reference internal" href="#null-checking"><span class="std std-ref">here</span></a>, <code class="docutils literal notranslate"><span class="pre">with</span></code> can also be used for doing a “truthy” check. You can use <code class="docutils literal notranslate"><span class="pre">.</span></code> to access
-the value of the <code class="docutils literal notranslate"><span class="pre">with</span></code> block. For example:</p>
+the value of the <code class="docutils literal notranslate"><span class="pre">with</span></code> block. For example:
+`</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with column}}{{{.}}}{{{/with}}}</span>
 </pre></div>
 </div>
@@ -2205,7 +2449,7 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <p>You can also use <code class="docutils literal notranslate"><span class="pre">else</span></code> as we decribed <a class="reference internal" href="#using-else-with-with-block"><span class="std std-ref">here</span></a>. That being said, we recommend using <a class="reference internal" href="#if-helper"><span class="std std-ref">if helper</span></a> instead of <code class="docutils literal notranslate"><span class="pre">with</span></code> for boolean operations as its more flexible and doesn’t change the context.</p>
 </section>
 <section id="define-known-reference">
-<h4>Define known reference<a class="headerlink" href="#define-known-reference" title="Permalink to this heading"></a></h4>
+<h5>Define known reference<a class="headerlink" href="#define-known-reference" title="Permalink to this heading"></a></h5>
 <p><code class="docutils literal notranslate"><span class="pre">with</span></code> can also be used with block parameters to define known references in the current block. The example above can be converted to</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author as |myAuthor|}}</span>
   <span class="p">{{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">firstName</span><span class="p">}}}</span> <span class="p">{{{</span><span class="n">myAuthor</span><span class="o">.</span><span class="n">lastName</span><span class="p">}}}</span> <span class="n">wrote</span> <span class="p">{{{</span><span class="n">title</span><span class="p">}}}</span><span class="o">.</span>
@@ -2215,7 +2459,7 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <p>This allows for complex templates to potentially provide clearer code than <code class="docutils literal notranslate"><span class="pre">../</span></code> depthed references allow for.</p>
 </section>
 <section id="using-else-with-with-block">
-<h4>Using <code class="docutils literal notranslate"><span class="pre">else</span></code> with <code class="docutils literal notranslate"><span class="pre">with</span></code> block<a class="headerlink" href="#using-else-with-with-block" title="Permalink to this heading"></a></h4>
+<h5>Using <code class="docutils literal notranslate"><span class="pre">else</span></code> with <code class="docutils literal notranslate"><span class="pre">with</span></code> block<a class="headerlink" href="#using-else-with-with-block" title="Permalink to this heading"></a></h5>
 <p>You can optionally provide an <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> section which will display only when the passed value is empty.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#with author}}</span>
   <span class="p">{{</span><span class="n">name</span><span class="p">}}</span>
@@ -2227,7 +2471,7 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 </section>
 </section>
 <section id="lookup-helper">
-<h3>Lookup helper<a class="headerlink" href="#lookup-helper" title="Permalink to this heading"></a></h3>
+<h4>Lookup helper<a class="headerlink" href="#lookup-helper" title="Permalink to this heading"></a></h4>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">lookup</span></code> helper to do dynamic parameter resolution with Handlebars variables.</p>
 <p>One example assumes you have a map similar to what is defined below and use an <code class="docutils literal notranslate"><span class="pre">id</span></code> to resolve the value of one of the keys in the map.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">var</span> <span class="nb">map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id1&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="s2">&quot;id2&quot;</span><span class="p">:</span> <span class="s2">&quot;alpha&quot;</span><span class="p">,</span> <span class="s2">&quot;id3&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">}</span>
@@ -2241,231 +2485,41 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 </div>
 <p>NOTE: When looking up a key to get its value, <code class="docutils literal notranslate"><span class="pre">null</span></code> (if value is <code class="docutils literal notranslate"><span class="pre">null</span></code>) or <code class="docutils literal notranslate"><span class="pre">undefined</span></code> (if key is not present) will be returned so make sure to guard against those negative cases in templating.</p>
 </section>
-<section id="encode-helper">
-<h3>Encode helper<a class="headerlink" href="#encode-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">encode</span></code> helper to get strings in URL encoded format. It accepts more than one string that needs to be encoded</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">=</span><span class="p">{{</span><span class="c1">#encode ageVar}}{{/encode}}</span>
-</pre></div>
-</div>
-<p>for context <code class="docutils literal notranslate"><span class="pre">ageVar=10</span></code> will result in <code class="docutils literal notranslate"><span class="pre">age%3D10</span></code></p>
-<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encode key &#39;=&#39; value}}</span>
-</pre></div>
-</div>
-<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;name&quot;</span> <span class="pre">and</span> <span class="pre">value=&quot;John&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">name%3DJohn</span></code></p>
-</section>
-<section id="escape-helper">
-<h3>Escape helper<a class="headerlink" href="#escape-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">escape</span></code> helper to specifically escape values; for example, hyphens “-” etc., you can use the escape block in this way. It accepts more than one string that needs to be escaped</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span><span class="o">=</span><span class="p">{{</span><span class="c1">#escape key}}{{/escape}}</span>
-</pre></div>
-</div>
-<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;**somevalue</span> <span class="pre">]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">!</span> <span class="pre">special&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">name=\*\*somevalue</span> <span class="pre">\]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">\!</span> <span class="pre">special</span></code></p>
-<p>In addition, you can provide multiple inputs too which are concatenated and then encoded. For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#escape key &#39;-&#39; value}}{{/escape}}</span>
-</pre></div>
-</div>
-<p>for context <code class="docutils literal notranslate"><span class="pre">key=&quot;**somevalue</span> <span class="pre">]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">!</span> <span class="pre">special&quot;</span> <span class="pre">and</span> <span class="pre">value=&quot;John&quot;</span></code> will result in <code class="docutils literal notranslate"><span class="pre">\*\*somevalue</span> <span class="pre">\]</span> <span class="pre">which</span> <span class="pre">is</span> <span class="pre">\!</span> <span class="pre">special\-John</span></code></p>
-</section>
-<section id="encodefacet-helper">
-<h3>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this heading"></a></h3>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. This helper can be used for encoding both JSON objects and string representation of a JSON object.</p>
-<section id="passing-the-string-representation-of-a-facet-blob">
-<h4>1. Passing the string representation of a facet blob<a class="headerlink" href="#passing-the-string-representation-of-a-facet-blob" title="Permalink to this heading"></a></h4>
-<p>The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
-<p>Template (newline and indentation added for readability and should be removed):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet}}</span>
-<span class="p">{</span>
-  \<span class="s2">&quot;and</span><span class="se">\&quot;</span><span class="s2">: [</span>
-    <span class="p">{</span>
-      \<span class="s2">&quot;source</span><span class="se">\&quot;</span><span class="s2">: [{</span><span class="se">\&quot;</span><span class="s2">inbound</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">schema</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">fk_1</span><span class="se">\&quot;</span><span class="s2">]}]}, </span><span class="se">\&quot;</span><span class="s2">RID</span><span class="se">\&quot;</span><span class="s2">],</span>
-      \<span class="s2">&quot;choices</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">{{</span><span class="si">{RID}</span><span class="s2">}}</span><span class="se">\&quot;</span><span class="s2">]</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-<span class="p">{{</span><span class="o">/</span><span class="n">encodeFacet</span><span class="p">}})</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-<p>As you can see in this example we are escaping all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s. This is because you are usually passing this value in a string in a JSON document. So all the <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>s must be escaped.</p>
-<p>You can also pass the string representation of the JSON object like the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">encodeFacet</span> <span class="n">json_str</span><span class="p">}}</span>
-</pre></div>
-</div>
-<p>or</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#encodeFacet json_str}}{{/encodeFacet}}</span>
-</pre></div>
-</div>
-<p>With the following context:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;json_str&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;and\&quot;: [{\&quot;source\&quot;: [{\&quot;inbound\&quot;: [\&quot;schema\&quot;, \&quot;fk_1\&quot;]}]}, \&quot;RID\&quot;], \&quot;choices\&quot;: [\&quot;{{{RID}}}\&quot;]}]}&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</section>
-<section id="passing-the-json-object-representing-a-facet">
-<h4>2. Passing the JSON object representing a facet<a class="headerlink" href="#passing-the-json-object-representing-a-facet" title="Permalink to this heading"></a></h4>
-<p>For instance, assuming <code class="docutils literal notranslate"><span class="pre">obj</span></code> is the name of the <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> column that stores the facet object:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet obj}})</span>
-</pre></div>
-</div>
-<p>or</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{#encodeFacet obj}}{{/encodeFacet}})</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="jsonstringify-helper">
-<h3>JsonStringify helper<a class="headerlink" href="#jsonstringify-helper" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">jsonStringify</span></code> helper will convert the supplied JSON object into a string representation of the JSON object. This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">JSON.stringify</span></code> function in javascript.</p>
-<p>The following are different ways of using this helper (assume <code class="docutils literal notranslate"><span class="pre">column</span></code> stores a JSON object):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#jsonStringify}}{{{column}}}{{/jsonStringify}}</span>
-
-<span class="p">{{</span><span class="c1">#jsonStringify column}}{{/jsonStringify}}</span>
-</pre></div>
-</div>
-<p>This can be used in conjunction with the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper for creating facet URL strings. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">caption</span><span class="p">](</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chaise</span><span class="o">/</span><span class="n">recordset</span><span class="o">/</span><span class="c1">#1/S:T/*::facets::{{encodeFacet (jsonStringify col)}})</span>
-</pre></div>
-</div>
-<p>Wher <code class="docutils literal notranslate"><span class="pre">col</span></code> is:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;inbound&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;schema&quot;</span><span class="p">,</span> <span class="s2">&quot;fk_1&quot;</span><span class="p">]}]},</span> <span class="s2">&quot;RID&quot;</span><span class="p">],</span>
-      <span class="s2">&quot;choices&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;{{</span><span class="si">{RID}</span><span class="s2">}}&quot;</span><span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>This would result in:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-</pre></div>
-</div>
-</section>
-<section id="findfirst-helper">
-<h3>Findfirst helper<a class="headerlink" href="#findfirst-helper" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">regexFindFirst</span></code> helper will take the input regular expression and return the first matching substring from the supplied string. Will return <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> otherwise.</p>
-<blockquote>
-<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
-</div></blockquote>
-<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;jpg|png&quot;}}{{this}}{{/regexFindFirst}}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png&quot;</span>
-</pre></div>
-</div>
-<p>An example template to extract the filename from a given path with testString = “/var/www/html/index.html”:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;[^\/]+$&quot;}}{{this}}{{/regexFindFirst}}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;index.html&quot;</span>
-</pre></div>
-</div>
-<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindFirst testString &quot;human&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
-</div></blockquote>
-</section>
-<section id="findall-helper">
-<h3>Findall helper<a class="headerlink" href="#findall-helper" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">regexFindAll</span></code> helper will take the input regular expression and return all the matching substrings from the supplied string in an array. Will return <code class="docutils literal notranslate"><span class="pre">[]</span></code> otherwise.</p>
-<blockquote>
-<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
-</div></blockquote>
-<p>A simple example where we try to match the file extension <code class="docutils literal notranslate"><span class="pre">jpg</span></code> or <code class="docutils literal notranslate"><span class="pre">png</span></code> with testString=”jumpng-fox.jpg”:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#each (regexFindAll testString &quot;jpg|png&quot;)}}{{this}}\n{{/each}}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;png</span><span class="se">\n</span><span class="s2">jpg</span><span class="se">\n</span><span class="s2">&quot;</span>
-</pre></div>
-</div>
-<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. For example you can use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#regexFindAll testString &quot;ACO1&quot; flags=&quot;i&quot; }}{{this}}{{/regexFindFirst}}</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
-</div></blockquote>
-</section>
-<section id="replace-helper">
-<h3>Replace helper<a class="headerlink" href="#replace-helper" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">replace</span></code> helper will take the input regular expression (first argument) and replace all matches in the supplied string with the supplied substring (second argument). This helper behaves the same way as the <code class="docutils literal notranslate"><span class="pre">replace</span></code> function for Strings in javascript.</p>
-<blockquote>
-<div><p>The regular expression syntax that Javascript supports is a bit different from other languages, please refer to <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN regular expressions document</a> for more information.</p>
-</div></blockquote>
-<p>One example would be to replace all underscores with whitespace characters for table name display.</p>
-<p>Template:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot;}}table_name_with_underscores{{/replace}}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name</span> <span class="k">with</span> <span class="n">underscores</span>
-</pre></div>
-</div>
-<p>You can also use the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named optional argument to pass <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags">regular expression flags</a>. By default we’re using the <code class="docutils literal notranslate"><span class="pre">g</span></code> flag, that’s why the example above is replacing all the matches. Examples of using the <code class="docutils literal notranslate"><span class="pre">flags</span></code> named argument:</p>
-<ul>
-<li><p>If you only want to replace the first match, you can pass empty string for flags:</p>
-<ul class="simple">
-<li><p>Template:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;_&quot; &quot; &quot; flags=&quot;&quot;}}table_name_with_underscores{{/replace}}</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Result:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="n">name_with_underscores</span>
-</pre></div>
-</div>
-</li>
-<li><p>Use the <code class="docutils literal notranslate"><span class="pre">i</span></code> flag for case-insensitive searching (in this example we’re also using <code class="docutils literal notranslate"><span class="pre">g</span></code> flag to make sure we’re still replacing all the matches):</p>
-<ul class="simple">
-<li><p>Template:</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#replace &quot;aco1&quot; &quot;ACO1&quot; flags=&quot;ig&quot;}}{{{Gene_Names}}}{{/replace}}</span>
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>Result (assuming <code class="docutils literal notranslate"><span class="pre">Gene_Names</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;Aco1,</span> <span class="pre">ACO1&quot;</span></code>):</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACO1</span><span class="p">,</span> <span class="n">ACO1</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</section>
-<section id="totitlecase-helper">
-<h3>ToTitleCase helper<a class="headerlink" href="#totitlecase-helper" title="Permalink to this heading"></a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">toTitleCase</span></code> helper will change the first character of each word (split by whitespace) in the string to a capital letter. The rest of the case of the string will remain unchanged.</p>
-<p>Template:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#toTitleCase}}this is the title of my page{{/toTitleCase}}</span>
-</pre></div>
-</div>
-<p>Result:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">This</span> <span class="n">Is</span> <span class="n">The</span> <span class="n">Title</span> <span class="n">Of</span> <span class="n">My</span> <span class="n">Page</span>
-</pre></div>
-</div>
 </section>
 </section>
 <section id="boolean-helpers">
 <h2>Boolean Helpers<a class="headerlink" href="#boolean-helpers" title="Permalink to this heading"></a></h2>
-<p>In this section we go over the helpers that can be used to do boolean operations. These helpers are commonly used with <code class="docutils literal notranslate"><span class="pre">if</span></code> or <code class="docutils literal notranslate"><span class="pre">unless</span></code>.</p>
+<p>This section covers two related groups: helpers that produce booleans (comparison, regex match, list membership, ACL, logical), and the <code class="docutils literal notranslate"><span class="pre">if</span></code> / <code class="docutils literal notranslate"><span class="pre">unless</span></code> blocks that consume them. Most boolean helpers are designed to be wrapped in an <code class="docutils literal notranslate"><span class="pre">#if</span></code> block, often as subexpressions.</p>
+<section id="if-helper">
+<h3>If helper<a class="headerlink" href="#if-helper" title="Permalink to this heading"></a></h3>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper to conditionally render a block. If its argument returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>, or <code class="docutils literal notranslate"><span class="pre">[]</span></code>, Handlebars will not render the block. You can use this helper with any of the <a class="reference internal" href="#boolean-helpers"><span class="std std-ref">Boolean Helpers</span></a> to do more complicated logical operations.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{/if}}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>If you’re using <code class="docutils literal notranslate"><span class="pre">if</span></code> block only to check for a JSON object and then using it, consider using <a class="reference internal" href="#with-helper"><span class="std std-ref">with helper</span></a> which will do the truthy check and changes context at the same time similar to <a class="reference internal" href="#null-checking"><span class="std std-ref">how Mustache null checking works</span></a>.</p>
+</div></blockquote>
+<p>When using a block expression, you can specify a template section to run if the expression returns a falsy value. The section, marked by <code class="docutils literal notranslate"><span class="pre">{{else}}</span></code> is called an “else section”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{{firstName}}} {{{lastName}}}{{else}}Hidden Author{{/if}}</span>
+</pre></div>
+</div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">else</span> <span class="pre">if</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if isVisible}} {{firstName}} {{lastName}}{{else if isKnown}} Unknown Author {{else}} Hidden and Unknown Author{{/if}}</span>
+</pre></div>
+</div>
+<p>Plesae refer to <a class="reference internal" href="#boolean-helpers"><span class="std std-ref">Boolean Helpers</span></a> section to learn how you can achieve more complicated comparisons inside the <code class="docutils literal notranslate"><span class="pre">if</span></code> block.</p>
+</section>
+<section id="unless-helper">
+<h3>Unless helper<a class="headerlink" href="#unless-helper" title="Permalink to this heading"></a></h3>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">unless</span></code> helper as the inverse of the <code class="docutils literal notranslate"><span class="pre">if</span></code> helper. Its block will be rendered if the expression returns a falsy value.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#unless license}}WARNING: This entry does not have a license!{{/unless}}</span>
+</pre></div>
+</div>
+<p>If looking up <code class="docutils literal notranslate"><span class="pre">license</span></code> under the current context returns a <code class="docutils literal notranslate"><span class="pre">falsy</span></code> value, Handlebars will render the warning. Otherwise, it will render nothing.</p>
+<p><strong>NOTE</strong>: You can use inverted if (<code class="docutils literal notranslate"><span class="pre">^if</span></code>) to get the same effect of <code class="docutils literal notranslate"><span class="pre">unless</span></code></p>
+</section>
 <section id="comparison-helpers">
 <h3>Comparison Helpers<a class="headerlink" href="#comparison-helpers" title="Permalink to this heading"></a></h3>
 <ul class="simple">
@@ -2534,6 +2588,32 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <blockquote>
 <div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
 </div></blockquote>
+</section>
+<section id="list-membership">
+<h3>List Membership<a class="headerlink" href="#list-membership" title="Permalink to this heading"></a></h3>
+<p>Membership test helpers.</p>
+<section id="memberof">
+<h4>memberOf<a class="headerlink" href="#memberof" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">memberOf</span></code> checks whether a scalar value appears in a list of candidates. <code class="docutils literal notranslate"><span class="pre">memberOf</span></code> is variadic. Pass the value to test, then any number of candidate args. Array arguments are flattened one level, so the same helper covers a fixed list, a column whose value is an array, or the result of <a class="reference internal" href="#pluck"><span class="std std-ref">pluck</span></a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (memberOf type &quot;non-polymer&quot; &quot;polymer&quot;)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (memberOf type allowedArray)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (memberOf type allowedArray &quot;extra&quot;)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (memberOf &quot;non-polymer&quot; (pluck $self &quot;values.type&quot;))}}...{{/if}}</span>
+</pre></div>
+</div>
+</section>
+<section id="hasmember">
+<h4>hasMember<a class="headerlink" href="#hasmember" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">hasMember</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the given array contains the given value. If the first argument is not an array (missing column, scalar value, etc.), it returns <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (hasMember tags &quot;active&quot;)}}</span>
+  <span class="o">...</span>
+<span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="access-control-acl-check">
 <h3>Access Control (ACL) check<a class="headerlink" href="#access-control-acl-check" title="Permalink to this heading"></a></h3>

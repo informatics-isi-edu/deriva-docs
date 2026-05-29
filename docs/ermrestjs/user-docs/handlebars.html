@@ -1404,6 +1404,14 @@
 <li><p><a class="reference internal" href="#formatdatetime-helper"><span class="std std-ref">formatDatetime helper</span></a></p></li>
 <li><p><a class="reference internal" href="#datetimetosnapshot-helper"><span class="std std-ref">datetimeToSnapshot helper</span></a></p></li>
 <li><p><a class="reference internal" href="#snapshottodatetime-helper"><span class="std std-ref">snapshotToDatetime helper</span></a></p></li>
+<li><p><a class="reference internal" href="#datetimeduration-helper"><span class="std std-ref">datetimeDuration helper</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#unit"><span class="std std-ref">unit</span></a></p></li>
+<li><p><a class="reference internal" href="#fraction"><span class="std std-ref">fraction</span></a></p></li>
+<li><p><a class="reference internal" href="#direction"><span class="std std-ref">direction</span></a></p></li>
+<li><p>tooltip</p></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>Numbers &amp; math</p>
@@ -1991,6 +1999,78 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </pre></div>
 </div>
 </section>
+<section id="datetimeduration-helper">
+<h4>datetimeDuration helper<a class="headerlink" href="#datetimeduration-helper" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">datetimeDuration</span></code> returns the duration between two <code class="docutils literal notranslate"><span class="pre">date</span></code>, <code class="docutils literal notranslate"><span class="pre">timestamp</span></code>, or <code class="docutils literal notranslate"><span class="pre">timestamptz</span></code> values. By default, it picks the largest unit that produces a whole number, prepends a <code class="docutils literal notranslate"><span class="pre">+</span></code> or <code class="docutils literal notranslate"><span class="pre">-</span></code> sign, and uses one decimal place.</p>
+<p>Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>The duration is <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">-</span> <span class="pre">start</span></code>, so a positive output means <code class="docutils literal notranslate"><span class="pre">end</span></code> is after <code class="docutils literal notranslate"><span class="pre">start</span></code>. An invalid input (null or unparseable) returns the empty string. When <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">===</span> <span class="pre">end</span></code>, the output is always <code class="docutils literal notranslate"><span class="pre">&quot;0</span> <span class="pre">seconds&quot;</span></code> (no sign or direction word).</p>
+<p>The conversion uses fixed Julian constants: <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">year</span> <span class="pre">=</span> <span class="pre">365.25</span> <span class="pre">days</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">month</span> <span class="pre">=</span> <span class="pre">30.4375</span> <span class="pre">days</span></code> (<code class="docutils literal notranslate"><span class="pre">365.25</span> <span class="pre">/</span> <span class="pre">12</span></code>), <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">day</span> <span class="pre">=</span> <span class="pre">24</span> <span class="pre">hours</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">hour</span> <span class="pre">=</span> <span class="pre">60</span> <span class="pre">minutes</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">minute</span> <span class="pre">=</span> <span class="pre">60</span> <span class="pre">seconds</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">second</span> <span class="pre">=</span> <span class="pre">1000</span> <span class="pre">ms</span></code>. <!-- These match `moment.js` / `date-fns` / astronomy conventions and are self-consistent (`12 × month = year`). --></p>
+<p>Examples (assume <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">=</span> <span class="pre">2025-01-01T00:00:00Z</span></code>, <code class="docutils literal notranslate"><span class="pre">end</span> <span class="pre">=</span> <span class="pre">2025-02-05T00:00:00Z</span></code> which is 35 days):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span><span class="p">}}</span>                              <span class="o">==&gt;</span> <span class="s1">&#39;+1.1 months&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">fraction</span><span class="o">=</span><span class="mi">4</span><span class="p">}}</span>                   <span class="o">==&gt;</span> <span class="s1">&#39;+1.1499 months&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;day&quot;</span><span class="p">}}</span>                   <span class="o">==&gt;</span> <span class="s1">&#39;+35.0 days&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;multi&quot;</span><span class="p">}}</span>                 <span class="o">==&gt;</span> <span class="s1">&#39;+1M 4D 13h 30m&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;calendar&quot;</span><span class="p">}}</span>              <span class="o">==&gt;</span> <span class="s1">&#39;+1M 4D&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;before/after&quot;</span><span class="p">}}</span>     <span class="o">==&gt;</span> <span class="s1">&#39;1.1 months after&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;unsigned&quot;</span><span class="p">}}</span>         <span class="o">==&gt;</span> <span class="s1">&#39;1.1 months&#39;</span>
+<span class="p">{{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;month&quot;</span> <span class="n">tooltip</span><span class="o">=</span><span class="n">true</span><span class="p">}}}</span>  <span class="o">==&gt;</span> <span class="s1">&#39;:span:+1.1 months:/span:{data-chaise-tooltip=&quot;1M 4D 13h 30m&amp;#10;&amp;#10;M = 30.4375 days, D = 24 hours&amp;#10;h = 60 minutes, m = 60 seconds&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>The optional arguments are:</p>
+<section id="unit">
+<h5><code class="docutils literal notranslate"><span class="pre">unit</span></code><a class="headerlink" href="#unit" title="Permalink to this heading"></a></h5>
+<p>A string controlling how the duration is rendered. Accepted values:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code> (default): pick the largest unit where the value is at least 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;year&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;month&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;day&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;hour&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;minute&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;second&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;millisecond&quot;</span></code>: force a single unit.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;multi&quot;</span></code>: multi-component breakdown using the same fixed-math constants (e.g., <code class="docutils literal notranslate"><span class="pre">1M</span> <span class="pre">4D</span> <span class="pre">13h</span> <span class="pre">30m</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;calendar&quot;</span></code>: multi-component breakdown computed with a calendar-aware walk (UTC) instead of fixed-math constants, e.g., <code class="docutils literal notranslate"><span class="pre">Jan</span> <span class="pre">1</span> <span class="pre">→</span> <span class="pre">Feb</span> <span class="pre">1</span> <span class="pre">==&gt;</span> <span class="pre">&quot;1M&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">Jan</span> <span class="pre">31</span> <span class="pre">→</span> <span class="pre">Feb</span> <span class="pre">28</span> <span class="pre">==&gt;</span> <span class="pre">&quot;1M&quot;</span></code> (month arithmetic clamps to the last day of the target month).</p>
+<blockquote>
+<div><p>:warning: CAUTION :warning: <code class="docutils literal notranslate"><span class="pre">&quot;calendar&quot;</span></code> uses fundamentally different math from every other <code class="docutils literal notranslate"><span class="pre">unit</span></code> value. Mixing it with the others in the same view will produce values that disagree. The same diff can render as <code class="docutils literal notranslate"><span class="pre">+0.9</span> <span class="pre">months</span></code> under <code class="docutils literal notranslate"><span class="pre">unit=&quot;month&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">+1M</span></code> under <code class="docutils literal notranslate"><span class="pre">unit=&quot;calendar&quot;</span></code>. If you choose <code class="docutils literal notranslate"><span class="pre">&quot;calendar&quot;</span></code>, use it consistently everywhere you render a duration for the same data.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>Any unrecognized value falls back to <code class="docutils literal notranslate"><span class="pre">&quot;auto&quot;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">}}</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">}}</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;multi&quot;</span><span class="p">}}</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;calendar&quot;</span><span class="p">}}</span>
+</pre></div>
+</div>
+</section>
+<section id="fraction">
+<h5><code class="docutils literal notranslate"><span class="pre">fraction</span></code><a class="headerlink" href="#fraction" title="Permalink to this heading"></a></h5>
+<p>A non-negative integer specifying the number of decimal places in the output. Defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code>. The value is rounded to this many places (round-half-away-from-zero) and trailing zeros are preserved. With <code class="docutils literal notranslate"><span class="pre">fraction=0</span></code>, the decimal point and trailing zeros are dropped.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">unit=&quot;multi&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">unit=&quot;calendar&quot;</span></code>, the fraction applies to the seconds component only.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">fraction</span><span class="o">=</span><span class="mi">0</span><span class="p">}}</span>   <span class="o">==&gt;</span> <span class="s1">&#39;+1 months&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">fraction</span><span class="o">=</span><span class="mi">2</span><span class="p">}}</span>   <span class="o">==&gt;</span> <span class="s1">&#39;+1.15 months&#39;</span>
+<span class="p">{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">fraction</span><span class="o">=</span><span class="mi">4</span><span class="p">}}</span>   <span class="o">==&gt;</span> <span class="s1">&#39;+1.1499 months&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="direction">
+<h5><code class="docutils literal notranslate"><span class="pre">direction</span></code><a class="headerlink" href="#direction" title="Permalink to this heading"></a></h5>
+<p>Controls how the sign of the duration is rendered. Accepted values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;sign&quot;</span></code> (default): prepend <code class="docutils literal notranslate"><span class="pre">+</span></code> or <code class="docutils literal notranslate"><span class="pre">-</span></code> to the output. e.g., <code class="docutils literal notranslate"><span class="pre">+1.2</span> <span class="pre">years</span></code>, <code class="docutils literal notranslate"><span class="pre">-1.2</span> <span class="pre">years</span></code>. For <code class="docutils literal notranslate"><span class="pre">multi</span></code> / <code class="docutils literal notranslate"><span class="pre">calendar</span></code>, the sign goes on the whole expression: <code class="docutils literal notranslate"><span class="pre">+5Y</span> <span class="pre">6M</span> <span class="pre">4D</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;before/after&quot;</span></code>: append <code class="docutils literal notranslate"><span class="pre">before</span></code> (negative) or <code class="docutils literal notranslate"><span class="pre">after</span></code> (positive). e.g., <code class="docutils literal notranslate"><span class="pre">1.2</span> <span class="pre">years</span> <span class="pre">after</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;earlier/later&quot;</span></code>: append <code class="docutils literal notranslate"><span class="pre">earlier</span></code> (negative) or <code class="docutils literal notranslate"><span class="pre">later</span></code> (positive). e.g., <code class="docutils literal notranslate"><span class="pre">1.2</span> <span class="pre">years</span> <span class="pre">later</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;unsigned&quot;</span></code>: no sign or word. e.g., <code class="docutils literal notranslate"><span class="pre">1.2</span> <span class="pre">years</span></code>.</p></li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">===</span> <span class="pre">end</span></code>, no sign or word is emitted regardless of <code class="docutils literal notranslate"><span class="pre">direction</span></code> (output is always <code class="docutils literal notranslate"><span class="pre">&quot;0</span> <span class="pre">seconds&quot;</span></code>). Any unrecognized value falls back to <code class="docutils literal notranslate"><span class="pre">&quot;sign&quot;</span></code>.</p>
+</section>
+<section id="tooltip">
+<h5><code class="docutils literal notranslate"><span class="pre">tooltip</span></code><a class="headerlink" href="#tooltip" title="Permalink to this heading"></a></h5>
+<p>A boolean. When <code class="docutils literal notranslate"><span class="pre">true</span></code>, wraps the visible value in a tooltip span that shows the fixed-math <code class="docutils literal notranslate"><span class="pre">multi</span></code> form and the conversion constants for the units it contains. The tooltip is automatically suppressed when <code class="docutils literal notranslate"><span class="pre">unit=&quot;calendar&quot;</span></code>.</p>
+<p>You <strong>must</strong> use the triple-brace form when <code class="docutils literal notranslate"><span class="pre">tooltip=true</span></code>. The default <code class="docutils literal notranslate"><span class="pre">{{...}}</span></code> syntax HTML-escapes the <code class="docutils literal notranslate"><span class="pre">=</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;</span></code> in the tooltip markup, which corrupts the attribute block, and the tooltip will not render.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">datetimeDuration</span> <span class="n">start</span> <span class="n">end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;month&quot;</span> <span class="n">tooltip</span><span class="o">=</span><span class="n">true</span><span class="p">}}}</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 <section id="numbers-math">
 <h3>Numbers &amp; math<a class="headerlink" href="#numbers-math" title="Permalink to this heading"></a></h3>
@@ -2017,7 +2097,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <span class="p">{{</span><span class="n">humanizeBytes</span> <span class="mi">41235532</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span> <span class="n">precision</span><span class="o">=</span><span class="mi">5</span> <span class="n">tootlip</span><span class="o">=</span><span class="n">true</span><span class="p">}}</span> <span class="o">==&gt;</span> <span class="s1">&#39;:span:39.325 MiB:/span:{data-chaise-tooltip=&quot;41235532 bytes (1 MiB = 1,048,576 bytes)&quot;}&#39;</span>
 </pre></div>
 </div>
-<p>The arguments are:</p>
+<p>The optional arguments are:</p>
 <section id="mode">
 <h5><code class="docutils literal notranslate"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="Permalink to this heading"></a></h5>
 <p>This argument will allow you to change the output format. It can either be a string <code class="docutils literal notranslate"><span class="pre">&quot;si&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;binary&quot;</span></code>. Any other value will be ignored.</p>
@@ -2043,8 +2123,8 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </pre></div>
 </div>
 </section>
-<section id="tooltip">
-<h5><code class="docutils literal notranslate"><span class="pre">tooltip</span></code><a class="headerlink" href="#tooltip" title="Permalink to this heading"></a></h5>
+<section id="id1">
+<h5><code class="docutils literal notranslate"><span class="pre">tooltip</span></code><a class="headerlink" href="#id1" title="Permalink to this heading"></a></h5>
 <p>A boolean value specifying whether you want the output to include a tooltip or not. If this argument is missing, we will not return any tooltips.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">humanizeBytes</span> <span class="n">value</span> <span class="n">tooltip</span><span class="o">=</span><span class="n">true</span><span class="p">}}</span>
 </pre></div>

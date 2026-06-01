@@ -1468,343 +1468,417 @@ j — yields a JavaScript object or array as a JSON encoded string
 <th style="text-align: left;">Expression</th>
 <th style="text-align: left;">Input</th>
 <th style="text-align: left;">Output</th>
+<th style="text-align: left;">Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">'%%'</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">'%'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%b'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'10'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%c'</td>
-<td style="text-align: left;">65</td>
-<td style="text-align: left;">'A'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%d'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%i'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%d'</td>
-<td style="text-align: left;">'2'</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%i'</td>
-<td style="text-align: left;">'2'</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%j'</td>
-<td style="text-align: left;">{ "foo": "bar" }</td>
-<td style="text-align: left;">'{"foo":"bar"}'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%j'</td>
-<td style="text-align: left;">["foo", "bar"]</td>
-<td style="text-align: left;">'["foo","bar"]'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%e'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2e+0'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%u'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%u'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'4294967294'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%f'</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: left;">'2.2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%g'</td>
-<td style="text-align: left;">3.141592653589793</td>
-<td style="text-align: left;">'3.141592653589793'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%o'</td>
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">'10'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%o'</td>
-<td style="text-align: left;">-8</td>
-<td style="text-align: left;">'37777777770'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%s'</td>
-<td style="text-align: left;">'%s'</td>
-<td style="text-align: left;">'%s'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%X'</td>
-<td style="text-align: left;">255</td>
-<td style="text-align: left;">'FF'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%X'</td>
-<td style="text-align: left;">-255</td>
-<td style="text-align: left;">'FFFFFF01'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'Hello %(who)s!'</td>
-<td style="text-align: left;">{ who: 'world' }</td>
-<td style="text-align: left;">'Hello world!'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">true</td>
-<td style="text-align: left;">'true'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%.1t'</td>
-<td style="text-align: left;">true</td>
-<td style="text-align: left;">'t'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">'true'</td>
-<td style="text-align: left;">'true'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">'true'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">false</td>
-<td style="text-align: left;">'false'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%.1t'</td>
-<td style="text-align: left;">false</td>
-<td style="text-align: left;">'f'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">''</td>
-<td style="text-align: left;">'false'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%t'</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">'false'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%d'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%d'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+d'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'+2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+d'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%i'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%i'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+i'</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">'+2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+i'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%f'</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: left;">'2.2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%f'</td>
-<td style="text-align: left;">-2.2</td>
-<td style="text-align: left;">'-2.2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+f'</td>
-<td style="text-align: left;">2.2</td>
-<td style="text-align: left;">'+2.2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+f'</td>
-<td style="text-align: left;">-2.2</td>
-<td style="text-align: left;">'-2.2'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+.1f'</td>
-<td style="text-align: left;">-2.34</td>
-<td style="text-align: left;">'-2.3'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+.1f'</td>
-<td style="text-align: left;">-0.01</td>
-<td style="text-align: left;">'-0.0'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%.6g'</td>
-<td style="text-align: left;">3.141592653589793</td>
-<td style="text-align: left;">'3.14159'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%.3g'</td>
-<td style="text-align: left;">3.141592653589793</td>
-<td style="text-align: left;">'3.14'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%.1g'</td>
-<td style="text-align: left;">3.141592653589793</td>
-<td style="text-align: left;">'3'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+010d'</td>
-<td style="text-align: left;">-123</td>
-<td style="text-align: left;">'-000000123'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%+#_10d'</td>
-<td style="text-align: left;">-123</td>
-<td style="text-align: left;">'______-123'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%f'</td>
-<td style="text-align: left;">-234.34</td>
-<td style="text-align: left;">'-234.34'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%05d'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-0002'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%05i'</td>
-<td style="text-align: left;">-2</td>
-<td style="text-align: left;">'-0002'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%5s'</td>
-<td style="text-align: left;">'&lt;'</td>
-<td style="text-align: left;">'    &lt;'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%05s'</td>
-<td style="text-align: left;">'&lt;'</td>
-<td style="text-align: left;">'0000&lt;'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%#_5s'</td>
-<td style="text-align: left;">'&lt;'</td>
-<td style="text-align: left;">'____&lt;'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%-5s'</td>
-<td style="text-align: left;">'&gt;'</td>
-<td style="text-align: left;">'&gt;    '</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%0-5s'</td>
-<td style="text-align: left;">'&gt;'</td>
-<td style="text-align: left;">'&gt;0000'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%#_-5s'</td>
-<td style="text-align: left;">'&gt;'</td>
-<td style="text-align: left;">'&gt;____'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%5s'</td>
-<td style="text-align: left;">'xxxxxx'</td>
-<td style="text-align: left;">'xxxxxx'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%02u'</td>
-<td style="text-align: left;">1234</td>
-<td style="text-align: left;">'1234'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%8.3f'</td>
-<td style="text-align: left;">-10.23456</td>
-<td style="text-align: left;">' -10.235'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%f %s'</td>
-<td style="text-align: left;">-12.34</td>
-<td style="text-align: left;">'-12.34 xxx'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%2j'</td>
-<td style="text-align: left;">{ "foo": "bar" }</td>
-<td style="text-align: left;">'{\n  "foo":"bar"\n}'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%2j'</td>
-<td style="text-align: left;">["foo", "bar"]</td>
-<td style="text-align: left;">'[\n  "foo",\n  "bar"\n]'</td>
-</tr>
-<tr>
 <td style="text-align: left;">'%.1f'</td>
 <td style="text-align: left;">2.345</td>
 <td style="text-align: left;">'2.3'</td>
+<td style="text-align: left;">Round float to 1 decimal place</td>
 </tr>
 <tr>
-<td style="text-align: left;">'%5.5s'</td>
-<td style="text-align: left;">'xxxxxx'</td>
-<td style="text-align: left;">'xxxxx'</td>
-</tr>
-<tr>
-<td style="text-align: left;">'%5.1s'</td>
-<td style="text-align: left;">'xxxxxx'</td>
-<td style="text-align: left;">'    x'</td>
-</tr>
-<tr>
-<td style="text-align: left;">%'15.3f</td>
-<td style="text-align: left;">10000.23456</td>
-<td style="text-align: left;">'     10,000.235'</td>
+<td style="text-align: left;">'%d'</td>
+<td style="text-align: left;">12345668</td>
+<td style="text-align: left;">'12345668'</td>
+<td style="text-align: left;">Disable default thousand separator for integers</td>
 </tr>
 <tr>
 <td style="text-align: left;">%'15d</td>
 <td style="text-align: left;">12345668</td>
 <td style="text-align: left;">'     12,345,668'</td>
+<td style="text-align: left;">Enable thousand separator (width 15)</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%%'</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">'%'</td>
+<td style="text-align: left;">Literal percent sign</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%b'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'10'</td>
+<td style="text-align: left;">Integer as binary</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%c'</td>
+<td style="text-align: left;">65</td>
+<td style="text-align: left;">'A'</td>
+<td style="text-align: left;">Integer as ASCII character</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%d'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">Signed decimal integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%i'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">Signed decimal integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%d'</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">String coerced to integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%i'</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">String coerced to integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%j'</td>
+<td style="text-align: left;">{ "foo": "bar" }</td>
+<td style="text-align: left;">'{"foo":"bar"}'</td>
+<td style="text-align: left;">Object as JSON</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%j'</td>
+<td style="text-align: left;">["foo", "bar"]</td>
+<td style="text-align: left;">'["foo","bar"]'</td>
+<td style="text-align: left;">Array as JSON</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%e'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2e+0'</td>
+<td style="text-align: left;">Scientific notation</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%u'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">Unsigned integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%u'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'4294967294'</td>
+<td style="text-align: left;">Negative wraps as unsigned</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%f'</td>
+<td style="text-align: left;">2.2</td>
+<td style="text-align: left;">'2.2'</td>
+<td style="text-align: left;">Float as-is</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%g'</td>
+<td style="text-align: left;">3.141592653589793</td>
+<td style="text-align: left;">'3.141592653589793'</td>
+<td style="text-align: left;">Float, shortest representation</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%o'</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">'10'</td>
+<td style="text-align: left;">Integer as octal</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%o'</td>
+<td style="text-align: left;">-8</td>
+<td style="text-align: left;">'37777777770'</td>
+<td style="text-align: left;">Negative octal</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%s'</td>
+<td style="text-align: left;">'%s'</td>
+<td style="text-align: left;">'%s'</td>
+<td style="text-align: left;">String as-is</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%X'</td>
+<td style="text-align: left;">255</td>
+<td style="text-align: left;">'FF'</td>
+<td style="text-align: left;">Integer as uppercase hex</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%X'</td>
+<td style="text-align: left;">-255</td>
+<td style="text-align: left;">'FFFFFF01'</td>
+<td style="text-align: left;">Negative hex</td>
+</tr>
+<tr>
+<td style="text-align: left;">'Hello %(who)s!'</td>
+<td style="text-align: left;">{ who: 'world' }</td>
+<td style="text-align: left;">'Hello world!'</td>
+<td style="text-align: left;">Named argument from object</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">true</td>
+<td style="text-align: left;">'true'</td>
+<td style="text-align: left;">Boolean as text</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%.1t'</td>
+<td style="text-align: left;">true</td>
+<td style="text-align: left;">'t'</td>
+<td style="text-align: left;">Boolean truncated to 1 char</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">'true'</td>
+<td style="text-align: left;">'true'</td>
+<td style="text-align: left;">Truthy value as boolean</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">'true'</td>
+<td style="text-align: left;">Truthy value as boolean</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">false</td>
+<td style="text-align: left;">'false'</td>
+<td style="text-align: left;">Boolean as text</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%.1t'</td>
+<td style="text-align: left;">false</td>
+<td style="text-align: left;">'f'</td>
+<td style="text-align: left;">Boolean truncated to 1 char</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">''</td>
+<td style="text-align: left;">'false'</td>
+<td style="text-align: left;">Falsy value as boolean</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%t'</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">'false'</td>
+<td style="text-align: left;">Falsy value as boolean</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%d'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">Signed decimal integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%d'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-2'</td>
+<td style="text-align: left;">Negative integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+d'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'+2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+d'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%i'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'2'</td>
+<td style="text-align: left;">Signed decimal integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%i'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-2'</td>
+<td style="text-align: left;">Negative integer</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+i'</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">'+2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+i'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%f'</td>
+<td style="text-align: left;">2.2</td>
+<td style="text-align: left;">'2.2'</td>
+<td style="text-align: left;">Float as-is</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%f'</td>
+<td style="text-align: left;">-2.2</td>
+<td style="text-align: left;">'-2.2'</td>
+<td style="text-align: left;">Negative float</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+f'</td>
+<td style="text-align: left;">2.2</td>
+<td style="text-align: left;">'+2.2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+f'</td>
+<td style="text-align: left;">-2.2</td>
+<td style="text-align: left;">'-2.2'</td>
+<td style="text-align: left;">Force sign on positives</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+.1f'</td>
+<td style="text-align: left;">-2.34</td>
+<td style="text-align: left;">'-2.3'</td>
+<td style="text-align: left;">Signed, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+.1f'</td>
+<td style="text-align: left;">-0.01</td>
+<td style="text-align: left;">'-0.0'</td>
+<td style="text-align: left;">Signed, 1 decimal place</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%.6g'</td>
+<td style="text-align: left;">3.141592653589793</td>
+<td style="text-align: left;">'3.14159'</td>
+<td style="text-align: left;">6 significant digits</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%.3g'</td>
+<td style="text-align: left;">3.141592653589793</td>
+<td style="text-align: left;">'3.14'</td>
+<td style="text-align: left;">3 significant digits</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%.1g'</td>
+<td style="text-align: left;">3.141592653589793</td>
+<td style="text-align: left;">'3'</td>
+<td style="text-align: left;">1 significant digit</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+010d'</td>
+<td style="text-align: left;">-123</td>
+<td style="text-align: left;">'-000000123'</td>
+<td style="text-align: left;">Signed, zero-padded to width</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%+#_10d'</td>
+<td style="text-align: left;">-123</td>
+<td style="text-align: left;">'______-123'</td>
+<td style="text-align: left;">Signed, custom pad char</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%f'</td>
+<td style="text-align: left;">-234.34</td>
+<td style="text-align: left;">'-234.34'</td>
+<td style="text-align: left;">Negative float</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%05d'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-0002'</td>
+<td style="text-align: left;">Pad with leading zeros to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%05i'</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">'-0002'</td>
+<td style="text-align: left;">Pad with leading zeros to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%5s'</td>
+<td style="text-align: left;">'&lt;'</td>
+<td style="text-align: left;">'    &lt;'</td>
+<td style="text-align: left;">Right-align to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%05s'</td>
+<td style="text-align: left;">'&lt;'</td>
+<td style="text-align: left;">'0000&lt;'</td>
+<td style="text-align: left;">Zero-pad string to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%#_5s'</td>
+<td style="text-align: left;">'&lt;'</td>
+<td style="text-align: left;">'____&lt;'</td>
+<td style="text-align: left;">Custom pad char to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%-5s'</td>
+<td style="text-align: left;">'&gt;'</td>
+<td style="text-align: left;">'&gt;    '</td>
+<td style="text-align: left;">Left-align to width 5</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%0-5s'</td>
+<td style="text-align: left;">'&gt;'</td>
+<td style="text-align: left;">'&gt;0000'</td>
+<td style="text-align: left;">Left-align, zero-padded</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%#_-5s'</td>
+<td style="text-align: left;">'&gt;'</td>
+<td style="text-align: left;">'&gt;____'</td>
+<td style="text-align: left;">Left-align, custom pad char</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%5s'</td>
+<td style="text-align: left;">'xxxxxx'</td>
+<td style="text-align: left;">'xxxxxx'</td>
+<td style="text-align: left;">Width does not truncate</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%02u'</td>
+<td style="text-align: left;">1234</td>
+<td style="text-align: left;">'1234'</td>
+<td style="text-align: left;">Width does not truncate</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%8.3f'</td>
+<td style="text-align: left;">-10.23456</td>
+<td style="text-align: left;">' -10.235'</td>
+<td style="text-align: left;">Width 8, 3 decimal places</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%f %s'</td>
+<td style="text-align: left;">-12.34</td>
+<td style="text-align: left;">'-12.34 xxx'</td>
+<td style="text-align: left;">Multiple placeholders</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%2j'</td>
+<td style="text-align: left;">{ "foo": "bar" }</td>
+<td style="text-align: left;">'{\n  "foo":"bar"\n}'</td>
+<td style="text-align: left;">Pretty-print JSON with 2-space indent</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%2j'</td>
+<td style="text-align: left;">["foo", "bar"]</td>
+<td style="text-align: left;">'[\n  "foo",\n  "bar"\n]'</td>
+<td style="text-align: left;">Pretty-print JSON array</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%5.5s'</td>
+<td style="text-align: left;">'xxxxxx'</td>
+<td style="text-align: left;">'xxxxx'</td>
+<td style="text-align: left;">Precision truncates string</td>
+</tr>
+<tr>
+<td style="text-align: left;">'%5.1s'</td>
+<td style="text-align: left;">'xxxxxx'</td>
+<td style="text-align: left;">'    x'</td>
+<td style="text-align: left;">Truncate then right-align</td>
+</tr>
+<tr>
+<td style="text-align: left;">%'15.3f</td>
+<td style="text-align: left;">10000.23456</td>
+<td style="text-align: left;">'     10,000.235'</td>
+<td style="text-align: left;">Thousand separator, 3 decimals</td>
 </tr>
 </tbody>
 </table>

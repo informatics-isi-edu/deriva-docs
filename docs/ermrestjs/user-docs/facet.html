@@ -1468,6 +1468,14 @@
 <div><p>Based on this, we are not supporting filtering on foreign keys with composite keys.</p>
 </div></blockquote>
 <p>For more information about source path refer to column directive’s documentation in <a class="reference internal" href="column-directive.html#source"><span class="std std-ref">here</span></a>.</p>
+<blockquote>
+<div><p>💡 <strong>BEST PRACTICE:</strong> When a source path includes inbound/outbound foreign key paths, the end column should be <code class="docutils literal notranslate"><span class="pre">RID</span></code> in the vast majority of cases. Choose a different end column only when you specifically want to facet on that displayed value, or when you know that search performs better on it.</p>
+<p>Ending the path in <code class="docutils literal notranslate"><span class="pre">RID</span></code> is recommended because:</p>
+<ol class="arabic simple">
+<li><p>It guarantees the facet is treated as an “entity” facet without having to verify that the chosen column is part of a unique, not-null key. Entity facets offer a better search experience, since the facet popup lets users filter even further, and they can be more performant than scalar facets, which rely on <code class="docutils literal notranslate"><span class="pre">attributegroup</span></code> queries with aggregate functions.</p></li>
+<li><p>Chaise’s “Explore” action on the record page generates facet URLs using the <code class="docutils literal notranslate"><span class="pre">RID</span></code> column. Defining your facets on the same column lets Chaise match the applied filter to your existing facet and display it in place, instead of synthesizing a separate facet column to represent it.</p></li>
+</ol>
+</div></blockquote>
 </section>
 <section id="source-key">
 <h2>Source key<a class="headerlink" href="#source-key" title="Permalink to this heading"></a></h2>

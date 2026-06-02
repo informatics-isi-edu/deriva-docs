@@ -1365,7 +1365,8 @@ The following is the assumed model of a fully-configured viewer app:</p>
 <p><img alt="record-page" src="../../_images/viewer-erd.png" /></p>
 <p>(All the table and column names are configurable)</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Image</span></code> table is the entry point of the viewer app.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Image</span></code> table is the entry point of the viewer app. It can also store image-level
+settings such as the default rotation (see <a class="reference internal" href="#image-configuration"><span class="std std-ref">image configuration</span></a>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> table is the actual table that stores the data for each image channel
 in each z-plane. For example, if an image has two stored z-indices and each one has
 two channels, there will be 4 records of <code class="docutils literal notranslate"><span class="pre">Processed_Image</span></code> table.</p></li>
@@ -1443,6 +1444,10 @@ will manipulate the displayed colors for each channel. This column is defined as
 <blockquote>
 <div><p>If the Config column is not defined, or the value is not in the expected format, the OSD viewer will use the default values.</p>
 </div></blockquote>
+<p>The column value may be a single object as shown above, or an <strong>array of such objects</strong>.
+When it’s an array, the viewer picks the first entry whose <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code> match the
+expected format (<code class="docutils literal notranslate"><span class="pre">&quot;channel-parameters&quot;</span></code> / <code class="docutils literal notranslate"><span class="pre">&quot;1.0&quot;</span></code>); the rest are ignored. This lets you keep
+multiple parameter sets (e.g. for different format versions) in the same column.</p>
 <p>Currently, in the viewer app, we’re using <code class="docutils literal notranslate"><span class="pre">&quot;channel-parameters&quot;</span></code> as the format name and <code class="docutils literal notranslate"><span class="pre">&quot;1.0&quot;</span></code>
 as the version number. And the config attributes are as follows:</p>
 <table>
@@ -1538,6 +1543,60 @@ as the version number. And the config attributes are as follows:</p>
 <span class="w">      </span><span class="nt">&quot;saturation_percent&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;hue_degree&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;display_greyscale&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="image-configuration">
+<h2>Image Configuration<a class="headerlink" href="#image-configuration" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> table can have a config column (<code class="docutils literal notranslate"><span class="pre">image_config_column_name</span></code>) that stores
+image-level settings. Currently this is used to persist the default rotation. Like the
+channel config, this is a <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> column with the following expected structure:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;format-name&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;format-version&gt;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>If the column is not defined, or the value is not in the expected format, the OSD viewer will use the default values.</p>
+</div></blockquote>
+<p>As with the channel config, the column value may be a single object or an <strong>array of such
+objects</strong>. When it’s an array, the viewer uses the first entry whose <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code>
+match the expected format; the rest are ignored.</p>
+<p>Currently the viewer app uses <code class="docutils literal notranslate"><span class="pre">&quot;image-parameters&quot;</span></code> as the format name and <code class="docutils literal notranslate"><span class="pre">&quot;1.0&quot;</span></code> as the
+version number (the version can be overridden via <code class="docutils literal notranslate"><span class="pre">image_config_format_version</span></code>). The config
+attributes are as follows:</p>
+<table>
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Acceptable values</th>
+            <th>Default value</th>
+        </tr>
+        <tr>
+            <td><strong>rotate</strong></td>
+            <td>
+                The default rotation (in degrees, clockwise) applied to the image when
+                the viewer loads. Users with update permission on the config column can
+                change and save this from the toolbar.
+            </td>
+            <td>Integers in [0, 360) range (typically 0, 90, 180, 270)</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
+<p>So an example of a stored image config looks like the following:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image-parameters&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;rotate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

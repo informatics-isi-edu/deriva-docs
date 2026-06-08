@@ -1676,6 +1676,7 @@ element and its nested model elements.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;max_facet_depth&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> <em>context</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>maxfacetdepth</em> <code class="docutils literal notranslate"><span class="pre">,</span></code>  …<code class="docutils literal notranslate"><span class="pre">}</span></code>: How many levels of facet popups we should allow.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;show_saved_query&quot;:</span></code> <em>savedquery</em> …<code class="docutils literal notranslate"><span class="pre">}</span></code>: Whether we want to display the saved query UI features or not. By default, this feature is turned off (set to false).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;bulk_create_foreign_key&quot;</span></code>: <em>bulkfk</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Use this property to control the bulk selection of foreign key values in <code class="docutils literal notranslate"><span class="pre">entry/create</span></code> context when there is a prefill query parameter. By default, the heuristics will be used to determine if this feature will be used. This can be defined on each of the catalog, schema, and table model elements.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;visible_cell_height&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">{</span></code> <em>context</em> <code class="docutils literal notranslate"><span class="pre">:</span></code> <em>visiblecellheight</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Limit the height of displayed cells. Currently only supported in the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context (record page).</p></li>
 </ul>
 <p>Supported JSON <em>ccomment</em> patterns:</p>
 <ul class="simple">
@@ -1744,6 +1745,11 @@ element and its nested model elements.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: Facet panel is only displayed for one level. The facet panel is not displayed as part of the facet popups.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: Facet panel is displayed for two levels. Both once the main table is opened and when the facet popup is opened for any of the facets.</p></li>
 <li><p>Any number bigger than 2 will be treated the same as defining <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p></li>
+</ul>
+<p>Supported JSON <em>visiblecellheight</em> patterns:</p>
+<ul class="simple">
+<li><p>Any positive number: The cell values in the record page will be limited to the given height.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">false</span></code>: Disable the feature and show all the contents. If this property is missing or is invalid, this is the default behavior.</p></li>
 </ul>
 <p>Supported JSON <em>context</em> patterns:</p>
 <ul class="simple">

@@ -1452,6 +1452,20 @@
 </li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#state-management-with-zustand"><span class="std std-ref">State management with zustand</span></a></p>
+<ul>
+<li><p><a class="reference internal" href="#global-vs-scoped-stores"><span class="std std-ref">Global vs scoped stores</span></a></p></li>
+<li><p><a class="reference internal" href="#how-to-implement-a-scoped-store"><span class="std std-ref">How to implement a scoped store</span></a></p>
+<ul>
+<li><p>1. Create the store, context, and Provider component</p></li>
+<li><p>2. Add custom hook</p></li>
+<li><p>3. Use provider in the parent</p></li>
+<li><p>4. Use the hook with selectors</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#notes"><span class="std std-ref">Notes</span></a></p></li>
+</ul>
+</li>
 <li><p><a class="reference internal" href="#performance"><span class="std std-ref">Performance</span></a></p>
 <ul>
 <li><p><a class="reference internal" href="#debugging"><span class="std std-ref">Debugging</span></a></p></li>
@@ -2549,6 +2563,9 @@ npm<span class="w"> </span>link<span class="w"> </span>@isrd-isi-edu/ermrestjs
 <section id="context-and-provider-pattern">
 <h2>Context and provider pattern<a class="headerlink" href="#context-and-provider-pattern" title="Permalink to this heading"></a></h2>
 <p>Our apps heavily rely on <a class="reference external" href="https://reactjs.org/docs/context.html"><code class="docutils literal notranslate"><span class="pre">Context</span></code></a> to facilitate how components communicate. This helps us to avoid passing props on each level and instead use the <a class="reference external" href="https://reactjs.org/docs/hooks-reference.html#usecontext"><code class="docutils literal notranslate"><span class="pre">useContext</span></code></a> hook to access the context.</p>
+<blockquote>
+<div><p>For new shared state, also consider <a class="reference internal" href="#state-management-with-zustand"><span class="std std-ref">zustand</span></a>. The context pattern below re-renders every consumer whenever any value in the provider changes, while zustand lets components subscribe to just the slices they use.</p>
+</div></blockquote>
 <section id="how-to-implement">
 <h3>How to implement<a class="headerlink" href="#how-to-implement" title="Permalink to this heading"></a></h3>
 <p>Before going through the providers that we’ve implemented for Chaise apps, let’s go over the skeleton of how we’re using <code class="docutils literal notranslate"><span class="pre">Context</span></code>. This example is just to demonstrate the concept. In a small example like the following, it’s more efficient to just pass the props without using context/provider.</p>
@@ -2666,6 +2683,132 @@ export default function CounterProvider({
 </pre></div>
 </div>
 </section>
+</section>
+</section>
+<section id="state-management-with-zustand">
+<h2>State management with zustand<a class="headerlink" href="#state-management-with-zustand" title="Permalink to this heading"></a></h2>
+<p>The context pattern above has a known performance cost: the provider’s value is a single object, so whenever any field in it changes, every component that calls the custom hook re-renders, whether it uses that field or not. <a class="reference external" href="https://zustand.docs.pmnd.rs/">zustand</a> solves this with stores and selectors: components subscribe to a slice of the state and re-render only when that slice changes.</p>
+<p>Prefer zustand for new shared state. The existing app providers (record, recordset, …) still use the context pattern and can migrate over time.</p>
+<section id="global-vs-scoped-stores">
+<h3>Global vs scoped stores<a class="headerlink" href="#global-vs-scoped-stores" title="Permalink to this heading"></a></h3>
+<p>zustand has two flavors:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://zustand.docs.pmnd.rs/apis/create"><code class="docutils literal notranslate"><span class="pre">create</span></code></a> returns a ready-to-use hook bound to a single module-level store. Use it for app-wide singleton state (what the app providers would become after migration).</p></li>
+<li><p><a class="reference external" href="https://zustand.docs.pmnd.rs/apis/create-store"><code class="docutils literal notranslate"><span class="pre">createStore</span></code></a> (from <code class="docutils literal notranslate"><span class="pre">zustand/vanilla</span></code>) returns a plain store object that can be instantiated as many times as needed. For state that’s scoped to a component instance (per row, per panel), create one store per instance and distribute it through a thin context. This is the <a class="reference external" href="https://zustand.docs.pmnd.rs/learn/guides/initialize-state-with-props">scoped-store pattern</a> and the one documented below.</p></li>
+</ul>
+<p>Note that the context still exists in the scoped pattern, but it distributes the store reference (which never changes), not the state values. So the provider never re-renders when the state changes, and consumers control their own re-renders with selectors.</p>
+</section>
+<section id="how-to-implement-a-scoped-store">
+<h3>How to implement a scoped store<a class="headerlink" href="#how-to-implement-a-scoped-store" title="Permalink to this heading"></a></h3>
+<p>The following implements the same counter example as the <a class="reference internal" href="#context-and-provider-pattern"><span class="std std-ref">context and provider pattern</span></a> section, so the two can be compared directly. For a real implementation, see <code class="docutils literal notranslate"><span class="pre">src/providers/record-show-more.tsx</span></code> and <code class="docutils literal notranslate"><span class="pre">src/hooks/record-show-more.ts</span></code>.</p>
+<section id="create-the-store-context-and-provider-component">
+<h4>1. Create the store, context, and Provider component<a class="headerlink" href="#create-the-store-context-and-provider-component" title="Permalink to this heading"></a></h4>
+<p>The store’s state type includes both the values and the actions that change them. Actions are defined in the store initializer via <code class="docutils literal notranslate"><span class="pre">set</span></code> and have stable identities (they never cause re-renders).</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span>// src/providers/counter.tsx
+
+import { createContext, useState } from &#39;react&#39;;
+import { createStore, type StoreApi } from &#39;zustand/vanilla&#39;;
+
+export type CounterState = {
+  counter: number;
+  lastModified: Date | null;
+  addOneToCounter: () =&gt; void;
+};
+
+const createCounterStore = (initialCounter: number) =&gt;
+  createStore&lt;CounterState&gt;((set) =&gt; ({
+    counter: initialCounter,
+    lastModified: null,
+    addOneToCounter: () =&gt;
+      set((state) =&gt; ({ counter: state.counter + 1, lastModified: new Date() })),
+  }));
+
+// distributes the store reference, not the state values. Access it through
+// the useCounter hook, not directly.
+export const CounterContext = createContext&lt;StoreApi&lt;CounterState&gt; | null&gt;(null);
+
+type CounterProviderProps = {
+  children: React.ReactNode,
+  initialCounter: number
+};
+
+export default function CounterProvider({
+  children,
+  initialCounter
+}: CounterProviderProps): JSX.Element {
+  // lazy initializer: the store is created once per provider instance
+  const [store] = useState(() =&gt; createCounterStore(initialCounter));
+
+  return &lt;CounterContext.Provider value={store}&gt;{children}&lt;/CounterContext.Provider&gt;
+}
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>2. Add custom hook<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<p>The hook takes a selector. The generic <code class="docutils literal notranslate"><span class="pre">T</span></code> ties the hook’s return type to whatever the selector picks, so call sites are fully typed without annotations.</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// src/hooks/counter.ts</span>
+
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useContext</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">useStore</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;zustand&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">CounterContext</span><span class="p">,</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">CounterState</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@isrd-isi-edu/chaise/src/providers/counter&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span><span class="w"> </span><span class="nx">useCounter</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">selector</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="kt">CounterState</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">T</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nx">T</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">store</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useContext</span><span class="p">(</span><span class="nx">CounterContext</span><span class="p">);</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">store</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="ne">Error</span><span class="p">(</span><span class="s1">&#39;No CounterProvider found when calling CounterContext&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">useStore</span><span class="p">(</span><span class="nx">store</span><span class="p">,</span><span class="w"> </span><span class="nx">selector</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">useCounter</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>3. Use provider in the parent<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<p>Same as the context pattern: the provider must wrap the components that use the hook, and the same “Inner” suffix trick applies when there’s no logical parent.</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span><span class="c1">// src/components/container.tsx</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">Container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="p">...</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">CounterProvider</span><span class="w"> </span><span class="na">initialCounter</span><span class="o">=</span><span class="p">{</span><span class="mf">0</span><span class="p">}&gt;</span>
+<span class="w">       </span><span class="p">&lt;</span><span class="nt">CounterDisplay</span><span class="w"> </span><span class="p">/&gt;</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">CounterProvider</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">};</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Container</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="use-the-hook-with-selectors">
+<h4>4. Use the hook with selectors<a class="headerlink" href="#use-the-hook-with-selectors" title="Permalink to this heading"></a></h4>
+<p>Each call declares one dependency, and that’s the component’s whole re-render contract. <code class="docutils literal notranslate"><span class="pre">CounterDisplay</span></code> re-renders when <code class="docutils literal notranslate"><span class="pre">counter</span></code> changes but NOT when <code class="docutils literal notranslate"><span class="pre">lastModified</span></code> changes:</p>
+<div class="highlight-tsx notranslate"><div class="highlight"><pre><span></span><span class="c1">// src/components/counter-display.tsx</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">CounterDisplay</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useCounter</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">counter</span><span class="p">);</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">addOneToCounter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">useCounter</span><span class="p">((</span><span class="nx">state</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">state</span><span class="p">.</span><span class="nx">addOneToCounter</span><span class="p">);</span>
+
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">&lt;</span><span class="nt">span</span><span class="w"> </span><span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">addOneToCounter</span><span class="p">}&gt;{</span><span class="nx">counter</span><span class="p">}&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">};</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">CounterDisplay</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Prefer one selector per field as above. Each returns a primitive or a stable action reference, so the default <code class="docutils literal notranslate"><span class="pre">Object.is</span></code> equality always does the right thing.</p></li>
+<li><p>Selecting multiple fields as an object (<code class="docutils literal notranslate"><span class="pre">useCounter((state)</span> <span class="pre">=&gt;</span> <span class="pre">({</span> <span class="pre">...</span> <span class="pre">}))</span></code>) creates a new object on every store change and would re-render on every update. If a component needs a multi-field subset of a large store, wrap the selector with <a class="reference external" href="https://zustand.docs.pmnd.rs/hooks/use-shallow"><code class="docutils literal notranslate"><span class="pre">useShallow</span></code></a> to compare the result field-by-field instead. Our stores are small enough that per-field selectors are usually the simpler choice.</p></li>
+<li><p>Never call <code class="docutils literal notranslate"><span class="pre">useCounter((state)</span> <span class="pre">=&gt;</span> <span class="pre">state)</span></code> to “get everything”: it re-renders on any change, the same behavior the context pattern has.</p></li>
+</ul>
 </section>
 </section>
 <section id="performance">

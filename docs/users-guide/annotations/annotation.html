@@ -180,7 +180,7 @@
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#contexts">Contexts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#facet-search">Facet search</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#formatting-and-presentation">Formatting and presentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#pseudo-columns-logic-and-heuristics">Pseudo-columns logic and heuristics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#column-directives-pseudo-columns">Column directives (pseudo-columns)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#table-alternatives">Table Alternatives</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#export">Export</a></li>
 </ul>
@@ -229,6 +229,40 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="contexts.html">Annotation Contexts Used By Chaise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="facet.html">Facet JSON Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#logical-operators">Logical operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#grouped-facets">Grouped facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#source-path">Source path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#source-key">Source key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#fast-filter-source">Fast filter source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#extra-properties">Extra properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#markdown-name">markdown_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#comment">comment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#open">open</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#ux-mode">ux_mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#hide-null-choice-hide-not-null-choice">hide_null_choice/hide_not_null_choice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#bar-plot">bar_plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#order">order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#hide-num-occurrences">hide_num_occurrences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-1">Example 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-2">Example 2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-3-entity-vs-scalar">Example 3 (Entity vs. Scalar)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-4-choice-vs-range">Example 4 (Choice Vs. Range)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-5-facet-title">Example 5 (Facet Title)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-6-open-vs-close">Example 6 (Open Vs. Close)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-7-change-order-of-scalar-values">Example 7 (Change order of scalar values)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-8-grouped-facets">Example 8 (Grouped facets)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="template-markdown.html">Template and Markdown Guide</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mustache-templating.html">Mustache Templating</a><ul>
@@ -272,6 +306,61 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive.html">Column Directive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#overall-structure">Overall structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-with-source">1. Column directive with <code class="docutils literal notranslate"><span class="pre">source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-with-sourcekey">2. Column directive with <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-without-any-source">3. Column directive without any source</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#data-source-properties">1. Data source properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#presentation-properties">2. Presentation properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#condition-properties">3. Condition properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#shorthand-syntax">Shorthand syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#visible-column-list">Visible Column List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#alternative-syntax">Alternative syntax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive-display.html">Column Directive Display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-display.html#accessing-column-directive-values-using-by-utilizing-source-definitions">Accessing Column Directive Values Using By Utilizing Source Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-display.html#accessing-current-column-directive-data">Accessing Current Column Directive Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-display.html#self-data-structure">$self Data Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-display.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive-template.html">Column directive in templating environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#defining-sources">1. Defining sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#defining-column-directive-display">2. Defining column directive display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-template.html#accessing-columns-and-fkeys">Accessing columns and fkeys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-template.html#accessing-sources-wait-for">Accessing sources (wait_for)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="input-iframe.html">Input iframe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#iframe-communication">Iframe communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#annotation">Annotation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#url-pattern">url_pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#field-mapping">field_mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#optional-fields">optional_fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#empty-field-confirm-message-markdown">empty_field_confirm_message_markdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="table-alternatives.html">Table Alternatives</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#definition-and-assumptions">Definition and assumptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#related-entities">Related Entities</a></li>
@@ -307,6 +396,11 @@
 <li class="toctree-l4"><a class="reference internal" href="export.html#example-6">Example 6</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="google-dataset.html">Google dataset annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="google-dataset.html#expected-fields">Expected Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="google-dataset.html#guidelines">Guidelines</a></li>
 </ul>
 </li>
 </ul>
@@ -1964,7 +2058,7 @@ columns in a table, overriding the defined table structure.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>: A string literal that refers to any of the defined sources in <a class="reference internal" href="#tag-2019-source-definitions"><span class="std std-ref">source-definitions annotations</span></a>. You MUST avoid defining both <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> as the client will ignore the <code class="docutils literal notranslate"><span class="pre">source</span></code> and just uses the <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>.</p></li>
 </ul>
 <blockquote>
-<div><p>💡 <strong>BEST PRACTICE:</strong> When the <code class="docutils literal notranslate"><span class="pre">source</span></code> (or the referenced <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>) includes inbound/outbound foreign key paths, the end column should be <code class="docutils literal notranslate"><span class="pre">RID</span></code> in the vast majority of cases. Choose a different end column only when you specifically want to facet on that displayed value, or when you know that search performs better on it. See <a class="reference internal" href="#facet.md#source-path"><span class="xref myst">facet documentation</span></a> for more information.</p>
+<div><p>💡 <strong>BEST PRACTICE:</strong> When the <code class="docutils literal notranslate"><span class="pre">source</span></code> (or the referenced <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>) includes inbound/outbound foreign key paths, the end column should be <code class="docutils literal notranslate"><span class="pre">RID</span></code> in the vast majority of cases. Choose a different end column only when you specifically want to facet on that displayed value, or when you know that search performs better on it. See <a class="reference internal" href="facet.html#source-path"><span class="std std-ref">facet documentation</span></a> for more information.</p>
 </div></blockquote>
 <p>Constraint attributes (optional):</p>
 <p>You can use these attributes to define default preselected facets (Combination of these attributes are not supported yet, you cannot have both <code class="docutils literal notranslate"><span class="pre">choices</span></code> and <code class="docutils literal notranslate"><span class="pre">ranges</span></code> specified on a facet).</p>
@@ -1977,7 +2071,7 @@ columns in a table, overriding the defined table structure.</p>
 <p>Configuration attributes (optional):</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">entity</span></code>: If the facet can be treated as entity (the column that is being used for facet is key of the table), setting this attribute to <code class="docutils literal notranslate"><span class="pre">false</span></code> will force the facet to show scalar mode.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code>: An alternative source that will be used for filtering values. You MUST make sure the projected column of <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> is compatiple with the main source of this facet. Please refer to <a class="reference internal" href="#facet.md#fast-filter-source"><span class="xref myst">this document</span></a> for more information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code>: An alternative source that will be used for filtering values. You MUST make sure the projected column of <code class="docutils literal notranslate"><span class="pre">fast_filter_source</span></code> is compatiple with the main source of this facet. Please refer to <a class="reference internal" href="facet.html#fast-filter-source"><span class="std std-ref">this document</span></a> for more information.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">markdown_name</span></code>: The markdown to use in place of the default heuristics for facet title.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">comment</span></code>: The tooltip to be used in place of the default heuristics for the facet. Set this to <code class="docutils literal notranslate"><span class="pre">false</span></code> if you don’t want any tooltip.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">open</span></code>: Setting this attribute to <code class="docutils literal notranslate"><span class="pre">true</span></code>, will force the facet to open by default.</p></li>
@@ -2006,7 +2100,7 @@ columns in a table, overriding the defined table structure.</p>
 You can modify this to sort based on other columns of the table that the scalar column belongs to. Or use the <code class="docutils literal notranslate"><span class="pre">&quot;num_occurrences&quot;:</span> <span class="pre">true</span></code> to refer to the “Number of occurences” column.</p>
 </li>
 </ul>
-<p>The following is an example of visible-columns annotation payload for defining facets. Please refer to <a class="reference internal" href="#facet.md"><span class="xref myst">this document</span></a> to learn more about the structure of facet and find more examples.</p>
+<p>The following is an example of visible-columns annotation payload for defining facets. Please refer to <a class="reference internal" href="facet.html"><span class="std std-doc">this document</span></a> to learn more about the structure of facet and find more examples.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;filter&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;and&quot;</span> <span class="p">:</span> <span class="p">[</span>
         <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;column&quot;</span><span class="p">,</span> <span class="s2">&quot;ranges&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;min&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">}]</span> <span class="p">,</span><span class="s2">&quot;markdown_name&quot;</span><span class="p">:</span> <span class="s2">&quot;**col**&quot;</span><span class="p">},</span>
@@ -2482,7 +2576,7 @@ the alternative one has modified the representation of each entity in some way.<
 </li>
 </ul>
 </li>
-<li><p>You may use <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> to have access to data from other tables. Currently only paths that start with an outbound foreign-key are supported. For more information on how to access the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> values while writing the <code class="docutils literal notranslate"><span class="pre">url_pattern</span></code>, please refer to <a class="reference internal" href="#column-directive-template.md#column-directive-templating-variable-data-structure"><span class="xref myst">this document</span></a>. For example if you define an all-outbound path called <code class="docutils literal notranslate"><span class="pre">all_outbound_fk_path</span></code>, you maye use <code class="docutils literal notranslate"><span class="pre">{{{all_outbound_fk_path.values.RID}}}</span></code> to access the RID value.</p></li>
+<li><p>You may use <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> to have access to data from other tables. Currently only paths that start with an outbound foreign-key are supported. For more information on how to access the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> values while writing the <code class="docutils literal notranslate"><span class="pre">url_pattern</span></code>, please refer to <a class="reference internal" href="column-directive-template.html#column-directive-templating-variable-data-structure"><span class="std std-ref">this document</span></a>. For example if you define an all-outbound path called <code class="docutils literal notranslate"><span class="pre">all_outbound_fk_path</span></code>, you maye use <code class="docutils literal notranslate"><span class="pre">{{{all_outbound_fk_path.values.RID}}}</span></code> to access the RID value.</p></li>
 <li><p>The default content-type and filename extension mapping can be found <a class="reference external" href="https://github.com/informatics-isi-edu/ermrestjs/blob/master/src/services/file-preview.ts">here</a> (<code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTENT_TYPE_MAPPING</span></code> and <code class="docutils literal notranslate"><span class="pre">DEFAULT_EXTENSION_MAPPING</span></code> variables). You may extend or change the behavior by utilizing <code class="docutils literal notranslate"><span class="pre">content_type_mapping</span></code> and <code class="docutils literal notranslate"><span class="pre">filename_ext_mapping</span></code> annotation properties.</p></li>
 <li><p>Nothing may be inferred without additional payload patterns present.</p></li>
 </ul>
@@ -2585,10 +2679,10 @@ The json object follows the same rules as <a class="reference external" href="ht
 <p><code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2019:source-definitions</span></code></p>
 <p>Using this key you can,</p>
 <ul class="simple">
-<li><p>Define list of column names and outbound foreign keys that should be available in the templating environments (Please refer to <a class="reference internal" href="#column-directive-template.md"><span class="xref myst">this document</span></a> for more information).</p></li>
+<li><p>Define list of column names and outbound foreign keys that should be available in the templating environments (Please refer to <a class="reference internal" href="column-directive-template.html"><span class="std std-doc">this document</span></a> for more information).</p></li>
 <li><p>Define <code class="docutils literal notranslate"><span class="pre">sources</span></code> that can be used in <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> and <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code> annotations.</p></li>
 <li><p>Define <code class="docutils literal notranslate"><span class="pre">sources</span></code> that can be used in the <code class="docutils literal notranslate"><span class="pre">wait_for</span></code> definition of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code>, <code class="docutils literal notranslate"><span class="pre">visible-foreign-keys</span></code>, and <code class="docutils literal notranslate"><span class="pre">citation</span></code> annotations.</p></li>
-<li><p>Define <code class="docutils literal notranslate"><span class="pre">conditions</span></code> that can be referenced by column directives via <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>. See <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition and condition_key</span></a> for more information.</p></li>
+<li><p>Define <code class="docutils literal notranslate"><span class="pre">conditions</span></code> that can be referenced by column directives via <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>. See <a class="reference internal" href="column-directive.html#condition"><span class="std std-ref">condition and condition_key</span></a> for more information.</p></li>
 <li><p>Modify the behavior of main search box in recordset page.</p></li>
 </ul>
 <blockquote>
@@ -2645,7 +2739,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <p>Supported JSON payload patterns:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;sources&quot;:</span></code> <em>sourcedefinitions</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: the source definitions that will allow you to refer to them by just using the defined <em>sourcekey</em>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;conditions&quot;:</span></code> <em>conditiondefinitions</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: reusable condition definitions that can be referenced by column directives via <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>. See <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition and condition_key</span></a> for more information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;conditions&quot;:</span></code> <em>conditiondefinitions</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: reusable condition definitions that can be referenced by column directives via <code class="docutils literal notranslate"><span class="pre">condition_key</span></code>. See <a class="reference internal" href="column-directive.html#condition"><span class="std std-ref">condition and condition_key</span></a> for more information.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;search-box&quot;:</span> <span class="pre">{</span> <span class="pre">&quot;or&quot;:</span> <span class="pre">[</span></code> <em>searchcolumn</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]}</span> <span class="pre">}</span></code>: Configure list of search columns.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;fkeys&quot;:</span></code> <em>fkeylist</em>  <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Array of foreign key constraints that will be mapped into <code class="docutils literal notranslate"><span class="pre">$fkey_schema_contraint</span></code> key in templating environments.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code> … <code class="docutils literal notranslate"><span class="pre">&quot;columns&quot;:</span></code> <em>columns</em>  <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Array of column names that their data will be available in templating environments.</p></li>
@@ -2657,7 +2751,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <li><p><code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> (the <strong>with-source</strong> form): visibility is driven by data from a separate fetch (only honored in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> alone (no <code class="docutils literal notranslate"><span class="pre">source</span></code>/<code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>/<code class="docutils literal notranslate"><span class="pre">wait_for</span></code>) (the <strong>no-source</strong> form): visibility is driven by a pure template evaluated against the catalog’s <a class="reference internal" href="handlebars.html#using-pre-defined-attributes"><span class="std std-ref">template environment</span></a>, useful for ACL-driven visibility via <a class="reference internal" href="handlebars.html#access-control-acl-check"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">isUserInAcl</span></code></span></a> (honored in every context).</p></li>
 </ul>
-<p>See the <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition documentation</span></a> for the full list of properties and a no-source example.</p>
+<p>See the <a class="reference internal" href="column-directive.html#condition"><span class="std std-ref">condition documentation</span></a> for the full list of properties and a no-source example.</p>
 </li>
 </ul>
 <p>Supported <em>sourcedefinitions</em> patterns:</p>
@@ -2777,7 +2871,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 </ul>
 <p>In all remaining scenarios, the problematic attribute (attributes that don’t follow the expected structure or type) will simply be ignored and the reason for that will be logged in the browser console.</p>
 <p>You can use <a class="reference external" href="https://search.google.com/test/rich-results">this</a> tool by Google to validate any JSON-LD yourself if needed, it accepts both a URL or a code snippet.</p>
-<p>The following is an example of this annotation. You can also find more information in <a class="reference internal" href="#google-dataset.md"><span class="xref myst">here</span></a>.</p>
+<p>The following is an example of this annotation. You can also find more information in <a class="reference internal" href="google-dataset.html"><span class="std std-doc">here</span></a>.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;tag:isrd.isi.edu,2021:google-dataset&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;detailed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2823,7 +2917,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>column name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: Define a list of not-null columns that should be used as “stable key”.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;stable_key&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">[</span></code> <em>schema name</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> <em>constraint name</em> <code class="docutils literal notranslate"><span class="pre">]</span></code> … <code class="docutils literal notranslate"><span class="pre">}</span></code>: An alternative syntax to <code class="docutils literal notranslate"><span class="pre">&quot;stable_key_columns&quot;</span></code> that allows you to refer to an existing key instead of defining your own list of columns.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;aggressive_facet_lookup&quot;:</span></code> <em>boolean</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Whether we should lookup the facets in the URL or not. By default this feature is turned off. This flag is currently EXPERIMENTAL and used to enable <a class="reference internal" href="#facet.md#fast-filter-source"><span class="xref myst">the fast filter feature in facets</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{</span></code>… <code class="docutils literal notranslate"><span class="pre">&quot;aggressive_facet_lookup&quot;:</span></code> <em>boolean</em> … <code class="docutils literal notranslate"><span class="pre">}</span></code>:  Whether we should lookup the facets in the URL or not. By default this feature is turned off. This flag is currently EXPERIMENTAL and used to enable <a class="reference internal" href="facet.html#fast-filter-source"><span class="std std-ref">the fast filter feature in facets</span></a>.</p></li>
 </ul>
 <p>Note:</p>
 <ul class="simple">
@@ -3240,7 +3334,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <h2>Column Directive<a class="headerlink" href="#column-directive" title="Permalink to this heading"></a></h2>
 <p>Column directive allows instruction of a data source and modification of its presentation. Column directives are defined relative to the table that they are part of. They can be used in <a class="reference internal" href="#tag-2016-visible-columns"><span class="std std-ref">visible-columns</span></a> or <a class="reference internal" href="#tag-2016-visible-foreign-keys"><span class="std std-ref">visible-foreign-keys</span></a> annotations, or defined as part of <a class="reference internal" href="#tag-2019-source-definitions"><span class="std std-ref">source-definitions</span></a> annotation.</p>
 <!-- TODO we might want to include the simple syntax here instead of just in visible-columns and visible-fks -->
-<p>Please refer to <a class="reference internal" href="#column-directive.md"><span class="xref myst">this document</span></a> for more detailed explanation and examples. The following is a summary of what’s described in the separate document.</p>
+<p>Please refer to <a class="reference internal" href="column-directive.html"><span class="std std-doc">this document</span></a> for more detailed explanation and examples. The following is a summary of what’s described in the separate document.</p>
 <section id="overall-structure">
 <h3>Overall structure<a class="headerlink" href="#overall-structure" title="Permalink to this heading"></a></h3>
 <p>As it was described, column directives are meant to instruct the data source and its presentation. Based on how the data source is defined, we can categorize them into the following (All the properties are described in <a class="reference internal" href="#properties"><span class="std std-ref">the next section</span></a>):</p>
@@ -3324,7 +3418,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <h4>1. Data source properties<a class="headerlink" href="#data-source-properties" title="Permalink to this heading"></a></h4>
 <p>These sets of properties change the nature of the column directive, as they will affect the communication with server. To detect duplicate column-directives we only look for these properties.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: The source path. It can either be a column or a foreign key path to a column in another table. You can find more information in <a class="reference internal" href="#column-directive.md#source"><span class="xref myst">the column directive document</span></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">source</span></code>: The source path. It can either be a column or a foreign key path to a column in another table. You can find more information in <a class="reference internal" href="column-directive.html#source"><span class="std std-ref">the column directive document</span></a>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">sourcekey</span></code>: Allows referring to any of the defined <code class="docutils literal notranslate"><span class="pre">sources</span></code> in the <a class="reference internal" href="#tag-2019-source-definitions"><span class="std std-ref">source-definitions</span></a> annotation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">entity</span></code>: If the source column is key of the table, setting this attribute to <code class="docutils literal notranslate"><span class="pre">false</span></code> will force the scalar mode. Otherwise the column directive will be in entity mode.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">aggregate</span></code>: The aggregate function that should be used for getting an aggregated result. Applicaple only to read-only non-filter context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> annotation. The available aggregate functions are <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>, <code class="docutils literal notranslate"><span class="pre">cnt</span></code>, <code class="docutils literal notranslate"><span class="pre">cnt_d</span></code>, <code class="docutils literal notranslate"><span class="pre">array</span></code>, and <code class="docutils literal notranslate"><span class="pre">array_d</span></code>.</p>
@@ -3350,7 +3444,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">hide_column_header</span></code>: Hide the column header (and still show the value). This is only supported in <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> annotation.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">self-link</span></code>: If you want to show a self-link to the current row, you need to make sure the source is based on a not-null unique column of the current table and add the <code class="docutils literal notranslate"><span class="pre">&quot;self_link&quot;:</span> <span class="pre">true</span></code> to the definition. Applicaple only to read-only non-filter context of <code class="docutils literal notranslate"><span class="pre">visible-columns</span></code> annotation.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">display</span></code>: A JSON object that describes the display settings for generating the value for this column. Please refer to <a class="reference internal" href="#column-directive-display.md"><span class="xref myst">column-directive display document</span></a> for more information. This object can have the following properties:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">display</span></code>: A JSON object that describes the display settings for generating the value for this column. Please refer to <a class="reference internal" href="column-directive-display.html"><span class="std std-doc">column-directive display document</span></a> for more information. This object can have the following properties:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>: The markdown pattern that will be used for generating the value.</p>
 <ul>
@@ -3381,8 +3475,8 @@ The json object follows the same rules as <a class="reference external" href="ht
 <li><p><code class="docutils literal notranslate"><span class="pre">max_length</span></code>: <code class="docutils literal notranslate"><span class="pre">&lt;number&gt;</span></code> A number that defines the maximum number of elements that should be displayed.</p></li>
 </ul>
 </li>
-<li><p><code class="docutils literal notranslate"><span class="pre">input_iframe</span></code>: Applicaple only to entry contexts. A JSON object that describes the settings for showing “input iframe” in entry apps. Please refer to the <a class="reference internal" href="#input-iframe.md"><span class="xref myst">input iframe document</span></a> for more information about this property.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">condition</span></code>: A JSON object that defines a condition controlling whether this column or related entity is displayed. The <strong>with-source</strong> form (<code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> set) references a data source whose result determines visibility and is only honored in the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. The <strong>no-source</strong> form (with <code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> set) is a pure template evaluated against the catalog’s template environment, useful for ACL-driven visibility, and is honored in every context (including <code class="docutils literal notranslate"><span class="pre">filter</span></code> facets). Please refer to the <a class="reference internal" href="#column-directive.md#condition"><span class="xref myst">condition documentation</span></a> for more information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_iframe</span></code>: Applicaple only to entry contexts. A JSON object that describes the settings for showing “input iframe” in entry apps. Please refer to the <a class="reference internal" href="input-iframe.html"><span class="std std-doc">input iframe document</span></a> for more information about this property.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">condition</span></code>: A JSON object that defines a condition controlling whether this column or related entity is displayed. The <strong>with-source</strong> form (<code class="docutils literal notranslate"><span class="pre">source</span></code> or <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code> set) references a data source whose result determines visibility and is only honored in the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. The <strong>no-source</strong> form (with <code class="docutils literal notranslate"><span class="pre">condition_pattern</span></code> set) is a pure template evaluated against the catalog’s template environment, useful for ACL-driven visibility, and is honored in every context (including <code class="docutils literal notranslate"><span class="pre">filter</span></code> facets). Please refer to the <a class="reference internal" href="column-directive.html#condition"><span class="std std-ref">condition documentation</span></a> for more information.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">condition_key</span></code>: A string that references a reusable condition defined in the <a class="reference internal" href="#tag-2019-source-definitions"><span class="std std-ref">conditions</span></a> section of the <code class="docutils literal notranslate"><span class="pre">source-definitions</span></code> annotation. The same context rules as <code class="docutils literal notranslate"><span class="pre">condition</span></code> apply (with-source only in <code class="docutils literal notranslate"><span class="pre">detailed</span></code>; no-source in every context). If both <code class="docutils literal notranslate"><span class="pre">condition</span></code> and <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> are defined, <code class="docutils literal notranslate"><span class="pre">condition_key</span></code> takes precedence.</p></li>
 </ul>
 </section>

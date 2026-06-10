@@ -28,7 +28,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Using annotations to create templates with Markdown" href="template-markdown-overview.html" />
-    <link rel="prev" title="Annotation Contexts Used By Chaise" href="contexts.html" /> 
+    <link rel="prev" title="Facet JSON Structure" href="facet.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -180,7 +180,7 @@
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#contexts">Contexts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#facet-search">Facet search</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#formatting-and-presentation">Formatting and presentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#pseudo-columns-logic-and-heuristics">Pseudo-columns logic and heuristics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#column-directives-pseudo-columns">Column directives (pseudo-columns)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#table-alternatives">Table Alternatives</a></li>
 <li class="toctree-l4"><a class="reference internal" href="annotations-overview.html#export">Export</a></li>
 </ul>
@@ -229,6 +229,40 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="contexts.html">Annotation Contexts Used By Chaise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="facet.html">Facet JSON Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#structure">Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#logical-operators">Logical operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#grouped-facets">Grouped facets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#source-path">Source path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#source-key">Source key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#fast-filter-source">Fast filter source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#constraints">Constraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#extra-properties">Extra properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#entity-v-s-scalar-facet">entity v.s. scalar facet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#markdown-name">markdown_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#comment">comment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#open">open</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#ux-mode">ux_mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#hide-null-choice-hide-not-null-choice">hide_null_choice/hide_not_null_choice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#bar-plot">bar_plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#order">order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#hide-num-occurrences">hide_num_occurrences</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="facet.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-1">Example 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-2">Example 2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-3-entity-vs-scalar">Example 3 (Entity vs. Scalar)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-4-choice-vs-range">Example 4 (Choice Vs. Range)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-5-facet-title">Example 5 (Facet Title)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-6-open-vs-close">Example 6 (Open Vs. Close)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-7-change-order-of-scalar-values">Example 7 (Change order of scalar values)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="facet.html#example-8-grouped-facets">Example 8 (Grouped facets)</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Template and Markdown Guide</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="template-markdown-overview.html">Using annotations to create templates with Markdown</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mustache-templating.html">Mustache Templating</a><ul>
@@ -272,6 +306,61 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive.html">Column Directive</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#overall-structure">Overall structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-with-source">1. Column directive with <code class="docutils literal notranslate"><span class="pre">source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-with-sourcekey">2. Column directive with <code class="docutils literal notranslate"><span class="pre">sourcekey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#column-directive-without-any-source">3. Column directive without any source</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#properties">Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#data-source-properties">1. Data source properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#presentation-properties">2. Presentation properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#condition-properties">3. Condition properties</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#shorthand-syntax">Shorthand syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#visible-column-list">Visible Column List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive.html#alternative-syntax">Alternative syntax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive-display.html">Column Directive Display</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-display.html#accessing-column-directive-values-using-by-utilizing-source-definitions">Accessing Column Directive Values Using By Utilizing Source Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-display.html#accessing-current-column-directive-data">Accessing Current Column Directive Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-display.html#self-data-structure">$self Data Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-display.html#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="column-directive-template.html">Column directive in templating environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#defining-sources">1. Defining sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#defining-column-directive-display">2. Defining column directive display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-template.html#accessing-columns-and-fkeys">Accessing columns and fkeys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="column-directive-template.html#accessing-sources-wait-for">Accessing sources (wait_for)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="column-directive-template.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="input-iframe.html">Input iframe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#table-of-contents">Table of contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#iframe-communication">Iframe communication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="input-iframe.html#annotation">Annotation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#url-pattern">url_pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#field-mapping">field_mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#optional-fields">optional_fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="input-iframe.html#empty-field-confirm-message-markdown">empty_field_confirm_message_markdown</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="table-alternatives.html">Table Alternatives</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#definition-and-assumptions">Definition and assumptions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="table-alternatives.html#related-entities">Related Entities</a></li>
@@ -307,6 +396,11 @@
 <li class="toctree-l4"><a class="reference internal" href="export.html#example-6">Example 6</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="google-dataset.html">Google dataset annotation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="google-dataset.html#expected-fields">Expected Fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="google-dataset.html#guidelines">Guidelines</a></li>
 </ul>
 </li>
 </ul>
@@ -1545,7 +1639,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="contexts.html" class="btn btn-neutral float-left" title="Annotation Contexts Used By Chaise" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="facet.html" class="btn btn-neutral float-left" title="Facet JSON Structure" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="template-markdown-overview.html" class="btn btn-neutral float-right" title="Using annotations to create templates with Markdown" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

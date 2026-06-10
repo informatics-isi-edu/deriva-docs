@@ -734,6 +734,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1392,14 +1393,17 @@
 <section id="how-to-add-the-navbar-app">
 <h2>How to add the navbar app<a class="headerlink" href="#how-to-add-the-navbar-app" title="Permalink to this heading"></a></h2>
 <p>You need to follow these steps to add the navbar app to any non-Chaise web page:</p>
+<p><a name="1-install-chaise"></a></p>
 <section id="install-chaise">
 <h3>1. Install Chaise<a class="headerlink" href="#install-chaise" title="Permalink to this heading"></a></h3>
 <p>Make sure Chaise is properly installed. The following steps (and the navbar app) assume that Chaise is installed and deployed on the server. For more information about how to install Chaise please refer to <a class="reference internal" href="installation.html"><span class="std std-doc">installation document</span></a>.</p>
+<p><a name="2-include-navbar-dependencies"></a></p>
 </section>
 <section id="include-navbar-dependencies">
 <h3>2. Include navbar dependencies<a class="headerlink" href="#include-navbar-dependencies" title="Permalink to this heading"></a></h3>
 <p>For the navbar to work, we need to include several JavaScript and CSS files on the page. To do so, you can either change your build process to prefetch them or include a JavaScript file that will dynamically fetch them. The first method MUST be done after Chaise installation; otherwise, it would break the app. That’s why we suggest doing it as part of the automated process of building Chaise and other apps.</p>
 <p>While the second method seems more straightforward, it will drastically affect the UX by increasing the load time of the navbar. Therefore we recommend the first method.</p>
+<p><a name="21-change-the-build-process-to-prefetch-dependencies-preferred-method"></a></p>
 <section id="change-the-build-process-to-prefetch-dependencies-preferred-method">
 <h4>2.1. Change the build process to prefetch dependencies (Preferred method)<a class="headerlink" href="#change-the-build-process-to-prefetch-dependencies-preferred-method" title="Permalink to this heading"></a></h4>
 <p>To summarize, after Chaise installation in your build scripts, you need to copy the contents of <code class="docutils literal notranslate"><span class="pre">lib/navbar/navbar-dependencies.html</span></code> into the HTML page that displays the navbar. This file won’t be present in the Chaise repository folder, and you can only find this folder where you’ve deployed chaise (By default it should be under <code class="docutils literal notranslate"><span class="pre">/var/www/chaise/</span></code>).</p>
@@ -1446,6 +1450,7 @@
 </li>
 <li><p>Build your Jekyll site as you normally would (using <code class="docutils literal notranslate"><span class="pre">jekyll</span> <span class="pre">build</span></code> or <code class="docutils literal notranslate"><span class="pre">jekyll</span> <span class="pre">serve</span></code> commands.)</p></li>
 </ol>
+<p><a name="22-dynamically-fetch-the-dependencies"></a></p>
 </section>
 </section>
 <section id="dynamically-fetch-the-dependencies">
@@ -1457,6 +1462,7 @@
 </pre></div>
 </div>
 <p>As we mentioned before, this can cause UX issues as it will increase the loading time of the navbar app.</p>
+<p><a name="3-prefetch-custom-styles-optional"></a></p>
 </section>
 </section>
 <section id="prefetch-custom-styles-optional">
@@ -1473,6 +1479,7 @@
 </pre></div>
 </div>
 <p>If you want to prefetch it, the include statement MUST be added before the content of <code class="docutils literal notranslate"><span class="pre">lib/navbar/navbar-dependencies.html</span></code> .</p>
+<p><a name="4-use-navbar"></a></p>
 </section>
 <section id="use-navbar">
 <h3>4. Use navbar<a class="headerlink" href="#use-navbar" title="Permalink to this heading"></a></h3>
@@ -1493,6 +1500,7 @@
 </div>
 </li>
 </ul>
+<p><a name="5-avoid-manually-including-bootstrap"></a></p>
 </section>
 <section id="avoid-manually-including-bootstrap">
 <h3>5. Avoid manually including bootstrap<a class="headerlink" href="#avoid-manually-including-bootstrap" title="Permalink to this heading"></a></h3>

@@ -734,6 +734,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -2033,6 +2034,17 @@ Content-Disposition: attachment; download*=UTF-8&#39;&#39;My%20File.json
 </ul>
 <p>If the set denoted by the resource name (without the limit modifier) has <em>k</em> elements, the denoted limited subset will have <em>n</em> members if <em>n</em> &lt; <em>k</em> and will otherwise have all <em>k</em> members. When combined with a sort modifier, the first <em>n</em> members will be returned, otherwise an arbitrary subset will be chosen.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">limit</span></code> query parameter is only meaningful on retrieval requests using the <code class="docutils literal notranslate"><span class="pre">GET</span></code> method described in Data Operations.</p>
+</section>
+<section id="arrays-query-parameter">
+<h2>Arrays Query Parameter<a class="headerlink" href="#arrays-query-parameter" title="Permalink to this heading"></a></h2>
+<p>An optional <code class="docutils literal notranslate"><span class="pre">arrays</span></code> query parameter can select an alternate encoding for array typed columns in <code class="docutils literal notranslate"><span class="pre">text/csv</span></code> query results:</p>
+<ul class="simple">
+<li><p><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/entity/</span></code> <em>path</em> <code class="docutils literal notranslate"> <span class="pre">...</span> <span class="pre">?arrays=</span></code> <em>encoding</em></p></li>
+<li><p><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/attribute/</span></code> <em>path</em> <code class="docutils literal notranslate"><span class="pre">/</span></code> <em>projection</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">?arrays=</span></code> <em>encoding</em></p></li>
+<li><p><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/attributegroup/</span></code> <em>path</em> <code class="docutils literal notranslate"><span class="pre">/</span></code> <em>group key</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">;</span></code> <em>projection</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">?arrays=</span></code> <em>encoding</em></p></li>
+<li><p><em>service</em> <code class="docutils literal notranslate"><span class="pre">/catalog/</span></code> <em>cid</em> [ <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> <em>revision</em> ] <code class="docutils literal notranslate"><span class="pre">/agreggate/</span></code> <em>path</em> <code class="docutils literal notranslate"><span class="pre">/</span></code> <em>group key</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">;</span></code> <em>projection</em> <code class="docutils literal notranslate"><span class="pre">,</span></code> … <code class="docutils literal notranslate"><span class="pre">?arrays=</span></code> <em>encoding</em></p></li>
+</ul>
+<p>At time of writing, the only alternate <em>encoding</em> is <code class="docutils literal notranslate"><span class="pre">json</span></code> to select JSON array syntax. The backwards-compatible default encoding, in the absence of this parameter is the PostgreSQL array syntax.</p>
 </section>
 <section id="data-paging">
 <h2>Data Paging<a class="headerlink" href="#data-paging" title="Permalink to this heading"></a></h2>

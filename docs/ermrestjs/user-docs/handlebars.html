@@ -734,6 +734,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1823,7 +1824,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <li><p><code class="docutils literal notranslate"><span class="pre">LocaleTimeString</span></code>: 4:04:46 PM</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">LocalString</span></code>: 10/19/2017, 4:04:46 PM</p></li>
 </ul>
-<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment. If you would like to display the current date and time in a different format, you can use <code class="docutils literal notranslate"><span class="pre">$moment.ISOString</span></code> with formatDatetime helper.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">$moment</span></code> object can be referred directly in the Mustache environment. If you would like to display the current date and time in a different format, you can use <code class="docutils literal notranslate"><span class="pre">$moment.ISOString</span></code> with <a class="reference internal" href="#formatdatetime-helper"><span class="std std-ref">formatDatetime</span></a> helper.</p>
 <p><strong>Examples</strong></p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span>Today&#39;s date is {{formatDatetime $moment.ISOString &quot;YYYY/M/D&quot;}}.
 </pre></div>
@@ -1947,6 +1948,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 </pre></div>
 </div>
 <p>Keep in mind that <code class="docutils literal notranslate"><span class="pre">printf</span></code> doesn’t check the validity of the given values. So for example if the value might not be a number, you cannot blindly use the <code class="docutils literal notranslate"><span class="pre">d</span></code> type and should guard against it.</p>
+<p><a name="dates--timestamps"></a></p>
 </section>
 <section id="dates-timestamps">
 <h3>Dates &amp; timestamps<a class="headerlink" href="#dates-timestamps" title="Permalink to this heading"></a></h3>
@@ -2082,6 +2084,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{{</span><span class="n">datetimeDuration</span> <span class="n">_start</span> <span class="n">_end</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;month&quot;</span> <span class="n">tooltip</span><span class="o">=</span><span class="n">true</span><span class="p">}}}</span>
 </pre></div>
 </div>
+<p><a name="numbers--math"></a></p>
 </section>
 </section>
 </section>
@@ -2157,6 +2160,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="n">subtract</span> <span class="n">value1</span> <span class="n">value2</span><span class="p">}}</span>
 </pre></div>
 </div>
+<p><a name="strings--regex"></a></p>
 </section>
 </section>
 <section id="strings-regex">
@@ -2289,6 +2293,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <blockquote>
 <div><p>If <code class="docutils literal notranslate"><span class="pre">flags</span></code> argument is not used, by default we are using the <code class="docutils literal notranslate"><span class="pre">g</span></code> (global search) flag for the regular expression search.</p>
 </div></blockquote>
+<p><a name="url--markdown-encoding"></a></p>
 </section>
 </section>
 <section id="url-markdown-encoding">
@@ -2323,6 +2328,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <section id="encodefacet-helper">
 <h4>Encodefacet helper<a class="headerlink" href="#encodefacet-helper" title="Permalink to this heading"></a></h4>
 <p>You can use the <code class="docutils literal notranslate"><span class="pre">encodeFacet</span></code> helper to compress a JSON object. The compressed string can be used for creating a URL path with facets. This helper can be used for encoding both JSON objects and string representation of a JSON object.</p>
+<p><a name="1-passing-the-string-representation-of-a-facet-blob"></a></p>
 <section id="passing-the-string-representation-of-a-facet-blob">
 <h5>1. Passing the string representation of a facet blob<a class="headerlink" href="#passing-the-string-representation-of-a-facet-blob" title="Permalink to this heading"></a></h5>
 <p>The string that you are passing as content MUST be JSON parsable. It will be ignored otherwise.</p>
@@ -2358,6 +2364,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <span class="p">}</span>
 </pre></div>
 </div>
+<p><a name="2-passing-the-json-object-representing-a-facet"></a></p>
 </section>
 <section id="passing-the-json-object-representing-a-facet">
 <h5>2. Passing the JSON object representing a facet<a class="headerlink" href="#passing-the-json-object-representing-a-facet" title="Permalink to this heading"></a></h5>
@@ -2403,6 +2410,7 @@ Current time is {{{$moment.hours}}}:{{{$moment.minutes}}}:{{{$moment.seconds}}}:
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;example.com/chaise/recordset/#1/S:T/*::facets::&lt;facet-blob-representation&gt;&quot;</span><span class="o">&gt;</span><span class="n">caption</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </pre></div>
 </div>
+<p><a name="lists-iteration--scope"></a></p>
 </section>
 </section>
 <section id="lists-iteration-scope">

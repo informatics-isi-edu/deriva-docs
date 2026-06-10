@@ -734,6 +734,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1490,6 +1491,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <span class="p">}</span>
 </pre></div>
 </div>
+<p><a name="1-normal-replacement---name"></a></p>
 <section id="normal-replacement-name">
 <h3>1. Normal replacement - “{{{name}}}”<a class="headerlink" href="#normal-replacement-name" title="Permalink to this heading"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
@@ -1502,6 +1504,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <blockquote>
 <div><p>‘This is some value in COLUMN <strong>BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</strong>’</p>
 </div></blockquote>
+<p><a name="2-replacement-with-url-encoding---encodenameencode"></a></p>
 </section>
 <section id="replacement-with-url-encoding-encode-name-encode">
 <h3>2. Replacement with URL encoding - “{{#encode}}{{{name}}}{{/encode}}”<a class="headerlink" href="#replacement-with-url-encoding-encode-name-encode" title="Permalink to this heading"></a></h3>
@@ -1515,6 +1518,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <blockquote>
 <div><p><a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></p>
 </div></blockquote>
+<p><a name="3-replacement-with-html-escaping---name"></a></p>
 </section>
 <section id="replacement-with-html-escaping-name">
 <h3>3. Replacement with HTML escaping - “{{name}}”<a class="headerlink" href="#replacement-with-html-escaping-name" title="Permalink to this heading"></a></h3>
@@ -1528,6 +1532,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <blockquote>
 <div><p>Research <strong>BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</strong> was conducted on 08/25/2016</p>
 </div></blockquote>
+<p><a name="4-replacement-with-null-check-disabled-escaping-and-url-encoding---namename"></a></p>
 </section>
 <section id="replacement-with-null-check-disabled-escaping-and-url-encoding-name-name">
 <h3>4. Replacement with null check, disabled escaping and url encoding - “{{#name}}…{{/name}}”<a class="headerlink" href="#replacement-with-null-check-disabled-escaping-and-url-encoding-name-name" title="Permalink to this heading"></a></h3>
@@ -1555,6 +1560,7 @@ Therefore it’s advised to use <code class="docutils literal notranslate"><span
 <blockquote>
 <div><p>Research on date 08/25/2016 : <a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">BiomassProdBatch for Virus=7782 Target=5HT1B site=USC</a></p>
 </div></blockquote>
+<p><a name="5-replacement-with-negated-null-check---namename"></a></p>
 </section>
 <section id="replacement-with-negated-null-check-name-name">
 <h3>5. Replacement with negated-null check - “{{^name}}…{{/name}}”<a class="headerlink" href="#replacement-with-negated-null-check-name-name" title="Permalink to this heading"></a></h3>
@@ -1570,6 +1576,7 @@ Research on date {{{date}}} : {{^title}}[This is some title](https://example.com
 <blockquote>
 <div><p>Research on date 08/25/2016 : <a class="reference external" href="https://example.com/chaise/search?name=BiomassProdBatch%20for%20Virus%3D7782%20Target%3D5HT1B%20site%3DUSC">This is some title</a></p>
 </div></blockquote>
+<p><a name="6-null-handling"></a></p>
 </section>
 <section id="null-handling">
 <h3>6. Null Handling<a class="headerlink" href="#null-handling" title="Permalink to this heading"></a></h3>

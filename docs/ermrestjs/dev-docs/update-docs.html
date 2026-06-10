@@ -732,6 +732,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1377,6 +1378,21 @@
 <section id="update-deriva-docs-files">
 <h2>Update deriva-docs files<a class="headerlink" href="#update-deriva-docs-files" title="Permalink to this heading"></a></h2>
 <p>If you added any new files to the <code class="docutils literal notranslate"><span class="pre">user-docs</span></code>, make sure the <a class="reference internal" href="../index.html"><span class="std std-doc">index.rst</span></a> is updated to include them. This file is used by deriva-docs to pull all the docs from this repository.</p>
+</section>
+<section id="keep-in-page-anchor-links-working-on-both-github-and-the-docs-site">
+<h2>Keep in-page anchor links working on both GitHub and the docs site<a class="headerlink" href="#keep-in-page-anchor-links-working-on-both-github-and-the-docs-site" title="Permalink to this heading"></a></h2>
+<p>The docs are read in two places that generate heading anchors differently:</p>
+<ul class="simple">
+<li><p><strong>GitHub</strong> (github-slugger): keeps <code class="docutils literal notranslate"><span class="pre">_</span></code>, keeps a leading <code class="docutils literal notranslate"><span class="pre">1.</span></code> number, and drops other punctuation without inserting a separator. So <code class="docutils literal notranslate"><span class="pre">####</span> <span class="pre">markdown_name</span></code> becomes <code class="docutils literal notranslate"><span class="pre">#markdown_name</span></code> and <code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">Dates</span> <span class="pre">&amp;</span> <span class="pre">Timestamps</span></code> becomes <code class="docutils literal notranslate"><span class="pre">#dates--timestamps</span></code>.</p></li>
+<li><p><strong>docs.derivacloud.org</strong> (Sphinx/docutils): turns <code class="docutils literal notranslate"><span class="pre">_</span></code> and punctuation runs into <code class="docutils literal notranslate"><span class="pre">-</span></code> and strips leading digits. The same headings become <code class="docutils literal notranslate"><span class="pre">#markdown-name</span></code> and <code class="docutils literal notranslate"><span class="pre">#dates-timestamps</span></code>.</p></li>
+</ul>
+<p>A table-of-contents or cross-reference link that uses one form is broken on the other renderer. To support both, add an explicit <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">name=&quot;&lt;github-slug&gt;&quot;&gt;&lt;/a&gt;</span></code> anchor right before any heading whose link target differs between the two. GitHub resolves the link via the heading’s own id, and the explicit anchor gives the Sphinx site a matching <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scripts/docs-anchors.py</span></code> automates this. It follows the toctrees in <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> to find every Markdown file the site renders, computes both slugs for each heading, and reports or inserts the anchors that are needed. Run it after adding or renaming headings:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>scripts/docs-anchors.py<span class="w">          </span><span class="c1"># check only; exits non-zero if anchors are missing</span>
+python3<span class="w"> </span>scripts/docs-anchors.py<span class="w"> </span>--fix<span class="w">    </span><span class="c1"># insert the missing anchors</span>
+</pre></div>
+</div>
+<p>It is idempotent, so re-running is safe. Links flagged with <code class="docutils literal notranslate"><span class="pre">!</span></code> point at no heading (a typo or a stale cross-reference) and must be fixed by hand.</p>
 </section>
 <section id="update-the-annotation-validator-in-deriva-py">
 <h2>Update the annotation validator in deriva-py<a class="headerlink" href="#update-the-annotation-validator-in-deriva-py" title="Permalink to this heading"></a></h2>

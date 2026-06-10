@@ -734,6 +734,7 @@
 <li class="toctree-l3"><a class="reference internal" href="data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1615,6 +1616,7 @@
 <li><p><a class="reference internal" href="data/naming.html#nondefaults-query-parameter"><span class="std std-ref">Nondefaults Query Parameter</span></a></p></li>
 <li><p><a class="reference internal" href="data/naming.html#onconflict-query-parameter"><span class="std std-ref">Onconflict Query Parameter</span></a></p></li>
 <li><p><a class="reference internal" href="data/naming.html#limit-query-parameter"><span class="std std-ref">Limit Query Parameter</span></a></p></li>
+<li><p><a class="reference internal" href="data/naming.html#arrays-query-parameter"><span class="std std-ref">Arrays Query Parameter</span></a></p></li>
 </ol>
 <p>The sort, paging, and limit syntax together can support <a class="reference internal" href="data/naming.html#data-paging"><span class="std std-ref">paged data access</span></a>.</p>
 </section>
@@ -1851,10 +1853,12 @@ scalar types except the regular-expression matches which only apply to
 <section id="arrays-of-scalars">
 <h5>Arrays of Scalars<a class="headerlink" href="#arrays-of-scalars" title="Permalink to this heading"></a></h5>
 <p>ERMrest supports columns storing arrays of the preceding scalar
-types. These arrays are encoded differently depending on the MIME type:</p>
+types. In requests and responses, these arrays are encoded differently
+depending on the MIME type:</p>
 <ul class="simple">
 <li><p>As native JSON array content in JSON input/output formats, e.g. <code class="docutils literal notranslate"><span class="pre">{&quot;array_column_name&quot;:</span> <span class="pre">[&quot;value1&quot;,</span> <span class="pre">&quot;value2&quot;],</span> <span class="pre">&quot;scalar_column_name&quot;:</span> <span class="pre">&quot;value3&quot;}</span></code></p></li>
-<li><p>As PostgreSQL-formatted arrays in CSV input/output formats, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;{value1,value2,value3}&quot;,value3</span></code></p></li>
+<li><p>As PostgreSQL-formatted arrays in CSV input/output formats, e.g. <code class="docutils literal notranslate"><span class="pre">&quot;{value1,value2}&quot;,value3</span></code>.</p></li>
+<li><p>Optionally, JSON array content is also supported in CSV input/output formats, but then must obey CSV quoting and escaping rules. The example row  <code class="docutils literal notranslate"><span class="pre">&quot;[&quot;&quot;value1&quot;&quot;,&quot;&quot;value2&quot;&quot;]&quot;,value3</span></code> contains two columns, with the first bearing the JSON value <code class="docutils literal notranslate"><span class="pre">[&quot;value1&quot;,&quot;value2&quot;]</span></code>.</p></li>
 </ul>
 <p>The <a class="reference internal" href="data/naming.html#binary-filter-predicate"><span class="std std-ref">binary filter predicate</span></a>
 language of ERMrest URIs compare each scalar element in a stored array
@@ -1864,6 +1868,18 @@ right-hand value from the URI filter syntax. The predicate is
 considered to match if <em>any</em> contained array element individually
 matches using the scalar comparison.</p>
 <p>A column storing an array of scalars MAY be used as a unique key or foreign key, subject to PostgreSQL native interpretation of array equality. However, it is RECOMMENDED that data modelers consider normalizing their schema to avoid such constructs.</p>
+</section>
+<section id="computed-json-columns">
+<h5>Computed JSON Columns<a class="headerlink" href="#computed-json-columns" title="Permalink to this heading"></a></h5>
+<p>A number of ERMrest special output forms produce composite values
+which are effectively computed <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code> and <code class="docutils literal notranslate"><span class="pre">array_d</span></code> aggregates are JSON arrays</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bin</span></code> binning results are JSON arrays</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trs</span></code> and <code class="docutils literal notranslate"><span class="pre">tcrs</span></code> rights-summaries are JSON objects</p></li>
+</ul>
+<p>Unlike stored array columns, these output values are computed <em>after</em>
+filtering and are never involved in filter predicates.</p>
 </section>
 <section id="experimental-types">
 <h5>Experimental Types<a class="headerlink" href="#experimental-types" title="Permalink to this heading"></a></h5>
@@ -1877,7 +1893,7 @@ for other reasons:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">numeric</span></code>: Arbitrary-precision decimal numerical data.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">time</span></code> and <code class="docutils literal notranslate"><span class="pre">timetz</span></code>: Time values lacking date information.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">timestamp</span></code>: Timestamps lacking timezone information.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">json</span></code>: JSON text strings.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">json</span></code>: JSON text strings. We recommend the <code class="docutils literal notranslate"><span class="pre">jsonb</span></code> type instead.</p></li>
 <li><p>various <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">character</span></code> types with length constraints: No
 length constraints or padding are considered or enforced by ERMrest
 and for the most part these map to variable-length <code class="docutils literal notranslate"><span class="pre">text</span></code> storage
@@ -1894,6 +1910,13 @@ databases for legacy support.</p>
 as described in <a class="reference external" href="https://tools.ietf.org/html/rfc4180">RFC 4180</a>. If
 deviation between the RFC and ERMrest are found, please report them as
 a bug in the ERMrest issue tracker.</p>
+<p>Note, ERMrest deviates from RFC 4180 and accepts a Unix-style
+<em>linefeed</em> character as record terminator as well as the two-byte
+sequence <em>carriage return</em> + <em>linefeed</em>. This usage should be
+consistent through an entire CSV input, not mixed on a per record
+basis. ERMrest may also produce CSV with Unix-style record terminators,
+depending on the configuration and behavior of the PostgreSQL server
+being used for the ERMrest deployment.</p>
 <p>Refer to the RFC for full CSV format details, but here are a few
 points worth noting:</p>
 <ul class="simple">
@@ -1915,11 +1938,15 @@ points worth noting:</p>
 </ul>
 <section id="null-values">
 <h5>NULL values<a class="headerlink" href="#null-values" title="Permalink to this heading"></a></h5>
-<p>As a further note, ERMrest interprets quoted and unquoted empty fields distinctly:</p>
+<p>As a further note, ERMrest interprets quoted and unquoted empty fields
+distinctly:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">...,,...</span></code>: NULL value</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">...,&quot;&quot;,...</span></code>: empty string</p></li>
 </ul>
+<p>However, these two scenarios will be conflated by typical CSV decoders
+which interpret both as the empty string and have no concept of NULL
+values.</p>
 </section>
 <section id="example-csv-content">
 <h5>Example CSV Content<a class="headerlink" href="#example-csv-content" title="Permalink to this heading"></a></h5>

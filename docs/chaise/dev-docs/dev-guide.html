@@ -732,6 +732,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#nondefaults-query-parameter">Nondefaults Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#onconflict-query-parameter">Onconflict Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#limit-query-parameter">Limit Query Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#arrays-query-parameter">Arrays Query Parameter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ermrest/api-doc/data/naming.html#data-paging">Data Paging</a></li>
 </ul>
 </li>
@@ -1472,6 +1473,7 @@
 <li><p><a class="reference internal" href="#memoization"><span class="std std-ref">Memoization</span></a></p></li>
 </ul>
 </li>
+<li><p><a class="reference internal" href="#documentation"><span class="std std-ref">Documentation</span></a></p></li>
 </ul>
 </section>
 <section id="commit-message-conventions">
@@ -2836,6 +2838,17 @@ export default function CounterProvider({
 <li><p>https://dmitripavlutin.com/use-react-memo-wisely/</p></li>
 </ul>
 </section>
+</section>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading"></a></h2>
+<p>The Markdown files under <a class="reference internal" href="#../user-docs"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">docs/user-docs</span></code></span></a> that are listed in <a class="reference internal" href="../index.html"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">docs/index.rst</span></code></span></a> are published on <a class="reference external" href="https://docs.derivacloud.org/chaise/index.html">docs.derivacloud.org</a> by deriva-docs. If you add a new user-docs file, add it to <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> as well.</p>
+<p>GitHub and the docs site (Sphinx) generate heading anchors differently. GitHub keeps <code class="docutils literal notranslate"><span class="pre">_</span></code> and a leading <code class="docutils literal notranslate"><span class="pre">1.</span></code> number and drops other punctuation without a separator, while Sphinx turns <code class="docutils literal notranslate"><span class="pre">_</span></code> and punctuation runs into <code class="docutils literal notranslate"><span class="pre">-</span></code> and strips leading digits. So a heading like <code class="docutils literal notranslate"><span class="pre">###</span> <span class="pre">1.</span> <span class="pre">Install</span> <span class="pre">Chaise</span></code> is <code class="docutils literal notranslate"><span class="pre">#1-install-chaise</span></code> on GitHub but <code class="docutils literal notranslate"><span class="pre">#install-chaise</span></code> on the site, and an in-page link can only target one of them. To support both, an explicit <code class="docutils literal notranslate"><span class="pre">&lt;a</span> <span class="pre">name=&quot;&lt;github-slug&gt;&quot;&gt;&lt;/a&gt;</span></code> anchor is added right before any heading whose two slugs differ: GitHub resolves the link through the heading’s own id, and the explicit anchor gives Sphinx a matching <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p><a class="reference internal" href="#../../scripts/docs-anchors.py"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">scripts/docs-anchors.py</span></code></span></a> automates this. It follows the toctree in <code class="docutils literal notranslate"><span class="pre">index.rst</span></code> to find the published files, computes both slugs for every heading, and reports or inserts the needed anchors. Run it after adding or renaming headings:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>scripts/docs-anchors.py<span class="w">          </span><span class="c1"># check only; exits non-zero if anchors are missing</span>
+python3<span class="w"> </span>scripts/docs-anchors.py<span class="w"> </span>--fix<span class="w">    </span><span class="c1"># insert the missing anchors</span>
+</pre></div>
+</div>
+<p>It is idempotent, so re-running is safe. Links flagged with <code class="docutils literal notranslate"><span class="pre">!</span></code> point at no heading (a typo or a stale cross-reference) and must be fixed by hand.</p>
 </section>
 </section>
 

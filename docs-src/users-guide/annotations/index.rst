@@ -7,12 +7,13 @@ Annotations Guide
    annotations-overview
    annotation
    contexts
-   facet-json-structure
-   facet-examples
+   facet
    template-markdown
    pre-format
-   pseudo-columns
-   pseudo-column-display
-   pseudo-column-template
+   column-directive
+   column-directive-display
+   column-directive-template
+   input-iframe
    table-alternatives
    export
+   google-dataset

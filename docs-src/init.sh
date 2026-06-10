@@ -50,15 +50,19 @@ ln -sfv ../deriva-py/project-tutorial.md
 
 cd ./annotations/
 ln -sfv ../../ermrestjs/user-docs/annotation.md
+ln -sfv ../../ermrestjs/user-docs/annotation-deprecated.md
+ln -sfv ../../ermrestjs/user-docs/column-directive.md
+ln -sfv ../../ermrestjs/user-docs/column-directive-display.md
+ln -sfv ../../ermrestjs/user-docs/column-directive-template.md
 ln -sfv ../../ermrestjs/user-docs/contexts.md
 ln -sfv ../../ermrestjs/user-docs/export.md
-ln -sfv ../../ermrestjs/user-docs/facet-examples.md
-ln -sfv ../../ermrestjs/user-docs/facet-json-structure.md
+ln -sfv ../../ermrestjs/user-docs/facet.md
+ln -sfv ../../ermrestjs/user-docs/google-dataset.md
 ln -sfv ../../ermrestjs/user-docs/handlebars.md
+ln -sfv ../../ermrestjs/user-docs/input-iframe.md
 ln -sfv ../../ermrestjs/user-docs/markdown-formatting.md
 ln -sfv ../../ermrestjs/user-docs/mustache-templating.md
 ln -sfv ../../ermrestjs/user-docs/pre-format.md
-ln -sfv ../../ermrestjs/user-docs/pseudo-columns.md
 ln -sfv ../../ermrestjs/user-docs/table-alternatives.md
 ln -sfv ../../ermrestjs/user-docs/template-markdown-overview.md
 ln -sfv ../../ermrestjs/user-docs/template-markdown.rst

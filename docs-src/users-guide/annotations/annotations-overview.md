@@ -35,10 +35,9 @@ Contexts are used to specify **presentation modes**, e.g. compact, detailed, edi
 
 ### Facet search
 
-The **facet search** is controlled through the `filter` context in the `isrd.isi.edu,2016:visible-columns` annotation. The following documents describe the JSON structure and examples of how to configure the annotation. 
+The **facet search** is controlled through the `filter` context in the `isrd.isi.edu,2016:visible-columns` annotation. The following document describes the JSON structure and examples of how to configure the annotation. 
 
-  * [JSON structure](facet-json-structure.md)
-  * [Examples](facet-examples.md)
+  * [JSON structure and examples](facet.md)
 
 ### Formatting and presentation
 
@@ -48,16 +47,16 @@ Chaise/ERMRestJS provides flexibility for system administrators to **customize t
 
 *Markdown* allows the display to be styled differently, e.g. bold text, embedded image/videos, etc. ERMRestJS also supports customized formats of native data types such as float or integer through `PreFormat`. For example, a floating point number can be displayed with a thousand separator and two decimals. The following documents provide details and examples of these features.
   
-  * [Templating and Markdown](template-markdown.md)
+  * [Templating and Markdown](template-markdown.rst)
   * [PreFormat](pre-format.md)
 
-### Pseudo-columns logic and heuristics  
+### Column directives (pseudo-columns)  
   
-The pseudo-columns allow Chaise to present denormalized content of an entity by pulling data from multiple related tables through foreign key paths.
+The column directives (previously known as pseudo-columns) allow Chaise to present denormalized content of an entity by pulling data from multiple related tables through foreign key paths.
 
-Pseudo-columns can be defined as a column in the visible column list of the `isrd.isi.edu,2016:visible-columns` annotation. 
+Column directives can be defined as a column in the visible column list of the `isrd.isi.edu,2016:visible-columns` annotation. 
 
-  * [Pseudo-Columns logic and heuristics](pseudo-columns.md)
+  * [Column directive logic and heuristics](column-directive.md)
 
 ### Table Alternatives
 

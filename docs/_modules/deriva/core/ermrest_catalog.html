@@ -2035,27 +2035,45 @@
                         <span class="n">content_type</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span>
                         <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Transferring data from [</span><span class="si">%s</span><span class="s2">] to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">destfilename</span><span class="p">))</span>
                         <span class="c1"># CSV processing iterates over lines in the response, skipping the header line(s) in all but</span>
-                        <span class="c1"># the first page, and captures the last line of each page to determine the last record processed</span>
+                        <span class="c1"># the first page, and captures this page&#39;s data lines to determine the last record processed.</span>
+                        <span class="c1"># The last complete record cannot be taken from the last raw byte line: a CSV field may contain</span>
+                        <span class="c1"># embedded newlines inside a quoted value (RFC 4180, e.g. OCR text with grid data), so the last</span>
+                        <span class="c1"># raw line can be a fragment of the record. Instead, the page&#39;s kept data lines are parsed</span>
+                        <span class="c1"># forward with the csv module -- starting from a known record boundary, it tracks quote state</span>
+                        <span class="c1"># correctly across embedded newlines. Using an incorrect record for the @after() cursor would</span>
+                        <span class="c1"># skip rows or re-fetch the same page forever.</span>
                         <span class="k">if</span> <span class="n">content_type</span> <span class="o">==</span> <span class="s2">&quot;text/csv&quot;</span><span class="p">:</span>
                             <span class="n">skip</span> <span class="o">=</span> <span class="mi">1</span>
                             <span class="n">line_num</span> <span class="o">=</span> <span class="mi">0</span>
+                            <span class="n">page_lines</span> <span class="o">=</span> <span class="p">[]</span>
                             <span class="k">if</span> <span class="n">first_page</span><span class="p">:</span>
                                 <span class="n">lines</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">(</span><span class="n">decode_unicode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                                 <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
                                 <span class="n">first_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
                                 <span class="n">skip</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">line_num</span>
                             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_lines</span><span class="p">():</span>
-                                <span class="k">if</span> <span class="ow">not</span> <span class="n">first_page</span><span class="p">:</span>
-                                    <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
-                                    <span class="k">if</span> <span class="n">line_num</span> <span class="o">&lt;=</span> <span class="n">skip</span><span class="p">:</span>
-                                        <span class="k">continue</span>
+                                <span class="n">line_num</span> <span class="o">+=</span> <span class="mi">1</span>
+                                <span class="c1"># The header line(s) appear on every page; the first page writes them to</span>
+                                <span class="c1"># the file but they are never data, so they are excluded from page_lines</span>
+                                <span class="c1"># on every page (data cursor only). Subsequent pages also skip writing them.</span>
+                                <span class="n">is_header</span> <span class="o">=</span> <span class="n">line_num</span> <span class="o">&lt;=</span> <span class="n">skip</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">first_page</span> <span class="ow">and</span> <span class="n">is_header</span><span class="p">:</span>
+                                    <span class="k">continue</span>
                                 <span class="n">tline</span> <span class="o">=</span> <span class="n">line</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
                                 <span class="n">destfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tline</span><span class="p">)</span>
                                 <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tline</span><span class="p">)</span>
-                                <span class="n">last_line</span> <span class="o">=</span> <span class="n">tline</span>
-                            <span class="k">if</span> <span class="n">last_line</span> <span class="ow">and</span> <span class="n">last_line</span> <span class="o">!=</span> <span class="n">first_line</span><span class="p">:</span>
-                                <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">([</span><span class="n">last_line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)],</span> <span class="n">first_line</span><span class="p">)</span>
-                                <span class="n">last_line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+                                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_header</span><span class="p">:</span>
+                                    <span class="c1"># Keep this page&#39;s data lines so the last complete record can be</span>
+                                    <span class="c1"># parsed forward; bounded by one page.</span>
+                                    <span class="n">page_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+                            <span class="c1"># Parse the page&#39;s data lines forward through a single csv.reader: starting from</span>
+                            <span class="c1"># a known record boundary, it tracks quote state across embedded newlines, so a</span>
+                            <span class="c1"># multi-line quoted field is reassembled into one record rather than mistaken</span>
+                            <span class="c1"># for several. Retain only the last record for the @after() cursor.</span>
+                            <span class="n">last_row</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">page_lines</span><span class="p">):</span>
+                                <span class="n">last_row</span> <span class="o">=</span> <span class="n">row</span>
+                            <span class="n">last_line</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">first_line</span><span class="p">,</span> <span class="n">last_row</span><span class="p">))</span> <span class="k">if</span> <span class="n">last_row</span> <span class="k">else</span> <span class="p">{}</span>
                             <span class="n">first_page</span> <span class="o">=</span> <span class="kc">False</span>
                         <span class="c1"># JSON-Stream processing writes the entire buffer to the destination file. The last line is</span>
                         <span class="c1"># captured by reverse seeking in the buffer from right before the last b&#39;\n&#39; newline to the next</span>

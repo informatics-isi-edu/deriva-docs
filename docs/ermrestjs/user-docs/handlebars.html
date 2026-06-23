@@ -1571,6 +1571,7 @@
 <ul>
 <li><p><a class="reference internal" href="#memberof"><span class="std std-ref">memberOf</span></a></p></li>
 <li><p><a class="reference internal" href="#hasmember"><span class="std std-ref">hasMember</span></a></p></li>
+<li><p><a class="reference internal" href="#overlaps"><span class="std std-ref">overlaps</span></a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#access-control-acl-check"><span class="std std-ref">Access Control (ACL) check</span></a></p></li>
@@ -2806,6 +2807,19 @@ the value of the <code class="docutils literal notranslate"><span class="pre">wi
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (hasMember tags &quot;active&quot;)}}</span>
   <span class="o">...</span>
 <span class="p">{{</span><span class="o">/</span><span class="k">if</span><span class="p">}}</span>
+</pre></div>
+</div>
+</section>
+<section id="overlaps">
+<h4>overlaps<a class="headerlink" href="#overlaps" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">overlaps</span></code> returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the given array shares at least one element with a list of candidates (a non-empty intersection). It is the array-vs-list counterpart to <a class="reference internal" href="#hasmember"><span class="std std-ref">hasMember</span></a> (array contains a single scalar). <code class="docutils literal notranslate"><span class="pre">overlaps</span></code> is variadic, pass the array column first, then any number of candidate args. Array arguments are flattened one level, so the same helper covers a fixed list, another array column, or the result of <a class="reference internal" href="#pluck"><span class="std std-ref">pluck</span></a>. If the first argument is not an array, it returns <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{{</span><span class="c1">#if (overlaps tags &quot;active&quot; &quot;featured&quot;)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (overlaps tags allowedArray)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (overlaps tags allowedArray &quot;extra&quot;)}}...{{/if}}</span>
+
+<span class="p">{{</span><span class="c1">#if (overlaps tags (pluck $self &quot;values.type&quot;))}}...{{/if}}</span>
 </pre></div>
 </div>
 </section>

@@ -2337,13 +2337,26 @@ to assure change is only applied to expected state.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="deriva.core.ermrest_catalog.ErmrestCatalog.get_as_file">
-<span class="sig-name descname"><span class="pre">get_as_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destfilename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_if_empty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_sort_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'RID'})</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.get_as_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.get_as_file" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_as_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destfilename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delete_if_empty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paged</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">page_sort_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">frozenset({'RID'})</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rid_set</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rid_table</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/deriva/core/ermrest_catalog.html#ErmrestCatalog.get_as_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#deriva.core.ermrest_catalog.ErmrestCatalog.get_as_file" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve catalog data streamed to destination file.
 Caller is responsible to clean up file even on error, when the file may or may not exist.
 If “delete_if_empty” is True, the file will be inspected for “empty” content. In the case of
 json/json-stream content, the presence of a single empty JSON object will be tested for. In the case of
 CSV content, the file will be parsed with CSV reader to determine that only a single header line and no row
 data is present.</p>
+<p>When “rid_set” is provided, “path” is ignored and the rows for those
+RIDs are fetched from “rid_table” by chunking the RID set into
+URL-safe <code class="docutils literal notranslate"><span class="pre">RID=any(...)</span></code> batches and appending every chunk’s page(s)
+into one file (for CSV the header is written exactly once).
+“rid_table” is required in this mode. The output format follows the
+caller’s Accept header – “text/csv” (the default when none is given)
+or “application/x-json-stream”. Returns the destination filename, or
+None if the result was empty and “delete_if_empty” applied. In this
+mode the result is always paged, so “paged” is ignored. Rows are
+sorted by “page_sort_columns” within each chunk but not globally
+across the RID set, and a RID supplied more than once (or appearing
+in more than one chunk) yields a duplicated row – callers that need a
+globally sorted or de-duplicated result must do so themselves.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2418,6 +2431,14 @@ of the catalog.</p>
 <dd><p>The snaptime for this catalog snapshot instance.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="deriva.core.ermrest_catalog.RID_SET_CHUNK_SIZE">
+<span class="sig-prename descclassname"><span class="pre">deriva.core.ermrest_catalog.</span></span><span class="sig-name descname"><span class="pre">RID_SET_CHUNK_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">500</span></em><a class="headerlink" href="#deriva.core.ermrest_catalog.RID_SET_CHUNK_SIZE" title="Permalink to this definition"></a></dt>
+<dd><p>URL-safe batch size for RID-set fetches. A <code class="docutils literal notranslate"><span class="pre">RID=any(...)</span></code> filter over
+thousands of RIDs exceeds the server’s URI length limit (a 225k-RID URL is
+~1.9 MB → HTTP 414); chunking keeps each request URL well within limits.</p>
 </dd></dl>
 
 <dl class="py class">

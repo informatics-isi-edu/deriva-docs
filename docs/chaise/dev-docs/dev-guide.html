@@ -1567,6 +1567,7 @@
 <ul>
 <li><p><a class="reference internal" href="#debugging"><span class="std std-ref">Debugging</span></a></p></li>
 <li><p><a class="reference internal" href="#memoization"><span class="std std-ref">Memoization</span></a></p></li>
+<li><p><a class="reference internal" href="#lazy-loading-heavy-dependencies"><span class="std std-ref">Lazy loading heavy dependencies</span></a></p></li>
 </ul>
 </li>
 <li><p><a class="reference internal" href="#documentation"><span class="std std-ref">Documentation</span></a></p></li>
@@ -2932,6 +2933,17 @@ export default function CounterProvider({
 <ul class="simple">
 <li><p>https://react.dev/reference/react/memo</p></li>
 <li><p>https://dmitripavlutin.com/use-react-memo-wisely/</p></li>
+</ul>
+</section>
+<section id="lazy-loading-heavy-dependencies">
+<h3>Lazy loading heavy dependencies<a class="headerlink" href="#lazy-loading-heavy-dependencies" title="Permalink to this heading"></a></h3>
+<p>When a large dependency is only needed on some code paths, don’t import it eagerly. Isolate it in its own module and load it with <a class="reference external" href="https://react.dev/reference/react/lazy"><code class="docutils literal notranslate"><span class="pre">React.lazy</span></code></a> + <code class="docutils literal notranslate"><span class="pre">Suspense</span></code> so webpack puts it in a separate chunk that’s only fetched when that path actually renders. For example, <code class="docutils literal notranslate"><span class="pre">plotly.js-basic-dist-min</span></code> (~1MB) is only needed when a range facet shows a histogram, so it’s isolated in <code class="docutils literal notranslate"><span class="pre">facet-range-plot.tsx</span></code> and lazy-loaded from <code class="docutils literal notranslate"><span class="pre">facet-range-picker.tsx</span></code>.</p>
+<p>Guidelines:</p>
+<ul class="simple">
+<li><p>Place the <code class="docutils literal notranslate"><span class="pre">lazy()</span></code> boundary at the call site with an existing conditional (the place that decides whether the feature shows), not inside the heavy component itself. A module cannot defer its own load; whoever imports it decides eager vs lazy.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">import()</span></code> splits at module granularity. If only part of a component needs the heavy dependency, extract that part into its own file first (like <code class="docutils literal notranslate"><span class="pre">facet-range-plot.tsx</span></code>) and keep the rest eagerly loaded.</p></li>
+<li><p>Mount the lazy component as soon as the feature is visible, even if its data hasn’t arrived yet (return <code class="docutils literal notranslate"><span class="pre">null</span></code> from the component until it has). This lets the chunk download run in parallel with data requests instead of after them.</p></li>
+<li><p>Give the <code class="docutils literal notranslate"><span class="pre">Suspense</span></code> <code class="docutils literal notranslate"><span class="pre">fallback</span></code> a spinner so users see progress while the chunk downloads.</p></li>
 </ul>
 </section>
 </section>

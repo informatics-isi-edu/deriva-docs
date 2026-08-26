@@ -1817,6 +1817,19 @@ calculate the position of any element dynamically in the DOM</p></li>
 </li>
 </ul>
 </li>
+<li><p>Use this order inside the component (so the file reads storage first, then what is derived from it, then what reacts to it):</p>
+<ol class="arabic simple">
+<li><p>External/context hooks: store selectors, <code class="docutils literal notranslate"><span class="pre">useContext</span></code>, custom hooks like <code class="docutils literal notranslate"><span class="pre">useError</span></code>/<code class="docutils literal notranslate"><span class="pre">useAlert</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useState</span></code> (including wrappers like <code class="docutils literal notranslate"><span class="pre">useNodesState</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useRef</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useMemo</span></code> (derived values)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useCallback</span></code> (handlers and actions)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">useEffect</span></code> / <code class="docutils literal notranslate"><span class="pre">useLayoutEffect</span></code> (they typically call the callbacks, so they come last)</p></li>
+<li><p>render helpers, early returns, JSX</p></li>
+</ol>
+<p>Separate the groups with the <code class="docutils literal notranslate"><span class="pre">//----</span> <span class="pre">state:</span> <span class="pre">----//</span></code> style section banners. See <code class="docutils literal notranslate"><span class="pre">example.tsx</span></code> for a full example.</p>
+</li>
+<li><p>Prefer <code class="docutils literal notranslate"><span class="pre">useMemo</span></code> for values computed from state/props and <code class="docutils literal notranslate"><span class="pre">useCallback</span></code> for handlers passed to children (see <code class="docutils literal notranslate"><span class="pre">components/model/model.tsx</span></code> for the pattern). Newer components should follow this; older components can be refactored opportunistically when touched.</p></li>
 <li><p>Calling functions after <code class="docutils literal notranslate"><span class="pre">useState</span></code> update and browser repaint</p>
 <ul class="simple">
 <li><p>When the set function of a <code class="docutils literal notranslate"><span class="pre">useState</span></code> hook is called, a browser repaint is triggered followed by each <code class="docutils literal notranslate"><span class="pre">useEffect</span></code> and <code class="docutils literal notranslate"><span class="pre">useLayoutEffect</span></code> being checked for changes</p></li>

@@ -968,6 +968,11 @@
 <li class="toctree-l4"><a class="reference internal" href="REST-API.html#chunked-upload-job-cancellation">Chunked Upload Job Cancellation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="REST-API.html#bulk-management-sub-resources">Bulk Management Sub-Resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="REST-API.html#bulk-name-listing-retrieval">Bulk Name Listing Retrieval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="REST-API.html#bulk-version-listing-retrieval">Bulk Version Listing Retrieval</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1525,6 +1530,167 @@ the original backing storage which it owns. The rename_from source DB
 entry exists and can itself be managed or deleted, but will raise 409
 errors on attempts to GET the content.</p></li>
 </ol>
+</section>
+</section>
+<section id="incremental-polling-observer-pattern">
+<h1>Incremental Polling Observer Pattern<a class="headerlink" href="#incremental-polling-observer-pattern" title="Permalink to this heading"></a></h1>
+<p>For operations tooling, we would like to construct <em>polling
+observers</em>: agents which can follow along with Hatrac DB state changes
+and perform automated maintenance tasks. For example, a full listing
+of object versions could be compared against an ERMrest catalog to
+identify dangling references (to dead objects) or orphaned objects
+(with no catalog reference). Or, coordinated access control policies
+could be orchestrated between the two systems, with an obsever to
+react to newly added objects, to detect drift in these policies, or to
+proactively “heal” the policy.</p>
+<p>A naive polling observer would periodically query Hatrac to enumerate
+all namespaces, objects, and object versions. Using the core object
+storage APIs, this would be quite inefficient and produce a large
+volume of log traffic too. There are two extensions to Hatrac which
+would help optimize this:</p>
+<ol class="arabic simple">
+<li><p>New bulk listing APIs to allow efficient, enumeration of Hatrac
+<code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code> table content.</p></li>
+<li><p>New temporal properties to allow ordering by change, so the bulk
+APIs support paginated, incremental observation of state changes.</p></li>
+</ol>
+<p>Together, these should allow a polling observer to get a bulk listing
+of all Hatrac content, build a private replica, and fall into a
+pattern of incrementally retrieving new or revised rows to update its
+understanding of Hatrac content.</p>
+<p>When the bulk API exposes tombstone records (where <code class="docutils literal notranslate"><span class="pre">is_deleted</span></code> is
+true), the observer can detect deletion incrementally too.</p>
+<p>NOTE: this approach retains one caveat of naive polling. It is not
+log-based replication. An asynchronous, polling observer is not
+guaranteed to see every mutation in a rapid burst. Some changes may be
+ephemeral, overwritten before the observer can query each state. But,
+we can guarantee that the observer will eventually see the quiescent
+state. This is sufficient to support cleanup and drift detection, but
+not a substitute for having appropriate access control, logging, and
+audit capability.</p>
+</section>
+<section id="temporal-properties">
+<h1>Temporal Properties<a class="headerlink" href="#temporal-properties" title="Permalink to this heading"></a></h1>
+<p>Temporal properties will be added to internal <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code>
+tables:
+e</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">created_at</span></code>: The timestamptz when the row was created</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modified_at</span></code>: The timestamptz when the row was last modified</p></li>
+</ul>
+<p>Because of the immutable semantics of hatrac object-versions, we only
+care to track changes to these database records, not the byte stream
+(file) content in the backing object storage.</p>
+<p>These two are analogous to the RCT/RMT columns in ERMrest. They
+will reflect the human-readable, wall-clock time when namespace/object
+or object-version records are created or updated, using the <code class="docutils literal notranslate"><span class="pre">now()</span></code>
+timestamp available in SQL triggers.</p>
+<p>When an existing hatrac DB is upgraded (via <code class="docutils literal notranslate"><span class="pre">hatrac-deploy</span></code>) to add
+these columns, existing rows will be initialized as if they were all
+created during the upgrade transaction.</p>
+<section id="sequencing-hazard-mitigation">
+<h2>Sequencing Hazard Mitigation<a class="headerlink" href="#sequencing-hazard-mitigation" title="Permalink to this heading"></a></h2>
+<p>PostgreSQL may add timestamps to a table out of sequence. The
+timestamp is a moment when the transaction starts rather than when it
+finishes. A slower transaction may commit its (older) timestamp after
+other transactions have already committed their (newer) values. An
+unlucky client could observe this asynchrony. Hence, the values
+themselves are insufficient to support incremental monitoring for
+change based on a “last seen” temporal cursor.</p>
+<p>Thankfully, PostgreSQL exposes a useful snapshot concept, describing
+active (non-retired) transactions. We can test whether the snapshot
+<code class="docutils literal notranslate"><span class="pre">xmin</span></code> is less than the snapshot <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, indicating there are
+non-retired tansactions in progress. Conversely, when these values are
+equal, the database is in a quiescent state and there is no hazard in
+the observable chronology.</p>
+<p>Because Hatrac is normally expected to quiesce in between mutation
+requests, we can simply abort unlucky polling observer requests with a
+<code class="docutils literal notranslate"><span class="pre">503</span> <span class="pre">Service</span> <span class="pre">Unavailable</span></code> status code when a hazard is detected. If
+the observer responds with backoff and retry, they should eventually
+query at a quiescent moment in the future.</p>
+</section>
+<section id="asynchronous-and-continuous-replication">
+<h2>Asynchronous and Continuous Replication<a class="headerlink" href="#asynchronous-and-continuous-replication" title="Permalink to this heading"></a></h2>
+<p>There is no transaction control to give the client a completely atomic
+snapshot of remote Hatrac state. Instead, the client must retrieve
+content from two different tabular sources and cope with transient
+referential integrity errors during the retrieval process:</p>
+<ol class="arabic simple">
+<li><p>Loop over <code class="docutils literal notranslate"><span class="pre">version</span></code> table records until an empty page result.</p></li>
+<li><p>Loop over <code class="docutils literal notranslate"><span class="pre">name</span></code> table records until an empty page result.</p></li>
+</ol>
+<p>Once both streams have been exhausted in this order, the observer
+holds a set of records they could merge into their own replica of
+these Hatrac tables.</p>
+</section>
+<section id="transient-inconsistencies-in-replica-stream">
+<h2>Transient Inconsistencies in Replica Stream<a class="headerlink" href="#transient-inconsistencies-in-replica-stream" title="Permalink to this heading"></a></h2>
+<p>While retrieving version records, there will be unresolvable
+references to the name table, which hasn’t been fetched yet. This is
+the foreign key <code class="docutils literal notranslate"><span class="pre">version.nameid</span></code> which references <code class="docutils literal notranslate"><span class="pre">name.id</span></code>.</p>
+<p>While retrieving name records, there may be unresolvable references
+between name records. This is the foreign key <code class="docutils literal notranslate"><span class="pre">name.pid</span></code> which
+references <code class="docutils literal notranslate"><span class="pre">name.id</span></code>. Once all name records have been fetched, the
+observer is guaranteed to have observed all ancestor namespaces which
+are references by other names they have observed.</p>
+<p>Both of these referential integrity challenges are ephemeral, while
+fetching records in order of last mutation, rather than insertion
+order. But, this temporal order is necessary to allow mutation order
+to be used as an ongoing stream position.</p>
+<p>Each time the polling observer polls, they should repeat the same
+process to fetch revisions to the version table, followed by fetching
+revisions to the name table.</p>
+</section>
+<section id="record-stream-pagination">
+<h2>Record Stream Pagination<a class="headerlink" href="#record-stream-pagination" title="Permalink to this heading"></a></h2>
+<p>We feed the following paramters for streaming of each table:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: the number of rows to include in a page</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_modified_at</span></code>: the <code class="docutils literal notranslate"><span class="pre">modified_at</span></code> of the prior row</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_id</span></code>: the <code class="docutils literal notranslate"><span class="pre">id</span></code> of the prior row</p></li>
+</ul>
+<p>The prior row material defines the stream position last seen by the
+observer, whether it is the most recent change or just the most recent
+that would fit in the page size.</p>
+<p>To boostrap a new observer, use special position:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">last_modified_at</span></code>: <code class="docutils literal notranslate"><span class="pre">-infinity</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_id</span></code>: <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+<p>These are guaranteed to be earlier in the sort order than any record
+content, so the first page will get the very earliest content.</p>
+<p>The following SQL query templates represent the paginated streams with
+these parameters:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT *
+FROM hatrac.name
+WHERE modified_at &gt;= {{last_modified_at}}
+  AND (modified_at &gt; {{last_modified_at}} OR id &gt; {{last_id}})
+ORDER BY modified_at, id
+LIMIT {{page_size}}
+
+SELECT *
+FROM hatrac.version
+WHERE modified_at &gt;= {{last_modified_at}}
+  AND (modified_at &gt; {{last_modified_at}} OR id &gt; {{last_id}})
+ORDER BY id
+LIMIT {{page_size}}
+</pre></div>
+</div>
+<p>For robustness, the client SHOULD persistently store the <code class="docutils literal notranslate"><span class="pre">id</span></code> and
+<code class="docutils literal notranslate"><span class="pre">modified_at</span></code> from the last row of the last page retrieved from each
+table. To recover this state from replica tables held on the client
+side, find the row with the stream position, e.g.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SELECT modified_at, id
+FROM name_replica
+ORDER BY modified_at DESC, id DESC
+LIMIT 1;
+
+SELECT modified_at, id
+FROM version_replica
+ORDER BY modified_at DESC, id DESC
+LIMIT 1;
+</pre></div>
+</div>
 </section>
 </section>
 

@@ -970,6 +970,11 @@
 <li class="toctree-l4"><a class="reference internal" href="#chunked-upload-job-cancellation">Chunked Upload Job Cancellation</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#bulk-management-sub-resources">Bulk Management Sub-Resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bulk-name-listing-retrieval">Bulk Name Listing Retrieval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bulk-version-listing-retrieval">Bulk Version Listing Retrieval</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1474,6 +1479,7 @@ the following characteristics:</p>
 <li><p><a class="reference internal" href="#metadata-sub-resources"><span class="std std-ref">Metadata</span></a></p></li>
 <li><p><a class="reference internal" href="#access-control-list-sub-resources"><span class="std std-ref">Access Control Lists</span></a></p></li>
 <li><p><a class="reference internal" href="#chunked-upload-resources"><span class="std std-ref">Chunked Uploads</span></a></p></li>
+<li><p><a class="reference internal" href="#bulk-management-sub-resources"><span class="std std-ref">Bulk Management</span></a></p></li>
 </ol>
 </section>
 <section id="quick-links-to-operations">
@@ -1532,6 +1538,13 @@ the following characteristics:</p>
 <li><p><a class="reference internal" href="#chunk-upload"><span class="std std-ref">Upload data chunk</span></a></p></li>
 <li><p><a class="reference internal" href="#chunked-upload-job-finalization"><span class="std std-ref">Finalize upload job</span></a></p></li>
 <li><p><a class="reference internal" href="#chunked-upload-job-cancellation"><span class="std std-ref">Cancel upload job</span></a></p></li>
+</ul>
+<ol class="arabic simple" start="7">
+<li><p>Bulk management operations</p></li>
+</ol>
+<ul class="simple">
+<li><p><a class="reference internal" href="#bulk-name-listing-retrieval"><span class="std std-ref">Get name listing</span></a></p></li>
+<li><p><a class="reference internal" href="#bulk-version-listing-retrieval"><span class="std std-ref">Get version listing</span></a></p></li>
 </ul>
 </section>
 </section>
@@ -2860,6 +2873,110 @@ Host: authority_name
 </div>
 <p>Once canceled, the job resource no longer exists and associated
 storage SHOULD be reclaimed.</p>
+</section>
+</section>
+<section id="bulk-management-sub-resources">
+<h2>Bulk Management Sub-Resources<a class="headerlink" href="#bulk-management-sub-resources" title="Permalink to this heading"></a></h2>
+<p>Bulk management sub-resources have an HTTPS URL of the form:</p>
+<ul class="simple">
+<li><p>https:// <em>authority</em> / <em>resource name</em> ;bulk/name/ <em>query</em> (for bulk name records)</p></li>
+<li><p>https:// <em>authority</em> / <em>resource name</em> ;bulk/version/ <em>query</em> (for bulk version records)</p></li>
+<li><p>https:// <em>authority</em> / <em>resource name</em> ;bulk/name/ (reserved)</p></li>
+<li><p>https:// <em>authority</em> / <em>resource name</em> ;bulk/version/ (reserved)</p></li>
+</ul>
+<p>Where <em>resource name</em> is a namespace, the <em>query</em> defines paginated
+listing position in the bulk listing operations described later. URL
+syntax without a <em>query</em> is reserved for future use and will raise an
+access error if used today.</p>
+<p>Conceptually, the two sub-resource spaces <code class="docutils literal notranslate"><span class="pre">;bulk/name/</span></code> and
+<code class="docutils literal notranslate"><span class="pre">;bulk/version/</span></code> are for bulk management of name records (namespaces
+and objects) and object-version records, respectively. These are
+slightly leaky abstractions to support bulk management of access
+control policy.</p>
+<section id="bulk-name-listing-retrieval">
+<h3>Bulk Name Listing Retrieval<a class="headerlink" href="#bulk-name-listing-retrieval" title="Permalink to this heading"></a></h3>
+<p>The GET operation is used to retrieve a paginated listing of name records en masse:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GET /resource_name;bulk/name/?limit=pagesize&amp;last_id=id0&amp;last_modified_at=timestamp0
+Host: authority_name
+Accept: application/json
+If-None-Match: etag_value
+</pre></div>
+</div>
+<p>To get a full listing of the service state, use the <code class="docutils literal notranslate"><span class="pre">/;bulk/name/</span></code>
+URL, i.e. where <em>resource name</em> is the root namespace. When a more
+specific namespace is addressed, the bulk listing will be narrowed to
+only encompass name records within that namespace hierarchy.</p>
+<p>The URL query parameters encode pagination boundary information:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: A positive integer <em>pagesize</em> (number of records) to include</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_id</span></code>: The row <code class="docutils literal notranslate"><span class="pre">id</span></code> <em>id0</em> of the last observed row of previous page</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_modified_at</span></code>: The <code class="docutils literal notranslate"><span class="pre">modified_at</span></code> <em>timestamp0</em> of the last observed row of previous page</p></li>
+</ul>
+<p>These listings are pages of a stream sorted primary by <code class="docutils literal notranslate"><span class="pre">modified_at</span></code>
+and secondarily by <code class="docutils literal notranslate"><span class="pre">id</span></code> to break ties when several rows have the same
+modification time.</p>
+<p>To start a new listing and get the first page, the special query terms
+<code class="docutils literal notranslate"><span class="pre">last_id=0</span></code> and <code class="docutils literal notranslate"><span class="pre">last_modified_at=-infinity</span></code> may be used to specify
+that no rows have been observed yet.</p>
+<p>The successful response is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>200 OK
+Content-Type: application/json
+Content-Length: N
+ETag: etag_value
+
+[{&quot;id&quot;:1,...}, ...]
+</pre></div>
+</div>
+<p>This response exposes low-level service metadata about each namespace
+and object name, suitable for consumption by a system operator.</p>
+<p>This request may raise HTTP errors:</p>
+<ul class="simple">
+<li><p>409 for attempts to access the ;bulk sub-resource on object names</p></li>
+<li><p>401 or 403 for unauthenticated or insufficiently privileged clients</p></li>
+</ul>
+</section>
+<section id="bulk-version-listing-retrieval">
+<h3>Bulk Version Listing Retrieval<a class="headerlink" href="#bulk-version-listing-retrieval" title="Permalink to this heading"></a></h3>
+<p>The GET operation is used to retrieve a paginated listing of version records en masse:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GET /resource_name;bulk/version/?limit=pagesize&amp;last_id=id0&amp;last_modified_at=timestamp0
+Host: authority_name
+Accept: application/json
+If-None-Match: etag_value
+</pre></div>
+</div>
+<p>To get a full listing of the service state, use the <code class="docutils literal notranslate"><span class="pre">/;bulk/version/</span></code>
+URL, i.e. where <em>resource name</em> is the root namespace. When a more
+specific namespace is addressed, the bulk listing will be narrowed to
+only encompass version records for objects within that namespace
+hierarchy.</p>
+<p>The URL query parameters encode pagination boundary information:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">limit</span></code>: A positive integer <em>pagesize</em> (number of records) to include</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_id</span></code>: The row <code class="docutils literal notranslate"><span class="pre">id</span></code> <em>id0</em> of the last observed row of previous page</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">last_modified_at</span></code>: The <code class="docutils literal notranslate"><span class="pre">modified_at</span></code> <em>timestamp0</em> of the last observed row of previous page</p></li>
+</ul>
+<p>These listings are pages of a stream sorted primary by <code class="docutils literal notranslate"><span class="pre">modified_at</span></code>
+and secondarily by <code class="docutils literal notranslate"><span class="pre">id</span></code> to break ties when several rows have the same
+modification time.</p>
+<p>To start a new listing and get the first page, the special query terms
+<code class="docutils literal notranslate"><span class="pre">last_id=0</span></code> and <code class="docutils literal notranslate"><span class="pre">last_modified_at=-infinity</span></code> may be used to specify
+that no rows have been observed yet.</p>
+<p>The successful response is:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>200 OK
+Content-Type: application/json
+Content-Length: N
+ETag: etag_value
+
+[{&quot;id&quot;:1,...}, ...]
+</pre></div>
+</div>
+<p>This response exposes low-level service metadata about each
+object-version, suitable for consumption by a system operator.</p>
+<p>This request may raise HTTP errors:</p>
+<ul class="simple">
+<li><p>409 for attempts to access the ;bulk sub-resource on object names</p></li>
+<li><p>401 or 403 for unauthenticated or insufficiently privileged clients</p></li>
+</ul>
 </section>
 </section>
 </section>

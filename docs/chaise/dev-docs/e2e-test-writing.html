@@ -1465,6 +1465,7 @@
 <ul>
 <li><p><a class="reference internal" href="#data-and-schema"><span class="std std-ref">Data and schema</span></a></p></li>
 <li><p><a class="reference internal" href="#test-structure"><span class="std std-ref">Test structure</span></a></p></li>
+<li><p><a class="reference internal" href="#test-locks"><span class="std std-ref">Test locks</span></a></p></li>
 <li><p><a class="reference internal" href="#locators"><span class="std std-ref">Locators</span></a></p></li>
 <li><p><a class="reference internal" href="#assertions"><span class="std std-ref">Assertions</span></a></p></li>
 <li><p><a class="reference internal" href="#actions"><span class="std std-ref">Actions</span></a></p></li>
@@ -1502,22 +1503,23 @@
 <li><p>https://playwright.dev/docs/test-parallel</p></li>
 </ul>
 </li>
+<li><p>If your spec mutates the catalog model (annotations or ACLs), it also needs a lock. See <a class="reference internal" href="#test-locks"><span class="std std-ref">Test locks</span></a>.</p></li>
 <li><p>The following are different ways that you can structure your tests:</p>
 <ul>
 <li><p>To reduce the runtime, breaking tests into multiple files is preferable. So if these tests won’t affect each other, it’s best to create multiple files that the <code class="docutils literal notranslate"><span class="pre">.config.ts</span></code> will then run.</p></li>
 <li><p>Another option is to keep them in the same file as two separate tests. In this case, each <code class="docutils literal notranslate"><span class="pre">test</span></code> will open a separate browser.</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="nx">test</span><span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;recordset tests&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">test</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">(({</span><span class="nx">page</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">test</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">(({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="s1">&#39;https://example.com/chaise/recordset/#1/schema:table&#39;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">waitForRecordsetPageReady</span><span class="p">();</span>
-<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span><span class="p">});</span>
 
-<span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="nx">page</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getMainSearchBox</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getRows</span><span class="p">(</span><span class="nx">page</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
 <span class="w">  </span><span class="p">});</span>
 
-<span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="nx">page</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetHeaderButtonById</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOptions</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">5</span><span class="p">);</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOption</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
@@ -1539,24 +1541,24 @@
 <ul>
 <li><p>Don’t forget to include <code class="docutils literal notranslate"><span class="pre">await</span></code> before each <code class="docutils literal notranslate"><span class="pre">test.step</span></code>.</p></li>
 <li><p>Playwright will not run the remaining steps if any of the steps fail. To get around this, you should use <code class="docutils literal notranslate"><span class="pre">expect.soft</span></code>.</p>
-<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;recordset search and facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;go to recordset page&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="s1">&#39;https://example.com/chaise/recordset/#1/schema:table&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">waitForRecordsetPageReady</span><span class="p">();</span>
-<span class="w">    </span><span class="p">});</span>
-
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="nx">page</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getMainSearchBox</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getRows</span><span class="p">(</span><span class="nx">page</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
-
-<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="nx">page</span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetHeaderButtonById</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOptions</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOption</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
-<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getRows</span><span class="p">(</span><span class="nx">page</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">});</span>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;recordset search and facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;go to recordset page&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="s1">&#39;https://example.com/chaise/recordset/#1/schema:table&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">waitForRecordsetPageReady</span><span class="p">();</span>
 <span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;search&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getMainSearchBox</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">fill</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getRows</span><span class="p">(</span><span class="nx">page</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
+
+<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">test</span><span class="p">.</span><span class="nx">step</span><span class="p">(</span><span class="s1">&#39;facet&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetHeaderButtonById</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOptions</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">facetID</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">2</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getFacetOption</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">.</span><span class="nx">soft</span><span class="p">(</span><span class="nx">RecordsetLocators</span><span class="p">.</span><span class="nx">getRows</span><span class="p">(</span><span class="nx">page</span><span class="p">)).</span><span class="nx">toHaveCount</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">});</span>
 </pre></div>
 </div>
 </li>
@@ -1582,13 +1584,15 @@
 </li>
 <li><p>Object</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="s1">&#39;col1&#39;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
-<span class="w">  </span><span class="s1">&#39;col2&#39;</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span>
-<span class="p">}</span>
+<span class="w">  </span><span class="nx">col1</span><span class="o">:</span><span class="w"> </span><span class="kt">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">col2</span><span class="o">:</span><span class="w"> </span><span class="kt">2</span><span class="p">,</span>
+<span class="p">};</span>
 
 <span class="kd">let</span><span class="w"> </span><span class="nx">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">const</span><span class="w"> </span><span class="nx">colName</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">values</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">RecordeditLocators</span><span class="p">.</span><span class="nx">getInputForAColumn</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">colName</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">)).</span><span class="nx">toHaveValue</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="nx">colName</span><span class="p">]);</span>
+<span class="w">  </span><span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">RecordeditLocators</span><span class="p">.</span><span class="nx">getInputForAColumn</span><span class="p">(</span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">colName</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">)).</span><span class="nx">toHaveValue</span><span class="p">(</span>
+<span class="w">    </span><span class="nx">values</span><span class="p">[</span><span class="nx">colName</span><span class="p">]</span>
+<span class="w">  </span><span class="p">);</span>
 <span class="w">  </span><span class="nx">index</span><span class="o">++</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -1597,6 +1601,61 @@
 </ul>
 </li>
 </ul>
+</section>
+<section id="test-locks">
+<h3>Test locks<a class="headerlink" href="#test-locks" title="Permalink to this heading"></a></h3>
+<p>Each parallel config (<code class="docutils literal notranslate"><span class="pre">test/e2e/specs/&lt;group&gt;/playwright.config.ts</span></code>) creates <strong>one catalog shared by every
+spec in that group</strong>, and the specs run across 4 workers. A spec that mutates the catalog model therefore has
+to declare a lock, otherwise it runs at the same time as the others and corrupts their state.</p>
+<p>Playwright runs no two tests holding the same lock at the same time, across files, workers and projects, while
+everything else stays parallel (<a class="reference external" href="https://playwright.dev/docs/test-parallel#test-locks">docs</a>).</p>
+<section id="when-to-add-one">
+<h4>When to add one<a class="headerlink" href="#when-to-add-one" title="Permalink to this heading"></a></h4>
+<p>Add <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">lock:</span> <span class="pre">TEST_LOCKS.CATALOG_MODEL</span> <span class="pre">}</span></code> if your spec calls <code class="docutils literal notranslate"><span class="pre">updateCatalogAnnotation</span></code> or <code class="docutils literal notranslate"><span class="pre">importACLs</span></code> (from
+<code class="docutils literal notranslate"><span class="pre">test/e2e/utils/catalog-utils.ts</span></code>), at any level: catalog, schema, table or column.</p>
+<p>Two separate reasons, and either one is enough:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">updateCatalogAnnotation</span></code> does a <code class="docutils literal notranslate"><span class="pre">PUT</span></code> to <code class="docutils literal notranslate"><span class="pre">/catalog/&lt;id&gt;/annotation/</span></code>, which replaces
+the entire annotation object. Two specs calling it overwrite each other no matter which keys each one sets.</p></li>
+<li><p>ERMrest serializes model mutations. Two specs changing the model at the same time get a <code class="docutils literal notranslate"><span class="pre">503</span></code>, even on
+different endpoints and different tables. Annotations and ACLs are separate APIs but still conflict, which is
+why there is a single <code class="docutils literal notranslate"><span class="pre">CATALOG_MODEL</span></code> lock rather than one per API.</p></li>
+</ol>
+<p>Reading catalog state needs no lock. Mutating rows needs no lock either, only the model.</p>
+</section>
+<section id="how-to-add-one">
+<h4>How to add one<a class="headerlink" href="#how-to-add-one" title="Permalink to this heading"></a></h4>
+<p>Put it on the <code class="docutils literal notranslate"><span class="pre">test.describe</span></code> that owns the mutation, so it is obvious which block is responsible:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">TEST_LOCKS</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@isrd-isi-edu/chaise/test/e2e/utils/constants&#39;</span><span class="p">;</span>
+
+<span class="nx">test</span><span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;batch unlink with dynamic acls&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">lock</span><span class="o">:</span><span class="w"> </span><span class="kt">TEST_LOCKS.CATALOG_MODEL</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">test</span><span class="p">.</span><span class="nx">beforeAll</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">({},</span><span class="w"> </span><span class="nx">testInfo</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">importACLs</span><span class="p">({</span>
+<span class="w">      </span><span class="cm">/* ... */</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="w">  </span><span class="c1">// ...</span>
+<span class="w">  </span><span class="nx">test</span><span class="p">.</span><span class="nx">afterAll</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">({},</span><span class="w"> </span><span class="nx">testInfo</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// always restore what you changed</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>A test can hold several locks (<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">lock:</span> <span class="pre">['a',</span> <span class="pre">'b']</span> <span class="pre">}</span></code>), though today <code class="docutils literal notranslate"><span class="pre">CATALOG_MODEL</span></code> is the only one.</p>
+</section>
+<section id="notes">
+<h4>Notes<a class="headerlink" href="#notes" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>The lock covers the whole file, not just the describe.** We run with <code class="docutils literal notranslate"><span class="pre">fullyParallel:</span> <span class="pre">false</span></code>, so tests in a
+file run in order and a lock declared anywhere in it is held for the entire file, <code class="docutils literal notranslate"><span class="pre">beforeAll</span></code> and <code class="docutils literal notranslate"><span class="pre">afterAll</span></code>
+included. Adding a lock to one describe serializes its whole spec against every other lock holder.</p></li>
+<li><p>Locks do not protect readers. They only order the specs that hold them. If your mutation changes something
+another spec asserts on, that spec breaks and the lock will not save it. Check for readers before adding a
+mutation. For example, turning on <code class="docutils literal notranslate"><span class="pre">exportConfigsSubmenu</span></code> adds a “Configurations” entry to the export menu,
+which is why <code class="docutils literal notranslate"><span class="pre">ExportLocators.getExportTemplateOptions</span></code> exists to exclude it from counts.</p></li>
+<li><p>Always undo your change in <code class="docutils literal notranslate"><span class="pre">afterAll</span></code>, so the next spec starts from a known state.</p></li>
+</ul>
+</section>
 </section>
 <section id="locators">
 <h3>Locators<a class="headerlink" href="#locators" title="Permalink to this heading"></a></h3>
@@ -1612,7 +1671,7 @@
 <li><p>If you want to iterate over locators, use <code class="docutils literal notranslate"><span class="pre">.all()</span></code>: https://playwright.dev/docs/api/class-locator#locator-all</p></li>
 <li><p>You can get the <code class="docutils literal notranslate"><span class="pre">page</span></code> and <code class="docutils literal notranslate"><span class="pre">context</span></code> object from a <code class="docutils literal notranslate"><span class="pre">Locator</span></code> object:</p>
 <div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">locator</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="nx">locator</span><span class="p">(</span><span class="s1">&#39;.some-element&#39;</span><span class="p">);</span>
-<span class="kd">const</span><span class="w"> </span><span class="nx">samePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">locator</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">samePage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">locator</span><span class="p">.</span><span class="nx">page</span><span class="p">();</span>
 <span class="kd">const</span><span class="w"> </span><span class="nx">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">samePage</span><span class="p">.</span><span class="nx">context</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -1689,7 +1748,7 @@
 <span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">link</span><span class="p">).</span><span class="nx">toHaveAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">regexOrFullString</span><span class="p">);</span>
 
 <span class="c1">// if you cannot come up with a proper regex, do this. but generally toHaveAttribute is much better</span>
-<span class="nx">expect</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)).</span><span class="nx">toContain</span><span class="p">(</span><span class="nx">partialExpected</span><span class="p">)</span>
+<span class="nx">expect</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">link</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;href&#39;</span><span class="p">)).</span><span class="nx">toContain</span><span class="p">(</span><span class="nx">partialExpected</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -1706,8 +1765,8 @@
 <span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">toHaveURL</span><span class="p">(</span><span class="sr">/\/recordset\//</span><span class="p">);</span>
 
 <span class="c1">// testing if the URL contains some string</span>
-<span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">toHaveURL</span><span class="p">(</span><span class="nx">url</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">url</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;@sort(my_column)&#39;</span><span class="p">)</span>
+<span class="k">await</span><span class="w"> </span><span class="nx">expect</span><span class="p">(</span><span class="nx">page</span><span class="p">).</span><span class="nx">toHaveURL</span><span class="p">((</span><span class="nx">url</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">url</span><span class="p">.</span><span class="nx">href</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;@sort(my_column)&#39;</span><span class="p">);</span>
 <span class="p">});</span>
 </pre></div>
 </div>
@@ -1761,7 +1820,9 @@
 </ul>
 </li>
 <li><p>Use <code class="docutils literal notranslate"><span class="pre">generateChaiseURL</span></code> for creating a chaise url:</p>
-<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="nx">generateChaiseURL</span><span class="p">(</span><span class="nx">APP_NAMES</span><span class="p">.</span><span class="nx">RECORD</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;schema&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">testInfo</span><span class="p">,</span><span class="w"> </span><span class="nx">baseURL</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;/id=12&#39;</span><span class="p">);</span>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span>
+<span class="w">  </span><span class="nx">generateChaiseURL</span><span class="p">(</span><span class="nx">APP_NAMES</span><span class="p">.</span><span class="nx">RECORD</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;schema&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;table&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">testInfo</span><span class="p">,</span><span class="w"> </span><span class="nx">baseURL</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;/id=12&#39;</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -1793,7 +1854,7 @@ manually trigger this event.</p></li>
 
 <span class="w">  </span><span class="nx">test</span><span class="p">.</span><span class="nx">beforeEach</span><span class="p">(</span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="p">,</span><span class="w"> </span><span class="nx">baseURL</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">page</span><span class="p">.</span><span class="kr">goto</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">baseURL</span><span class="si">}${</span><span class="nx">PAGE_URL</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="w">  </span><span class="p">})</span>
+<span class="w">  </span><span class="p">});</span>
 
 <span class="w">  </span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;basic features,&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">({</span><span class="w"> </span><span class="nx">page</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">navbar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">NavbarLocators</span><span class="p">.</span><span class="nx">getContainer</span><span class="p">(</span><span class="nx">page</span><span class="p">);</span>
@@ -1802,7 +1863,7 @@ manually trigger this event.</p></li>
 <span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">navbar</span><span class="p">.</span><span class="nx">waitFor</span><span class="p">({</span><span class="w"> </span><span class="nx">state</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;visible&#39;</span><span class="w"> </span><span class="p">});</span>
 <span class="w">    </span><span class="p">});</span>
 <span class="w">  </span><span class="p">});</span>
-<span class="p">})</span>
+<span class="p">});</span>
 </pre></div>
 </div>
 </section>

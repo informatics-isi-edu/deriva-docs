@@ -325,6 +325,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/column-directive.html#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/column-directive.html#visible-foreignkey-list">Visible ForeignKey List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/column-directive.html#alternative-syntax">Alternative syntax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../users-guide/annotations/column-directive.html#remind-curators-about-the-missing-data">Remind Curators about the missing data</a></li>
 </ul>
 </li>
 </ul>
@@ -1117,6 +1118,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#visible-column-list">Visible Column List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#visible-foreignkey-list">Visible ForeignKey List</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#alternative-syntax">Alternative syntax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#remind-curators-about-the-missing-data">Remind Curators about the missing data</a></li>
 </ul>
 </li>
 </ul>
@@ -1533,6 +1535,7 @@
 <li><p><a class="reference internal" href="#visible-column-list"><span class="std std-ref">Visible Column List</span></a></p></li>
 <li><p><a class="reference internal" href="#visible-foreignkey-list"><span class="std std-ref">Visible ForeignKey List</span></a></p></li>
 <li><p><a class="reference internal" href="#alternative-syntax"><span class="std std-ref">Alternative syntax</span></a></p></li>
+<li><p><a class="reference internal" href="#remind-curators-about-the-missing-data"><span class="std std-ref">Remind Curators about the missing data</span></a></p></li>
 </ul>
 </li>
 </ul>
@@ -1682,6 +1685,15 @@
 </ul>
 <blockquote>
 <div><p>Even if the column directive is used in “entity” mode where it’s suppsoed to represent the row and not just a column, we must record this column choice explicitly in the column directive so that we can use an unambiguous column while communicating with ERMrest.</p>
+</div></blockquote>
+<blockquote>
+<div><p>💡 <strong>BEST PRACTICE:</strong> If the source path includes inbound/outbound foreign keys and you want the column directive to represent the whole row rather than a particular column, end the path with <code class="docutils literal notranslate"><span class="pre">RID</span></code>. Choose a different end column only when you specifically want to fetch that column.</p>
+<p>When the end column is a key of the table, the column directive is in “entity” mode and Chaise fetches the whole row instead of just that column. So in a visible column with an outbound path, changing the end column from <code class="docutils literal notranslate"><span class="pre">RID</span></code> to another key column doesn’t change the behavior. But the end column matters elsewhere:</p>
+<ol class="arabic simple">
+<li><p>In facets, the end column is the one used for filtering, so <code class="docutils literal notranslate"><span class="pre">RID</span></code> ensures an efficient and consistent URL.</p></li>
+<li><p>The “Explore” button of related tables generates its URL by reversing the path and ending it in <code class="docutils literal notranslate"><span class="pre">RID</span></code>. Using <code class="docutils literal notranslate"><span class="pre">RID</span></code> in your facets lets Chaise match that filter with your existing facet. See <a class="reference internal" href="facet.html#source-path"><span class="std std-ref">facet documentation</span></a> for more information.</p></li>
+</ol>
+<p>So for consistency, always end entity paths with <code class="docutils literal notranslate"><span class="pre">RID</span></code>.</p>
 </div></blockquote>
 <p>Therefore the following are acceptable ways of defining source path:</p>
 <ul>
@@ -2427,6 +2439,53 @@ cnt_d -> #
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;main_key_constraint&quot;</span><span class="p">]</span> <span class="o">==</span>  <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">}</span>
 <span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;main_key_constraint&quot;</span><span class="p">]</span> <span class="o">=/=</span> <span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;entity&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="remind-curators-about-the-missing-data">
+<h3>Remind Curators about the missing data<a class="headerlink" href="#remind-curators-about-the-missing-data" title="Permalink to this heading"></a></h3>
+<p>When curators create a new record, we can use “virtual column directives” to remind them about the required/missing related entities. To do so, we just need to add a column directive without any source that conditionally shows different messages to curators.</p>
+<p>In this example, let’s assume we have an <code class="docutils literal notranslate"><span class="pre">Investigation</span></code> table that has a many-to-many relationship to the <code class="docutils literal notranslate"><span class="pre">Program</span></code> table, and the sourcekey <code class="docutils literal notranslate"><span class="pre">program_fkey</span></code> is the visible-column for it on the <code class="docutils literal notranslate"><span class="pre">Investigation</span></code> record page. To create new data, they must first create an <code class="docutils literal notranslate"><span class="pre">Investigation</span></code> and then add at least one <code class="docutils literal notranslate"><span class="pre">Program</span></code> to the <code class="docutils literal notranslate"><span class="pre">Investigation</span></code>. To remind them about the missing data, we can add the following column directives to the <code class="docutils literal notranslate"><span class="pre">Investigation</span></code> table:</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// required by chaise, but users don&#39;t see this value:</span>
+<span class="w">  </span><span class="s2">&quot;markdown_name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;warn-about-missing-data&quot;</span><span class="p">,</span>
+
+<span class="w">  </span><span class="c1">// hide the column header:</span>
+<span class="w">  </span><span class="s2">&quot;hide_column_header&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+
+<span class="w">  </span><span class="c1">// show if program is missing:</span>
+<span class="w">  </span><span class="s2">&quot;condition&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;sourcekey&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;program_fkey&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;on_empty&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;show&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="s2">&quot;display&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;markdown_pattern&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;:::div {style=\&quot;font-size:16px;margin-bottom:-8px !important;\&quot;}\n:span::/span:{.fa-solid .fa-triangle-exclamation style=\&quot;margin-right:4px;font-size:20px;color:orange !important;\&quot;} **Warning: There is no Program linked to this Investigation.** **Make sure at least a Program is linked**. \n:::&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+<p>If your record page has multiple required related entities, you can either add multiple column directives with different <code class="docutils literal notranslate"><span class="pre">condition</span></code> and <code class="docutils literal notranslate"><span class="pre">markdown_pattern</span></code>, or use the same entry for all, like the following (assume <code class="docutils literal notranslate"><span class="pre">study_fkey</span></code> is another required related entity):</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// required by chaise, but users don&#39;t see this value:</span>
+<span class="w">  </span><span class="s2">&quot;markdown_name&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;warn-about-missing-data&quot;</span><span class="p">,</span>
+
+<span class="w">  </span><span class="c1">// hide the column header:</span>
+<span class="w">  </span><span class="s2">&quot;hide_column_header&quot;</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+
+<span class="w">  </span><span class="c1">// show if program or study are missing:</span>
+<span class="w">  </span><span class="s2">&quot;condition&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;sourcekey&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;program_fkey&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;wait_for&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;study_fkey&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="s2">&quot;markdown_pattern&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{{#unless (or program_fkey study_fkey)}}show{{/unless}}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;template_engine&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;handlebars&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+
+<span class="w">  </span><span class="c1">// display different messages based on which related entity is missing:</span>
+<span class="w">  </span><span class="s2">&quot;display&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;markdown_pattern&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;{{#if study_fkey}}Program is missing{{else if program_fkey}}Study is missing{{else}}Program and Study are missing{{/if}}&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">},</span>
 </pre></div>
 </div>
 </section>

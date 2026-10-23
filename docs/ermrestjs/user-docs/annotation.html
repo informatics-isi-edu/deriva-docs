@@ -1998,7 +1998,7 @@ using a hierarchical scoping mode:</p>
 </ol>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">detailed</span></code> <code class="docutils literal notranslate"><span class="pre">:</span></code> <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:chaise:record</span></code>,</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">compact</span></code> <code class="docutils literal notranslate"><span class="pre">:</span></code> <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:chaise:resultset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compact</span></code> <code class="docutils literal notranslate"><span class="pre">:</span></code> <code class="docutils literal notranslate"><span class="pre">tag:isrd.isi.edu,2016:chaise:recordset</span></code></p></li>
 </ul>
 <ol class="arabic simple" start="2">
 <li><p>Server-level configuration in <code class="docutils literal notranslate"><span class="pre">chaise-config.js</span></code> on web server overrides hard-coded default.</p></li>
@@ -3151,6 +3151,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;compact/brief&quot;</span></code>: A limited compact, tabular presentation of data from multiple entities to be shown under the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. In this context, only a page of data will be shown with a link to the access the <code class="docutils literal notranslate"><span class="pre">compact</span></code> context for more detail (related entities section).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;compact/brief/inline&quot;</span></code>: A limited inline, compact, tabular presentation of data from multiple entities to be shown under the <code class="docutils literal notranslate"><span class="pre">detailed</span></code> context. In this context, only a page of data will be shown with a link to the access the <code class="docutils literal notranslate"><span class="pre">compact</span></code> context for more detail (inline related entities section).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;compact/resultset&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">compact</span></code> used for formatting the values (and row names) of the records shown after creating or editing multiple records. The list of columns is controlled by the <code class="docutils literal notranslate"><span class="pre">resultset</span></code> context (or the form, if <code class="docutils literal notranslate"><span class="pre">resultset</span></code> is not defined).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;compact/select&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">compact</span></code> that is used for selecting entities, e.g. when prompting the user for choosing a foreign key or facet value.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;compact/select/association&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">compact/select</span></code> used for selecting entities to link to or unlink from the main record.</p>
@@ -3181,6 +3182,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 </ul>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;filter&quot;</span></code>: Any data-filtering control context, i.e. when prompting the user for column constraints or facets.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;resultset&quot;</span></code>: The tabular presentation of the records shown after creating or editing multiple records. If the visible-columns annotation doesn’t define a list for <code class="docutils literal notranslate"><span class="pre">resultset</span></code>, the columns of the form are used (<code class="docutils literal notranslate"><span class="pre">entry/create</span></code> after creating, <code class="docutils literal notranslate"><span class="pre">entry/edit</span></code> after editing). Since the records are not read again after the submission, the same restrictions as the <code class="docutils literal notranslate"><span class="pre">entry</span></code> context apply (e.g. no aggregates or inbound paths). The values are formatted using the <code class="docutils literal notranslate"><span class="pre">compact/resultset</span></code> context.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;row_name&quot;</span></code>: Any abbreviated title-like presentation context.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;row_name/title&quot;</span></code>: A sub-context of <code class="docutils literal notranslate"><span class="pre">row_name</span></code> that only applies to title of page.</p></li>
@@ -3211,6 +3213,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <th>entry/create</th>
 <th>export</th>
 <th>filter</th>
+<th>resultset</th>
 <th>row_name</th>
 <th>*</th>
 </tr>
@@ -3229,10 +3232,12 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>X</td>
 </tr>
 <tr>
 <td><a href="#tag-2016-visible-columns">2016 Visible Columns</a></td>
+<td>X</td>
 <td>X</td>
 <td>X</td>
 <td>X</td>
@@ -3259,6 +3264,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>X</td>
 </tr>
 <tr>
@@ -3274,6 +3280,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>X</td>
 </tr>
 <tr>
@@ -3283,6 +3290,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>X</td>
 <td>X</td>
 <td>X</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -3304,6 +3312,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>X</td>
 </tr>
 <tr>
@@ -3319,6 +3328,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>X</td>
 </tr>
 <tr>
@@ -3328,6 +3338,7 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>X</td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
@@ -3350,9 +3361,11 @@ The json object follows the same rules as <a class="reference external" href="ht
 <td>-</td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 </tr>
 </tbody>
 </table>
+<p>The values of the <code class="docutils literal notranslate"><span class="pre">resultset</span></code> context are formatted using the <code class="docutils literal notranslate"><span class="pre">compact/resultset</span></code> context, so the column-display, key-display, and table-display (<code class="docutils literal notranslate"><span class="pre">row_name</span></code>) annotations of <code class="docutils literal notranslate"><span class="pre">compact</span></code> apply to them.</p>
 </section>
 <section id="pattern-expansion">
 <h2>Pattern Expansion<a class="headerlink" href="#pattern-expansion" title="Permalink to this heading"></a></h2>
